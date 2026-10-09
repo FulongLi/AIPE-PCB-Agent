@@ -1,0 +1,176 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-09T12:18:44",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_Buck_1kW.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 R1 的焊盘 1 [HO]",
+                    "pos": {
+                        "x": 109.0,
+                        "y": 46.9125
+                    },
+                    "uuid": "9d7c2231-a393-4ded-bb5b-d16ed679b0dc"
+                },
+                {
+                    "description": "走线 [HO] (B.Cu), 长度: 4.7500 mm",
+                    "pos": {
+                        "x": 113.75,
+                        "y": 47.0
+                    },
+                    "uuid": "b1eec258-096d-4914-80bd-6b12c4ab7d9b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [HO] (B.Cu), 长度: 1.2500 mm",
+                    "pos": {
+                        "x": 135.0,
+                        "y": 45.75
+                    },
+                    "uuid": "87017e7f-fcd2-4835-b129-51e0d91bbefa"
+                },
+                {
+                    "description": "F.Cu 上 R3 的焊盘 1 [HO]",
+                    "pos": {
+                        "x": 135.0,
+                        "y": 46.9125
+                    },
+                    "uuid": "fd3ab474-d1ca-433c-9afd-0f4f535c195b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "填充区[SW]在 F.Cu 上, 优先级 1",
+                    "pos": {
+                        "x": 116.3,
+                        "y": 40.5
+                    },
+                    "uuid": "efd79366-c654-4e31-ac69-5cc1f2c6e07b"
+                },
+                {
+                    "description": "填充区[SW]在 F.Cu 上, 优先级 1",
+                    "pos": {
+                        "x": 116.3,
+                        "y": 40.5
+                    },
+                    "uuid": "efd79366-c654-4e31-ac69-5cc1f2c6e07b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 R5 的焊盘 1 [LO]",
+                    "pos": {
+                        "x": 109.0,
+                        "y": 59.9125
+                    },
+                    "uuid": "75599148-842f-4995-8f2d-912c64d1dbd9"
+                },
+                {
+                    "description": "走线 [LO] (B.Cu), 长度: 0.7500 mm",
+                    "pos": {
+                        "x": 109.0,
+                        "y": 59.25
+                    },
+                    "uuid": "0b279ece-9446-449b-92eb-30af31b6560e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [HO] (B.Cu), 长度: 1.2500 mm",
+                    "pos": {
+                        "x": 135.0,
+                        "y": 45.75
+                    },
+                    "uuid": "87017e7f-fcd2-4835-b129-51e0d91bbefa"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [HO] (B.Cu), 长度: 4.7500 mm",
+                    "pos": {
+                        "x": 113.75,
+                        "y": 47.0
+                    },
+                    "uuid": "b1eec258-096d-4914-80bd-6b12c4ab7d9b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [LO] (B.Cu), 长度: 0.7500 mm",
+                    "pos": {
+                        "x": 109.0,
+                        "y": 59.25
+                    },
+                    "uuid": "0b279ece-9446-449b-92eb-30af31b6560e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        }
+    ]
+}

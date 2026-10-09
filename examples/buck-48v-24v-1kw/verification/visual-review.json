@@ -1,0 +1,37 @@
+{
+  "reviewer": "AI visual inspection",
+  "date": "2026-10-09",
+  "scope": "PDF/renders and layer geometry; not mechanical or electrical qualification",
+  "files": {
+    "schematic.pdf": {
+      "sha256": "15ce86c0da4201876d3a94b05df60a6f21914b092217d5782b004f55deeeb8e5",
+      "reviewed": true,
+      "pages": 14
+    },
+    "pcb_layout.pdf": {
+      "sha256": "0c873c3cd975fde4d4e0e8244f57c9a4a61d2c2018fe52b5917eb981b58e5148",
+      "reviewed": true,
+      "pages": 8
+    },
+    "pcb_front.png": {
+      "sha256": "035125555bc354fda04ed25224a9ad4fb898452845ec41c787d9a27f7932ba6b",
+      "reviewed": true
+    },
+    "pcb_back.png": {
+      "sha256": "624bede57fdf7c1d5124d3ca0667cf3f254dc607f9035a82c6beba0d1812026c",
+      "reviewed": true
+    },
+    "pcb_3d.png": {
+      "sha256": "e3528a71067f0419b8fb87e87abd875f9cf20fa5ef3771ba92651d583d09febe",
+      "reviewed": true
+    }
+  },
+  "observations": [
+    "All 14 schematic pages rendered and inspected; dense sensing and full DSP pin sheets also inspected at larger resolution.",
+    "All 8 final PCB layer/assembly pages inspected; monochrome plotting and 0.9 A3 scale avoid pale silk and title-block overlap.",
+    "Ground-plane polygon indexing error found by visual inspection, corrected, and protected by an executable area/window invariant.",
+    "Duplicate assembly designators removed while retaining in-body footprint references.",
+    "Front/back/isometric renders include custom envelopes; no missing-model messages in STEP export.",
+    "No observed page clipping or text overflow remains; detailed component references are vector text and require zoom."
+  ]
+}

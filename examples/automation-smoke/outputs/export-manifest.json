@@ -1,0 +1,320 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "name": "schematic_pdf",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "pdf",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\review\\schematic.pdf",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "pcb_pdf",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pdf",
+        "--mode-multipage",
+        "--layers",
+        "F.Cu,B.Cu,F.SilkS,B.SilkS",
+        "--common-layers",
+        "Edge.Cuts",
+        "--scale",
+        "0",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\review\\pcb_layout.pdf",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "gerber",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "gerbers",
+        "--layers",
+        "F.Cu,B.Cu,F.SilkS,B.SilkS,Edge.Cuts,F.Paste,B.Paste,F.Mask,B.Mask",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\gerber\\",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "drill",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "drill",
+        "--format",
+        "excellon",
+        "--generate-report",
+        "--report-path",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\drill\\drill-report.rpt",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\drill\\",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "bom",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "bom",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\bom\\bom.csv",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "placement",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pos",
+        "--format",
+        "csv",
+        "--units",
+        "mm",
+        "--side",
+        "both",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\pick_and_place\\positions.csv",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "step",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "step",
+        "--subst-models",
+        "--include-tracks",
+        "--include-zones",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\step\\board.step",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "front",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\review\\pcb_front.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "back",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "bottom",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\review\\pcb_back.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "isometric",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--rotate",
+        "330,0,25",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\review\\pcb_3d.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "netlist",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "netlist",
+        "--format",
+        "kicadxml",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\outputs\\netlist.xml",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\automation-smoke\\kicad\\AIPE_Smoke.kicad_sch"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "artifacts": {
+    "netlist.xml": {
+      "bytes": 5899,
+      "sha256": "adcea6bb1267f5c60e36efae295513b7bd48cad58ef23ff3ac907e3c49691653"
+    },
+    "bom/bom.csv": {
+      "bytes": 229,
+      "sha256": "81b3907e6d55292b55dd6d37dc8836ab617b71db9df4881ecb26b2ae4c04485b"
+    },
+    "drill/AIPE_Smoke.drl": {
+      "bytes": 448,
+      "sha256": "0136fc0e43360dec5298ebe178f2dbf19ad924bf7d4acfa232f6b5553b451d55"
+    },
+    "drill/drill-report.rpt": {
+      "bytes": 660,
+      "sha256": "fd14d575fe70d1637b341c90115d373eb92658ec8e67e05a838f6dd51a603b90"
+    },
+    "gerber/AIPE_Smoke-B_Cu.gbl": {
+      "bytes": 5761,
+      "sha256": "d6dc486266d9f5c518d1c99ffd7fcfca84c788db131a01e6e8797461925703e8"
+    },
+    "gerber/AIPE_Smoke-B_Mask.gbs": {
+      "bytes": 630,
+      "sha256": "f6a05ab9c1afb333b12ede71f8cfd53a5a57a64705751af2493edf8de74bfde0"
+    },
+    "gerber/AIPE_Smoke-B_Paste.gbp": {
+      "bytes": 470,
+      "sha256": "2fc3ec5b226861ac821e0745fac6baaff76ddeec102c8d6d3505d66a8fb2d2e6"
+    },
+    "gerber/AIPE_Smoke-B_Silkscreen.gbo": {
+      "bytes": 471,
+      "sha256": "f86c0906ad448fe5583371f7d5d83c9b2f3adec86db8190120c2a2e7fdac08ba"
+    },
+    "gerber/AIPE_Smoke-Edge_Cuts.gm1": {
+      "bytes": 703,
+      "sha256": "0a49b73216d3b18b3ed1b2a75c2a55d2497e21f24af87ca2c17d4eff20af8e5c"
+    },
+    "gerber/AIPE_Smoke-F_Cu.gtl": {
+      "bytes": 2394,
+      "sha256": "c0084ac2c539d7634beef9c47b65c19faa07471ef8cdfdca6fc24d229303a17f"
+    },
+    "gerber/AIPE_Smoke-F_Mask.gts": {
+      "bytes": 1443,
+      "sha256": "98c4bc125e7e41e9dd98336b8da7faa745066cc97745b3de4e2f18019206ee33"
+    },
+    "gerber/AIPE_Smoke-F_Paste.gtp": {
+      "bytes": 1283,
+      "sha256": "18f573fc2156457a27dd7b0a48fa0fadcf868c4b6b41b7d15f4e123ff0a3bcec"
+    },
+    "gerber/AIPE_Smoke-F_Silkscreen.gto": {
+      "bytes": 3416,
+      "sha256": "db9a41c8588e5de37c9bafcc948f79f02b5638739bc3399bf294baf5bf70c586"
+    },
+    "gerber/AIPE_Smoke-job.gbrjob": {
+      "bytes": 2837,
+      "sha256": "952cec391e69cf09ac3a39dc35222b929d782996975427e133b660bdcdc7fae7"
+    },
+    "logs/back.log": {
+      "bytes": 1541,
+      "sha256": "fbc2697642d953e96085770edc5430c5df05f3b347e4a1e3d7a2bff0a6540942"
+    },
+    "logs/bom.log": {
+      "bytes": 109,
+      "sha256": "b333a82baf8f4a112dc52fba1784ceffe003a1c9ae9ff2ad10a45cdcf9b59ff2"
+    },
+    "logs/drill.log": {
+      "bytes": 120,
+      "sha256": "0fcc20448e00052ffe1ac631c6d14b086ee30000ebacc4db00acbf2ee08cab9f"
+    },
+    "logs/front.log": {
+      "bytes": 1541,
+      "sha256": "75eaa59f92d3f806a05854a21a4f681e6e1399928c797eec8156589b6fa71949"
+    },
+    "logs/gerber.log": {
+      "bytes": 1039,
+      "sha256": "753653f3a314099e2fd7ffc92d0a1f8370268f1d982dd4c69a7e31d2a63f1c2e"
+    },
+    "logs/isometric.log": {
+      "bytes": 1541,
+      "sha256": "2d29db7ba23fea1ddcc00ee59ab708070fd4aa277b133b9b0c269f0b0a3d264f"
+    },
+    "logs/netlist.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "logs/pcb_pdf.log": {
+      "bytes": 121,
+      "sha256": "1106473ed91a298fd39a6a45e46b09a76c808467225a7743352ef6ec1417ebd7"
+    },
+    "logs/placement.log": {
+      "bytes": 125,
+      "sha256": "3a589b6d259b2ac3b0338edb8beb5f77f1ba9da4c4730cf7298655bfd78e7f8f"
+    },
+    "logs/schematic_pdf.log": {
+      "bytes": 117,
+      "sha256": "f0cb169572d82cfbc4cf646625b7cd3076489341f9dee7db8474ebbb740c40dd"
+    },
+    "logs/step.log": {
+      "bytes": 130,
+      "sha256": "1071265bf49e04d5153f6b8bcbb05a25a134d39136c45abf77764578e85111ad"
+    },
+    "pick_and_place/positions.csv": {
+      "bytes": 257,
+      "sha256": "6209ababcc3bb3e49e382f76dd1a8a896bfd38e095cbbc71ea738650b72d26a4"
+    },
+    "review/pcb_3d.png": {
+      "bytes": 78952,
+      "sha256": "e433bbacb2c02e33c358fac9c3bbb686b0394513d75d34f5ce43dbca8dcac4a2"
+    },
+    "review/pcb_back.png": {
+      "bytes": 11660,
+      "sha256": "03e49e830e2bd4a3b39758819b1854daa72fccedae762a970b78ffbe3f9544c3"
+    },
+    "review/pcb_front.png": {
+      "bytes": 12815,
+      "sha256": "79707939b80887553d994c266a03d05cbea6d5bc2adb520994da33be800069c4"
+    },
+    "review/pcb_layout.pdf": {
+      "bytes": 17637,
+      "sha256": "db54e8955d2dc9721bd8dc628ae975d20e0250748e6a28eb317eb57d9346cb5a"
+    },
+    "review/schematic.pdf": {
+      "bytes": 44362,
+      "sha256": "33adfcabb9183ddea26337f175f8b579330e49998c8028eb7e5b7e42c39807c4"
+    },
+    "step/board.step": {
+      "bytes": 315295,
+      "sha256": "632976411e52a3892224f08df6cd99d3166722009e58486d0f05d02e30a02beb"
+    }
+  }
+}

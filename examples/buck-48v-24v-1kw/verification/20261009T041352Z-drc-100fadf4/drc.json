@@ -1,0 +1,138 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-09T12:13:55",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_Buck_1kW.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [SW] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 117.5,
+                        "y": 48.05
+                    },
+                    "uuid": "ff5ba3d7-b47c-4044-8dbe-6eb868922957"
+                },
+                {
+                    "description": "走线 [SW] (In2.Cu), 长度: 3.5000 mm",
+                    "pos": {
+                        "x": 119.0,
+                        "y": 53.5
+                    },
+                    "uuid": "4e24d4e8-84dd-47c5-b303-023672ca2fa2"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [EMU1] (F.Cu), 长度: 0.0875 mm",
+                    "pos": {
+                        "x": 208.9125,
+                        "y": 182.0
+                    },
+                    "uuid": "395ec4a1-1695-4b79-91bc-b722d57c4f68"
+                },
+                {
+                    "description": "过孔 [EMU1] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 190.75,
+                        "y": 184.25
+                    },
+                    "uuid": "8fb82b9b-c45b-4acd-84e8-e51648e8a2bc"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J7 的PTH 焊盘 14 [EMU1]",
+                    "pos": {
+                        "x": 223.54,
+                        "y": 206.24
+                    },
+                    "uuid": "3208b03f-ebad-4f5c-b8a2-b2605d3f763a"
+                },
+                {
+                    "description": "走线 [EMU1] (F.Cu), 长度: 1.0000 mm",
+                    "pos": {
+                        "x": 209.0,
+                        "y": 182.0
+                    },
+                    "uuid": "3f5e6961-8ac4-47e9-a8b9-fee62e4e790a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [EMU1] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 190.75,
+                        "y": 184.25
+                    },
+                    "uuid": "8fb82b9b-c45b-4acd-84e8-e51648e8a2bc"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [EMU1] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 210.0,
+                        "y": 182.0
+                    },
+                    "uuid": "ad5a5e94-869a-4494-886e-6ae69a1d596c"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        }
+    ]
+}

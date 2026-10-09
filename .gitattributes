@@ -1,0 +1,19 @@
+# Human-authored source has consistent endings on Windows/macOS/Linux.
+* text=auto eol=lf
+
+# Preserve exact CAD/export bytes so recorded hashes survive a checkout.
+*.kicad_sch -text whitespace=cr-at-eol
+*.kicad_pcb -text whitespace=cr-at-eol
+*.kicad_pro -text whitespace=cr-at-eol
+*.kicad_sym -text whitespace=cr-at-eol
+*.kicad_mod -text whitespace=cr-at-eol
+examples/**/outputs/** -text -whitespace
+examples/**/manufacturing/** -text -whitespace
+examples/**/verification/** -text whitespace=cr-at-eol
+*.log -text -whitespace
+*.step -text -whitespace
+*.wrl -text -whitespace
+**/fp-lib-table -text
+**/sym-lib-table -text
+examples/**/releases/** -text -whitespace
+examples/**/libraries/CC-BY-SA-4.0.txt -text -whitespace
