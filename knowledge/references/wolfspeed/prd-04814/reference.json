@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "REF-WS-PRD-04814",
+  "manufacturer": "Wolfspeed",
+  "title": "PRD-04814 design options for SiC MOSFET gate bias power supplies",
+  "product_page": "https://www.wolfspeed.com/products/power/gate-driver-boards/cgd15sg00d2/",
+  "design_type": "application-note",
+  "documents": [
+    {
+      "id": "PRD-04814",
+      "kind": "application-note",
+      "title": "Design options for SiC MOSFET gate bias power supplies",
+      "revision": "0.1",
+      "source_url": "https://assets.wolfspeed.com/uploads/2025/01/Wolfspeed_PRD-04814_Design_Options_for_SiC_MOSFET_Gate_Bias_Power_Supplies.pdf",
+      "file_name": "Wolfspeed_PRD-04814_Design_Options_for_SiC_MOSFET_Gate_Bias_Power_Supplies.pdf",
+      "file_type": "pdf",
+      "redistribution": "not-verified",
+      "acquisition": {
+        "status": "downloaded",
+        "retrieved": "2026-10-09",
+        "cache_path": ".cache/references/REF-WS-PRD-04814/Wolfspeed_PRD-04814_Design_Options_for_SiC_MOSFET_Gate_Bias_Power_Supplies.pdf",
+        "bytes": 462924,
+        "sha256": "8fcf8e102b62ed728860199d35f9cff1d36a3b0e146227041e681ee0f66c261b",
+        "resolved_url": "https://assets.wolfspeed.com/uploads/2025/01/Wolfspeed_PRD-04814_Design_Options_for_SiC_MOSFET_Gate_Bias_Power_Supplies.pdf"
+      },
+      "extraction": {
+        "status": "analysed",
+        "method": "full text read (10 pages)"
+      },
+      "revision_basis": "footer 'PRD-04814 Rev 0.1, Jan. 2025'"
+    }
+  ],
+  "discovered_via": "Linked from the CGD15SG00D2 and CGD1700HB2M-UNA product pages and cited in PRD-06992 Section 6.3 and PRD-09301 Section 2.4; fetched 2026-10-09.",
+  "summary": "Wolfspeed application note comparing isolated gate-bias supply topologies for SiC MOSFETs (DC/DC modules, single-channel flyback/push-pull/LLC, multi-output flyback and bridge) and presenting four flexible split-rail (Vcc/Vss) circuits that let one PCB support different SiC gate-voltage requirements with BOM-only changes.",
+  "license": {
+    "redistribution": "not-verified",
+    "terms_source": "document footer",
+    "notes": "Wolfspeed documents carry '(c) Wolfspeed, Inc. All rights reserved'; no redistribution licence was found in the documents or design-file archives inspected. Treated as not redistributable; only original analysis and metadata are committed."
+  },
+  "evidence_limitations": [
+    "Topology comparison table is qualitative (relative cost/size/isolation capacitance); no measured data is provided.",
+    "Example circuit tables give component values without load, temperature or tolerance analysis.",
+    "Page 3 contains an unrelated paragraph about turn-on loss measurement (figure 7, 240 V, 17.2 A) that appears to be an editorial error in the source; it was ignored."
+  ],
+  "analysis": "analysis.md",
+  "source_discrepancies": [
+    "Figure 7 caption refers to a single-channel push-pull based on TI TIDA-01605 while the stray paragraph on page 3 also references a 'figure 7' for switching-loss measurement."
+  ]
+}
