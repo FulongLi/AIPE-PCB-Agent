@@ -201,6 +201,8 @@ def validate(root: Path = KNOWLEDGE, cache: Path = CACHE) -> dict:
             errors.append(f"{rel(path)}: datasheet marked verified-pdf but acquisition is {status}")
         if sheet["url_status"] == "not-located" and sheet["url"] is not None:
             errors.append(f"{rel(path)}: not-located datasheet must have url null")
+        if sheet["url_status"] != "not-located" and not sheet["url"]:
+            errors.append(f"{rel(path)}: {sheet['url_status']} datasheet needs a url")
 
     # 4. policy -------------------------------------------------------------
     for rule in rules.values():

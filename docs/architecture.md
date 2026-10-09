@@ -30,3 +30,12 @@ The complete operation layer will grow with verified needs: project creation,
 schematic connectivity and footprint assignment, board stack-up, placement,
 tracks/vias/zones, checks, exports and review images. These are planned
 capabilities, not a claim of current implementation.
+
+## Engineering knowledge layer
+
+Design decisions can draw on the reference-derived knowledge base in
+`knowledge/` (skills, circuit blocks, component knowledge and rules with
+evidence and validation status). It is produced and checked by
+`automation/knowledge/` and queried through `automation.knowledge.query`. See
+[knowledge-system.md](knowledge-system.md). It informs design and review; it
+does not replace the KiCad checks above or human engineering review.
