@@ -66,10 +66,16 @@ def acquire_file(url: str, target: Path, file_type: str, previous: dict, refresh
             record["resolved_url"] = resolved.split("?ts=")[0]
         if previous.get("sha256") and previous["sha256"] != record["sha256"]:
             record["note"] = f"content changed since previous acquisition (was {previous['sha256']})"
-    except (urllib.error.URLError, OSError, ValueError) as error:
+    except ValueError as error:
+        # The bytes on disk are not the declared type (e.g. an HTML error page): discard them.
         record["error"] = f"{type(error).__name__}: {error}"
         if target.exists():
             target.unlink()
+    except (urllib.error.URLError, OSError) as error:
+        # Network/file errors leave any previously cached copy untouched.
+        record["error"] = f"{type(error).__name__}: {error}"
+        if previous.get("sha256"):
+            record["note"] = f"previous successful acquisition {previous.get('retrieved')} sha256 {previous['sha256']}"
     return record
 
 

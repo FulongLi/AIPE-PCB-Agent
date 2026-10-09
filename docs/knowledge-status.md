@@ -16,7 +16,7 @@ Python 3.9.6 (standard library; no packages installed).
 | Rules | Complete | 43 rules: 11 hard constraints, 2 optimisation objectives, 25 recommendations, 5 human-review; 7 single-reference observations (none hard); conflicts preserved in KR-GD-003/004/005, KR-IS-001 |
 | Evidence checks | Passed | 26 checks: 24 pass, 2 computed-for-review, 0 fail (5 netlist checks need the local cache) |
 | Validation | Passed | `python -m automation.knowledge.validate`: 0 errors; all 19 part numbers found in the manufacturers' own files |
-| Tests | Passed | `python -m unittest discover -s tests`: 40 tests OK (6 existing + 34 new); without the cache: 40 OK, 1 skipped |
+| Tests | Passed | `python -m unittest discover -s tests`: 41 tests OK (6 existing + 35 new); without the cache: 41 OK, 1 skipped |
 | Retrieval demo | Complete | `knowledge/examples/retrieval-demo.md` |
 | Buck V1 | Unchanged | Frozen manifest hashes verified by test; no diff against `main` under `examples/buck-48v-24v-1kw` |
 

@@ -249,6 +249,18 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn("not a pdf", record["error"])
         self.assertFalse(target.exists())
 
+    def test_network_error_on_refresh_keeps_cached_copy(self):
+        import urllib.error
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "doc.pdf"
+            target.write_bytes(b"%PDF-1.7 cached")
+            previous = {"status": "downloaded", "retrieved": "2026-10-01", "sha256": "0" * 64}
+            with patch.object(acquire, "download", side_effect=urllib.error.URLError("offline")):
+                record = acquire.acquire_file("https://example.com/doc.pdf", target, "pdf", previous, True, "2026-10-09")
+            self.assertEqual(record["status"], "failed")
+            self.assertTrue(target.exists())
+            self.assertIn("previous successful acquisition", record["note"])
+
     def test_zip_member_path_traversal_is_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             archive = Path(folder) / "evil.zip"
