@@ -1,0 +1,1414 @@
+# AIPE-PCB-Agent
+## Codex V1 Autonomous Power Electronics PCB Design Task
+
+## 1. Existing Repository
+
+Work directly inside the existing GitHub repository:
+
+```text
+FulongLi/AIPE-PCB-Agent
+```
+
+Clone URL:
+
+```text
+https://github.com/FulongLi/AIPE-PCB-Agent.git
+```
+
+Do NOT create another repository.
+
+Do NOT create a separate standalone project outside this repository and copy it back later.
+
+The repository itself is the working project, source of truth, engineering record, and handoff mechanism between collaborators.
+
+At the time this task was prepared, the repository was empty.
+
+However, at execution time:
+
+1. Clone/pull the repository.
+2. Inspect its current contents.
+3. Preserve any files or work that may have been added since this task was written.
+4. Adapt to the existing structure rather than overwriting useful work.
+
+If it is still empty, initialize it as described below.
+
+---
+
+# 2. Mission
+
+Build the first complete V1 demonstration of an AI-generated power-electronics PCB.
+
+The target workflow is:
+
+```text
+Minimal specification
+        ↓
+Engineering calculations
+        ↓
+Architecture
+        ↓
+Component selection
+        ↓
+Power schematic
+        ↓
+DSP/control schematic
+        ↓
+Complete KiCad schematic
+        ↓
+PCB floorplan
+        ↓
+Component placement
+        ↓
+Automatic AI-directed routing
+        ↓
+ERC / DRC
+        ↓
+Engineering self-review
+        ↓
+V1 review package
+        ↓
+GitHub push
+        ↓
+Human review
+```
+
+This phase ends at V1.
+
+Do NOT perform V2 redesign until human review feedback is supplied later.
+
+---
+
+# 3. Benchmark Specification
+
+Design the following converter:
+
+```yaml
+converter:
+  topology: synchronous_buck
+  input_voltage_nominal: 48V
+  output_voltage: 24V
+  output_power: 1000W
+
+controller:
+  preferred_device: TMS320F28335
+
+pcb:
+  architecture: integrated_power_and_control_board
+  cad_tool: KiCad
+```
+
+Nominal output current is approximately:
+
+```text
+1000 W / 24 V ≈ 41.7 A
+```
+
+The intended power stage is a conventional synchronous buck using high-side and low-side switching devices.
+
+---
+
+# 4. Repository Initialization
+
+If the repository is still empty, initialize it directly.
+
+Create a useful root structure such as:
+
+```text
+AIPE-PCB-Agent/
+│
+├── README.md
+├── .gitignore
+│
+├── docs/
+│   ├── architecture.md
+│   ├── agent-workflow.md
+│   ├── pcb-design-rules.md
+│   └── environment.md
+│
+├── agents/
+│   └── CODEX_V1_TASK.md
+│
+├── automation/
+│   ├── setup/
+│   ├── kicad_tools/
+│   ├── verification/
+│   └── scripts/
+│
+├── examples/
+│   └── buck-48v-24v-1kw/
+│       ├── input/
+│       ├── design/
+│       ├── components/
+│       ├── kicad/
+│       ├── verification/
+│       ├── manufacturing/
+│       ├── review/
+│       └── releases/
+│
+└── tests/
+```
+
+Do not create empty directories merely for appearance. Add files when they become useful.
+
+Commit the initial repository bootstrap.
+
+Push it to GitHub so the remote repository becomes a usable checkpoint.
+
+---
+
+# 5. Git Workflow
+
+Once the initial repository exists, perform engineering development on:
+
+```text
+codex/v1-buck-1kw
+```
+
+If necessary:
+
+```text
+main
+  ↓
+codex/v1-buck-1kw
+```
+
+Do not conduct the entire experimental engineering task directly on `main`.
+
+Commit at meaningful milestones.
+
+Recommended checkpoints:
+
+```text
+chore: bootstrap AIPE-PCB-Agent repository
+
+chore: configure KiCad automation environment
+
+feat: complete converter engineering design
+
+feat: add component selection and BOM
+
+feat: generate complete schematic
+
+feat: complete PCB placement
+
+feat: complete PCB routing
+
+test: complete ERC DRC and engineering checks
+
+docs: add V1 engineering review package
+
+release: freeze buck 1kW V1
+```
+
+Push regularly.
+
+Important work must not exist only on the local computer.
+
+At completion, prepare a Pull Request:
+
+```text
+codex/v1-buck-1kw → main
+```
+
+Suggested title:
+
+```text
+AI-generated 48V to 24V 1kW Synchronous Buck — V1
+```
+
+---
+
+# 6. Stage 0 — Host Environment Inspection
+
+The host computer may be a collaborator's Windows PC.
+
+Do NOT assume the environment matches the original developer's Mac.
+
+Before engineering work, detect:
+
+```text
+Operating system
+OS version
+CPU architecture
+Python
+Git
+KiCad
+kicad-cli
+KiCad version
+KiCad Python support
+KiCad IPC API support
+installed KiCad plugins
+installed MCP servers
+package managers
+PATH configuration
+working-directory permissions
+```
+
+Support at minimum:
+
+```text
+Windows 10/11
+macOS
+```
+
+Linux support is desirable where practical.
+
+Record the detected environment in:
+
+```text
+docs/environment.md
+```
+
+---
+
+# 7. Environment Installation
+
+If required tools are missing, install them.
+
+Essential tools include:
+
+```text
+Git
+Python
+KiCad
+kicad-cli
+required Python packages
+required KiCad automation dependencies
+```
+
+Install the latest suitable stable KiCad version.
+
+Do not intentionally use nightly or experimental KiCad builds unless a stable version genuinely cannot support the task.
+
+Do not assume a KiCad MCP server already exists.
+
+If a reliable KiCad MCP implementation is useful, it may be installed.
+
+However:
+
+```text
+The task must NOT depend on a third-party MCP server being available.
+```
+
+The project must remain capable of operating through official KiCad automation interfaces and project files.
+
+---
+
+# 8. Windows Handling
+
+The collaborator may run Codex on Windows.
+
+Use PowerShell-compatible environment detection where appropriate.
+
+Examples:
+
+```powershell
+Get-Command git
+Get-Command python
+Get-Command kicad-cli
+```
+
+If `kicad-cli` is not in PATH, inspect common KiCad locations, including:
+
+```text
+C:\Program Files\KiCad\
+```
+
+Do not conclude KiCad is missing solely because:
+
+```text
+kicad-cli
+```
+
+is not directly callable.
+
+Locate the actual executable.
+
+Store tool paths in configuration where necessary.
+
+Avoid hardcoding Unix-only paths.
+
+---
+
+# 9. Cross-Platform Automation
+
+Prefer Python for the automation layer.
+
+Do not make Bash scripts the core architecture.
+
+Do not make PowerShell scripts the core architecture.
+
+Examples:
+
+```text
+automation/setup/detect_environment.py
+automation/setup/detect_kicad.py
+
+automation/kicad_tools/create_project.py
+automation/kicad_tools/run_erc.py
+automation/kicad_tools/run_drc.py
+automation/kicad_tools/export_outputs.py
+
+automation/verification/check_power_layout.py
+```
+
+Core scripts should detect the OS programmatically.
+
+Example:
+
+```python
+import platform
+
+system = platform.system()
+```
+
+The automation layer should eventually be reusable on another engineer's machine.
+
+---
+
+# 10. KiCad Automation Architecture
+
+KiCad is the PCB CAD backend.
+
+Codex is the engineering/design agent.
+
+Conceptually:
+
+```text
+Codex
+  ↓
+AIPE PCB Tool Layer
+  ↓
+KiCad
+```
+
+Prefer deterministic interfaces in approximately this priority:
+
+```text
+1. kicad-cli
+
+2. official KiCad IPC API
+
+3. official supported KiCad Python interfaces
+
+4. deterministic generation or manipulation
+   of KiCad project files
+
+5. GUI interaction only when no reliable
+   programmatic path exists
+```
+
+Do not design the system around simulated mouse clicking.
+
+Do not invent unsupported KiCad API functionality.
+
+When one interface cannot perform an operation, use another reliable method.
+
+---
+
+# 11. KiCad Tool Layer
+
+Create reusable operations conceptually equivalent to:
+
+```text
+create_project
+
+create_schematic
+add_component
+connect_net
+assign_footprint
+
+create_board
+configure_stackup
+
+place_component
+move_component
+
+create_track
+create_via
+create_zone
+
+run_erc
+run_drc
+
+export_bom
+export_pdf
+export_gerber
+export_drill
+export_pick_and_place
+export_step
+
+generate_review_images
+```
+
+These functions do not have to be implemented as literal functions with these names.
+
+The important requirement is to establish a reusable AI-to-KiCad automation layer.
+
+Preserve this code in the repository.
+
+---
+
+# 12. Mandatory Automation Smoke Test
+
+Before attempting the 1 kW converter, prove the KiCad automation pipeline works.
+
+Create a disposable test design.
+
+Perform enough operations to demonstrate:
+
+```text
+Codex
+→ automation tool
+→ KiCad
+→ valid KiCad project
+→ ERC/DRC/export
+```
+
+If this fails, repair the automation environment first.
+
+Do not begin a complex power converter using an unverified CAD automation pipeline.
+
+---
+
+# 13. Engineering Design
+
+Before drawing the PCB, calculate and document the converter design.
+
+Determine:
+
+```text
+duty ratio
+
+nominal input current
+
+nominal output current
+
+switching frequency
+
+inductor ripple target
+
+inductance
+
+input capacitance
+
+output capacitance
+
+capacitor ripple-current requirements
+
+MOSFET ratings
+
+MOSFET conduction losses
+
+MOSFET switching losses
+
+gate-driver requirements
+
+dead time
+
+inductor losses
+
+thermal assumptions
+
+estimated efficiency
+
+current measurement
+
+input voltage measurement
+
+output voltage measurement
+
+temperature measurement
+
+overcurrent protection
+
+overvoltage protection
+
+auxiliary supplies
+```
+
+Write calculations into:
+
+```text
+examples/buck-48v-24v-1kw/design/
+```
+
+Record assumptions explicitly.
+
+Do not repeatedly interrupt the task for minor design decisions.
+
+---
+
+# 14. Component Selection
+
+Select real components.
+
+For important components, record:
+
+```text
+manufacturer
+part number
+package
+voltage rating
+current rating
+thermal characteristics
+important switching parameters
+reason for selection
+operating stress
+engineering margin
+reference/datasheet
+```
+
+Do not invent component parameters.
+
+Use manufacturer documentation wherever possible.
+
+Generate:
+
+```text
+components/component_selection.csv
+components/bom.csv
+```
+
+---
+
+# 15. Power Stage
+
+The design should contain a complete synchronous buck power stage including, as required:
+
+```text
+input connector
+
+input protection
+
+bulk input capacitance
+
+high-frequency input capacitance
+
+high-side MOSFET
+
+low-side MOSFET
+
+gate driver
+
+inductor
+
+output capacitors
+
+output connector
+
+current sensing
+
+voltage sensing
+
+temperature sensing
+
+protection circuits
+```
+
+Pay particular attention to the high-frequency commutation loop:
+
+```text
+Cin
+ ↓
+high-side MOSFET
+ ↓
+switch node
+ ↓
+low-side MOSFET
+ ↓
+Cin return
+```
+
+This loop must be treated as a first-class PCB constraint.
+
+---
+
+# 16. Controller
+
+Use:
+
+```text
+TMS320F28335
+```
+
+as the preferred DSP/controller.
+
+Design the associated circuitry rather than merely placing the DSP symbol.
+
+Include, as appropriate:
+
+```text
+DSP core/I/O supplies
+
+decoupling
+
+clock
+
+reset
+
+JTAG
+
+PWM generation
+
+ADC interface
+
+gate-driver interface
+
+current feedback
+
+Vin feedback
+
+Vout feedback
+
+temperature feedback
+
+fault input
+
+communications/debug
+
+reference voltages
+
+auxiliary power conversion
+```
+
+Manufacturer reference designs may be used as engineering references.
+
+Do not blindly copy an evaluation board.
+
+---
+
+# 17. PCB Architecture
+
+V1 should use:
+
+```text
+ONE integrated PCB
+```
+
+containing both:
+
+```text
+Power Stage
+
+and
+
+DSP / Control
+```
+
+But physically partition the functional areas.
+
+Conceptually:
+
+```text
++--------------------------------------------------+
+| POWER                                            |
+|                                                  |
+| Input → Cin → Half Bridge → L → Cout → Output   |
+|                                                  |
++--------------------------------------------------+
+| DRIVER / SENSING / PROTECTION                    |
++--------------------------------------------------+
+| CONTROL                                          |
+|                                                  |
+| F28335 / ADC / PWM / JTAG / communications      |
+|                                                  |
++--------------------------------------------------+
+```
+
+The actual geometry must be derived from engineering constraints.
+
+---
+
+# 18. PCB Stack-Up
+
+Determine and document:
+
+```text
+board dimensions
+
+layer count
+
+copper thickness
+
+stack-up
+
+power layers
+
+ground layers
+
+signal layers
+
+thermal-via strategy
+
+high-current via strategy
+
+cooling assumptions
+
+mounting assumptions
+```
+
+Do not choose these purely for convenience.
+
+The board carries approximately 42 A at the output.
+
+---
+
+# 19. Component Placement
+
+Automatically place the complete design.
+
+Placement priorities include:
+
+```text
+high-frequency input capacitors
+
+half-bridge MOSFETs
+
+commutation-loop minimization
+
+gate-driver proximity
+
+gate-loop minimization
+
+inductor
+
+output capacitors
+
+current sensing
+
+voltage sensing
+
+switch-node containment
+
+thermal spreading
+
+control/power separation
+
+ADC and feedback integrity
+
+DSP placement
+
+connectors
+```
+
+Electrical performance has priority over cosmetic symmetry.
+
+---
+
+# 20. Automatic Routing
+
+Route the complete board.
+
+Do not stop after component placement.
+
+"Automatic routing" in this project means:
+
+```text
+The AI makes PCB routing decisions.
+```
+
+It does NOT simply mean:
+
+```text
+press a generic autorouter button.
+```
+
+Use, as appropriate:
+
+```text
+tracks
+
+wide tracks
+
+copper polygons
+
+planes
+
+multiple copper layers
+
+parallel current paths
+
+vias
+
+via arrays
+
+thermal vias
+```
+
+Account explicitly for the approximately 41.7 A output current.
+
+---
+
+# 21. Power Electronics PCB Constraints
+
+Consider explicitly:
+
+```text
+high-frequency commutation-loop area
+
+gate-loop area
+
+gate-driver distance
+
+gate-return path
+
+DC-link capacitor location
+
+switch-node copper extent
+
+power-ground return
+
+Kelvin sensing
+
+current-sense routing
+
+analog-feedback routing
+
+feedback separation from switching node
+
+DSP/control separation
+
+ADC noise exposure
+
+high-current copper capacity
+
+via current capacity
+
+thermal spreading
+
+decoupling capacitor placement
+
+EMI-sensitive paths
+```
+
+KiCad DRC passing is NOT proof that the board is electrically well designed.
+
+---
+
+# 22. AIPE PCB Engineering Rules
+
+Begin building a reusable engineering-rule layer inside:
+
+```text
+docs/pcb-design-rules.md
+```
+
+and, where practical, a machine-readable rules representation.
+
+Initial examples:
+
+```text
+PE-PCB-001
+Minimize MOSFET gate loop.
+
+PE-PCB-002
+Place high-frequency DC-link capacitor close to the half bridge.
+
+PE-PCB-003
+Minimize high-frequency commutation-loop area.
+
+PE-PCB-004
+Use appropriate Kelvin routing for current measurement.
+
+PE-PCB-005
+Keep sensitive analog signals away from the switching node.
+
+PE-PCB-006
+Size high-current copper and vias for electrical and thermal requirements.
+
+PE-PCB-007
+Physically separate control electronics from noisy switching structures.
+
+PE-PCB-008
+Place IC decoupling capacitors adjacent to their relevant power pins.
+```
+
+Do not pretend every rule can already be checked numerically.
+
+Mark rules as either:
+
+```text
+automated
+
+semi-automated
+
+human-review
+```
+
+---
+
+# 23. Schematic Completion
+
+Generate a complete KiCad schematic.
+
+Assign real footprints.
+
+Run ERC.
+
+When ERC errors occur:
+
+```text
+inspect
+→ fix
+→ rerun
+```
+
+Do not simply export the errors and stop.
+
+---
+
+# 24. PCB Completion
+
+Generate the complete PCB.
+
+Requirements:
+
+```text
+all intended components placed
+
+board stack-up defined
+
+power routing completed
+
+signal routing completed
+
+zones defined
+
+grounding implemented
+
+vias implemented
+
+no unintentionally unrouted nets
+```
+
+The V1 PCB must be genuinely reviewable.
+
+---
+
+# 25. Verification
+
+Run:
+
+```text
+ERC
+
+DRC
+
+connectivity checks
+
+unrouted-net checks
+
+footprint checks
+
+power-net sanity checks
+
+basic engineering-rule checks
+```
+
+Correct automatically fixable issues.
+
+Never disable meaningful ERC/DRC checks merely to obtain a zero-error report.
+
+Document unresolved warnings.
+
+---
+
+# 26. Engineering Self-Review
+
+Perform a separate review pass before freezing V1.
+
+Ask explicitly:
+
+```text
+Is the commutation loop too large?
+
+Are the high-frequency input capacitors sufficiently close?
+
+Is the gate driver too far from the MOSFETs?
+
+Is the gate return path appropriate?
+
+Is the switching-node copper unnecessarily large?
+
+Is current measurement correctly routed?
+
+Are feedback traces exposed to switching noise?
+
+Is the DSP too close to the switching section?
+
+Are ground-return paths sensible?
+
+Is approximately 42 A output copper sufficient?
+
+Are high-current via arrays sufficient?
+
+Is thermal spreading plausible?
+
+Are DSP decoupling capacitors positioned correctly?
+
+Are connectors mechanically reasonable?
+```
+
+Fix obvious mistakes.
+
+Do not redesign indefinitely.
+
+This is V1.
+
+---
+
+# 27. Required V1 Outputs
+
+Produce approximately:
+
+```text
+examples/buck-48v-24v-1kw/
+│
+├── input/
+│   └── requirements.yaml
+│
+├── design/
+│   ├── assumptions.md
+│   ├── calculations.md
+│   ├── architecture.md
+│   └── thermal_estimate.md
+│
+├── components/
+│   ├── component_selection.csv
+│   └── bom.csv
+│
+├── kicad/
+│   ├── AIPE_Buck_1kW.kicad_pro
+│   ├── AIPE_Buck_1kW.kicad_sch
+│   └── AIPE_Buck_1kW.kicad_pcb
+│
+├── verification/
+│   ├── ERC_report.*
+│   ├── DRC_report.*
+│   ├── pcb_rule_review.md
+│   └── known_issues.md
+│
+├── manufacturing/
+│   ├── gerber/
+│   ├── drill/
+│   ├── bom/
+│   ├── pick_and_place/
+│   └── step/
+│
+├── review/
+│   ├── schematic.pdf
+│   ├── pcb_layout.pdf
+│   ├── pcb_front.*
+│   ├── pcb_back.*
+│   ├── pcb_3d.*
+│   └── design_report.md
+│
+└── releases/
+    └── v1/
+```
+
+---
+
+# 28. V1 Review Package
+
+The engineer reviewing the result should not need to inspect Codex logs.
+
+Create a compact review package containing:
+
+```text
+schematic PDF
+
+PCB front view
+
+PCB back view
+
+PCB 3D view
+
+design report
+
+BOM
+
+ERC report
+
+DRC report
+
+known issues
+```
+
+A reviewer should be able to understand the design quickly.
+
+---
+
+# 29. V1 Frozen Release
+
+Do not overwrite V1 later.
+
+Freeze the major outputs under:
+
+```text
+examples/buck-48v-24v-1kw/releases/v1/
+```
+
+Future iterations should become:
+
+```text
+v2
+v3
+...
+```
+
+This project should make evolution between design generations easy to compare.
+
+---
+
+# 30. Design Report
+
+Create:
+
+```text
+review/design_report.md
+```
+
+Include:
+
+```text
+converter specification
+
+engineering assumptions
+
+topology
+
+major calculations
+
+component selection
+
+power-stage architecture
+
+DSP/control architecture
+
+gate-driver architecture
+
+sensing
+
+protection
+
+PCB stack-up
+
+placement strategy
+
+routing strategy
+
+ground strategy
+
+thermal strategy
+
+estimated losses
+
+estimated efficiency
+
+ERC status
+
+DRC status
+
+known weaknesses
+
+engineering uncertainties
+
+human-review priorities
+```
+
+---
+
+# 31. GitHub Handoff
+
+The GitHub repository is part of the engineering workflow.
+
+Push meaningful progress regularly to:
+
+```text
+FulongLi/AIPE-PCB-Agent
+```
+
+Do not wait until the very end to upload everything.
+
+At V1 completion:
+
+1. Push all commits.
+2. Freeze `releases/v1`.
+3. Ensure review files are committed.
+4. Ensure KiCad source files are committed.
+5. Prepare/open the V1 Pull Request.
+6. Summarize known issues in the PR description.
+
+The repository should make it possible for another collaborator to continue the project from a different computer without reconstructing hidden local state.
+
+---
+
+# 32. Do Not Stop Early
+
+The task is NOT complete when:
+
+```text
+the environment is installed
+```
+
+It is NOT complete when:
+
+```text
+the calculations are finished
+```
+
+It is NOT complete when:
+
+```text
+the schematic is finished
+```
+
+It is NOT complete when:
+
+```text
+placement is finished
+```
+
+It is NOT complete with a partially routed PCB.
+
+V1 is complete only when the repository contains:
+
+```text
+engineering calculations
+
+real component selection
+
+complete schematic
+
+footprints
+
+complete placement
+
+complete intended routing
+
+ERC results
+
+DRC results
+
+engineering self-review
+
+manufacturing outputs
+
+PCB renders
+
+design report
+
+V1 frozen release
+
+Git commit history
+
+GitHub branch / PR ready for human review
+```
+
+---
+
+# 33. Autonomous Execution
+
+This is intended to be a long-running autonomous Codex task.
+
+Proceed through:
+
+```text
+inspect existing repository
+        ↓
+clone/pull
+        ↓
+initialize repo if necessary
+        ↓
+commit/push bootstrap
+        ↓
+create working branch
+        ↓
+inspect host environment
+        ↓
+install missing tools
+        ↓
+verify KiCad automation
+        ↓
+run smoke test
+        ↓
+converter engineering
+        ↓
+component selection
+        ↓
+schematic
+        ↓
+PCB placement
+        ↓
+PCB routing
+        ↓
+ERC / DRC
+        ↓
+engineering review
+        ↓
+documentation
+        ↓
+V1 frozen release
+        ↓
+push to GitHub
+        ↓
+prepare PR
+```
+
+Do not stop after every routine step asking for permission.
+
+Use reasonable engineering judgment.
+
+Document assumptions.
+
+Preserve checkpoints.
+
+If one method fails, investigate alternatives rather than abandoning the entire task.
+
+If administrator permission or another unavoidable human action blocks installation, document the exact blocker, preserve completed work, and continue every task that remains technically possible.
+
+---
+
+# 34. Safety and Engineering Status
+
+The resulting board is an engineering prototype produced primarily to evaluate autonomous AI hardware-design capability.
+
+Label V1 clearly:
+
+> **AI-GENERATED ENGINEERING PROTOTYPE — V1 — HUMAN REVIEW REQUIRED**
+
+Do not claim that successful ERC/DRC means the hardware is ready for fabrication or energisation.
+
+Do not claim production readiness.
+
+Do not claim electrical safety.
+
+Do not proceed to physical power-up as part of this task.
+
+The next phase is explicitly:
+
+```text
+V1
+ ↓
+Human Power Electronics Review
+ ↓
+Colleague / Independent Review
+ ↓
+Review Comments
+ ↓
+AIPE Rule Update
+ ↓
+Codex V2 Redesign
+```
+
+The eventual goal of this repository is not merely to generate one buck converter.
+
+The broader goal is to develop a reusable:
+
+```text
+AIPE Power Electronics PCB Agent
+```
+
+that can progressively learn and formalize power-electronics PCB engineering knowledge across future converter designs.

@@ -1,0 +1,37 @@
+schema_version: 1
+source: task071026.txt
+status: requirements_captured_engineering_not_started
+converter:
+  topology: synchronous_buck
+  input_voltage_nominal_V: 48.0
+  output_voltage_V: 24.0
+  output_power_W: 1000.0
+  output_current_nominal_A: 41.6666666667
+controller:
+  preferred_device: TMS320F28335
+pcb:
+  architecture: integrated_power_and_control_board
+  cad_tool: KiCad
+  board_count: 1
+release:
+  generation: v1
+  label: AI-GENERATED ENGINEERING PROTOTYPE — V1 — HUMAN REVIEW REQUIRED
+  human_review_required: true
+  physical_power_up_in_scope: false
+  v2_requires_review_feedback: true
+execution:
+  repository: FulongLi/AIPE-PCB-Agent
+  branch: codex/v1-buck-1kw
+  confirm_software_and_installation_location: true
+  smoke_test_required_before_converter_engineering: true
+unresolved_inputs:
+  input_voltage_range_V: null
+  input_transient_envelope: null
+  output_ripple_limit_V: null
+  load_transient_envelope: null
+  ambient_temperature_range_C: null
+  cooling_and_heatsink_constraints: null
+  board_outline_and_mounting_constraints: null
+  connector_and_cable_constraints: null
+  manufacturing_capabilities_and_cost_target: null
+  firmware_and_control_validation_scope: null
