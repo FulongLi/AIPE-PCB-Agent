@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-004",
+  "title": "Isolated gate bias power supply design",
+  "domain": "power_electronics",
+  "document": "SKILL-004-isolated-gate-bias-supply.md",
+  "purpose": "Choose and design the isolated supply for each SiC gate driver: topology, rail generation, power budget, isolation capacitance, regulation and input protection.",
+  "applicable_conditions": [
+    "Isolated SiC gate drivers needing floating bipolar or unipolar supplies",
+    "Regulated low-voltage auxiliary input (12 V in the references)"
+  ],
+  "not_applicable": [
+    "Bootstrap supplies",
+    "Non-isolated controller/logic auxiliary supplies"
+  ],
+  "principles": [
+    "P = Q_G * f_sw * (V_DD - V_EE) budget per supply with margin",
+    "Minimise isolation capacitance; i = C_iso * dv/dt",
+    "CM choke at converter input with capacitor between choke and converter",
+    "Rails around the source via dual outputs, Zener split or LDOs",
+    "Regulate only as needed; LDO headroom >= 0.3 V",
+    "Share supplies only after review",
+    "Protect the auxiliary input"
+  ],
+  "procedure": [
+    "Group switch positions by reference",
+    "Compute power per supply",
+    "Select topology using PRD-04814 comparison",
+    "Choose rail generation and compute operating points",
+    "Add CM choke and decoupling",
+    "Verify isolation rating and estimate i_CM",
+    "Define power-good/UVLO interaction"
+  ],
+  "component_considerations": [
+    "Modules: R12P21503D, MGJ2D122005SC (named alternatives only)",
+    "Integrated module UCC14141-Q1 (rating depends on input range)",
+    "Discrete LLC: UCC25800-Q1 with low-capacitance transformer",
+    "LDOs LT3082/LT3015 for -R variants"
+  ],
+  "pcb_constraints": [
+    "Supply inside its driver island, straddling the barrier with creepage (KR-ISO-001, KR-ISO-004)",
+    "CM choke and input capacitor order (KR-IS-002)",
+    "Output capacitors in the gate loop (KR-PCB-002)"
+  ],
+  "verification_methods": [
+    "Power budget (EC-003, EC-004, EC-014)",
+    "LDO set-points (EC-005..EC-007), LLC frequency (EC-008)",
+    "Measure rails versus load and input; ripple during switching; common-mode current/EMI"
+  ],
+  "known_limitations": [
+    "Module datasheets not verified for two parts",
+    "PRD-04814 comparison is qualitative"
+  ],
+  "keywords": [
+    "isolated supply",
+    "gate bias",
+    "dc/dc module",
+    "llc",
+    "push-pull",
+    "flyback",
+    "zener split",
+    "ldo",
+    "isolation capacitance",
+    "common mode",
+    "power budget"
+  ],
+  "sources": [
+    {
+      "source": "REF-WS-PRD-04814",
+      "document": "PRD-04814",
+      "location": "§1-§3",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD15SG00D2",
+      "document": "PRD-08391",
+      "location": "Schematic and Functionality",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-06992",
+      "location": "§4.3, §4.8",
+      "kind": "stated",
+      "check": "EC-003"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-09301",
+      "location": "§2.4, §3.6-3.8",
+      "kind": "stated",
+      "check": "EC-004"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§3.4",
+      "kind": "stated",
+      "check": "EC-014"
+    }
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-001",
+      "CB-IS-002",
+      "CB-IS-003",
+      "CB-IS-004",
+      "CB-PR-001"
+    ],
+    "components": [
+      "CMP-UCC14141-Q1",
+      "CMP-UCC25800-Q1",
+      "CMP-750319177",
+      "CMP-R12P21503D",
+      "CMP-MGJ2D122005SC"
+    ],
+    "rules": [
+      "KR-IS-001",
+      "KR-IS-002",
+      "KR-IS-003",
+      "KR-IS-004",
+      "KR-IS-005",
+      "KR-GD-001",
+      "KR-GD-005",
+      "KR-PR-003"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

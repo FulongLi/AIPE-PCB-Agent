@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "CMP-MGJ2D122005SC",
+  "manufacturer": "Murata Power Solutions",
+  "part_number": "MGJ2D122005SC",
+  "category": "isolated_supplies",
+  "description": "2 W isolated DC/DC module with +20 V / -5 V outputs intended for gate-driver bias; used with LDO post-regulation.",
+  "package": "SIP",
+  "key_parameters": [
+    {
+      "name": "Outputs",
+      "value": "+20 / -5",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "Table 11"
+      }
+    },
+    {
+      "name": "Output power",
+      "value": "2",
+      "unit": "W",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "Table 2, per channel"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Gate-driver bias where LDO post-regulation needs headroom (CGD1700HB2M-UNA -R1/-R2)."
+  ],
+  "design_considerations": [
+    "LDO outputs must stay at least 0.3 V inside the module rails (PRD-06992 §4.3.4).",
+    "Linear post-regulation adds dissipation proportional to the headroom and gate-drive current."
+  ],
+  "datasheet": {
+    "url": "https://www.murata.com/products/productdata/8807029997598/kdc-mgj2.pdf",
+    "url_status": "unverified",
+    "note": "URL reached by redirect from power.murata.com; server returned HTTP 500 on 2026-10-09. Parameters are taken from the Wolfspeed user guide only.",
+    "acquisition": {
+      "status": "failed",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-MGJ2D122005SC.pdf",
+      "error": "HTTPError: HTTP Error 500: Internal Server Error"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT4, UT5",
+      "role": "per-channel isolated bias, -R1 and -R2 variants",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-BOM",
+          "location": "sheets 2 and 3 item 39",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "Table 11",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [
+    {
+      "part_or_family": "MGJ2D121505SC (+15/-5 V)",
+      "manufacturer": "Murata Power Solutions",
+      "relationship": "named on the schematic for +15/-4 V operation with only the negative rail regulated",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "Table 11 note 1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 3 note",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "dc/dc module",
+    "isolated bias",
+    "ldo headroom"
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-003"
+    ]
+  }
+}

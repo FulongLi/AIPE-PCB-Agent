@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "CB-PR-002",
+  "name": "Isolated thermistor feedback through gate-driver analog-to-PWM channel",
+  "category": "protection",
+  "function": "Biases a thermistor with the gate driver's internal current source and returns temperature as an isolated duty-cycle signal, avoiding a separate isolator.",
+  "inputs": [
+    {
+      "name": "JB1 / RT",
+      "description": "thermistor (module NTC or board sensor) referenced to the driver COM",
+      "domain": "isolated-driver"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "APWM / THERM-P/N",
+      "description": "duty-cycle signal (10-88 % at 400 kHz) to controller",
+      "domain": "control"
+    }
+  ],
+  "operating_conditions": [
+    "UCC21710 AIN biased by 200 uA (196-209 uA); RC filter for analog read-back."
+  ],
+  "required_components": [
+    {
+      "role": "gate driver with AIN/APWM",
+      "value_or_part": "UCC21710-Q1",
+      "source_refdes": "UT2 / U29",
+      "component": "CMP-UCC21710-Q1"
+    },
+    {
+      "role": "thermistor",
+      "value_or_part": "module NTC via JB1 (Wolfspeed) / TMP6131DECR (TI)",
+      "source_refdes": "JB1 / RT1"
+    },
+    {
+      "role": "AIN filter",
+      "value_or_part": "2.2 k + 10 nF (CGD1700)",
+      "source_refdes": "RB5, CB16"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "AIN voltage",
+      "expression": "V_AIN = I_AIN * R_NTC(T)",
+      "basis": "UCC21710-Q1 datasheet IAIN; PRD-06992 §4.7"
+    }
+  ],
+  "interface_requirements": [
+    "Prefer the driver referenced to a stable node (low side) (PRD-09301 §3.4).",
+    "Calibrate with a potentiometer in place of the NTC (PRD-06992 §4.7)."
+  ],
+  "pcb_constraints": [
+    "Sensor wiring stays within the driver's isolated island."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT2 AIN, JB1",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.7",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.4",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "RT1-RT4 (TMP6131)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "Figure 3-13",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Bias current confirmed from the UCC21710-Q1 datasheet; temperature transfer function depends on the sensor and was not computed.",
+  "limitations": [
+    "NTC temperature differs from junction temperature (PRD-06992 §4.7).",
+    "TI marks its temperature path as 'not implemented' in firmware (Table 4-1)."
+  ],
+  "keywords": [
+    "ntc",
+    "thermistor",
+    "temperature sensing",
+    "isolated",
+    "apwm"
+  ],
+  "related": {
+    "components": [
+      "CMP-UCC21710-Q1"
+    ],
+    "skills": [
+      "SKILL-006"
+    ],
+    "rules": [
+      "KR-TH-003"
+    ]
+  }
+}

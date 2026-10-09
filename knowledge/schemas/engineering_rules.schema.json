@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering_rules.schema.json",
+  "title": "Machine-readable engineering rules derived from reference evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "categories", "rules"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "description": {"$ref": "common.schema.json#/$defs/text"},
+    "categories": {"type": "object", "additionalProperties": {"type": "string"}},
+    "rules": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}}
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "category", "domain", "statement", "applicability", "rationale",
+                   "priority", "verification", "evidence", "generality", "validation_status", "confidence"],
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/rule_id"},
+        "title": {"$ref": "common.schema.json#/$defs/text"},
+        "category": {"enum": ["hard-constraint", "optimization-objective", "engineering-recommendation", "human-review-requirement"]},
+        "domain": {"enum": ["power_electronics", "gate_drivers", "capacitors", "sensing", "thermal", "pcb_layout", "isolation", "protection"]},
+        "statement": {"$ref": "common.schema.json#/$defs/text"},
+        "applicability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["conditions"],
+          "properties": {
+            "conditions": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+            "exclusions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/text"}}
+          }
+        },
+        "rationale": {"$ref": "common.schema.json#/$defs/text"},
+        "priority": {"enum": ["critical", "high", "medium", "low"]},
+        "numerical_limits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["parameter", "value", "unit", "basis", "basis_type"],
+            "properties": {
+              "parameter": {"$ref": "common.schema.json#/$defs/text"},
+              "value": {"type": "string", "minLength": 1},
+              "unit": {"type": "string"},
+              "basis": {"$ref": "common.schema.json#/$defs/text"},
+              "basis_type": {"enum": ["datasheet", "standard", "manufacturer-guidance", "reference-design-instance", "calculation"]}
+            }
+          }
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["method", "procedure"],
+          "properties": {
+            "method": {"enum": ["automated", "semi-automated", "calculation", "simulation", "measurement", "human-review"]},
+            "procedure": {"$ref": "common.schema.json#/$defs/text"},
+            "aipe_hook": {"type": "string"}
+          }
+        },
+        "evidence": {"$ref": "common.schema.json#/$defs/evidence_list"},
+        "generality": {
+          "$comment": "single-reference-observation rules may not be hard constraints.",
+          "enum": ["single-reference-observation", "multi-source-consistent", "manufacturer-guidance", "physics-derived"]
+        },
+        "validation_status": {"$ref": "common.schema.json#/$defs/validation_status"},
+        "confidence": {"enum": ["low", "medium", "high"]},
+        "alternatives": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/alternative"}},
+        "conflicts": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/alternative"}},
+        "related": {"$ref": "common.schema.json#/$defs/related"}
+      }
+    }
+  }
+}

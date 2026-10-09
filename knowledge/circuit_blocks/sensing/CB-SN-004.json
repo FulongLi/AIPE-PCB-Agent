@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "id": "CB-SN-004",
+  "name": "Hall-effect tank/switch-node current sensing with built-in overcurrent flag",
+  "category": "sensing",
+  "function": "Measures transformer (tank) current at 100 kHz with an isolated Hall sensor (1 MHz bandwidth) whose overcurrent output trips the PWM through an MCU input.",
+  "inputs": [
+    {
+      "name": "IN+ / IN-",
+      "description": "primary current through integrated conductor",
+      "domain": "power-stage",
+      "range": "set by sensitivity option (B1A: 25 mV/A per current datasheet)"
+    },
+    {
+      "name": "VS",
+      "description": "3.3 V supply",
+      "domain": "control"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "VOUT",
+      "description": "analog current signal to ADC",
+      "domain": "control"
+    },
+    {
+      "name": "FAULT",
+      "description": "overcurrent flag to MCU trip input",
+      "domain": "control"
+    }
+  ],
+  "operating_conditions": [
+    "Overcurrent thresholds set by a VOC divider: 45 A primary, 70 A secondary (TIDA-010054)."
+  ],
+  "required_components": [
+    {
+      "role": "Hall current sensor",
+      "value_or_part": "TMCS1133B1QDVGR",
+      "source_refdes": "U15 (U2 secondary)",
+      "component": "CMP-TMCS1133"
+    },
+    {
+      "role": "VOC divider",
+      "value_or_part": "8.2 k / 1.2 k",
+      "source_refdes": "R45, R46"
+    },
+    {
+      "role": "output filter",
+      "value_or_part": "68.1 ohm + 3.9 nF",
+      "source_refdes": "R168, C153"
+    }
+  ],
+  "design_calculations": [],
+  "interface_requirements": [
+    "MCU input configured to trip PWM on FAULT (TIDA-010054 uses GPIO to trip zone)."
+  ],
+  "pcb_constraints": [
+    "Integrated conductor in series with the transformer path; sensor body bridges the isolation gap with the datasheet creepage (>= 8 mm)."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U15, U2",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.3 Figure 3-7",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Threshold divider equation is in the sensor datasheet, not the design guide; AIPE did not recompute the 45 A/70 A settings.",
+  "limitations": [
+    "Working-voltage capability differs between the TI guide (1100 VDC) and the current datasheet (1343 VDC reinforced).",
+    "Orderable number in the TI BOM is not listed in the current datasheet revision."
+  ],
+  "keywords": [
+    "hall sensor",
+    "tank current",
+    "overcurrent",
+    "fast protection"
+  ],
+  "related": {
+    "components": [
+      "CMP-TMCS1133"
+    ],
+    "skills": [
+      "SKILL-005"
+    ],
+    "rules": [
+      "KR-SN-005"
+    ]
+  }
+}

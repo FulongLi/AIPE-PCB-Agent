@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "id": "CMP-750319177",
+  "manufacturer": "Würth Elektronik",
+  "part_number": "750319177",
+  "category": "magnetics",
+  "description": "WE-AGDT auxiliary gate-drive transformer (EP7) with 1:1.67 turns ratio and low inter-winding capacitance.",
+  "package": "EP7 SMT",
+  "key_parameters": [
+    {
+      "name": "Primary inductance (minimum)",
+      "value": "16.5",
+      "unit": "uH",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      },
+      "condition": "N1, 10 kHz, 100 mV"
+    },
+    {
+      "name": "Turns ratio N1:N2",
+      "value": "1:1.67",
+      "unit": "",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      }
+    },
+    {
+      "name": "Leakage inductance",
+      "value": "550",
+      "unit": "nH",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      },
+      "condition": "±30%, 100 kHz"
+    },
+    {
+      "name": "Inter-winding capacitance",
+      "value": "0.68",
+      "unit": "pF",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      },
+      "condition": "typ., 100 kHz"
+    },
+    {
+      "name": "Insulation test voltage",
+      "value": "4000",
+      "unit": "V AC",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      },
+      "condition": "N1 to N2"
+    },
+    {
+      "name": "Voltage-time product",
+      "value": "36",
+      "unit": "uVs",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      },
+      "condition": "N1, bipolar"
+    },
+    {
+      "name": "Operating temperature",
+      "value": "-40 to +130",
+      "unit": "degC",
+      "source": {
+        "document": "datasheet",
+        "location": "datasheet rev 001.004 p.1"
+      }
+    },
+    {
+      "name": "Isolation rating as applied on CGD15SG00D2",
+      "value": "800 Vpk basic (IEC 61558-2-16, OVC II, PD2)",
+      "unit": "",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD15SG00D2",
+        "reference_document": "PRD-08391",
+        "location": "Table 1 note 3"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Low-power isolated bias from a UCC25800-class half-bridge driver at several hundred kHz."
+  ],
+  "design_considerations": [
+    "Inter-winding capacitance directly sets common-mode current i = C * dv/dt; prefer low C for high dv/dt positions.",
+    "Insulation class of the transformer limits the system isolation claim; Wolfspeed rates the board 800 Vpk basic."
+  ],
+  "datasheet": {
+    "url": "https://www.we-online.com/components/products/datasheet/750319177.pdf",
+    "url_status": "verified-pdf",
+    "revision": "001.004 (2024-06-10)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-750319177.pdf",
+      "bytes": 810549,
+      "sha256": "5716164e2fd01240a6b13f203b7301cf7c7b11c4763cc5d53fab8a996173df55",
+      "resolved_url": "https://www.we-online.com/components/products/datasheet/750319177.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD15SG00D2",
+      "refdes": "T1",
+      "role": "isolation transformer of the LLC bias supply",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-BOM",
+          "location": "BOM line 23",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "Schematic and Functionality",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "transformer",
+    "isolation",
+    "interwinding capacitance",
+    "gate drive"
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-001"
+    ],
+    "components": [
+      "CMP-UCC25800-Q1"
+    ]
+  }
+}

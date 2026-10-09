@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-001",
+  "title": "SiC gate driver design",
+  "domain": "gate_drivers",
+  "document": "SKILL-001-sic-gate-driver-design.md",
+  "purpose": "Specify the isolated gate-drive circuit for a SiC MOSFET: isolation, rails, R_G,ON/R_G,OFF, off-state immunity, DESAT protection and controller interface.",
+  "applicable_conditions": [
+    "SiC MOSFETs (discrete or module) in bridges or single-ended stages",
+    "Bus voltage within the driver IC's isolation and working-voltage rating",
+    "Floating references needing isolated drive"
+  ],
+  "not_applicable": [
+    "Non-isolated bootstrap low-voltage drivers (e.g. the 48 V Buck V1 benchmark)",
+    "GaN HEMT gate drive",
+    "Power-semiconductor selection (AIPE Transistor Database scope)"
+  ],
+  "principles": [
+    "Isolated driver for every switch position (PRD-09301 §1.2)",
+    "Driver referenced to the Kelvin source",
+    "Gate levels within device absolute maxima, negative turn-off preferred in half bridges unless 0 V is justified",
+    "Peak gate current needed at both edges",
+    "Independent turn-on/turn-off resistance",
+    "Off-state immunity via capacitance ratio, negative bias, low R_G,OFF and short-path Miller clamp",
+    "Hardware DESAT protection with blanking, soft turn-off and latched fault",
+    "Gate discharge resistor at the device side of R_G",
+    "Differential or filtered signalling with hardware interlock"
+  ],
+  "procedure": [
+    "Collect device gate limits, Q_G, capacitance ratio, R_DS(on)(T), short-circuit withstand",
+    "Select isolation rating for the node",
+    "Select rails and bias supply (SKILL-004) and check the power budget",
+    "Select driver IC features",
+    "Choose starting R_G values from datasheet curves",
+    "Design DESAT trip and blanking with CB-GD-001 formulas",
+    "Add discharge resistor, rail decoupling and clamp",
+    "Define interlock, fault/RDY and signalling",
+    "Record instance values and hand constraints to SKILL-002"
+  ],
+  "component_considerations": [
+    "Driver isolation, CMTI, peak current, split outputs, clamp, DESAT threshold accuracy, soft turn-off, UVLO, delay",
+    "DESAT diode voltage rating and recovery",
+    "Pulse-rated gate resistors",
+    "Fast Schottky steering diodes if used"
+  ],
+  "pcb_constraints": [
+    "KR-PCB-001 gate/Kelvin adjacent layers",
+    "KR-PCB-002 decoupling in gate loop",
+    "KR-PCB-003 no Kelvin-to-power-source tie",
+    "KR-PCB-005 driver adjacent to switch",
+    "KR-ISO-001..003 barriers, creepage, net classes"
+  ],
+  "verification_methods": [
+    "Recompute DESAT trip and blanking (EC-001, EC-002)",
+    "Bias power and f_sw limit (EC-003, EC-004)",
+    "Netlist checks of gate, clamp and DESAT paths (EC-022, EC-023, EC-026)",
+    "Double-pulse tests; off-state V_GS with isolated probe at device side of R_G",
+    "Short-circuit, UVLO and interlock fault injection"
+  ],
+  "known_limitations": [
+    "Reference values are instance values",
+    "No AIPE simulation or hardware test",
+    "Module guidance applied to discretes only where physics is identical"
+  ],
+  "keywords": [
+    "gate driver",
+    "sic",
+    "isolated",
+    "desat",
+    "miller clamp",
+    "gate resistor",
+    "negative bias",
+    "parasitic turn-on",
+    "interlock"
+  ],
+  "sources": [
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-09301",
+      "location": "§1-§5",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-06992",
+      "location": "§4",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD15SG00D2",
+      "document": "PRD-08391",
+      "location": "Schematic and Functionality",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD15SG00D2",
+      "document": "PRD-06933",
+      "location": "§2-§4",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-PRD-04814",
+      "document": "PRD-04814",
+      "location": "§1",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§3.5",
+      "kind": "stated"
+    }
+  ],
+  "related": {
+    "blocks": [
+      "CB-GD-001",
+      "CB-GD-002",
+      "CB-GD-003"
+    ],
+    "components": [
+      "CMP-UCC21710-Q1",
+      "CMP-UCC23514"
+    ],
+    "rules": [
+      "KR-GD-001",
+      "KR-GD-002",
+      "KR-GD-003",
+      "KR-GD-004",
+      "KR-GD-005",
+      "KR-GD-007",
+      "KR-GD-008",
+      "KR-GD-009",
+      "KR-GD-010",
+      "KR-GD-011",
+      "KR-GD-012",
+      "KR-PR-001",
+      "KR-PR-002"
+    ],
+    "skills": [
+      "SKILL-002",
+      "SKILL-004"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

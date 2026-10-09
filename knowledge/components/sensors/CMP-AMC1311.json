@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "CMP-AMC1311",
+  "manufacturer": "Texas Instruments",
+  "part_number": "AMC1311",
+  "orderable_variants": [
+    "AMC1311BDWVR"
+  ],
+  "category": "sensors",
+  "description": "Reinforced isolated amplifier with 2 V high-impedance input for voltage sensing through resistive dividers.",
+  "package": "SOIC-8 stretched (DWV)",
+  "key_parameters": [
+    {
+      "name": "Input range",
+      "value": "2",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      },
+      "condition": "high impedance"
+    },
+    {
+      "name": "Gain",
+      "value": "1",
+      "unit": "V/V",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      }
+    },
+    {
+      "name": "Offset error (B grade, max)",
+      "value": "±1.5",
+      "unit": "mV",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      }
+    },
+    {
+      "name": "Gain error (B grade, max)",
+      "value": "±0.2",
+      "unit": "%",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      }
+    },
+    {
+      "name": "Reinforced isolation",
+      "value": "7000",
+      "unit": "Vpk",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      },
+      "condition": "DIN EN IEC 60747-17"
+    },
+    {
+      "name": "Working voltage",
+      "value": "1500",
+      "unit": "Vrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Description"
+      }
+    },
+    {
+      "name": "CMTI (B grade, min)",
+      "value": "100",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS786C p.1 Features"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Isolated measurement of a divided-down HV bus where the analog output can be routed a short distance to an ADC."
+  ],
+  "design_considerations": [
+    "Divider bottom resistor and input impedance set accuracy; TI scales 800 V to 1.57 V (78 % of 2 V) leaving overvoltage headroom.",
+    "Output is differential; TIDA-010054 uses an OPA2320 stage to convert to the 0-3.3 V ADC range."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SBAS786C (June 2022)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-AMC1311.pdf",
+      "bytes": 1782662,
+      "sha256": "4a80cec704b1f432d03456356464691761809852cd071aca4fab60d784c33f57",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/amc1311.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U21",
+      "role": "primary DC-bus voltage sensing (AMC1311BDWVR)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line AMC1311BDWVR",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2-3.3",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "isolated amplifier",
+    "voltage sensing",
+    "divider"
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-001"
+    ],
+    "skills": [
+      "SKILL-005"
+    ]
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "id": "CB-SN-003",
+  "name": "Isolated shunt current sensing (isolated amplifier or delta-sigma modulator)",
+  "category": "sensing",
+  "function": "Measures DC current through a low-ohmic shunt with a ±50 mV isolated amplifier (analog to ADC) or a ±50 mV isolated modulator (bitstream to SDFM), with a differential RC input filter.",
+  "inputs": [
+    {
+      "name": "Iin+ / Iin-",
+      "description": "Kelvin sense of the shunt",
+      "domain": "high-voltage",
+      "range": "±50 mV full scale"
+    },
+    {
+      "name": "5V_ISO",
+      "description": "isolated high-side supply",
+      "domain": "isolated-sense"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "I_DC",
+      "description": "ADC voltage (amplifier variant) or bitstream (modulator variant)",
+      "domain": "control"
+    }
+  ],
+  "operating_conditions": [
+    "Primary: 12.5 A x 3 mOhm = 37.5 mV; secondary: 20 A x 1.5 mOhm = 30 mV."
+  ],
+  "required_components": [
+    {
+      "role": "shunt (primary)",
+      "value_or_part": "Vishay WSL36373L000FEA 3 mOhm 3 W",
+      "source_refdes": "R58"
+    },
+    {
+      "role": "shunt (secondary)",
+      "value_or_part": "Vishay WSL36371L500FEA 1.5 mOhm 3 W",
+      "source_refdes": "R59"
+    },
+    {
+      "role": "isolated amplifier",
+      "value_or_part": "AMC1302QDWVRQ1",
+      "source_refdes": "U18",
+      "component": "CMP-AMC1302-Q1"
+    },
+    {
+      "role": "isolated modulator",
+      "value_or_part": "AMC1306M05DWVR",
+      "source_refdes": "U10",
+      "component": "CMP-AMC1306M05"
+    },
+    {
+      "role": "input filter",
+      "value_or_part": "2 x 10 ohm + 82 nF differential",
+      "source_refdes": "R136, R140, C124 / R89, R91, C89"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Shunt signal",
+      "expression": "V = I_max * R_shunt <= 50 mV with margin",
+      "basis": "TIDUES0 §3.3",
+      "example": "12.5 A -> 37.5 mV; 20 A -> 30 mV",
+      "check": "EC-017"
+    },
+    {
+      "name": "Shunt dissipation",
+      "expression": "P = I_rms^2 * R_shunt",
+      "basis": "AIPE check",
+      "example": "0.47 W and 0.60 W vs 3 W rating",
+      "check": "EC-018"
+    }
+  ],
+  "interface_requirements": [
+    "Lower output voltages raise output current; TI notes a smaller shunt may be needed (§3.3)."
+  ],
+  "pcb_constraints": [
+    "Kelvin connections from the shunt pads, routed as a tight differential pair to the filter.",
+    "Filter at the IC input pins."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "R58, U18 / R59, U10",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.3 Figures 3-5, 3-6",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "Full-scale signal and dissipation recomputed (EC-017, EC-018). Accuracy budget not analysed.",
+  "limitations": [
+    "Shunt self-heating and TCR effects not evaluated."
+  ],
+  "keywords": [
+    "shunt",
+    "current sensing",
+    "isolated amplifier",
+    "kelvin",
+    "delta-sigma"
+  ],
+  "related": {
+    "components": [
+      "CMP-AMC1302-Q1",
+      "CMP-AMC1306M05"
+    ],
+    "skills": [
+      "SKILL-005"
+    ],
+    "rules": [
+      "KR-SN-001",
+      "KR-SN-004"
+    ],
+    "project_rules": [
+      "PE-PCB-004"
+    ]
+  }
+}

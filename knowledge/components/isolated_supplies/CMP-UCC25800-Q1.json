@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "id": "CMP-UCC25800-Q1",
+  "manufacturer": "Texas Instruments",
+  "part_number": "UCC25800-Q1",
+  "orderable_variants": [
+    "UCC25800AQDGNQ1"
+  ],
+  "category": "isolated_supplies",
+  "description": "Open-loop half-bridge (LLC) transformer driver for low-EMI isolated bias supplies using a low-capacitance transformer.",
+  "package": "HVSSOP-8 with thermal pad (DGN)",
+  "key_parameters": [
+    {
+      "name": "Input voltage range",
+      "value": "9 to 34",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDX3C p.1 Features"
+      }
+    },
+    {
+      "name": "Programmable frequency",
+      "value": "0.1 to 1.2",
+      "unit": "MHz",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDX3C p.1 Features"
+      }
+    },
+    {
+      "name": "Output power capability",
+      "value": "9 W at 34 V / 6 W at 24 V / 4 W at 15 V input",
+      "unit": "W",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDX3C p.1 Features"
+      }
+    },
+    {
+      "name": "Frequency setting on CGD15SG00D2",
+      "value": "R_T = 47 k (≈470-500 kHz)",
+      "unit": "",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD15SG00D2",
+        "reference_document": "PRD-08391",
+        "location": "p.11 and schematic sheet 2"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Per-switch isolated bias where very low primary-to-secondary capacitance is required.",
+    "Regulated input rail; open-loop output varies with input and load."
+  ],
+  "design_considerations": [
+    "Choose a transformer with high leakage inductance but low inter-winding capacitance; the leakage forms the resonant tank with the secondary capacitors.",
+    "Output is unregulated: add Zener/LDO post-regulation where gate-rail tolerance matters (CB-IS-004).",
+    "OC/DT and RT resistors set protection, dead time and frequency."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/ucc25800-q1.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SLUSDX3C (August 2023)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-UCC25800-Q1.pdf",
+      "bytes": 2611559,
+      "sha256": "f7365400cfb82fe60596ea087fa4b2610d5df8151e8cd8f9d0b61736c510994f",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/ucc25800-q1.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD15SG00D2",
+      "refdes": "U2",
+      "role": "LLC transformer driver for isolated gate bias (UCC25800AQDGNQ1)",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-BOM",
+          "location": "BOM line 25",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "Schematic and Functionality",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [
+    {
+      "part_or_family": "SN6501 / SN6505 push-pull transformer drivers",
+      "manufacturer": "Texas Instruments",
+      "relationship": "alternative single-channel push-pull bias topology named by Wolfspeed (single output rail, small transformer)",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 Single-channel DC/DC push-pull",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "part_or_family": "LT3999",
+      "manufacturer": "Analog Devices",
+      "relationship": "alternative push-pull controller named by Wolfspeed",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 Single-channel DC/DC push-pull",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "llc",
+    "transformer driver",
+    "isolated bias",
+    "low emi"
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-001"
+    ],
+    "components": [
+      "CMP-750319177"
+    ],
+    "skills": [
+      "SKILL-004"
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-003",
+  "title": "DC-link capacitor selection and placement",
+  "domain": "capacitors",
+  "document": "SKILL-003-dc-link-capacitors.md",
+  "purpose": "Select DC-link capacitance, technology and placement for SiC bridges and size DC-blocking capacitors in transformer-coupled bridges.",
+  "applicable_conditions": [
+    "Voltage-source bridges with switched DC-link current",
+    "Hundreds of volts, tens to hundreds of kHz"
+  ],
+  "not_applicable": [
+    "Line-frequency hold-up sizing",
+    "Inductor-ripple output filters of low-voltage converters",
+    "Capacitor lifetime modelling"
+  ],
+  "principles": [
+    "C >= dQ_max / dV over all operating corners",
+    "RMS ripple current at f_sw and temperature sets technology and count",
+    "Bulk film plus distributed HV ceramics at each bridge leg",
+    "Voltage rating with margin (TI ratios observed, no derating rule stated)",
+    "DC-blocking capacitor with resonance a decade below f_s",
+    "Account for ceramic DC-bias capacitance loss"
+  ],
+  "procedure": [
+    "Define operating envelope",
+    "Compute capacitor current, dQ and I_rms at every corner",
+    "Select film capacitors for C, V and I_rms",
+    "Add HV ceramics beside each leg",
+    "Size DC-blocking capacitor",
+    "Hand placement to SKILL-002/SKILL-006"
+  ],
+  "component_considerations": [
+    "Film ripple-current and ESR curves (obtain datasheets)",
+    "HV MLCC voltage rating and DC-bias curve",
+    "AEC-Q200 ceramics where relevant"
+  ],
+  "pcb_constraints": [
+    "Ceramics adjacent to switch pins (KR-PCB-004, PE-PCB-002/003)",
+    "Short wide multilayer film connections (KR-PCB-006)",
+    "HV creepage around capacitor leads (KR-ISO-002)"
+  ],
+  "verification_methods": [
+    "Recompute dQ->C (EC-012) and DC-blocking C_min (EC-013)",
+    "Simulate capacitor current at corners",
+    "Measure ripple voltage and capacitor temperature"
+  ],
+  "known_limitations": [
+    "Based on one reference design",
+    "Film capacitor datasheets not acquired"
+  ],
+  "keywords": [
+    "dc-link",
+    "capacitor",
+    "film",
+    "mlcc",
+    "ripple current",
+    "ripple voltage",
+    "dc blocking",
+    "commutation loop",
+    "decoupling"
+  ],
+  "sources": [
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§2.3.4.5",
+      "kind": "stated",
+      "check": "EC-012"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§2.3.4.5.1",
+      "kind": "stated",
+      "check": "EC-013"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDRZW1",
+      "location": "capacitor lines",
+      "kind": "observed"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDRZW3",
+      "location": "top overlay",
+      "kind": "observed"
+    }
+  ],
+  "related": {
+    "rules": [
+      "KR-CAP-001",
+      "KR-CAP-002",
+      "KR-CAP-003",
+      "KR-CAP-004",
+      "KR-PCB-004",
+      "KR-PCB-006"
+    ],
+    "components": [
+      "CMP-B32716H1156K000",
+      "CMP-B32716H8306K000",
+      "CMP-2220Y1K00474KETWS2",
+      "CMP-CGA9P1X7T2J474M250KC",
+      "CMP-C1812V104KDRACTU"
+    ],
+    "project_rules": [
+      "PE-PCB-002",
+      "PE-PCB-003"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

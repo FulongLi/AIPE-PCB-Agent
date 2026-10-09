@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-006",
+  "title": "Power electronics thermal placement",
+  "domain": "thermal",
+  "document": "SKILL-006-thermal-placement.md",
+  "purpose": "Place devices, heat sinks, drivers and temperature sensors so losses stay within thermal-path limits, shared-sink insulation is maintained and temperature feedback is used correctly.",
+  "applicable_conditions": [
+    "Through-hole or module SiC devices on heat sinks with natural or forced air",
+    "Boards where drivers must sit beside heat-sinked devices"
+  ],
+  "not_applicable": [
+    "Liquid cooling and cold plates",
+    "Transient thermal impedance, power cycling, CFD"
+  ],
+  "principles": [
+    "P_max = (T_J,max - T_A,max) / R_th,total including shared-sink share",
+    "Rated insulating interface for shared sinks",
+    "Loss estimates over the envelope including loss of ZVS",
+    "Thermal placement must not lengthen electrical loops",
+    "Thermistor temperature is not junction temperature"
+  ],
+  "procedure": [
+    "Compute per-device losses",
+    "Choose sink, interface, airflow and compute P_max",
+    "Place devices and keep capacitors/magnetics out of exhaust (review)",
+    "Place drivers at device leads",
+    "Place and route thermistors through isolated channels",
+    "Plan temperature measurements"
+  ],
+  "component_considerations": [
+    "Heat-sink resistance at actual airflow",
+    "Interface pad rating and resistance",
+    "Fan airflow and auxiliary-rail budget",
+    "Thermistor type and location"
+  ],
+  "pcb_constraints": [
+    "Keep-outs around sinks and hardware",
+    "Creepage from sink to HV pins",
+    "Driver placement per SKILL-002 (KR-PCB-005)"
+  ],
+  "verification_methods": [
+    "P_max recomputation (EC-019, EC-020)",
+    "Thermal simulation",
+    "Full-load temperature measurement"
+  ],
+  "known_limitations": [
+    "Single reference thermal model at 40 degC",
+    "No transient or lifetime analysis"
+  ],
+  "keywords": [
+    "thermal",
+    "heat sink",
+    "junction temperature",
+    "insulation pad",
+    "fan",
+    "ntc",
+    "thermistor",
+    "loss",
+    "placement"
+  ],
+  "sources": [
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§2.3.5.6",
+      "kind": "stated",
+      "check": "EC-019"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDRZW3",
+      "location": "drivers beside devices",
+      "kind": "observed"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-06992",
+      "location": "§4.7",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-09301",
+      "location": "§3.4",
+      "kind": "stated"
+    }
+  ],
+  "related": {
+    "blocks": [
+      "CB-PR-002"
+    ],
+    "rules": [
+      "KR-TH-001",
+      "KR-TH-002",
+      "KR-TH-003",
+      "KR-PCB-005"
+    ],
+    "skills": [
+      "SKILL-002"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

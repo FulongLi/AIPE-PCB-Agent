@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "id": "CB-GD-001",
+  "name": "Isolated SiC gate driver with DESAT, soft turn-off, Miller clamp and split outputs",
+  "category": "gate_drivers",
+  "function": "Drives one SiC MOSFET from a logic PWM across a reinforced isolation barrier with independent turn-on/turn-off resistors, active Miller clamp, DESAT overcurrent detection with configurable blanking, 400 mA soft turn-off, UVLO/RDY and an isolated analog-to-PWM sensing channel.",
+  "inputs": [
+    {
+      "name": "IN+ / IN-",
+      "description": "PWM inputs; cross-wire with the complementary switch for hardware interlock",
+      "domain": "control",
+      "range": "3.3 V or 5 V logic"
+    },
+    {
+      "name": "RST/EN",
+      "description": "enable and latched-fault reset (low pulse >= 1000 ns on CGD1700)",
+      "domain": "control"
+    },
+    {
+      "name": "VCC",
+      "description": "primary-side logic supply",
+      "domain": "control",
+      "range": "3.3-5 V"
+    },
+    {
+      "name": "VDD / COM / VEE",
+      "description": "isolated bias rails referenced to the MOSFET Kelvin source (COM)",
+      "domain": "isolated-driver",
+      "range": "e.g. +15/0/-4 V (TI), +15/0/-3 V (CGD1700)"
+    },
+    {
+      "name": "DESAT sense",
+      "description": "connection to the MOSFET drain through HV blocking diode(s)",
+      "domain": "high-voltage",
+      "range": "full bus voltage when off"
+    },
+    {
+      "name": "AIN",
+      "description": "thermistor or divided voltage referenced to COM",
+      "domain": "isolated-driver",
+      "range": "biased by internal 200 uA source"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "GATE",
+      "description": "gate drive through RG_ON (OUTH) and RG_OFF (OUTL); clamp via CLMPI",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "KS return",
+      "description": "Kelvin-source return (COM)",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "FLT",
+      "description": "open-drain overcurrent fault (latched)",
+      "domain": "control"
+    },
+    {
+      "name": "RDY",
+      "description": "power-good of both sides (UVLO)",
+      "domain": "control"
+    },
+    {
+      "name": "APWM",
+      "description": "duty-cycle encoded AIN measurement",
+      "domain": "control",
+      "range": "400 kHz, 10-88 %"
+    }
+  ],
+  "operating_conditions": [
+    "SiC MOSFETs with Kelvin source up to the IC isolation/working-voltage rating (UCC21710-Q1: 1.5 kVrms working).",
+    "Isolated bias capable of Q_G * f_sw * (VDD-VEE) plus quiescent power.",
+    "DESAT diodes rated at least the MOSFET blocking voltage (PRD-09301 §5.1)."
+  ],
+  "required_components": [
+    {
+      "role": "isolated gate driver",
+      "value_or_part": "UCC21710-Q1",
+      "source_refdes": "U29 (TI) / UT2, UT3 (CGD1700)",
+      "component": "CMP-UCC21710-Q1"
+    },
+    {
+      "role": "turn-on gate resistor",
+      "value_or_part": "2.0 ohm 1206 (TI) / 1 ohm 2512 pulse-rated (CGD1700)",
+      "source_refdes": "R209 or R216 (TI; on/off assignment not resolved from text) / RT27"
+    },
+    {
+      "role": "turn-off gate resistor",
+      "value_or_part": "2.0 ohm 1206 (TI) / 1 ohm 2512 (CGD1700)",
+      "source_refdes": "R209 or R216 (TI) / RT28"
+    },
+    {
+      "role": "Miller clamp link",
+      "value_or_part": "0 ohm from CLMPI to gate",
+      "source_refdes": "RT29 (CGD1700)"
+    },
+    {
+      "role": "gate discharge resistor",
+      "value_or_part": "10 kOhm gate-source",
+      "source_refdes": "RT33 (CGD1700)"
+    },
+    {
+      "role": "DESAT HV diode(s)",
+      "value_or_part": "1 x US1Q-TP 1200 V (TI) / 2 x US3M-13 1 kV in series (CGD1700)",
+      "source_refdes": "D14 / DB8, DT7"
+    },
+    {
+      "role": "DESAT bias and divider",
+      "value_or_part": "VDD - 2.2 k - node - 2.2 k - OC - 220 ohm - COM (CGD1700)",
+      "source_refdes": "RT25, RT22, RT21"
+    },
+    {
+      "role": "blanking capacitor",
+      "value_or_part": "56 pF C0G (CGD1700)",
+      "source_refdes": "CT19"
+    },
+    {
+      "role": "OC clamp diode",
+      "value_or_part": "BAT42W Schottky OC to COM (CGD1700)",
+      "source_refdes": "DT5"
+    },
+    {
+      "role": "rail decoupling",
+      "value_or_part": "VDD-COM and COM-VEE local ceramics (20 uF each on CGD1700)",
+      "source_refdes": "CB12-CB15"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "DESAT trip voltage",
+      "expression": "V_trip = V_OCTH * (R2 + R3) / R3 - n_diodes * V_F",
+      "basis": "PRD-06992 §4.4.4",
+      "example": "0.7 V * 2420/220 - 2*0.5 V = 6.7 V",
+      "check": "EC-001"
+    },
+    {
+      "name": "External blanking time",
+      "expression": "t_blank = -(R1+R2)/(R1+R2+R3) * R3 * C_blank * ln(1 - (R1+R2+R3)/R3 * V_OCTH / VDD)",
+      "basis": "PRD-06992 §4.4.4 (add IC deglitch, 120 ns nominal)",
+      "example": "45.9 ns with R1=R2=2.2 k, R3=220, C=56 pF, VDD=15 V",
+      "check": "EC-002"
+    },
+    {
+      "name": "Trip current",
+      "expression": "I_trip ~ value of I_D where V_DS(I_D, T_J, V_GS) = V_trip on the device output curve",
+      "basis": "PRD-06992 §4.4.4 (C3M0032120J1: 6.7 V ~ 103 A at 150 degC)"
+    },
+    {
+      "name": "Bias power",
+      "expression": "P = Q_G * f_sw * (VDD - VEE)",
+      "basis": "PRD-06992 §4.8; PRD-09301 Eq.1",
+      "example": "118 nC, 18 V, 2 W -> f_sw <= 940 kHz",
+      "check": "EC-003"
+    }
+  ],
+  "interface_requirements": [
+    "Isolated bias rails referenced to the MOSFET Kelvin source; never tie the module Kelvin source to the power source in layout (PRD-09301 §1.1).",
+    "PWM signal integrity: buffered, RC-filtered single-ended over short distances or differential over cables (PRD-09301 §4).",
+    "Controller must generate dead time; interlock is only a last barrier (PRD-09301 §5.6-5.7).",
+    "Fault and RDY lines filtered and combined; latched fault cleared by RST/EN."
+  ],
+  "pcb_constraints": [
+    "Gate and Kelvin-source routed as wide pours on adjacent layers with Kelvin source shielding the gate (PRD-09301 §2.2-2.3) - KR-PCB-001.",
+    "Decoupling capacitors inside the driver-to-device gate loop (PRD-09301 §2.6) - KR-PCB-002.",
+    "No copper crossing the driver isolation barrier on any layer; DESAT diodes keep full HV creepage to other net groups (PRD-09301 §2.1, §2.7) - KR-ISO-001/002.",
+    "Short DESAT drain connection; route the low-voltage detection side compactly and shielded, long runs only on the HV-diode side (PRD-09301 §6.4).",
+    "Gate discharge resistor on the device side of the gate resistor (PRD-09301 §5.9)."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT2/UT3 channels",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "pstxnet.dat",
+          "kind": "netlist",
+          "check": "EC-022"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "pstxnet.dat",
+          "kind": "netlist",
+          "check": "EC-023"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.1, §4.4",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U29 and seven identical channels",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5 Figure 3-13",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "DESAT trip/blanking and bias-power formulas recomputed (EC-001..EC-003); CGD1700 DESAT and gate-path connectivity confirmed against the Allegro netlist (EC-022, EC-023, EC-026). Not simulated or hardware-tested by AIPE.",
+  "limitations": [
+    "Resistor, blanking and trip values are instance values; they depend on the device, topology and fault-risk tolerance.",
+    "TI's 6.4 V / 1 us DESAT setting was produced with TI's calculator and is not recomputable from the published text alone.",
+    "UCC21710-Q1 isolation ratings must be checked against the system's insulation coordination."
+  ],
+  "alternatives": [
+    {
+      "approach": "Long blanking (1 us) with DESAT 6.4 V in a ZVS DAB (TI)",
+      "trade_off": "Fewer false trips with switching noise; longer short-circuit energy before shutdown.",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "approach": "Short external blanking (~46 ns + 120 ns deglitch) on a characterisation driver (Wolfspeed)",
+      "trade_off": "Fast protection; higher false-trip risk with ringing - must be measured in circuit.",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.4",
+          "kind": "stated",
+          "check": "EC-002"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "isolated gate driver",
+    "desat",
+    "overcurrent",
+    "soft turn-off",
+    "miller clamp",
+    "sic mosfet",
+    "half bridge"
+  ],
+  "related": {
+    "components": [
+      "CMP-UCC21710-Q1"
+    ],
+    "skills": [
+      "SKILL-001",
+      "SKILL-002"
+    ],
+    "rules": [
+      "KR-GD-002",
+      "KR-GD-003",
+      "KR-GD-004",
+      "KR-PR-001",
+      "KR-PCB-001"
+    ],
+    "project_rules": [
+      "PE-PCB-001"
+    ]
+  }
+}

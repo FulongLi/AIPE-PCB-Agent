@@ -27,6 +27,31 @@ handoff state.
 - [Frozen V1](examples/buck-48v-24v-1kw/releases/v1/README.md)
 - [Portable V1 review archive](examples/buck-48v-24v-1kw/releases/v1-review-package.zip)
 
+## Engineering Knowledge System (V0)
+
+AIPE now learns from manufacturer reference designs. The
+[knowledge base](knowledge/README.md) holds traceable, reusable power-electronics
+knowledge extracted from TI TIDA-010054 and Wolfspeed CGD15SG00D2,
+CGD1700HB2M-UNA and PRD-04814: six engineering Skills (SiC gate drivers,
+gate-driver layout, DC-link capacitors, isolated gate bias, sensing, thermal
+placement), 13 circuit building blocks, 19 component records and 43
+machine-readable rules — each with evidence locations and an explicit
+validation status (reference-derived or analytically checked; nothing is
+simulated or hardware-validated yet).
+
+```text
+python -m automation.knowledge.query "recommended layout practices for an isolated SiC gate driver"
+python -m automation.knowledge.validate
+```
+
+- [Architecture and reference-learning workflow](docs/knowledge-system.md)
+- [V0 status and findings](docs/knowledge-status.md)
+- [Retrieval demonstration](knowledge/examples/retrieval-demo.md)
+
+Raw manufacturer files are downloaded to the Git-ignored `.cache/references/`
+by `python -m automation.knowledge.acquire`; only original analysis and
+metadata are committed.
+
 ## Start here
 
 - [Original task](task071026.txt) and [execution constraints](agents/CODEX_V1_TASK.md)
@@ -34,7 +59,7 @@ handoff state.
 - [Automation architecture](docs/architecture.md)
 - [Installation proposal](docs/installation-plan.md)
 - [Host environment](docs/environment.md)
-- [PCB engineering rules](docs/pcb-design-rules.md)
+- [PCB engineering rules](docs/pcb-design-rules.md) and [knowledge rules](knowledge/rules/engineering_rules.json)
 - [Benchmark requirements](examples/buck-48v-24v-1kw/input/requirements.yaml)
 
 ## Environment inspection

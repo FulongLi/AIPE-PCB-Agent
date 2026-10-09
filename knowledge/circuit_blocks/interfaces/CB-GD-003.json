@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "id": "CB-GD-003",
+  "name": "Differential gate-signal and fault interface with fail-safe polarity",
+  "category": "interfaces",
+  "function": "Receives RS-422 differential PWM, transmits differential FAULT and thermistor PWM, filters every line, combines per-channel faults into a global fault and keeps outputs off when the cable is open.",
+  "inputs": [
+    {
+      "name": "HS/LS-PWM-P/N",
+      "description": "RS-422 differential PWM pairs, 120 ohm terminated",
+      "domain": "control",
+      "range": "5 V differential"
+    },
+    {
+      "name": "RESET/EN",
+      "description": "single-ended enable/reset with RC filter and 10 k pull-up",
+      "domain": "control"
+    },
+    {
+      "name": "VDC",
+      "description": "12 V input (protected by CB-PR-001 alternative B)",
+      "domain": "auxiliary",
+      "range": "10.8-13.2 V"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "PWM to drivers",
+      "description": "single-ended PWM converted close to the driver ICs",
+      "domain": "control"
+    },
+    {
+      "name": "FAULT-P/N",
+      "description": "differential global fault (OC or UVLO of either channel)",
+      "domain": "control"
+    },
+    {
+      "name": "THERM-P/N",
+      "description": "differential duty-cycle temperature signal",
+      "domain": "control"
+    }
+  ],
+  "operating_conditions": [
+    "Driver boards connected to the controller by ribbon or twisted-pair cable; bus voltages below ~2 kV where differential is preferred over fibre (PRD-09301 §4.3)."
+  ],
+  "required_components": [
+    {
+      "role": "dual differential driver/receiver",
+      "value_or_part": "SN65C1167EPWR",
+      "source_refdes": "UB3"
+    },
+    {
+      "role": "input LC filter",
+      "value_or_part": "1 uH series + 56 pF per line",
+      "source_refdes": "LB1-LB4, CB3, CB4"
+    },
+    {
+      "role": "termination",
+      "value_or_part": "120 ohm per pair",
+      "source_refdes": "RB3, RB4"
+    },
+    {
+      "role": "fault combiner",
+      "value_or_part": "SN74HC21DR dual 4-input AND",
+      "source_refdes": "UT1"
+    },
+    {
+      "role": "RC filters",
+      "value_or_part": "120 ohm + 56 pF on PWM, fault, ready and reset lines",
+      "source_refdes": "RT11-RT20 and CT7-CT18 (fault/ready combining and driver inputs); RT1/CT3 on reset"
+    }
+  ],
+  "design_calculations": [],
+  "interface_requirements": [
+    "Controller side must provide RS-422 drivers/receivers (Wolfspeed CGD12HB00D adapter or on-board transceivers).",
+    "Single-ended section after the receiver kept as short as possible (PRD-09301 §4.2, §7.1).",
+    "Twisted-pair ribbon cable recommended for long connections (PRD-06992 Table 5 note)."
+  ],
+  "pcb_constraints": [
+    "Differential pairs routed adjacent; receivers and filters near the connector and the driver ICs.",
+    "RC filters placed close to the receiving pins (PRD-09301 §4.4)."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UB3, UT1, JT1 and filters",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 1",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§3.1, §4.2",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Topology taken from the schematic and user guide; no AIPE calculation or simulation of noise margins.",
+  "limitations": [
+    "Filter time constants must be checked against minimum pulse width and dead time of the target converter.",
+    "Polarity-swap fail-safe depends on the transceiver's open-input behaviour; verify for any substitute part."
+  ],
+  "alternatives": [
+    {
+      "approach": "Short single-ended buffered PWM with RC filters on the same PCB",
+      "trade_off": "Lowest cost; acceptable only over short on-board distances.",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§4.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.6 (SN74LVC126A buffers)",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "approach": "Fibre-optic signalling",
+      "trade_off": "Best noise immunity; high cost, size and routing constraints.",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§4.3",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "differential",
+    "rs-422",
+    "noise immunity",
+    "fault",
+    "interlock"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-001"
+    ],
+    "rules": [
+      "KR-GD-008",
+      "KR-GD-009"
+    ]
+  }
+}

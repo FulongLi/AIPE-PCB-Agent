@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-005",
+  "title": "Current and voltage sensing",
+  "domain": "sensing",
+  "document": "SKILL-005-current-voltage-sensing.md",
+  "purpose": "Design isolated voltage and current measurement chains for high-voltage SiC converters including scaling, signal format, filtering, fast protection paths and isolated-side supply.",
+  "applicable_conditions": [
+    "DC-bus/output/battery voltages of hundreds of volts and currents of tens of amperes",
+    "Controllers with ADCs and/or sigma-delta filter peripherals"
+  ],
+  "not_applicable": [
+    "Non-isolated low-voltage low-side sensing",
+    "Current transformers and Rogowski coils"
+  ],
+  "principles": [
+    "Rate every barrier part for the node",
+    "Scale within the linear range with headroom",
+    "Analog for short paths, bitstream for long paths",
+    "Kelvin shunts with input filtering",
+    "Hardware path for fast overcurrent",
+    "Distributed HV divider ladders checked per element",
+    "Isolated-side supply may come from the same-reference gate-bias supply"
+  ],
+  "procedure": [
+    "List quantities, ranges, accuracy, bandwidth, trip levels",
+    "Choose sensing element and isolation device",
+    "Compute scaling, dissipation and stress",
+    "Choose signal format and routing",
+    "Design filters and isolated supply",
+    "Define fast protection paths",
+    "Plan calibration"
+  ],
+  "component_considerations": [
+    "AMC1311, AMC1302-Q1, AMC1336, AMC1306M05, TMCS1133",
+    "Check current datasheet revisions versus design-guide statements",
+    "0.1 % ladder resistors; 3 W metal-element shunts"
+  ],
+  "pcb_constraints": [
+    "Divider ladders along creepage paths (KR-ISO-002)",
+    "Kelvin shunt routing (KR-SN-004)",
+    "Short terminated bitstream lines",
+    "Isolated-side ground confined to island (KR-ISO-001)"
+  ],
+  "verification_methods": [
+    "Scaling and dissipation (EC-015..EC-018, EC-021)",
+    "Calibration against reference meter",
+    "Low-voltage trip tests as in TIDA-010054 Lab 2",
+    "Insulation coordination review"
+  ],
+  "known_limitations": [
+    "Single reference design for sensing",
+    "Accuracy budgets not computed"
+  ],
+  "keywords": [
+    "current sensing",
+    "voltage sensing",
+    "isolated amplifier",
+    "delta-sigma",
+    "shunt",
+    "hall sensor",
+    "divider",
+    "high voltage",
+    "overcurrent",
+    "sdfm",
+    "adc"
+  ],
+  "sources": [
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDUES0",
+      "location": "§3.2-3.4",
+      "kind": "stated",
+      "check": "EC-015"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDRZW1",
+      "location": "sensor and shunt lines",
+      "kind": "observed"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-09301",
+      "location": "§5.1",
+      "kind": "stated"
+    }
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-001",
+      "CB-SN-002",
+      "CB-SN-003",
+      "CB-SN-004"
+    ],
+    "components": [
+      "CMP-AMC1311",
+      "CMP-AMC1302-Q1",
+      "CMP-AMC1306M05",
+      "CMP-AMC1336",
+      "CMP-TMCS1133"
+    ],
+    "rules": [
+      "KR-SN-001",
+      "KR-SN-002",
+      "KR-SN-003",
+      "KR-SN-004",
+      "KR-SN-005"
+    ],
+    "project_rules": [
+      "PE-PCB-004",
+      "PE-PCB-005"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

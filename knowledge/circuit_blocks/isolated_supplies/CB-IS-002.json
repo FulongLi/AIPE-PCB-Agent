@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "id": "CB-IS-002",
+  "name": "Integrated isolated bias module (+15/-4 V) with optional sensing supply",
+  "category": "isolated_supplies",
+  "function": "Provides +15 V / -4 V isolated rails per gate driver from 12 V with an integrated-transformer module; the low-side module optionally also feeds a 5 V LDO for isolated sensing.",
+  "inputs": [
+    {
+      "name": "12V",
+      "description": "auxiliary rail from an eFuse",
+      "domain": "auxiliary",
+      "range": "10.8-13.2 V for 1.5 W rating"
+    },
+    {
+      "name": "ENA",
+      "description": "module enable",
+      "domain": "control"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "VDD (+15V_x)",
+      "description": "positive gate rail",
+      "domain": "isolated-driver",
+      "range": "+15 V"
+    },
+    {
+      "name": "COM (GND_x)",
+      "description": "Kelvin-source reference",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "VEE (-4V_x)",
+      "description": "negative gate rail",
+      "domain": "isolated-driver",
+      "range": "-4 V"
+    },
+    {
+      "name": "PG",
+      "description": "power-good",
+      "domain": "control"
+    },
+    {
+      "name": "5V_ISO",
+      "description": "optional LDO output for isolated amplifiers/modulators",
+      "domain": "isolated-sense",
+      "range": "5 V"
+    }
+  ],
+  "operating_conditions": [
+    "1.5 W per module at 10.8-13.2 V input (datasheet)."
+  ],
+  "required_components": [
+    {
+      "role": "isolated bias module",
+      "value_or_part": "UCC14141QDWNRQ1",
+      "source_refdes": "U14 and seven others",
+      "component": "CMP-UCC14141-Q1"
+    },
+    {
+      "role": "feedback dividers",
+      "value_or_part": "107 k / 30.0 k and 49.9 k / 16.2 k (0.1 %)",
+      "source_refdes": "R188, R189, R197, R196"
+    },
+    {
+      "role": "current-limit resistor",
+      "value_or_part": "1.0 k (driver only) or 600 ohm (driver + sensing)",
+      "source_refdes": "R183"
+    },
+    {
+      "role": "sensing LDO (optional)",
+      "value_or_part": "TLV76050DBZR with series input resistor",
+      "source_refdes": "U16"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Bias power budget",
+      "expression": "P_total = Q_G * f_sw * (VDD - VEE) + P_quiescent + P_shared_loads <= module rating",
+      "basis": "TIDUES0 §2.3.5.4, §3.4.2; datasheet",
+      "example": "C3M0075120K: 53 nC * 100 kHz * 19 V = 0.10 W (TI's Eq.30 doubles this)",
+      "check": "EC-014"
+    }
+  ],
+  "interface_requirements": [
+    "Shared sensing supply only for sensors referenced to the same node as that switch's source."
+  ],
+  "pcb_constraints": [
+    "Module placed beside its driver on the same isolated island; no copper crossing the barrier.",
+    "LED indicator per output (TI) is optional."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U14 / U16",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.2-3.4.3 Figures 3-11, 3-12",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Values taken from TI's figures and BOM; the module's feedback-resistor equations were not recomputed because they are datasheet-specific and not published in the design guide.",
+  "limitations": [
+    "TI provided but did not test bias sharing between low-side FETs or bootstrap options (§3.4.2)."
+  ],
+  "keywords": [
+    "isolated bias",
+    "integrated transformer",
+    "ucc14141",
+    "sensing supply"
+  ],
+  "related": {
+    "components": [
+      "CMP-UCC14141-Q1"
+    ],
+    "skills": [
+      "SKILL-004"
+    ],
+    "rules": [
+      "KR-IS-001",
+      "KR-IS-004"
+    ]
+  }
+}

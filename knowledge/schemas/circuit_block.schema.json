@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "circuit_block.schema.json",
+  "title": "Reusable circuit building block extracted from reference designs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "name", "category", "function", "inputs", "outputs",
+               "operating_conditions", "required_components", "design_calculations",
+               "interface_requirements", "pcb_constraints", "source_designs", "validation_status",
+               "validation_notes", "limitations", "related"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"$ref": "common.schema.json#/$defs/block_id"},
+    "name": {"$ref": "common.schema.json#/$defs/text"},
+    "category": {"enum": ["gate_drivers", "isolated_supplies", "sensing", "protection", "interfaces"]},
+    "function": {"$ref": "common.schema.json#/$defs/text"},
+    "inputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/port"}},
+    "outputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/port"}},
+    "operating_conditions": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "required_components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "value_or_part"],
+        "properties": {
+          "role": {"$ref": "common.schema.json#/$defs/text"},
+          "value_or_part": {"type": "string", "minLength": 1},
+          "source_refdes": {"type": "string"},
+          "component": {"$ref": "common.schema.json#/$defs/component_id"}
+        }
+      }
+    },
+    "design_calculations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "expression", "basis"],
+        "properties": {
+          "name": {"$ref": "common.schema.json#/$defs/text"},
+          "expression": {"type": "string", "minLength": 3},
+          "example": {"type": "string"},
+          "basis": {"$ref": "common.schema.json#/$defs/text"},
+          "check": {"$ref": "common.schema.json#/$defs/check_id"}
+        }
+      }
+    },
+    "interface_requirements": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "pcb_constraints": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "source_designs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference", "refdes", "evidence"],
+        "properties": {
+          "reference": {"$ref": "common.schema.json#/$defs/reference_id"},
+          "refdes": {"type": "string", "minLength": 1},
+          "evidence": {"$ref": "common.schema.json#/$defs/evidence_list"}
+        }
+      }
+    },
+    "validation_status": {"$ref": "common.schema.json#/$defs/validation_status"},
+    "validation_notes": {"$ref": "common.schema.json#/$defs/text"},
+    "limitations": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "alternatives": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/alternative"}},
+    "keywords": {"type": "array", "items": {"type": "string", "minLength": 2}},
+    "related": {"$ref": "common.schema.json#/$defs/related"}
+  },
+  "$defs": {
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description", "domain"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "description": {"$ref": "common.schema.json#/$defs/text"},
+        "domain": {
+          "$comment": "Isolation domain the port belongs to.",
+          "enum": ["control", "isolated-driver", "power-stage", "high-voltage", "auxiliary", "isolated-sense"]
+        },
+        "range": {"type": "string"}
+      }
+    }
+  }
+}

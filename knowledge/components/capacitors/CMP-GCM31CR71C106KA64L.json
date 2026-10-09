@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "id": "CMP-GCM31CR71C106KA64L",
+  "manufacturer": "Murata",
+  "part_number": "GCM31CR71C106KA64L",
+  "category": "capacitors",
+  "description": "MLCC 10 uF, 16 V, X7R, 1206; used as gate-driver rail decoupling.",
+  "package": "1206",
+  "key_parameters": [
+    {
+      "name": "Capacitance",
+      "value": "10",
+      "unit": "uF",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "CGD1700-BOM",
+        "location": "item 4 description"
+      },
+      "condition": "X7R"
+    },
+    {
+      "name": "Rated voltage",
+      "value": "16",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "CGD1700-BOM",
+        "location": "item 4 description"
+      }
+    },
+    {
+      "name": "Decoupling per rail on CGD1700HB2M-UNA",
+      "value": "20 uF VDD-Source and 20 uF VSS-Source per channel",
+      "unit": "",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-09301",
+        "location": "§2.6"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Isolated gate-driver rail decoupling for module-class gate charge."
+  ],
+  "design_considerations": [
+    "Place between the driver IC and the gate/source output so the HF gate loop closes through the capacitors (PRD-09301 §2.6).",
+    "16 V rating on a 15 V or 18 V rail leaves little margin and large DC-bias derating; verify effective capacitance (AIPE observation, not stated by Wolfspeed)."
+  ],
+  "datasheet": {
+    "url": "https://www.murata.com/en-us/products/productdetail?partno=GCM31CR71C106KA64%23",
+    "url_status": "unverified",
+    "note": "Manufacturer product page returned HTTP 200 HTML; datasheet PDF not confirmed.",
+    "acquisition": {
+      "status": "failed",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-GCM31CR71C106KA64L.pdf",
+      "error": "ValueError: downloaded bytes are not a pdf file (starts b'<!DOCTYP')"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "CB6-CB15 (10 pcs, -UNA)",
+      "role": "DC/DC input and gate-rail decoupling",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-BOM",
+          "location": "sheet 1 item 4",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.6 Figure 17",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "decoupling",
+    "gate driver"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-002"
+    ],
+    "rules": [
+      "KR-PCB-002"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "id": "CMP-CGA9P1X7T2J474M250KC",
+  "manufacturer": "TDK",
+  "part_number": "CGA9P1X7T2J474M250KC",
+  "category": "capacitors",
+  "description": "MLCC 0.47 uF, 630 V, X7T, 2220, AEC-Q200 grade 1.",
+  "package": "2220",
+  "key_parameters": [
+    {
+      "name": "Capacitance",
+      "value": "0.47",
+      "unit": "uF",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      },
+      "condition": "±20%, X7T"
+    },
+    {
+      "name": "Rated voltage",
+      "value": "630",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      }
+    }
+  ],
+  "application_conditions": [
+    "High-frequency decoupling of 500 V buses close to the switches."
+  ],
+  "design_considerations": [
+    "Rated 630 V on a 500 V bus: check DC-bias capacitance loss and ripple heating.",
+    "Placed as a column beside the TO-247 legs (observed)."
+  ],
+  "datasheet": {
+    "url": null,
+    "url_status": "not-located",
+    "note": "TDK product pages refused automated access (HTTP 403) on 2026-10-09; no datasheet URL recorded. Parameters are from the TI BOM description only.",
+    "acquisition": {
+      "status": "not-attempted"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "C32-C58 (even), 14 pcs",
+      "role": "secondary-side high-frequency DC-link decoupling beside the bridge",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line CGA9P1X7T2J474M250KC",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "top overlay placement",
+          "kind": "observed",
+          "note": "placement observed in rendered layer plot"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "dc-link",
+    "capacitor",
+    "decoupling"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-003"
+    ],
+    "blocks": []
+  }
+}

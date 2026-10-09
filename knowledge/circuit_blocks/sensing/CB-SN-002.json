@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "id": "CB-SN-002",
+  "name": "Isolated HV voltage sensing with delta-sigma modulator and MCU SDFM",
+  "category": "sensing",
+  "function": "Divides a 500 V bus to the ±1 V input of an isolated delta-sigma modulator; the bitstream is decimated by the MCU's sigma-delta filter module with a PWM-generated clock.",
+  "inputs": [
+    {
+      "name": "V_OUT / VBATT",
+      "description": "high-voltage node",
+      "domain": "high-voltage",
+      "range": "0-500 V"
+    },
+    {
+      "name": "CLK_MOD",
+      "description": "modulator clock from a spare MCU PWM",
+      "domain": "control"
+    },
+    {
+      "name": "5V_ISO_S",
+      "description": "isolated high-side supply",
+      "domain": "isolated-sense",
+      "range": "5 V"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "DOUT",
+      "description": "single-bit stream to MCU SDFM input",
+      "domain": "control",
+      "range": "3.3 V CMOS"
+    }
+  ],
+  "operating_conditions": [
+    "Full scale 500 V -> 0.756 V (75.6 % of 1 V)."
+  ],
+  "required_components": [
+    {
+      "role": "divider top",
+      "value_or_part": "8 x 634 kOhm 0.1 %",
+      "source_refdes": "R96-R111"
+    },
+    {
+      "role": "divider bottom",
+      "value_or_part": "7.68 kOhm 0.1 %",
+      "source_refdes": "R115"
+    },
+    {
+      "role": "delta-sigma modulator",
+      "value_or_part": "AMC1336DWVR",
+      "source_refdes": "U13 (U12 for battery)",
+      "component": "CMP-AMC1336"
+    },
+    {
+      "role": "input, clock and data RC/series elements",
+      "value_or_part": "small series resistors (40.2 ohm, 100 ohm) and pF-range capacitors per Figure 3-3"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Divider output",
+      "expression": "V_out = V_bus * R_bottom / (n * R_top + R_bottom)",
+      "basis": "TIDUES0 §3.2.2",
+      "example": "500 V -> 0.756 V",
+      "check": "EC-016"
+    }
+  ],
+  "interface_requirements": [
+    "MCU with sigma-delta filter peripheral; clock propagation delay compensated (TI uses a delayed clock fed back to SDFM inputs, Table 4-1)."
+  ],
+  "pcb_constraints": [
+    "Clock and data routed as short, series-terminated digital lines.",
+    "Divider in the HV creepage region."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U12, U13",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.2 Figures 3-3, 3-4",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "Divider scaling recomputed (EC-016). Digital filter configuration was not analysed.",
+  "limitations": [
+    "Battery-sense divider ratio depends on relay state (§3.2.2.1); both states need analysis."
+  ],
+  "keywords": [
+    "delta-sigma",
+    "sdfm",
+    "voltage sensing",
+    "isolated modulator",
+    "battery voltage"
+  ],
+  "related": {
+    "components": [
+      "CMP-AMC1336"
+    ],
+    "skills": [
+      "SKILL-005"
+    ],
+    "rules": [
+      "KR-SN-001",
+      "KR-SN-003"
+    ]
+  }
+}

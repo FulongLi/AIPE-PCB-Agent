@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "common.schema.json",
+  "title": "Shared definitions for AIPE engineering knowledge records",
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 3
+    },
+    "text_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "reference_id": {
+      "type": "string",
+      "pattern": "^REF-[A-Z]+-[A-Z0-9-]+$"
+    },
+    "skill_id": {
+      "type": "string",
+      "pattern": "^SKILL-\\d{3}$"
+    },
+    "block_id": {
+      "type": "string",
+      "pattern": "^CB-[A-Z]{2}-\\d{3}$"
+    },
+    "component_id": {
+      "type": "string",
+      "pattern": "^CMP-[A-Z0-9-]+$"
+    },
+    "rule_id": {
+      "type": "string",
+      "pattern": "^KR-[A-Z]+-\\d{3}$"
+    },
+    "check_id": {
+      "type": "string",
+      "pattern": "^EC-\\d{3}$"
+    },
+    "validation_status": {
+      "$comment": "Ordered by strength. A manufacturer reference design is evidence of an implementation, not independent verification.",
+      "enum": [
+        "reference-derived",
+        "analytically-checked",
+        "simulation-verified",
+        "hardware-validated"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "location",
+        "kind"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/reference_id"
+        },
+        "document": {
+          "type": "string",
+          "minLength": 2
+        },
+        "location": {
+          "type": "string",
+          "minLength": 2
+        },
+        "kind": {
+          "$comment": "stated: written in the source; observed: seen in a drawing/layout/BOM; netlist: confirmed against a CAD netlist; calculated: recomputed by an evidence check; inferred: AIPE interpretation that the source does not state.",
+          "enum": [
+            "stated",
+            "observed",
+            "netlist",
+            "calculated",
+            "inferred"
+          ]
+        },
+        "check": {
+          "$ref": "#/$defs/check_id"
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "evidence_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "related": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/skill_id"
+          }
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block_id"
+          }
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component_id"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule_id"
+          }
+        },
+        "project_rules": {
+          "$comment": "Existing repository rules, e.g. PE-PCB-001 in docs/pcb-design-rules.md.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^PE-PCB-\\d{3}$"
+          }
+        }
+      }
+    },
+    "alternative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approach",
+        "evidence"
+      ],
+      "properties": {
+        "approach": {
+          "$ref": "#/$defs/text"
+        },
+        "trade_off": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence_list"
+        }
+      }
+    },
+    "acquisition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not-attempted",
+            "downloaded",
+            "failed"
+          ]
+        },
+        "retrieved": {
+          "$ref": "#/$defs/date"
+        },
+        "cache_path": {
+          "type": "string"
+        },
+        "resolved_url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "error": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
