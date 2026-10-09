@@ -88,22 +88,27 @@ def pins(symbol: str, unit: int = 1) -> list[dict]:
 
 
 class Schematic:
-    def __init__(self, name: str, title: str, paper: str = "A4"):
+    def __init__(self, name: str, title: str, paper: str = "A4", *, project_name=None,
+                 instance_path=None, revision="smoke", comment="AUTOMATION TEST ONLY - NOT A POWER CONVERTER"):
         self.name, self.title, self.paper = name, title, paper
         self.root_uuid = uid(name + "/root")
+        self.project_name = project_name or name
+        self.instance_path = instance_path or "/" + self.root_uuid
+        self.revision, self.comment = revision, comment
         self.symbols: dict[str, str] = {}
         self.items: list[str] = []
         self.references: dict[str, str] = {}
 
     def add_symbol(self, lib_id: str, definition: str, reference: str, value: str,
-                   footprint: str, x: float, y: float, unit: int = 1) -> dict[str, tuple]:
+                   footprint: str, x: float, y: float, unit: int = 1, *, property_y=None,
+                   in_bom=True, on_board=True) -> dict[str, tuple]:
         self.symbols[lib_id] = definition.replace(
             '(symbol ' + quote(lib_id.split(":")[-1]), '(symbol ' + quote(lib_id), 1)
-        symbol_uuid = uid(self.name + "/" + reference)
+        symbol_uuid = uid(self.name + "/" + reference + (f"/unit{unit}" if unit != 1 else ""))
         self.references[reference] = symbol_uuid
         properties = []
-        for key, text, dy, hidden in (("Reference", reference, -6.35, False),
-                                      ("Value", value, 6.35, False),
+        for key, text, dy, hidden in (("Reference", reference, -6.35 if property_y is None else property_y, False),
+                                      ("Value", value, 6.35 if property_y is None else property_y+2.54, False),
                                       ("Footprint", footprint, 0, True),
                                       ("Datasheet", "", 0, True)):
             properties.append(f'(property {quote(key)} {quote(text)} (at {x} {y + dy} 0) '
@@ -113,10 +118,10 @@ class Schematic:
         pin_lines = "\n".join(f'(pin {quote(p["number"])} (uuid "{uid(symbol_uuid + p["number"])}"))'
                               for p in pin_info)
         self.items.append(f'''(symbol (lib_id {quote(lib_id)}) (at {x} {y} 0)
-          (unit {unit}) (in_bom yes) (on_board yes) (dnp no) (uuid "{symbol_uuid}")
+          (unit {unit}) (in_bom {"yes" if in_bom else "no"}) (on_board {"yes" if on_board else "no"}) (dnp no) (uuid "{symbol_uuid}")
           {chr(10).join(properties)}
           {pin_lines}
-          (instances (project {quote(self.name)} (path "/{self.root_uuid}"
+          (instances (project {quote(self.project_name)} (path {quote(self.instance_path)}
             (reference {quote(reference)}) (unit {unit})))))''')
         return {p["number"]: (x + p["x"], y - p["y"]) for p in pin_info}
 
@@ -129,11 +134,25 @@ class Schematic:
           (effects (font (size 1.27 1.27)) (justify left bottom))
           (uuid "{uid(self.name + '/label/' + str(len(self.items)))}"))''')
 
+    def global_label(self, name: str, point: tuple, angle=0) -> None:
+        self.items.append(f'''(global_label {quote(name)} (shape bidirectional)
+          (at {point[0]} {point[1]} {angle})
+          (effects (font (size 1.0 1.0)) (justify {"left" if angle==0 else "right"}))
+          (uuid "{uid(self.name + '/global/' + str(len(self.items)))}"))''')
+
+    def no_connect(self, point: tuple) -> None:
+        self.items.append(f'(no_connect (at {point[0]} {point[1]}) (uuid "{uid(self.name + "/nc/" + str(len(self.items)))}"))')
+
+    def text(self, value: str, x: float, y: float, size=1.27) -> None:
+        self.items.append(f'''(text {quote(value)} (at {x} {y} 0)
+          (effects (font (size {size} {size})) (justify left top))
+          (uuid "{uid(self.name + '/text/' + str(len(self.items)))}"))''')
+
     def write(self, path: Path) -> None:
         text = f'''(kicad_sch (version 20250114) (generator "aipe")
           (uuid "{self.root_uuid}") (paper {quote(self.paper)})
-          (title_block (title {quote(self.title)}) (rev "smoke")
-            (comment 1 "AUTOMATION TEST ONLY - NOT A POWER CONVERTER"))
+          (title_block (title {quote(self.title)}) (rev {quote(self.revision)})
+            (comment 1 {quote(self.comment)}))
           (lib_symbols {chr(10).join(self.symbols.values())})
           {chr(10).join(self.items)}
           (sheet_instances (path "/" (page "1")))

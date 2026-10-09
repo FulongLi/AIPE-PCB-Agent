@@ -34,6 +34,12 @@ def run_check(kind: str, source: Path, output_root: Path,
     manifest = {"command": command, "source": str(source), "status": "failed",
                 "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
                 "tool_exit_code": None, "wrapper_exit_code": 2, "report": str(report)}
+    # Hierarchical schematics, rules and project libraries also affect results.
+    # Record their bytes, rather than accepting an unchanged root sheet as proof.
+    suffixes={'.kicad_sch','.kicad_pro','.kicad_dru','.kicad_sym','.kicad_mod'}
+    dependencies=sorted(p for p in source.parent.rglob('*') if p.is_file() and
+                        (p.suffix in suffixes or p.name in ('sym-lib-table','fp-lib-table')))
+    manifest['dependency_sha256']={p.relative_to(source.parent).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in dependencies}
     try:
         result = subprocess.run(command, capture_output=True, text=True,
                                 encoding="utf-8", errors="replace", timeout=180)
