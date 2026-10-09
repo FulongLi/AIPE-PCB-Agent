@@ -1,0 +1,495 @@
+{
+  "generator": "automation/knowledge/check_evidence.py",
+  "meaning": "pass = recomputed value or connectivity agrees with the source; computed = value derived for review without a stated source value; skipped = source not cached (not a pass).",
+  "summary": {
+    "computed": 2,
+    "pass": 24
+  },
+  "checks": [
+    {
+      "id": "EC-001",
+      "title": "CGD1700 DESAT trip voltage",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-06992 §4.4.4",
+      "kind": "calculation",
+      "inputs": {
+        "V_OC_thresh_V": 0.7,
+        "R2_ohm": 2200.0,
+        "R3_ohm": 220.0,
+        "diodes": 2,
+        "Vf_V": 0.5
+      },
+      "computed": 6.7,
+      "unit": "V",
+      "stated": 6.7,
+      "relative_error": 0.0,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-002",
+      "title": "CGD1700 DESAT external blanking time",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-06992 §4.4.4",
+      "kind": "calculation",
+      "inputs": {
+        "R1": 2200.0,
+        "R2": 2200.0,
+        "R3": 220.0,
+        "C_blank_F": 5.6e-11,
+        "V_OC_thresh_V": 0.7,
+        "VDD_V": 15.0
+      },
+      "computed": 45.90107,
+      "unit": "ns",
+      "stated": 46.0,
+      "relative_error": 0.0022,
+      "tolerance": 0.02,
+      "status": "pass"
+    },
+    {
+      "id": "EC-003",
+      "title": "Max f_sw from 2 W bias, CCB032M12FM3T",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-06992 §4.8",
+      "kind": "calculation",
+      "inputs": {
+        "P_W": 2.0,
+        "QG_C": 1.18e-07,
+        "dV_V": 18.0
+      },
+      "computed": 941.619586,
+      "unit": "kHz",
+      "stated": 940.0,
+      "relative_error": 0.0017,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-004",
+      "title": "Max f_sw from 2 W bias, CAB450M12XM3",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-09301 §3.7 Eq.3",
+      "kind": "calculation",
+      "inputs": {
+        "P_W": 2.0,
+        "QG_C": 1.33e-06,
+        "dV_V": 19.0
+      },
+      "computed": 79.145231,
+      "unit": "kHz",
+      "stated": 79.0,
+      "relative_error": 0.0018,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-005",
+      "title": "LT3015 negative rail, 2025 BOM divider",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-06992 §4.3.4; BOM sheet 2",
+      "kind": "calculation",
+      "inputs": {
+        "R2": "54.9k||54.9k",
+        "R1": 12100.0,
+        "I_ADJ_A": 3e-08
+      },
+      "computed": -3.988509,
+      "unit": "V",
+      "stated": -4.0,
+      "relative_error": 0.0029,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-006",
+      "title": "LT3015 negative rail, Rev V1 schematic divider",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "CGD1700 schematic sheet 3",
+      "kind": "calculation",
+      "inputs": {
+        "R2": "10k||10k",
+        "R1": 2200.0,
+        "I_ADJ_A": 3e-08
+      },
+      "computed": -3.992877,
+      "unit": "V",
+      "stated": -4.0,
+      "relative_error": 0.0018,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-007",
+      "title": "LT3082 positive rail (R2 variant)",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "PRD-06992 Table 14",
+      "kind": "calculation",
+      "inputs": {
+        "I_SET_A": 1e-05,
+        "R_FB_ohm": 1800000.0
+      },
+      "computed": 18.0,
+      "unit": "V",
+      "stated": 18.0,
+      "relative_error": 0.0,
+      "tolerance": 0.001,
+      "status": "pass"
+    },
+    {
+      "id": "EC-008",
+      "title": "UCC25800 switching frequency from R_T",
+      "reference": "REF-WS-CGD15SG00D2",
+      "location": "CGD15SG00D2 schematic sheet 2; PRD-08391 p.11",
+      "kind": "calculation",
+      "inputs": {
+        "R_T_ohm": 47000.0,
+        "relation": "Fsw = R * 10 Hz"
+      },
+      "computed": 470.0,
+      "unit": "kHz",
+      "stated": 500.0,
+      "relative_error": 0.06,
+      "tolerance": 0.1,
+      "status": "pass"
+    },
+    {
+      "id": "EC-009",
+      "title": "Steering-diode equivalent turn-off resistance",
+      "reference": "REF-WS-CGD15SG00D2",
+      "location": "CGD15SG00D2 schematic sheet 1",
+      "kind": "calculation",
+      "inputs": {
+        "R6_ohm": 10.0,
+        "R7_ohm": 10.0,
+        "diode": "ideal (drop ignored)"
+      },
+      "computed": 5.0,
+      "unit": "ohm",
+      "status": "computed",
+      "note": "turn-on R = R6 = 10 ohm; turn-off R ~ R6 || R7 = 5 ohm before diode drop"
+    },
+    {
+      "id": "EC-010",
+      "title": "DAB theoretical maximum power",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §2.3.4.1",
+      "kind": "calculation",
+      "inputs": {
+        "N": 1.6,
+        "V1": 800.0,
+        "V2": 500.0,
+        "fs": 100000.0,
+        "L": 3.5e-05
+      },
+      "computed": 22.857143,
+      "unit": "kW",
+      "stated": 22.85,
+      "relative_error": 0.0003,
+      "tolerance": 0.005,
+      "status": "pass"
+    },
+    {
+      "id": "EC-011",
+      "title": "DAB phase shift at 10 kW",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §2.3.4.4",
+      "kind": "calculation",
+      "inputs": {
+        "N": 1.6,
+        "V1": 800.0,
+        "V2": 500.0,
+        "fs": 100000.0,
+        "L": 3.5e-05,
+        "P": 10000.0
+      },
+      "computed": 22.5,
+      "unit": "deg",
+      "stated": 23.0,
+      "relative_error": 0.0217,
+      "tolerance": 0.03,
+      "status": "pass"
+    },
+    {
+      "id": "EC-012",
+      "title": "DAB output capacitance from ripple charge",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §2.3.4.5",
+      "kind": "calculation",
+      "inputs": {
+        "dQ_C": 5e-05,
+        "V_ripple_V": 5.0
+      },
+      "computed": 10.0,
+      "unit": "uF",
+      "stated": 10.0,
+      "relative_error": 0.0,
+      "tolerance": 0.001,
+      "status": "pass"
+    },
+    {
+      "id": "EC-013",
+      "title": "DC-blocking capacitor minimum",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F Eq.20",
+      "kind": "calculation",
+      "inputs": {
+        "fs": 100000.0,
+        "L": 3.5e-05,
+        "criterion": "f_res = fs/10"
+      },
+      "computed": 7.237227,
+      "unit": "uF",
+      "stated": 7.2,
+      "relative_error": 0.0052,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-014",
+      "title": "Gate-drive power per primary FET (TI expression)",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F Eq.30",
+      "kind": "calculation",
+      "inputs": {
+        "VDD": 15.0,
+        "VEE": -4.0,
+        "QG": 5.3e-08,
+        "fs": 100000.0,
+        "TI_expression": "2*(VDD-VEE)*QG*fs"
+      },
+      "computed": 0.2014,
+      "unit": "W",
+      "stated": 0.2,
+      "relative_error": 0.007,
+      "tolerance": 0.02,
+      "status": "pass",
+      "note": "TI Eq.30 includes a factor 2 (0.201 W); the Wolfspeed/standard expression P = QG*fs*dV gives 0.101 W. Conflict preserved in KR-IS-001."
+    },
+    {
+      "id": "EC-015",
+      "title": "Primary HV divider output at 800 V",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §3.2.1",
+      "kind": "calculation",
+      "inputs": {
+        "R_top": "8 x 634k",
+        "R_bottom": 10000.0,
+        "V_in": 800
+      },
+      "computed": 1.574183,
+      "unit": "V",
+      "stated": 1.57,
+      "relative_error": 0.0027,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-016",
+      "title": "Secondary HV divider output at 500 V",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §3.2.2",
+      "kind": "calculation",
+      "inputs": {
+        "R_top": "8 x 634k",
+        "R_bottom": 7680.0,
+        "V_in": 500
+      },
+      "computed": 0.755953,
+      "unit": "V",
+      "stated": 0.76,
+      "relative_error": 0.0053,
+      "tolerance": 0.01,
+      "status": "pass"
+    },
+    {
+      "id": "EC-017",
+      "title": "Primary shunt full-scale signal",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §3.3",
+      "kind": "calculation",
+      "inputs": {
+        "I_A": 12.5,
+        "R_ohm": 0.003
+      },
+      "computed": 37.5,
+      "unit": "mV",
+      "stated": 37.5,
+      "relative_error": 0.0,
+      "tolerance": 0.001,
+      "status": "pass",
+      "note": "shunt dissipation 0.469 W; AMC1302 linear input +/-50 mV"
+    },
+    {
+      "id": "EC-018",
+      "title": "Secondary shunt full-scale signal",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F §3.3",
+      "kind": "calculation",
+      "inputs": {
+        "I_A": 20.0,
+        "R_ohm": 0.0015
+      },
+      "computed": 30.0,
+      "unit": "mV",
+      "stated": 30.0,
+      "relative_error": 0.0,
+      "tolerance": 0.001,
+      "status": "pass",
+      "note": "shunt dissipation 0.600 W; AMC1306M05 input +/-50 mV"
+    },
+    {
+      "id": "EC-019",
+      "title": "Max loss per primary FET (C3M0075120K)",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F Eq.32",
+      "kind": "calculation",
+      "inputs": {
+        "TJ_max": 150.0,
+        "TA": 40.0,
+        "Rth_HS": 0.5,
+        "Rth_iso": 0.1,
+        "Rth_JC": 1.1,
+        "model": "two FETs share one heat sink"
+      },
+      "computed": 50.0,
+      "unit": "W",
+      "stated": 50.0,
+      "relative_error": 0.0,
+      "tolerance": 0.02,
+      "status": "pass"
+    },
+    {
+      "id": "EC-020",
+      "title": "Max loss per secondary FET (C3M0030090K)",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F Eq.32",
+      "kind": "calculation",
+      "inputs": {
+        "TJ_max": 150.0,
+        "TA": 40.0,
+        "Rth_HS": 0.5,
+        "Rth_iso": 0.1,
+        "Rth_JC": 0.48,
+        "model": "two FETs share one heat sink"
+      },
+      "computed": 69.620253,
+      "unit": "W",
+      "stated": 69.0,
+      "relative_error": 0.009,
+      "tolerance": 0.02,
+      "status": "pass"
+    },
+    {
+      "id": "EC-021",
+      "title": "Voltage stress per HV divider resistor",
+      "reference": "REF-TI-TIDA-010054",
+      "location": "TIDUES0F Figure 3-2; BOM RT0805BRD07634KL",
+      "kind": "calculation",
+      "inputs": {
+        "V_bus": 800.0,
+        "resistors": 8,
+        "R_each": 634000.0
+      },
+      "computed": 99.803227,
+      "unit": "V",
+      "status": "computed",
+      "note": "each resistor sees ~100 V and dissipates 15.7 mW; compare with the resistor's limiting element voltage and pulse rating (not verified here)"
+    },
+    {
+      "id": "EC-022",
+      "title": "CGD1700 low-side DESAT network connectivity",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "pstxnet.dat",
+      "kind": "netlist",
+      "assertions": {
+        "RT25 VDD->bias node": true,
+        "bias node->DB8 anode": true,
+        "DB8 and DT7 in series": true,
+        "DT7 cathode->drain connector JT4": true,
+        "RT22 bias node->OC pin": true,
+        "RT21 OC->source": true,
+        "CT19 blanking cap OC->source": true,
+        "DT5 clamp OC->source": true
+      },
+      "status": "pass",
+      "source_sha256": "4122659a767ad0f7042e2f3b453045160d217049903eda647a6bc51592ef071c"
+    },
+    {
+      "id": "EC-023",
+      "title": "CGD1700 low-side gate path connectivity",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "pstxnet.dat",
+      "kind": "netlist",
+      "assertions": {
+        "OUTH->RT27": true,
+        "OUTL->RT28": true,
+        "CLMPI->RT29": true,
+        "RT27, RT28, RT29 and RT33 share the gate net": true,
+        "RT33 gate->source": true
+      },
+      "gate_net": "LS-GATE",
+      "status": "pass",
+      "source_sha256": "4122659a767ad0f7042e2f3b453045160d217049903eda647a6bc51592ef071c"
+    },
+    {
+      "id": "EC-024",
+      "title": "CGD1700 net spacing classes",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "pstxnet.dat NET_SPACING_TYPE",
+      "kind": "netlist",
+      "assertions": {
+        "PRIMARY": true,
+        "LOW-SIDE": true,
+        "HIGH-SIDE": true,
+        "LS-DESAT-MIDPOINT": true,
+        "HS-DESAT-MIDPOINT": true,
+        "LS-DRAIN": true,
+        "HS-DRAIN": true
+      },
+      "net_counts": {
+        "(none)": 2,
+        "HIGH-SIDE": 13,
+        "HS-DESAT-MIDPOINT": 1,
+        "HS-DRAIN": 1,
+        "LOW-SIDE": 15,
+        "LS-DESAT-MIDPOINT": 1,
+        "LS-DRAIN": 1,
+        "PRIMARY": 52
+      },
+      "status": "pass",
+      "source_sha256": "4122659a767ad0f7042e2f3b453045160d217049903eda647a6bc51592ef071c"
+    },
+    {
+      "id": "EC-025",
+      "title": "CGD15SG00D2 steering diode and Zener split connectivity",
+      "reference": "REF-WS-CGD15SG00D2",
+      "location": "ODB++ eda/data",
+      "kind": "netlist",
+      "assertions": {
+        "D3 pin 1 on driver VOUT (U1 pin 7)": true,
+        "R6 from VOUT to GATE": true,
+        "R7 from D3 pin 2 to GATE": true,
+        "Zener D4 across SOURCE-VDD2": true,
+        "Zener D5 across SOURCE-VSS2": true
+      },
+      "status": "pass",
+      "note": "Diode polarity is not in the netlist; schematic symbol shows the D3 cathode at pin 1.",
+      "source_sha256": "b3ce5425df4f3eef09dc79d3466910b113fa225dc5eb93d4f013d39cc8963c69"
+    },
+    {
+      "id": "EC-026",
+      "title": "CGD1700 high-side DESAT network connectivity",
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "location": "pstxnet.dat",
+      "kind": "netlist",
+      "assertions": {
+        "DB7 and DT8 in series": true,
+        "DT8 cathode->drain connector JT5": true,
+        "RT23 OC->HS source": true
+      },
+      "status": "pass",
+      "source_sha256": "4122659a767ad0f7042e2f3b453045160d217049903eda647a6bc51592ef071c"
+    }
+  ]
+}
