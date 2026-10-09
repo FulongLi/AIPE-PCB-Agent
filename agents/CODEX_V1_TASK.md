@@ -6,8 +6,10 @@ The user authorised execution of [task071026.txt](../task071026.txt) on
 > Confirm required software and its installation location with the user before installing.
 
 This includes additional Python packages and automation dependencies. Existing
-software may be used. No installer, package installation, or dependency upgrade
-has yet been authorised. Capture subsequent approvals in the installation plan.
+software may be used. KiCad 10.0.7 x64 and its official libraries are approved for
+`D:\EngineeringTools\KiCad\10.0` by the user's subsequent "可以" reply. No other
+package installation or dependency upgrade is authorised. Capture approvals in
+the installation plan.
 
 Work in `FulongLi/AIPE-PCB-Agent`, branch `codex/v1-buck-1kw`; preserve existing
 content. Do not fork or create another repository to bypass missing write access.

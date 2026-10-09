@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import uuid
@@ -31,6 +32,7 @@ def run_check(kind: str, source: Path, output_root: Path,
         command.extend(["--schematic-parity", "--refill-zones"])
     command.append(str(source))
     manifest = {"command": command, "source": str(source), "status": "failed",
+                "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
                 "tool_exit_code": None, "wrapper_exit_code": 2, "report": str(report)}
     try:
         result = subprocess.run(command, capture_output=True, text=True,
@@ -42,9 +44,21 @@ def run_check(kind: str, source: Path, output_root: Path,
         report_data = json.loads(report.read_text(encoding="utf-8-sig"))
         if not isinstance(report_data, dict) or not report_data:
             raise ValueError("KiCad produced an empty or invalid JSON report")
-        manifest["wrapper_exit_code"] = result.returncode
-        manifest["status"] = "passed" if result.returncode == 0 else "failed"
-    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+        if report_data.get("$schema") != f"https://schemas.kicad.org/{kind}.v1.json":
+            raise ValueError("Unexpected KiCad report schema; manual inspection required")
+        if kind == "erc":
+            sheets = report_data.get("sheets")
+            if not isinstance(sheets, list) or not sheets:
+                raise ValueError("ERC report has no sheets")
+            groups = [sheet["violations"] for sheet in sheets]
+        else:
+            groups = [report_data[key] for key in ("violations", "unconnected_items", "schematic_parity")]
+        if not all(isinstance(group, list) for group in groups):
+            raise ValueError("Malformed violation lists")
+        manifest["finding_count"] = sum(len(group) for group in groups)
+        manifest["wrapper_exit_code"] = result.returncode or (5 if manifest["finding_count"] else 0)
+        manifest["status"] = "passed" if manifest["wrapper_exit_code"] == 0 else "failed"
+    except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as exc:
         manifest["error"] = str(exc)
     manifest_path = output / "run.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

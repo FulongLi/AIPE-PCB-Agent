@@ -8,9 +8,9 @@ Recorded 2026-10-09, Asia/Shanghai.
 | Create development branch | Complete | codex/v1-buck-1kw, based on origin/main |
 | Bootstrap repository | Complete locally | Requirements, workflow, setup scripts and task record |
 | Inspect host | Complete for initial setup | Windows 11 x64; existing Git, Python and GitHub CLI; see environment.md |
-| Install KiCad | Awaiting user confirmation | Proposed 10.0.7 x64; software and directory require approval |
-| KiCad automation smoke test | Not run | Must execute real ERC, DRC and exports after KiCad is available |
-| Converter calculations / architecture | Not started | Gated by smoke test |
+| Install KiCad | Complete | Approved 10.0.7 x64 installed at D:\EngineeringTools\KiCad\10.0; installer exit 0 |
+| KiCad automation smoke test | Passed | Real ERC/DRC zero findings; exact connectivity; 11 export commands passed |
+| Converter calculations / architecture | In progress | Manufacturer documentation and assumption register |
 | Component selection | Not started | Manufacturer references and margins required |
 | Schematic / ERC | Not started | No passing report exists |
 | Placement / routing / DRC | Not started | No board exists |
@@ -20,18 +20,19 @@ Recorded 2026-10-09, Asia/Shanghai.
 
 ## External actions needed
 
-1. User confirmation of KiCad software and installation directory.
-2. Write access to the existing repository for the intended authenticated account.
+1. Write access to the existing repository for the intended authenticated account.
 
-Both requests have been presented to the user. No new software has been installed.
-Local preparation continues while these actions are pending.
+KiCad approval was supplied and installation is complete. GitHub write access
+remains unavailable; local engineering continues.
 
 ## Verification at this checkpoint
 
 - `python -m automation.setup.detect_environment --output .aipe/environment.json --markdown docs/environment.md`: completed on this Windows host.
-- `python -m unittest discover -s tests -v`: 5 tests passed.
+- `python -m unittest discover -s tests -v`: 6 tests passed.
 - Tests cover explicit tool paths with spaces, invalid configured paths, violation
   exit codes, missing reports and stale-report isolation. They use simulated
-  process results and provide no evidence of a valid KiCad design.
+  process results. Real integration evidence is separately retained in the
+  automation-smoke example.
 - macOS/Linux discovery paths are implemented but have not been executed on those
-  operating systems. Real KiCad integration, ERC and DRC remain **not run**.
+  operating systems. Real KiCad integration, ERC and DRC **passed for the smoke
+  circuit only**. The 1 kW converter has not been generated or checked.

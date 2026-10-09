@@ -36,11 +36,17 @@ class CheckTests(unittest.TestCase):
         self.source.write_text("test fixture", encoding="utf-8")
         self.cli = self.root / "kicad-cli.exe"
 
-    def fake_process(self, returncode, produce_report=True):
+    def fake_process(self, returncode, produce_report=True, violations=None):
         def execute(command, **kwargs):
             if produce_report:
                 report = Path(command[command.index("--output") + 1])
-                report.write_text(json.dumps({"violations": []}), encoding="utf-8")
+                kind = command[2]
+                data = {"$schema": f"https://schemas.kicad.org/{kind}.v1.json"}
+                if kind == "erc":
+                    data["sheets"] = [{"violations": violations or []}]
+                else:
+                    data.update(violations=violations or [], unconnected_items=[], schematic_parity=[])
+                report.write_text(json.dumps(data), encoding="utf-8")
             return subprocess.CompletedProcess(command, returncode, "simulated", "")
         return execute
 
@@ -58,6 +64,12 @@ class CheckTests(unittest.TestCase):
             code, manifest = run_check("erc", self.source, self.root / "out", self.cli)
         self.assertNotEqual(code, 0)
         self.assertEqual(json.loads(manifest.read_text())["status"], "failed")
+
+    def test_report_findings_cannot_pass_even_with_zero_process_exit(self):
+        with patch("subprocess.run", side_effect=self.fake_process(0, violations=[{"severity": "error"}])):
+            code, manifest = run_check("drc", self.source, self.root / "out", self.cli)
+        self.assertEqual(code, 5)
+        self.assertEqual(json.loads(manifest.read_text())["finding_count"], 1)
 
     def test_old_success_cannot_mask_a_failed_second_run(self):
         with patch("subprocess.run", side_effect=self.fake_process(0)):

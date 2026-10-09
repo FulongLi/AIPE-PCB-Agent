@@ -1,6 +1,6 @@
 # Installation proposal
 
-Status: **awaiting user confirmation**. Prepared 2026-10-09, Asia/Shanghai.
+Status: **installed and smoke-tested**. Prepared 2026-10-09, Asia/Shanghai.
 
 | Tool | Finding | Proposed action | Proposed location |
 | --- | --- | --- | --- |
@@ -12,7 +12,7 @@ Status: **awaiting user confirmation**. Prepared 2026-10-09, Asia/Shanghai.
 | Third-party KiCad MCP / autorouter | Not required for bootstrap | No installation proposed | None |
 
 Alternative KiCad directory offered: `C:\Program Files\KiCad\10.0`.
-The selected directory is not yet approved. Installer downloads, if needed, will
+The user approved `D:\EngineeringTools\KiCad\10.0`. Installer downloads will
 be kept in ignored `.cache/downloads/` inside the repository. Standard installer
 settings or user configuration may also be written to the Windows user profile.
 Do not change the machine-wide PATH unnecessarily; retain an explicit CLI path
@@ -34,4 +34,25 @@ References (checked 2026-10-09):
 
 ## Approval record
 
-Pending. No software installation approved or performed as of this checkpoint.
+On 2026-10-09 the user replied "可以" to the explicit request to install the
+KiCad 10.0.7 x64 suite, CLI and official libraries at
+`D:\EngineeringTools\KiCad\10.0`. This approves that software and location.
+Additional dependencies still require separate confirmation. Installation is
+complete and verified. The installer exited 0 using current-user mode and the
+approved directory. CLI reports 10.0.7; bundled Python 3.11.5 imports `pcbnew`
+and reports 10.0.7. Symbols, footprints and 3D libraries are present. Existing
+system Python remains 3.10.11.
+
+## Installation evidence
+
+- Download: official download page's Tsinghua mirror, `kicad-10.0.7-x86_64.exe`.
+- File size: 968953784 bytes.
+- SHA-256 (computed locally): `CE3881B6A9188EB34AC1EBAAEC7651149E8A025206410ADDFB11A1A9656ECF95`.
+- Windows Authenticode status: Valid; signer KICAD SERVICES CORPORATION.
+- Certificate issuer: GlobalSign GCC R45 EV CodeSigning CA 2020.
+- Certificate serial: `39DF6B588D969CA15D8D2756`, matching the official page.
+- Install mode: `/S /currentuser /D=D:\EngineeringTools\KiCad\10.0`.
+- Executable: `D:\EngineeringTools\KiCad\10.0\bin\kicad-cli.exe`.
+- Actual smoke evidence: `examples/automation-smoke/verification/smoke-result.json`.
+- No additional application or third-party Python package was installed by the
+  automation. The official suite supplies its own Python and dependencies.

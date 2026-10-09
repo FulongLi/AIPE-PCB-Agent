@@ -11,7 +11,8 @@ approximately 41.7 A. V1 is a review deliverable, not an energisation approval.
 ## Current status
 
 Repository bootstrap and initial environment inspection are complete locally on
-`codex/v1-buck-1kw`; KiCad installation awaits confirmation. No converter
+`codex/v1-buck-1kw`; KiCad 10.0.7 is installed and the small automation smoke
+test passed real ERC/DRC, connectivity and export checks. No converter
 schematic, PCB, passing CAD checks, or frozen
 V1 release exists yet. See [execution status](docs/status.md).
 
