@@ -10,11 +10,20 @@ approximately 41.7 A. V1 is a review deliverable, not an energisation approval.
 
 ## Current status
 
-Repository bootstrap and initial environment inspection are complete locally on
-`codex/v1-buck-1kw`; KiCad 10.0.7 is installed and the small automation smoke
-test passed real ERC/DRC, connectivity and export checks. No converter
-schematic, PCB, passing CAD checks, or frozen
-V1 release exists yet. See [execution status](docs/status.md).
+The V1 converter CAD is complete on `codex/v1-buck-1kw`: 14 schematic sheets,
+240 physical items, a fully routed 300 x 220 mm six-layer PCB, and zero native
+ERC/DRC findings. Connectivity, source/export hashes and all eleven export
+commands are verified. This establishes a CAD review package, not a validated
+1 kW converter. See [execution status](docs/status.md) for freeze and GitHub
+handoff state.
+
+- [V1 design report](examples/buck-48v-24v-1kw/review/design_report.md)
+- [Schematic PDF](examples/buck-48v-24v-1kw/review/schematic.pdf)
+- [PCB layer and assembly PDF](examples/buck-48v-24v-1kw/review/pcb_layout.pdf)
+- [Board 3D view](examples/buck-48v-24v-1kw/review/pcb_3d.png)
+- [Known issues](examples/buck-48v-24v-1kw/verification/known_issues.md)
+- [Verification summary](examples/buck-48v-24v-1kw/verification/verification-summary.json)
+- [Reproduction instructions](docs/reproduce-v1.md)
 
 ## Start here
 

@@ -312,8 +312,8 @@ def main():
     for layer in (pcb.F_Cu,pcb.In1_Cu,pcb.In4_Cu,pcb.B_Cu):
         z=zone('GND',layer,[(1,1),(299,1),(299,219),(1,219)],0,0.25)
         if layer in (pcb.In1_Cu,pcb.In4_Cu):
-            polygon=z.Outline();polygon.NewHole()
-            for x,y in [(133,36),(156,36),(156,58),(133,58)]:polygon.Append(pcb.FromMM(x),pcb.FromMM(y))
+            polygon=z.Outline();hole=polygon.NewHole()
+            for x,y in [(133,36),(156,36),(156,58),(133,58)]:polygon.Append(pcb.FromMM(x),pcb.FromMM(y),0,hole)
     board.BuildConnectivity();pcb.ZONE_FILLER(board).Fill(board.Zones());pcb.SaveBoard(str(path),board)
     report=dict(stage='routed_candidate',seconds=time.monotonic()-start,stats=dict(r.stats),unresolved=failures,
                 status='requires-native-DRC',power_polygon_vertices=power_shapes)

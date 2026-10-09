@@ -1,9 +1,12 @@
 # Initial PCB engineering review rules
 
-These rules originate in the task. At bootstrap, **no geometry checker has been
-implemented and no board has been reviewed**. The machine-readable register is
-`automation/verification/pcb_rules.json`. Planned metrics do not constitute
-validated electrical or thermal limits.
+These rules originate in the task. The V1 checker
+`automation/verification/check_power_layout.py` now measures the actual routed
+board, checks pad/net mapping and power topology, and guards the intended
+ground-plane extent. The machine-readable register is
+`automation/verification/pcb_rules.json`. Measurements do not constitute
+validated electrical or thermal limits. See the example's
+`verification/pcb_rule_review.md` for the separate final review and open issues.
 
 | ID | Requirement | Current review method | Required evidence |
 | --- | --- | --- | --- |
@@ -16,7 +19,8 @@ validated electrical or thermal limits.
 | PE-PCB-007 | Separate control from noisy power structures | human-review | Functional placement and ground-return review |
 | PE-PCB-008 | Place decoupling next to the relevant IC pins | human-review | Per-supply pin map, capacitor location and return path |
 
-Numeric thresholds will be established from the actual circuit, stack-up and
-manufacturer evidence. Promote a rule to semi-automated or automated only when
-its checker and limits have been implemented and verified. A short geometric
+The table describes the electrical acceptance evidence, which remains a human
+responsibility. The register marks geometric support as semi-automated for
+rules 001, 002, 004-008. Only exact pad/net equality, explicit critical topology,
+layer count and the ground-plane extent guard are automatic invariants. A short
 distance alone does not establish a suitable gate or commutation loop.

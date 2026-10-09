@@ -6,6 +6,16 @@ from automation.kicad_tools.buck_model import build,EXAMPLE
 
 def generate():
     refs={s['id']:s['url'] for s in json.loads((EXAMPLE/'components/references.json').read_text())['sources']}
+    passive_sources={
+      'GRM21BR71H104KA01L':'https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM21BR71H104KA01-01-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20250707233810',
+      'GRM21BR71E225KA73L':'https://www.murata.com/-/media/webrenewal/tool/library/common-pdf/dynamic-model/component-list-d-mlcc-2506.ashx?cvid=20250805040419000000&la=ja-jp',
+      'CGA6N3X7R2A225K230AB':'https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA6N3X7R2A225K230AB',
+      'TMK325B7226KMHT':'https://ds.yuden.co.jp/TYCOMPAS/eu/detail?pn=TMK325B7226KMHT&u=M',
+    }
+    def source_for(p):
+        if p['mpn'] in passive_sources:return passive_sources[p['mpn']]
+        if p['maker']=='KEMET':return 'https://content.kemet.com/datasheets/'+('KEM_C1003_C0G_SMD.pdf' if 'GACTU' in p['mpn'] else 'KEM_C1002_X7R_SMD.pdf')
+        return refs.get(p['source'],p['source'])
     # Ratings are conditional on the linked data-sheet test conditions; operating
     # stresses are engineering calculations, not measurement results.
     selected={
@@ -38,11 +48,13 @@ def generate():
                     spec=(rating,'Ceramic ripple capability application dependent','DC bias/temperature/ESR require exact MPN data','Nominal value is not effective biased capacitance','See rail in circuit.json; bootstrap 12 V; rail bypass <=54 V','Nominal voltage exceeds connected DC rail; effective-capacitance margin unverified','Bypass, filtering or hold-up per schematic')
                 else:
                     spec=('See manufacturer data sheet','See manufacturer data sheet','Application temperature/derating unverified','Pin functions checked in electrical model','See circuit.json and calculations.md','No numeric margin asserted','Required supply, protection, sensing or debug function')
-            out.writerow(dict(zip(fields,[p['ref'],p['maker'],p['mpn'],p['footprint'],*spec,refs.get(p['source'],p['source']),'No procurement/lot/availability or hardware qualification; independent BOM review required'])))
+            limit='No procurement/lot/availability or hardware qualification; independent BOM review required'
+            if p['mpn']=='TMK325B7226KMHT':limit+='; manufacturer status Non-preferred checked 2026-10-09'
+            out.writerow(dict(zip(fields,[p['ref'],p['maker'],p['mpn'],p['footprint'],*spec,source_for(p),limit])))
     with (EXAMPLE/'components/bom.csv').open('w',newline='',encoding='utf8') as f:
         out=csv.writer(f);out.writerow(['Reference','Value','Manufacturer','MPN','Footprint','Datasheet','Assembly note'])
         for p in build().parts:
-            if p['kind'] not in ('TP','H'):out.writerow([p['ref'],p['value'],p['maker'],p['mpn'],p['footprint'],refs.get(p['source'],p['source']),p['note']])
+            if p['kind'] not in ('TP','H'):out.writerow([p['ref'],p['value'],p['maker'],p['mpn'],p['footprint'],source_for(p),p['note']+('; manufacturer status Non-preferred; sourcing review required' if p['mpn']=='TMK325B7226KMHT' else '')])
 
 
 if __name__=='__main__':generate()

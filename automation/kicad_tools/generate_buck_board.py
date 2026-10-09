@@ -25,6 +25,8 @@ def generate():
     parts=build().parts
     mapping=json.loads((EXAMPLE/'design/schematic_mapping.json').read_text())['paths']
     board=pcb.BOARD();board.SetCopperLayerCount(6)
+    title=board.GetTitleBlock();title.SetTitle('AIPE 48V to 24V / 1kW');title.SetRevision('V1')
+    title.SetComment(0,'AI-GENERATED ENGINEERING PROTOTYPE - HUMAN REVIEW REQUIRED')
     board.GetDesignSettings().SetBoardThickness(pcb.FromMM(2.0))
     netlist=EXAMPLE/'verification/schematic_netlist.xml'
     netlist.parent.mkdir(parents=True,exist_ok=True)
@@ -46,6 +48,8 @@ def generate():
         fp.SetPath(pcb.KIID_PATH(mapping[p['ref']]))
         fp.Value().SetVisible(False)
         fp.Reference().SetLayer(pcb.F_Fab)
+        if any(isinstance(g,pcb.PCB_TEXT) and g.GetText()=='${REFERENCE}' for g in fp.GraphicalItems()):
+            fp.Reference().SetVisible(False)
         fp.Reference().SetTextSize(point(1,1));fp.Reference().SetTextThickness(pcb.FromMM(0.15))
         # Package drawings remain unchanged. Electrical pad mapping is explicit.
         seen=set()
@@ -190,6 +194,7 @@ def generate():
         stack.append(f'(layer "{layer}" (type "copper") (thickness {thickness}))')
         if i<5:stack.append(f'(layer "dielectric {i+1}" (type "{ "core" if i in (1,3) else "prepreg" }") (thickness {dielectrics[i]}) (material "FR4") (epsilon_r 4.3) (loss_tangent 0.02))')
     native=path.read_text(encoding='utf8')
+    native=native.replace('(paper "A4")','(paper "A3")')
     native=native.replace('(setup\n','(setup\n (stackup\n'+'\n'.join(stack)+'\n(copper_finish "ENIG") (dielectric_constraints no))\n',1)
     path.write_text(native,encoding='utf8')
     loaded=pcb.LoadBoard(str(path));assert loaded.GetCopperLayerCount()==6

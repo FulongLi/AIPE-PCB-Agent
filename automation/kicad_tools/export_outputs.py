@@ -12,7 +12,7 @@ from pathlib import Path
 from automation.setup.detect_kicad import find_kicad_cli
 
 
-def export(source: Path, output: Path, layers: str) -> None:
+def export(source: Path, output: Path, layers: str, pdf_scale: str = "0") -> None:
     cli = find_kicad_cli()
     if not cli:
         raise FileNotFoundError("KiCad CLI unavailable")
@@ -24,9 +24,9 @@ def export(source: Path, output: Path, layers: str) -> None:
         (output / name).mkdir()
     commands = [
         ("schematic_pdf", ["sch", "export", "pdf", "-o", str(output / "review/schematic.pdf"), str(schematic)]),
-        ("pcb_pdf", ["pcb", "export", "pdf", "--mode-multipage", "--layers",
-                     ",".join(layer for layer in layers.split(",") if layer != "Edge.Cuts"),
-                     "--common-layers", "Edge.Cuts", "--scale", "0",
+        ("pcb_pdf", ["pcb", "export", "pdf", "--mode-multipage", "--black-and-white", "--include-border-title", "--layers",
+                     ",".join(layer for layer in layers.split(",") if layer not in ("Edge.Cuts","B.SilkS")),
+                     "--common-layers", "Edge.Cuts", "--scale", pdf_scale,
                      "-o", str(output / "review/pcb_layout.pdf"), str(board)]),
         ("gerber", ["pcb", "export", "gerbers", "--layers", layers + ",F.Paste,B.Paste,F.Mask,B.Mask",
                     "-o", str(output / "gerber") + os.sep, str(board)]),
@@ -47,7 +47,11 @@ def export(source: Path, output: Path, layers: str) -> None:
         ("netlist", ["sch", "export", "netlist", "--format", "kicadxml",
                      "-o", str(output / "netlist.xml"), str(schematic)]),
     ]
-    evidence = {"status": "in_progress", "commands": [], "artifacts": {}}
+    input_suffixes={'.kicad_pcb','.kicad_sch','.kicad_pro','.kicad_dru','.kicad_mod','.kicad_sym','.step','.wrl'}
+    evidence = {"status": "in_progress", "commands": [], "artifacts": {},
+                "input_sha256": {p.relative_to(board.parent).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
+                    for p in sorted(board.parent.rglob('*')) if p.is_file() and
+                    (p.suffix in input_suffixes or p.name in ('sym-lib-table','fp-lib-table'))}}
     try:
         for name, arguments in commands:
             command = [str(cli), *arguments]
@@ -82,5 +86,6 @@ if __name__ == "__main__":
     parser.add_argument("source", type=Path, help="KiCad project basename or source path")
     parser.add_argument("--output", type=Path, required=True, help="Must not already exist")
     parser.add_argument("--layers", default="F.Cu,B.Cu,F.SilkS,B.SilkS,Edge.Cuts")
+    parser.add_argument("--pdf-scale", default="0", help="0 auto; V1 A3 review uses 0.9 to clear the title block")
     args = parser.parse_args()
-    export(args.source, args.output, args.layers)
+    export(args.source, args.output, args.layers, args.pdf_scale)

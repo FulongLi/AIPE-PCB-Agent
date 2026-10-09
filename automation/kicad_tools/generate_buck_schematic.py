@@ -94,14 +94,14 @@ def generate():
     parts=build().parts
     target=EXAMPLE/'kicad'; target.mkdir(parents=True,exist_ok=True)
     libs=target/'libraries'; libs.mkdir(exist_ok=True)
-    root=Schematic(NAME,'48 V to 24 V / 1 kW synchronous buck','A3',revision='V1 development',comment=NOTE)
+    root=Schematic(NAME,'48 V to 24 V / 1 kW synchronous buck','A3',revision='V1',comment=NOTE)
     root.text(NOTE,20,20,2)
     root.text('Design basis: 36-54 V input / 24 V 41.67 A / 100 kHz / 150 MHz F28335\nHardware review prototype. Firmware control loop and thermal performance are unvalidated.\nAll inter-page connections use explicit global net labels. GND is one continuous electrical net.',20,31,1.5)
     all_defs=[]; paths={}; placement={}
     for page_num,(page,title) in enumerate(PAGES.items(),2):
         sheet_id=uid(NAME+'/'+page+'/sheet')
         instance_path='/'+root.root_uuid+'/'+sheet_id
-        sch=Schematic(NAME+'/'+page,title,'A3',project_name=NAME,instance_path=instance_path,revision='V1 development',comment=NOTE)
+        sch=Schematic(NAME+'/'+page,title,'A3',project_name=NAME,instance_path=instance_path,revision='V1',comment=NOTE)
         sch.text(title,12.7,16.51,2)
         if page=='10_dsp': sch.text('Units: supply pins / ADC / connected digital pins / intentionally unused digital pins. TEST1, TEST2 and X2 are NC.',12.7,22.86,1)
         x,y,row_height=38.1,33.02,0

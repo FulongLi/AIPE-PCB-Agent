@@ -2,13 +2,55 @@
   "schema_version": 1,
   "source": "task071026.txt section 22",
   "rules": [
-    {"id": "PE-PCB-001", "requirement": "Minimise MOSFET gate loop", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-002", "requirement": "Place HF DC-link capacitor close to half bridge", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-003", "requirement": "Minimise HF commutation loop", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-004", "requirement": "Use Kelvin current sensing", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-005", "requirement": "Separate sensitive analog and switch-node paths", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-006", "requirement": "Justify high-current copper and via capacity", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-007", "requirement": "Separate control and switching structures", "method": "human-review", "status": "unverified"},
-    {"id": "PE-PCB-008", "requirement": "Place decoupling adjacent to supply pins", "method": "human-review", "status": "unverified"}
-  ]
+    {
+      "id": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitor close to half bridge",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-003",
+      "requirement": "Minimise HF commutation loop",
+      "method": "human-review",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-004",
+      "requirement": "Use Kelvin current sensing",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    },
+    {
+      "id": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "method": "semi-automated",
+      "status": "measured; engineering acceptance requires human review"
+    }
+  ],
+  "checker": "automation/verification/check_power_layout.py",
+  "evidence": "examples/buck-48v-24v-1kw/verification/power-layout-metrics.json"
 }

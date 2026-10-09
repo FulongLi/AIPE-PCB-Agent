@@ -13,7 +13,7 @@ not additional user requirements.
 | Frequency | 100 kHz, complementary ePWM1A/B, 200 ns initial dead time |
 | Environment | 0-50 C ambient; forced airflow and externally supported insulated MOSFET heatsink required |
 | Load behavior | 20 A / 100 us illustrative load step; no guaranteed dynamic specification |
-| Board | Initial 300 x 200 mm, six copper layers, 2.0 mm total; dimensions may change to satisfy placement/routing |
+| Board | Final 300 x 220 mm, six copper layers, 2.0 mm total; expanded from the initial 300 x 200 mm estimate for placement/routing |
 | Copper | L1/L3/L4/L6 70 um finished copper, L2/L5 35 um; PCB vendor must confirm manufacturability and fine-pitch process |
 | Power connection | M5 REDCUBE solder terminals, ring lugs, cable strain relief; 2.2 Nm terminal torque only with mechanical support |
 | Main inductor | 285 g part requires a separate mechanical clamp/support; solder joints must not carry shock loads |
