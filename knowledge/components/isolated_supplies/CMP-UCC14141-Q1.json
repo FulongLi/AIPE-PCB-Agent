@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "id": "CMP-UCC14141-Q1",
+  "manufacturer": "Texas Instruments",
+  "part_number": "UCC14141-Q1",
+  "orderable_variants": [
+    "UCC14141QDWNRQ1"
+  ],
+  "category": "isolated_supplies",
+  "description": "Integrated-transformer isolated DC/DC module for gate-driver bias with adjustable VDD-VEE and COM-VEE outputs.",
+  "package": "SSOP-36 wide (DWN)",
+  "key_parameters": [
+    {
+      "name": "Input voltage range",
+      "value": "8 to 18",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      },
+      "condition": "32 V absolute maximum"
+    },
+    {
+      "name": "Output power",
+      "value": "1.5",
+      "unit": "W",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      },
+      "condition": "10.8 V < VIN < 13.2 V, TA <= 85 degC"
+    },
+    {
+      "name": "Output power (wide input)",
+      "value": "1.0",
+      "unit": "W",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      },
+      "condition": "8 V < VIN < 18 V, TA <= 85 degC"
+    },
+    {
+      "name": "VDD-VEE adjustable range",
+      "value": "15 to 25",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      },
+      "condition": "±1.3% regulation"
+    },
+    {
+      "name": "CMTI",
+      "value": ">150",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      }
+    },
+    {
+      "name": "Isolation (planned certification)",
+      "value": "5000",
+      "unit": "Vrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSF10B p.1 Features"
+      },
+      "condition": "1 minute per UL 1577"
+    },
+    {
+      "name": "Configured outputs in TIDA-010054",
+      "value": "+15 / -4",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDUES0",
+        "location": "§3.4.2"
+      }
+    },
+    {
+      "name": "Current-limit resistor RLIM in TIDA-010054",
+      "value": "1.0 k (driver only) / 600 (driver + isolated sensing)",
+      "unit": "ohm",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDUES0",
+        "location": "§3.4.2"
+      }
+    }
+  ],
+  "application_conditions": [
+    "One module per floating gate-driver reference from a regulated 12 V rail.",
+    "Can also feed small loads on the same isolated reference (e.g. an LDO for isolated sensing) within the power budget."
+  ],
+  "design_considerations": [
+    "Size RLIM from the total load using TI's calculator; TI used a lower RLIM where the module also powers sensing.",
+    "Power budget: gate-charge power Q_G * f_sw * (VDD-VEE) plus driver quiescent and any shared loads must stay below the module rating at the actual input voltage.",
+    "Rated 1.5 W only for 10.8-13.2 V input; size the auxiliary rail and protection accordingly."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SLUSF10B (June 2023)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-UCC14141-Q1.pdf",
+      "bytes": 3133172,
+      "sha256": "b09c65705d5fc3d53eb56fab6bfa9a6c97c5104887874abd87cd9b192582baf7",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U14, U24, U27, U28, U32, U33, U36, U39",
+      "role": "isolated bias for each gate driver (UCC14141QDWNRQ1)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line UCC14141QDWNRQ1",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.2 Figure 3-11",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "isolated bias",
+    "gate driver supply",
+    "integrated transformer"
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-002"
+    ],
+    "skills": [
+      "SKILL-004"
+    ]
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "CMP-UCC23514",
+  "manufacturer": "Texas Instruments",
+  "part_number": "UCC23514",
+  "orderable_variants": [
+    "UCC23514MDWVR"
+  ],
+  "category": "driver_ics",
+  "description": "Opto-compatible single-channel isolated gate driver with emulated-diode input; M variant provides an active Miller clamp pin.",
+  "package": "SOIC-8 stretched (DWV)",
+  "key_parameters": [
+    {
+      "name": "Isolation rating",
+      "value": "5.0",
+      "unit": "kVrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "Peak source / sink current",
+      "value": "4.5 / 5.3",
+      "unit": "A",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "Output supply voltage",
+      "value": "12 to 33",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "Propagation delay (maximum)",
+      "value": "105",
+      "unit": "ns",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "CMTI (minimum)",
+      "value": "150",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "Package creepage",
+      "value": "8.5",
+      "unit": "mm",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    },
+    {
+      "name": "Input reverse polarity handling",
+      "value": "13",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDV0A p.1 Features"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Drop-in replacement for opto-isolated gate drivers; single-ended current-driven input.",
+    "Single switch positions where an opto-style PWM interface is already used (CGD15SG00D2)."
+  ],
+  "design_considerations": [
+    "Single VOUT pin: independent turn-on/turn-off resistance needs a steering diode (CB-GD-002).",
+    "Input resistor sizing sets e-diode forward current; check against datasheet input specifications.",
+    "Has no DESAT or soft turn-off; overcurrent protection must be provided elsewhere."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/ucc23514.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SLUSDV0A (October 2020)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-UCC23514.pdf",
+      "bytes": 1803518,
+      "sha256": "16c7168af0d3685352faf57e4ef5827e413196cb6f8f3bb0846e10ff825a312d",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/ucc23514.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD15SG00D2",
+      "refdes": "U1",
+      "role": "isolated gate driver (UCC23514MDWVR)",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-BOM",
+          "location": "BOM line 24",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "Schematic and Functionality",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "opto-compatible",
+    "isolated gate driver",
+    "miller clamp"
+  ],
+  "related": {
+    "blocks": [
+      "CB-GD-002"
+    ],
+    "skills": [
+      "SKILL-001"
+    ]
+  }
+}

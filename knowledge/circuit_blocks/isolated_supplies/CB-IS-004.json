@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "CB-IS-004",
+  "name": "Configurable split-rail (Vcc/Vss) generator for multi-source SiC gate levels",
+  "category": "isolated_supplies",
+  "function": "Creates positive and negative gate rails around the source from a single isolated output with a resistor-Zener network (optionally with an upstream linear regulator) so that one PCB supports different SiC V_GS requirements by BOM change.",
+  "inputs": [
+    {
+      "name": "V_total",
+      "description": "single isolated DC/DC output (fixed or adjustable)",
+      "domain": "isolated-driver",
+      "range": "e.g. 18-25 V"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Vcc",
+      "description": "positive gate rail",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "Source",
+      "description": "midpoint",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "Vss",
+      "description": "negative gate rail",
+      "domain": "isolated-driver"
+    }
+  ],
+  "operating_conditions": [
+    "Configurations +15/-5 ... +20/-5 V and unipolar +15/0 or +18/0 V published by Wolfspeed."
+  ],
+  "required_components": [
+    {
+      "role": "bias resistor",
+      "value_or_part": "4.99 kOhm (when negative rail used)",
+      "source_refdes": "R1"
+    },
+    {
+      "role": "Zener",
+      "value_or_part": "2-5 V selected for V_neg",
+      "source_refdes": "D1"
+    },
+    {
+      "role": "rail capacitors",
+      "value_or_part": "0.1 uF + 10 uF",
+      "source_refdes": "C3, C4"
+    },
+    {
+      "role": "unipolar link",
+      "value_or_part": "0 ohm (when Vss = 0 V)",
+      "source_refdes": "R5"
+    },
+    {
+      "role": "optional linear regulator",
+      "value_or_part": "sets V_total for regulation of all outputs",
+      "source_refdes": "U1"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Rail levels",
+      "expression": "V_neg = -V_Z; V_pos = V_total - V_Z",
+      "basis": "PRD-04814 §3",
+      "example": "V_total 18 V, V_Z 3 V -> +15/-3 V"
+    },
+    {
+      "name": "Zener dissipation",
+      "expression": "P_Z = V_Z * (I_bias - I_load,neg) at minimum load",
+      "basis": "AIPE derivation (inferred) from circuit topology"
+    }
+  ],
+  "interface_requirements": [
+    "DC/DC must operate over the needed output range when adjustable (PRD-04814 example 3)."
+  ],
+  "pcb_constraints": [
+    "Split network placed at the driver supply pins; rail capacitors close to driver."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-PRD-04814",
+      "refdes": "example circuits 1-4",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§3 Figures 8-11 tables",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "reference": "REF-WS-CGD15SG00D2",
+      "refdes": "D4, R3, D5, R10",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-ALL",
+          "location": "ODB++",
+          "kind": "netlist",
+          "check": "EC-025"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Configuration tables are manufacturer examples without load or tolerance analysis; AIPE did not simulate them.",
+  "limitations": [
+    "Zener split regulation degrades with load changes; light-load Zener current and heavy-load droop must be checked."
+  ],
+  "keywords": [
+    "split rail",
+    "zener",
+    "multi-sourcing",
+    "gate voltage",
+    "configurable"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-004"
+    ],
+    "rules": [
+      "KR-GD-005",
+      "KR-GD-006"
+    ]
+  }
+}

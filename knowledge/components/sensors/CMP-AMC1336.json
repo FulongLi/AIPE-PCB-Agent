@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "id": "CMP-AMC1336",
+  "manufacturer": "Texas Instruments",
+  "part_number": "AMC1336",
+  "orderable_variants": [
+    "AMC1336DWVR"
+  ],
+  "category": "sensors",
+  "description": "Reinforced isolated delta-sigma modulator with ±1 V high-impedance input for voltage sensing.",
+  "package": "SOIC-8 stretched (DWV)",
+  "key_parameters": [
+    {
+      "name": "Input range",
+      "value": "±1",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS951B p.1 Features"
+      }
+    },
+    {
+      "name": "Input resistance (typ)",
+      "value": "1.5",
+      "unit": "GOhm",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS951B p.1 Features"
+      }
+    },
+    {
+      "name": "Reinforced isolation",
+      "value": "8000",
+      "unit": "Vpk",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS951B p.1 Features"
+      },
+      "condition": "DIN VDE V 0884-11:2017-01"
+    },
+    {
+      "name": "Isolation (UL1577)",
+      "value": "5700",
+      "unit": "Vrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS951B p.1 Features"
+      },
+      "condition": "1 minute"
+    },
+    {
+      "name": "Transient immunity (typ)",
+      "value": "115",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS951B p.1 Features"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Isolated HV voltage sensing with a digital interface to an MCU sigma-delta filter."
+  ],
+  "design_considerations": [
+    "Scale the divider for the ±1 V input with headroom (TI: 500 V -> 0.76 V).",
+    "Battery-side divider changes ratio when a relay shorts its lower part (TIDUES0 §3.2.2.1): verify both states."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/amc1336.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SBAS951B (April 2020)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-AMC1336.pdf",
+      "bytes": 1252716,
+      "sha256": "768e314c2dd0c99796674f01b734b9c01cea8f81df0b507d900653f14a7af540",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/amc1336.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U12, U13",
+      "role": "secondary output voltage and battery voltage sensing",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line AMC1336DWVR",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2-3.3",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "delta-sigma",
+    "voltage sensing",
+    "divider",
+    "sdfm"
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-002"
+    ],
+    "skills": [
+      "SKILL-005"
+    ]
+  }
+}

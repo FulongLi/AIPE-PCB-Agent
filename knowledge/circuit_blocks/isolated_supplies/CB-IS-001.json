@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "id": "CB-IS-001",
+  "name": "Open-loop LLC isolated gate bias with voltage doubler and Zener split",
+  "category": "isolated_supplies",
+  "function": "Generates a source-referenced +15 V / -3.x V gate-drive supply from 12 V using a half-bridge transformer driver, a low-capacitance transformer, a resonant voltage doubler and a resistor-Zener split.",
+  "inputs": [
+    {
+      "name": "+12V",
+      "description": "regulated auxiliary input through a common-mode choke",
+      "domain": "auxiliary",
+      "range": "11-12.5 V (CGD15SG00D2)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "VDD2",
+      "description": "positive gate rail",
+      "domain": "isolated-driver",
+      "range": "+15.4 V typ."
+    },
+    {
+      "name": "SOURCE",
+      "description": "rail midpoint tied to MOSFET source",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "VSS2",
+      "description": "negative gate rail",
+      "domain": "isolated-driver",
+      "range": "-3.3 V typ."
+    }
+  ],
+  "operating_conditions": [
+    "Up to 2 W at 25 degC (CGD15SG00D2 rating).",
+    "Switching frequency ~470-500 kHz set by R_T."
+  ],
+  "required_components": [
+    {
+      "role": "transformer driver",
+      "value_or_part": "UCC25800AQDGNQ1",
+      "source_refdes": "U2",
+      "component": "CMP-UCC25800-Q1"
+    },
+    {
+      "role": "isolation transformer",
+      "value_or_part": "Würth 750319177, 1:1.67",
+      "source_refdes": "T1",
+      "component": "CMP-750319177"
+    },
+    {
+      "role": "input common-mode choke",
+      "value_or_part": "Murata DLW43SH220XK2L 22 uH",
+      "source_refdes": "L1"
+    },
+    {
+      "role": "primary split capacitors",
+      "value_or_part": "2 x 1 uF",
+      "source_refdes": "C17, C19"
+    },
+    {
+      "role": "resonant capacitors",
+      "value_or_part": "2 x 22 nF C0G/X7R",
+      "source_refdes": "C8, C16"
+    },
+    {
+      "role": "rectifiers",
+      "value_or_part": "2 x SL14PL-TP 40 V 1 A Schottky",
+      "source_refdes": "D1, D2"
+    },
+    {
+      "role": "split network",
+      "value_or_part": "15 V Zener || 20 k; 3.9 V Zener || 5.1 k",
+      "source_refdes": "D4, R3, D5, R10"
+    },
+    {
+      "role": "rail capacitors",
+      "value_or_part": "4.7 uF 35 V X7R",
+      "source_refdes": "C5-C7, C13-C15"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Switching frequency",
+      "expression": "f_sw = R_T * 10 Hz/ohm (schematic note)",
+      "basis": "CGD15SG00D2 schematic sheet 2",
+      "example": "47 k -> 470 kHz (guide: ~500 kHz)",
+      "check": "EC-008"
+    },
+    {
+      "name": "Rail split",
+      "expression": "V_neg set by the lower Zener/resistor; V_pos = V_total - V_neg; check Zener current at min and max load",
+      "basis": "PRD-04814 §3 example 1; PRD-08391 p.11"
+    }
+  ],
+  "interface_requirements": [
+    "Input from a regulated 9-34 V rail (UCC25800-Q1 range).",
+    "SOURCE must connect to the driven MOSFET's Kelvin source."
+  ],
+  "pcb_constraints": [
+    "Transformer slots/notches to reach the required creepage (8 mm on CGD15SG00D2).",
+    "Primary and secondary planes partitioned with no copper crossing the barrier (PRD-08391 PCB Layout).",
+    "Common-mode choke at the module input with input capacitance between choke and converter (PRD-09301 §3.8)."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-CGD15SG00D2",
+      "refdes": "U2, T1, L1, D1, D2, D4, D5",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-SCH",
+          "location": "sheet 2",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "Schematic and Functionality",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-ALL",
+          "location": "ODB++ Zener split",
+          "kind": "netlist",
+          "check": "EC-025"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "Frequency relation recomputed (EC-008, 6 % from the stated 'approximately 500 kHz'); Zener split connectivity confirmed (EC-025). Load regulation is Wolfspeed's measurement only.",
+  "limitations": [
+    "Open-loop output tracks input voltage and load.",
+    "Measured -3.3 V is below the 3.9 V Zener rating: split depends on load."
+  ],
+  "alternatives": [
+    {
+      "approach": "Integrated isolated module (CB-IS-002, CB-IS-003)",
+      "trade_off": "Fewer parts and certification; higher unit cost, less control of C_iso.",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 comparison table",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "llc",
+    "isolated bias",
+    "voltage doubler",
+    "zener split",
+    "low emi"
+  ],
+  "related": {
+    "components": [
+      "CMP-UCC25800-Q1",
+      "CMP-750319177"
+    ],
+    "skills": [
+      "SKILL-004"
+    ],
+    "rules": [
+      "KR-IS-001",
+      "KR-IS-003"
+    ]
+  }
+}

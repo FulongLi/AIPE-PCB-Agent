@@ -1,0 +1,2097 @@
+{
+  "schema_version": 1,
+  "description": "AIPE engineering rules V0 extracted from TI TIDA-010054 and Wolfspeed CGD15SG00D2, CGD1700HB2M-UNA, PRD-04814, PRD-06933 and PRD-09301. Rules from a single reference are never hard constraints; numerical limits carry an explicit basis; conflicting approaches are kept in 'conflicts'/'alternatives'.",
+  "categories": {
+    "hard-constraint": "Must hold for a correct and safe design; violation blocks release. Limits always cite their basis.",
+    "optimization-objective": "Quantity to minimise or maximise subject to the hard constraints.",
+    "engineering-recommendation": "Good practice with stated applicability; deviations need a documented reason.",
+    "human-review-requirement": "Cannot be decided automatically; a qualified engineer must review the stated item."
+  },
+  "rules": [
+    {
+      "id": "KR-GD-001",
+      "title": "Gate voltage within the selected device's absolute maximum",
+      "category": "hard-constraint",
+      "domain": "gate_drivers",
+      "statement": "The steady-state gate rails plus their tolerance and the measured transient overshoot/undershoot at the device gate must stay inside the absolute-maximum V_GS range of the selected SiC MOSFET.",
+      "applicability": {
+        "conditions": [
+          "Any SiC MOSFET gate drive."
+        ]
+      },
+      "rationale": "Exceeding V_GS limits degrades gate-oxide lifetime and reliability; fast SiC transients can push the gate beyond the static rail values.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Example absolute maximum V_GS (Wolfspeed Gen-3 C3M)",
+          "value": "+19 / -8",
+          "unit": "V",
+          "basis": "PRD-04814 §1; applies only to Wolfspeed 3rd-generation devices - use the selected device's datasheet",
+          "basis_type": "manufacturer-guidance"
+        },
+        {
+          "parameter": "Recommended rail tolerance",
+          "value": "±5",
+          "unit": "%",
+          "basis": "PRD-04814 §1 recommendation for both rails",
+          "basis_type": "manufacturer-guidance"
+        }
+      ],
+      "verification": {
+        "method": "measurement",
+        "procedure": "Compare (rail + tolerance) and the worst V_GS excursion measured on the device side of R_G with an isolated probe against the datasheet absolute maxima."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§1 Gate bias requirements",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§1.4, §6.1",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-001",
+          "SKILL-004"
+        ],
+        "rules": [
+          "KR-GD-005"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-002",
+      "title": "Independent turn-on and turn-off gate resistance",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Provide separately tunable turn-on and turn-off gate resistance, using split driver outputs or steering diodes.",
+      "applicability": {
+        "conditions": [
+          "Hard-switched or partially hard-switched SiC positions where dv/dt, overshoot and switching loss must be balanced."
+        ]
+      },
+      "rationale": "Turn-on usually limits overshoot/EMI while turn-off can be faster; a single resistor forces the slower of the two values and raises losses.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Double-pulse test sweeping R_G,ON and R_G,OFF; confirm V_DS overshoot and dv/dt limits."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.2",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "pstxnet.dat OUTH/OUTL paths",
+          "kind": "netlist",
+          "check": "EC-023"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-ALL",
+          "location": "ODB++ D3/R6/R7",
+          "kind": "netlist",
+          "check": "EC-025"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.5.4 turn-on and turn-off resistors 2 ohm",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "alternatives": [
+        {
+          "approach": "Split OUTH/OUTL outputs (UCC21710)",
+          "trade_off": "No diode in the gate loop.",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD1700HB2M-UNA",
+              "document": "PRD-06992",
+              "location": "§4.1",
+              "kind": "stated"
+            }
+          ]
+        },
+        {
+          "approach": "Turn-off steering diode with R_OFF in parallel (CGD15SG00D2)",
+          "trade_off": "Works with single-output drivers; diode drop and recovery affect the edge.",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD15SG00D2",
+              "document": "CGD15SG00D2-SCH",
+              "location": "sheet 1",
+              "kind": "observed"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "blocks": [
+          "CB-GD-001",
+          "CB-GD-002"
+        ],
+        "skills": [
+          "SKILL-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-003",
+      "title": "Miller clamp or equivalent low-impedance off-state path when parasitic turn-on is plausible",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Where complementary-switch dv/dt can lift the off-state gate (high R_G,OFF, long gate path, 0 V or small negative bias), provide an active Miller clamp or other low-impedance path to the turn-off rail, routed with low inductance to the device.",
+      "applicability": {
+        "conditions": [
+          "Half-bridge and bridge positions with high dv/dt."
+        ],
+        "exclusions": [
+          "Designs with low R_G and low-inductance routing where Wolfspeed states the clamp is not strictly needed (PRD-09301 §5.8)."
+        ]
+      },
+      "rationale": "Miller current through C_GD charges C_GS; a clamp bypasses the gate resistor during the off state.",
+      "priority": "medium",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Measure V_GS of the off device during the complementary transition with and without the clamp (PRD-06933 §5 method)."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-06933",
+          "location": "§4 Miller clamp",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.8",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.5",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "conflicts": [
+        {
+          "approach": "Miller clamps are less effective for modules because the clamp path to the die is long",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD15SG00D2",
+              "document": "PRD-06933",
+              "location": "§4 Miller clamp",
+              "kind": "stated"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "blocks": [
+          "CB-GD-001",
+          "CB-GD-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-004",
+      "title": "DESAT trip level and blanking derived per design and measured",
+      "category": "human-review-requirement",
+      "domain": "protection",
+      "statement": "The overcurrent (DESAT) trip voltage and blanking time must be calculated for the selected device's V_DS(I_D, T_J) curve, the diode drops and the fault-risk tolerance, then verified in circuit; reference-design values must not be copied.",
+      "applicability": {
+        "conditions": [
+          "Gate drivers using V_DS desaturation detection."
+        ]
+      },
+      "rationale": "Trip current depends on R_DS(on) temperature; blanking trades false trips against short-circuit energy (PRD-09301 §5.1).",
+      "priority": "critical",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Recompute with CB-GD-001 formulas, compare blanking + IC response with the device short-circuit withstand time, then measure trip behaviour."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.4",
+          "kind": "stated",
+          "check": "EC-001"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "conflicts": [
+        {
+          "approach": "TIDA-010054: 6.4 V trip with 1 us blanking (ZVS DAB, TO-247-4)",
+          "trade_off": "Fewer nuisance trips, more fault energy.",
+          "evidence": [
+            {
+              "source": "REF-TI-TIDA-010054",
+              "document": "TIDUES0",
+              "location": "§3.5",
+              "kind": "stated"
+            }
+          ]
+        },
+        {
+          "approach": "CGD1700HB2M-UNA: 6.7 V trip with ~46 ns external blanking + 120 ns IC deglitch",
+          "trade_off": "Fast protection; must be checked against ringing.",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD1700HB2M-UNA",
+              "document": "PRD-06992",
+              "location": "§4.4.4",
+              "kind": "stated",
+              "check": "EC-002"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "blocks": [
+          "CB-GD-001"
+        ],
+        "rules": [
+          "KR-PR-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-005",
+      "title": "Negative turn-off bias for half-bridge positions unless 0 V is justified",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "In half-bridge positions use a negative turn-off rail (Wolfspeed Gen-3: -2 V to -4 V, recommended -3 V to -4 V) unless switching tests show 0 V turn-off is acceptable for the device and layout.",
+      "applicability": {
+        "conditions": [
+          "Half bridges and bridges with high dv/dt."
+        ],
+        "exclusions": [
+          "Single-ended topologies (buck, boost, flyback) where PRD-04814 states 0 V turn-off may be used."
+        ]
+      },
+      "rationale": "A negative rail adds margin against parasitic turn-on and speeds turn-off, while staying away from the negative V_GS limit.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Measure off-state V_GS peaks during complementary switching for the chosen rail (PRD-06933 §4, PRD-09301 Figure 33 method)."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "introduction and §1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "p.11 negative gate bias",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-06933",
+          "location": "§4 negative gate drive voltage",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "conflicts": [
+        {
+          "approach": "Negative bias is not required for Wolfspeed devices; 0 V can be adopted after case-by-case evaluation",
+          "trade_off": "Simpler supply; heightened sensitivity to layout noise.",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD1700HB2M-UNA",
+              "document": "PRD-09301",
+              "location": "§3.5",
+              "kind": "stated"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "rules": [
+          "KR-GD-001"
+        ],
+        "blocks": [
+          "CB-IS-004"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-006",
+      "title": "BOM-configurable gate rails when multi-sourcing SiC devices",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "When more than one SiC supplier must be supported, lay out the gate-bias split network (and optional regulators) so V_GS levels can be changed by population options only.",
+      "applicability": {
+        "conditions": [
+          "Products with multi-sourced SiC MOSFETs having different recommended gate voltages."
+        ]
+      },
+      "rationale": "Different manufacturers and generations specify different V_GS; a configurable footprint avoids a PCB re-spin.",
+      "priority": "low",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Check that each supported device's recommended rails are reachable by documented population options."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§3 example circuits",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§1.1 Table 1 variants",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-IS-004",
+          "CB-IS-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-007",
+      "title": "Gate-source discharge resistor on the device side of R_G",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Fit a gate-source resistor directly at the device side of the gate resistor so the gate stays discharged when the driver is unpowered.",
+      "applicability": {
+        "conditions": [
+          "All SiC gate drives, particularly where the bus can be energised before the driver supply."
+        ]
+      },
+      "rationale": "Prevents charge build-up and unintended conduction while the driver is unpowered.",
+      "priority": "high",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Schematic and layout review: resistor present, between gate and Kelvin source, no component between it and the gate pin."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.9",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "RT33 gate-source",
+          "kind": "netlist",
+          "check": "EC-023"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-SCH",
+          "location": "R8 47 k",
+          "kind": "observed"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "alternatives": [
+        {
+          "approach": "10 kOhm (Wolfspeed typical value, CGD1700HB2M-UNA)",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD1700HB2M-UNA",
+              "document": "PRD-09301",
+              "location": "§5.9",
+              "kind": "stated"
+            }
+          ]
+        },
+        {
+          "approach": "47 kOhm (CGD15SG00D2)",
+          "evidence": [
+            {
+              "source": "REF-WS-CGD15SG00D2",
+              "document": "CGD15SG00D2-BOM",
+              "location": "R8",
+              "kind": "observed"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "blocks": [
+          "CB-GD-001",
+          "CB-GD-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-008",
+      "title": "Noise-immune gate-signal transmission",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Transmit PWM and fault signals differentially (or by fibre) over cables and long distances, convert to single-ended as close as possible to the driver IC, and RC-filter every control and fault line at the receiving pin.",
+      "applicability": {
+        "conditions": [
+          "Gate drivers connected to the controller by cables or long traces in high-dv/dt environments."
+        ],
+        "exclusions": [
+          "Short on-board links, where buffered single-ended PWM with RC filtering is acceptable (PRD-09301 §4.1; TI uses SN74LVC126A buffers)."
+        ]
+      },
+      "rationale": "Single-ended references degrade over distance; differential pairs reject common-mode noise; the single-ended segment remains vulnerable.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Inject or observe common-mode noise during switching; verify no spurious PWM/fault transitions; open-cable test keeps outputs off."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§4.1-4.4",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.2",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 1 note on fail-safe polarity",
+          "kind": "observed"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-GD-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-009",
+      "title": "Hardware interlock as last barrier, dead time from the controller",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Cross-connect complementary PWM inputs (or add logic) so both switches of a leg cannot be on together, while still generating adequate dead time in the controller.",
+      "applicability": {
+        "conditions": [
+          "Half-bridge legs."
+        ]
+      },
+      "rationale": "Prevents shoot-through from controller faults or noise; interlock does not create dead time.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Apply both PWM inputs high: both outputs must stay low; verify dead time at the gates."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.6-5.7",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.6 Table 16",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5 PWM interlock",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-GD-001",
+          "CB-GD-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-010",
+      "title": "Review any external gate-source capacitor; avoid it on packages without Kelvin source",
+      "category": "human-review-requirement",
+      "domain": "gate_drivers",
+      "statement": "Flag every external gate-source capacitor for review; on SiC devices without a Kelvin-source pin (e.g. TO-247-3) Wolfspeed states it must not be used.",
+      "applicability": {
+        "conditions": [
+          "Gate circuits containing a capacitor from gate to source or Kelvin source."
+        ]
+      },
+      "rationale": "With a shared source path the capacitor can increase oscillation and overshoot; added C_GS also lengthens parasitic gate excursions.",
+      "priority": "high",
+      "verification": {
+        "method": "human-review",
+        "procedure": "BOM/package check for three-lead devices plus review of any C_GS against the device datasheet and switching measurements."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-06933",
+          "location": "§4 gate capacitance",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "alternatives": [
+        {
+          "approach": "Small capacitor or RC between gate and Kelvin source to reduce overshoot",
+          "evidence": [
+            {
+              "source": "REF-WS-PRD-04814",
+              "document": "PRD-04814",
+              "location": "§1",
+              "kind": "stated"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KR-GD-011",
+      "title": "Soft shutdown on overcurrent; avoid two-level turn-off for modules",
+      "category": "engineering-recommendation",
+      "domain": "protection",
+      "statement": "Turn the device off softly after an overcurrent detection (controlled-current or high-resistance path); do not use two-level turn-off with SiC power modules.",
+      "applicability": {
+        "conditions": [
+          "SiC positions with overcurrent detection, especially modules."
+        ]
+      },
+      "rationale": "Hard turn-off at fault current causes large V_DS overshoot; two-level turn-off concentrates stress (Spirito effect) per Wolfspeed.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Short-circuit test measuring V_DS peak during fault turn-off."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.2-5.3",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.5",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-GD-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-GD-012",
+      "title": "Do not rely on a gate-Kelvin Zener clamp for transient protection",
+      "category": "engineering-recommendation",
+      "domain": "gate_drivers",
+      "statement": "Do not rely on a Zener from gate to Kelvin source to protect against fast gate transients; make the gate rails and layout robust instead.",
+      "applicability": {
+        "conditions": [
+          "Power-module gate drives."
+        ]
+      },
+      "rationale": "Zeners respond too slowly and are separated from the die by package inductance; useful only for steady-state clamping.",
+      "priority": "low",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Review any gate Zener's purpose; confirm transients are controlled by layout and rails (measure V_GS)."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.4",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium"
+    },
+    {
+      "id": "KR-IS-001",
+      "title": "Gate-bias power budget covers gate charge at the switching frequency",
+      "category": "hard-constraint",
+      "domain": "power_electronics",
+      "statement": "Each isolated gate supply must deliver at least the sum over its driven devices of Q_G * f_sw * (V_DD - V_EE), plus driver quiescent and any shared loads, within its rating at the actual input voltage and ambient, with margin.",
+      "applicability": {
+        "conditions": [
+          "All isolated gate-driver supplies, including shared supplies."
+        ]
+      },
+      "rationale": "Insufficient bias power collapses the rails, slows switching and can trigger UVLO or linear-region operation.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Gate power expression",
+          "value": "P = Q_G * f_sw * (V_DD - V_EE)",
+          "unit": "W",
+          "basis": "Charge Q_G is moved through the rail difference once per switching cycle (PRD-09301 Eq.1)",
+          "basis_type": "calculation"
+        }
+      ],
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute per supply with datasheet Q_G at the actual rails; compare with the supply rating; Wolfspeed applies margin (79 kHz -> ~70 kHz)."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.8",
+          "kind": "stated",
+          "check": "EC-003"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.7",
+          "kind": "stated",
+          "check": "EC-004"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.5.4 Eq.30",
+          "kind": "stated",
+          "check": "EC-014"
+        }
+      ],
+      "generality": "physics-derived",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "conflicts": [
+        {
+          "approach": "TI TIDA-010054 Eq.30 uses 2 * (V_DD - V_EE) * Q_G * f_sw, twice the Wolfspeed expression",
+          "trade_off": "More conservative; basis for the factor 2 not explained by TI.",
+          "evidence": [
+            {
+              "source": "REF-TI-TIDA-010054",
+              "document": "TIDUES0",
+              "location": "§2.3.5.4",
+              "kind": "stated",
+              "check": "EC-014"
+            }
+          ]
+        }
+      ],
+      "related": {
+        "blocks": [
+          "CB-IS-001",
+          "CB-IS-002",
+          "CB-IS-003"
+        ],
+        "skills": [
+          "SKILL-004"
+        ]
+      }
+    },
+    {
+      "id": "KR-IS-002",
+      "title": "Common-mode choke at the bias-supply input, close to the converter",
+      "category": "engineering-recommendation",
+      "domain": "power_electronics",
+      "statement": "Where common-mode current through the bias supply is a concern, place a common-mode choke at the bias-converter input, physically close to the converter, with the converter's input capacitor between choke and converter.",
+      "applicability": {
+        "conditions": [
+          "Isolated gate-bias supplies on high-dv/dt switch positions."
+        ]
+      },
+      "rationale": "The choke raises the impedance of the common-mode path through the supply's isolation capacitance.",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Layout review of choke and capacitor order; optional EMI or common-mode current measurement."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.8",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 3 LT1/LT2, CB6/CB7",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "CGD15SG00D2-SCH",
+          "location": "sheet 2 L1 with C1/C2/C4 on converter side",
+          "kind": "observed"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-IS-001",
+          "CB-IS-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-IS-003",
+      "title": "Minimise isolation capacitance of gate-bias supplies",
+      "category": "optimization-objective",
+      "domain": "power_electronics",
+      "statement": "Prefer bias supplies and transformers with low primary-to-secondary capacitance and estimate the common-mode current i = C_iso * dv/dt for each switch position.",
+      "applicability": {
+        "conditions": [
+          "High-side and fast-switching positions."
+        ]
+      },
+      "rationale": "SiC dv/dt drives current through isolation capacitance into control circuitry, causing noise and EMC problems.",
+      "priority": "high",
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute i_CM from datasheet C_iso and the expected dv/dt; compare candidate supplies."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "LLC choice for ultra-low EMI",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 comparison table",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "components": [
+          "CMP-750319177",
+          "CMP-R12P21503D"
+        ],
+        "blocks": [
+          "CB-IS-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-IS-004",
+      "title": "Sharing a gate-bias supply requires review",
+      "category": "human-review-requirement",
+      "domain": "power_electronics",
+      "statement": "Sharing one isolated supply between drivers referenced to the same node must be reviewed for circulating currents (decoupling resistors), combined power budget, symmetry of placement and source-referenced current-viewing resistors.",
+      "applicability": {
+        "conditions": [
+          "Low-side switches of inverters or totem-pole PFC sharing a reference."
+        ]
+      },
+      "rationale": "Shared references create circulating-current and coupling paths; one supply limits maximum switching frequency.",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Review layout symmetry, decoupling resistors and the combined power budget (KR-IS-001)."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 Figures 3-5",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.6",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.2 sharing option not tested",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "rules": [
+          "KR-IS-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-IS-005",
+      "title": "Specify gate-rail regulation; post-regulate when precision is required",
+      "category": "engineering-recommendation",
+      "domain": "power_electronics",
+      "statement": "Specify the required gate-rail accuracy; unregulated module outputs suit many end applications, but use LDO or Zener post-regulation where characterisation-grade accuracy or non-standard levels are needed.",
+      "applicability": {
+        "conditions": [
+          "Isolated gate supplies."
+        ]
+      },
+      "rationale": "Rail tolerance shifts switching behaviour and V_GS margins; Wolfspeed recommends ±5 % rails.",
+      "priority": "medium",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Measure rails across load and input range."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§1.1, §4.3.2",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "p.11 rails within 5 %",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-IS-003",
+          "CB-IS-004"
+        ]
+      }
+    },
+    {
+      "id": "KR-CAP-001",
+      "title": "DC-link capacitance from worst-case ripple charge",
+      "category": "hard-constraint",
+      "domain": "capacitors",
+      "statement": "Size each DC-link capacitance as C >= dQ_max / dV_ripple,allowed, where dQ_max is the largest ripple charge over all operating corners (voltage ratio, power, modulation).",
+      "applicability": {
+        "conditions": [
+          "Converters with switched DC-link currents (DAB, PSFB, bridges)."
+        ]
+      },
+      "rationale": "Ripple charge varies strongly with operating point; nominal-point sizing underestimates capacitance.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Capacitance criterion",
+          "value": "C >= dQ / dV",
+          "unit": "F",
+          "basis": "Charge balance on the capacitor over one ripple period",
+          "basis_type": "calculation"
+        }
+      ],
+      "verification": {
+        "method": "calculation",
+        "procedure": "Simulate or compute the capacitor current at every corner, integrate to dQ, apply the ripple limit."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.5",
+          "kind": "stated",
+          "check": "EC-012"
+        }
+      ],
+      "generality": "physics-derived",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-CAP-002",
+      "title": "DC-link RMS ripple current within rating at frequency and temperature",
+      "category": "hard-constraint",
+      "domain": "capacitors",
+      "statement": "The DC-link capacitor technology and quantity must carry the computed RMS ripple current at the switching frequency and worst-case temperature within the manufacturer rating.",
+      "applicability": {
+        "conditions": [
+          "All DC links with high-frequency ripple."
+        ]
+      },
+      "rationale": "Ripple current heats capacitors (ESR); film is selected for low ESR at switching frequency.",
+      "priority": "critical",
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute I_C,rms (e.g. TIDUES0 Eq.19 for DAB) and compare to datasheet ripple rating with frequency/temperature correction; measure case temperature."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.5 Eq.19",
+          "kind": "stated"
+        }
+      ],
+      "generality": "physics-derived",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-003"
+        ],
+        "components": [
+          "CMP-B32716H1156K000",
+          "CMP-B32716H8306K000"
+        ]
+      }
+    },
+    {
+      "id": "KR-CAP-003",
+      "title": "Bulk film plus distributed high-frequency ceramics at each bridge",
+      "category": "engineering-recommendation",
+      "domain": "capacitors",
+      "statement": "Combine bulk film capacitance for energy and ripple with high-voltage ceramic capacitors distributed immediately beside each half-bridge to keep the high-frequency commutation loop small.",
+      "applicability": {
+        "conditions": [
+          "Board-mounted discrete SiC bridges at hundreds of volts."
+        ]
+      },
+      "rationale": "Film capacitors are physically large and far from the switches; local ceramics shorten the HF current loop (inferred from layout).",
+      "priority": "high",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Layout review of ceramic proximity to switch pins; extract commutation-loop area/inductance."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "MLCC columns 2220/1812 1 kV and 630 V",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "top overlay MLCC columns beside bridges",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "purpose of the MLCC columns",
+          "kind": "inferred",
+          "note": "TI does not state the purpose; interpretation by AIPE"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "project_rules": [
+          "PE-PCB-002",
+          "PE-PCB-003"
+        ],
+        "skills": [
+          "SKILL-003",
+          "SKILL-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-CAP-004",
+      "title": "DC-blocking capacitor sized well below resonance with the tank inductance",
+      "category": "engineering-recommendation",
+      "domain": "capacitors",
+      "statement": "In transformer-coupled bridges susceptible to volt-second imbalance, add a series DC-blocking capacitor rated for full transformer RMS current and voltage, with C >= 100 / (4 pi^2 f_s^2 L) (series resonance a decade below f_s).",
+      "applicability": {
+        "conditions": [
+          "DAB or other bridges driving a transformer without inherent DC blocking."
+        ]
+      },
+      "rationale": "Mismatched PWM or driver delays can walk the transformer flux into saturation.",
+      "priority": "medium",
+      "numerical_limits": [
+        {
+          "parameter": "Minimum capacitance criterion",
+          "value": "C >= 100 / (4 pi^2 f_s^2 L)",
+          "unit": "F",
+          "basis": "TIDUES0 Eq.20; equivalent to f_res <= f_s/10 (AIPE interpretation)",
+          "basis_type": "reference-design-instance"
+        }
+      ],
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute C_min and resonance; check RMS current rating; simulate switch-node waveform distortion."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.5.1 Eq.20",
+          "kind": "stated",
+          "check": "EC-013"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "analytically-checked",
+      "confidence": "medium",
+      "related": {
+        "skills": [
+          "SKILL-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-SN-001",
+      "title": "Isolated sensing parts rated for the system working voltage",
+      "category": "hard-constraint",
+      "domain": "isolation",
+      "statement": "Every sensor, isolated amplifier, modulator, isolated supply or other component that bridges an isolation barrier must have an isolation and working-voltage rating appropriate to the node voltage and the required insulation class.",
+      "applicability": {
+        "conditions": [
+          "Isolated voltage/current sensing and any barrier-crossing component."
+        ]
+      },
+      "rationale": "Under-rated barrier components defeat isolation and endanger the low-voltage side and operators.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Required rating",
+          "value": "per applicable equipment standard",
+          "unit": "",
+          "basis": "Insulation coordination standard for the product (e.g. IEC 60664-1, UL 61800-5-1 named in PRD-09301 §2.7)",
+          "basis_type": "standard"
+        }
+      ],
+      "verification": {
+        "method": "human-review",
+        "procedure": "Insulation coordination review: node voltage, working voltage (DC/RMS), required basic/reinforced class, datasheet ratings."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.2.3-2.2.8 reinforced isolated sensors",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-SN-001",
+          "CB-SN-002",
+          "CB-SN-003",
+          "CB-SN-004"
+        ]
+      }
+    },
+    {
+      "id": "KR-SN-002",
+      "title": "Sensor scaling keeps worst-case signal inside the linear input range",
+      "category": "hard-constraint",
+      "domain": "sensing",
+      "statement": "Scale dividers and shunts so the maximum operating signal plus the required protection/overvoltage headroom stays within the sensor's linear input range.",
+      "applicability": {
+        "conditions": [
+          "All isolated voltage and current sensing chains."
+        ]
+      },
+      "rationale": "Clipping at full scale hides faults that protection must detect. Example (instance values, not targets): TIDA-010054 uses 1.57 V of a 2 V input, 0.76 V of ±1 V, and 37.5 mV / 30 mV of ±50 mV.",
+      "priority": "high",
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute signal at maximum operating and trip levels; compare with datasheet linear range."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.1",
+          "kind": "stated",
+          "check": "EC-015"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.2",
+          "kind": "stated",
+          "check": "EC-016"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.3",
+          "kind": "stated",
+          "check": "EC-017"
+        }
+      ],
+      "generality": "physics-derived",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-SN-001",
+          "CB-SN-002",
+          "CB-SN-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-SN-003",
+      "title": "Digital isolated sensing for long signal paths",
+      "category": "engineering-recommendation",
+      "domain": "sensing",
+      "statement": "Prefer an isolated delta-sigma bitstream (decoded by the MCU) over an analog signal when the sensing point is far from the controller.",
+      "applicability": {
+        "conditions": [
+          "Sensing points far from the controller; MCU with sigma-delta filter peripheral."
+        ]
+      },
+      "rationale": "A digital interface is less vulnerable to noise over long traces (TI).",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Review trace lengths and the MCU filter/clock configuration."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.2",
+          "kind": "stated"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "blocks": [
+          "CB-SN-002",
+          "CB-SN-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-SN-004",
+      "title": "Kelvin-connected shunts with filtering at the isolated input",
+      "category": "engineering-recommendation",
+      "domain": "sensing",
+      "statement": "Use four-terminal (Kelvin) shunt connections routed as a tight pair to an input RC filter at the isolated amplifier or modulator.",
+      "applicability": {
+        "conditions": [
+          "Shunt current sensing."
+        ]
+      },
+      "rationale": "Kelvin sensing excludes copper and solder drop from the measurement; the filter limits switching noise.",
+      "priority": "high",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Layout review of shunt sense pads and pair routing."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "Figures 3-5, 3-6 input filters",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "4-terminal 3637 shunts WSL3637",
+          "kind": "observed"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "project_rules": [
+          "PE-PCB-004"
+        ],
+        "blocks": [
+          "CB-SN-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-SN-005",
+      "title": "Fast hardware path for switch-node overcurrent",
+      "category": "engineering-recommendation",
+      "domain": "protection",
+      "statement": "Use a hardware overcurrent path (DESAT, fast comparator or a current sensor with built-in OC output) for switch-level protection; do not rely on ADC sampling in the control loop.",
+      "applicability": {
+        "conditions": [
+          "Switch-node and tank currents in fast SiC converters."
+        ]
+      },
+      "rationale": "Controller ADC paths need too many clock cycles relative to SiC short-circuit withstand times.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Measure detection-to-PWM-off latency."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.3 Hall sensor chosen for low propagation delay",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-SN-004",
+          "CB-GD-001"
+        ],
+        "rules": [
+          "KR-PR-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-001",
+      "title": "Gate and Kelvin-source as adjacent-layer pours with Kelvin-source shielding",
+      "category": "engineering-recommendation",
+      "domain": "pcb_layout",
+      "statement": "Route gate and Kelvin-source connections as wide pours on adjacent PCB layers, with the Kelvin-source layer between the gate and other circuitry.",
+      "applicability": {
+        "conditions": [
+          "Multilayer gate-driver PCBs for SiC devices."
+        ]
+      },
+      "rationale": "Adjacent layers give flux cancellation (largest gate-inductance reduction per Wolfspeed); the Kelvin layer shields the gate from noise.",
+      "priority": "high",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Check stack-up layer assignment and pour overlap for gate/KS nets; human review of layer images.",
+        "aipe_hook": "future extension of automation/verification/check_power_layout.py: per-net layer overlap metric"
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.2-2.3",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "PCB Layout planes under related components",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "project_rules": [
+          "PE-PCB-001"
+        ],
+        "skills": [
+          "SKILL-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-002",
+      "title": "Gate-driver decoupling inside the gate loop",
+      "category": "engineering-recommendation",
+      "domain": "pcb_layout",
+      "statement": "Place the driver's positive and negative rail decoupling capacitors between the driver IC and the gate/source output, close to both, sized for the gate charge of the driven device(s).",
+      "applicability": {
+        "conditions": [
+          "All isolated gate drivers."
+        ]
+      },
+      "rationale": "The high-frequency gate current closes through the decoupling capacitors; their loop sets the effective gate inductance.",
+      "priority": "high",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Measure capacitor-to-driver-pin distance and loop area in the layout; check rail ripple during switching."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.6",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "p.10-11 C10-C12 near source pin",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.6 20 uF per rail on CGD1700HB2M-UNA",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "project_rules": [
+          "PE-PCB-008"
+        ],
+        "components": [
+          "CMP-GCM31CR71C106KA64L"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-003",
+      "title": "Never tie the device Kelvin source to the power source in the layout",
+      "category": "hard-constraint",
+      "domain": "pcb_layout",
+      "statement": "For devices with a dedicated Kelvin-source pin, the gate-driver return must connect only to the Kelvin-source pin; the PCB must not connect Kelvin-source and power-source nets.",
+      "applicability": {
+        "conditions": [
+          "SiC devices or modules with a Kelvin-source pin."
+        ]
+      },
+      "rationale": "An external connection reintroduces common-source inductance into the gate loop and can overload internal Kelvin bond wires.",
+      "priority": "critical",
+      "verification": {
+        "method": "automated",
+        "procedure": "Netlist check that Kelvin-source and power-source nets are distinct and connected only through the device.",
+        "aipe_hook": "netlist rule: KS net must not share a net with S/power-source pins"
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§1.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.8 four-pin devices with Kelvin connection",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-004",
+      "title": "Prioritise power commutation loop inductance over gate loop inductance",
+      "category": "optimization-objective",
+      "domain": "pcb_layout",
+      "statement": "Minimise the high-frequency power commutation loop first, then the gate loop; driver routing must not compromise the power loop.",
+      "applicability": {
+        "conditions": [
+          "Hard- and soft-switched SiC bridges."
+        ]
+      },
+      "rationale": "Power-loop inductance dominates overshoot and losses; gate-loop inductance matters but less (Wolfspeed).",
+      "priority": "high",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Extract commutation-loop geometry (capacitor-to-switch path) and compare alternatives; human review of overlays."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§1.4, §2.2, §3.3",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "project_rules": [
+          "PE-PCB-003",
+          "PE-PCB-002"
+        ],
+        "rules": [
+          "KR-CAP-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-005",
+      "title": "Gate driver adjacent to its switch; minimise connector and probe-loop inductance",
+      "category": "engineering-recommendation",
+      "domain": "pcb_layout",
+      "statement": "Place each gate driver (and its local decoupling) immediately beside its switch; for separate driver boards, mate as close as possible to the gate/source pins and provide a V_GS probe point at the device.",
+      "applicability": {
+        "conditions": [
+          "Board-mounted and plug-in gate drivers."
+        ]
+      },
+      "rationale": "Distance and connectors add gate-loop inductance, delay and noise pickup; connectors often dominate.",
+      "priority": "high",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Measure driver-to-device distance; check probe point location relative to R_G."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "drivers on bottom side beside each TO-247-4",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§3.2, §3.5",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§1.4, §2.5",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "project_rules": [
+          "PE-PCB-001",
+          "PE-PCB-007"
+        ]
+      }
+    },
+    {
+      "id": "KR-PCB-006",
+      "title": "High-current bus copper paralleled across layers",
+      "category": "engineering-recommendation",
+      "domain": "pcb_layout",
+      "statement": "Carry DC-bus and bridge currents on wide pours repeated on several copper layers, stitched with via arrays, sized by a current-density/temperature-rise analysis.",
+      "applicability": {
+        "conditions": [
+          "Board-mounted power stages with tens of amperes."
+        ]
+      },
+      "rationale": "Parallel layers reduce resistance and inductance (inferred from observation).",
+      "priority": "medium",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Compute copper cross-section and temperature rise; check via current capacity."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "top, inner 1 and bottom power pours",
+          "kind": "observed"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "reference-derived",
+      "confidence": "low",
+      "related": {
+        "project_rules": [
+          "PE-PCB-006"
+        ]
+      }
+    },
+    {
+      "id": "KR-ISO-001",
+      "title": "No copper crossing an isolation barrier on any layer",
+      "category": "hard-constraint",
+      "domain": "isolation",
+      "statement": "No copper (traces, pours, planes) on any layer may cross a gate-driver isolation barrier or the barrier between independently referenced driver channels; only components rated for the barrier may bridge it.",
+      "applicability": {
+        "conditions": [
+          "Isolated gate drivers, isolated supplies and isolated sensing."
+        ]
+      },
+      "rationale": "Copper across the barrier removes isolation, couples dv/dt noise and can damage the controller.",
+      "priority": "critical",
+      "verification": {
+        "method": "semi-automated",
+        "procedure": "Define keep-out zones per barrier and run DRC; inspect every copper layer image.",
+        "aipe_hook": "KiCad rule areas / keepouts per isolation barrier"
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.1 Figures 9-10",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "PCB Layout plane partitioning",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-ISO-002",
+      "title": "Creepage and clearance per standard for every net-class pair",
+      "category": "hard-constraint",
+      "domain": "isolation",
+      "statement": "Creepage and clearance between net groups must meet the applicable standard for the working voltage, pollution degree and material; nets connected to the drain through DESAT diodes carry full bus voltage.",
+      "applicability": {
+        "conditions": [
+          "All high-voltage PCBs."
+        ]
+      },
+      "rationale": "Arcing and tracking risk depends on voltage, surface and contamination.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Creepage/clearance distance",
+          "value": "per applicable standard (e.g. UL 61800-5-1, IEC 60664-1, IPC-2221A)",
+          "unit": "mm",
+          "basis": "PRD-09301 §2.7 names these standards; no universal value",
+          "basis_type": "standard"
+        }
+      ],
+      "verification": {
+        "method": "human-review",
+        "procedure": "Derive distances from the governing standard; encode as KiCad net-class clearance rules; verify slots/cut-outs."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.7",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "NET_SPACING_TYPE classes",
+          "kind": "netlist",
+          "check": "EC-024"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "related": {
+        "rules": [
+          "KR-ISO-003",
+          "KR-ISO-004"
+        ]
+      }
+    },
+    {
+      "id": "KR-ISO-003",
+      "title": "Group nets of similar potential into spacing classes",
+      "category": "engineering-recommendation",
+      "domain": "isolation",
+      "statement": "Assign nets to spacing classes by reference potential (control/primary, each driver channel, DESAT midpoint, drain) so nets within a group route tightly while groups keep required spacing.",
+      "applicability": {
+        "conditions": [
+          "Isolated gate-driver and sensing layouts."
+        ]
+      },
+      "rationale": "Pins of one driver differ by ~20 V while groups differ by the bus voltage.",
+      "priority": "medium",
+      "verification": {
+        "method": "automated",
+        "procedure": "Check every net has a class and class-pair clearance rules exist.",
+        "aipe_hook": "KiCad net classes and custom DRC rules"
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "pstxnet.dat NET_SPACING_TYPE",
+          "kind": "netlist",
+          "check": "EC-024"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.7 Figures 19-20",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "analytically-checked",
+      "confidence": "high"
+    },
+    {
+      "id": "KR-ISO-004",
+      "title": "Slots and cut-outs to extend creepage",
+      "category": "engineering-recommendation",
+      "domain": "isolation",
+      "statement": "Use board slots or cut-outs across isolation gaps when creepage, not clearance, is limiting.",
+      "applicability": {
+        "conditions": [
+          "Isolation gaps limited by surface creepage."
+        ]
+      },
+      "rationale": "A cut-out lengthens the surface path; clearance (through air) is unchanged.",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Measure creepage path around slots; confirm minimum slot width with the fabricator."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§2.7 Figure 18",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD15SG00D2",
+          "document": "PRD-08391",
+          "location": "creepage grooves and transformer notches",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SPEC",
+          "location": "0.030 in slots",
+          "kind": "observed"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high"
+    },
+    {
+      "id": "KR-PR-001",
+      "title": "Hardware short-circuit protection faster than device withstand time",
+      "category": "hard-constraint",
+      "domain": "protection",
+      "statement": "Every SiC switch position in a product design must have hardware short-circuit/overcurrent protection whose total response (blanking + detection + soft turn-off) is shorter than the selected device's short-circuit withstand time under the actual conditions.",
+      "applicability": {
+        "conditions": [
+          "Product SiC converters."
+        ],
+        "exclusions": [
+          "Evaluation fixtures where protection is provided externally (CGD15SG00D2 has no DESAT)."
+        ]
+      },
+      "rationale": "SiC devices can fail within microseconds under short circuit; protection must act before failure.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Device short-circuit withstand time",
+          "value": "from the selected device datasheet or test",
+          "unit": "us",
+          "basis": "Device-specific; no universal value",
+          "basis_type": "datasheet"
+        }
+      ],
+      "verification": {
+        "method": "measurement",
+        "procedure": "Compute total response from driver datasheet and blanking; compare with device short-circuit data; verify by short-circuit test."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.3",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5 DESAT",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "rules": [
+          "KR-GD-004",
+          "KR-SN-005"
+        ],
+        "blocks": [
+          "CB-GD-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-PR-002",
+      "title": "Latched, combined fault reporting with UVLO lock-out",
+      "category": "engineering-recommendation",
+      "domain": "protection",
+      "statement": "Hold outputs off during supply UVLO, latch overcurrent faults until an explicit reset, and report a combined fault to the controller.",
+      "applicability": {
+        "conditions": [
+          "Gate-driver subsystems."
+        ]
+      },
+      "rationale": "Reduced rails cause linear operation or false turn-on; a latched combined fault simplifies safe controller response.",
+      "priority": "high",
+      "verification": {
+        "method": "measurement",
+        "procedure": "Fault-injection test of UVLO and OC paths, including reset timing."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.5",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5 RDY",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-GD-003"
+        ]
+      }
+    },
+    {
+      "id": "KR-PR-003",
+      "title": "Protect the auxiliary input feeding bias supplies",
+      "category": "engineering-recommendation",
+      "domain": "protection",
+      "statement": "Protect the auxiliary rail that feeds gate-bias supplies against reverse polarity and overvoltage (and, where practical, overcurrent/UVLO), with thresholds consistent with the bias converters' input range.",
+      "applicability": {
+        "conditions": [
+          "Auxiliary 12 V inputs to driver boards and power stages."
+        ]
+      },
+      "rationale": "A wiring fault on the auxiliary input can destroy all bias converters at once.",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Review thresholds against downstream input ratings."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.10",
+          "kind": "stated"
+        }
+      ],
+      "generality": "multi-source-consistent",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-PR-001"
+        ]
+      }
+    },
+    {
+      "id": "KR-TH-001",
+      "title": "Device loss below the thermal-path limit at worst-case ambient",
+      "category": "hard-constraint",
+      "domain": "thermal",
+      "statement": "Each device's worst-case loss must be below P_max = (T_J,max - T_A,max) / R_th,total, where R_th,total includes junction-case, interface/insulation and the device's effective share of the heat-sink resistance.",
+      "applicability": {
+        "conditions": [
+          "Heat-sinked power semiconductors."
+        ]
+      },
+      "rationale": "Exceeding the junction limit reduces lifetime or destroys the device.",
+      "priority": "critical",
+      "numerical_limits": [
+        {
+          "parameter": "Junction temperature limit",
+          "value": "T_J,max of the selected device",
+          "unit": "degC",
+          "basis": "Device datasheet (TI used 150 degC for C3M parts)",
+          "basis_type": "datasheet"
+        }
+      ],
+      "verification": {
+        "method": "calculation",
+        "procedure": "Compute with datasheet R_th,JC, measured or specified interface and sink resistances and maximum ambient; confirm by temperature measurement."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.5.6 Eq.32",
+          "kind": "stated",
+          "check": "EC-019"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.5.6 Eq.32",
+          "kind": "stated",
+          "check": "EC-020"
+        }
+      ],
+      "generality": "physics-derived",
+      "validation_status": "analytically-checked",
+      "confidence": "high",
+      "related": {
+        "skills": [
+          "SKILL-006"
+        ]
+      }
+    },
+    {
+      "id": "KR-TH-002",
+      "title": "Rated insulating interface for shared heat sinks",
+      "category": "engineering-recommendation",
+      "domain": "thermal",
+      "statement": "When several exposed-drain packages share a heat sink, use a rated insulating thermal interface and include its thermal resistance in the budget.",
+      "applicability": {
+        "conditions": [
+          "TO-247 class packages on common heat sinks."
+        ]
+      },
+      "rationale": "Exposed drains are at different potentials; insulation adds thermal resistance.",
+      "priority": "high",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Check interface voltage rating, creepage at the package edge and thermal resistance."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.5.6",
+          "kind": "stated"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "reference-derived",
+      "confidence": "medium",
+      "related": {
+        "skills": [
+          "SKILL-006"
+        ]
+      }
+    },
+    {
+      "id": "KR-TH-003",
+      "title": "NTC readings are not junction temperature",
+      "category": "human-review-requirement",
+      "domain": "thermal",
+      "statement": "Treat module/board NTC readings as substrate or board temperature for cooling supervision; do not use them as junction-temperature protection without a validated thermal model, and isolate NTC feedback.",
+      "applicability": {
+        "conditions": [
+          "Designs using thermistor feedback from modules or heat sinks."
+        ]
+      },
+      "rationale": "Thermistor temperature differs substantially from junction temperature; module NTC isolation can fail after a catastrophic event.",
+      "priority": "medium",
+      "verification": {
+        "method": "human-review",
+        "procedure": "Review how firmware uses the temperature; calibrate the chain with a potentiometer."
+      },
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.7",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§3.4",
+          "kind": "stated"
+        }
+      ],
+      "generality": "manufacturer-guidance",
+      "validation_status": "reference-derived",
+      "confidence": "high",
+      "related": {
+        "blocks": [
+          "CB-PR-002"
+        ]
+      }
+    },
+    {
+      "id": "KR-PE-001",
+      "title": "Verify soft-switching range across the operating envelope",
+      "category": "human-review-requirement",
+      "domain": "power_electronics",
+      "statement": "For phase-shift-controlled converters, verify the ZVS boundary and RMS currents across the full voltage-ratio and load range, not only at the nominal point; plan modulation (e.g. EPS) where ZVS is lost.",
+      "applicability": {
+        "conditions": [
+          "DAB and related phase-shift converters."
+        ]
+      },
+      "rationale": "Away from unity voltage ratio and at light load, single-phase-shift loses ZVS and circulating current rises.",
+      "priority": "high",
+      "verification": {
+        "method": "simulation",
+        "procedure": "Simulate the operating envelope; compare SPS and EPS losses."
+      },
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.2, §4.5.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§2.3.4.1",
+          "kind": "stated",
+          "check": "EC-010"
+        }
+      ],
+      "generality": "single-reference-observation",
+      "validation_status": "analytically-checked",
+      "confidence": "medium"
+    }
+  ]
+}

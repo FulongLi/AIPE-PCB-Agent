@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "id": "CB-IS-003",
+  "name": "SIP isolated DC/DC per channel with input CM choke and optional LDO post-regulation",
+  "category": "isolated_supplies",
+  "function": "Per-channel 2 W isolated DC/DC module behind a fuse and common-mode choke; default output used directly (+15/-3 V) or post-regulated with positive and negative LDOs to precise levels (+15/-4 V, +18/-4 V).",
+  "inputs": [
+    {
+      "name": "12V",
+      "description": "protected 12 V input",
+      "domain": "auxiliary",
+      "range": "10.8-13.2 V"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "HS/LS-VDD",
+      "description": "positive gate rail",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "HS/LS-Source",
+      "description": "Kelvin-source reference",
+      "domain": "isolated-driver"
+    },
+    {
+      "name": "HS/LS-VSS",
+      "description": "negative gate rail",
+      "domain": "isolated-driver"
+    }
+  ],
+  "operating_conditions": [
+    "2 W per channel; LDO outputs at least 0.3 V inside module rails (PRD-06992 §4.3.4)."
+  ],
+  "required_components": [
+    {
+      "role": "fuse",
+      "value_or_part": "Bel Fuse SSQ 750 (750 mA)",
+      "source_refdes": "FT1, FT2"
+    },
+    {
+      "role": "common-mode choke",
+      "value_or_part": "Würth 744226S 10 uH",
+      "source_refdes": "LT1, LT2"
+    },
+    {
+      "role": "module input capacitor",
+      "value_or_part": "10 uF between choke and module",
+      "source_refdes": "CB6, CB7"
+    },
+    {
+      "role": "isolated DC/DC",
+      "value_or_part": "RECOM R12P21503D (+15/-3) or Murata MGJ2D122005SC (+20/-5)",
+      "source_refdes": "UT4, UT5",
+      "component": "CMP-R12P21503D"
+    },
+    {
+      "role": "positive LDO (option)",
+      "value_or_part": "LT3082EDD#PBF, R_SET 1.5 M or 1.8 M",
+      "source_refdes": "UB6, UB8"
+    },
+    {
+      "role": "negative LDO (option)",
+      "value_or_part": "LT3015EDD#TRPBF, divider 54.9 k||54.9 k / 12.1 k",
+      "source_refdes": "UB5, UB7"
+    },
+    {
+      "role": "rail decoupling",
+      "value_or_part": "2 x 10 uF per rail",
+      "source_refdes": "CB8-CB15",
+      "component": "CMP-GCM31CR71C106KA64L"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Positive LDO output",
+      "expression": "V = R_SET * 10 uA",
+      "basis": "PRD-06992 §4.3.4",
+      "example": "1.8 M -> 18 V",
+      "check": "EC-007"
+    },
+    {
+      "name": "Negative LDO output",
+      "expression": "V = -1.22 V * (1 + R2/R1) - I_ADJ * R2",
+      "basis": "PRD-06992 §4.3.4",
+      "example": "-3.99 V with 2025 BOM values; -3.99 V with Rev V1 schematic values",
+      "check": "EC-005"
+    },
+    {
+      "name": "Maximum switching frequency from bias",
+      "expression": "f_sw <= P_max / (Q_G * dV)",
+      "basis": "PRD-09301 §3.7",
+      "example": "1330 nC, 19 V, 2 W -> 79 kHz",
+      "check": "EC-004"
+    }
+  ],
+  "interface_requirements": [
+    "Changing V_GS rails also changes DESAT blanking (biased from VDD) (PRD-06992 §4.3.4)."
+  ],
+  "pcb_constraints": [
+    "CM choke physically close to the module; input capacitor between choke and module (PRD-09301 §3.8) - KR-IS-002.",
+    "Separate high-side and low-side islands with no shared copper."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT4, UT5, LT1, LT2, UB5-UB8",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 3",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.3",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-BOM",
+          "location": "variant sheets",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "LDO set-point equations recomputed for both published divider sets (EC-005, EC-006, EC-007) and the frequency limit (EC-004). No AIPE hardware or simulation.",
+  "limitations": [
+    "Module datasheets for R12P21503D and MGJ2D122005SC were not verified (see component records).",
+    "Schematic Rev V1 values differ from the 2025 BOM."
+  ],
+  "alternatives": [
+    {
+      "approach": "Use module output directly without LDOs",
+      "trade_off": "Lower cost; rails unregulated but suitable for most end applications per Wolfspeed.",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§1.1",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "isolated dc/dc",
+    "ldo",
+    "common mode choke",
+    "gate bias",
+    "post regulation"
+  ],
+  "related": {
+    "components": [
+      "CMP-R12P21503D",
+      "CMP-MGJ2D122005SC",
+      "CMP-GCM31CR71C106KA64L"
+    ],
+    "skills": [
+      "SKILL-004"
+    ],
+    "rules": [
+      "KR-IS-001",
+      "KR-IS-002",
+      "KR-IS-003"
+    ]
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "CB-PR-001",
+  "name": "Auxiliary input protection for gate-driver bias rails",
+  "category": "protection",
+  "function": "Protects the 12 V auxiliary input feeding isolated bias supplies against overvoltage, reverse polarity and overload.",
+  "inputs": [
+    {
+      "name": "VIN_AUX",
+      "description": "external 12 V",
+      "domain": "auxiliary"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "12V",
+      "description": "protected rail to bias modules, fans, relays",
+      "domain": "auxiliary"
+    }
+  ],
+  "operating_conditions": [
+    "Alternative A (TI): eFuse OVP 15 V, UVLO 9 V, 2.2 A. Alternative B (Wolfspeed): P-FET reverse protection with 20 V Zener clamp."
+  ],
+  "required_components": [
+    {
+      "role": "eFuse (A)",
+      "value_or_part": "TPS26400PWPR",
+      "source_refdes": "U4",
+      "component": "CMP-TPS2640"
+    },
+    {
+      "role": "TVS (A)",
+      "value_or_part": "SMCJ36CA, SMBJ36CA",
+      "source_refdes": "D7, D5"
+    },
+    {
+      "role": "P-channel MOSFET (B)",
+      "value_or_part": "DMP3056L-7",
+      "source_refdes": "UB1"
+    },
+    {
+      "role": "Zener clamp (B)",
+      "value_or_part": "SMAJ5932B-TP 20 V",
+      "source_refdes": "DB1"
+    },
+    {
+      "role": "bulk capacitor (B)",
+      "value_or_part": "100 uF 25 V tantalum",
+      "source_refdes": "CB5"
+    }
+  ],
+  "design_calculations": [],
+  "interface_requirements": [
+    "Thresholds consistent with downstream bias-module input range (UCC14141-Q1 1.5 W at 10.8-13.2 V)."
+  ],
+  "pcb_constraints": [
+    "Protection at the connector before distribution to isolated islands."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U4, D5, D7, D9",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.1 Figure 3-8",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UB1, DB1, DB4, CB5",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.4.1",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-SCH",
+          "location": "sheet 3",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "reference-derived",
+  "validation_notes": "Two manufacturer implementations recorded; thresholds not re-derived by AIPE.",
+  "limitations": [
+    "TI's own description of the J15 supply conflicts (12 V 2.5 A vs 15 V 700 mA)."
+  ],
+  "alternatives": [
+    {
+      "approach": "P-FET reverse-polarity protection with Zener clamp (Wolfspeed)",
+      "trade_off": "Very low cost and loss; no current limit or UVLO.",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-09301",
+          "location": "§5.10",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "efuse",
+    "reverse polarity",
+    "input protection",
+    "auxiliary supply"
+  ],
+  "related": {
+    "components": [
+      "CMP-TPS2640"
+    ],
+    "skills": [
+      "SKILL-004"
+    ],
+    "rules": [
+      "KR-PR-003"
+    ]
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "id": "CMP-UCC21710-Q1",
+  "manufacturer": "Texas Instruments",
+  "part_number": "UCC21710-Q1",
+  "orderable_variants": [
+    "UCC21710QDWQ1",
+    "UCC21710QDWRQ1"
+  ],
+  "category": "driver_ics",
+  "description": "Reinforced isolated single-channel gate driver for SiC MOSFETs/IGBTs with split outputs, overcurrent (DESAT/shunt) detection, soft turn-off, active Miller clamp, UVLO with RDY and an isolated analog-to-PWM channel.",
+  "package": "SOIC-16 DW",
+  "key_parameters": [
+    {
+      "name": "Isolation rating",
+      "value": "5.7",
+      "unit": "kVrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Working isolation voltage",
+      "value": "1.5",
+      "unit": "kVrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Description"
+      }
+    },
+    {
+      "name": "Peak source/sink current",
+      "value": "±10",
+      "unit": "A",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Maximum output drive voltage VDD-VEE",
+      "value": "33",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "CMTI (minimum)",
+      "value": "150",
+      "unit": "V/ns",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Overcurrent detection threshold VOCTH",
+      "value": "0.63 / 0.7 / 0.77",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D electrical characteristics, VOCTH"
+      },
+      "condition": "min / typ / max"
+    },
+    {
+      "name": "Overcurrent response time",
+      "value": "270",
+      "unit": "ns",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Soft turn-off current on fault",
+      "value": "400",
+      "unit": "mA",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Internal active Miller clamp",
+      "value": "4",
+      "unit": "A",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "AIN internal current source IAIN",
+      "value": "196 / 200 / 209",
+      "unit": "uA",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D electrical characteristics, IAIN"
+      },
+      "condition": "min / typ / max, VAIN = 2.5 V"
+    },
+    {
+      "name": "Propagation delay (maximum)",
+      "value": "130",
+      "unit": "ns",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Package creepage and clearance",
+      "value": ">8",
+      "unit": "mm",
+      "source": {
+        "document": "datasheet",
+        "location": "SLUSDH8D p.1 Features"
+      }
+    },
+    {
+      "name": "Overcurrent deglitch filter (as used by Wolfspeed blanking calculation)",
+      "value": "120",
+      "unit": "ns",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "§4.4.4"
+      },
+      "condition": "nominal"
+    }
+  ],
+  "application_conditions": [
+    "SiC MOSFETs and IGBTs up to the device's isolation and working-voltage ratings; used with 700-800 V discrete SiC (TIDA-010054) and 1700 V module drivers (CGD1700HB2M-UNA).",
+    "Requires an isolated secondary supply (VDD-VEE up to 33 V) and a 3.3 V/5 V primary supply."
+  ],
+  "design_considerations": [
+    "Split OUTH/OUTL allow independent turn-on and turn-off resistors without steering diodes.",
+    "The OC pin supports DESAT with external HV diode(s) or shunt sensing; trip voltage and blanking are set externally (see CB-GD-001).",
+    "Wire IN+/IN- of the HS and LS drivers to each other's PWM for hardware interlock; it is not a dead-time generator (PRD-09301 §5.6).",
+    "The analog-to-PWM channel is referenced to the driver's isolated side; prefer the low-side driver for temperature sensing (PRD-09301 §3.4)."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SLUSDH8D (June 2024)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-UCC21710-Q1.pdf",
+      "bytes": 2573175,
+      "sha256": "9b7984d54f7e26686f947930e91b7573acaac528a3befeb676995c16a7635202",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U29, U30, U34, U35, U37, U38, U40, U41",
+      "role": "isolated gate driver, one per SiC MOSFET (UCC21710QDWQ1)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line UCC21710QDWQ1",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.5 Figure 3-13",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT2, UT3",
+      "role": "low-side and high-side isolated gate drivers (UCC21710QDWRQ1)",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-BOM",
+          "location": "all three variant sheets, item UT2/UT3",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-ORCAD",
+          "location": "pstxnet.dat UT2/UT3",
+          "kind": "netlist",
+          "check": "EC-023"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "isolated gate driver",
+    "desat",
+    "soft turn-off",
+    "miller clamp",
+    "sic"
+  ],
+  "related": {
+    "blocks": [
+      "CB-GD-001"
+    ],
+    "skills": [
+      "SKILL-001"
+    ]
+  }
+}

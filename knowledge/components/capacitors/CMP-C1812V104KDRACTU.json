@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "id": "CMP-C1812V104KDRACTU",
+  "manufacturer": "KEMET",
+  "part_number": "C1812V104KDRACTU",
+  "category": "capacitors",
+  "description": "MLCC 0.1 uF, 1000 V, X7R, 1812.",
+  "package": "1812",
+  "key_parameters": [
+    {
+      "name": "Capacitance",
+      "value": "0.1",
+      "unit": "uF",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      },
+      "condition": "±10%, X7R"
+    },
+    {
+      "name": "Rated voltage",
+      "value": "1000",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      }
+    }
+  ],
+  "application_conditions": [
+    "High-voltage local decoupling and snubbing positions in an 800 V power stage."
+  ],
+  "design_considerations": [
+    "Verify the exact circuit position in the CAD source before reuse; TIDA-010054 uses eight (C15, C16, C19, C20, C25, C26, C28, C30) in the power stage figure."
+  ],
+  "datasheet": {
+    "url": "https://search.kemet.com/component-documentation/download/specsheet/C1812V104KDRACTU",
+    "url_status": "verified-pdf",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-C1812V104KDRACTU.pdf",
+      "bytes": 287886,
+      "sha256": "6efbedd9023c6a9a647dc99424d5aea0cf45748759793f375261bab2c5058313",
+      "resolved_url": "https://search.kemet.com/component-documentation/download/specsheet/C1812V104KDRACTU"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "C15, C16, C19, C20, C25, C26, C28, C30",
+      "role": "1 kV ceramic capacitors in the power stage",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line C1812V104KDRACTU",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "Figure 3-1",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "high voltage mlcc",
+    "decoupling"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-003"
+    ]
+  }
+}

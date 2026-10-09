@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "id": "CMP-R12P21503D",
+  "manufacturer": "RECOM",
+  "part_number": "R12P21503D",
+  "category": "isolated_supplies",
+  "description": "2 W unregulated isolated DC/DC SIP module with asymmetric +15 V / -3 V outputs for SiC gate drivers.",
+  "package": "SIP7",
+  "key_parameters": [
+    {
+      "name": "Outputs",
+      "value": "+15 / -3",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "Table 11"
+      }
+    },
+    {
+      "name": "Input (12 V nominal family)",
+      "value": "12",
+      "unit": "V",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "Table 3, supply 10.8-13.2 V"
+      }
+    },
+    {
+      "name": "Output power",
+      "value": "2",
+      "unit": "W",
+      "source": {
+        "document": "reference",
+        "reference": "REF-WS-CGD1700HB2M-UNA",
+        "reference_document": "PRD-06992",
+        "location": "Table 2, per channel"
+      }
+    },
+    {
+      "name": "Isolation (series datasheet)",
+      "value": "6.4",
+      "unit": "kVDC",
+      "source": {
+        "document": "datasheet",
+        "location": "RxxP2xx series datasheet p.1"
+      },
+      "condition": "series datasheet; this asymmetric variant is not listed in it"
+    },
+    {
+      "name": "Isolation capacitance (series datasheet)",
+      "value": "1.5 min / 10 max",
+      "unit": "pF",
+      "source": {
+        "document": "datasheet",
+        "location": "RxxP2xx series datasheet, isolation characteristics"
+      },
+      "condition": "series datasheet; confirm for this variant"
+    }
+  ],
+  "application_conditions": [
+    "Per-channel gate-driver bias where an unregulated +15/-3 V supply is acceptable (most end applications per Wolfspeed)."
+  ],
+  "design_considerations": [
+    "Output is unregulated; add LDOs or Zener splitting where precise gate levels are needed (CGD1700HB2M-UNA -R variants).",
+    "Pre-qualified and agency-certified modules simplify isolation design (PRD-04814) but cost more than discrete solutions."
+  ],
+  "datasheet": {
+    "url": "https://recom-power.com/pdf/Econoline/RxxP2xx.pdf",
+    "url_status": "unverified",
+    "note": "The verified series datasheet RxxP2xx does not list the asymmetric R12P21503D; a variant-specific datasheet was not located on 2026-10-09.",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-R12P21503D.pdf",
+      "bytes": 898943,
+      "sha256": "a7a64ad1d1b0d8a229d9d7310b9e6567efab6d3c2f58d081146e0cd9e402b0a2",
+      "resolved_url": "https://recom-power.com/pdf/Econoline/RxxP2xx.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-WS-CGD1700HB2M-UNA",
+      "refdes": "UT4, UT5",
+      "role": "per-channel isolated bias, default -UNA variant",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "CGD1700-BOM",
+          "location": "sheet 1 item 29",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "Table 11",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [
+    {
+      "part_or_family": "MGJ2D series",
+      "manufacturer": "Murata",
+      "relationship": "module alternative named by Wolfspeed; MGJ2D122005SC used in the -R1/-R2 variants",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 Power supply module",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "Table 11",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "part_or_family": "QA15115R2",
+      "manufacturer": "Mornsun",
+      "relationship": "module alternative named by Wolfspeed",
+      "evidence": [
+        {
+          "source": "REF-WS-PRD-04814",
+          "document": "PRD-04814",
+          "location": "§2 Power supply module",
+          "kind": "stated"
+        }
+      ]
+    },
+    {
+      "part_or_family": "R12P215S (+15 V single output)",
+      "manufacturer": "RECOM",
+      "relationship": "Wolfspeed's suggested module for unipolar +15/0 V operation",
+      "evidence": [
+        {
+          "source": "REF-WS-CGD1700HB2M-UNA",
+          "document": "PRD-06992",
+          "location": "§4.3.5",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "dc/dc module",
+    "isolated bias",
+    "sip",
+    "unregulated"
+  ],
+  "related": {
+    "blocks": [
+      "CB-IS-003"
+    ],
+    "skills": [
+      "SKILL-004"
+    ]
+  }
+}

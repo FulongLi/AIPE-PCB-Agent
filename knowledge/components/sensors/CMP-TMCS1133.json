@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "id": "CMP-TMCS1133",
+  "manufacturer": "Texas Instruments",
+  "part_number": "TMCS1133",
+  "orderable_variants": [
+    "TMCS1133B1QDVGR"
+  ],
+  "category": "sensors",
+  "description": "Isolated Hall-effect current sensor, 1 MHz bandwidth, integrated conductor and overcurrent detection output.",
+  "package": "SOIC-10 (DVG)",
+  "key_parameters": [
+    {
+      "name": "Continuous current",
+      "value": "80",
+      "unit": "Arms",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E p.1 Features"
+      }
+    },
+    {
+      "name": "Signal bandwidth",
+      "value": "1",
+      "unit": "MHz",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E p.1 Features"
+      }
+    },
+    {
+      "name": "Overcurrent detection response",
+      "value": "100",
+      "unit": "ns",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E p.1 Features"
+      }
+    },
+    {
+      "name": "Supply range",
+      "value": "3 to 5.5",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E p.1 Features"
+      }
+    },
+    {
+      "name": "Sensitivity of B1A option",
+      "value": "25",
+      "unit": "mV/A",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E device comparison table"
+      }
+    },
+    {
+      "name": "Maximum reinforced working voltage",
+      "value": "950 Vrms / 1343 VDC",
+      "unit": "",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E insulation specifications VIOWM"
+      }
+    },
+    {
+      "name": "Reinforced working voltage as stated by TI design guide",
+      "value": "1100",
+      "unit": "VDC",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDUES0",
+        "location": "§2.2.8"
+      },
+      "condition": "older statement; differs from current datasheet"
+    },
+    {
+      "name": "Creepage and clearance",
+      "value": ">=8",
+      "unit": "mm",
+      "source": {
+        "document": "datasheet",
+        "location": "SBOSAG0E insulation specifications"
+      }
+    },
+    {
+      "name": "Overcurrent trip settings in TIDA-010054",
+      "value": "45 A primary / 70 A secondary",
+      "unit": "",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDUES0",
+        "location": "§3.3"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Transformer/tank current sensing and fast switch-node overcurrent protection where a shunt is impractical."
+  ],
+  "design_considerations": [
+    "The fault output can trip PWM directly through an MCU GPIO/trip zone (TIDA-010054).",
+    "Working-voltage capability must be checked against the current datasheet: TI's design guide and the 2026 datasheet state different values."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SBOSAG0E (May 2026)",
+    "note": "TI BOM orderable TMCS1133B1QDVGR is not listed in SBOSAG0E, which lists TMCS1133B1AQDVGR; confirm orderable status.",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-TMCS1133.pdf",
+      "bytes": 3505624,
+      "sha256": "2a5d4408fae0a705495db52f34a8f2451ec6cd3674a5274ebb0a96639dcd92dd",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U2, U15",
+      "role": "primary and secondary transformer-current sensing (TMCS1133B1QDVGR)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line TMCS1133B1QDVGR",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.3 Figure 3-7",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "hall sensor",
+    "current sensing",
+    "overcurrent",
+    "tank current"
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-004"
+    ],
+    "skills": [
+      "SKILL-005"
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "CMP-AMC1306M05",
+  "manufacturer": "Texas Instruments",
+  "part_number": "AMC1306M05",
+  "orderable_variants": [
+    "AMC1306M05DWVR"
+  ],
+  "category": "sensors",
+  "description": "Reinforced isolated delta-sigma modulator, ±50 mV input, uncoded CMOS bitstream.",
+  "package": "SOIC-8 stretched (DWV)",
+  "key_parameters": [
+    {
+      "name": "Input range",
+      "value": "±50",
+      "unit": "mV",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS734D p.1 Features"
+      }
+    },
+    {
+      "name": "Reinforced isolation",
+      "value": "7000",
+      "unit": "Vpk",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS734D p.1 Features"
+      }
+    },
+    {
+      "name": "Isolation (UL1577)",
+      "value": "5000",
+      "unit": "Vrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS734D p.1 Features"
+      },
+      "condition": "1 minute"
+    },
+    {
+      "name": "Transient immunity (typ)",
+      "value": "100",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS734D p.1 Features"
+      }
+    },
+    {
+      "name": "Resolution / dynamic range with digital filter",
+      "value": "16 bit / 85 dB at 78 kSPS",
+      "unit": "",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS734D p.1 Description"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Isolated shunt sensing far from the controller, decoded by an MCU sigma-delta filter (C2000 SDFM)."
+  ],
+  "design_considerations": [
+    "Requires an external modulator clock; TI generates it with a spare PWM and compensates propagation delay with a delayed clock (Table 4-1).",
+    "A digital bitstream is less vulnerable to noise over longer traces than an analog signal (TIDUES0 §3.2.2)."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/amc1306m05.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SBAS734D (August 2026)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-AMC1306M05.pdf",
+      "bytes": 1750134,
+      "sha256": "8516d55d290034b8c2996a9b97b1d9fb1c16647e91b7dddc35dfc87bafd939aa",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/amc1306m05.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U10",
+      "role": "secondary output current sensing with 1.5 mOhm shunt",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line AMC1306M05DWVR",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2-3.3",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "delta-sigma",
+    "modulator",
+    "shunt",
+    "sdfm"
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-003"
+    ],
+    "skills": [
+      "SKILL-005"
+    ]
+  }
+}

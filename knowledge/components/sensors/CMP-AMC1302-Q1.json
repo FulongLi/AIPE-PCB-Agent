@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "id": "CMP-AMC1302-Q1",
+  "manufacturer": "Texas Instruments",
+  "part_number": "AMC1302-Q1",
+  "orderable_variants": [
+    "AMC1302QDWVRQ1"
+  ],
+  "category": "sensors",
+  "description": "Automotive reinforced isolated amplifier with ±50 mV input for shunt current sensing.",
+  "package": "SOIC-8 stretched (DWV)",
+  "key_parameters": [
+    {
+      "name": "Input range",
+      "value": "±50",
+      "unit": "mV",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "Fixed gain",
+      "value": "41",
+      "unit": "V/V",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "Offset error (max)",
+      "value": "±50",
+      "unit": "uV",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "Gain error (max)",
+      "value": "±0.2",
+      "unit": "%",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "CMTI (min)",
+      "value": "100",
+      "unit": "kV/us",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "Reinforced isolation",
+      "value": "7000",
+      "unit": "Vpk",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Features"
+      }
+    },
+    {
+      "name": "Working voltage",
+      "value": "1.5",
+      "unit": "kVrms",
+      "source": {
+        "document": "datasheet",
+        "location": "SBAS920B p.1 Description"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Shunt-based current sensing where the shunt sits at a floating or high-side potential."
+  ],
+  "design_considerations": [
+    "Size the shunt for full-scale current below ±50 mV with margin (TI: 12.5 A x 3 mOhm = 37.5 mV) and check shunt dissipation.",
+    "Kelvin-connect the shunt sense pads and filter the input (TI uses 10 ohm + 82 nF)."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/amc1302-q1.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SBAS920B (June 2022)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-AMC1302-Q1.pdf",
+      "bytes": 1648731,
+      "sha256": "47671c4b6c561e8e2d1a61e32a4832b62db2f61e488b5f166af25eba8a6d3fd3",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/amc1302-q1.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U18",
+      "role": "primary DC current sensing with 3 mOhm shunt (AMC1302QDWVRQ1)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line AMC1302QDWVRQ1",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2-3.3",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "isolated amplifier",
+    "shunt",
+    "current sensing"
+  ],
+  "related": {
+    "blocks": [
+      "CB-SN-003"
+    ],
+    "skills": [
+      "SKILL-005"
+    ]
+  }
+}

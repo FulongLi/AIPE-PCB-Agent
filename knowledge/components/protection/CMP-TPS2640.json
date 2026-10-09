@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "CMP-TPS2640",
+  "manufacturer": "Texas Instruments",
+  "part_number": "TPS2640",
+  "orderable_variants": [
+    "TPS26400PWPR"
+  ],
+  "category": "protection",
+  "description": "42 V, 2 A eFuse with integrated reverse-input-polarity protection, adjustable UVLO/OVP/current limit and IMON.",
+  "package": "HTSSOP-16 (PWP)",
+  "key_parameters": [
+    {
+      "name": "Operating voltage",
+      "value": "4.2 to 42",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLVSFQ6A p.1 Features"
+      },
+      "condition": "45 V absolute maximum"
+    },
+    {
+      "name": "Reverse input polarity",
+      "value": "down to -42",
+      "unit": "V",
+      "source": {
+        "document": "datasheet",
+        "location": "SLVSFQ6A p.1 Features"
+      }
+    },
+    {
+      "name": "Total on-resistance",
+      "value": "150",
+      "unit": "mOhm",
+      "source": {
+        "document": "datasheet",
+        "location": "SLVSFQ6A p.1 Features"
+      }
+    },
+    {
+      "name": "Adjustable current limit",
+      "value": "0.1 to 2.23",
+      "unit": "A",
+      "source": {
+        "document": "datasheet",
+        "location": "SLVSFQ6A p.1 Features"
+      }
+    },
+    {
+      "name": "TIDA-010054 settings",
+      "value": "OVP 15 V, UVLO 9 V, ILIM 2.2 A",
+      "unit": "",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDUES0",
+        "location": "§3.4.1"
+      }
+    }
+  ],
+  "application_conditions": [
+    "Protecting a 12 V auxiliary rail that feeds gate-driver bias modules, fans and relays."
+  ],
+  "design_considerations": [
+    "Set UVLO/OVP consistent with the input range of the bias modules it feeds.",
+    "Add TVS for surge (TI uses SMCJ36CA/SMBJ36CA)."
+  ],
+  "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/tps2640.pdf",
+    "url_status": "verified-pdf",
+    "revision": "SLVSFQ6A (June 2021)",
+    "acquisition": {
+      "status": "downloaded",
+      "retrieved": "2026-10-09",
+      "cache_path": ".cache/references/datasheets/CMP-TPS2640.pdf",
+      "bytes": 5213915,
+      "sha256": "41de915abce630562a0f9e09962a1c262e2176e1b8d8c58800a8e4a0e4d97fd3",
+      "resolved_url": "https://www.ti.com/lit/ds/symlink/tps2640.pdf"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U4",
+      "role": "auxiliary 12 V input eFuse (TPS26400PWPR)",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line TPS26400PWPR",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.4.1 Figure 3-8",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "efuse",
+    "input protection",
+    "reverse polarity"
+  ],
+  "related": {
+    "blocks": [
+      "CB-PR-001"
+    ]
+  }
+}

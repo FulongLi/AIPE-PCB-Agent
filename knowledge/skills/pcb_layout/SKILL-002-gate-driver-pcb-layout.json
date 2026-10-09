@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "id": "SKILL-002",
+  "title": "Gate driver PCB layout",
+  "domain": "pcb_layout",
+  "document": "SKILL-002-gate-driver-pcb-layout.md",
+  "purpose": "Convert a gate-driver schematic into placement, stack-up, routing and isolation constraints with low-inductance gate loops and intact isolation barriers.",
+  "applicable_conditions": [
+    "Isolated SiC gate drivers on multilayer PCBs",
+    "Drivers on the power board or on plug-in driver boards"
+  ],
+  "not_applicable": [
+    "Busbar/laminated power-stage design",
+    "Numeric creepage/clearance values (taken from the governing standard)"
+  ],
+  "principles": [
+    "Power commutation loop has priority over the gate loop",
+    "Gate and Kelvin source as adjacent-layer pours with Kelvin shielding",
+    "Decoupling capacitors inside the gate loop",
+    "Driver adjacent to its switch; connectors dominate inductance",
+    "No copper crossing isolation barriers on any layer",
+    "Net classes grouped by potential",
+    "Slots for creepage",
+    "Differential pairs and short single-ended segments with filters at receivers"
+  ],
+  "procedure": [
+    "Assign nets to spacing classes and create class-pair clearance rules",
+    "Define stack-up with gate/Kelvin adjacency",
+    "Place power stage and HF capacitors, then drivers at their switches",
+    "Place bias supplies inside islands with CM choke order",
+    "Draw isolation keep-outs and slots",
+    "Route DESAT drain connection short",
+    "Route PWM/fault pairs and filters",
+    "Add V_GS probe point at device side of R_G",
+    "Run DRC and inspect every copper layer"
+  ],
+  "component_considerations": [
+    "Compact gate-resistor and capacitor packages",
+    "Connector inductance for plug-in drivers; MMCX for V_GS",
+    "Bias transformer/module pin spacing for creepage"
+  ],
+  "pcb_constraints": [
+    "KR-PCB-001",
+    "KR-PCB-002",
+    "KR-PCB-003",
+    "KR-PCB-004",
+    "KR-PCB-005",
+    "KR-ISO-001",
+    "KR-ISO-002",
+    "KR-ISO-003",
+    "KR-ISO-004",
+    "KR-IS-002",
+    "PE-PCB-001, PE-PCB-007, PE-PCB-008"
+  ],
+  "verification_methods": [
+    "KiCad DRC with net-class clearances",
+    "Netlist check that Kelvin and power source nets are distinct",
+    "Extract driver-to-device distance and decoupling loop",
+    "Per-layer image review",
+    "V_GS ringing measurement"
+  ],
+  "known_limitations": [
+    "TI layout observations are visual only",
+    "Manufacturer guidance not quantified by AIPE parasitic extraction",
+    "PRD-09301 creepage figures not extracted"
+  ],
+  "keywords": [
+    "layout",
+    "pcb",
+    "gate loop",
+    "kelvin source",
+    "isolation",
+    "creepage",
+    "clearance",
+    "net class",
+    "decoupling",
+    "stack-up",
+    "routing",
+    "placement"
+  ],
+  "sources": [
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "PRD-09301",
+      "location": "§1.4, §2.1-2.7, §3.8, §4, §6",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-WS-CGD15SG00D2",
+      "document": "PRD-08391",
+      "location": "PCB Layout",
+      "kind": "stated"
+    },
+    {
+      "source": "REF-TI-TIDA-010054",
+      "document": "TIDRZW3",
+      "location": "layer plots",
+      "kind": "observed"
+    },
+    {
+      "source": "REF-WS-CGD1700HB2M-UNA",
+      "document": "CGD1700-ORCAD",
+      "location": "NET_SPACING_TYPE",
+      "kind": "netlist",
+      "check": "EC-024"
+    }
+  ],
+  "related": {
+    "rules": [
+      "KR-PCB-001",
+      "KR-PCB-002",
+      "KR-PCB-003",
+      "KR-PCB-004",
+      "KR-PCB-005",
+      "KR-ISO-001",
+      "KR-ISO-002",
+      "KR-ISO-003",
+      "KR-ISO-004",
+      "KR-IS-002"
+    ],
+    "skills": [
+      "SKILL-001",
+      "SKILL-003",
+      "SKILL-006"
+    ],
+    "project_rules": [
+      "PE-PCB-001",
+      "PE-PCB-007",
+      "PE-PCB-008"
+    ]
+  },
+  "validation_status": "reference-derived"
+}

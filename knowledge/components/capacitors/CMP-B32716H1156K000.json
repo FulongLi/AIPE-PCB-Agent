@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "id": "CMP-B32716H1156K000",
+  "manufacturer": "TDK (EPCOS)",
+  "part_number": "B32716H1156K000",
+  "category": "capacitors",
+  "description": "Metallized polypropylene film capacitor 15 uF, 1.1 kV DC, radial box, 4 pins.",
+  "package": "radial box, 4-pin THT",
+  "key_parameters": [
+    {
+      "name": "Capacitance",
+      "value": "15",
+      "unit": "uF",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      },
+      "condition": "±10%"
+    },
+    {
+      "name": "Rated DC voltage",
+      "value": "1.1",
+      "unit": "kV",
+      "source": {
+        "document": "reference",
+        "reference": "REF-TI-TIDA-010054",
+        "reference_document": "TIDRZW1",
+        "location": "BOM description"
+      }
+    }
+  ],
+  "application_conditions": [
+    "800 V-class DC links with high-frequency ripple current."
+  ],
+  "design_considerations": [
+    "Low ESR film is chosen for ripple current at the switching frequency (TIDUES0 §2.3.4.5).",
+    "Voltage rating gives margin above the 800 V maximum bus; derating basis is not stated by TI."
+  ],
+  "datasheet": {
+    "url": null,
+    "url_status": "not-located",
+    "note": "TDK product pages refused automated access (HTTP 403) on 2026-10-09; parameters are from the TI BOM description only.",
+    "acquisition": {
+      "status": "not-attempted"
+    }
+  },
+  "reference_usage": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "C23, C24",
+      "role": "primary (800 V) DC-link bulk capacitance, 2 x 15 uF = 30 uF",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM line B32716H1156K000",
+          "kind": "observed"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW3",
+          "location": "top overlay placement",
+          "kind": "observed",
+          "note": "placement observed in rendered layer plot"
+        }
+      ]
+    }
+  ],
+  "alternatives": [],
+  "external_refs": {
+    "aipe_component_db": null,
+    "aipe_transistor_db": null
+  },
+  "keywords": [
+    "dc-link",
+    "capacitor",
+    "decoupling"
+  ],
+  "related": {
+    "skills": [
+      "SKILL-003"
+    ],
+    "blocks": []
+  }
+}

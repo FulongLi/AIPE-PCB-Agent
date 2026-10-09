@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "id": "CB-SN-001",
+  "name": "Isolated HV bus voltage sensing with resistor ladder and isolated amplifier",
+  "category": "sensing",
+  "function": "Divides an 800 V DC bus to the 2 V input of an isolated amplifier and converts the differential isolated output to a 0-3.3 V single-ended ADC signal.",
+  "inputs": [
+    {
+      "name": "VBUS_P / VBUS_N",
+      "description": "high-voltage DC bus",
+      "domain": "high-voltage",
+      "range": "0-800 V"
+    },
+    {
+      "name": "5V_ISO_P",
+      "description": "isolated high-side supply (from CB-IS-002 LDO)",
+      "domain": "isolated-sense",
+      "range": "5 V"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "V_DC_PRI",
+      "description": "single-ended ADC input",
+      "domain": "control",
+      "range": "0-3.3 V"
+    }
+  ],
+  "operating_conditions": [
+    "Full scale 800 V -> 1.574 V at the amplifier input (78.7 % of 2 V)."
+  ],
+  "required_components": [
+    {
+      "role": "divider top",
+      "value_or_part": "8 x 634 kOhm 0.1 % 0805 (Yageo RT0805BRD07634KL)",
+      "source_refdes": "R112, R124, R145, R146, R148, R149, R151, R152"
+    },
+    {
+      "role": "divider bottom",
+      "value_or_part": "10.0 kOhm",
+      "source_refdes": "not resolved from text extraction (10.0 kOhm per §3.2.1)"
+    },
+    {
+      "role": "isolated amplifier",
+      "value_or_part": "AMC1311BDWVR",
+      "source_refdes": "U21",
+      "component": "CMP-AMC1311"
+    },
+    {
+      "role": "differential-to-single-ended stage",
+      "value_or_part": "OPA2320AIDRGT with 10.0 k / 8.06 k 0.1 % resistor network and 330 pF capacitors (Figure 3-2)",
+      "source_refdes": "U11B"
+    }
+  ],
+  "design_calculations": [
+    {
+      "name": "Divider output",
+      "expression": "V_out = V_bus * R_bottom / (n * R_top + R_bottom)",
+      "basis": "TIDUES0 §3.2.1",
+      "example": "800 V -> 1.574 V",
+      "check": "EC-015"
+    },
+    {
+      "name": "Per-resistor stress",
+      "expression": "V_R = V_bus * R_top / (n * R_top + R_bottom); P = V_R^2 / R_top",
+      "basis": "AIPE check",
+      "example": "~100 V and 15.7 mW per 0805 resistor",
+      "check": "EC-021"
+    }
+  ],
+  "interface_requirements": [
+    "High-side GND of the amplifier is the bus negative; supply from an isolated source on that node."
+  ],
+  "pcb_constraints": [
+    "Distribute the ladder along a creepage path; keep HV ladder away from low-voltage traces.",
+    "Filter capacitor at the amplifier input; differential output routed as a pair to the conversion stage."
+  ],
+  "source_designs": [
+    {
+      "reference": "REF-TI-TIDA-010054",
+      "refdes": "U21, U11B, R112-R152, R158",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.1 Figure 3-2",
+          "kind": "stated"
+        },
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDRZW1",
+          "location": "BOM",
+          "kind": "observed"
+        }
+      ]
+    }
+  ],
+  "validation_status": "analytically-checked",
+  "validation_notes": "Scaling and resistor stress recomputed (EC-015, EC-021). Resistor voltage rating vs. 100 V per element was not checked against the resistor datasheet.",
+  "limitations": [
+    "Accuracy depends on resistor tolerance, voltage coefficient and amplifier input impedance - not analysed."
+  ],
+  "alternatives": [
+    {
+      "approach": "Delta-sigma modulator with digital bitstream (CB-SN-002)",
+      "trade_off": "More noise-robust over long traces; needs an MCU sigma-delta filter.",
+      "evidence": [
+        {
+          "source": "REF-TI-TIDA-010054",
+          "document": "TIDUES0",
+          "location": "§3.2.2",
+          "kind": "stated"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "voltage sensing",
+    "isolated amplifier",
+    "resistor divider",
+    "dc bus",
+    "high voltage"
+  ],
+  "related": {
+    "components": [
+      "CMP-AMC1311"
+    ],
+    "skills": [
+      "SKILL-005"
+    ],
+    "rules": [
+      "KR-SN-001",
+      "KR-SN-002"
+    ]
+  }
+}

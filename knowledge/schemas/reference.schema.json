@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reference.schema.json",
+  "title": "Manufacturer reference design / document record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "manufacturer", "title", "product_page", "design_type",
+               "discovered_via", "summary", "documents", "license", "evidence_limitations", "analysis"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"$ref": "common.schema.json#/$defs/reference_id"},
+    "manufacturer": {"$ref": "common.schema.json#/$defs/text"},
+    "title": {"$ref": "common.schema.json#/$defs/text"},
+    "product_page": {"type": "string", "pattern": "^https://"},
+    "design_type": {"enum": ["reference-design", "evaluation-board", "application-note"]},
+    "discovered_via": {"$ref": "common.schema.json#/$defs/text"},
+    "summary": {"$ref": "common.schema.json#/$defs/text"},
+    "ratings": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "title", "revision", "source_url", "file_name", "file_type",
+                     "redistribution", "acquisition", "extraction"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9-]+$"},
+          "kind": {"enum": ["design-guide", "user-guide", "application-note", "schematic", "bom",
+                            "pcb-layout", "gerber", "assembly-drawing", "cad-project", "step-model",
+                            "simulation-model"]},
+          "title": {"$ref": "common.schema.json#/$defs/text"},
+          "revision": {"type": "string", "minLength": 1},
+          "revision_basis": {"type": "string"},
+          "source_url": {"type": "string", "pattern": "^https://"},
+          "file_name": {"type": "string", "minLength": 3},
+          "file_type": {"enum": ["pdf", "zip"]},
+          "redistribution": {"enum": ["not-verified", "prohibited", "permitted"]},
+          "acquisition": {"$ref": "common.schema.json#/$defs/acquisition"},
+          "extraction": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status"],
+            "properties": {
+              "status": {"enum": ["not-inspected", "inventoried", "partially-analysed", "analysed", "not-analysed"]},
+              "method": {"type": "string"},
+              "notes": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["redistribution", "notes"],
+      "properties": {
+        "redistribution": {"enum": ["not-verified", "prohibited", "permitted"]},
+        "terms_source": {"type": "string"},
+        "notes": {"$ref": "common.schema.json#/$defs/text"}
+      }
+    },
+    "evidence_limitations": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "source_discrepancies": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "analysis": {"type": "string", "pattern": "\\.md$"}
+  }
+}
