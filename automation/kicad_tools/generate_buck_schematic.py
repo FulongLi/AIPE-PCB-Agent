@@ -6,7 +6,7 @@ import math
 from pathlib import Path
 
 from automation.kicad_tools.buck_model import build, write_model, EXAMPLE
-from automation.kicad_tools.native_schematic import Schematic, quote, uid, pins
+from automation.kicad_tools.native_schematic import Schematic, quote, uid, pins, extract_symbol
 
 NAME="AIPE_Buck_1kW"
 NOTE="AI-GENERATED ENGINEERING PROTOTYPE - V1 - HUMAN REVIEW REQUIRED"
@@ -42,6 +42,15 @@ def units_for(part):
 
 def symbol_for(part):
     name='Sym_'+part['ref']
+    standard={'Q':('Transistor_FET','Q_NMOS_GDS'),'L':('Device','L'),'D':('Device','D_Zener')}.get(part['kind'])
+    if part['ref']=='F1':standard=('Device','Fuse')
+    if standard:
+        from automation.kicad_tools.buck_footprints import data_root
+        library,original=standard
+        definition=extract_symbol(data_root()/'symbols'/(library+'.kicad_sym'),original)
+        definition=definition.replace('"'+original,'"'+name)
+        assert {p['number'] for p in pins(definition)}==set(part['pins'])
+        return name,definition,[(15.24,15.24)]
     bodies=[]; extents=[]
     groups=units_for(part)
     for unit,numbers in enumerate(groups,1):
@@ -100,7 +109,7 @@ def generate():
             symbol,definition,extents=symbol_for(p)
             all_defs.append(definition)
             for unit,(width,height) in enumerate(extents,1):
-                cell_width=63.5 if len(p['pins'])<=2 else 124.46
+                cell_width=63.5 if len(p['pins'])<=2 or p['kind']=='Q' else 124.46
                 cell_height=max(27.94,height+22.86)
                 if x+cell_width/2>398:
                     x=38.1; y+=row_height; row_height=0

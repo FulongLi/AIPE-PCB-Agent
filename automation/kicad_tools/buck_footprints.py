@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import re
 from pathlib import Path
 
 from automation.kicad_tools.buck_model import build, EXAMPLE
@@ -22,6 +23,8 @@ def footprint(name, pads, width, height, description):
       (fp_rect (start {-width/2} {-height/2}) (end {width/2} {height/2}) (stroke (width 0.15) (type default)) (fill none) (layer "F.Fab"))
       (fp_rect (start {-width/2-0.5} {-height/2-0.5}) (end {width/2+0.5} {height/2+0.5}) (stroke (width 0.05) (type default)) (fill none) (layer "F.CrtYd"))
       {pads}
+      (model "${{KIPRJMOD}}/libraries/AIPE.3dshapes/{name}.wrl"
+        (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
     )\n'''
 
 
@@ -29,6 +32,8 @@ def prepare():
     source=data_root()
     target=EXAMPLE/'kicad/libraries'
     target.mkdir(parents=True,exist_ok=True)
+    from automation.kicad_tools.simple_models import generate
+    generate(target/'AIPE.3dshapes')
     libs=set()
     for p in build().parts:
         lib,name=p['footprint'].split(':');libs.add(lib)
@@ -37,6 +42,12 @@ def prepare():
         original=source/'footprints'/(lib+'.pretty')/(name+'.kicad_mod')
         if not original.exists():raise FileNotFoundError(original)
         shutil.copyfile(original,dst/original.name)
+        replacement='TI_DDA8' if p['ref'] in ('U1','U2') else 'TI_PWP28' if p['ref']=='U4' else 'ASV_7x5' if p['ref']=='Y1' else None
+        if replacement:
+            file=dst/original.name
+            text=file.read_text(encoding='utf8')
+            text=re.sub(r'\(model "[^"]+"',f'(model "${{KIPRJMOD}}/libraries/AIPE.3dshapes/{replacement}.wrl"',text)
+            file.write_text(text,encoding='utf8')
     custom=target/'AIPE.pretty'
     # 10 uH Figure B: 25.4 inner-edge gap + 7.11 lead width = 32.51 center pitch.
     pads='\n'.join(f'''(pad "{i+1}" thru_hole oval (at {x} 0) (size 12 7)
@@ -63,8 +74,9 @@ def prepare():
         if original.exists():shutil.copyfile(original,target/name)
     (target/'NOTICE.md').write_text('''# Library provenance
 
-Stock footprints were copied unmodified from the installed official KiCad 10.0.7
-library. They retain the KiCad library license; see the accompanying license.
+Stock copper/pad geometry comes from the official KiCad 10.0.7 library. U1/U2,
+U4 and Y1 have only their missing model reference replaced by a dimensioned AIPE
+envelope. They retain the KiCad library license; see the accompanying license.
 Custom AIPE symbols and footprints were generated from the manufacturer drawings
 identified in descriptions and components/references.json. No proprietary CAD
 library was imported. Three custom power footprints require independent dimensional

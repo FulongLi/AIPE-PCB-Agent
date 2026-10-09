@@ -34,28 +34,324 @@
 (pin passive line (at -7.62 0 0) (length 5.08)
                 (name "~" (effects (font (size 1.0 1.0))))
                 (number "1" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_F1" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "F" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "40A/70V" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "AIPE:MIDI_70V_M6_P30" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_F1_1_1" (rectangle (start -2.54 2.54) (end 2.54 -2.54) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin passive line (at -7.62 0 0) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 7.62 0 180) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_D1" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "D" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "SMCJ54A" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Diode_SMD:D_SMC" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_D1_1_1" (rectangle (start -2.54 2.54) (end 2.54 -2.54) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin passive line (at -7.62 0 0) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 7.62 0 180) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))))
+(symbol "AIPE:Sym_F1"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "F"
+			(at 2.032 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Sym_F1"
+			(at -1.905 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at -1.778 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Sym_F1"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "fuse"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "*Fuse*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_F1_0_1"
+			(rectangle
+				(start -0.762 -2.54)
+				(end 0.762 2.54)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 2.54) (xy 0 -2.54)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_F1_1_1"
+			(pin passive line
+				(at 0 3.81 270)
+				(length 1.27)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -3.81 90)
+				(length 1.27)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "AIPE:Sym_D1"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "D"
+			(at 0 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Sym_D1"
+			(at 0 -2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Zener diode"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "diode"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_D1_0_1"
+			(polyline
+				(pts
+					(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 0) (xy -1.27 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_D1_1_1"
+			(pin passive line
+				(at -3.81 0 0)
+				(length 2.54)
+				(name "K"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 3.81 0 180)
+				(length 2.54)
+				(name "A"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 (symbol "AIPE:Sym_C15" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
         (property "Reference" "C" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
         (property "Value" "2.2u/100V" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
@@ -168,73 +464,1388 @@
 (pin passive line (at 7.62 0 180) (length 5.08)
                 (name "~" (effects (font (size 1.0 1.0))))
                 (number "2" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_Q1" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "Q" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "CSD19536KCS" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_Q1_1_1" (rectangle (start -19.05 3.81) (end 19.05 -3.81) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin input line (at -24.130000000000003 1.27 0) (length 5.08)
-                (name "G" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at -24.130000000000003 -1.27 0) (length 5.08)
-                (name "D" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 24.130000000000003 1.27 180) (length 5.08)
-                (name "S" (effects (font (size 1.0 1.0))))
-                (number "3" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_Q2" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "Q" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "CSD19536KCS" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_Q2_1_1" (rectangle (start -19.05 3.81) (end 19.05 -3.81) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin input line (at -24.130000000000003 1.27 0) (length 5.08)
-                (name "G" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at -24.130000000000003 -1.27 0) (length 5.08)
-                (name "D" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 24.130000000000003 1.27 180) (length 5.08)
-                (name "S" (effects (font (size 1.0 1.0))))
-                (number "3" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_Q3" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "Q" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "CSD19536KCS" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_Q3_1_1" (rectangle (start -19.05 3.81) (end 19.05 -3.81) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin input line (at -24.130000000000003 1.27 0) (length 5.08)
-                (name "G" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at -24.130000000000003 -1.27 0) (length 5.08)
-                (name "D" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 24.130000000000003 1.27 180) (length 5.08)
-                (name "S" (effects (font (size 1.0 1.0))))
-                (number "3" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_Q4" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "Q" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "CSD19536KCS" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_Q4_1_1" (rectangle (start -19.05 3.81) (end 19.05 -3.81) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin input line (at -24.130000000000003 1.27 0) (length 5.08)
-                (name "G" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at -24.130000000000003 -1.27 0) (length 5.08)
-                (name "D" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 24.130000000000003 1.27 180) (length 5.08)
-                (name "S" (effects (font (size 1.0 1.0))))
-                (number "3" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_L1" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "L" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "10uH/83A" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "AIPE:IHXL2000VZ_10uH_Upright" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_L1_1_1" (rectangle (start -2.54 2.54) (end 2.54 -2.54) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin passive line (at -7.62 0 0) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 7.62 0 180) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))))
+(symbol "AIPE:Sym_Q1"
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Q"
+			(at 5.08 1.905 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Sym_Q1"
+			(at 5.08 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 5.08 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_Q1_0_1"
+			(polyline
+				(pts
+					(xy 0.254 1.905) (xy 0.254 -1.905)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.254 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 2.286) (xy 0.762 1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 0.508) (xy 0.762 -0.508)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.27) (xy 0.762 -2.286)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 1.651 0)
+				(radius 2.794)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 2.54) (xy 2.54 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.54 1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 2.54 -1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.921 0.381) (xy 3.683 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_Q1_1_1"
+			(pin input line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 5.08 270)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 -5.08 90)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "AIPE:Sym_Q2"
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Q"
+			(at 5.08 1.905 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Sym_Q2"
+			(at 5.08 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 5.08 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_Q2_0_1"
+			(polyline
+				(pts
+					(xy 0.254 1.905) (xy 0.254 -1.905)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.254 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 2.286) (xy 0.762 1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 0.508) (xy 0.762 -0.508)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.27) (xy 0.762 -2.286)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 1.651 0)
+				(radius 2.794)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 2.54) (xy 2.54 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.54 1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 2.54 -1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.921 0.381) (xy 3.683 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_Q2_1_1"
+			(pin input line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 5.08 270)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 -5.08 90)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "AIPE:Sym_Q3"
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Q"
+			(at 5.08 1.905 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Sym_Q3"
+			(at 5.08 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 5.08 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_Q3_0_1"
+			(polyline
+				(pts
+					(xy 0.254 1.905) (xy 0.254 -1.905)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.254 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 2.286) (xy 0.762 1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 0.508) (xy 0.762 -0.508)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.27) (xy 0.762 -2.286)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 1.651 0)
+				(radius 2.794)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 2.54) (xy 2.54 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.54 1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 2.54 -1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.921 0.381) (xy 3.683 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_Q3_1_1"
+			(pin input line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 5.08 270)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 -5.08 90)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "AIPE:Sym_Q4"
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Q"
+			(at 5.08 1.905 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Sym_Q4"
+			(at 5.08 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 5.08 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, gate/drain/source"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_Q4_0_1"
+			(polyline
+				(pts
+					(xy 0.254 1.905) (xy 0.254 -1.905)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.254 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 2.286) (xy 0.762 1.27)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 0.508) (xy 0.762 -0.508)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.27) (xy 0.762 -2.286)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 1.651 0)
+				(radius 2.794)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 2.54) (xy 2.54 1.778)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.54 1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(circle
+				(center 2.54 -1.778)
+				(radius 0.254)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type outline)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.921 0.381) (xy 3.683 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_Q4_1_1"
+			(pin input line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 5.08 270)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 -5.08 90)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "AIPE:Sym_L1"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Sym_L1"
+			(at -1.27 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Sym_L1"
+			(at 1.905 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Inductor"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "inductor choke coil reactor magnetic"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_L1_0_1"
+			(arc
+				(start 0 2.54)
+				(mid 0.6323 1.905)
+				(end 0 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 1.27)
+				(mid 0.6323 0.635)
+				(end 0 0)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 0)
+				(mid 0.6323 -0.635)
+				(end 0 -1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 -1.27)
+				(mid 0.6323 -1.905)
+				(end 0 -2.54)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_L1_1_1"
+			(pin passive line
+				(at 0 3.81 270)
+				(length 1.27)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -3.81 90)
+				(length 1.27)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 (symbol "AIPE:Sym_R9" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
         (property "Reference" "R" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
         (property "Value" "2m/6W/Kelvin" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
@@ -315,398 +1926,398 @@
           (at 218.44 43.18 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "2d8ee6cd-5dc5-5494-a11f-376b8f3869c4"))
-(symbol (lib_id "AIPE:Sym_F1") (at 292.1 43.18 0)
+(symbol (lib_id "AIPE:Sym_F1") (at 292.1 48.26 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "230f95a1-6a6e-569d-acc2-a9439be11133")
           (property "Reference" "F1" (at 292.1 34.29 0)  (effects (font (size 1.27 1.27))))
 (property "Value" "40A/70V" (at 292.1 36.83 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "AIPE:MIDI_70V_M6_P30" (at 292.1 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 292.1 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Footprint" "AIPE:MIDI_70V_M6_P30" (at 292.1 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 292.1 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "d57c5c9a-b9e2-5b50-8cdb-be1d80c5aef9"))
 (pin "2" (uuid "55359678-5aae-5abd-8436-2703d63f85d0"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "F1") (unit 1)))))
-(wire (pts (xy 284.48 43.18) (xy 281.94 43.18))
+(wire (pts (xy 292.1 44.449999999999996) (xy 289.56 44.449999999999996))
           (stroke (width 0) (type default)) (uuid "f279b9a9-10c6-5fe9-8cff-a633610e9c3d"))
 (global_label "VIN_RAW" (shape bidirectional)
-          (at 281.94 43.18 180)
+          (at 289.56 44.449999999999996 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "6baaf6b2-5796-56c8-b1c5-25b41bec482f"))
-(wire (pts (xy 299.72 43.18) (xy 302.26 43.18))
+(wire (pts (xy 292.1 52.07) (xy 289.56 52.07))
           (stroke (width 0) (type default)) (uuid "4c8183f0-cf6b-534c-bd73-878879d7e913"))
 (global_label "VIN" (shape bidirectional)
-          (at 302.26 43.18 0)
-          (effects (font (size 1.0 1.0)) (justify left))
+          (at 289.56 52.07 180)
+          (effects (font (size 1.0 1.0)) (justify right))
           (uuid "1d531741-d66a-5569-bb5b-a91ec6f078ad"))
-(symbol (lib_id "AIPE:Sym_D1") (at 355.6 43.18 0)
+(symbol (lib_id "AIPE:Sym_D1") (at 355.6 48.26 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "01be2ae3-872a-5a64-8d36-090d039ef806")
           (property "Reference" "D1" (at 355.6 34.29 0)  (effects (font (size 1.27 1.27))))
 (property "Value" "SMCJ54A" (at 355.6 36.83 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Diode_SMD:D_SMC" (at 355.6 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 355.6 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Footprint" "Diode_SMD:D_SMC" (at 355.6 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 355.6 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "e9c16469-3dfc-5df1-9135-e3eadee88c7d"))
 (pin "2" (uuid "e77d7e1f-228f-5282-96d2-a137effeb995"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "D1") (unit 1)))))
-(wire (pts (xy 347.98 43.18) (xy 345.44 43.18))
+(wire (pts (xy 351.79 48.26) (xy 349.25 48.26))
           (stroke (width 0) (type default)) (uuid "4cebb7a3-283d-572a-b636-8c7fbc721903"))
 (global_label "VIN" (shape bidirectional)
-          (at 345.44 43.18 180)
+          (at 349.25 48.26 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "9b10c056-6e92-58c4-9595-4624d32b26ff"))
-(wire (pts (xy 363.22 43.18) (xy 365.76 43.18))
+(wire (pts (xy 359.41 48.26) (xy 361.95 48.26))
           (stroke (width 0) (type default)) (uuid "2f69a45f-c51e-56ce-9a85-2ca97a5c9249"))
 (global_label "GND" (shape bidirectional)
-          (at 365.76 43.18 0)
+          (at 361.95 48.26 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "227cde57-c7e1-5d14-98eb-6a83a96b0baf"))
-(symbol (lib_id "AIPE:Sym_C15") (at 38.1 71.12 0)
+(symbol (lib_id "AIPE:Sym_C15") (at 38.1 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "61021e33-7630-5f37-b0c8-adb605a01d3f")
-          (property "Reference" "C15" (at 38.1 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 38.1 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 38.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 38.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C15" (at 38.1 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 38.1 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 38.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 38.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "0d2f7e99-5870-5800-9090-652a27bf5272"))
 (pin "2" (uuid "dac75fda-35dc-5369-9031-f525e3940e27"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C15") (unit 1)))))
-(wire (pts (xy 30.48 71.12) (xy 27.94 71.12))
+(wire (pts (xy 30.48 81.28000000000002) (xy 27.94 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "924d85e4-fa60-59cf-97f3-c66e5208eac9"))
 (global_label "VIN" (shape bidirectional)
-          (at 27.94 71.12 180)
+          (at 27.94 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "2620f1e3-23f0-56a2-bdff-4e60baf3365b"))
-(wire (pts (xy 45.72 71.12) (xy 48.26 71.12))
+(wire (pts (xy 45.72 81.28000000000002) (xy 48.26 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "9b8c76c5-64c9-5ec8-819a-cb70bc425b74"))
 (global_label "GND" (shape bidirectional)
-          (at 48.26 71.12 0)
+          (at 48.26 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "81753909-78f2-5947-b72f-2bef67f5fddd"))
-(symbol (lib_id "AIPE:Sym_C16") (at 101.6 71.12 0)
+(symbol (lib_id "AIPE:Sym_C16") (at 101.6 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "f5040df9-24a2-56f9-910c-d4b827e783b6")
-          (property "Reference" "C16" (at 101.6 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 101.6 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 101.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 101.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C16" (at 101.6 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 101.6 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 101.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 101.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "a8ada0b1-42c1-51d5-9993-e3bef823772c"))
 (pin "2" (uuid "d93a1e39-a2d5-5652-a079-b3f06a4df0ec"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C16") (unit 1)))))
-(wire (pts (xy 93.97999999999999 71.12) (xy 91.44 71.12))
+(wire (pts (xy 93.97999999999999 81.28000000000002) (xy 91.44 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "028e1367-b797-55d1-b76d-8e4e0f21e5e0"))
 (global_label "VIN" (shape bidirectional)
-          (at 91.44 71.12 180)
+          (at 91.44 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "cf5ead03-8b4e-5a60-a776-0d3e02f1b43c"))
-(wire (pts (xy 109.22 71.12) (xy 111.76 71.12))
+(wire (pts (xy 109.22 81.28000000000002) (xy 111.76 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "4d982931-fc8a-5ab7-8722-7a21f2f08f05"))
 (global_label "GND" (shape bidirectional)
-          (at 111.76 71.12 0)
+          (at 111.76 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "d49b66c3-8770-5925-a112-e4ffd464c7ce"))
-(symbol (lib_id "AIPE:Sym_C17") (at 165.1 71.12 0)
+(symbol (lib_id "AIPE:Sym_C17") (at 165.1 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "4c482c85-911e-5b39-a673-bdc43402594e")
-          (property "Reference" "C17" (at 165.1 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 165.1 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 165.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 165.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C17" (at 165.1 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 165.1 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 165.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 165.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "102d4e13-e1f9-5dad-91e8-ee05f54705e8"))
 (pin "2" (uuid "4fc0dd4c-0f60-5814-9d70-093a94a58ba9"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C17") (unit 1)))))
-(wire (pts (xy 157.48 71.12) (xy 154.94 71.12))
+(wire (pts (xy 157.48 81.28000000000002) (xy 154.94 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "8eb05559-eb8c-5fff-9427-abccb1de700d"))
 (global_label "VIN" (shape bidirectional)
-          (at 154.94 71.12 180)
+          (at 154.94 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "769f7bb9-a071-5e59-a062-26d3662fa974"))
-(wire (pts (xy 172.72 71.12) (xy 175.26 71.12))
+(wire (pts (xy 172.72 81.28000000000002) (xy 175.26 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "d7ca6f11-145b-5978-ac29-e73fc9f783d4"))
 (global_label "GND" (shape bidirectional)
-          (at 175.26 71.12 0)
+          (at 175.26 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "c8aaff83-1276-56ec-a6f3-76555c6f04ef"))
-(symbol (lib_id "AIPE:Sym_C18") (at 228.6 71.12 0)
+(symbol (lib_id "AIPE:Sym_C18") (at 228.6 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "b10ef6f0-d8f8-5edd-8f45-417dd60478ab")
-          (property "Reference" "C18" (at 228.6 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 228.6 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 228.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 228.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C18" (at 228.6 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 228.6 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 228.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 228.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "a308d8c1-7624-5c9f-baea-cbfd7570d049"))
 (pin "2" (uuid "410b9722-8709-52ef-bca3-1019bc4b0cec"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C18") (unit 1)))))
-(wire (pts (xy 220.98 71.12) (xy 218.44 71.12))
+(wire (pts (xy 220.98 81.28000000000002) (xy 218.44 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "1b8fe99b-779f-5acd-a4fe-75d07f20daa9"))
 (global_label "VIN" (shape bidirectional)
-          (at 218.44 71.12 180)
+          (at 218.44 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "529cf36c-55d9-5a52-ad12-7769370b6c95"))
-(wire (pts (xy 236.22 71.12) (xy 238.76 71.12))
+(wire (pts (xy 236.22 81.28000000000002) (xy 238.76 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "6481da58-b51a-58fd-ac54-a5a3143f82b9"))
 (global_label "GND" (shape bidirectional)
-          (at 238.76 71.12 0)
+          (at 238.76 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "e823c277-dfcd-58e1-865c-a0cdcfa31775"))
-(symbol (lib_id "AIPE:Sym_C19") (at 292.1 71.12 0)
+(symbol (lib_id "AIPE:Sym_C19") (at 292.1 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "5e646fa9-5b05-5e6a-90b0-a7403228ffa4")
-          (property "Reference" "C19" (at 292.1 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 292.1 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 292.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 292.1 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C19" (at 292.1 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 292.1 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 292.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 292.1 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "417bbd7f-ed90-5856-a67e-955ed42c1fe3"))
 (pin "2" (uuid "72deb737-7ce4-5f51-9823-714fd5c73877"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C19") (unit 1)))))
-(wire (pts (xy 284.48 71.12) (xy 281.94 71.12))
+(wire (pts (xy 284.48 81.28000000000002) (xy 281.94 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "403ab702-9ba6-569a-b6cf-fc2f0abe228a"))
 (global_label "VIN" (shape bidirectional)
-          (at 281.94 71.12 180)
+          (at 281.94 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "845f557e-aed4-50b6-8c7f-3e11deed0f06"))
-(wire (pts (xy 299.72 71.12) (xy 302.26 71.12))
+(wire (pts (xy 299.72 81.28000000000002) (xy 302.26 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "36a53301-584c-594f-a25e-3dd0fb357077"))
 (global_label "GND" (shape bidirectional)
-          (at 302.26 71.12 0)
+          (at 302.26 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "25b94e95-2cd6-5149-8e32-0b1d03403a2b"))
-(symbol (lib_id "AIPE:Sym_C20") (at 355.6 71.12 0)
+(symbol (lib_id "AIPE:Sym_C20") (at 355.6 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "f17009f2-3f40-5519-bede-6f8a272aad96")
-          (property "Reference" "C20" (at 355.6 62.230000000000004 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 355.6 64.77000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 355.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 355.6 71.12 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C20" (at 355.6 72.39000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 355.6 74.93000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 355.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 355.6 81.28000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "f2ad05c2-caa7-551e-afd4-9e3eeedd7021"))
 (pin "2" (uuid "d81c39b8-6a1b-54d0-9343-1a0ec8deecc7"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C20") (unit 1)))))
-(wire (pts (xy 347.98 71.12) (xy 345.44 71.12))
+(wire (pts (xy 347.98 81.28000000000002) (xy 345.44 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "605a2900-e5dd-525a-861f-01cce1aca6c5"))
 (global_label "VIN" (shape bidirectional)
-          (at 345.44 71.12 180)
+          (at 345.44 81.28000000000002 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "16501dc1-7325-5d4f-b79c-e21735b64ef8"))
-(wire (pts (xy 363.22 71.12) (xy 365.76 71.12))
+(wire (pts (xy 363.22 81.28000000000002) (xy 365.76 81.28000000000002))
           (stroke (width 0) (type default)) (uuid "a0c11545-2c1b-52fd-ab3d-425a6cd36b7c"))
 (global_label "GND" (shape bidirectional)
-          (at 365.76 71.12 0)
+          (at 365.76 81.28000000000002 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "0ba4fa3d-5397-5fff-8098-63157aad04ee"))
-(symbol (lib_id "AIPE:Sym_C21") (at 38.1 99.06000000000002 0)
+(symbol (lib_id "AIPE:Sym_C21") (at 38.1 109.22000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "14f247ef-b4a3-57c3-b618-bfc886d05afb")
-          (property "Reference" "C21" (at 38.1 90.17000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 38.1 92.71000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 38.1 99.06000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 38.1 99.06000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C21" (at 38.1 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 38.1 102.87000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 38.1 109.22000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 38.1 109.22000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "762915cb-60ea-52de-9d86-12afe6f2c31c"))
 (pin "2" (uuid "065374b0-d174-551f-8248-e5e836063fd1"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C21") (unit 1)))))
-(wire (pts (xy 30.48 99.06000000000002) (xy 27.94 99.06000000000002))
+(wire (pts (xy 30.48 109.22000000000001) (xy 27.94 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "7f7cc089-1c70-5637-9936-73f862dfec75"))
 (global_label "VIN" (shape bidirectional)
-          (at 27.94 99.06000000000002 180)
+          (at 27.94 109.22000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "6a27324a-7ad4-50ca-8e71-e89fcfe929e6"))
-(wire (pts (xy 45.72 99.06000000000002) (xy 48.26 99.06000000000002))
+(wire (pts (xy 45.72 109.22000000000001) (xy 48.26 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "9b17abac-29b2-58cd-9f40-f052e11ca715"))
 (global_label "GND" (shape bidirectional)
-          (at 48.26 99.06000000000002 0)
+          (at 48.26 109.22000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "1ddbf8f2-d401-5c1b-8225-8041a2ad5d24"))
-(symbol (lib_id "AIPE:Sym_C22") (at 101.6 99.06000000000002 0)
+(symbol (lib_id "AIPE:Sym_C22") (at 101.6 109.22000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "50a5427c-2e9d-5215-9583-95e537e3b268")
-          (property "Reference" "C22" (at 101.6 90.17000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2.2u/100V" (at 101.6 92.71000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 101.6 99.06000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 101.6 99.06000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "C22" (at 101.6 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2.2u/100V" (at 101.6 102.87000000000002 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 101.6 109.22000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 101.6 109.22000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "6ac121a9-985b-5cfd-b70f-2eb457eb1bcc"))
 (pin "2" (uuid "802dcd6b-c05d-590d-abe8-b8fea4f713fc"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "C22") (unit 1)))))
-(wire (pts (xy 93.97999999999999 99.06000000000002) (xy 91.44 99.06000000000002))
+(wire (pts (xy 93.97999999999999 109.22000000000001) (xy 91.44 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "32cde264-843c-577e-bffe-da943c5a2bba"))
 (global_label "VIN" (shape bidirectional)
-          (at 91.44 99.06000000000002 180)
+          (at 91.44 109.22000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "80e7543f-8ad7-5a41-8ed6-df6749e70ab5"))
-(wire (pts (xy 109.22 99.06000000000002) (xy 111.76 99.06000000000002))
+(wire (pts (xy 109.22 109.22000000000001) (xy 111.76 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "499b5e7a-b0f5-5b1c-916b-77d8f33035d0"))
 (global_label "GND" (shape bidirectional)
-          (at 111.76 99.06000000000002 0)
+          (at 111.76 109.22000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "a57395a5-345c-58f4-bea0-e1425bbb0f66"))
-(symbol (lib_id "AIPE:Sym_Q1") (at 195.57999999999998 100.33000000000001 0)
+(symbol (lib_id "AIPE:Sym_Q1") (at 165.1 114.30000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "5cfb4fcb-2ece-5f95-9a82-ba9acea4128d")
-          (property "Reference" "Q1" (at 195.57999999999998 90.17000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "CSD19536KCS" (at 195.57999999999998 92.71000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 195.57999999999998 100.33000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 195.57999999999998 100.33000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "Q1" (at 165.1 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "CSD19536KCS" (at 165.1 102.87 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 165.1 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 165.1 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "9a45c4e9-22ca-5962-bcb9-951c18b5d96f"))
 (pin "2" (uuid "ee383afb-c12a-5d81-b61f-df684204cbf8"))
 (pin "3" (uuid "ef051099-6ce5-5f50-b3df-69599e56fe5c"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "Q1") (unit 1)))))
-(wire (pts (xy 171.45 99.06000000000002) (xy 168.91 99.06000000000002))
+(wire (pts (xy 160.01999999999998 114.30000000000001) (xy 157.48 114.30000000000001))
           (stroke (width 0) (type default)) (uuid "367cd01e-707a-55f1-a169-e33853cad603"))
 (global_label "GH1" (shape bidirectional)
-          (at 168.91 99.06000000000002 180)
+          (at 157.48 114.30000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "8b86f5fd-9f49-58cf-a980-89167740f3e6"))
-(wire (pts (xy 171.45 101.60000000000001) (xy 168.91 101.60000000000001))
+(wire (pts (xy 167.64 109.22000000000001) (xy 170.18 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "ea2f9bf6-f5be-5afa-a758-e19ffb9f9274"))
 (global_label "VIN" (shape bidirectional)
-          (at 168.91 101.60000000000001 180)
-          (effects (font (size 1.0 1.0)) (justify right))
+          (at 170.18 109.22000000000001 0)
+          (effects (font (size 1.0 1.0)) (justify left))
           (uuid "450964eb-69c3-5728-bab0-ee5b0abcee0b"))
-(wire (pts (xy 219.70999999999998 99.06000000000002) (xy 222.25 99.06000000000002))
+(wire (pts (xy 167.64 119.38000000000001) (xy 170.18 119.38000000000001))
           (stroke (width 0) (type default)) (uuid "10e420d5-d2f7-5456-80f7-27e3ac4e117c"))
 (global_label "SW" (shape bidirectional)
-          (at 222.25 99.06000000000002 0)
+          (at 170.18 119.38000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "9583a0b2-056c-5183-b475-f03250d2ba8a"))
-(symbol (lib_id "AIPE:Sym_Q2") (at 320.04 100.33000000000001 0)
+(symbol (lib_id "AIPE:Sym_Q2") (at 228.6 114.30000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "23e9d60e-cf60-5c9a-b8fd-4526ff694a4c")
-          (property "Reference" "Q2" (at 320.04 90.17000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "CSD19536KCS" (at 320.04 92.71000000000001 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 320.04 100.33000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 320.04 100.33000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "Q2" (at 228.6 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "CSD19536KCS" (at 228.6 102.87 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 228.6 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 228.6 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "c6c6361e-4ac1-5413-93dd-0ef44d64e3e5"))
 (pin "2" (uuid "0504d2e5-aa5c-5f6a-a0f0-c14d33126560"))
 (pin "3" (uuid "2a1cf501-7a0a-564f-abd2-c4e210afb46e"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "Q2") (unit 1)))))
-(wire (pts (xy 295.91 99.06000000000002) (xy 293.37 99.06000000000002))
+(wire (pts (xy 223.51999999999998 114.30000000000001) (xy 220.98 114.30000000000001))
           (stroke (width 0) (type default)) (uuid "316095a2-e6eb-5603-ab53-cf1af59840f1"))
 (global_label "GH2" (shape bidirectional)
-          (at 293.37 99.06000000000002 180)
+          (at 220.98 114.30000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "dc277708-152c-5dd1-8c1c-0201cd8a3022"))
-(wire (pts (xy 295.91 101.60000000000001) (xy 293.37 101.60000000000001))
+(wire (pts (xy 231.14 109.22000000000001) (xy 233.68 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "4c82e25d-ad0e-5076-ac56-934ae4e96a07"))
 (global_label "VIN" (shape bidirectional)
-          (at 293.37 101.60000000000001 180)
-          (effects (font (size 1.0 1.0)) (justify right))
+          (at 233.68 109.22000000000001 0)
+          (effects (font (size 1.0 1.0)) (justify left))
           (uuid "997a0f13-02da-5449-bded-a9d56cc219ec"))
-(wire (pts (xy 344.17 99.06000000000002) (xy 346.71 99.06000000000002))
+(wire (pts (xy 231.14 119.38000000000001) (xy 233.68 119.38000000000001))
           (stroke (width 0) (type default)) (uuid "2b22861b-046c-50bc-85dc-1e59b351356f"))
 (global_label "SW" (shape bidirectional)
-          (at 346.71 99.06000000000002 0)
+          (at 233.68 119.38000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "b159a233-4e02-5920-92da-2e8db618f678"))
-(symbol (lib_id "AIPE:Sym_Q3") (at 68.58 130.81 0)
+(symbol (lib_id "AIPE:Sym_Q3") (at 292.1 114.30000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "254f9518-3e17-5a04-aea9-61973f75ca08")
-          (property "Reference" "Q3" (at 68.58 120.65 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "CSD19536KCS" (at 68.58 123.19 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 68.58 130.81 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 68.58 130.81 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "Q3" (at 292.1 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "CSD19536KCS" (at 292.1 102.87 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 292.1 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 292.1 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "8165c215-cc96-5a09-8008-79937ef90f04"))
 (pin "2" (uuid "4de5ffdf-95c0-5f26-8fc3-8c8c03a8ad3a"))
 (pin "3" (uuid "9ec4879b-21ba-59ff-a9ef-fcc871429de5"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "Q3") (unit 1)))))
-(wire (pts (xy 44.449999999999996 129.54) (xy 41.91 129.54))
+(wire (pts (xy 287.02000000000004 114.30000000000001) (xy 284.48 114.30000000000001))
           (stroke (width 0) (type default)) (uuid "b0d75038-c607-508f-9a6f-8968a2d4319a"))
 (global_label "GL1" (shape bidirectional)
-          (at 41.91 129.54 180)
+          (at 284.48 114.30000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "4d2d6c79-0c61-550a-aed3-43364f91948b"))
-(wire (pts (xy 44.449999999999996 132.08) (xy 41.91 132.08))
+(wire (pts (xy 294.64000000000004 109.22000000000001) (xy 297.18 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "28eb221d-f987-5170-962c-0002e55e7962"))
 (global_label "SW" (shape bidirectional)
-          (at 41.91 132.08 180)
-          (effects (font (size 1.0 1.0)) (justify right))
+          (at 297.18 109.22000000000001 0)
+          (effects (font (size 1.0 1.0)) (justify left))
           (uuid "73545022-e8d4-5641-918b-608732bc646d"))
-(wire (pts (xy 92.71000000000001 129.54) (xy 95.25 129.54))
+(wire (pts (xy 294.64000000000004 119.38000000000001) (xy 297.18 119.38000000000001))
           (stroke (width 0) (type default)) (uuid "9d40e60a-6b9e-5a77-9b16-475eab525241"))
 (global_label "GND" (shape bidirectional)
-          (at 95.25 129.54 0)
+          (at 297.18 119.38000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "e0af8494-7fef-51f3-bfde-e427485ff6db"))
-(symbol (lib_id "AIPE:Sym_Q4") (at 193.04 130.81 0)
+(symbol (lib_id "AIPE:Sym_Q4") (at 355.6 114.30000000000001 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "98815ef4-bdf3-5ab5-ba4b-57c507f4021c")
-          (property "Reference" "Q4" (at 193.04 120.65 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "CSD19536KCS" (at 193.04 123.19 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 193.04 130.81 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 193.04 130.81 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "Q4" (at 355.6 100.33000000000001 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "CSD19536KCS" (at 355.6 102.87 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical" (at 355.6 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 355.6 114.30000000000001 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "a26160a1-877d-5ac7-9a14-084b5e3b255f"))
 (pin "2" (uuid "94392069-5c46-5fce-8a34-2b3fa5769d42"))
 (pin "3" (uuid "94e05ae4-254d-5364-b079-a6c2ea6ec973"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "Q4") (unit 1)))))
-(wire (pts (xy 168.91 129.54) (xy 166.37 129.54))
+(wire (pts (xy 350.52000000000004 114.30000000000001) (xy 347.98 114.30000000000001))
           (stroke (width 0) (type default)) (uuid "fcdf4b98-7e31-5d7f-abc9-4fca78e92667"))
 (global_label "GL2" (shape bidirectional)
-          (at 166.37 129.54 180)
+          (at 347.98 114.30000000000001 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "8e4c97cd-a047-509c-92bc-c1495aebdbc8"))
-(wire (pts (xy 168.91 132.08) (xy 166.37 132.08))
+(wire (pts (xy 358.14000000000004 109.22000000000001) (xy 360.68 109.22000000000001))
           (stroke (width 0) (type default)) (uuid "a2cd727f-9a05-5983-9ef0-9f5be372ebb4"))
 (global_label "SW" (shape bidirectional)
-          (at 166.37 132.08 180)
-          (effects (font (size 1.0 1.0)) (justify right))
+          (at 360.68 109.22000000000001 0)
+          (effects (font (size 1.0 1.0)) (justify left))
           (uuid "efb75995-e2b6-5030-aa5e-92839ba45dd7"))
-(wire (pts (xy 217.17 129.54) (xy 219.71 129.54))
+(wire (pts (xy 358.14000000000004 119.38000000000001) (xy 360.68 119.38000000000001))
           (stroke (width 0) (type default)) (uuid "ce0276c1-b6b8-57c2-9c97-60e0e5abb8e9"))
 (global_label "GND" (shape bidirectional)
-          (at 219.71 129.54 0)
+          (at 360.68 119.38000000000001 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "46832a50-0491-519d-a58d-61707316a784"))
-(symbol (lib_id "AIPE:Sym_L1") (at 287.02 129.54000000000002 0)
+(symbol (lib_id "AIPE:Sym_L1") (at 38.1 152.4 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "5e4f3e02-6691-5573-b7a2-b53b9afd1b79")
-          (property "Reference" "L1" (at 287.02 120.65000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "10uH/83A" (at 287.02 123.19000000000003 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "AIPE:IHXL2000VZ_10uH_Upright" (at 287.02 129.54000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 287.02 129.54000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "L1" (at 38.1 138.43 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "10uH/83A" (at 38.1 140.97 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "AIPE:IHXL2000VZ_10uH_Upright" (at 38.1 152.4 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 38.1 152.4 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "70cf6470-5155-53ca-b183-2ca5ccac8abc"))
 (pin "2" (uuid "05e7d3c7-fbdb-5eec-b207-6876c7bc07a9"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "L1") (unit 1)))))
-(wire (pts (xy 279.4 129.54000000000002) (xy 276.86 129.54000000000002))
+(wire (pts (xy 38.1 148.59) (xy 35.56 148.59))
           (stroke (width 0) (type default)) (uuid "0bd28b50-7dcd-5b79-bf24-e32095f64b46"))
 (global_label "SW" (shape bidirectional)
-          (at 276.86 129.54000000000002 180)
+          (at 35.56 148.59 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "d7757673-99e4-5273-bae9-28d02c346d86"))
-(wire (pts (xy 294.64 129.54000000000002) (xy 297.18 129.54000000000002))
+(wire (pts (xy 38.1 156.21) (xy 35.56 156.21))
           (stroke (width 0) (type default)) (uuid "01e85b6d-cf23-5cc5-ba07-b79cf3650df7"))
 (global_label "IL_FORCE" (shape bidirectional)
-          (at 297.18 129.54000000000002 0)
-          (effects (font (size 1.0 1.0)) (justify left))
+          (at 35.56 156.21 180)
+          (effects (font (size 1.0 1.0)) (justify right))
           (uuid "e54043ce-efe9-5ccf-aff5-28d1f34cd49b"))
-(symbol (lib_id "AIPE:Sym_R9") (at 68.58 161.29000000000002 0)
+(symbol (lib_id "AIPE:Sym_R9") (at 132.07999999999998 148.59 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "20176767-c775-5483-8b91-3f7afe83a6ae")
-          (property "Reference" "R9" (at 68.58 151.13000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Value" "2m/6W/Kelvin" (at 68.58 153.67000000000002 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "AIPE:CSS4J_4026_Kelvin" (at 68.58 161.29000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 68.58 161.29000000000002 0) (hide yes) (effects (font (size 1.27 1.27))))
+          (property "Reference" "R9" (at 132.07999999999998 138.43 0)  (effects (font (size 1.27 1.27))))
+(property "Value" "2m/6W/Kelvin" (at 132.07999999999998 140.97 0)  (effects (font (size 1.27 1.27))))
+(property "Footprint" "AIPE:CSS4J_4026_Kelvin" (at 132.07999999999998 148.59 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 132.07999999999998 148.59 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "c46701c2-1f6b-5ade-a13e-e73d4481f537"))
 (pin "2" (uuid "abaddffb-da08-5193-b42b-f07fdc59909d"))
 (pin "3" (uuid "2f5c6394-5ed4-59f6-8e03-e298e3d4c05b"))
 (pin "4" (uuid "09c4c9dc-7e1a-5090-8a9e-632008f37e96"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/4cd2b2d7-9bd5-5391-9dfc-22bbc87e674a"
             (reference "R9") (unit 1)))))
-(wire (pts (xy 44.449999999999996 160.02) (xy 41.91 160.02))
+(wire (pts (xy 107.94999999999999 147.32) (xy 105.41 147.32))
           (stroke (width 0) (type default)) (uuid "3526ed5d-65bf-5c26-8ec2-002ce80e4f5c"))
 (global_label "IL_FORCE" (shape bidirectional)
-          (at 41.91 160.02 180)
+          (at 105.41 147.32 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "36d2df0e-b283-5190-85f5-029f5364266d"))
-(wire (pts (xy 44.449999999999996 162.56000000000003) (xy 41.91 162.56000000000003))
+(wire (pts (xy 107.94999999999999 149.86) (xy 105.41 149.86))
           (stroke (width 0) (type default)) (uuid "37130e99-c910-5c1e-8fd9-45fa2d581ab4"))
 (global_label "VOUT" (shape bidirectional)
-          (at 41.91 162.56000000000003 180)
+          (at 105.41 149.86 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "ff8a46fd-1971-5fb4-98f1-6087dec00ac0"))
-(wire (pts (xy 92.71000000000001 160.02) (xy 95.25 160.02))
+(wire (pts (xy 156.20999999999998 147.32) (xy 158.75 147.32))
           (stroke (width 0) (type default)) (uuid "a32ca009-db79-58d5-9dff-edef820e295e"))
 (global_label "ISENSE_P" (shape bidirectional)
-          (at 95.25 160.02 0)
+          (at 158.75 147.32 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "c7519295-ebd9-515d-8e78-9a98e6bdce3e"))
-(wire (pts (xy 92.71000000000001 162.56000000000003) (xy 95.25 162.56000000000003))
+(wire (pts (xy 156.20999999999998 149.86) (xy 158.75 149.86))
           (stroke (width 0) (type default)) (uuid "7a4579ae-ccfa-595a-94bf-99fb674ad6bd"))
 (global_label "ISENSE_N" (shape bidirectional)
-          (at 95.25 162.56000000000003 0)
+          (at 158.75 149.86 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "994eb99d-29a9-58d3-acc9-551f1b247987"))
           (sheet_instances (path "/" (page "1")))

@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 EXAMPLE = ROOT / "examples/buck-48v-24v-1kw"
 SO8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-EP8 = "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3mm"
+EP8 = "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm"
 SOT = "Package_TO_SOT_SMD:SOT-23"
 SOT5 = "Package_TO_SOT_SMD:SOT-23-5"
 SOT6 = "Package_TO_SOT_SMD:SOT-23-6"
@@ -218,7 +218,7 @@ def build():
     for net in ('BOOT84','BOOT85','BOOT86','BOOT87','EMU0','EMU1','TMS','TDI'): c.resistor('4.7k','3V3',net,'12_clock_debug')
     c.resistor('2.2k','TRST','GND','12_clock_debug'); c.resistor('10k','TCK','GND','12_clock_debug')
     c.header(14,{1:'TMS',2:'TRST',3:'TDI',4:'GND',5:'3V3',6:None,7:'TDO',8:'GND',9:'TCK',10:'GND',11:'TCK',12:'GND',13:'EMU0',14:'EMU1'},'12_clock_debug','TI 14-pin JTAG; key pin 6 absent',rows=2)
-    c.header(3,{1:'BOOT84',2:'GND',3:'3V3'},'12_clock_debug','SCI boot strap; default open / Flash')
+    c.header(3,{1:'GND',2:'BOOT84',3:'3V3'},'12_clock_debug','BOOT: 1-2 SCI / 2-3 or open Flash')
     c.header(3,{1:'UART_TX',2:'UART_RX',3:'GND'},'12_clock_debug','UART 3.3 V only')
     c.resistor('10k','3V3','UART_RX','12_clock_debug')
     for net in ('VIN','VOUT','GND','AUX12','5V','3V3','1V9','FAULT_N','ARMED','ADC_CURRENT','ADC_VOUT','ADC_VIN'):

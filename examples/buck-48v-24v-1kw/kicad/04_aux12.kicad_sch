@@ -5,7 +5,7 @@
           (lib_symbols (symbol "AIPE:Sym_U2" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
         (property "Reference" "U" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
         (property "Value" "LM5164DDAR" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3mm" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+        (property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
         (symbol "Sym_U2_1_1" (rectangle (start -19.05 7.62) (end 19.05 -7.62) (stroke (width 0.254) (type default)) (fill (type background)))
 (pin power_in line (at -24.130000000000003 5.08 0) (length 5.08)
                 (name "GND" (effects (font (size 1.0 1.0))))
@@ -76,17 +76,184 @@
 (pin passive line (at 7.62 0 180) (length 5.08)
                 (name "~" (effects (font (size 1.0 1.0))))
                 (number "2" (effects (font (size 1.0 1.0)))))))
-(symbol "AIPE:Sym_L2" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
-        (property "Reference" "L" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
-        (property "Value" "68uH" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
-        (property "Footprint" "Inductor_SMD:L_Coilcraft_MSS1246T-XXX" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-        (symbol "Sym_L2_1_1" (rectangle (start -2.54 2.54) (end 2.54 -2.54) (stroke (width 0.254) (type default)) (fill (type background)))
-(pin passive line (at -7.62 0 0) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "1" (effects (font (size 1.0 1.0)))))
-(pin passive line (at 7.62 0 180) (length 5.08)
-                (name "~" (effects (font (size 1.0 1.0))))
-                (number "2" (effects (font (size 1.0 1.0)))))))
+(symbol "AIPE:Sym_L2"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "Sym_L2"
+			(at -1.27 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Sym_L2"
+			(at 1.905 0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Inductor"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "inductor choke coil reactor magnetic"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Sym_L2_0_1"
+			(arc
+				(start 0 2.54)
+				(mid 0.6323 1.905)
+				(end 0 1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 1.27)
+				(mid 0.6323 0.635)
+				(end 0 0)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 0)
+				(mid 0.6323 -0.635)
+				(end 0 -1.27)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(arc
+				(start 0 -1.27)
+				(mid 0.6323 -1.905)
+				(end 0 -2.54)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "Sym_L2_1_1"
+			(pin passive line
+				(at 0 3.81 270)
+				(length 1.27)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -3.81 90)
+				(length 1.27)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 (symbol "AIPE:Sym_C35" (pin_names (offset 0.508)) (in_bom yes) (on_board yes)
         (property "Reference" "C" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
         (property "Value" "22u/25V" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
@@ -205,7 +372,7 @@
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "47433e0c-c0d7-50e3-8360-f50e17dec8e1")
           (property "Reference" "U2" (at 68.58 34.29 0)  (effects (font (size 1.27 1.27))))
 (property "Value" "LM5164DDAR" (at 68.58 36.83 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3mm" (at 68.58 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Footprint" "Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.71x3.4mm" (at 68.58 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
 (property "Datasheet" "" (at 68.58 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "8cb786d9-973e-5572-9d66-3e3952b90562"))
 (pin "2" (uuid "98b865c7-c2ee-5b73-9579-7e2d0890f8f5"))
@@ -338,27 +505,27 @@
           (at 299.72 43.18 0)
           (effects (font (size 1.0 1.0)) (justify left))
           (uuid "29cea9ba-5d00-5fbf-9dfa-2842e7c6eb07"))
-(symbol (lib_id "AIPE:Sym_L2") (at 353.06 43.18 0)
+(symbol (lib_id "AIPE:Sym_L2") (at 353.06 48.26 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "80ba3adc-6919-5959-b24a-1d4efc9829ee")
           (property "Reference" "L2" (at 353.06 34.29 0)  (effects (font (size 1.27 1.27))))
 (property "Value" "68uH" (at 353.06 36.83 0)  (effects (font (size 1.27 1.27))))
-(property "Footprint" "Inductor_SMD:L_Coilcraft_MSS1246T-XXX" (at 353.06 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
-(property "Datasheet" "" (at 353.06 43.18 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Footprint" "Inductor_SMD:L_Coilcraft_MSS1246T-XXX" (at 353.06 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
+(property "Datasheet" "" (at 353.06 48.26 0) (hide yes) (effects (font (size 1.27 1.27))))
           (pin "1" (uuid "baf52676-429d-5b6b-ab23-40591e458ff1"))
 (pin "2" (uuid "dcbeb81c-7fdc-53ce-91f6-6d0209b8d060"))
           (instances (project "AIPE_Buck_1kW" (path "/558e48a2-11d7-5e19-b5b7-8bc9de1ba629/ca189374-1703-55cb-b602-676b8bab71a8"
             (reference "L2") (unit 1)))))
-(wire (pts (xy 345.44 43.18) (xy 342.9 43.18))
+(wire (pts (xy 353.06 44.449999999999996) (xy 350.52 44.449999999999996))
           (stroke (width 0) (type default)) (uuid "807125ff-59d7-5510-bca8-2f7f24d98f6c"))
 (global_label "SW12" (shape bidirectional)
-          (at 342.9 43.18 180)
+          (at 350.52 44.449999999999996 180)
           (effects (font (size 1.0 1.0)) (justify right))
           (uuid "060793b3-f734-50f9-95ad-c5ed5819e8a3"))
-(wire (pts (xy 360.68 43.18) (xy 363.22 43.18))
+(wire (pts (xy 353.06 52.07) (xy 350.52 52.07))
           (stroke (width 0) (type default)) (uuid "b7b63c35-f6ac-55e8-86f3-822252f07397"))
 (global_label "AUX12" (shape bidirectional)
-          (at 363.22 43.18 0)
-          (effects (font (size 1.0 1.0)) (justify left))
+          (at 350.52 52.07 180)
+          (effects (font (size 1.0 1.0)) (justify right))
           (uuid "4dc79200-3e0e-5b8e-8250-53a18ec3d8dd"))
 (symbol (lib_id "AIPE:Sym_C35") (at 38.1 81.28000000000002 0)
           (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "691a2043-464c-5e92-803c-4cac09a43502")
