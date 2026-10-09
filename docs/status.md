@@ -15,7 +15,7 @@ Recorded 2026-10-09, Asia/Shanghai. Branch: `codex/v1-buck-1kw`.
 | Engineering and visual review | Complete for V1 review | Ground-plane cutout fixed after image review; open electrical/thermal issues explicitly listed |
 | Manufacturing and review outputs | Complete | Gerber, drill, BOM, placement, STEP, fourteen-page schematic and eight-page PCB PDFs, three renders |
 | Frozen V1 | Complete locally | 155 files under releases/v1, SHA-256 manifest, plus v1-review-package.zip; source commit 7565481 |
-| GitHub push / PR | Blocked by repository permissions | Authenticated MrCoconut616: pull=true, push=false; prepared body in v1-pull-request.md |
+| GitHub push / PR | Blocked by repository permissions | Actual push rejected with HTTP 403; authenticated MrCoconut616: pull=true, push=false; prepared body in v1-pull-request.md |
 
 The next phase is human power-electronics review. No hardware qualification,
 fabrication, purchase, physical power-up or V2 redesign was performed.
@@ -26,6 +26,20 @@ Grant the authenticated account write access to `FulongLi/AIPE-PCB-Agent`, or
 provide an already authorized repository authentication context. This is a
 GitHub repository permission blocker, not a software-installation request.
 No separate repository or unauthorized fork was created.
+
+The completed release was committed as `0e70560`. Running
+`git push -u origin codex/v1-buck-1kw` returned:
+
+```text
+remote: Permission to FulongLi/AIPE-PCB-Agent.git denied to MrCoconut616.
+fatal: unable to access 'https://github.com/FulongLi/AIPE-PCB-Agent.git/': The requested URL returned error: 403
+```
+
+No remote branch or pull request was created. Once access is granted, push the
+existing branch and open the PR against `main` using `docs/v1-pull-request.md`.
+The frozen manifest, disk files, Git blobs and portable ZIP were checked for
+byte consistency. Its KiCad default display-state file is retained in Git to
+match the immutable snapshot; it contains no credentials or host paths.
 
 ## Validation scope
 
