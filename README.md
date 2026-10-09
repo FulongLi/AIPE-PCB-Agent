@@ -24,6 +24,8 @@ handoff state.
 - [Known issues](examples/buck-48v-24v-1kw/verification/known_issues.md)
 - [Verification summary](examples/buck-48v-24v-1kw/verification/verification-summary.json)
 - [Reproduction instructions](docs/reproduce-v1.md)
+- [Frozen V1](examples/buck-48v-24v-1kw/releases/v1/README.md)
+- [Portable V1 review archive](examples/buck-48v-24v-1kw/releases/v1-review-package.zip)
 
 ## Start here
 

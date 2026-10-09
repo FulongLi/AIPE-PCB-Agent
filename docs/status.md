@@ -14,7 +14,7 @@ Recorded 2026-10-09, Asia/Shanghai. Branch: `codex/v1-buck-1kw`.
 | Netlist and artifact checks | Passed | 645 assigned pins, 85 named nets; board/source/export hashes |
 | Engineering and visual review | Complete for V1 review | Ground-plane cutout fixed after image review; open electrical/thermal issues explicitly listed |
 | Manufacturing and review outputs | Complete | Gerber, drill, BOM, placement, STEP, fourteen-page schematic and eight-page PCB PDFs, three renders |
-| Frozen V1 | Preparing checksum snapshot | freeze_v1.py refuses to overwrite an existing release |
+| Frozen V1 | Complete locally | 155 files under releases/v1, SHA-256 manifest, plus v1-review-package.zip; source commit 7565481 |
 | GitHub push / PR | Blocked by repository permissions | Authenticated MrCoconut616: pull=true, push=false; prepared body in v1-pull-request.md |
 
 The next phase is human power-electronics review. No hardware qualification,
