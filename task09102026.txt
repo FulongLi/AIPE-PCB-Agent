@@ -1,0 +1,1053 @@
+# AIPE-PCB-Agent V2.0
+# Knowledge-Driven Autonomous SiC Power Converter Design
+
+Repository:
+https://github.com/FulongLi/AIPE-PCB-Agent
+
+Mission:
+Design a complete 400 V to 200 V, 5 kW SiC synchronous
+buck converter using the existing AIPE Engineering
+Knowledge System and KiCad automation tools.
+
+This is the second major design experiment for
+AIPE-PCB-Agent.
+
+V1 was produced using Codex.
+V2 will be independently developed using Claude Code.
+
+The objective is to evaluate whether engineering
+knowledge extracted from real manufacturer reference
+designs can improve autonomous electronic design.
+
+Work autonomously through the complete engineering
+design workflow.
+
+Do not stop after calculations or schematic generation.
+
+Produce complete, reviewable KiCad PCB projects.
+
+
+==================================================
+1. REPOSITORY AND EXISTING KNOWLEDGE
+==================================================
+
+First clone and inspect the existing repository.
+
+Study:
+
+- README.md
+- docs/architecture.md
+- docs/knowledge-system.md
+- docs/pcb-design-rules.md
+- knowledge/
+- automation/
+- examples/
+- tests/
+
+The repository already contains an Engineering
+Knowledge System V0.
+
+It includes:
+
+- 4 manufacturer reference designs
+- 6 Engineering Skills
+- 13 Circuit Building Blocks
+- 19 component knowledge records
+- 43 engineering rules
+
+The knowledge was primarily extracted from:
+
+TI:
+TIDA-010054
+10 kW bidirectional DAB converter
+
+Wolfspeed:
+CGD15SG00D2
+CGD1700HB2M-UNA
+PRD-04814
+
+IMPORTANT:
+
+Do not simply read these files as background.
+
+Actively retrieve and apply relevant engineering
+knowledge during the new design.
+
+Use the existing knowledge retrieval interface:
+
+automation/knowledge/query.py
+
+For every significant design decision, record:
+
+- Knowledge Skill ID
+- Engineering Rule ID
+- Reference Design ID
+- Decision made
+- Engineering justification
+- Applicability to the present design
+
+Do not blindly copy reference designs.
+
+Adapt knowledge to the actual converter requirements.
+
+
+==================================================
+2. NEW CONVERTER SPECIFICATION
+==================================================
+
+Design a new converter:
+
+Topology:
+Synchronous Buck Converter
+
+Nominal Input:
+400 V DC
+
+Nominal Output:
+200 V DC
+
+Rated Output Power:
+5000 W
+
+Nominal Output Current:
+25 A
+
+Switching Frequency:
+50 kHz
+
+Power Semiconductor:
+Wolfspeed SiC MOSFET
+
+Controller:
+TI TMS320F28335
+
+PCB CAD:
+KiCad
+
+Architecture:
+AI-selected, integrated or separated boards.
+
+The agent should derive and document reasonable
+additional design assumptions, including:
+
+- input voltage operating range
+- output voltage tolerance
+- current ripple target
+- output voltage ripple target
+- ambient temperature
+- cooling conditions
+- efficiency target
+- transient operating conditions
+- PCB manufacturing constraints
+
+Do not silently invent specifications.
+
+Clearly distinguish user requirements from
+agent-selected assumptions.
+
+
+==================================================
+3. OPERATING ENVIRONMENT
+==================================================
+
+The host machine may be Windows.
+
+KiCad was previously installed and used for
+the original Codex V1 PCB design.
+
+First verify the existing environment.
+
+Check:
+
+- operating system
+- KiCad installation and version
+- kicad-cli
+- Python
+- KiCad automation scripts
+- available IPC API
+- existing plugins and MCP servers
+- simulation tools
+- Git authentication
+
+Do not unnecessarily reinstall working software.
+
+Reuse existing tools whenever practical.
+
+If additional packages or dependencies are
+required, identify them and install through
+the approved environment workflow.
+
+Do not overwrite existing configurations.
+
+Verify the KiCad automation interface with
+a small smoke test before starting the
+new engineering project.
+
+
+==================================================
+4. PROJECT ORGANISATION
+==================================================
+
+Preserve all existing projects and knowledge.
+
+Do NOT overwrite:
+
+examples/buck-48v-24v-1kw/
+
+Do NOT modify the frozen V1 release.
+
+Create a new example:
+
+examples/sic-buck-400v-200v-5kw/
+
+Use a dedicated Git branch:
+
+feat/sic-buck-5kw-v2
+
+The new design is a separate benchmark.
+
+Preserve the existing knowledge system and
+reuse its interfaces.
+
+Do not create an unrelated standalone project.
+
+
+==================================================
+5. ENGINEERING KNOWLEDGE APPLICATION
+==================================================
+
+Before beginning the circuit design, query
+the Engineering Knowledge System.
+
+Relevant Skills include:
+
+SKILL-001
+SiC Gate Driver Design
+
+SKILL-002
+Gate Driver PCB Layout
+
+SKILL-003
+DC-Link Capacitor Selection
+
+SKILL-004
+Isolated Gate Bias Supply
+
+SKILL-005
+Current and Voltage Sensing
+
+SKILL-006
+Thermal Placement
+
+Also inspect relevant:
+
+- Engineering Rules
+- Circuit Building Blocks
+- Component Knowledge
+- Reference Design Analyses
+
+Determine which knowledge applies directly,
+which requires adaptation, and which does
+not apply to this converter.
+
+Create:
+
+design/knowledge_application.md
+
+This document should show how engineering
+knowledge influences the actual design.
+
+The knowledge system should contribute to
+engineering decisions, not merely be cited
+in the final report.
+
+
+==================================================
+6. POWER SEMICONDUCTOR SELECTION
+==================================================
+
+Use Wolfspeed SiC MOSFETs.
+
+Evaluate suitable candidates from the
+650 V, 900 V and 1200 V classes.
+
+Do not automatically choose the lowest
+voltage rating.
+
+Evaluate:
+
+- voltage margin
+- transient overshoot
+- current ratings
+- RDS(on)
+- switching energy
+- gate charge
+- parasitic capacitances
+- package
+- Kelvin source
+- thermal resistance
+- availability
+
+Select a real manufacturer part number.
+
+Use verified datasheet parameters.
+
+Estimate switching and conduction losses
+at the proposed operating conditions.
+
+Ensure the selected semiconductor can operate
+within its applicable safe operating limits.
+
+
+==================================================
+7. GATE DRIVER DESIGN
+==================================================
+
+Apply Wolfspeed and TI gate-driver knowledge.
+
+Design a complete SiC Gate Driver stage.
+
+Evaluate:
+
+- isolated gate driver IC
+- positive and negative gate bias
+- isolated bias supply
+- gate resistor selection
+- separate turn-on and turn-off paths
+- Miller clamp
+- Kelvin source connection
+- DESAT or equivalent fast protection
+- UVLO
+- hardware interlock
+- dead time
+- fault signalling
+- gate supply decoupling
+
+Select real driver components.
+
+Document why they are appropriate for
+the selected SiC MOSFET.
+
+The driver PCB layout must minimise
+gate-loop parasitic inductance.
+
+Do not blindly transplant a Wolfspeed
+reference circuit with different operating
+voltage, package or switching conditions.
+
+
+==================================================
+8. MAGNETIC COMPONENT DESIGN
+==================================================
+
+Design the output inductor.
+
+Determine:
+
+- required inductance
+- rated current
+- peak current
+- saturation current
+- winding resistance
+- copper losses
+- core losses at 50 kHz
+- temperature rise
+- physical size
+- mounting requirements
+
+Prefer a real commercially available
+magnetic component where appropriate.
+
+If no suitable standard component exists,
+document the custom design requirements.
+
+Include the actual component footprint,
+physical dimensions and mechanical clearance
+in PCB placement optimisation.
+
+Prepare for future integration with
+AIPE Magnetic Database.
+
+
+==================================================
+9. CAPACITOR DESIGN
+==================================================
+
+Use the existing DC-Link Capacitor Skill.
+
+Evaluate:
+
+Input DC-link capacitors:
+- capacitance
+- voltage rating
+- RMS ripple current
+- ESR / ESL
+- film and ceramic capacitor combinations
+- voltage derating
+- thermal behaviour
+
+Output capacitors:
+- capacitance
+- ripple-current rating
+- output voltage ripple
+- transient response
+- ESR
+- temperature and lifetime
+
+Place high-frequency capacitors near
+the switching power stage.
+
+Minimise the associated high-frequency
+commutation loop.
+
+Do not select capacitors solely by capacitance.
+
+
+==================================================
+10. ELECTRICAL DESIGN VERIFICATION
+==================================================
+
+Complete and check the electrical design
+before beginning PCB placement.
+
+Verify:
+
+- topology
+- circuit connectivity
+- switching operation
+- driver voltage compatibility
+- PWM operation
+- dead time
+- sensing interfaces
+- current and voltage stresses
+- startup behaviour
+- fault protection
+- inductor saturation margin
+- capacitor ratings
+- estimated losses
+- thermal limits
+
+Use appropriate analytical calculations
+and circuit simulation where practical.
+
+A plausible schematic is not sufficient.
+
+Run KiCad ERC.
+
+Correct all actionable errors before
+advancing to PCB design.
+
+If simulation cannot be executed, record
+the limitation explicitly.
+
+Do not substitute assumptions for
+simulation results.
+
+
+==================================================
+11. PCB ARCHITECTURE SELECTION
+==================================================
+
+The agent should independently evaluate
+different PCB architectures.
+
+Option A:
+Single integrated power and control PCB.
+
+Option B:
+Separate Power PCB and DSP Control PCB.
+
+Option C:
+Separate Power PCB, Gate Driver PCB and
+DSP Control PCB, if justified.
+
+Evaluate:
+
+- total PCB area
+- overall assembly volume
+- layout complexity
+- EMI
+- grounding
+- cooling
+- manufacturing cost
+- connector reliability
+- modularity
+- ease of testing
+- future redesign
+
+Do not automatically choose the same
+architecture as V1.
+
+The agent must explain the selected option.
+
+Preferred layer counts:
+
+Power PCB:
+2–4 layers where technically feasible.
+
+Control PCB:
+Prefer 4 layers where practical.
+
+6 layers are allowed if justified.
+
+Do not add layers merely to simplify routing.
+
+Do not sacrifice electrical integrity,
+current capacity or isolation to reduce
+layer count.
+
+
+==================================================
+12. POWER AND CONTROL PARTITIONING
+==================================================
+
+If separate boards are selected:
+
+POWER BOARD:
+
+- SiC MOSFETs
+- gate drivers
+- gate bias supplies
+- DC-link capacitors
+- output inductor
+- output capacitors
+- current sensing
+- voltage sensing
+- fast hardware protection
+- thermal management
+
+CONTROL BOARD:
+
+- TMS320F28335
+- DSP power supplies
+- PWM logic
+- ADC interfaces
+- fault management
+- communications
+- JTAG/debug
+- clock/reset
+- auxiliary digital circuitry
+
+Design an appropriate board-to-board
+connection system.
+
+Possible solutions:
+
+- board-to-board connectors
+- pin headers
+- ribbon cables
+- differential signal connectors
+
+Choose based on actual signal integrity,
+noise immunity, grounding and reliability.
+
+Do not route high-current power through
+ordinary signal connectors.
+
+Keep high-speed gate-drive loops close
+to the switching devices.
+
+Do not separate the driver from the
+power stage merely for visual symmetry.
+
+
+==================================================
+13. THERMAL AND MECHANICAL DESIGN
+==================================================
+
+Thermal design must influence placement.
+
+Evaluate:
+
+- MOSFET losses
+- junction temperature
+- package thermal resistance
+- heatsink requirements
+- electrical isolation from heatsink
+- thermal interface materials
+- inductor temperature
+- capacitor temperature
+- airflow
+- cooling clearance
+- mounting holes
+- mechanical assembly
+
+Reserve realistic heatsink and inductor
+envelopes before routing.
+
+Do not treat a component footprint as
+the complete mechanical envelope.
+
+Document the cooling assumptions and
+thermal model limitations.
+
+
+==================================================
+14. EMI-AWARE PLACEMENT AND ROUTING
+==================================================
+
+The switching frequency is 50 kHz.
+
+However, fast SiC switching transitions
+introduce high-frequency parasitic effects.
+
+Explicitly optimise:
+
+- commutation-loop inductance
+- gate-loop inductance
+- switching-node copper geometry
+- DC-link capacitor proximity
+- gate-driver return path
+- Kelvin source routing
+- high-current copper paths
+- analog signal return paths
+- current-sense routing
+- DSP/control separation
+- common-mode coupling
+- isolation boundaries
+
+Apply relevant Engineering Skills
+and reference-derived PCB rules.
+
+Avoid unnecessary switching-node copper.
+
+Keep sensitive sensing and feedback signals
+away from noisy switching structures.
+
+Use appropriate planes, zones, track geometry
+and via structures.
+
+Do not regard passing DRC as proof of
+acceptable EMI performance.
+
+
+==================================================
+15. COMPACT PCB OPTIMISATION
+==================================================
+
+PCB compactness is an explicit design objective.
+
+The agent should optimise:
+
+- PCB area
+- overall assembly volume
+- placement density
+- critical routing lengths
+- copper utilisation
+- power-loop geometry
+- mechanical arrangement
+
+Subject to:
+
+- electrical correctness
+- current capacity
+- thermal requirements
+- safety clearances
+- creepage distances
+- manufacturing constraints
+- signal integrity
+- EMI requirements
+
+Do not blindly minimise the distance
+between all components.
+
+Generate and evaluate multiple floorplan
+candidates where practical.
+
+Compare the candidates using measurable
+engineering criteria.
+
+Select the best justified design.
+
+Document why the final placement was chosen.
+
+
+==================================================
+16. AUTOMATIC PCB GENERATION
+==================================================
+
+Use KiCad to generate the actual PCB.
+
+The complete process must include:
+
+1. Schematic generation
+2. Footprint assignment
+3. PCB architecture
+4. Board outline
+5. Layer stack-up
+6. Component placement
+7. Power routing
+8. Signal routing
+9. Copper zones
+10. Vias and via arrays
+11. Design-rule configuration
+12. ERC / DRC
+13. PCB visualisation
+14. Manufacturing export
+
+Use the existing AIPE automation tools
+where suitable.
+
+Extend them if necessary.
+
+Prefer deterministic CAD APIs and
+verified project-file generation.
+
+Avoid fragile GUI automation where a
+reliable programmatic alternative exists.
+
+Do not generate fake PCB images.
+
+The outputs must come from real,
+editable KiCad project files.
+
+
+==================================================
+17. AUTOMATED REVIEW AND OPTIMISATION
+==================================================
+
+After PCB generation:
+
+Run native ERC and DRC.
+
+Check for unrouted connections.
+
+Perform an independent power-electronics
+engineering review.
+
+Evaluate:
+
+- gate-driver placement
+- commutation-loop geometry
+- capacitor placement
+- inductor placement
+- thermal clearance
+- high-current copper paths
+- sensing and grounding
+- isolation boundaries
+- PCB area
+- routing complexity
+- layer count
+
+Automatically correct verifiable errors.
+
+Attempt placement and routing improvements.
+
+Save measurable before/after results.
+
+Do not disable meaningful DRC rules
+to obtain a clean report.
+
+Document every unresolved engineering issue.
+
+
+==================================================
+18. KNOWLEDGE UTILISATION REPORT
+==================================================
+
+Create a dedicated report:
+
+review/knowledge_utilisation_report.md
+
+For each significant design decision:
+
+- What engineering problem was considered?
+- Which AIPE Skill was retrieved?
+- Which engineering rule was applied?
+- Which manufacturer reference supports it?
+- How did it influence the actual circuit or PCB?
+- What verification was performed?
+- Was the decision analytically checked,
+  simulated, or still unverified?
+
+This report is mandatory.
+
+The central V2 experiment is whether
+manufacturer-derived engineering knowledge
+improves autonomous design quality.
+
+
+==================================================
+19. DELIVERABLES
+==================================================
+
+Create a complete new example:
+
+examples/sic-buck-400v-200v-5kw/
+
+Suggested structure:
+
+input/
+    requirements.yaml
+
+design/
+    calculations.md
+    assumptions.md
+    architecture.md
+    component_selection.md
+    thermal_analysis.md
+    knowledge_application.md
+
+components/
+    bom.csv
+    component_records.json
+
+simulation/
+    models/
+    results/
+    simulation_report.md
+
+kicad/
+    schematic/
+    power_board/
+    control_board/
+
+verification/
+    erc/
+    drc/
+    engineering_checks/
+    known_issues.md
+
+manufacturing/
+    gerber/
+    drill/
+    bom/
+    assembly/
+
+review/
+    schematic.pdf
+    pcb_front.png
+    pcb_back.png
+    pcb_3d.png
+    architecture_comparison.md
+    knowledge_utilisation_report.md
+    design_report.md
+
+releases/
+    v2/
+
+Adapt the directory structure to the
+selected PCB architecture.
+
+If one integrated board is selected,
+a separate control_board directory
+is not required.
+
+Include all necessary KiCad source files.
+
+
+==================================================
+20. COMPARISON WITH V1
+==================================================
+
+The original V1 was:
+
+48 V to 24 V
+1 kW
+Silicon MOSFET
+Integrated PCB
+6 layers
+300 x 220 mm
+
+The new V2 has different electrical ratings.
+
+Do not claim a raw PCB-area comparison
+proves superiority across the two designs.
+
+Instead compare:
+
+- completeness of engineering workflow
+- knowledge utilisation
+- PCB architecture quality
+- critical loop layout
+- component selection rationale
+- thermal design completeness
+- board density and power density
+- manufacturability
+- automated verification coverage
+
+Provide measurable metrics where possible.
+
+Distinguish genuine improvements from
+differences caused by electrical specifications.
+
+
+==================================================
+21. SAFETY AND VALIDATION
+==================================================
+
+This is a 400 V DC, 5 kW non-isolated converter.
+
+The 200 V output remains hazardous and
+must not be treated as a safe low-voltage output.
+
+The agent must consider:
+
+- isolation of accessible control interfaces
+- fault protection
+- safe startup and shutdown
+- input precharge/inrush
+- DC-link discharge
+- grounding and isolation boundaries
+- safe test interfaces
+- device short-circuit capability
+- protective coordination
+- thermal faults
+
+Determine applicable electrical,
+insulation and manufacturing standards
+for the intended environment.
+
+Do not invent generic clearance values
+without a justified design basis.
+
+This task ends at an engineering prototype
+review package.
+
+Do not fabricate, purchase components,
+or energise the hardware.
+
+The design must remain subject to
+independent human engineering review.
+
+
+==================================================
+22. EXECUTION AND GIT WORKFLOW
+==================================================
+
+This is intended as a long autonomous
+Claude Code engineering task.
+
+Do not stop after every routine stage.
+
+Proceed through:
+
+Repository inspection
+    ↓
+Knowledge retrieval
+    ↓
+Environment validation
+    ↓
+Engineering calculations
+    ↓
+Component selection
+    ↓
+Circuit design
+    ↓
+Circuit verification
+    ↓
+Architecture selection
+    ↓
+PCB placement
+    ↓
+Automatic routing
+    ↓
+ERC / DRC
+    ↓
+Engineering optimisation
+    ↓
+Review reports
+    ↓
+V2 release
+    ↓
+GitHub Pull Request
+
+Commit meaningful milestones.
+
+Do not modify or overwrite frozen V1 data.
+
+Do not modify unrelated repositories.
+
+If a genuine blocker occurs, preserve
+all completed work and report the precise
+blocking condition.
+
+Never fabricate successful simulation,
+ERC, DRC or design results.
+
+If complete routing cannot be achieved,
+preserve the actual KiCad state and report
+the remaining unrouted connections.
+
+Do not label an incomplete design
+as a finished V2.
+
+
+==================================================
+23. GITHUB SUBMISSION
+==================================================
+
+Submit the work to:
+
+https://github.com/FulongLi/AIPE-PCB-Agent
+
+Branch:
+
+feat/sic-buck-5kw-v2
+
+If direct push is unavailable,
+use an authorised fork and create a PR.
+
+PR title:
+
+AIPE-PCB-Agent V2 — Knowledge-Driven 5kW SiC Buck
+
+The PR should include:
+
+- engineering design summary
+- circuit verification
+- chosen architecture
+- selected SiC MOSFET
+- gate-driver design
+- magnetic and capacitor selection
+- thermal analysis
+- PCB images
+- ERC/DRC results
+- knowledge utilisation report
+- known limitations
+
+Do not merge automatically.
+
+Stop after submitting the completed V2
+for human engineering review.
+
+
+==================================================
+24. SUCCESS CRITERIA
+==================================================
+
+The goal is NOT simply to produce another PCB.
+
+The goal is to demonstrate that AIPE's
+Engineering Knowledge System contributes
+to better autonomous engineering decisions.
+
+Success requires:
+
+- a complete engineering design
+- justified real component selection
+- evidence of knowledge utilisation
+- electrically reviewed schematics
+- complete intended PCB placement/routing
+- real KiCad verification results
+- engineering layout and thermal review
+- compactness optimisation
+- reproducible design files
+- a documented V2 release
+
+The final result should demonstrate:
+
+Engineering Knowledge
+        +
+Autonomous Design
+        +
+CAD Automation
+        +
+Engineering Verification
+        =
+Knowledge-Driven PCB Design
+
+Label the release:
+
+AI-GENERATED ENGINEERING PROTOTYPE
+V2 — HUMAN REVIEW REQUIRED
