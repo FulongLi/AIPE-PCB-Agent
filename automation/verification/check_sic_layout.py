@@ -792,7 +792,7 @@ def extract_board(path) -> BoardData:
             try:
                 diameter = mm(item.GetWidth(on_ids[0]))
             except TypeError:
-                diameter = mm(item.GetWidth())
+                diameter = mm(item.GetWidth(item.GetLayer()))  # KiCad 10: PCB_VIA.GetWidth needs a layer (else a blocking wx assert dialog)
             data.vias.append(dict(net=item.GetNetname(), xy=mm(item.GetPosition()), diameter=diameter,
                                   drill=mm(item.GetDrillValue()), layers=[names[layer] for layer in on_ids]))
         else:
