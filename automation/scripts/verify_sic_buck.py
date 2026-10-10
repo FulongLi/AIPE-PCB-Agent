@@ -59,7 +59,18 @@ def check_run(kind: str, board: str, problems: list) -> dict:
         dependency = cad / name
         if not dependency.exists() or sha(dependency) != digest:
             problems.append(f"{board} {kind}: dependency changed {name}")
-    record["hashes_valid"] = not any(p.startswith(f"{board} {kind}") for p in problems)
+    hash_problems = [p for p in problems if p.startswith(f"{board} {kind}: source") or p.startswith(f"{board} {kind}: dependency")
+                     or p.startswith(f"{board} {kind}: report")]
+    record["hashes_valid"] = not hash_problems  # finding counts are reported separately; only hash/currency problems invalidate the chain
+    report = Path(data.get("report", ""))
+    recorded_report_hash = data.get("report_sha256")
+    if recorded_report_hash is not None:  # run_check records the report hash (review LR-19); older manifests lack it
+        if not report.is_file() or sha(report) != recorded_report_hash:
+            problems.append(f"{board} {kind}: report changed since the recorded run")
+            record["hashes_valid"] = False
+        record["report_hash_checked"] = True
+    else:
+        record["report_hash_checked"] = False
     return record
 
 
@@ -111,7 +122,8 @@ def check_metrics(board: str, problems: list) -> dict:
     board_file = EXAMPLE / "kicad" / BOARDS[board]["dir"] / (BOARDS[board]["name"] + ".kicad_pcb")
     recorded = data.get("board_sha256") or data.get("board", {}).get("sha256")
     current = sha(board_file) if board_file.exists() else None
-    record = {"file": path.relative_to(EXAMPLE).as_posix(), "board_hash_recorded": recorded is not None,
+    record = {"status": "passed" if (recorded and recorded == current) else ("unverified" if not recorded else "failed"),
+              "file": path.relative_to(EXAMPLE).as_posix(), "board_hash_recorded": recorded is not None,
               "board_hash_matches": (recorded == current) if recorded else None}
     if recorded and recorded != current:
         problems.append(f"{board}: layout metrics were measured on a different board file")

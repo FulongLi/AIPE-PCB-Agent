@@ -87,13 +87,13 @@ SELV_CLEARANCE = {"power": 0.25, "control": 0.2}
 
 HV_CLASSES = ("HV_VIN", "HV_SW", "HV_PGND", "HV_VOUT")
 SW_ISLAND = ("DRV_HS", "DESAT_HS")
-PGND_ISLAND = ("DRV_LS", "DESAT_LS", "SENSE_ISO")
+PGND_ISLAND = ("DRV_LS", "DESAT_LS", "SENSE_ISO", "PGND_LV")
 HV_SIDE = HV_CLASSES + SW_ISLAND + PGND_ISLAND
 SELV_CLASSES = ("CTRL_SELV", "CTRL_PWR", "Default")
 # Reference potential of every HV-side class: pairs across groups get the HV functional clearance,
 # HV_SW with its driver island and HV_PGND with its island/sensing nets the same-island clearance.
 REFERENCE_GROUP = {"HV_VIN": "VIN", "HV_VOUT": "VOUT", "HV_SW": "SW", "DRV_HS": "SW", "DESAT_HS": "SW",
-                   "HV_PGND": "PGND", "DRV_LS": "PGND", "DESAT_LS": "PGND", "SENSE_ISO": "PGND"}
+                   "HV_PGND": "PGND", "DRV_LS": "PGND", "DESAT_LS": "PGND", "SENSE_ISO": "PGND", "PGND_LV": "PGND"}
 SAME_ISLAND_PAIRS = (("HV_SW", SW_ISLAND), ("HV_PGND", PGND_ISLAND))
 
 HV_VIA = dict(via_diameter=1.2, via_drill=0.6)
@@ -102,10 +102,11 @@ SELV_VIA = dict(via_diameter=0.6, via_drill=0.3)
 
 # Power-board HV-side patterns: sic_buck_common.NET_CLASS_PATTERNS with the deltas described above.
 POWER_HV_PATTERNS = {
-    "HV_VIN": ["VIN_RAW", "VIN", "VIN_PRE", "BLD_IN_*", "IND_IN_*", "DAMP_MID", "VIN_DIV_T*"],
+    "HV_VIN": ["VIN_RAW", "VIN", "VIN_PRE", "BLD_IN_*", "IND_IN_1", "IND_IN_2", "DAMP_MID", "VIN_DIV_T*"],
     "HV_SW": ["SW", "SNUB_MID"],
     "HV_PGND": ["PGND", "PE_REF_MID"],
-    "HV_VOUT": ["VOUT", "VOUT_L", "BLD_OUT_*", "IND_OUT_*", "VOUT_DIV_T*"],
+    "PGND_LV": ["IND_IN_3", "IND_OUT_2"],
+    "HV_VOUT": ["VOUT", "VOUT_L", "BLD_OUT_*", "IND_OUT_1", "VOUT_DIV_T*"],
     "DRV_HS": ["HS_*", "G_H", "KS_H", "VDD_H", "VEE_H"],
     "DRV_LS": ["LS_*", "G_L", "KS_L", "VDD_L", "VEE_L"],
     "DESAT_HS": ["DESAT_H_*"],
@@ -118,8 +119,9 @@ NET_CLASS_PATTERN_DELTAS = [
     "(each net belongs to exactly one class)",
     "A-G1: SENSE_ISO patterns VIN_DIV* / VOUT_DIV* narrowed to VIN_DIV / VOUT_DIV; the ladder taps VIN_DIV_T* / VOUT_DIV_T1 "
     "(up to ~360 V) join HV_VIN / HV_VOUT",
-    "A-G1: HV intermediate nodes (sic_buck_power_model.HV_INTERMEDIATE_NETS) assigned by reference potential: BLD_IN_*, IND_IN_*, "
-    "DAMP_MID -> HV_VIN; SNUB_MID -> HV_SW; PE_REF_MID -> HV_PGND; BLD_OUT_*, IND_OUT_* -> HV_VOUT",
+    "A-G1: HV intermediate nodes (sic_buck_power_model.HV_INTERMEDIATE_NETS) assigned by reference potential: BLD_IN_*, IND_IN_1/2, "
+    "DAMP_MID -> HV_VIN; SNUB_MID -> HV_SW; PE_REF_MID -> HV_PGND; BLD_OUT_*, IND_OUT_1 -> HV_VOUT; the LED anode nodes IND_IN_3 and "
+    "IND_OUT_2 sit about 2 V above PGND and form the PGND_LV class of the PGND reference island (0.3 mm to HV_PGND, 3.0 mm to the other HV groups, 9.0 mm to SELV), so the 0805 indicator LEDs need no 3 mm spacing (DRC round 2026-10-11)",
     "A-G1: CTRL_SELV lists every remaining power-board net explicitly (no net is left to Default)",
     "A-G2: control board - CTRL_PWR (1.0 mm tracks) for 12V_IN, 12V_PROT, EFUSE_RTN, 5V, 5V_SW, 3V3, 1V9, 3V3_BULK, 1V9_BULK, GND_CTRL; "
     "CTRL_SELV for every other net; the shared HV patterns are carried as guards that must match nothing",
@@ -268,6 +270,7 @@ def board_net_classes(board: str, parts) -> tuple[list, dict]:
             _class("DESAT_HS", SAME_ISLAND, 0.3, ISLAND_VIA, POWER_HV_PATTERNS["DESAT_HS"]),
             _class("DESAT_LS", SAME_ISLAND, 0.3, ISLAND_VIA, POWER_HV_PATTERNS["DESAT_LS"]),
             _class("SENSE_ISO", SAME_ISLAND, 0.3, ISLAND_VIA, POWER_HV_PATTERNS["SENSE_ISO"]),
+            _class("PGND_LV", SAME_ISLAND, 0.5, ISLAND_VIA, POWER_HV_PATTERNS["PGND_LV"]),
             _class("PE", HV_TO_PE, 2.0, HV_VIA, POWER_HV_PATTERNS["PE"]),
             _class("CTRL_SELV", selv, selv, SELV_VIA, remaining),
         ]
@@ -422,9 +425,13 @@ def pin_field_exceptions(parts, geometry: dict, assignment: dict, clearances: di
         for i, a in enumerate(pads):
             for b in pads[i + 1:]:
                 net_a, net_b = part["nets"].get(a["number"]), part["nets"].get(b["number"])
-                if not net_a or not net_b or net_a == net_b:
+                if net_a == net_b:
                     continue
-                class_a, class_b = assignment[net_a], assignment[net_b]
+                # A no-connect pad carries KiCad's "unconnected-(REF-PadN)" net, which lives in the Default class and is
+                # therefore 9.0 mm away from every HV-side pad of the same package by the barrier rule; the package
+                # geometry cannot change, so these pairs need the same exception as any other pad pair.
+                class_a = assignment[net_a] if net_a else "Default"
+                class_b = assignment[net_b] if net_b else "Default"
                 required = required_clearance(class_a, class_b, clearances)
                 gap = pad_gap(a, b)
                 if gap < required - 1e-6:
@@ -433,7 +440,7 @@ def pin_field_exceptions(parts, geometry: dict, assignment: dict, clearances: di
                     if record is None or gap < record["min_gap_mm"]:
                         pairs[key] = dict(ref=part["ref"], footprint=part["footprint"], classes=list(key), required_mm=required,
                                           min_gap_mm=round(gap, 4), clearance_mm=exception_clearance(gap), kind=exception_kind(required),
-                                          pads=[a["number"], b["number"]], nets=[net_a, net_b], pad_pairs=0)
+                                          pads=[a["number"], b["number"]], nets=[net_a or "unconnected", net_b or "unconnected"], pad_pairs=0)
                     pairs[key]["pad_pairs"] += 1
         records += [pairs[k] for k in sorted(pairs)]
     return sorted(records, key=lambda r: (ps.reference_prefix(r["ref"]), ps.pin_key(r["ref"][len(ps.reference_prefix(r["ref"])):]), r["classes"]))

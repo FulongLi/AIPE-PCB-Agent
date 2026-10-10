@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "title": "Independent PCB layout review (task section 17) - findings",
+  "date": "2026-10-10",
+  "reviewer": "independent layout-review agent (did not create the boards)",
+  "inputs": {
+    "control_board": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb",
+    "control_board_sha256": "119d37df1b737fd727e44429991f7ed9537c5c9b3a292292e13f046657b04ecd",
+    "power_board": "kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb (absent)",
+    "control_drc_manifest": "verification/drc/20261010T104013Z-drc-7a5fd84b/run.json",
+    "control_drc_counts": {"violations": 0, "unconnected_items": 39, "schematic_parity": 0, "tool_exit_code": 5, "wrapper_exit_code": 5},
+    "control_export_manifest": "manufacturing/control_board/export-manifest.json",
+    "layout_metrics": "verification/engineering_checks/layout_metrics_control.json",
+    "review_table": "verification/pcb_rule_review.md"
+  },
+  "severity_scale": ["blocker", "should-fix", "note"],
+  "dispositions_note": "verifiable_by_automation = true when the correction is a placement / plan / spec JSON change followed by a re-run of the generator, router, kicad-cli DRC and the metrics checker; false when it needs a schematic, library, document or engineering decision.",
+  "findings": [
+    {
+      "id": "LR-01",
+      "severity": "blocker",
+      "board": "power",
+      "rule": "all power-board rules (KR-PCB-001..006, KR-ISO-001..004, KR-CAP-003, KR-TH-002, PE-PCB-001..008)",
+      "evidence": "No file kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb exists (only schematics, ERC 20261010T070357Z-erc-a2f64724 with 0 findings, .kicad_pro net classes, .kicad_dru rules and fp-lib-table). verification/netlist_check_power.json records status board_missing; verification/drc contains no power run; manufacturing/power_board does not exist; no layout metrics or renders. Gate loop, commutation loop (C1-C10 rows <= 5 / <= 15 mm, VIN+ over PGND pours), Kelvin separation in copper, inductor and SW copper extent, heatsink keep-out, pour widths and via arrays, isolation strip, slots and SELV intrusion cannot be measured.",
+      "proposed_correction": "Run the power-board layout stage (v2_pipeline_smoke.board_stage pattern) to produce the board, then kicad-cli DRC with --schematic-parity --severity-all through run_check into verification/drc and the metrics checker with a corrected layout_spec_power.json (LR-08); re-submit for review.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-02",
+      "severity": "blocker",
+      "board": "control",
+      "rule": "routing completeness / DRC unconnected_items (prerequisite for PE-PCB-005, PE-PCB-007, PE-PCB-008 acceptance)",
+      "evidence": "verification/drc/20261010T104013Z-drc-7a5fd84b/drc.json: 39 unconnected items on 20 nets - XRS_N 6 (U4.1, TP13.1, R24.2, D2.1, U8.13, U5.80, U3.22), FLT_H_N 3, FLT_L_N 3, OTP_N 3, PG_BIAS_S_N 3, RDY_H 3, RDY_L 3, ADC_TEMP_HS 2, OVP_IN_N 2, and 1 each on BIAS_EN, BOOT87, G1_N, OVP_N, OVP_OUT_N, PG_BIAS_H_OK, PG_BIAS_L_OK, PG_BIAS_S_OK, RELAY_ON, SPARE_D2, TDI. routing_progress_control.json lists all 39 as router 'route' failures; endpoints cluster between the DSP PWM/fault pin side (U5 pins 10-26 at y = 45.7 mm, x = 61-70 mm) and the fault combiner U8/U10/U11 at y = 56-65 mm, plus the board-spanning XRS_N (U4 at x = 12.4 to U5 at x = 80.7 and U3 at x = 49.9). Only two routing layers (F.Cu, B.Cu) exist by design; 4151 tracks, 642 vias.",
+      "proposed_correction": "Create routing room on the DSP's PWM/fault side: move the logic region (U8, U9, U10, U11 and their resistors) >= 3 mm further from the DSP's bottom escape rows and spread it along x; allow the router 0.15 mm track / 0.15 mm clearance (the pcb_stackup fabrication minimum) in the escape field; put XRS_N, TDI, FLT_H_N, FLT_L_N, RDY_H, RDY_L, OTP_N, PG_BIAS_S_N, RELAY_ON, BIAS_EN early in SIGNAL_ORDER; give XRS_N a pre-routed B.Cu lane across the top of the DSP toward U4; re-run the generator and kicad-cli DRC until unconnected_items = 0.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-03",
+      "severity": "blocker",
+      "board": "control",
+      "rule": "mechanical / interconnect stacking (design_decisions.json interconnect, architecture.control_board.mounting; pcb_stackup.md section 2 'B.Cu: signals, JTAG, mezzanine header')",
+      "evidence": "pcbnew: J8 (PinHeader_2x25_P2.54mm_Vertical, TSW-125-07-G-D) side = F.Cu at (28.0, 76.0) rotation 90, pins at y 73.46 / 76.0 mm, x 28.0-88.96 mm, pin 1 left; review/pcb_3d_control.png shows the 50 pins protruding from the component side. The design stacks the control board 11.05 mm above the power-board SELV strip (header mating downward into SSW-125-01-G-D). Tallest component-side parts: J1 12.0 mm, C9 11.2 mm, C3 10.5 mm (spec heights). All 15 B.Cu parts are 0603 capacitors (0.9 mm).",
+      "proposed_correction": "Place J8 on B.Cu (mirror about its own axis so that pin 1 stays at the documented end; re-derive the 'PIN 1 LEFT' silkscreen) and re-route; keep the B.Cu part height budget <= 11.05 mm minus the power-board SELV part heights (<= 8 mm per pcb_stackup). The candidate JSON 'fixed' entries need a side field in generate_sic_control_board.py. Decide and document the JTAG side (stackup table says B.Cu; accessibility argues for F.Cu).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-04",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "PE-PCB-005 / PE-PCB-008 (design_decisions.json sensing.adc_front_end: '1 k + 1 nF at every ADC pin')",
+      "evidence": "Distance from the DSP ADCIN pad to its 1 nF filter capacitor pad: ADC_VIN 10.48 mm (C68), ADC_ISENSE 11.33 (C69), ADC_TEMP_HS 12.21 (C70), ADC_VOUT 12.33 (C74), ADC_I12V 12.96 (C73), ADC_TEMP_CTRL 13.11 (C71), ADC_V12V 13.25 (C75), ADC_ISENSE_REF 17.27 (C72); series 1 k resistors 21.6-36.0 mm away; ADCREFP capacitor C48 7.87 mm, ADCREFM capacitor C47 7.38 mm, ADCRESEXT resistor R25 12.8 mm. The analogue region starts at x = 87 mm while the ADC pin row is at x = 76.75 mm, so no filter part can be closer than ~10 mm.",
+      "proposed_correction": "Move the eight 1 nF capacitors (C68-C75) and C47/C48 to within ~3-5 mm of pins 38-42 and 46-49 (outside the outward escape via rows at 15.9 mm radius), e.g. extend the analogue region to x >= 82 mm or add a dedicated 'adc_filters' region hugging the DSP's right side; keep the 1 k resistors at the analogue end; re-run.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-05",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "PE-PCB-002 / PE-PCB-003 (applied to the TPS54302 hot loop) and PE-PCB-008",
+      "evidence": "U2 TPS54302 VIN pad 3 at (17.14, 20.05): nearest 12V_PROT capacitor pads C3 100 uF electrolytic 6.85 mm, C5 100 nF 17.7 mm, C4 10 uF ceramic 21.24 mm (C4 GND pad 20.96 mm from U2 GND pad 1); U2 GND pad to nearest GND via 1.36 mm. 5V_SW: U2.2 (17.1, 21.0) to L1.1 (23.8, 21.0) are 6.7 mm apart, yet the net has 10 segments on F.Cu and B.Cu (9.9 mm on B.Cu) with 3 vias at (18.5, 21.0), (22.2, 21.0), (25.4, 24.0); bootstrap capacitor C6 pad at (24.3, 28.0) is 7 mm from the SW pin.",
+      "proposed_correction": "Place C4 and C5 directly at U2 pins 3 / 1 (<= 2 mm, GND pad with its own via to In1.Cu), keep 5V_SW on F.Cu as a short wide polygon or 1.0 mm pre-routed track U2.2 -> L1.1 with C6 at the pins, and route 5V_BST on F.Cu; add these to pre_routed in the routing plan; re-run.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-06",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "PE-PCB-006 (thermal copper / vias) and PE-PCB-008",
+      "evidence": "pcbnew: U3 TPS767D301 (P_LDO 1.39 W per design_decisions.json controller.supplies) exposed pad 29 (2.85 x 5.4 mm, GND_CTRL) contains 1 via (0.3 mm drill); U1 TPS26400 exposed pad 17 (3.4 x 5.0 mm, EFUSE_RTN) contains 1 via, and EFUSE_RTN has no plane (71 track segments at 0.4 mm). The research record (controller_aux_interconnect.json) asked for the PowerPAD 'stitched to the RTN/GND plane with multiple vias'.",
+      "proposed_correction": "Extend INPAD_VIAS to arrays: >= 6 x 0.3 mm vias (0.9-1.0 mm pitch) in the U3 pad to the In1.Cu GND plane and >= 4 vias in the U1 pad with a local EFUSE_RTN copper area on B.Cu (or to the GND plane once LR-10 is resolved); re-run.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-07",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "PE-PCB-006 (IPC-2221 width check) / project CTRL_PWR net class (track_width 1.0 mm)",
+      "evidence": "Router NET_RULES used 0.4 mm for 12V_IN (42 segments, 62 mm), EFUSE_RTN (71 segments, 67 mm), 5V_SW and 0.3 mm for 12V_PROT (21 segments) and 5V (44 segments); the project net class CTRL_PWR specifies 1.0 mm. IPC-2221 external, 35 um: 1.96 A (eFuse I_CB) on 0.4 mm -> 28.8 K rise, 1.76 A (worst pull-in) -> 22.5 K, 1.96 A on 0.3 mm -> 46 K, on 1.0 mm -> 6.4 K. Layer transitions: 2 parallel 0.3 mm vias at U1.1/U1.2 (12V_IN) and at U1.15/U1.16 (12V_PROT) -> ~1 A each, 2.2 K (external formula) / 10.7 K (internal). Bulk 12V_PROT and 5V current flows in the In2.Cu islands (1453.7 / 608.5 mm2), so the hot spots are the short outer-layer stubs; 12V_PROT corridor fingers on In2.Cu are 1.2-1.3 mm wide (1.3 A -> 7.8 K internal).",
+      "proposed_correction": "Set NET_RULES width 1.0 mm (class value) for 12V_IN, 12V_PROT, EFUSE_RTN, 5V, 5V_SW (0.6 mm minimum where the SOT-23-6 / HTSSOP pads limit), add a third via at the eFuse input and output, widen the 12V_PROT corridor fingers to >= 2 mm; re-run and re-check with the IPC-2221 formula in the metrics checker.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-08",
+      "severity": "should-fix",
+      "board": "power",
+      "rule": "layout spec correctness for KR-ISO-001 / KR-ISO-002 / KR-ISO-004, KR-PCB-003, PE-PCB-001..003, KR-TH-002 (checker input)",
+      "evidence": "verification/engineering_checks/layout_spec_power.json (unmodified since 14:48) versus design/circuit_power.json: barrier_parts list U2 as 'UCC21710 LS driver' (schematic U2 = UCC14141 HS bias), U3 as 'UCC14141 HS gate bias' (schematic U3 = UCC21710 LS driver), U8 as 'TMCS1133' (schematic U8 = OPA2320; TMCS1133 is U10 and is absent from the list); gate_loops Q2 driver_ref 'U2' (should be U3) with driver_output_pads/return_pads placeholders; mosfets drain_pad 2 / source_pad 3 / gate_pad 1 / kelvin_pad 4 (schematic Q1: 1 VIN drain, 2 SW source, 3 KS_H, 4 G_H; Q2: 1 SW, 2 PGND, 3 KS_L, 4 G_L); decoupling supply nets COM_H / COM_L (schematic uses KS_H / KS_L); sensing kelvin_pairs VIN_DIV_P/N, VOUT_DIV_P/N (schematic: single VIN_DIV, VOUT_DIV); CTRL_SELV patterns omit 12V_BIAS_H/L/S, GNDP_H/L/S, PWM_H_F, PWM_L_F, RESET_N_F, BIAS_EN_F, REF2V5_PB, K1_LOW, RLY_G, VIN_AMP_P/N, VOUT_AMP_P/N, VIN_OUTP/N, VOUT_OUTP/N (all CTRL_SELV in the .kicad_pro), so the 9.0 mm HV-to-SELV measurement would skip them; compactness heights 'C2[0-9]' 45 mm (the 45 mm films are C13/C14, the 37 mm films C11/C12) and L1 40 mm (baseline 48 mm). The task required the spec to be updated to the real design; it was not.",
+      "proposed_correction": "Rewrite the spec from circuit_power.json: barrier_parts U1, U3 (UCC21710), U2, U4, U5 (UCC14141), U6, U7 (AMC1311), U10 (TMCS1133); gate_loops Q1 -> U1, Q2 -> U3 with the UCC21710 DW pad numbers (OUTH/OUTL/COM) from the placed footprint; MOSFET pads 1 drain / 2 source / 3 Kelvin / 4 gate; decoupling nets VDD_x / VEE_x / KS_x; kelvin pairs VIN_DIV & PGND reference or drop; full CTRL_SELV pattern list; heights C11/C12 37, C13/C14 45, L1 48, HS1 50; then run check_sic_layout.py on the power board.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-09",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "connector placement (task baseline: J1, J3, J5, J4, J2, J6, J7 at the edges)",
+      "evidence": "pcbnew: J5 UART (PinHeader_1x03) at (44.0, 30.0) and J4 BOOT at (44.0, 42.0) - 44 mm from the left edge, between the supply block and the DSP; J1 (12.0, 8.3), J2 (4.5, 44.0), J3 (93.0, 7.0), J6 (113.0, 20.0), J7 (113.0, 58.0) and J8 are at edges.",
+      "proposed_correction": "Move J4 and J5 to the left edge strip (x ~ 4-8 mm, y ~ 25-40 mm, next to J2) in control_B.json 'fixed' and re-route (their nets UART_RX/TX and BOOT84-87 are DSP pins on the DSP's left/top side, so the path length grows by ~40 mm; acceptable for UART and straps).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-10",
+      "severity": "should-fix",
+      "board": "control",
+      "rule": "PE-PCB-008 / grounding (schematic-level, surfaced by the layout)",
+      "evidence": "Model and board: net EFUSE_RTN connects only U1 pin 8 (RTN), U1 pin 17 (PAD), R3.2, R4.2, R5.2, C2.2 - no part or copper joins it to GND_CTRL (DRC 0 violations confirms the nets are isolated in copper). The U1 note in design/circuit_control.json says 'RTN separate from GND (A-C3); PowerPad on RTN', but no assumption A-C3 exists in design/assumptions.md or design_decisions.json; the research record controller_aux_interconnect.json expected the 'PowerPAD stitched to the RTN/GND plane'. I12V_MON is the IMON current across R5 to EFUSE_RTN and is read by ADCINB0 against GND_CTRL, which is meaningless if EFUSE_RTN floats. The TPS26400 RTN pin is the device return and is to be connected to system ground per the datasheet (to be confirmed by the schematic owner).",
+      "proposed_correction": "Schematic owner to confirm the TPS26400 RTN/GND/PAD connection and either tie EFUSE_RTN to GND_CTRL (single point at the eFuse or merge the nets) or document the undefined assumption A-C3 with its rationale; the layout then follows the corrected netlist. Not a layout change.",
+      "verifiable_by_automation": false
+    },
+    {
+      "id": "LR-11",
+      "severity": "note",
+      "board": "control",
+      "rule": "PE-PCB-007 (checker proxy quality)",
+      "evidence": "layout_metrics_control.md reports 'control section (46 parts) to power stage (33 parts) bounding-box distance 0.000 mm, overlap 1928 mm2' because the spec groups include J8 (12V_PROT pins 1-3 and the analogue pins 43-49) and U5 in both sections. Recomputed with J8 and U5 excluded: analogue section (45 parts touching ADC_/ADCREF/ADCRESEXT/VIN_SENSE/VOUT_SENSE/ISENSE/TEMP_/REF2V5/REF3V0/comparator-reference nets) bbox x 87.1-114.8, y 16.5-69.5 mm; supply section (34 parts on 12V_IN/12V_PROT/5V/5V_SW/EFUSE_RTN/5V_BST/5V_FB/5V_EN) bbox x 3.5-50.9 mm; separation 36.3 mm; PWM gating parts bbox 36.0-66.5 x 52.2-69.0 mm, 20.6 mm from the analogue bbox.",
+      "proposed_correction": "In layout_spec_control.json add 'exclude_refs': ['J8', 'U5'] (or an equivalent key in check_sic_layout.control_metrics) for the section groups so that the PE-PCB-007 proxy measures the sections, not the shared connector; re-run the checker.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-12",
+      "severity": "note",
+      "board": "both",
+      "rule": "evidence tooling (verification-summary.json)",
+      "evidence": "automation/scripts/verify_sic_buck.py line 62: record['hashes_valid'] = not any(p.startswith(f'{board} {kind}') for p in problems) - the message 'control drc: latest run did not pass with zero findings' shares the prefix, so hashes_valid is reported false although this review recomputed source_sha256 and 42/42 dependency hashes as valid.",
+      "proposed_correction": "Match the specific 'source changed' / 'dependency changed' problem strings when computing hashes_valid (or collect them in a separate list); re-run verify_sic_buck.py.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-13",
+      "severity": "note",
+      "board": "control",
+      "rule": "PE-PCB-008 (DSP decoupling)",
+      "evidence": "26 near_dsp_pin capacitors: 1V9 pins 3.90-5.03 mm (B.Cu under the body), 3V3 pins 5.05 mm (F.Cu ring at 18.5 mm radius) and 5.85 mm for pin 143 -> C37; mean 4.54 mm; each capacitor GND pad has a GND via within 1.10 mm and each rail pad a rail via within 1.99 mm; C22 (pin 31), C36 (pin 139), C38 (pin 146) are not the nearest capacitors to their designated pins (4.10 / 5.24 / 4.50 mm). Baseline wording 'within a few mm' is met; the agent's 5.0 mm proxy is exceeded by 0.85 mm.",
+      "proposed_correction": "Reduce the 3V3 ring radius in control_B.json dsp_bypass from 18.5 to ~17.3 mm (far escape row 15.875 + 0.3 via radius + 0.2 clearance + 0.8 pad = 17.2 mm) and let the lateral spread follow the pins; expect ~3.7-4.0 mm maximum.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-14",
+      "severity": "note",
+      "board": "control",
+      "rule": "PE-PCB-004 (Kelvin / pair routing of ISENSE and ISENSE_REF)",
+      "evidence": "ISENSE 80.2 mm track / 4 vias, ISENSE_REF 56.5 mm / 2 vias, mismatch 23.6 mm; 18 segments of the two nets cross the logic-region corner (x 33-86.5, y 50.5-70.8) on the way from J8 pins 43/45 (x 81.3 / 83.9, y 76.0) to the analogue region. Both are ground-referenced DC signals (TMCS1133 VOUT and VREF through the OPA2320 strip) so the mismatch is not an error source, but the pair intent is not implemented.",
+      "proposed_correction": "Pre-route the two nets side by side along the right edge (pre_routed tracks in the routing plan) or move the ISENSE front end next to the analogue end of J8; the grid router has no differential-pair mode, so this is a manual plan entry.",
+      "verifiable_by_automation": false
+    },
+    {
+      "id": "LR-15",
+      "severity": "note",
+      "board": "control",
+      "rule": "DFM (zone fill slivers)",
+      "evidence": "In2.Cu 3V3 background zone fill contains 7 outlines of 0.0025-0.0039 mm2 (20-30 um wide) at (60.58-60.60, 44.68-44.92), (61.90-61.93, 44.68-44.92), (78.57-78.60, 43.58-43.82), (60.57-60.60, 43.66-43.82), (61.90-61.92, 43.66-43.81), (70.40-70.43, 22.18-22.34), (70.40-70.42, 21.08-21.32) mm - fragments trapped between the background and the higher-priority 3V3 corridor zones at (60.6-61.9, 43.6-46.5), (69.1-70.4, 19.4-22.4), (78.6-81.5, 43.1-44.4). Same net, so electrically harmless; below typical 0.1 mm minimum feature.",
+      "proposed_correction": "Enlarge the corridor zones by >= 0.25 mm (zone clearance + min thickness) or snap their edges to the background fill grid in island_corridors(); re-fill and re-check OutlineCount per layer.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-16",
+      "severity": "note",
+      "board": "control",
+      "rule": "clock placement (design_decisions.json controller.dsp: 30 MHz oscillator on XCLKIN)",
+      "evidence": "Y1 centre (66.0, 8.2) is 13.0 mm from U5 pin 105 XCLKIN (70.75, 20.32); CLK30_SOURCE Y1.3 -> R26.1 12.3 mm / 2 vias, CLK30 R26.2 -> U5.105 11.6 mm / 2 vias; routed over the unbroken In1 GND plane.",
+      "proposed_correction": "Place Y1 and R26 within ~5 mm of pin 105 (just outside the top escape rows at y ~ 15 mm) in control_B.json 'fixed'; optional.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-17",
+      "severity": "note",
+      "board": "control",
+      "rule": "exports (STEP / renders)",
+      "evidence": "manufacturing/control_board/logs/step.log: 'Could not add 3D model' for U1 (Package_SO.3dshapes/TSSOP-16-1EP_4.4x5mm_Pitch0.65mm_EP3.4x5mm.step), Y1 (Oscillator.3dshapes/Oscillator_SMD_SeikoEpson_SG8002CA-4Pin_7.0x5.0mm.step) and U3 (Package_SO.3dshapes/HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm.step) - files absent from the KiCad 10.0.7 bundle; the three parts are bodiless in board.step and in all three renders. Export hashes (35 artefacts, 43 inputs) verified.",
+      "proposed_correction": "Library maintainer: point the three footprints' model fields at models present in the bundle (or add the models); libraries are frozen for the layout agents.",
+      "verifiable_by_automation": false
+    },
+    {
+      "id": "LR-18",
+      "severity": "note",
+      "board": "both",
+      "rule": "mechanical stacking geometry (architecture.md section 9, pcb_stackup.md section 9: 'overhanging the power board edge by about 40 mm', 'two through clearance holes in the SELV strip')",
+      "evidence": "J8 pin rows at y = 73.46 / 76.0 mm are 4.0-6.5 mm from the control board's long edge; the socket J7 must sit inside the 30 mm SELV strip, so the control board's inner edge can be at most ~34 mm from the power-board edge, giving an overhang of >= 46 mm for the 80 mm board (documents: about 40 mm). H3 (4, 76) and H4 (116, 76) are co-linear with the J8 bottom row and 22-25 mm outboard of the header ends; H1/H2 at y = 4 land in the overhang (baseplate standoffs). No control-board copper above HV copper cannot be checked without the power board.",
+      "proposed_correction": "Fix the documents to the measured geometry and derive the power-board J7 position and H8-H11 pattern from this board's J8 (pin 1 at (28.0, 76.0) in board coordinates, 50 pins, 2.54 mm) and H3/H4; standards reviewer to re-run the between-boards clearance argument once the connector height is confirmed.",
+      "verifiable_by_automation": false
+    },
+    {
+      "id": "LR-19",
+      "severity": "note",
+      "board": "both",
+      "rule": "evidence chain (run_check manifests)",
+      "evidence": "verification/drc/*/run.json records command, source_sha256, 42 dependency hashes, exit codes and finding_count, but no hash of the drc.json report it points to; drc.json names its source only as 'AIPE_SiC_Buck_Control.kicad_pcb'. The report could be edited after the run without the record noticing. (This review recomputed and confirmed all recorded hashes and re-counted the report: 0 / 39 / 0.)",
+      "proposed_correction": "Add report_sha256 (and the report's finding counts by category) to the run.json written by automation.kicad_tools.run_check, and have verify_sic_buck.py check it.",
+      "verifiable_by_automation": true
+    }
+  ],
+  "measured_summary": {
+    "control": {
+      "outline_mm": [120.0, 80.0],
+      "copper_layers": 4,
+      "footprints": 207, "footprints_B_Cu": 15, "pads": 772, "tracks": 4151, "vias": 642, "via_type": "0.6 / 0.3 mm through only",
+      "zones": 16, "inner_layer_tracks": 0,
+      "In1_GND_CTRL_area_mm2": 8512.7, "In1_islands": 1,
+      "In2_islands_mm2": {"12V_PROT": 1453.7, "5V": 608.5, "1V9": 754.2, "3V3_background": 5401.4, "corridor_patches": 11},
+      "drc": {"violations": 0, "unconnected_items": 39, "schematic_parity": 0, "exit_code": 5},
+      "dsp_bypass_mm": {"max": 5.849, "mean": 4.54, "gnd_via_max_mm": 1.1, "rail_via_max_mm": 1.99},
+      "adc_filter_cap_to_pin_mm": {"min": 10.48, "max": 17.27},
+      "analog_to_supply_bbox_mm": 36.25, "analog_to_pwm_parts_bbox_mm": 20.62, "min_analog_to_pwm_track_mm": 12.64, "min_analog_to_5V_SW_track_mm": 53.39,
+      "pwm_chain_mm": {"PWM_H_total": 66.7, "PWM_L_total": 63.3}, "tz_mm": {"FAULT_N": 133.8, "OC_N": 57.9},
+      "isense_pair_mm": {"ISENSE": 80.2, "ISENSE_REF": 56.5, "mismatch": 23.6},
+      "clock_mm": {"Y1_to_XCLKIN": 13.0},
+      "buck_hot_loop_mm": {"U2_VIN_to_C4": 21.24, "U2_VIN_to_C5": 17.7, "U2_VIN_to_C3_electrolytic": 6.85, "5V_SW_vias": 3},
+      "ep_vias": {"U1": 1, "U3": 1},
+      "track_widths_mm": {"12V_IN": 0.4, "12V_PROT": 0.3, "EFUSE_RTN": 0.4, "5V": 0.3, "5V_SW": 0.4, "signals": 0.2},
+      "ipc2221_external_rise_K": {"1.96A_0.4mm": 28.8, "1.76A_0.4mm": 22.5, "1.96A_0.3mm": 46.3, "1.96A_1.0mm": 6.4, "0.98A_one_0.3mm_via": 2.2},
+      "min_copper_to_edge_mm": 2.67,
+      "J8": {"side": "F.Cu", "pin1_xy": [28.0, 76.0], "row_y": [73.46, 76.0]},
+      "holes_xy": {"H1": [4, 4], "H2": [116, 4], "H3": [4, 76], "H4": [116, 76]},
+      "tallest_F_parts_mm": {"J1": 12.0, "C9": 11.2, "J8": 11.05, "C3": 10.5}
+    },
+    "power": {"board": "absent", "erc_findings": 0, "schematic_components": 237, "schematic_pads": 648}
+  }
+}

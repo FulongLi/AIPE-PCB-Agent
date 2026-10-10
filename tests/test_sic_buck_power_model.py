@@ -162,7 +162,7 @@ class ModelTests(unittest.TestCase):
             model.CUSTOM_NAMES['c_in']: ['1', '2'], model.CUSTOM_NAMES['c_out']: ['1', '2'], model.CUSTOM_NAMES['toroid']: ['1', '2'],
             model.CUSTOM_NAMES['heatsink']: [], model.CUSTOM_NAMES['ucc14141']: [str(n) for n in range(1, 37)],
             model.CUSTOM_NAMES['amc1311']: [str(n) for n in range(1, 9)], model.CUSTOM_NAMES['tmcs1133']: [str(n) for n in range(1, 11)],
-            model.CUSTOM_NAMES['ptc']: ['1', '2']}
+            model.CUSTOM_NAMES['ptc']: ['1', '2'], model.CUSTOM_NAMES['ucc21710']: [str(n) for n in range(1, 17)]}
         self.assertEqual(set(model.CUSTOM_FOOTPRINTS), set(expected))
         for name, value in model.CUSTOM_FOOTPRINTS.items():
             with self.subTest(name=name):
@@ -176,7 +176,7 @@ class ModelTests(unittest.TestCase):
         toroid = pf.pads_in_text(model.CUSTOM_FOOTPRINTS[model.CUSTOM_NAMES['toroid']][0])
         self.assertEqual([p['type'] for p in toroid], ['thru_hole', 'thru_hole'] + ['np_thru_hole'] * 4)
         self.assertEqual({tuple(p['at']) for p in toroid if p['type'] == 'np_thru_hole'}, {(-30.0, -30.0), (-30.0, 30.0), (30.0, -30.0), (30.0, 30.0)})
-        for key, length in (('ucc14141', 17.5), ('amc1311', 10.4), ('tmcs1133', 15.5)):
+        for key, length in (('ucc14141', 17.5), ('amc1311', 10.8), ('tmcs1133', 15.5), ('ucc21710', 16.6)):
             slots = [p for p in pf.pads_in_text(model.CUSTOM_FOOTPRINTS[model.CUSTOM_NAMES[key]][0]) if p['type'] == 'np_thru_hole']
             self.assertEqual([(p['shape'], p['drill']) for p in slots], [('oval', [1.2, length])], key)
         tmcs = {p['number']: p for p in pf.pads_in_text(model.CUSTOM_FOOTPRINTS[model.CUSTOM_NAMES['tmcs1133']][0]) if p['number']}

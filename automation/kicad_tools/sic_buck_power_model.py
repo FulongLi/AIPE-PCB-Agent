@@ -134,7 +134,7 @@ CUSTOM FOOTPRINTS (AIPE library, see CUSTOM_FOOTPRINTS):
   PTC_Disc_D20_P10_Envelope         leaded PTC disc, 10 mm pitch, 1.3 mm drill, 20 mm body.
   The slots implement the baseline rule (standards_and_spacing.slots: 1.2 mm non-plated slot
   extending >= 3 mm beyond the outermost pad edges) for the three custom barrier parts; the
-  UCC21710 uses the library SOIC-16W footprint, so its slot must be added by the layout.
+  UCC21710_DW0016A_Slot             KiCad SOIC-16W_7.5x10.3mm_P1.27mm land pattern with a 1.2 x 16.6 mm slot.
 
 ADDED ASSUMPTIONS (not in the baseline; labelled in the part notes):
   A-P1  ISENSE_REF is generated as 0.1 x 3V3 (9.09 k / 1.00 k 0.1 %, 100 nF) because the
@@ -329,13 +329,27 @@ def tmcs1133_footprint(name="TMCS1133_DVG0010A_HV_Slot"):
 def amc1311_footprint(name="AMC1311_DWV0008A_Slot"):
     """TI DWV0008A (SBAS786C 4218796/A): 8 pads 1.8 x 0.6 mm at 1.27 mm, centre span 10.9 mm (9.1 mm nominal
     clearance), body 5.85 x 7.5 mm (7.5 mm across the pins), 2.8 mm high; 1.2 x 10.4 mm isolation slot."""
-    pads = _dual_row_pads(4, 1.27, 5.45, 1.8, 0.6) + [_slot_pad(10.4)]
-    text = pf.make_footprint(name, "\n  ".join(pads), 12.7, 10.4,
+    pads = _dual_row_pads(4, 1.27, 5.45, 1.8, 0.6) + [_slot_pad(10.8)]
+    text = pf.make_footprint(name, "\n  ".join(pads), 12.7, 11.0,
                              "AMC1311 DWV0008A wide-body SOIC-8 (TI land pattern 8 x 1.8 x 0.6 mm, 1.27 mm pitch, 10.9 mm span) with a "
-                             "1.2 x 10.4 mm NPTH isolation slot; F.Fab = pad/slot envelope, real body 7.5 x 5.85 x 2.8 mm; AIPE footprint "
+                             "1.2 x 10.8 mm NPTH isolation slot (>= 3 mm beyond the outer pad edges); F.Fab = pad/slot envelope, real body 7.5 x 5.85 x 2.8 mm; AIPE footprint "
                              "from SBAS786C, review against the drawing", name, tags="AMC1311 DWV isolated amplifier",
                              silkscreen=False, extra=_pin1_marks(6.35, -1.905))
     return text, [(0, 0, 1.4, 7.5, 5.85, 2.8, (0.15, 0.15, 0.15))]
+
+
+def ucc21710_footprint(name="UCC21710_DW0016A_Slot"):
+    """UCC21710 DW (SOIC-16 wide body): the KiCad SOIC-16W_7.5x10.3mm_P1.27mm land pattern (16 pads 2.05 x 0.6 mm at
+    1.27 mm, centre span 9.3 mm, land gap 7.25 mm) plus the baseline 1.2 mm NPTH isolation slot, 16.6 mm long so it
+    extends >= 3 mm beyond the outer pad edges (10.3 mm body); silkscreen limited to the pin-1 mark so nothing crosses
+    the slot (replaces the library footprint whose outline crossed a board-level cut-out)."""
+    pads = _dual_row_pads(8, 1.27, 4.65, 2.05, 0.6) + [_slot_pad(16.6)]
+    text = pf.make_footprint(name, "\n  ".join(pads), 11.7, 16.8,
+                             "UCC21710 SOIC-16 DW wide body (KiCad SOIC-16W_7.5x10.3mm_P1.27mm land pattern) with a 1.2 x 16.6 mm NPTH "
+                             "isolation slot (>= 3 mm beyond the pads); F.Fab = pad/slot envelope, real body 7.5 x 10.3 x 2.65 mm; AIPE footprint "
+                             "from the KiCad library geometry, review against SLUSDH8D", name, tags="UCC21710 DW isolated gate driver",
+                             silkscreen=False, extra=_pin1_marks(5.675, -4.445))
+    return text, [(0, 0, 1.325, 7.5, 10.3, 2.65, (0.15, 0.15, 0.15))]
 
 
 def ucc14141_footprint(name="UCC14141_DWN0036A_Slot"):
@@ -382,7 +396,7 @@ def ptc_footprint(name="PTC_Disc_D20_P10_Envelope"):
 
 CUSTOM_NAMES = dict(c_in="C_Film_41.5x28x37_P37.5x10.2", c_out="C_Film_41.5x30x45_P37.5x20.3", toroid="L_Toroid_HF58x2_D69_H48_P25.4",
                     heatsink="HS_LAM5DK_100x100_H50", ucc14141="UCC14141_DWN0036A_Slot", amc1311="AMC1311_DWV0008A_Slot",
-                    tmcs1133="TMCS1133_DVG0010A_HV_Slot", ptc="PTC_Disc_D20_P10_Envelope")
+                    tmcs1133="TMCS1133_DVG0010A_HV_Slot", ptc="PTC_Disc_D20_P10_Envelope", ucc21710="UCC21710_DW0016A_Slot")
 
 CUSTOM_FOOTPRINTS = {
     CUSTOM_NAMES["c_in"]: pf.film_capacitor_footprint(CUSTOM_NAMES["c_in"], 37.5, 41.5, 28.0, 37.0, 1.6, pins=4, second_pitch_mm=10.2, pad_mm=3.0),
@@ -393,6 +407,7 @@ CUSTOM_FOOTPRINTS = {
     CUSTOM_NAMES["amc1311"]: amc1311_footprint(),
     CUSTOM_NAMES["tmcs1133"]: tmcs1133_footprint(),
     CUSTOM_NAMES["ptc"]: ptc_footprint(),
+    CUSTOM_NAMES["ucc21710"]: ucc21710_footprint(),
 }
 
 
@@ -486,10 +501,10 @@ def gate_channel(c: Circuit, x: str, other: str, drain_net: str, page: str, *, q
     c.resistor("10k", pwm_f, "GND_CTRL", page, note="10 k pull-down: driver input defined low when the mezzanine is open")
     nets = {1: ks, 2: node_oc, 3: ks, 4: outh, 5: vdd, 6: outl, 7: clmp, 8: vee, 9: "GND_CTRL", 10: pwm_f, 11: pwm_other_f,
             12: f"RDY_{x}", 13: f"FLT_{x}_N", 14: "RESET_N_F", 15: "3V3", 16: None}
-    c.add("U", "UCC21710QDWRQ1", "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm", nets, page=page, kind="IC", mpn="UCC21710QDWRQ1", maker=TI,
+    c.add("U", "UCC21710QDWRQ1", "AIPE:" + CUSTOM_NAMES["ucc21710"], nets, page=page, kind="IC", mpn="UCC21710QDWRQ1", maker=TI,
           source=TI_DS.format("ucc21710-q1"), definitions=UCC21710_PINS, ref=u_ref,
           note=f"{island} isolated SiC driver, pinout SLUSDH8D (fetched-datasheet); IN+ = PWM_{x}_F, IN- = PWM_{other}_F interlock (KR-GD-009); "
-          "AIN tied to COM (CR-01); APWM unused; isolation slot under the body to be added by the layout (library footprint)")
+          "AIN tied to COM (CR-01); APWM unused; AIPE footprint with the KiCad SOIC-16W land pattern and the 1.2 x 16.6 mm isolation slot")
     erjp08(c, "10", "10R0", outh, g, page, note="R_ON 10 ohm bring-up (tuning target 6.8 ohm = ERJ-P08F6R80V), baseline rg_on_ohm")
     erjp08(c, "3.3", "3R30", outl, g, page, note="R_OFF 3.3 ohm, baseline rg_off_ohm")
     c.resistor("0", clmp, g, page, mpn="RC0603JR-070RL", note="Miller clamp link CLMPI -> gate, 0 ohm 0603, path <= 15 mm (KR-GD-003, REQUIRED)")

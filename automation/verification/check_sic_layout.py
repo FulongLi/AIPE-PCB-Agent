@@ -771,8 +771,15 @@ def extract_board(path) -> BoardData:
                     if rings:
                         polys[names[layer]] = rings
             drill = mm(pad.GetDrillSize())
+            hole_bbox = None
+            if max(drill) > 0:
+                try:  # board-oriented hole outline (the drill size itself is unrotated: a 90 deg footprint swaps its slot axes)
+                    hb = pad.GetEffectiveHoleShape().BBox()
+                    hole_bbox = (mm(hb.GetX()), mm(hb.GetY()), mm(hb.GetRight()), mm(hb.GetBottom()))
+                except Exception:
+                    hole_bbox = None
             pads.append(dict(number=pad.GetNumber(), net=pad.GetNetname(), xy=mm(pad.GetPosition()), layers=[names[layer] for layer in on],
-                             attribute=attribute, npth=npth, drill=drill, size=mm(pad.GetSize()), polys=polys,
+                             attribute=attribute, npth=npth, drill=drill, hole_bbox=hole_bbox, size=mm(pad.GetSize()), polys=polys,
                              oblong=bool(pad.GetDrillShape() == pcb.PAD_DRILL_SHAPE_OBLONG and max(drill) > 0 and drill[0] != drill[1])))
         for graphic in fp.GraphicalItems():
             if isinstance(graphic, pcb.PCB_SHAPE) and graphic.GetLayer() == pcb.Edge_Cuts:
@@ -899,7 +906,7 @@ def net_summary(data: BoardData, spec: dict) -> dict:
 def copper_rows(nets: dict, spec: dict) -> list:
     """PE-PCB-006 rows: HV-group net copper (zone area per layer, via count) against spec copper references."""
     copper = spec.get('copper', {})
-    hv_nets = nets_of_groups(nets, copper.get('groups', ['HV']), spec) if spec['net_classes'] else []
+    hv_nets = [n for n in copper['nets'] if n in nets] if copper.get('nets') else (nets_of_groups(nets, copper.get('groups', ['HV']), spec) if spec['net_classes'] else [])
     rows = []
     vias_required = copper.get('vias_per_transition_min')
     for net in hv_nets:
@@ -1197,9 +1204,12 @@ def _barrier_part(data: BoardData, spec: dict, part: dict, rows: list) -> dict:
     for fp_ref, fp in data.footprints.items():
         for p in fp['pads']:
             if p['npth'] and max(p['drill']) > 0 and search and point_in_bbox(p['xy'], search):
-                half = (p['drill'][0] / 2, p['drill'][1] / 2)
-                box = (p['xy'][0] - half[0], p['xy'][1] - half[1], p['xy'][0] + half[0], p['xy'][1] + half[1])
-                candidates.append(dict(kind='npth pad', owner=fp_ref, bbox=box, width=min(p['drill']), oblong=p['oblong']))
+                if p.get('hole_bbox'):
+                    box = tuple(p['hole_bbox'])  # oriented with the footprint (a rotated slot swaps its axes)
+                else:
+                    half = (p['drill'][0] / 2, p['drill'][1] / 2)
+                    box = (p['xy'][0] - half[0], p['xy'][1] - half[1], p['xy'][0] + half[0], p['xy'][1] + half[1])
+                candidates.append(dict(kind='npth pad', owner=fp_ref, bbox=box, width=min(box[2] - box[0], box[3] - box[1]), oblong=p['oblong']))
     for shape in data.edge_shapes:
         if search and bbox_distance(shape['bbox'], search) == 0:
             candidates.append(dict(kind=f"edge {shape['kind']}", owner=shape['owner'], bbox=shape['bbox'],
@@ -1367,6 +1377,8 @@ def control_metrics(data: BoardData, spec: dict, model=None) -> dict:
         return result
     nets = data.nets()
 
+    excluded_refs = set(cfg.get('exclude_refs', []))  # parts shared by both sections (mezzanine connector, DSP) distort the bbox proxy
+
     def refs_for(key_refs, key_groups, exclude_groups=()):
         refs = set(cfg.get(key_refs, []))
         for pattern in cfg.get(key_refs + '_patterns', []):
@@ -1379,7 +1391,7 @@ def control_metrics(data: BoardData, spec: dict, model=None) -> dict:
                 pad_nets = {p['net'] for p in fp['pads'] if p['net']}
                 if pad_nets & wanted and not pad_nets & banned:
                     refs.add(ref)
-        return sorted(r for r in refs if r in data.footprints)
+        return sorted(r for r in refs if r in data.footprints and r not in excluded_refs)
 
     control_refs = refs_for('section_refs', 'section_groups', cfg.get('power_groups', ['HV', 'DRV', 'DESAT']))
     power_refs = refs_for('power_refs', 'power_groups')
@@ -1391,7 +1403,7 @@ def control_metrics(data: BoardData, spec: dict, model=None) -> dict:
         ix = (max(control_box[0], power_box[0]), max(control_box[1], power_box[1]), min(control_box[2], power_box[2]), min(control_box[3], power_box[3]))
         overlap = bbox_area(ix)
     result.update(control_refs=control_refs, power_refs=power_refs, control_bbox_mm=control_box, power_bbox_mm=power_box,
-                  bbox_separation_mm=separation, bbox_overlap_mm2=overlap)
+                  bbox_separation_mm=separation, bbox_overlap_mm2=overlap, excluded_refs=sorted(excluded_refs))
     limit = cfg.get('separation_mm_min')
     result['rows'].append(row('PE-PCB-007', f'control section ({len(control_refs)} parts) to power stage ({len(power_refs)} parts) bounding-box distance (mm)',
                               rounded(separation), None if limit is None else f'>= {limit} mm', None if limit is None or separation is None else separation >= float(limit),

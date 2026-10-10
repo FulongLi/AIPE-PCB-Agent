@@ -62,6 +62,12 @@ def run_check(kind: str, source: Path, output_root: Path,
         if not all(isinstance(group, list) for group in groups):
             raise ValueError("Malformed violation lists")
         manifest["finding_count"] = sum(len(group) for group in groups)
+        if kind == "drc":
+            manifest["finding_counts"] = {key: len(report_data[key]) for key in ("violations", "unconnected_items", "schematic_parity")}
+        else:
+            manifest["finding_counts"] = {"sheets": len(groups), "violations": manifest["finding_count"]}
+        # the report is part of the evidence: record its hash so a later edit of drc.json/erc.json is detectable
+        manifest["report_sha256"] = hashlib.sha256(report.read_bytes()).hexdigest()
         manifest["wrapper_exit_code"] = result.returncode or (5 if manifest["finding_count"] else 0)
         manifest["status"] = "passed" if manifest["wrapper_exit_code"] == 0 else "failed"
     except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as exc:

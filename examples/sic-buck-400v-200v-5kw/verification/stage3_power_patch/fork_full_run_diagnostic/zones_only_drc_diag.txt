@@ -1,0 +1,85 @@
+violations 18, unconnected 426, parity 0
+
+=== clearance / HV side to CTRL_SELV (all layers): 12 (error) ===
+  - need/actual ['9.0000', '8.0218'] @ {'x': 210.095, 'y': 149.875}
+      PAD U10.5 [unconnected-(U10-NC-Pad5)] F @(210.095,149.875) size 2.00x0.60
+      PAD U10.1 [VOUT_L] F @(214.540,139.625) size 3.00x4.41
+  - need/actual ['9.0000', '7.7500'] @ {'x': 210.095, 'y': 149.875}
+      PAD U10.5 [unconnected-(U10-NC-Pad5)] F @(210.095,149.875) size 2.00x0.60
+      PAD U10.2 [VOUT] F @(209.460,139.625) size 3.00x4.41
+  - need/actual ['9.0000', '7.2500'] @ {'x': 128.445, 'y': 140.35}
+      PAD U3.1 [KS_L] F @(128.445,140.350) size 2.05x0.60
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '7.3121'] @ {'x': 127.175, 'y': 140.35}
+      PAD U3.2 [DESAT_L_OC] F @(127.175,140.350) size 2.05x0.60
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '7.5753'] @ {'x': 125.905, 'y': 140.35}
+      PAD U3.3 [KS_L] F @(125.905,140.350) size 2.05x0.60
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '8.0260'] @ {'x': 124.635, 'y': 140.35}
+      PAD U3.4 [LS_OUTH] F @(124.635,140.350) size 2.05x0.60
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '7.2500'] @ {'x': 100.445, 'y': 140.35}
+      PAD U1.1 [KS_H] F @(100.445,140.350) size 2.05x0.60
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '7.3121'] @ {'x': 99.175, 'y': 140.35}
+      PAD U1.2 [DESAT_H_OC] F @(99.175,140.350) size 2.05x0.60
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '7.5753'] @ {'x': 97.905, 'y': 140.35}
+      PAD U1.3 [KS_H] F @(97.905,140.350) size 2.05x0.60
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '8.0260'] @ {'x': 96.635, 'y': 140.35}
+      PAD U1.4 [HS_OUTH] F @(96.635,140.350) size 2.05x0.60
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+  - need/actual ['9.0000', '8.6359'] @ {'x': 128.445, 'y': 149.65}
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+      PAD U3.5 [VDD_L] F @(123.365,140.350) size 2.05x0.60
+  - need/actual ['9.0000', '8.6359'] @ {'x': 100.445, 'y': 149.65}
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+      PAD U1.5 [VDD_H] F @(95.365,140.350) size 2.05x0.60
+
+=== silk_edge_clearance / -: 4 (warning) ===
+  - need/actual [] @ {'x': 88.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(88.23,144.38)-(103.77,144.43)
+      SHAPE of U1 F.Silkscreen Line bbox=(90.68,141.08)-(90.80,148.92)
+  - need/actual [] @ {'x': 88.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(88.23,144.38)-(103.77,144.43)
+      SHAPE of U1 F.Silkscreen Line bbox=(101.20,141.08)-(101.32,148.92)
+  - need/actual [] @ {'x': 116.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(116.23,144.38)-(131.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(118.68,141.08)-(118.80,148.92)
+  - need/actual [] @ {'x': 116.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(116.23,144.38)-(131.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(129.20,141.08)-(129.32,148.92)
+
+=== clearance / HV functional clearance (outer layers): 2 (error) ===
+  - need/actual ['3.0000', '1.9500'] @ {'x': 66.025, 'y': 6.5}
+      TRACK [PGND] F.Cu (66.025,6.500)-(67.525,6.500) w=0.60
+      TRACK [IND_IN_3] F.Cu (70.075,6.500)-(71.525,6.500) w=0.60
+  - need/actual ['3.0000', '1.9500'] @ {'x': 163.5, 'y': 16.225}
+      TRACK [PGND] F.Cu (163.500,16.225)-(163.500,17.725) w=0.60
+      TRACK [IND_OUT_2] F.Cu (163.500,20.275)-(163.500,21.725) w=0.60
+
+=== unconnected (426) ===
+  GND_CTRL:43, 3V3:30, VEE_L:23, VEE_H:23, PGND:21, GNDP_S:18, GNDP_H:18, GNDP_L:18, KS_H:15, KS_L:15, VDD_L:10, VDD_H:10, 12V_BIAS_S:6, 12V_BIAS_H:6, 12V_BIAS_L:6, 5V_ISO:6, G_H:6, G_L:6, 12V_PROT:6, PWM_L_F:5, PWM_H_F:5, BIAS_EN_F:5, ISO_15V:5, VOUT_SENSE:4, DESAT_L_OC:4, VIN_SENSE:4, DESAT_H_OC:4, RESET_N_F:4, VIN_DIV:4, PE:4, VOUT_DIV:4, LS_FB_VEE:3, ISENSE_REF:3, VIN_AMP_N:3, VOUT_AMP_N:3, VOUT_AMP_P:3, VIN_AMP_P:3, LS_FB_VDD:3, HS_FB_VEE:3, HS_FB_VDD:3, ISO_FB_VEE:3, ISO_FB_VDD:3, OC_N:2, REF2V5_PB:2, DESAT_L_A:2, RDY_L:2, RDY_H:2, FLT_H_N:2, DESAT_H_A:2, VOC_SET:2, PG_BIAS_L_N:2, FLT_L_N:2, ISENSE:2, PG_BIAS_H_N:2, FAN_TACH:2, PG_BIAS_S_N:2, K1_LOW:2, RLY_G:2, SPARE_D1:1, PWM_L:1, LS_RLIM:1, FAULT_N:1, HS_OUTH:1, HS_OUTL:1, HS_CLMP:1, VIN_OUTN:1, VIN_OUTP:1, PWM_H:1, SPARE_D2:1, VOUT_OUTN:1, RELAY_ON:1, BIAS_EN:1, RESET_N:1, VOUT_OUTP:1, HS_RLIM:1, ISO_RLIM:1, LS_OUTH:1, LS_OUTL:1, LS_CLMP:1, LS_GK:1, HS_GK:1
+  - VIA [PGND] @(156.000,125.500) d=0.80 drill=0.40 | PAD R56.2 [PGND] B @(153.000,124.675) size 0.80x0.95
+  - PAD R63.2 [PGND] B @(156.000,136.325) size 0.80x0.95 | PAD U5.36 [PGND] F @(157.475,140.025) size 1.85x0.45
+  - PAD R63.2 [PGND] B @(156.000,136.325) size 0.80x0.95 | PAD C64.2 [PGND] B @(157.225,128.500) size 0.90x0.95
+  - PAD U5.36 [PGND] F @(157.475,140.025) size 1.85x0.45 | PAD U5.35 [PGND] F @(158.125,140.025) size 1.85x0.45
+  - PAD U5.35 [PGND] F @(158.125,140.025) size 1.85x0.45 | PAD U5.31 [PGND] F @(160.725,140.025) size 1.85x0.45
+  - PAD U5.31 [PGND] F @(160.725,140.025) size 1.85x0.45 | PAD U5.30 [PGND] F @(161.375,140.025) size 1.85x0.45
+  - PAD U5.30 [PGND] F @(161.375,140.025) size 1.85x0.45 | PAD U5.27 [PGND] F @(163.325,140.025) size 1.85x0.45
+  - PAD U5.27 [PGND] F @(163.325,140.025) size 1.85x0.45 | PAD U5.26 [PGND] F @(163.975,140.025) size 1.85x0.45
+  - PAD U5.26 [PGND] F @(163.975,140.025) size 1.85x0.45 | PAD U5.25 [PGND] F @(164.625,140.025) size 1.85x0.45
+  - PAD U5.25 [PGND] F @(164.625,140.025) size 1.85x0.45 | PAD U5.24 [PGND] F @(165.275,140.025) size 1.85x0.45
+  - PAD U5.24 [PGND] F @(165.275,140.025) size 1.85x0.45 | PAD U5.23 [PGND] F @(165.925,140.025) size 1.85x0.45
+  - PAD R54.2 [PGND] B @(165.325,137.000) size 0.80x0.95 | PAD U5.24 [PGND] F @(165.275,140.025) size 1.85x0.45
+  - PAD U5.23 [PGND] F @(165.925,140.025) size 1.85x0.45 | PAD U5.22 [PGND] F @(166.575,140.025) size 1.85x0.45
+  - PAD U5.22 [PGND] F @(166.575,140.025) size 1.85x0.45 | PAD U5.21 [PGND] F @(167.225,140.025) size 1.85x0.45
+  - PAD U5.21 [PGND] F @(167.225,140.025) size 1.85x0.45 | PAD U5.20 [PGND] F @(167.875,140.025) size 1.85x0.45
+  - PAD U5.20 [PGND] F @(167.875,140.025) size 1.85x0.45 | PAD U5.19 [PGND] F @(168.525,140.025) size 1.85x0.45
+  - PAD U6.4 [PGND] F @(179.095,139.550) size 1.80x0.60 | PAD U6.3 [PGND] F @(180.365,139.550) size 1.80x0.60
+  - PAD U6.3 [PGND] F @(180.365,139.550) size 1.80x0.60 | PAD C72.2 [PGND] B @(181.225,136.500) size 0.90x0.95
+  - PAD U7.4 [PGND] F @(193.095,139.550) size 1.80x0.60 | PAD U7.3 [PGND] F @(194.365,139.550) size 1.80x0.60
+  - PAD U7.4 [PGND] F @(193.095,139.550) size 1.80x0.60 | VIA [PGND] @(191.250,136.500) d=0.60 drill=0.30
+  - PAD R66.2 [PGND] B @(201.825,136.000) size 0.80x0.95 | PAD C74.2 [PGND] B @(197.275,136.500) size 0.90x0.95

@@ -66,9 +66,9 @@ class NetClassTests(unittest.TestCase):
         classes, assignment = g.board_net_classes('power', self.parts['power'])
         names = [c['name'] for c in classes]
         self.assertEqual(names, ['Default', 'HV_VIN', 'HV_SW', 'HV_PGND', 'HV_VOUT', 'DRV_HS', 'DRV_LS', 'DESAT_HS', 'DESAT_LS',
-                                 'SENSE_ISO', 'PE', 'CTRL_SELV'])
+                                 'SENSE_ISO', 'PGND_LV', 'PE', 'CTRL_SELV'])
         self.assertEqual(set(assignment), set(g.net_names(self.parts['power'])))
-        expected = {'VIN_RAW': 'HV_VIN', 'VIN': 'HV_VIN', 'BLD_IN_1': 'HV_VIN', 'IND_IN_3': 'HV_VIN', 'DAMP_MID': 'HV_VIN', 'VIN_DIV_T1': 'HV_VIN',
+        expected = {'VIN_RAW': 'HV_VIN', 'VIN': 'HV_VIN', 'BLD_IN_1': 'HV_VIN', 'IND_IN_3': 'PGND_LV', 'DAMP_MID': 'HV_VIN', 'VIN_DIV_T1': 'HV_VIN',
                     'SW': 'HV_SW', 'SNUB_MID': 'HV_SW', 'PGND': 'HV_PGND', 'PE_REF_MID': 'HV_PGND', 'VOUT': 'HV_VOUT', 'VOUT_L': 'HV_VOUT',
                     'BLD_OUT_1': 'HV_VOUT', 'VOUT_DIV_T1': 'HV_VOUT', 'G_H': 'DRV_HS', 'KS_H': 'DRV_HS', 'HS_OUTH': 'DRV_HS', 'VEE_L': 'DRV_LS',
                     'DESAT_H_A': 'DESAT_HS', 'DESAT_L_OC': 'DESAT_LS', 'VIN_DIV': 'SENSE_ISO', 'VOUT_DIV': 'SENSE_ISO', '5V_ISO': 'SENSE_ISO',
@@ -77,7 +77,7 @@ class NetClassTests(unittest.TestCase):
         for net, name in expected.items():
             self.assertEqual(assignment[net], name, net)
         for net in power_model.HV_INTERMEDIATE_NETS:
-            self.assertIn(assignment[net], g.HV_CLASSES, net)
+            self.assertIn(assignment[net], g.HV_CLASSES + ('PGND_LV',), net)  # LED anode nodes are the PGND_LV island class
         for pin in range(1, 51):
             self.assertEqual(assignment[common.mezzanine_net(str(pin))], 'CTRL_SELV', pin)
         clearance = g.class_clearances(classes)

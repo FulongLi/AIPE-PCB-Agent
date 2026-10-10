@@ -1,0 +1,91 @@
+violations 241, unconnected 146, parity 0
+
+=== clearance / HV functional clearance (outer layers): 97 (error) ===
+  - need/actual ['3.0000', '1.6666'] @ {'x': 87.0, 'y': 126.0}
+      PAD Q1.1 [VIN] THT @(87.000,126.000) size 1.91x4.50
+      TRACK [G_H] B.Cu (89.250,130.375)-(88.375,130.375) w=1.00
+  - need/actual ['3.0000', '1.8840'] @ {'x': 87.0, 'y': 126.0}
+      PAD Q1.1 [VIN] THT @(87.000,126.000) size 1.91x4.50
+      TRACK [G_H] B.Cu (89.250,130.250)-(89.250,130.375) w=1.00
+  - need/actual ['3.0000', '1.6666'] @ {'x': 88.375, 'y': 130.375}
+      TRACK [G_H] B.Cu (88.375,130.375)-(88.375,130.500) w=1.00
+      PAD Q1.1 [VIN] THT @(87.000,126.000) size 1.91x4.50
+  ... 94 more
+
+=== via_dangling / -: 72 (warning) ===
+  - need/actual [] @ {'x': 202.0, 'y': 163.375}
+      VIA [3V3] @(202.000,163.375) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 199.875, 'y': 169.5}
+      VIA [3V3] @(199.875,169.500) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 216.5, 'y': 151.5}
+      VIA [3V3] @(216.500,151.500) d=0.60 drill=0.30
+  ... 69 more
+
+=== clearance / HV side to CTRL_SELV (all layers): 37 (error) ===
+  - need/actual ['9.0000', '8.9766'] @ {'x': 127.175, 'y': 149.65}
+      TRACK [3V3] F.Cu (127.175,149.650)-(127.125,149.625) w=0.50
+      TRACK [KS_L] F.Cu (128.500,140.375)-(128.500,138.625) w=0.25
+  - need/actual ['9.0000', '8.9250'] @ {'x': 123.375, 'y': 149.625}
+      TRACK [RDY_L] F.Cu (123.375,149.625)-(123.375,151.375) w=0.25
+      TRACK [VDD_L] F.Cu (123.375,140.375)-(123.375,138.625) w=0.40
+  - need/actual ['9.0000', '8.1250'] @ {'x': 128.445, 'y': 140.35}
+      TRACK [KS_L] F.Cu (128.445,140.350)-(128.500,140.375) w=0.25
+      PAD U3.16 [unconnected-(U3-APWM-Pad16)] F @(128.445,149.650) size 2.05x0.60
+  ... 34 more
+
+=== items_not_allowed / -: 20 (error) ===
+  - need/actual [] @ {'x': 157.5, 'y': 150.0}
+      TRACK [GNDP_S] F.Cu (157.500,150.000)-(157.125,150.000) w=0.40
+  - need/actual [] @ {'x': 157.125, 'y': 150.0}
+      TRACK [GNDP_S] F.Cu (157.125,150.000)-(157.125,150.500) w=0.40
+  - need/actual [] @ {'x': 168.875, 'y': 150.0}
+      TRACK [GNDP_S] F.Cu (168.875,150.000)-(168.875,150.500) w=0.40
+  ... 17 more
+
+=== clearance / CTRL_SELV: 7 (error) ===
+  - need/actual ['0.2500', '0.2250'] @ {'x': 140.375, 'y': 150.0}
+      TRACK [12V_BIAS_L] F.Cu (140.375,150.000)-(140.250,150.000) w=0.40
+      TRACK [GNDP_L] F.Cu (141.000,150.000)-(141.125,150.000) w=0.40
+  - need/actual ['0.2500', '0.2250'] @ {'x': 140.375, 'y': 149.975}
+      TRACK [12V_BIAS_L] F.Cu (140.375,149.975)-(140.375,150.000) w=0.40
+      TRACK [GNDP_L] F.Cu (141.000,150.000)-(141.125,150.000) w=0.40
+  - need/actual ['0.2500', '0.2250'] @ {'x': 141.025, 'y': 149.975}
+      TRACK [GNDP_L] F.Cu (141.025,149.975)-(141.000,150.000) w=0.40
+      TRACK [12V_BIAS_L] F.Cu (140.375,150.000)-(140.250,150.000) w=0.40
+  ... 4 more
+
+=== silk_edge_clearance / -: 4 (warning) ===
+  - need/actual [] @ {'x': 88.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(88.23,144.38)-(103.77,144.43)
+      SHAPE of U1 F.Silkscreen Line bbox=(90.68,141.08)-(90.80,148.92)
+  - need/actual [] @ {'x': 88.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(88.23,144.38)-(103.77,144.43)
+      SHAPE of U1 F.Silkscreen Line bbox=(101.20,141.08)-(101.32,148.92)
+  - need/actual [] @ {'x': 116.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(116.23,144.38)-(131.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(118.68,141.08)-(118.80,148.92)
+  ... 1 more
+
+=== clearance / pin field R65 HV_VOUT-SENSE_ISO (hv): 2 (error) ===
+  - need/actual ['1.7900', '1.3750'] @ {'x': 193.875, 'y': 136.5}
+      TRACK [VOUT_DIV] F.Cu (193.875,136.500)-(193.875,132.000) w=0.30
+      PAD R65.1 [VOUT_DIV_T1] F @(195.963,132.000) size 1.12x1.75
+  - need/actual ['1.7900', '1.3750'] @ {'x': 193.875, 'y': 132.0}
+      TRACK [VOUT_DIV] F.Cu (193.875,132.000)-(191.875,132.000) w=0.30
+      PAD R65.1 [VOUT_DIV_T1] F @(195.963,132.000) size 1.12x1.75
+
+=== clearance / DRV_LS: 1 (error) ===
+  - need/actual ['0.3000', '0.2500'] @ {'x': 141.675, 'y': 140.025}
+      TRACK [VDD_L] F.Cu (141.675,140.025)-(141.625,140.000) w=0.40
+      TRACK [VEE_L] F.Cu (142.325,140.025)-(142.375,140.000) w=0.40
+
+=== track_dangling / -: 1 (warning) ===
+  - need/actual [] @ {'x': 127.5, 'y': 136.0}
+      TRACK [DESAT_L_OC] F.Cu (127.500,136.000)-(127.500,135.250) w=0.30
+
+=== unconnected (146) ===
+  VEE_H:22, VEE_L:20, 3V3:12, VDD_H:8, VDD_L:6, PWM_L_F:5, GNDP_S:4, PE:4, KS_H:4, G_L:4, 12V_BIAS_S:3, BIAS_EN_F:3, HS_FB_VDD:3, PWM_H_F:3, LS_FB_VDD:3, HS_FB_VEE:2, VOUT_SENSE:2, ISO_15V:2, FAN_TACH:2, G_H:2, VIN_AMP_P:1, DESAT_H_A:1, GNDP_H:1, PG_BIAS_H_N:1, HS_RLIM:1, RDY_H:1, DESAT_H_OC:1, HS_OUTH:1, HS_OUTL:1, HS_CLMP:1, VOUT_AMP_N:1, GNDP_L:1, PG_BIAS_L_N:1, LS_RLIM:1, LS_FB_VEE:1, DESAT_L_OC:1, PWM_H:1, VIN_AMP_N:1, KS_L:1, LS_OUTH:1, LS_OUTL:1, LS_CLMP:1, RDY_L:1, FLT_L_N:1, RESET_N:1, RELAY_ON:1, PG_BIAS_S_N:1, ISO_RLIM:1, ISO_FB_VEE:1, ISO_FB_VDD:1, BIAS_EN:1, HS_GK:1
+  - PAD R14.2 [PE] B @(35.038,45.000) size 1.23x3.35 | PAD C19.2 [PE] THT @(43.000,32.500) size 2.00x2.00
+  - PAD R16.2 [PE] B @(35.038,54.500) size 1.23x3.35 | PAD R14.2 [PE] B @(35.038,45.000) size 1.23x3.35
+  - PAD C18.2 [PE] THT @(43.000,19.000) size 2.00x2.00 | PAD H1.1 [PE] THT @(31.500,7.000) size 8.60x8.60
+  - PAD C19.2 [PE] THT @(43.000,32.500) size 2.00x2.00 | PAD C18.2 [PE] THT @(43.000,19.000) size 2.00x2.00

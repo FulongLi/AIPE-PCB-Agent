@@ -3885,7 +3885,6 @@
         "MountingHole:MountingHole_3.2mm_M3",
         "MountingHole:MountingHole_4.3mm_M4",
         "MountingHole:MountingHole_4.3mm_M4_Pad",
-        "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
         "Package_SO:VSSOP-8_3x3mm_P0.65mm",
         "Package_TO_SOT_SMD:SOT-23",
         "Package_TO_SOT_THT:TO-247-4_Vertical",
@@ -3907,7 +3906,8 @@
         "L_Toroid_HF58x2_D69_H48_P25.4",
         "PTC_Disc_D20_P10_Envelope",
         "TMCS1133_DVG0010A_HV_Slot",
-        "UCC14141_DWN0036A_Slot"
+        "UCC14141_DWN0036A_Slot",
+        "UCC21710_DW0016A_Slot"
       ],
       "models": [
         "AMC1311_DWV0008A_Slot",
@@ -3917,7 +3917,8 @@
         "L_Toroid_HF58x2_D69_H48_P25.4",
         "PTC_Disc_D20_P10_Envelope",
         "TMCS1133_DVG0010A_HV_Slot",
-        "UCC14141_DWN0036A_Slot"
+        "UCC14141_DWN0036A_Slot",
+        "UCC21710_DW0016A_Slot"
       ],
       "parts": 237
     },
@@ -3941,7 +3942,6 @@
           "DAMP_MID",
           "IND_IN_1",
           "IND_IN_2",
-          "IND_IN_3",
           "VIN",
           "VIN_DIV_T1",
           "VIN_DIV_T2",
@@ -3955,7 +3955,8 @@
           "VIN",
           "VIN_PRE",
           "BLD_IN_*",
-          "IND_IN_*",
+          "IND_IN_1",
+          "IND_IN_2",
           "DAMP_MID",
           "VIN_DIV_T*"
         ]
@@ -3997,7 +3998,6 @@
         "nets": [
           "BLD_OUT_1",
           "IND_OUT_1",
-          "IND_OUT_2",
           "VOUT",
           "VOUT_DIV_T1",
           "VOUT_L"
@@ -4008,7 +4008,7 @@
           "VOUT",
           "VOUT_L",
           "BLD_OUT_*",
-          "IND_OUT_*",
+          "IND_OUT_1",
           "VOUT_DIV_T*"
         ]
       },
@@ -4114,6 +4114,21 @@
           "5V_ISO",
           "VIN_DIV",
           "VOUT_DIV"
+        ]
+      },
+      {
+        "name": "PGND_LV",
+        "clearance": 0.3,
+        "track_width": 0.5,
+        "nets": [
+          "IND_IN_3",
+          "IND_OUT_2"
+        ],
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "patterns": [
+          "IND_IN_3",
+          "IND_OUT_2"
         ]
       },
       {
@@ -4236,7 +4251,7 @@
     "net_class_pattern_deltas": [
       "A-G1: DESAT_H* / DESAT_L* moved from DRV_HS / DRV_LS (sic_buck_common) into the baseline classes DESAT_HS / DESAT_LS (each net belongs to exactly one class)",
       "A-G1: SENSE_ISO patterns VIN_DIV* / VOUT_DIV* narrowed to VIN_DIV / VOUT_DIV; the ladder taps VIN_DIV_T* / VOUT_DIV_T1 (up to ~360 V) join HV_VIN / HV_VOUT",
-      "A-G1: HV intermediate nodes (sic_buck_power_model.HV_INTERMEDIATE_NETS) assigned by reference potential: BLD_IN_*, IND_IN_*, DAMP_MID -> HV_VIN; SNUB_MID -> HV_SW; PE_REF_MID -> HV_PGND; BLD_OUT_*, IND_OUT_* -> HV_VOUT",
+      "A-G1: HV intermediate nodes (sic_buck_power_model.HV_INTERMEDIATE_NETS) assigned by reference potential: BLD_IN_*, IND_IN_1/2, DAMP_MID -> HV_VIN; SNUB_MID -> HV_SW; PE_REF_MID -> HV_PGND; BLD_OUT_*, IND_OUT_1 -> HV_VOUT; the LED anode nodes IND_IN_3 and IND_OUT_2 sit about 2 V above PGND and form the PGND_LV class of the PGND reference island (0.3 mm to HV_PGND, 3.0 mm to the other HV groups, 9.0 mm to SELV), so the 0805 indicator LEDs need no 3 mm spacing (DRC round 2026-10-11)",
       "A-G1: CTRL_SELV lists every remaining power-board net explicitly (no net is left to Default)",
       "A-G2: control board - CTRL_PWR (1.0 mm tracks) for 12V_IN, 12V_PROT, EFUSE_RTN, 5V, 5V_SW, 3V3, 1V9, 3V3_BULK, 1V9_BULK, GND_CTRL; CTRL_SELV for every other net; the shared HV patterns are carried as guards that must match nothing"
     ],
@@ -4275,48 +4290,6 @@
         "nets": [
           "SNUB_MID",
           "PGND"
-        ],
-        "pad_pairs": 1
-      },
-      {
-        "ref": "D1",
-        "footprint": "LED_SMD:LED_0805_2012Metric",
-        "classes": [
-          "HV_PGND",
-          "HV_VIN"
-        ],
-        "required_mm": 3.0,
-        "min_gap_mm": 0.9,
-        "clearance_mm": 0.89,
-        "kind": "hv",
-        "pads": [
-          "1",
-          "2"
-        ],
-        "nets": [
-          "PGND",
-          "IND_IN_3"
-        ],
-        "pad_pairs": 1
-      },
-      {
-        "ref": "D2",
-        "footprint": "LED_SMD:LED_0805_2012Metric",
-        "classes": [
-          "HV_PGND",
-          "HV_VOUT"
-        ],
-        "required_mm": 3.0,
-        "min_gap_mm": 0.9,
-        "clearance_mm": 0.89,
-        "kind": "hv",
-        "pads": [
-          "1",
-          "2"
-        ],
-        "nets": [
-          "PGND",
-          "IND_OUT_2"
         ],
         "pad_pairs": 1
       },
@@ -4409,7 +4382,7 @@
         "footprint": "Resistor_SMD:R_1206_3216Metric",
         "classes": [
           "HV_VIN",
-          "HV_VIN"
+          "PGND_LV"
         ],
         "required_mm": 3.0,
         "min_gap_mm": 1.8,
@@ -4451,7 +4424,7 @@
         "footprint": "Resistor_SMD:R_1206_3216Metric",
         "classes": [
           "HV_VOUT",
-          "HV_VOUT"
+          "PGND_LV"
         ],
         "required_mm": 3.0,
         "min_gap_mm": 1.8,
@@ -4637,7 +4610,7 @@
       },
       {
         "ref": "U1",
-        "footprint": "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
         "classes": [
           "CTRL_SELV",
           "DESAT_HS"
@@ -4658,7 +4631,7 @@
       },
       {
         "ref": "U1",
-        "footprint": "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
         "classes": [
           "CTRL_SELV",
           "DRV_HS"
@@ -4676,6 +4649,48 @@
           "RESET_N_F"
         ],
         "pad_pairs": 34
+      },
+      {
+        "ref": "U1",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
+        "classes": [
+          "DESAT_HS",
+          "Default"
+        ],
+        "required_mm": 9.0,
+        "min_gap_mm": 7.2809,
+        "clearance_mm": 7.27,
+        "kind": "barrier",
+        "pads": [
+          "2",
+          "16"
+        ],
+        "nets": [
+          "DESAT_H_OC",
+          "unconnected"
+        ],
+        "pad_pairs": 1
+      },
+      {
+        "ref": "U1",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
+        "classes": [
+          "DRV_HS",
+          "Default"
+        ],
+        "required_mm": 9.0,
+        "min_gap_mm": 7.25,
+        "clearance_mm": 7.24,
+        "kind": "barrier",
+        "pads": [
+          "1",
+          "16"
+        ],
+        "nets": [
+          "KS_H",
+          "unconnected"
+        ],
+        "pad_pairs": 4
       },
       {
         "ref": "U2",
@@ -4742,7 +4757,7 @@
       },
       {
         "ref": "U3",
-        "footprint": "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
         "classes": [
           "CTRL_SELV",
           "DESAT_LS"
@@ -4763,7 +4778,7 @@
       },
       {
         "ref": "U3",
-        "footprint": "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
         "classes": [
           "CTRL_SELV",
           "DRV_LS"
@@ -4781,6 +4796,48 @@
           "RESET_N_F"
         ],
         "pad_pairs": 34
+      },
+      {
+        "ref": "U3",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
+        "classes": [
+          "DESAT_LS",
+          "Default"
+        ],
+        "required_mm": 9.0,
+        "min_gap_mm": 7.2809,
+        "clearance_mm": 7.27,
+        "kind": "barrier",
+        "pads": [
+          "2",
+          "16"
+        ],
+        "nets": [
+          "DESAT_L_OC",
+          "unconnected"
+        ],
+        "pad_pairs": 1
+      },
+      {
+        "ref": "U3",
+        "footprint": "AIPE:UCC21710_DW0016A_Slot",
+        "classes": [
+          "DRV_LS",
+          "Default"
+        ],
+        "required_mm": 9.0,
+        "min_gap_mm": 7.25,
+        "clearance_mm": 7.24,
+        "kind": "barrier",
+        "pads": [
+          "1",
+          "16"
+        ],
+        "nets": [
+          "KS_L",
+          "unconnected"
+        ],
+        "pad_pairs": 4
       },
       {
         "ref": "U4",
@@ -4991,6 +5048,27 @@
           "OC_N"
         ],
         "pad_pairs": 11
+      },
+      {
+        "ref": "U10",
+        "footprint": "AIPE:TMCS1133_DVG0010A_HV_Slot",
+        "classes": [
+          "Default",
+          "HV_VOUT"
+        ],
+        "required_mm": 9.0,
+        "min_gap_mm": 7.75,
+        "clearance_mm": 7.74,
+        "kind": "barrier",
+        "pads": [
+          "2",
+          "5"
+        ],
+        "nets": [
+          "VOUT",
+          "unconnected"
+        ],
+        "pad_pairs": 1
       },
       {
         "ref": "U10",
