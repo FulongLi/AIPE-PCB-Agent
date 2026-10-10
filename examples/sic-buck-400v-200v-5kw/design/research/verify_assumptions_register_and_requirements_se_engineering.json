@@ -1,0 +1,196 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "Operating-point table at six corners (D, Iin, Iin at 98 %, dI_L, I_pk, I_L,rms, I_Cin,rms, switch RMS)",
+      "status": "verified",
+      "evidence": "Recomputed with L = 267 uH, fs = 50 kHz: D 0.5556/0.5000/0.4545; dI_L 6.66/7.49/8.17 A (26.6/30.0/32.7 % of 25 A); I_pk 28.33-29.09 A at 25 A and 30.83-31.59 A at 27.5 A; I_L,rms 25.07-25.11 / 27.57-27.60 A; Iin 13.89/12.50/11.36 A (15.28/13.75/12.50 A), at 98 % 14.17/12.76/11.60 A (15.59/14.03/12.76 A); I_HS,rms 18.7/17.7/16.9 and 20.5/19.5/18.6 A; I_LS,rms 16.7/17.7/18.5 and 18.4/19.5/20.4 A. I_Cin,rms with ripple neglected 12.42-13.75 A; exact value including ripple is 12.50-13.83 A (+0.08 A, immaterial). Worst corners correctly identified (440 V for peak/ripple/LS RMS, 360 V for Iin and HS RMS, 400 V for I_Cin)."
+    },
+    {
+      "item": "A-15 saturation requirement (seed correction)",
+      "status": "verified",
+      "evidence": "1.3 x 31.59 A = 41.07 A (>= 42 A rounded); 1.3 x 31.3 A (seed) = 40.7 A; with L = 220 uH at 440 V / 27.5 A: dI = 9.92 A, I_pk = 32.46 A, 1.3x = 42.2 A. Cross-area: the inductor agent specifies soft roll-off to 210 uH at 41 A and the sensing agent's hardware OC trip is 37.5 A typ (33.7-41.2 A max band), i.e. below I_sat - consistent."
+    },
+    {
+      "item": "A-09 output ripple capacitance and ESR limits",
+      "status": "verified",
+      "evidence": "C >= 8.17/(8 x 50e3 x 2.0) = 10.2 uF; ESR <= 2.0/8.17 = 0.245 ohm; 47 uF -> 0.43 Vpp; I_C,rms = 8.17/sqrt(12) = 2.36 A. Arithmetic correct.",
+      "correction": "The two limits are stated as independent; at both limits the ripple is 2.0 V (capacitive) + 2.0 V (ESR) = 4.0 Vpp, twice the specification. State them as one budget (e.g. C >= 20 uF and ESR <= 0.12 ohm) or note that the realised film bank (capacitor agent: 120 uF nominal / 108 uF min, 0.25 Vpp) makes the split moot."
+    },
+    {
+      "item": "A-11 load-transient capacitance and inductor slew charge",
+      "status": "verified",
+      "evidence": "C >= 12.5/(2 pi f_c x 10 V) = 198.9/99.5/39.8 uF for f_c = 1/2/5 kHz; slew charge 0.5 x 12.5 x 267e-6 x 12.5/(Vin - 200) = 130.4 uC (360 V) / 86.9 uC (440 V) step-up, 104.3 uC step-down -> 1.30 / 0.87 / 1.04 V at 100 uF; fs/20 = 2.5 kHz. Agrees.",
+      "correction": "Omission: the register specifies only the 12.5 A step. A realistic laboratory load dump 25 A -> 0 is not covered: LI^2 energy alone gives +10.2 V with 40 uF, +6.8 V with 60 uF, +4.1 V with 100 uF (+12.2 V at 27.5 A / 40 uF); C_min for +10 V is 40.7 uF. The capacitor agent computes a 14.8 V excursion at f_c = 2.5 kHz for the 25 A dump, above the +/-5 % limit and only 5 V below the 220 V output OVP chosen by the sensing agent. Add the load-dump case to A-11 and state whether it may trip output OVP."
+    },
+    {
+      "item": "A-20 efficiency loss budget and plausibility estimate",
+      "status": "verified",
+      "evidence": "P_loss = 154.6 / 102.0 / 76.1 W for 97 / 98 / 98.5 %; 128.2 W at 97.5 %. Conduction 2 x 17.7^2 x 0.043 = 26.9 W cold, 43.1 W with the assumed 1.6 hot factor; switching (955 + 107) uJ x (400/800) x (25/40) x 50 kHz = 16.6 W (linear V and I scaling, standard first-order method; the body-diode E_on is the right case for a hard-switched synchronous buck); 85-95 W total -> 98.14-98.33 %. Arithmetic agrees; inputs are snippet-level and flagged as such. The selected device (mosfet.json, fetched datasheet C4MS025120K: E_on/E_off 470/64 uJ at 800 V / 39.2 A, E_rr 256 uJ, R_DS(on) 150 degC est. 48.5 mohm) gives lower switching loss (thermal agent: 28.7 W worst case per device), so the 97.5 % floor is conservative."
+    },
+    {
+      "item": "A-18 thermal path limit P_max and 40 vs 50 degC sensitivity",
+      "status": "contradicted",
+      "evidence": "Formula (T_J - T_A)/(R_thJC + R_iso + 2 R_hs) is the correct two-devices-per-sink model (the sink carries 2P). Arithmetic agrees: 57.3 -> 52.1 W (-9.1 %) with 0.42/0.5/0.5 K/W; TI EC-019 reproduces 50.0 W at 40 degC and 45.5 W at 50 degC. However the parametric pad range 0.1-0.5 K/W is contradicted by the thermal agent's selected interface (Sil-Pad TSP 3500: 0.63-0.80 K/W at 25-50 psi) and heat sink (0.68 K/W): P_max = (150 - 50)/(0.41 + 0.80 + 2 x 0.68) = 38.9 W, not 'about 52 W per device' (Section 5).",
+      "correction": "Widen the pad range to 0.1-1.0 K/W, use the selected device's R_thJC = 0.41 K/W, restate P_max as about 39 W (margin 1.36 over 28.7 W per the thermal agent) and state that P_max is compared with the worse device of the pair (equal sharing is TI's assumption, SKILL-006 known limitation; with the sanity-device numbers HS about 38 W vs LS about 24 W, T_J,HS 116 degC)."
+    },
+    {
+      "item": "A-02/A-03/A-04 UVLO, OVP and survival ladder margins",
+      "status": "contradicted",
+      "evidence": "Margins agree: UVLO stop 40 V (11.1 %) and start 20 V (5.6 %) below 360 V; OVP 4.5 % above 440 V; survival 4.3 % above OVP; 480 V = 73.8 / 53.3 / 40.0 % of 650 / 900 / 1200 V. Internal inconsistency found: the converter may run down to the 320 V UVLO stop, where Iin at 27.5 A and 98 % is 5500/(0.98 x 320) = 17.5 A (16.5 A at 340 V), above the 16 A lower bound of the A-05 source current limit; a source at its limit collapses into UVLO (negative input impedance).",
+      "correction": "Either raise the minimum source current limit in A-05 to >= 18 A, or add a firmware input-power derating below 360 V (e.g. Iin limit 15.6 A) and say so in A-02 and A-34."
+    },
+    {
+      "item": "A-05/A-06 input-capacitor inrush energy and charge time",
+      "status": "verified",
+      "evidence": "E = 0.5 C V^2 = 1.6 / 3.2 / 4.8 J (20/40/60 uF at 400 V), 2.3 / 4.6 / 6.9 J at 480 V; t = C V / I = 1.6 / 3.2 / 4.8 ms at 5 A and 0.53 / 1.07 / 1.6 ms at 15 A (400 V). The constant-current charging model is appropriate for a current-limited source.",
+      "correction": "The calculation entry says '1.07-4.8 ms at 5 A' - 1.07 ms is the 40 uF / 15 A value; the correct ranges are 1.6-4.8 ms at 5 A and 0.53-4.8 ms over 5-15 A (markdown A-06 '1.1-4.8 ms at a 5-15 A source limit' should read 0.5-4.8 ms)."
+    },
+    {
+      "item": "A-17 dead-time fraction and body-diode loss",
+      "status": "verified",
+      "evidence": "2 t_d fs = 1 / 2 / 3 % for 100 / 200 / 300 ns; P = frac x 27.5 A x 4 V = 1.10 / 2.20 / 3.30 W. Agrees. Note: the selected device's V_SD is 4.6 V hot at 19.6 A (mosfet.json) and negative gate bias raises it further, so 2.5-3 W at 200 ns is the better estimate - still acceptable."
+    },
+    {
+      "item": "A-22 gate-drive power (KR-IS-001)",
+      "status": "verified",
+      "evidence": "118e-9 x 50e3 x 19 = 0.112 W per device. EC-014 records TI's expression with a factor 2 (conflict preserved in KR-IS-001); even doubled (0.22 W) it is negligible against module quiescent power. Not mentioned by the agent but immaterial."
+    },
+    {
+      "item": "A-22 auxiliary 12 V budget",
+      "status": "verified",
+      "evidence": "5.4 + 0.5 + 1 + 3 + 6 + 1.5 = 17.4 W x 1.2 = 20.88 W -> 1.74 A at 12 V, 1.93 A at 10.8 V. Agrees. Fan 0.5 A x 12 V = 6 W.",
+      "correction": "Distributor listings give 0.34 A as the typical AFB0812SH current and 0.51 A as maximum; the budget should use the fan's maximum (start-up) current, which already exceeds the 0.5 A cap. The thermal agent's integrated heat-sink fan is budgeted at 0.3 A (unverified) - keep the cap but state 'maximum rated current'."
+    },
+    {
+      "item": "A-19 fan free-stream velocity",
+      "status": "verified",
+      "evidence": "1.30 m3/min = 0.0217 m3/s over 0.0064 m2 = 3.39 m/s (46.6 CFM = 0.0220 m3/s, consistent). The 'about 2 m/s after back-pressure' figure is unverified (no fan curve vs heat-sink impedance); the agent flagged it."
+    },
+    {
+      "item": "D_eff with losses",
+      "status": "verified",
+      "evidence": "0.556/0.98 = 0.567, 0.5/0.98 = 0.510, 0.455/0.98 = 0.464. Agrees; the 0.85 duty ceiling leaves margin."
+    },
+    {
+      "item": "A-08 ADC resolution and divider scaling (KR-SN-002)",
+      "status": "verified",
+      "evidence": "3 V / 4096 = 0.732 mV per LSB; with a 250 V full scale (1.25 x 200 V) 0.061 V per LSB (agent 'about 0.05 V' - approximate); 1.1 x 480 V = 528 V full scale puts 460 V at 2.61 V and 480 V at 2.73 V on a 3 V ADC. The sensing agent chose 602 V and 302 V full scales, both above the register's minima - consistent."
+    },
+    {
+      "item": "A-31 copper width estimate (IPC)",
+      "status": "verified",
+      "evidence": "Agent: 'roughly 15-20 mm per layer for 25-31.6 A at 70 um and 20-30 K rise'. An IPC-2152-type fit gives 7.4-13.5 mm and IPC-2221 external gives 6.5-11.5 mm for the same conditions; the agent's figure is conservative by about 1.5x and is explicitly deferred to the layout agent. Acceptable as a placement reservation."
+    },
+    {
+      "item": "Knowledge applicability: KR-GD-005 exclusion vs synchronous buck",
+      "status": "verified",
+      "evidence": "Rule exclusion text confirmed ('Single-ended topologies (buck, boost, flyback) where PRD-04814 states 0 V turn-off may be used'); the register argues the synchronous buck is a complementary half-bridge with high dv/dt (rule condition) and hands the decision to the gate-driver agent - conflict preserved, not silently resolved."
+    },
+    {
+      "item": "Knowledge applicability: KR-SN-003, KR-CAP-004, KR-PE-001 marked not applicable; SKILL-003 output-filter exclusion; KR-CAP-001 applied to the buck input; KR-PR-001 exclusion",
+      "status": "verified",
+      "evidence": "Rule conditions read from engineering_rules.json: KR-SN-003 requires an MCU with a sigma-delta filter peripheral (TMS320F28335 has none; SDFM first appeared on F2837x); KR-CAP-004 'DAB or other bridges driving a transformer'; KR-PE-001 'DAB and related phase-shift converters'; SKILL-003 excludes 'output filters where ripple is set by an inductor current'; the KR-CAP-001 condition 'switched DC-link currents' fits the pulsed buck input current; KR-PR-001 excludes only evaluation fixtures with external protection. All correctly applied."
+    },
+    {
+      "item": "Human-review rules surfaced, not decided; reference instance values not copied",
+      "status": "verified",
+      "evidence": "KR-GD-004, KR-IS-004, KR-TH-002 (pad rating), KR-TH-003 are human-review items in the register and open_issues. The TIDA-010054 values (2 ohm, 6.4 V / 1 us, 45 / 70 A, 20 / 60 uF), the CGD1700HB2M-UNA values (1 ohm, 6.7 V / 46 ns) and the CGD15SG00D2 8 mm creepage appear only as 'not design values'. Cited reference decisions checked against the analysis files: TIDA decisions 1 (700-800 V), 8 (TPS26400; UCC14141 1.5 W at 10.8-13.2 V), 9 (40 degC, equal sharing); PRD-04814 decision 1; CGD15SG00D2 decision 7; CGD1700HB2M-UNA decision 4; SKILL-006 fans +0.29 A (1.14 -> 1.43 A)."
+    },
+    {
+      "item": "A-24 citation 'TIDA-010054 is 300 x 180 mm at 10 kW (decision 10)'",
+      "status": "unverified",
+      "evidence": "knowledge/references/ti/tida-010054/analysis.md decision 10 describes layout partitioning and contains no board dimensions; no 300 or 180 mm dimension appears anywhere in the analysis file. The size benchmark is not traceable to the cited knowledge record.",
+      "correction": "Cite the actual source of the board size (TIDUES0 or the Gerber outline) or mark the figure as unverified; V1's 300 x 220 mm is verified in examples/buck-48v-24v-1kw/design/assumptions.md."
+    },
+    {
+      "item": "Section 6 V1 comparison facts",
+      "status": "verified",
+      "evidence": "V1 assumptions.md: 36-54 V, 100 kHz with 200 ns dead time, 0-50 degC, 20 A / 100 us illustrative step, 300 x 220 mm six layers with 70/35 um mix, 285 g inductor clamp, controlled supply ramp; architecture.md: 10 uH inductor, UCC27211 bootstrap driver (SKILL-001 explicitly excludes it). 41.7 A output and 20.8-27.8 A input follow from 1 kW / 24 V and 1 kW / 48-36 V."
+    },
+    {
+      "item": "Isola 370HR laminate parameters (A-30)",
+      "status": "unverified",
+      "evidence": "Web check (Isola 370hr_2.pdf summary, Eurocircuits PCL370HR sheet, Epec copy): Tg 180 degC (DSC), Td 340 degC (TGA 5 %), UL 94 V-0, UL file E41625 confirmed. The CTI class 3 (175-249 V) claim - the one property that sets material group IIIa and therefore the creepage tables - was not found in any retrieved result.",
+      "correction": "Confirm CTI from the full 370HR data sheet or the UL iQ record for E41625 before the standards agent's IIIa creepage values are frozen; otherwise carry it as unverified."
+    },
+    {
+      "item": "Delta AFB0812SH fan ratings",
+      "status": "verified",
+      "evidence": "Distributor listings (Cytech, zenode, Master Electronics): 80 x 80 x 25.4 mm, 12 V, 46.6 CFM / 1.3 m3/min, 66.5 Pa, 4.08 W, 4000 rpm, 7-13.8 V; 0.34 A typical with 0.51 A maximum on one reseller page. No official Delta datasheet retrieved; the 4500 rpm Delta-page figure could not be checked."
+    },
+    {
+      "item": "C3M0032120K sanity-check device values",
+      "status": "unverified",
+      "evidence": "Q_G 118 nC, R_DS(on),max 43 mohm, switching energies and R_thJC 0.42 K/W remain snippet-level or assumed. Superseded: mosfet.json holds fetched-datasheet values for the selected C4MS025120K (R_thJC 0.41 K/W, Q_G 125 nC, R_DS(on) 28 mohm typ / 48.5 mohm at 150 degC est., V_SD 4.6 V hot). The register should reference the selected device."
+    },
+    {
+      "item": "Knowledge queries and tooling claim",
+      "status": "verified",
+      "evidence": "Queries 1, 4 and 7 rerun with --json --limit 8 return exactly the reported top-hit lists. The UnicodeEncodeError reproduces when PYTHONIOENCODING is unset (on this host the console codec is 'gbk', not cp1252; the cause - non-ASCII characters in query.py's print - and the workaround are the same)."
+    },
+    {
+      "item": "Requirements separation (U / S / S* / D / H) and consistency with the design basis",
+      "status": "verified",
+      "evidence": "The nine U rows match input/requirements.yaml (topology, 400 V, 200 V, 5 kW / 25 A, 50 kHz, Wolfspeed SiC, TMS320F28335, KiCad/architecture, scope exclusions); every [SEED] of the design basis is listed as S or S*, the four corrections are flagged, and no seed is silently altered. Environmental inputs (OVC II, PD2, <= 2000 m, group IIIa) match the standards agent's result; the architecture agent's 240 x 180 mm power board sits inside the A-24 envelope."
+    },
+    {
+      "item": "Omissions in the register (quantities downstream agents had to invent)",
+      "status": "contradicted",
+      "evidence": "(a) No DC-link / output discharge requirement: stored energy 3.2-4.8 J (40-60 uF at 400 V) plus 2.0-2.9 J (100-120 uF at 200-220 V); the standards agent applied IEC 61800-5-1 4.3.11 (< 60 V within 5 s or label) and chose passive bleeders for <= 60 s (R <= t/(C ln(V0/60)): 527 kohm / 0.30 W for 60 uF at 400 V; 44 kohm / 3.6 W would be needed for 5 s), the capacitor agent sized them - the register is silent. (b) No input DC-link ripple target: KR-CAP-001 needs dV_allowed; dQ = D(1-D) Io / fs = 125 uC (25 A) / 138 uC (27.5 A) -> 17 uF for 2 % (8 Vpp) or 34 uF for 1 %; the capacitor agent had to add its own assumption A1 (<= 2 %). (c) Full load dump not specified (see A-11). (d) No output OVP threshold although A-35 requires output OVP (sensing agent chose 220 V). (e) No switch-node overshoot allowance for the device-class evaluation and commutation-loop target (MOSFET agent 502/528 Vpk at 440 V, standards agent 530 Vpk recurring peak). (f) HS/LS loss asymmetry not stated for the shared-sink model.",
+      "correction": "Add register rows for discharge time/bleeder, input ripple target, load dump, output OVP level and switch-node overshoot allowance (values proposed in required_changes)."
+    }
+  ],
+  "recomputed": [
+    {"name": "Duty cycle D = Vout/Vin", "agent_value": "0.556 / 0.500 / 0.455", "verifier_value": "0.5556 / 0.5000 / 0.4545", "agrees": true},
+    {"name": "Input current (eta = 1 and 0.98; 25 and 27.5 A)", "agent_value": "13.89/12.50/11.36 and 15.28/13.75/12.50 A; 14.17/12.76/11.60 and 15.59/14.03/12.76 A", "verifier_value": "13.89/12.50/11.36 and 15.28/13.75/12.50 A; 14.17/12.76/11.60 and 15.59/14.03/12.76 A", "agrees": true},
+    {"name": "Inductor ripple dI_L (267 uH)", "agent_value": "6.66 / 7.49 / 8.17 A = 26.6 / 30.0 / 32.7 %", "verifier_value": "6.658 / 7.491 / 8.172 A = 26.6 / 30.0 / 32.7 %; L_ideal = 266.7 uH", "agrees": true},
+    {"name": "Peak inductor current", "agent_value": "28.33 / 28.75 / 29.09 A; 30.83 / 31.25 / 31.59 A", "verifier_value": "28.33 / 28.75 / 29.09 A; 30.83 / 31.25 / 31.59 A", "agrees": true},
+    {"name": "Saturation requirement 1.3 x I_pk,worst", "agent_value": ">= 41.1 A (>= 42 A); 42.2 A at 220 uH (32.46 A peak)", "verifier_value": "41.07 A; 220 uH at 440 V: dI 9.92 A, I_pk 32.46 A, 42.2 A; seed-based 1.3 x 31.3 = 40.7 A", "agrees": true},
+    {"name": "Inductor and switch RMS currents", "agent_value": "I_L,rms 25.07-25.11 / 27.57-27.60 A; I_HS 18.7/17.7/16.9 and 20.6/19.5/18.6 A; I_LS 16.7/17.7/18.6 and 18.4/19.5/20.4 A", "verifier_value": "25.07-25.11 / 27.57-27.60 A; I_HS 18.7/17.7/16.9 and 20.5/19.5/18.6 A; I_LS 16.7/17.7/18.5 and 18.4/19.5/20.4 A (rounding only)", "agrees": true},
+    {"name": "Input capacitor RMS current Io sqrt(D(1-D))", "agent_value": "12.42 / 12.50 / 12.45 A; 13.66 / 13.75 / 13.69 A", "verifier_value": "12.42 / 12.50 / 12.45 A; 13.66 / 13.75 / 13.69 A (exact with ripple 12.50 / 12.59 / 12.55 and 13.74 / 13.83 / 13.79 A)", "agrees": true, "note": "The ripple term adds about 0.08 A; the agent stated the neglect explicitly."},
+    {"name": "Output capacitance for ripple (C, ESR, 47 uF case, I_C,rms)", "agent_value": "C >= 10.2 uF; ESR <= 0.245 ohm; 0.44 Vpp at 47 uF; 2.4 A", "verifier_value": "10.21 uF; 0.245 ohm; 0.43 Vpp; 2.36 A", "agrees": true, "note": "Limits are not simultaneous: both at limit give 4.0 Vpp."},
+    {"name": "Output capacitance for load transient and slew charge", "agent_value": "199 / 99.5 / 39.8 uF; 87-130 uC step-up, 104 uC step-down -> <= 1.3 V at 100 uF", "verifier_value": "198.9 / 99.5 / 39.8 uF; 86.9 (440 V) - 130.4 (360 V) uC, 104.3 uC; 0.87 / 1.30 / 1.04 V at 100 uF", "agrees": true, "note": "Load dump 25 A -> 0 not covered: +10.2 V at 40 uF, +4.1 V at 100 uF from LI^2 alone."},
+    {"name": "Efficiency loss budget", "agent_value": "154.6 / 102.0 / 76.1 W; 128 W at 97.5 %", "verifier_value": "154.6 / 102.0 / 76.1 W; 128.2 W", "agrees": true},
+    {"name": "Efficiency plausibility (sanity device)", "agent_value": "P_cond 27 W cold / ~43 W hot; P_sw ~16.6 W; total 85-95 W -> 98.1-98.3 %", "verifier_value": "26.9 W / 43.1 W; 16.59 W (linear V, I scaling of 1062 uJ); 85 W -> 98.33 %, 95 W -> 98.14 %", "agrees": true, "note": "Inputs snippet-level; the selected C4MS025120K has lower switching energy, so the estimate is conservative."},
+    {"name": "Thermal path limit P_max", "agent_value": "57.3 -> 52.1 W (R_thJC 0.42, R_iso 0.5, R_hs 0.5); 50.0 -> 45.5 W (TI values)", "verifier_value": "57.3 -> 52.1 W (-9.1 %); 50.0 -> 45.5 W; EC-019 reproduces 50.0 W. With the thermal agent's selected parts (0.41 + 0.80 + 2 x 0.68 K/W): 38.9 W at 50 degC", "agrees": true, "note": "Arithmetic agrees; the pad-resistance range (0.1-0.5 K/W) and the Section 5 'about 52 W per device' conclusion do not hold for the selected interface (0.63-0.80 K/W)."},
+    {"name": "UVLO / OVP / survival margins", "agent_value": "UVLO stop 40 V (11.1 %), start 20 V; OVP 4.5 %; survival 4.3 % above OVP; 74 / 53 / 40 % of 650 / 900 / 1200 V", "verifier_value": "11.1 % / 5.6 %; 4.5 %; 4.3 %; 73.8 / 53.3 / 40.0 %", "agrees": true, "note": "Iin at the 320 V UVLO stop, 27.5 A, 98 % = 17.5 A exceeds the 16 A minimum source limit of A-05 (inconsistency)."},
+    {"name": "Input capacitor inrush energy and charge time", "agent_value": "1.6-6.9 J; 1.07-4.8 ms at 5 A (400 V) and 0.53-1.6 ms at 15 A", "verifier_value": "1.6-6.9 J; 1.6-4.8 ms at 5 A; 0.53-1.6 ms at 15 A", "agrees": false, "note": "1.07 ms is the 40 uF / 15 A value, not a 5 A value; energy agrees."},
+    {"name": "Dead-time fraction and body-diode loss", "agent_value": "1 / 2 / 3 %; 1.1 / 2.2 / 3.3 W", "verifier_value": "1.0 / 2.0 / 3.0 %; 1.10 / 2.20 / 3.30 W (2.53 W at 200 ns if evaluated at I_pk 31.6 A)", "agrees": true},
+    {"name": "Gate-drive power", "agent_value": "0.11 W per device", "verifier_value": "0.112 W (0.22 W with TI's factor-2 expression, EC-014)", "agrees": true},
+    {"name": "Auxiliary 12 V budget", "agent_value": "20.9 W -> 1.74 A at 12 V, 1.93 A at 10.8 V", "verifier_value": "17.4 W x 1.2 = 20.88 W -> 1.74 A / 1.93 A", "agrees": true, "note": "Fan maximum current 0.51 A (listing) vs 0.34 A typical."},
+    {"name": "Fan free-stream velocity", "agent_value": "3.4 m/s", "verifier_value": "0.02167 m3/s / 0.0064 m2 = 3.39 m/s", "agrees": true},
+    {"name": "Effective duty with losses", "agent_value": "0.567 / 0.510 / 0.464", "verifier_value": "0.5673 / 0.5102 / 0.4643", "agrees": true},
+    {"name": "ADC resolution after scaling (A-08)", "agent_value": "0.73 mV per LSB; about 0.05 V per LSB after scaling", "verifier_value": "0.732 mV; 0.061 V per LSB at 250 V full scale (0.074 V at the sensing agent's 302 V)", "agrees": true, "note": "Approximate wording; the conclusion (+/-1 % achievable) is unchanged."},
+    {"name": "Copper width reservation A-31", "agent_value": "roughly 15-20 mm per layer for 25-31.6 A, 70 um, 20-30 K", "verifier_value": "IPC-2152-type fit 7.4-13.5 mm; IPC-2221 external 6.5-11.5 mm", "agrees": true, "note": "The agent's reservation is conservative by about 1.5x; the computation is correctly deferred to the layout agent."},
+    {"name": "Input DC-link ripple charge (not computed by the agent)", "agent_value": "not computed; no input ripple target in the register", "verifier_value": "dQ = D(1-D) Io / fs = 123-125 uC (25 A), 136-138 uC (27.5 A); C >= 17 uF for 8 Vpp (2 %), 34 uF for 4 Vpp (1 %)", "agrees": false, "note": "The capacitor agent had to add assumption A1 (<= 2 %); the register should own it."},
+    {"name": "DC-link discharge / bleeder (not in the register)", "agent_value": "absent", "verifier_value": "60 uF at 400 V to 60 V: 527 kohm / 0.30 W for 60 s, 44 kohm / 3.6 W for 5 s; 120 uF at 200 V: 415 kohm / 0.10 W for 60 s; stored energy 4.8 J + 2.4 J", "agrees": false, "note": "The standards agent chose <= 60 s passive bleeders with a label; the register is silent."},
+    {"name": "HS/LS loss asymmetry with the sanity-device numbers (not in the register)", "agent_value": "'roughly 30 W per device expected'", "verifier_value": "HS = 21.5 + 16.6 = 38.2 W, LS = 21.5 + 2.2 = 23.8 W (hot, 400 V / 25 A); T_J,HS = 50 + 38.2 x 0.92 + 62 x 0.5 = 116 degC with 0.42/0.5/0.5 K/W", "agrees": false, "note": "The average is 31 W but P_max must be checked on the HS device; with the selected device the thermal agent finds a 51/49 split, so the practical impact is small."}
+  ],
+  "knowledge_misuse": [
+    "KR-CAP-002 is labelled 'direct' for the buck output capacitor although the rule's condition is 'DC links with high-frequency ripple'; the physics transfers, but the label should be 'adapted' so the trace shows the condition was extended.",
+    "KR-GD-008: the register says differential PWM/fault signalling 'applies directly' whenever drivers and controller are on separate boards. The rule's condition is cables or long traces and its exclusion is short links with buffered single-ended PWM; the architecture agent's option B (stacked 2.54 mm mezzanine, drivers on the power board) is a short link, so the condition should be stated in terms of link length and noise environment, not board count.",
+    "SKILL-006 known limitation (TI's model assumes equal sharing) is cited but not carried into Section 5: 'about 52 W per device ... exceeds the roughly 30 W per device expected' compares an equal-share limit with an average loss; P_max must be checked against the worse device of the pair, and the 52 W figure itself rests on a 0.1-0.5 K/W pad range that the thermal agent's selected 0.63-0.80 K/W pad falls outside.",
+    "A-24 attributes a 300 x 180 mm board size to REF-TI-TIDA-010054 decision 10; the knowledge record contains no board dimensions, so the citation does not support the number (unverified, not a copied instance value)."
+  ],
+  "required_changes": [
+    "Add a discharge assumption (new S/H row): input and output banks discharge to <= 60 V within 60 s by passive bleeders with a warning label, or within 5 s where terminals are accessible (IEC 61800-5-1 4.3.11, as selected by the standards agent); give the sizing method R <= t / (C ln(V0 / 60)) and the loss (about 0.3 W input, 0.1 W output for 60 s) so the capacitor and efficiency budgets include it.",
+    "Add an input DC-link ripple-voltage target to Section 4.1 (e.g. <= 2 % pk-pk = 8 Vpp at 400 V, matching the capacitor agent's A1) with dQ = D(1-D) Io / fs = 125 / 138 uC -> C >= 17 uF (34 uF for 1 %), so KR-CAP-001 has its dV_allowed from the register rather than from the capacitor agent.",
+    "Extend A-11 with the full load-dump case 25 A (and 27.5 A) -> 0: LI^2 minimum C = 40.7 uF for +10 V, +4.1 V at 100 uF; the capacitor agent's 14.8 V excursion at f_c = 2.5 kHz exceeds +/-5 %; state whether the dump may trip output OVP or must stay below it, and set the recovery time for this case.",
+    "Add an output OVP threshold row (the sensing agent uses 220 V = +10 %; keep >= 10 V above the allowed transient excursion and below the 1.25 x 200 V divider full scale) and an input OVP response-time expectation for the 440 -> 480 V transient.",
+    "Resolve the A-02 / A-05 inconsistency: at the 320 V UVLO stop and 27.5 A the input current is 17.5 A (16.5 A at 340 V), above the 16 A minimum source limit; either raise the A-05 lower bound to >= 18 A or add an input-power derating / input-current limit below 360 V to A-02 and the firmware contract A-34.",
+    "A-18 / Section 5: widen the parametric pad resistance to 0.1-1.0 K/W, use R_thJC = 0.41 K/W of the selected C4MS025120K and the thermal agent's 0.68 K/W sink: P_max = (150 - 50)/(0.41 + 0.80 + 2 x 0.68) = 38.9 W (margin 1.36 over 28.7 W), replacing 'about 52 W per device'; state that the limit is checked on the worse device and that equal sharing is TI's assumption.",
+    "Add a switch-node overshoot allowance (S) for the device-class evaluation and the commutation-loop target, e.g. <= 90 V above Vin (<= 530 Vpk at 440 V, consistent with the MOSFET agent's 502 / 528 Vpk and the standards agent's 530 Vpk recurring peak), so 'before switching overshoot' in A-04 becomes a number.",
+    "Correct the inrush charge-time range: 1.6-4.8 ms at 5 A and 0.53-1.6 ms at 15 A (20-60 uF, 400 V); replace '1.07-4.8 ms at 5 A' and the markdown '1.1-4.8 ms' with 0.5-4.8 ms over the 5-15 A limit range.",
+    "A-09: state the ripple limits as one budget (both at their limits give 4.0 Vpp): e.g. C >= 20 uF and ESR <= 0.12 ohm, or note that the realised 108 uF film bank (0.25 Vpp) makes the split irrelevant.",
+    "A-19 / A-22: budget the fan at its maximum rated current, not the typical value (AFB0812SH: 0.34 A typical, 0.51 A maximum per distributor listing), and note that the 2 m/s figure needs the fan curve against the heat-sink impedance; the thermal agent's integrated fan (0.3 A) must be verified against the same cap.",
+    "A-30: mark the Isola 370HR CTI class 3 as unverified until read from the full data sheet or the UL E41625 record (Tg 180 / Td 340 / V-0 / E41625 are confirmed); the material group IIIa creepage values depend on it.",
+    "A-24: replace or source the 'TIDA-010054 300 x 180 mm' benchmark (not present in the cited knowledge record); keep V1 300 x 220 mm, which is verified.",
+    "Replace the C3M0032120K snippet values in A-18 / A-20 and the 'no Wolfspeed R_thJC verified' open issue with the selected device's fetched-datasheet values from mosfet.json (C4MS025120K: R_thJC 0.41 K/W, Q_G 125 nC, R_DS(on) 28 mohm typ / 48.5 mohm at 150 degC est., V_SD 4.6 V hot, E_on/E_off 470/64 uJ, E_rr 256 uJ at 800 V / 39.2 A).",
+    "Relabel KR-CAP-002 (output capacitor) as 'adapted' and rewrite the KR-GD-008 condition in A-21 in terms of link length / noise environment (mezzanine = short link, rule exclusion) rather than board count.",
+    "Section 5: add the HS/LS loss split statement for the shared-sink check (sanity numbers HS about 38 W, LS about 24 W; selected device 51/49 % per the thermal agent).",
+    "Tooling note: the UnicodeEncodeError depends on the console code page (gbk on this host, cp1252 on the agent's); recommend that query.py reconfigure stdout to UTF-8 or use ensure_ascii so the workaround is not needed."
+  ],
+  "summary": "All twenty calculations in the register reproduce from the stated inputs (operating points at six corners, saturation requirement 41.07 A -> 42 A, ripple and transient capacitance, efficiency budget, thermal P_max sensitivity, UVLO/OVP ladder, dead time, gate power, auxiliary budget, fan velocity); the only arithmetic slip is the inrush charge-time range (1.07 ms belongs to 40 uF / 15 A). Knowledge rules were applied inside their conditions, the KR-GD-005 buck exclusion conflict was preserved and handed to the gate-driver agent, human-review rules were surfaced not decided, and no reference instance values were copied; query top hits reproduce exactly. The register is nevertheless incomplete and in two places inconsistent: it omits a DC-link discharge requirement, an input ripple target, the full load-dump case, an output OVP level and a switch-node overshoot allowance (quantities the capacitor, standards and sensing agents then had to invent); the UVLO stop (320 V) allows 17.5 A input current against a 16 A minimum source limit; and the thermal conclusion 'about 52 W per device' rests on a 0.1-0.5 K/W pad range that the selected interface (0.63-0.80 K/W) falls outside - the limit is 38.9 W with the selected parts. The Isola 370HR CTI class (material group IIIa) and the TIDA-010054 300 x 180 mm benchmark could not be verified. Verdict: confirmed with the listed corrections."
+}

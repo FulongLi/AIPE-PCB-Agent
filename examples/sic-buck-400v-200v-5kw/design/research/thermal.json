@@ -1,0 +1,896 @@
+{
+ "decision_area": "Thermal design, heatsink, insulating interface materials, NTC/OTP mapping and mechanical envelopes for the two C4MS025120K TO-247-4 devices of the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck",
+ "knowledge_queries": [
+  {
+   "command": "python -m automation.knowledge.query \"thermal design heatsink junction temperature budget shared heatsink insulating pad\" --json --limit 8",
+   "top_hits": [
+    "SKILL-006",
+    "REF-TI-TIDA-010054 (Decision 9)",
+    "KR-TH-002",
+    "KR-TH-003",
+    "KR-TH-001",
+    "SKILL-003",
+    "KR-IS-001",
+    "SKILL-004"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"NTC over-temperature protection trip temperature mapping to junction\" --json --limit 8",
+   "top_hits": [
+    "KR-TH-003",
+    "SKILL-006",
+    "CB-PR-002",
+    "REF-WS-CGD1700HB2M-UNA (Decision 8)",
+    "KR-GD-004",
+    "CB-SN-004",
+    "SKILL-005",
+    "KR-TH-001"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"component placement hot spot capacitor distance from heatsink airflow inductor\" --json --limit 8",
+   "top_hits": [
+    "SKILL-006",
+    "SKILL-003",
+    "KR-PCB-002",
+    "SKILL-002",
+    "KR-GD-007",
+    "REF-TI-TIDA-010054 (Decision 9)",
+    "KR-CAP-003",
+    "KR-IS-002"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"creepage clearance grounded heatsink drain tab insulation 400 V\" --json --limit 8",
+   "top_hits": [
+    "SKILL-006 (PCB constraints)",
+    "KR-TH-002",
+    "KR-ISO-002",
+    "SKILL-002",
+    "KR-ISO-004",
+    "KR-ISO-003",
+    "CB-GD-001",
+    "REF-WS-CGD1700HB2M-UNA (Decision 6)"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"copper temperature rise current carrying capacity IPC-2152 trace width\" --json --limit 6",
+   "top_hits": [
+    "KR-PCB-006",
+    "KR-CAP-002",
+    "CMP-B32716H8306K000",
+    "REF-TI-TIDA-010054 (Decision 10)",
+    "KR-PE-001",
+    "KR-ISO-004"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"fan failure natural convection over temperature shutdown\" --json --limit 6",
+   "top_hits": [
+    "SKILL-006",
+    "KR-GD-011",
+    "REF-WS-CGD1700HB2M-UNA (Decision 8)",
+    "SKILL-003",
+    "KR-PR-001",
+    "KR-PCB-004"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query \"Ohmite CR201-50VE heat sink Wakefield CD-02-05-247 pad TMP6131 thermistor\" --json --limit 6",
+   "top_hits": [
+    "SKILL-006",
+    "REF-TI-TIDA-010054 (Decision 9)",
+    "KR-TH-002",
+    "KR-TH-003",
+    "CB-PR-002"
+   ]
+  },
+  {
+   "command": "python -m automation.knowledge.query --get KR-TH-001 / KR-TH-002 / KR-TH-003 / CB-PR-002 / KR-PCB-006 / KR-ISO-002 --json",
+   "top_hits": [
+    "full records read; related: SKILL-006, CB-PR-002, PE-PCB-006, KR-ISO-003, KR-ISO-004"
+   ]
+  },
+  {
+   "command": "read knowledge/skills/thermal/SKILL-006-thermal-placement.md and .json; knowledge/references/ti/tida-010054/analysis.md (Decisions 9, 10, non-generalisable items); knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md (Decision 8); docs/pcb-design-rules.md (PE-PCB-001..008)",
+   "top_hits": [
+    "SKILL-006 principles 1-5",
+    "REF-TI-TIDA-010054 decision 9",
+    "REF-WS-CGD1700HB2M-UNA decision 8",
+    "PE-PCB-001, 003, 005, 006"
+   ]
+  }
+ ],
+ "knowledge_used": [
+  {
+   "id": "SKILL-006",
+   "type": "skill",
+   "applicability": "adapted",
+   "how_applied": "Principles 1-5 and the six-step procedure applied: budget along the real path with this design's 50 degC ambient, 150/125 degC limits and 0.41 K/W R_thJC; shared-sink insulation; losses first; drivers under the device leads; NTC is not T_J. TI instance values (40 degC, 0.5 degC/W sink, 0.1 degC/W pad, 50/69 W limits) were not copied and were found not reproducible from the Ohmite/Wakefield datasheets.",
+   "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "KR-TH-001",
+   "type": "rule",
+   "applicability": "direct",
+   "how_applied": "Hard constraint evaluated: P_max = (T_J,lim - T_A)/(2*R_th,HS + R_pad + R_JC) = 38.9 W (150 degC) and 29.2 W (125 degC) against 28.7 W worst-case per device; required R_th,HS table derived for both limits.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "KR-TH-002",
+   "type": "rule",
+   "applicability": "direct",
+   "how_applied": "Rated insulating pad selected (Sil-Pad TSP 3500, 4 kVac) with its resistance (0.63-0.82 K/W) in the budget; pad oversized for edge creepage; capacitance/displacement current added as an extra selection criterion; voltage rating and creepage surfaced for human review as the rule requires.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "KR-TH-003",
+   "type": "rule",
+   "applicability": "human-review",
+   "how_applied": "NTC on the earthed sink treated as cooling supervision; T_J mapping given as an estimate (T_NTC + 39-43 K at full load, load dependent); trip levels, calibration and the isolation route are surfaced for review, not decided.",
+   "reference_design": "REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "CB-PR-002",
+   "type": "block",
+   "applicability": "adapted",
+   "how_applied": "Isolated thermistor path via a gate-driver AIN/APWM channel offered as the isolation option if the control ground is not PE-bonded; the chosen sensor is a ring-lug NTC on the PE-potential heatsink rather than a module NTC; calibration with a fixed resistor adopted.",
+   "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+  },
+  {
+   "id": "REF-TI-TIDA-010054",
+   "type": "reference",
+   "applicability": "adapted",
+   "how_applied": "Decision 9 model (two TO-247 per insulated forced-air sink) adopted; the factor 2 interpreted as shared-sink; TI's parts CR201-50VE and CD-02-05-247 evaluated as candidates and not selected (no forced-air data / 25-week lead; 76 um pad capacitance). Decision 10 driver placement reused.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "REF-WS-CGD1700HB2M-UNA",
+   "type": "reference",
+   "applicability": "adapted",
+   "how_applied": "Decision 8 rationale (NTC isolation can fail after a catastrophic event) considered; here the NTC sits on a protectively earthed sink, so the hazard differs; isolation decision passed to the architecture agent.",
+   "reference_design": "REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "KR-PCB-006",
+   "type": "rule",
+   "applicability": "adapted",
+   "how_applied": "Copper sizing by an IPC-2221/2152-style temperature-rise estimate for 25/27.5 A on 70 um copper, repeated on two layers with via arrays.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "PE-PCB-006",
+   "type": "project-rule",
+   "applicability": "adapted",
+   "how_applied": "Width, via count and loss rationale provided as the human-review evidence the rule asks for.",
+   "reference_design": "project rules"
+  },
+  {
+   "id": "KR-ISO-002",
+   "type": "rule",
+   "applicability": "human-review",
+   "how_applied": "Creepage sink-to-tab and sink-to-HV copper estimated at 5.0 mm (500 V, PD2, group IIIa) and used to oversize the pads; the governing figure must be set by the isolation review.",
+   "reference_design": "REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "KR-ISO-004",
+   "type": "rule",
+   "applicability": "adapted",
+   "how_applied": "Slots suggested around earthed heatsink mounting pins if surface creepage to HV copper is limiting.",
+   "reference_design": "REF-WS-CGD15SG00D2, REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "KR-PCB-005",
+   "type": "rule",
+   "applicability": "direct",
+   "how_applied": "Via SKILL-006 principle 4: gate drivers and decoupling on the opposite board side directly below the TO-247 leads so the sink placement does not lengthen gate or commutation loops.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "KR-PCB-004",
+   "type": "rule",
+   "applicability": "adapted",
+   "how_applied": "Device pitch limited to 28 mm (pad-size driven) to keep the commutation loop short while meeting pad creepage.",
+   "reference_design": "REF-WS-CGD1700HB2M-UNA"
+  },
+  {
+   "id": "PE-PCB-003",
+   "type": "project-rule",
+   "applicability": "adapted",
+   "how_applied": "Mechanical placement defined so the commutation loop overlay can still be minimised (devices adjacent on one sink face).",
+   "reference_design": "project rules"
+  },
+  {
+   "id": "PE-PCB-005",
+   "type": "project-rule",
+   "applicability": "direct",
+   "how_applied": "NTC and fan TACH wiring routed away from the switch node.",
+   "reference_design": "project rules"
+  },
+  {
+   "id": "KR-CAP-003",
+   "type": "rule",
+   "applicability": "adapted",
+   "how_applied": "HV ceramics beside the legs are in the hottest PCB zone; a >= 125 degC rating requirement is handed to the capacitor agent.",
+   "reference_design": "REF-TI-TIDA-010054"
+  },
+  {
+   "id": "KR-PR-001",
+   "type": "rule",
+   "applicability": "not-applicable",
+   "how_applied": "Short-circuit protection timing is not a thermal-path item; only noted that OTP is a slow (seconds) protection and must not be relied on for device faults.",
+   "reference_design": "REF-TI-TIDA-010054"
+  }
+ ],
+ "candidates": [
+  {
+   "part_number": "LAM 5 K 100 12",
+   "manufacturer": "Fischer Elektronik",
+   "key_parameters": {
+    "R_th_forced_K_per_W": "0.68 (RS listing for LAM 5 100 12; same profile and fan)",
+    "R_th_natural_K_per_W": "not found (estimate 3-4; sibling LAM 5 D K 125 24: 1.73 per DigiKey)",
+    "dimensions_mm": "100 x 50 x 50",
+    "fan": "12 V DC axial, integrated; current not found (budget 0.3 A)",
+    "airflow_m3_per_h": "not found (family: 10.1 at 5 V 50 mm, 20 at 24 V 100 mm, 14.3 for D 100 12)",
+    "mounting": "K = clip mounting for transistors (distributor description); PCB mount",
+    "mass_g": "not found (estimate 250-350)",
+    "finish": "natural anodised aluminium",
+    "T_sink_worst_degC": 88.2,
+    "T_J_HS_worst_degC": "122.9 typ / 131.1 max R_DS(on)"
+   },
+   "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/VA/LAM5K10012/datasheet.xhtml (blocked to automated access); distributor: https://uk.rs-online.com/web/p/heatsinks/7742827",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "SELECTED. Meets T_J <= 150 degC with >= 19 K margin in every case and the 125 degC preference with typical parts; compact 50 x 50 mm envelope with its own 12 V fan on the auxiliary rail. All figures are distributor-level; the Fischer datasheet must be obtained before BOM freeze."
+  },
+  {
+   "part_number": "LAM 5 D K 100 12",
+   "manufacturer": "Fischer Elektronik",
+   "key_parameters": {
+    "R_th_forced_K_per_W": "0.30 (novapart listing)",
+    "R_th_natural_K_per_W": "not found (D K 125 24: 1.73)",
+    "dimensions_mm": "100 x 100.5 x 50 (double-width profile)",
+    "airflow_m3_per_h": "14.3 max (listing)",
+    "T_J_HS_worst_degC": "101.6 typ / 107.2 max R"
+   },
+   "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/VA/LAM5DK12524/datasheet.xhtml (sibling, from DigiKey)",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Upgrade option if the 125 degC preference must hold with max-R_DS(on) parts or measured R_pad exceeds 1 K/W; costs 100 x 100 mm of board area."
+  },
+  {
+   "part_number": "LAM 5 K 100 5",
+   "manufacturer": "Fischer Elektronik",
+   "key_parameters": {
+    "R_th_forced_K_per_W": 1.1,
+    "dimensions_mm": "100 x 50",
+    "fan": "5 V",
+    "price_usd": 44.93,
+    "stock": "1000 (DigiKey marketplace)"
+   },
+   "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/VA/LAM5K1005/datasheet.xhtml",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Rejected: 5 V fan version gives 1.1 K/W (T_J about 147 degC worst case); shows the family's sensitivity to fan flow."
+  },
+  {
+   "part_number": "LAM 5 D K 125 24",
+   "manufacturer": "Fischer Elektronik",
+   "key_parameters": {
+    "R_th_forced_K_per_W": 0.43,
+    "R_th_natural_K_per_W": 1.73,
+    "dimensions_mm": "125 x 100.5",
+    "fan": "24 V",
+    "price_usd": 131.02
+   },
+   "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/VA/LAM5DK12524/datasheet.xhtml",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Not selectable (24 V fan); used only as the family's natural-convection reference point for the fan-fail estimate."
+  },
+  {
+   "part_number": "CR201-50VE",
+   "manufacturer": "Ohmite",
+   "key_parameters": {
+    "R_th_natural_K_per_W": "3.3 at 70 K rise",
+    "R_th_forced_K_per_W": "not found (estimate 0.95-1.3 at 2-3 m/s)",
+    "surface_area": "73.5 in2 / 47409 mm2",
+    "mass_g": 103,
+    "dimensions_mm": "50 long x 75 wide; height not listed",
+    "mounting": "universal cam-clip CLA-TO-21E for TO-247/TO-264, PC pins",
+    "finish": "V = degreased",
+    "availability": "DigiKey not stocked, 25-week lead, USD 5.41 at 3060"
+   },
+   "datasheet_url": "https://www.ohmite.com/assets/images/sink-cr.pdf (copy: https://www.farnell.com/datasheets/3759653.pdf)",
+   "datasheet_revision": "rev 2/18-1",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "TIDA-010054 part. Rejected as primary: no forced-air data, estimated T_J,HS about 147 degC at 1.1 K/W, long lead time. TI's 0.5 degC/W is not in the datasheet."
+  },
+  {
+   "part_number": "MF60251V1-1000U-A99",
+   "manufacturer": "Sunon",
+   "key_parameters": {
+    "size_mm": "60 x 60 x 25",
+    "voltage_V": "12 (4.5-13.8)",
+    "airflow_CFM": 23.5,
+    "static_pressure_Pa": 52.3,
+    "power_W": 0.9
+   },
+   "datasheet_url": "https://www.digikey.com/en/products/detail/sunon-fans/MF60251V1-1000U-A99/6198741",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Separate fan only for the extrusion alternative; not needed with the LAM 5 integrated fan."
+  },
+  {
+   "part_number": "Sil-Pad TSP 3500 (formerly Sil-Pad 2000), 0.254 mm",
+   "manufacturer": "Henkel Bergquist",
+   "key_parameters": {
+    "thickness_mm": "0.254 (0.254-0.508 available)",
+    "thermal_conductivity_W_mK": 3.5,
+    "thermal_impedance_C_in2_W": "0.57 / 0.43 / 0.33 / 0.25 / 0.20 at 10 / 25 / 50 / 100 / 200 psi",
+    "TO220_C_W_at_50psi": 2.02,
+    "R_pad_TO247_K_W": "1.09 / 0.82 / 0.63 at 10 / 25 / 50 psi (0.523 in2)",
+    "dielectric_breakdown_Vac": 4000,
+    "dielectric_constant": 4.0,
+    "volume_resistivity_ohm_m": "1e11",
+    "operating_temp_degC": "-60 to 200",
+    "carrier": "fiberglass, silicone elastomer",
+    "UL": "94 V-0",
+    "C_pad_pF": 47
+   },
+   "datasheet_url": "https://datasheets.tdx.henkel.com/BERGQUIST-SIL-PAD-TSP-3500-en_GL.pdf",
+   "datasheet_revision": "TDS November 2018",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "SELECTED insulating interface: best thermal impedance of the elastomer pads, 200 degC, 4 kVac, lowest capacitance among the pads; cut oversize 28 x 32 mm (or 60 x 32 mm strip), no hole, clip mounted."
+  },
+  {
+   "part_number": "Sil-Pad TSP A2000 (formerly Sil-Pad A1500), 0.254 mm",
+   "manufacturer": "Henkel Bergquist",
+   "key_parameters": {
+    "thickness_mm": 0.254,
+    "thermal_conductivity_W_mK": 2.0,
+    "thermal_impedance_C_in2_W": "0.59 / 0.50 / 0.42 / 0.34 / 0.31 at 10 / 25 / 50 / 100 / 200 psi",
+    "R_pad_TO247_K_W": "1.13 / 0.96 / 0.80 at 10 / 25 / 50 psi",
+    "dielectric_breakdown_Vac": 6000,
+    "dielectric_constant": 7.0,
+    "operating_temp_degC": "-60 to 180",
+    "C_pad_pF": 82
+   },
+   "datasheet_url": "https://datasheets.tdx.henkel.com/BERGQUIST-SIL-PAD-TSP-A2000-en_GL.pdf",
+   "datasheet_revision": "TDS November 2018",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "Alternative with the highest breakdown voltage; 27 % higher thermal impedance and 1.75x the capacitance of TSP 3500."
+  },
+  {
+   "part_number": "CD-02-05-247 / CD-02-05-247-N / CD-02-05-025 (ulTIMiFlux)",
+   "manufacturer": "Wakefield-Vette",
+   "key_parameters": {
+    "thickness_mm": "0.076 +/-10 % (0.003 in) polyimide carrier with phase-change compound",
+    "thermal_impedance_C_in2_W": "0.107 at 100 psi",
+    "R_pad_TO247_K_W": 0.2,
+    "electrical_isolation_V": "9200 (test method not stated)",
+    "phase_change_temp_degC": 60,
+    "die_cuts": "TO-247 with hole 0.95 x 0.75 in; -N no hole; 1 x 1 in square; 5 x 5 in sheet",
+    "C_pad_pF": "137 (er 3.5 assumed)",
+    "UL": "94 V-0"
+   },
+   "datasheet_url": "https://wakefieldthermal.com/content/data_sheets/ulTIMiFlux%20Dielectric%20Phase%20Change%20Thermal%20Material%20%281%29.pdf",
+   "datasheet_revision": "not found (undated)",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "TIDA-010054 pad. Lowest thermal impedance but needs 100 psi (screw mounting), 76 um film cut-through risk and 3x the coupling capacitance; stock die-cut too small for edge creepage. Kept as screw-mounted alternative. TI's 0.1 degC/W is an impedance per in2, not a TO-247 resistance."
+  },
+  {
+   "part_number": "AOS 247",
+   "manufacturer": "Fischer Elektronik",
+   "key_parameters": {
+    "material": "Al2O3 ceramic",
+    "thickness_mm": 1.0,
+    "outline_mm": "23 x 20",
+    "thermal_resistance_K_W": "0.30 (DigiKey; test area not stated, distributor snippet says at 1 in2)",
+    "thermal_conductivity_W_mK": "25 (dau-components) / 9.0 (DigiKey, inconsistent)",
+    "dielectric_strength": "10 kV/mm (distributor)",
+    "C_pad_pF": "29 (er 9.8 assumed)",
+    "price_usd": 0.81,
+    "stock": "990 (DigiKey)"
+   },
+   "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/$catalogue/fischerData/PR/AOS247_/datasheet.xhtml",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Low-capacitance fallback for EMI; needs grease/phase-change on both faces and a larger ceramic (AOS 218/247, 25 x 21 x 3 mm) or custom size for edge creepage."
+  },
+  {
+   "part_number": "Kapton MT+",
+   "manufacturer": "DuPont",
+   "key_parameters": {
+    "status": "not fetched"
+   },
+   "datasheet_url": "not found",
+   "datasheet_revision": "not found",
+   "parameter_verification": "unverified",
+   "assessment": "Listed in the task as an option; not evaluated beyond noting that a 50 um film would give about 200 pF coupling capacitance, the worst of the set."
+  },
+  {
+   "part_number": "NTCALUG01A103F",
+   "manufacturer": "Vishay",
+   "key_parameters": {
+    "R25_ohm": "10000 +/-1 %",
+    "B25_85_K": "3984 +/-0.5 %",
+    "operating_temp_degC": "-40 to +150",
+    "dissipation_factor_mW_K": 23,
+    "thermal_time_constant_s": 7.5,
+    "test_voltage_terminals_to_lug_Vac": 1500,
+    "insulation_resistance_at_500Vdc_Mohm": 100,
+    "mounting": "M3 ring lug (stud 3-4)",
+    "leads": "AWG24 PTFE, 38.1 mm (80 / 160 mm variants)",
+    "qualification": "AEC-Q200 grade 1"
+   },
+   "datasheet_url": "https://www.vishay.com/docs/29092/ntcalug01a.pdf (copy: https://www.farnell.com/datasheets/2611641.pdf)",
+   "datasheet_revision": "Rev 17-Nov-17, document 29092",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "SELECTED heatsink temperature sensor; mounted between the two TO-247 bodies."
+  },
+  {
+   "part_number": "7721-7PPSG",
+   "manufacturer": "Boyd (Laconia)",
+   "key_parameters": {
+    "type": "#4 insulating shoulder washer",
+    "shoulder_dia_mm": 3.43,
+    "bore_mm": 2.95,
+    "flange_dia_mm": 5.46,
+    "total_thickness_mm": 1.83,
+    "material": "PPS 40 % glass filled, 260 degC",
+    "torque_Nm": "0.56-0.68 (distributor)",
+    "stock": "about 52000 (DigiKey)"
+   },
+   "datasheet_url": "https://www.digikey.com/en/products/detail/boyd-laconia-llc/7721-7PPSG/1625304",
+   "datasheet_revision": "not found",
+   "parameter_verification": "search-snippet",
+   "assessment": "Screw-mount alternative hardware (#4-40 or M2.5 screw; M3 does not fit the 2.95 mm bore); clips preferred."
+  },
+  {
+   "part_number": "CLA-TO-21E",
+   "manufacturer": "Ohmite",
+   "key_parameters": {
+    "type": "universal cam clip for TO-247/TO-264, music wire ASTM A228, nickel plated"
+   },
+   "datasheet_url": "https://www.ohmite.com/assets/images/sink-cr.pdf",
+   "datasheet_revision": "rev 2/18-1",
+   "parameter_verification": "fetched-datasheet",
+   "assessment": "Clip for the CR-series alternative only; not usable on the LAM 5 profile."
+  }
+ ],
+ "selection": {
+  "heatsink": {
+   "part_number": "LAM 5 K 100 12",
+   "manufacturer": "Fischer Elektronik",
+   "R_th_design_K_per_W": 0.68,
+   "R_th_natural_estimate_K_per_W": "3-4 (unverified)",
+   "dimensions_mm": "100 x 50 x 50 body",
+   "fan": "integrated 12 V axial, current budget 0.3 A (unverified)",
+   "mass_estimate_kg": "0.25-0.35",
+   "mounting": "stands on the power PCB, 2-4 M3 fixings; devices on the long face with retaining clips; PE bonded",
+   "upgrade": "LAM 5 D K 100 12 (0.30 K/W, 100.5 mm wide)",
+   "alternative": "Ohmite CR201-50VE + Sunon MF60251V1 (only if measured R_th <= 1.0 K/W)"
+  },
+  "interface": {
+   "part_number": "Bergquist Sil-Pad TSP 3500, 0.254 mm, custom cut 28 x 32 mm per device (or one 60 x 32 mm strip), no hole",
+   "R_pad_design_K_per_W": "0.80 (clip, ~25 psi); 0.63 if screw mounted at 50 psi",
+   "breakdown_Vac": 4000,
+   "C_pad_pF": 47,
+   "alternatives": "TSP A2000 (6 kVac), ulTIMiFlux CD-02-05 (screw mount), AOS 247 Al2O3 (low capacitance)"
+  },
+  "hardware": {
+   "primary": "LAM 5 K retaining clips (force to verify >= 40 N); clip metal to leads >= 3 mm",
+   "screw_alternative": "Boyd 7721-7PPSG PPS shoulder washer + #4-40 or M2.5 screw, 0.56-0.68 N m, die-cut pad with hole"
+  },
+  "thermal_results": {
+   "worst_corner": "440 V / 27.5 A, T_J 150 degC losses, T_A 50 degC",
+   "T_sink_degC": "88.2 typ / 92.8 max R",
+   "T_J_HS_degC": "122.9 typ / 131.1 max R (0.80 K/W pad); 118.1 / 125.7 (0.63 K/W pad)",
+   "T_J_LS_degC": "121.5 typ / 130.5 max R",
+   "T_J_nominal_400V_25A_degC": 112.1,
+   "T_J_switching_plus30pct_degC": 129.7,
+   "P_max_per_device_W": "38.9 at 150 degC, 29.2 at 125 degC (KR-TH-001)",
+   "required_R_th_HS_K_per_W": "<= 1.16 (150 degC, typ) / <= 0.98 (150 degC, max R) / <= 0.72 (125 degC, typ) / <= 0.58 (125 degC, max R)",
+   "fan_failure": "T_sink,ss 247 degC (3.5 K/W est.) or 147 degC (1.73 K/W); T_J > 175 degC in both -> OTP mandatory; time 88 -> 100 degC about 60-75 s"
+  },
+  "ntc_otp": {
+   "sensor": "Vishay NTCALUG01A103F on the sink between the devices, <= 10 mm from HS tab, M3 thread-forming screw",
+   "readout": "2.2 kohm pull-up to 3.00 V: 2.46 V @25, 0.88 V @90, 0.71 V @100, 0.57 V @110, 0.41 V @125 degC; 15.5 mV/K",
+   "thresholds_sink_degC": {
+    "warn_derate": 90,
+    "firmware_trip": 100,
+    "hardware_comparator_trip_zone": 110
+   },
+   "T_J_mapping": "T_J,HS ~ T_NTC + 4 K + P_HS*(R_pad + R_JC) = T_NTC + 39 K (typ) / + 43 K (max R) at full load; load dependent, estimate via loss model",
+   "isolation": "lug at PE potential; direct ADC if control ground is PE-bonded, else isolated path (CB-PR-002 or digital isolator) - architecture decision",
+   "fan_supervision": "TACH into eCAP/GPIO; derate within 2 s of fan stall"
+  },
+  "copper": {
+   "outer_70um_width_mm": ">= 12 for 25-27.5 A (10-20 K rise)",
+   "inner_width_mm": ">= 22",
+   "vias_per_25A_transition": ">= 24 x 0.3 mm drill",
+   "loss": "0.17 W/cm at 25 A for 12 mm; about 2.5 W per 15 cm path"
+  },
+  "other_components": {
+   "inductor": "6-10 W, 60-80 mm envelope: lateral to the sink in bypass airflow, >= 20 mm from sink, outside exhaust; natural-convection rise 20-58 K would be too high at 10 W / 60 mm",
+   "film_capacitors": ">= 20 mm from sink, outside exhaust (+9 to +12 K air); hot-spot <= 85 degC design, 105 degC class limit to confirm",
+   "electrolytics": ">= 30 mm if any",
+   "ceramics_at_legs": "rated >= 125 degC"
+  },
+  "envelope_mm": {
+   "reserved_strip": "185 x 60 (100 body + 15 fan + 30 intake + 30 exhaust; 5 keep-out each side)",
+   "height": 55,
+   "device_pitch": 28,
+   "device_body_height_above_pcb": "20-25"
+  }
+ },
+ "calculations": [
+  {
+   "name": "Conduction loss re-check at the worst corner",
+   "expression": "I_rms,HS = sqrt(D*(Io^2 + dI^2/12)); I_rms,LS = sqrt((1-D)*(Io^2 + dI^2/12)); P = I_rms^2 * R_DS(on)(150 degC)",
+   "inputs": {
+    "D": 0.4545,
+    "Io_A": 27.5,
+    "dI_A": 8.17,
+    "R_150_typ_ohm": 0.0485,
+    "R_150_max_ohm": 0.0572
+   },
+   "result": "I_rms HS 18.61 A, LS 20.38 A; P_cond HS 16.8 W, LS 20.2 W typ (agent: 16.8 / 20.2); 19.8 / 23.8 W max R -> P_HS 31.7 W, P_LS 31.2 W, P_total 62.9 W",
+   "knowledge_ref": "SKILL-006 principle 3"
+  },
+  {
+   "name": "Required heatsink thermal resistance",
+   "expression": "R_th,HS <= (T_J,lim - T_A - P_dev*(R_pad + R_JC)) / P_total",
+   "inputs": {
+    "T_A_degC": 50,
+    "R_JC_K_W": 0.41,
+    "P_HS_W": [
+     28.7,
+     31.7
+    ],
+    "P_total_W": [
+     56.2,
+     62.9
+    ],
+    "R_pad_K_W": [
+     0.8,
+     0.63
+    ]
+   },
+   "result": "T_J <= 150: 1.16 (typ, 0.8) / 1.25 (typ, 0.63) / 0.98 (max R, 0.8) / 1.07 (max R, 0.63) K/W; T_J <= 125: 0.72 / 0.80 / 0.58 / 0.67 K/W",
+   "knowledge_ref": "KR-TH-001; SKILL-006 principle 1; REF-TI-TIDA-010054 decision 9 (factor 2 read as shared sink)"
+  },
+  {
+   "name": "Junction temperatures with the selected sink",
+   "expression": "T_sink = T_A + P_total*R_th,HS; T_J = T_sink + P_dev*(R_pad + R_JC)",
+   "inputs": {
+    "R_th_HS_K_W": 0.68,
+    "R_pad_K_W": [
+     0.8,
+     0.63
+    ],
+    "cases": "typ 56.2 W / max R 62.9 W / nominal 46.7 W / switching +30 % 59.8 W"
+   },
+   "result": "T_sink 88.2 degC typ; T_J,HS 122.9 (typ, 0.8), 131.1 (max R, 0.8), 118.1 (typ, 0.63), 125.7 (max R, 0.63), 112.1 (nominal), 129.7 (sw +30 %); T_J,LS 121.5 typ",
+   "knowledge_ref": "KR-TH-001"
+  },
+  {
+   "name": "P_max per device (KR-TH-001 form)",
+   "expression": "P_max = (T_J,lim - T_A)/(2*R_th,HS + R_pad + R_JC)",
+   "inputs": {
+    "R_th_HS_K_W": 0.68,
+    "R_pad_K_W": 0.8,
+    "R_JC_K_W": 0.41
+   },
+   "result": "38.9 W at 150 degC (margin 1.36 over 28.7 W); 29.2 W at 125 degC (just met typ); 41.7 / 31.2 W with 0.63 K/W pad",
+   "knowledge_ref": "KR-TH-001; EC-019/EC-020 pattern"
+  },
+  {
+   "name": "Upgrade sink LAM 5 D K 100 12",
+   "expression": "same model with R_th,HS = 0.30 K/W",
+   "inputs": {
+    "R_th_HS_K_W": 0.3,
+    "R_pad_K_W": 0.8
+   },
+   "result": "T_sink 66.9 / 68.9 degC; T_J,HS 101.6 typ / 107.2 max R; P_max(125) 41.4 W",
+   "knowledge_ref": "KR-TH-001"
+  },
+  {
+   "name": "Fan failure (natural convection) and time to trip",
+   "expression": "T_sink,ss = T_A + P_total*R_nat; tau = m*c_p*R_nat; t = -tau*ln(1 - (T_trip - T_0)/(T_ss - T_0))",
+   "inputs": {
+    "R_nat_K_W": [
+     3.5,
+     1.73
+    ],
+    "P_total_W": 56.2,
+    "m_kg": [
+     0.25,
+     0.3
+    ],
+    "c_p_J_kgK": 900,
+    "T_0_degC": 88.2,
+    "T_trip_degC": 100
+   },
+   "result": "T_sink,ss 247 degC (T_J,HS 281) at 3.5 K/W; 147 degC (T_J,HS 182 > 175 abs max) even at 1.73 K/W; tau 790-950 s; 88 -> 100 degC in 61-73 s; 100 -> 110 degC a further 56-67 s",
+   "knowledge_ref": "SKILL-006 principle 5; design basis fan seed"
+  },
+  {
+   "name": "Interface pad thermal resistance for TO-247",
+   "expression": "R_pad = thermal impedance (degC-in2/W) / A_tab; A_tab = 0.63 x 0.83 in = 0.523 in2",
+   "inputs": {
+    "TSP3500_C_in2_W": [
+     0.57,
+     0.43,
+     0.33
+    ],
+    "TSPA2000_C_in2_W": [
+     0.59,
+     0.5,
+     0.42
+    ],
+    "ulTIMiFlux_C_in2_W_100psi": 0.107
+   },
+   "result": "TSP 3500: 1.09 / 0.82 / 0.63 K/W at 10 / 25 / 50 psi; TSP A2000: 1.13 / 0.96 / 0.80; ulTIMiFlux 0.20 at 100 psi; Al2O3 1 mm bulk 0.12 + 2 grease layers ~0.3 K/W",
+   "knowledge_ref": "KR-TH-002"
+  },
+  {
+   "name": "Clamp pressure under a clip",
+   "expression": "p = F / A_tab",
+   "inputs": {
+    "F_N": [
+     40,
+     60
+    ],
+    "A_tab_m2": 0.000337
+   },
+   "result": "119-178 kPa = 17-26 psi average -> pad impedance taken at 25 psi (0.80 K/W); screw mounting reaches 50-200 psi",
+   "knowledge_ref": "KR-TH-002 (pad pressure)"
+  },
+  {
+   "name": "Pad capacitance and displacement current into the earthed sink",
+   "expression": "C = eps0*er*A/t; i = C*dv/dt",
+   "inputs": {
+    "A_m2": 0.000337,
+    "dv_dt_V_per_s": 50000000000.0,
+    "er_t": "TSP 3500 4.0/0.254 mm; A2000 7.0/0.254; ulTIMiFlux 3.5/0.076; Al2O3 9.8/1.0; TSP 3500 4.0/0.508"
+   },
+   "result": "47 pF / 2.3 A; 82 pF / 4.1 A; 137 pF / 6.9 A; 29 pF / 1.5 A; 23 pF / 1.2 A (per device, ~10 ns pulses)",
+   "knowledge_ref": "KR-TH-002 adapted; MOSFET agent dv/dt 30-60 V/ns"
+  },
+  {
+   "name": "Pad oversize for edge creepage",
+   "expression": "margin = (pad - tab)/2 per axis; creepage tab edge -> sink >= margin",
+   "inputs": {
+    "tab_mm": "16 x 21",
+    "pad_mm": "28 x 32",
+    "required_mm": "5.0 (500 V, PD2, group IIIa, IEC 60664-1 F.5 from memory)"
+   },
+   "result": "6.0 mm and 5.5 mm margins -> >= 5.5 mm creepage; stock 24 x 19 mm die-cuts give only 4.0 / -1 mm (tab wider than pad in one axis) and are rejected",
+   "knowledge_ref": "KR-TH-002; KR-ISO-002 (human review)"
+  },
+  {
+   "name": "NTC divider voltages and sensitivity",
+   "expression": "R(T) = R25*exp(B*(1/T - 1/298.15)); V = 3.00*R/(2200 + R)",
+   "inputs": {
+    "R25_ohm": 10000,
+    "B_K": 3984,
+    "pull_up_ohm": 2200,
+    "V_ref_V": 3.0
+   },
+   "result": "2.459 V @25, 1.854 @50, 0.979 @85, 0.881 @90, 0.710 @100, 0.570 @110, 0.410 @125 degC; 15.5 mV/K (21 LSB/K at 12 bit / 3 V); self-heating 0.6 mW -> 0.03 K",
+   "knowledge_ref": "KR-TH-003; CB-PR-002 (calibration method)"
+  },
+  {
+   "name": "NTC to junction mapping and trip levels",
+   "expression": "T_J,HS = T_NTC + dT_spread + P_HS*(R_pad + R_JC)",
+   "inputs": {
+    "dT_spread_K": 4,
+    "P_HS_W": [
+     28.7,
+     31.7
+    ],
+    "R_pad_plus_R_JC_K_W": 1.21
+   },
+   "result": "offset 39 K typ / 43 K max R at full load; trips: 90 degC warn (T_J <= 133), 100 degC firmware trip (T_J <= 143), 110 degC hardware trip (T_J ~150); worst steady-state sink 88-93 degC leaves 7-12 K margin to the firmware trip",
+   "knowledge_ref": "KR-TH-003 (human review)"
+  },
+  {
+   "name": "Copper width for 25 / 27.5 A on 70 um",
+   "expression": "A_mil2 = (I/(k*dT^0.44))^(1/0.725); w = A/(70 um = 2.756 mil)",
+   "inputs": {
+    "k_external": 0.048,
+    "k_internal": 0.024,
+    "I_A": [
+     25,
+     27.5
+    ],
+    "dT_K": [
+     10,
+     20,
+     30
+    ]
+   },
+   "result": "external: 12.7 / 8.4 / 6.5 mm at 25 A for 10 / 20 / 30 K; 14.5 / 9.5 / 7.5 mm at 27.5 A; internal 2.6x wider (21.7 mm at 25 A / 20 K)",
+   "knowledge_ref": "KR-PCB-006; PE-PCB-006"
+  },
+  {
+   "name": "Copper loss per length",
+   "expression": "R' = rho(100 degC)*1 cm/(w*t); P' = I^2*R'",
+   "inputs": {
+    "rho_100C_ohm_m": 2.23e-08,
+    "w_mm": [
+     10,
+     12,
+     15
+    ],
+    "t_um": 70
+   },
+   "result": "0.318 / 0.265 / 0.212 mohm/cm -> 0.20 / 0.17 / 0.13 W/cm at 25 A; about 2.5 W for 15 cm of 12 mm path",
+   "knowledge_ref": "PE-PCB-006"
+  },
+  {
+   "name": "Inductor surface temperature rise",
+   "expression": "dT = P/(h*A_s); A_s = 6*a^2",
+   "inputs": {
+    "P_W": [
+     6,
+     10
+    ],
+    "a_m": [
+     0.06,
+     0.08
+    ],
+    "h_W_m2K": {
+     "natural": 8,
+     "forced_2m_s": 25
+    }
+   },
+   "result": "60 mm: 35-58 K natural, 11-19 K forced; 80 mm: 20-33 K natural, 6-10 K forced",
+   "knowledge_ref": "SKILL-006 procedure step 3 (AIPE recommendation, review)"
+  },
+  {
+   "name": "Exhaust air temperature rise and duct velocity",
+   "expression": "dT_air = P/(rho*c_p*Q); v = Q/(A_duct*open fraction)",
+   "inputs": {
+    "P_W": 56.2,
+    "Q_m3_h": [
+     14.3,
+     20
+    ],
+    "rho_kg_m3": 1.13,
+    "c_p_J_kgK": 1007,
+    "A_duct_m2": 0.0025,
+    "open_fraction": 0.6
+   },
+   "result": "+12.4 K at 14.3 m3/h, +8.9 K at 20 m3/h; velocity 2.6-3.7 m/s (>= 2 m/s seed satisfied)",
+   "knowledge_ref": "design basis airflow seed"
+  },
+  {
+   "name": "Heatsink thermal time constant (forced)",
+   "expression": "tau = m*c_p*R_th,HS",
+   "inputs": {
+    "m_kg": [
+     0.25,
+     0.3
+    ],
+    "R_th_HS_K_W": 0.68
+   },
+   "result": "150-180 s >> 10 s overload -> steady-state treatment of the 110 % corner is conservative",
+   "knowledge_ref": "SKILL-006 known limitation (no transient analysis)"
+  }
+ ],
+ "assumptions_added": [
+  {
+   "name": "Heatsink thermal resistance LAM 5 K 100 12",
+   "value": "0.68 K/W at the integrated fan's nominal flow",
+   "basis": "RS listing for LAM 5 100 12 (same profile and fan, without clips); Fischer datasheet blocked; must be confirmed"
+  },
+  {
+   "name": "Natural-convection resistance of the LAM 5 100 (fan stalled)",
+   "value": "3-4 K/W (3.5 used)",
+   "basis": "Area scaling from the DigiKey-listed 1.73 K/W of LAM 5 D K 125 24; conclusion (T_J > 175 degC) holds even at 1.73 K/W"
+  },
+  {
+   "name": "Heatsink mass and fan current",
+   "value": "0.25-0.35 kg; 0.3 A at 12 V",
+   "basis": "Estimate from profile volume and typical 50 mm 12 V fans; not found in sources"
+  },
+  {
+   "name": "Interface pad resistance",
+   "value": "0.80 K/W (clip, 25 psi) design; 0.63 K/W (screw, 50 psi)",
+   "basis": "TSP 3500 impedance 0.43 / 0.33 degC-in2/W divided by 0.523 in2; uniform flux assumed"
+  },
+  {
+   "name": "TO-247 tab contact area",
+   "value": "16 x 21 mm = 3.37 cm2 = 0.523 in2",
+   "basis": "Package outline; actual backplate slightly smaller (conservative for capacitance, slightly optimistic for R_pad)"
+  },
+  {
+   "name": "Clip force",
+   "value": "40-60 N",
+   "basis": "Typical TO-247 spring clips; Fischer LAM 5 K spring force not published"
+  },
+  {
+   "name": "Dielectric constants for capacitance",
+   "value": "TSP 3500 4.0 and A2000 7.0 (datasheets); polyimide 3.5 and Al2O3 9.8 (textbook)",
+   "basis": "Henkel TDS; generic material data"
+  },
+  {
+   "name": "dv/dt for displacement current",
+   "value": "50 V/ns",
+   "basis": "MOSFET agent expected 30-60 V/ns turn-on"
+  },
+  {
+   "name": "Creepage requirement sink-to-HV",
+   "value": "5.0 mm",
+   "basis": "IEC 60664-1 Table F.5, 500 V, PD2, material group IIIa, recalled from memory; to be set by the isolation review (KR-ISO-002)"
+  },
+  {
+   "name": "Sink spreading between NTC and device footprint",
+   "value": "4 K",
+   "basis": "Engineering estimate for a 3-4 mm aluminium wall over 10-15 mm; to be measured"
+  },
+  {
+   "name": "IPC trace-current constants",
+   "value": "I = k*dT^0.44*A^0.725, k = 0.048 ext / 0.024 int",
+   "basis": "IPC-2221 form used as IPC-2152-style estimate; IPC-2152 charts not digitised"
+  },
+  {
+   "name": "Convective coefficients for the inductor",
+   "value": "8 W/m2K natural, 25 W/m2K at >= 2 m/s",
+   "basis": "Textbook ranges for small bodies"
+  },
+  {
+   "name": "Air properties",
+   "value": "rho 1.13 kg/m3, c_p 1007 J/kgK",
+   "basis": "Air at about 40 degC"
+  },
+  {
+   "name": "Capacitor hot-spot limits",
+   "value": "105 degC class limit, 85 degC design target",
+   "basis": "Typical MKP film ratings; capacitor agent to confirm with its parts"
+  },
+  {
+   "name": "Ambient at fan intake",
+   "value": "50 degC, no enclosure preheating",
+   "basis": "Design basis seed; enclosure not defined"
+  },
+  {
+   "name": "Equal-sharing lumped model",
+   "value": "P_total*R_th,HS for the sink term",
+   "basis": "SKILL-006 principle 1 reading of TI's factor 2; actual split 51/49 %"
+  }
+ ],
+ "pcb_constraints": [
+  "Reserve a 185 x 60 mm strip with 55 mm height for the LAM 5 K 100 12 (100 mm body + 15 mm fan allowance + 30 mm intake + 30 mm exhaust clearance + 5 mm keep-out each side); exhaust toward an enclosure vent or board edge; no parts taller than 15 mm in the intake/exhaust zones.",
+  "Both TO-247-4 on the sink's long face toward the half-bridge/HV-ceramic area at 28 mm pitch, lead row 3-5 mm from the face, bodies 20-25 mm above the PCB; footprint with Kelvin source per the MOSFET agent (KR-PCB-003).",
+  "Gate drivers, rail decoupling and gate resistors on the bottom side directly below the device leads so the sink placement does not lengthen gate or commutation loops (SKILL-006 principle 4; KR-PCB-005; KR-PCB-002; PE-PCB-001; KR-PCB-004; PE-PCB-003).",
+  "No HV copper (VIN+, SW, VOUT, DESAT nets) on outer layers within 5 mm of the heatsink outline, its clips and its earthed mounting pins; inner-layer HV pours under the sink only if the solid-insulation path is accepted by the isolation review; slots around mounting pins if surface creepage limits (KR-ISO-002, KR-ISO-004; 5.0 mm is an estimate for human review).",
+  "Heatsink bonded to protective earth through a dedicated PCB pad/wire on a PE net separate from PGND; the fan frame and NTC lug are at the same potential.",
+  "Pads are custom-cut Sil-Pad TSP 3500 28 x 32 mm (or one 60 x 32 mm strip), no mounting hole; clip metal must keep >= 3 mm clearance to the device leads; if screw mounting is chosen instead, use Boyd 7721-7PPSG shoulder washers with #4-40/M2.5 screws and die-cut pads with holes.",
+  "NTC (Vishay NTCALUG01A103F) mounting point: M3 thread-forming hole on the device face between the two TO-247 bodies, <= 10 mm from the HS tab; leads as a twisted pair to the control connector away from the switch node (PE-PCB-005), 2.2 kohm pull-up to 3.00 V and an RC filter at the ADC; add a hardware comparator output to an ePWM trip-zone input.",
+  "Fan connector (12 V, GND, TACH) at the fan end; fan supply current-limited; TACH to an eCAP/GPIO for stall detection.",
+  "Power nets carrying 25-27.5 A: >= 12 mm wide pours on 70 um outer layers (>= 22 mm on inner layers), repeated on two layers and stitched; >= 24 vias of 0.3 mm drill per 25 A layer transition (KR-PCB-006, PE-PCB-006).",
+  "Film DC-link and output capacitors >= 20 mm from the heatsink body and outside the exhaust; electrolytics (if any) >= 30 mm; HV ceramics beside the legs rated >= 125 degC (KR-CAP-003).",
+  "Inductor (60-80 mm envelope) placed laterally beside the sink in the fan bypass stream, >= 20 mm from the sink, >= 15 mm from the film capacitors, outside the exhaust cone.",
+  "Provide thermocouple test points: a flat spot on the sink beside each device and probe access to the device case edge (SKILL-006 verification step 6).",
+  "Partition compatibility: sink, devices, pads, clips, NTC and fan stay on the power board in every partition; only NTC and TACH signals cross to the control domain, through the barrier required by the architecture."
+ ],
+ "open_issues": [
+  "All Fischer LAM 5 K 100 12 figures (0.68 K/W, airflow, fan current, mass, natural-convection resistance, meaning of the K suffix) are distributor-level because fischerelektronik.de blocked automated access; the datasheet must be obtained and the BOM confirmed before freeze.",
+  "The 125 degC preferred junction limit is met with typical parts (122.9 degC) but not with max-R_DS(on) parts (131.1 degC) on the single-width sink; decide between accepting this and adopting LAM 5 D K 100 12 (0.30 K/W, 100 mm wide, T_J 101-107 degC).",
+  "Interface resistance under clip pressure (0.80 K/W assumed) must be measured; if the case-to-sink drop exceeds about 1 K/W at 28.7 W, switch to screw mounting (0.63 K/W) or the upgrade sink.",
+  "Fan current (0.3 A placeholder) must be confirmed against the <= 2 A auxiliary 12 V budget (aux-supply agent).",
+  "Fan-failure survival depends entirely on the OTP: natural-convection resistance is an estimate, so the test plan needs a fan-stall test at reduced power with case thermocouples; a fan TACH fault should derate within 2 s.",
+  "Creepage from the earthed sink/clips to drain tabs and HV copper is set at 5.0 mm from memory of IEC 60664-1; the isolation/architecture agent must fix the governing standard and distances (KR-ISO-002) and confirm the 4 kVac pad rating is acceptable as basic insulation at 480 V peak (type-test voltage to be defined).",
+  "Pad capacitance drives 2-4 A displacement-current pulses into PE at each edge; the EMC design (CM choke, Y-capacitor strategy) must account for it, or the thicker 0.508 mm TSP 3500 / Al2O3 option taken at a 0.3-0.4 K/W thermal penalty.",
+  "NTC isolation route (direct ADC vs CB-PR-002 driver AIN vs digital isolator) depends on whether the SELV control ground is bonded to PE - architecture decision; KR-TH-003 calibration with a fixed resistor and a thermocouple-validated T_J estimator remain firmware-contract items.",
+  "Inductor (6-10 W) and film-capacitor hot-spot limits are placeholders until the inductor and capacitor agents report; a 60 mm inductor at 10 W cannot live in still air and may need a second fan or ducting.",
+  "Knowledge-base note: SKILL-006's TI instance values (CR201-50VE 0.5 degC/W, CD-02-05-247 0.1 degC/W) are not supported by the manufacturers' datasheets (3.3 K/W natural, 0.107 degC-in2/W); the skill should carry a caveat.",
+  "The 10 s overload is treated as steady state (conservative); transient and power-cycling lifetime are out of scope (SKILL-006 known limitation)."
+ ],
+ "verification_status": "Analytically checked: conduction re-check, required R_th,HS, T_J for four loss cases x three sinks x two pads, P_max per KR-TH-001, fan-fail steady state and time-to-trip, pad resistance from impedance, pad capacitance/displacement current, pad oversize creepage, NTC divider and sensitivity, NTC-to-T_J mapping, copper width/loss, inductor and exhaust rises, time constants. Fetched datasheets: Bergquist TSP 3500 and TSP A2000 (TDS Nov 2018), Wakefield ulTIMiFlux CD-02-05 (undated), Vishay NTCALUG01A (rev 17-Nov-17), Ohmite CR series (rev 2/18-1 via Farnell copy). Distributor-level (search-snippet) only: all Fischer LAM 5 data, Fischer AOS 247, Boyd 7721-7PPSG, Sunon fan. Unverified: Kapton MT+, clip force, sink spreading, LAM 5 natural resistance, mass, fan current, 5.0 mm creepage figure. Human review: KR-TH-002 pad rating and edge creepage, KR-ISO-002 distances, KR-TH-003 trip mapping and isolation route, acceptance of 131 degC with max-R parts vs the D K upgrade, fan-fail strategy, CM displacement current.",
+ "markdown": "# Thermal design, heatsink, interface materials and mechanical envelopes\n\n## 1. Inputs and loss re-check\n\nDesign basis: 50 degC ambient, forced air >= 2 m/s from a 12 V fan, junction design limit 150 degC (preferred 125 degC, device maximum 175 degC), both Wolfspeed C4MS025120K (TO-247-4, R_thJC 0.41 K/W) on one shared, protectively earthed heatsink with rated insulating pads (KR-TH-002; REF-TI-TIDA-010054 decision 9). Losses are the MOSFET agent's values at T_J = 150 degC and typical R_DS(on) 48.5 mohm; the max-R_DS(on) row scales conduction by 57.2/48.5.\n\n| Corner (T_J 150 degC) | P_HS (W) | P_LS (W) | P_total (W) |\n| --- | --- | --- | --- |\n| 400 V / 25 A nominal | 25.1 | 21.6 | 46.7 |\n| 440 V / 25 A | 24.6 | 23.3 | 47.9 |\n| 440 V / 27.5 A (worst, typ R) | 28.7 | 27.5 | 56.2 |\n| 440 V / 27.5 A, max R_DS(on) | 31.7 | 31.2 | 62.9 |\n\nConduction re-check (SKILL-006 principle 3): at 440 V / 27.5 A, D = 0.4545, dI = 8.17 A; I_rms,HS = sqrt(D*(Io^2 + dI^2/12)) = 18.61 A -> 18.61^2 * 0.0485 = 16.8 W; I_rms,LS = 20.38 A -> 20.2 W. Both match the MOSFET agent to 0.1 W.\n\n## 2. Thermal model and required heatsink resistance\n\nShared-sink model (KR-TH-001; SKILL-006 principle 1): T_J,dev = T_A + P_total * R_th,HS + P_dev * (R_th,pad + R_th,JC). TI's unexplained factor 2 on the sink term (REF-TI-TIDA-010054 decision 9, EC-019/020) is read as two devices sharing one sink; with near-equal losses P_total * R_th,HS is the same statement. Required sink resistance: R_th,HS <= (T_J,lim - T_A - P_dev*(R_pad + R_JC)) / P_total.\n\n| Case | R_pad (K/W) | R_th,HS for T_J <= 150 | R_th,HS for T_J <= 125 |\n| --- | --- | --- | --- |\n| typ R, P_HS 28.7 W, P_total 56.2 W | 0.80 (clip, ~25 psi) | 1.16 K/W | 0.72 K/W |\n| typ R | 0.63 (screw, 50 psi) | 1.25 K/W | 0.80 K/W |\n| max R, P_HS 31.7 W, P_total 62.9 W | 0.80 | 0.98 K/W | 0.58 K/W |\n| max R | 0.63 | 1.07 K/W | 0.67 K/W |\n\nA sink of about 0.7 K/W at the design airflow is therefore the target; 0.3 K/W would make the 125 degC preference hold even with max-R_DS(on) parts.\n\n## 3. Heatsink selection\n\n| Candidate | R_th forced (K/W) | R_th natural (K/W) | Size (mm) | Verification | Assessment |\n| --- | --- | --- | --- | --- | --- |\n| Fischer LAM 5 K 100 12 (12 V fan integrated, clip variant) | 0.68 (RS listing for LAM 5 100 12) | not found (est. 3-4) | 100 x 50 x 50 | distributor listings only | SELECTED |\n| Fischer LAM 5 D K 100 12 (double width) | 0.30 (distributor) | not found; sibling D K 125 24: 1.73 (DigiKey) | 100 x 100.5 x 50 | distributor | upgrade option |\n| Fischer LAM 5 K 100 5 (5 V fan) | 1.1 (DigiKey) | not listed | 100 x 50 | distributor | rejected: 5 V fan, too weak |\n| Ohmite CR201-50VE + Sunon MF60251V1 60 mm fan | not found (est. 0.95-1.3 at 2-3 m/s) | 3.3 at 70 K rise | 50 x 75, 103 g | fetched datasheet rev 2/18-1 | rejected: T_J ~147 degC, 25-week lead |\n\nSelected: Fischer Elektronik LAM 5 K 100 12 miniature cooling aggregate (50 x 50 mm hollow finned extrusion, 100 mm long, built-in 12 V axial fan, \"K\" = clip mounting per distributor descriptions). With R_th,HS = 0.68 K/W: T_sink = 50 + 56.2*0.68 = 88.2 degC; T_J,HS = 88.2 + 28.7*(0.80 + 0.41) = 122.9 degC; T_J,LS = 121.5 degC. Max R_DS(on): T_sink 92.8 degC, T_J,HS 131.1 degC. With screw-mounted pads (0.63 K/W): 118.1 / 125.7 degC. Nominal 400 V / 25 A: T_J,HS 112 degC. Switching loss +30 % (SKILL-006 principle 3 uncertainty): 129.7 degC. P_max per device (KR-TH-001) = (150 - 50)/(2*0.68 + 0.80 + 0.41) = 38.9 W against 28.7 W worst case (margin 1.36); the 125 degC preference gives 29.2 W, i.e. just met with typical parts and missed by 6 K with max-R_DS(on) parts. Upgrade LAM 5 D K 100 12 (0.3 K/W): T_J,HS 101.6 degC typ, 107.2 degC max R; P_max(125) = 41.4 W. In reality T_J settles lower because R_DS(on) at 115-125 degC is 8-12 % below the 150 degC value used here.\n\nFan failure: the natural-convection resistance of the single-width LAM 5 was not found; scaling the published 1.73 K/W of the double-width 125 mm unit by surface area gives roughly 3.5 K/W. Steady state would be T_sink = 50 + 56.2*3.5 = 247 degC (T_J > 280 degC); even the optimistic 1.73 K/W gives T_J,HS = 182 degC, above the 175 degC absolute maximum. The OTP therefore must act. With an estimated 0.25-0.30 kg aluminium mass, tau = m*c*R_nat = 790-950 s and the sink climbs from 88 to 100 degC in about 60-75 s, which the NTC trip catches; a fan tachometer fault should additionally force a derate within 2 s. Full-power operation without the fan is impossible, which the design-basis seed already implies.\n\nThe TI instance values quoted in SKILL-006 (CR201-50VE \"0.5 degC/W\", CD-02-05-247 \"0.1 degC/W\") are not reproducible: the Ohmite datasheet gives 3.3 K/W natural with no forced-air figure, and the Wakefield value is 0.107 degC-in2/W, an impedance per area. Neither was copied.\n\n## 4. Insulating interface (KR-TH-002)\n\nTO-247 drains sit on VIN+ (HS) and SW (LS); insulation to the earthed sink is mandatory. Contact area taken as 16 x 21 mm = 0.523 in2 = 3.37 cm2; R_pad = thermal impedance / area (uniform-flux estimate).\n\n| Material | Thickness | k (W/mK) | Impedance (degC-in2/W) | R_pad TO-247 (K/W) | Breakdown | Capacitance / i at 50 V/ns | Verification |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Bergquist Sil-Pad TSP 3500 (was Sil-Pad 2000) | 0.254 mm | 3.5 | 0.57/0.43/0.33 at 10/25/50 psi | 1.09/0.82/0.63 | 4000 Vac (ASTM D149) | 47 pF / 2.3 A | fetched TDS Nov 2018 |\n| Bergquist Sil-Pad TSP A2000 (was A1500) | 0.254 mm | 2.0 | 0.59/0.50/0.42 | 1.13/0.96/0.80 | 6000 Vac | 82 pF / 4.1 A | fetched TDS Nov 2018 |\n| Wakefield-Vette ulTIMiFlux CD-02-05-247 | 0.076 mm polyimide + phase change | not stated | 0.107 at 100 psi | 0.20 | \"9200 V\" (method not stated) | 137 pF / 6.9 A | fetched datasheet (undated) |\n| Fischer AOS 247 Al2O3 | 1.0 mm, 23 x 20 mm | 25 (snippet) | 0.30 K/W (test area not stated) | ~0.3-0.5 incl. grease | 10 kV/mm (snippet) | 29 pF / 1.5 A | distributor pages |\n| DuPont Kapton MT+ | 2-3 mil | - | - | - | - | - | unverified (not fetched) |\n\nSelection: Sil-Pad TSP 3500, 0.254 mm, cut oversize (28 x 32 mm per device, or one 60 x 32 mm strip under both devices), no mounting hole, clip mounted. Reasons: best thermal impedance of the elastomer pads, 200 degC rating, 4 kVac breakdown (1.6x the 2.5 kV requirement and well above a 1.5 kVac / 2.1 kVdc basic-insulation type test at 480 V peak, to be confirmed by the isolation review), fibreglass carrier for cut-through resistance, and 3x lower coupling capacitance than the 76 um phase-change pad. The pad capacitance drives displacement current into protective earth at every edge (C*dv/dt = 47 pF * 50 V/ns = 2.3 A for ~10 ns); the thin ulTIMiFlux pad, although proven in TIDA-010054, would triple this and is kept only as a screw-mounted alternative. Al2O3 (29 pF) is the fallback if conducted CM emissions demand it, at the cost of grease on both faces and a larger-than-stock ceramic for creepage. Design value R_pad = 0.80 K/W (clip pressure about 25 psi; 40-60 N over 3.4 cm2 gives only 12-26 psi average) and 0.63 K/W for screw mounting at 50 psi; both are assumptions to be measured. Oversizing gives >= 5.5 mm of pad surface beyond every tab edge, so the creepage tab-to-sink is >= 5.5 mm, above the 5.0 mm I estimate for 500 V working voltage, pollution degree 2, material group IIIa (IEC 60664-1 Table F.5 from memory; KR-ISO-002 human review). Stock TO-247 die-cuts (24 x 19 mm) leave only 1.5-4 mm and are not acceptable here.\n\nHardware: clip mounting with the LAM 5 K retaining springs (spring force not published; verify >= 40 N) keeps the pad hole-free and places only the earthed clip against the plastic body (clip-to-lead clearance >= 3 mm to check). Screw alternative: Boyd 7721-7PPSG PPS shoulder washer (shoulder dia 3.43 mm fits the 3.6 mm tab hole, bore 2.95 mm -> #4-40 or M2.5 screw, not M3; 260 degC; torque 0.56-0.68 N m per distributor data) with a die-cut pad with hole; the 0.24 mm PPS wall is then the only solid insulation to the screw, which is why clips are preferred.\n\n## 5. NTC placement and OTP mapping (KR-TH-003)\n\nSensor: Vishay NTCALUG01A103F ring-lug NTC (10 kohm +/-1 %, B25/85 3984 K, -40 to +150 degC, 23 mW/K, tau 7.5 s, 1500 Vac terminal-to-lug, AEC-Q200; datasheet 29092 rev 17-Nov-17), fixed with an M3 thread-forming screw on the device face of the sink between the two TO-247 bodies, <= 10 mm from the HS tab. The lug is at protective-earth potential; the control-side treatment (direct ADC input if the SELV control ground is bonded to PE, otherwise an isolated channel such as the LS driver AIN/APWM path of CB-PR-002) is an architecture decision surfaced below.\n\nReadout: 2.2 kohm pull-up to a 3.00 V reference gives 2.46 V (25 degC), 0.98 V (85), 0.88 V (90), 0.71 V (100), 0.57 V (110), 0.41 V (125); sensitivity 15.5 mV/K = 21 LSB/K of the 12-bit ADC; self-heating 0.03 K. Mapping (not a measurement of T_J): T_J,HS ~ T_NTC + 4 K (sink spreading, assumed) + P_HS*(R_pad + R_JC) = T_NTC + 39 K at the worst corner (typ) and + 43 K (max R); at light load the offset collapses to a few kelvin, so firmware should estimate T_J = T_NTC + k*P_est(Vin, Iout) rather than add a fixed offset. Thresholds: warning/derate at 90 degC sink (T_J <= 133 degC), firmware trip at 100 degC (T_J <= 143 degC), hardware comparator into an ePWM trip zone at 110 degC as the last line (T_J about 150 degC at full-load losses). Worst-case steady-state sink temperature is 88-93 degC, so the 100 degC trip has 7-12 K margin; the chain must be calibrated with a resistor in place of the NTC (CB-PR-002 method) and validated with a thermocouple at the device footprint.\n\n## 6. Copper temperature rise (KR-PCB-006, PE-PCB-006)\n\nIPC-2221/2152-style estimate I = k * dT^0.44 * A^0.725 (k = 0.048 external, 0.024 internal; A in mil2) at 70 um (2.76 mil): 25 A / 10 K -> 12.7 mm external (33 mm internal); 25 A / 20 K -> 8.4 mm (21.7 mm); 27.5 A / 20 K -> 9.5 mm (24.8 mm). Rule: power nets >= 12 mm wide on outer layers (>= 22 mm on inner layers), repeated on two layers and stitched. Resistive loss at 100 degC: 12 mm x 70 um = 0.265 mohm/cm -> 0.17 W/cm at 25 A, about 2.5 W for a 15 cm total path (0.05 % efficiency). Layer transitions carrying 25 A need >= 24 vias of 0.3 mm drill (about 1 A each, conservative).\n\n## 7. Other heat sources and distances\n\nInductor (6-10 W, 60-80 mm envelope assumed): natural convection with h = 8 W/m2K gives 20-58 K rise; in >= 2 m/s air (h = 25) 6-19 K. Place it laterally beside the sink in the fan bypass stream, >= 20 mm from the sink body and outside the exhaust. Exhaust air carries 56 W in 14-20 m3/h, i.e. +9 to +12 K above ambient (62 degC at 50 degC ambient). Film capacitors: hot-spot limits are typically 105 degC for MKP (to be confirmed from the capacitor agent's datasheets); design target <= 85 degC at 50 degC ambient, so >= 20 mm from the sink and out of the exhaust; electrolytics, if any, >= 30 mm. HV ceramics beside the bridge legs (KR-CAP-003) sit in the hottest PCB zone (lead copper at 90-100 degC) and must be rated >= 125 degC.\n\n## 8. Mechanical envelope and PCB placement constraints\n\nReserve a 185 x 60 mm strip, 55 mm high: 100 mm body + 15 mm fan allowance + 30 mm intake + 30 mm exhaust clearance, plus 5 mm keep-out each side; exhaust toward an enclosure vent; no parts > 15 mm tall in the intake/exhaust zones. Both TO-247-4 on the long face toward the half-bridge area at 28 mm pitch, lead row 3-5 mm from the face, bodies 20-25 mm above the board; gate drivers and decoupling on the bottom side directly beneath the leads (SKILL-006 principle 4; KR-PCB-005; PE-PCB-001), so the thermal placement does not lengthen the commutation loop (KR-PCB-004, PE-PCB-003). No HV copper on outer layers within 5 mm of the sink outline and its earthed mounting pins; inner-layer HV pours under the sink only if the solid-insulation path is accepted (KR-ISO-002; slots per KR-ISO-004 where creepage limits). Sink bonded to PE by a dedicated pad; fan connector (12 V, GND, TACH) at the fan end; NTC leads as a twisted pair away from the switch node (PE-PCB-005). Mass about 0.25-0.35 kg (estimate) requires two to four M3 fixings in addition to the device clips. Partition compatibility: on a separate power board the sink, devices, pads, NTC and fan all stay on the power board; only the NTC and TACH signals cross to the control domain.\n\n## 9. Limitations of the cooling assumptions\n\nNo CFD; lumped steady-state model with equal sharing (actual split 51/49 %); the 0.68 K/W figure is a distributor value at the fan's nominal flow for a uniformly heated profile, not two concentrated 28 W sources; interface resistance depends on clamp pressure (0.63-1.09 K/W over 10-50 psi); TI's factor 2 on the sink term is interpreted, not explained; 50 degC assumed at the fan intake with no enclosure preheating; radiation and PCB conduction neglected (conservative); the 10 s overload is treated as steady state (conservative, sink tau >> 10 s); natural-convection resistance of the LAM 5 is an estimate.\n\n## 10. Verification status\n\nAnalytically checked: conduction losses, required R_th,HS, T_J at four loss cases for three sink resistances and two pad values, P_max per KR-TH-001, fan-fail steady state and time-to-trip, pad resistance from datasheet impedance, pad capacitance and displacement current, NTC divider voltages and self-heating, copper width and loss, inductor rise, exhaust rise.\nFetched datasheets: Sil-Pad TSP 3500 and TSP A2000 (Henkel TDS Nov 2018), Wakefield ulTIMiFlux CD-02-05 (undated), Vishay NTCALUG01A (rev 17-Nov-17), Ohmite CR series (rev 2/18-1, Farnell-hosted copy).\nUnverified: all Fischer LAM 5 figures (0.68 / 0.30 K/W, airflow, fan current, mass, natural R_th, meaning of K) are distributor data because fischerelektronik.de blocked automated access; AOS 247 ceramic data; Boyd shoulder washer dimensions; Sunon fan; Kapton MT+; clip force; sink spreading 4 K; creepage 5.0 mm figure.\nHuman review: KR-TH-002 pad rating and edge creepage; KR-ISO-002 distances; KR-TH-003 NTC-to-T_J mapping, trip levels and isolation route; acceptance of 131 degC with max-R_DS(on) parts versus the LAM 5 D K upgrade; fan-fail protection strategy; CM displacement current into PE.\n"
+}

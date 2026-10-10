@@ -1,0 +1,355 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "UCC21710-Q1 parameters used by the agent (VOCTH 0.63/0.70/0.77 V; tOCFIL 95/120/180 ns; tOCOFF 150/270/400 ns to OUT(L) 90 %; tOCFLT 300/530/750 ns; ISTO 250/400/570 mA; IDCHG 40 mA; VOCL 0.13 V; VCLMPTH 1.5/2.0/2.5 V to VEE; VVDD_ON 10.5/12.0/12.8 V; IVDDQ 3.6/4/5.9 mA; IVCCQ 2.5/3/4 mA; VINH max 2.31 V, VINL min 0.99 V at 3.3 V; tPD 60/90/130 ns; PWD 30 ns; skew 30 ns; TINFIL 28/40/60 ns; CMTI 150 V/ns; creepage/clearance > 8 mm; FLT and RDY open-drain, RDY parallelable)",
+      "status": "verified",
+      "evidence": "SLUSDH8D (June 2024) fetched by the verifier and text-extracted (pdftotext); electrical/switching tables and pin table match the agent's values. tOCOFF is defined 'OC propagation delay to OUT(L) 90 %', so adding it to the external blanking without a separate deglitch term is consistent."
+    },
+    {
+      "item": "UCC21710-Q1 RST/EN reset pulse >= 1 us",
+      "status": "verified",
+      "evidence": "TRSTFIL deglitch 400/650/800 ns and 50 k internal pull-down (SLUSDH8D); a >= 1000 ns low pulse exceeds the 800 ns maximum filter."
+    },
+    {
+      "item": "Agent statement '1.5 W total at TA = 25 degC (abs max table)' for the UCC14141-Q1",
+      "status": "contradicted",
+      "evidence": "SLUSF10B Features: '1.5-W output power for 10.8 V < VVIN < 13.2 V, at TA <= 85 degC' and '1-W output power for 8 V < VVIN < 18 V, at TA <= 85 degC'; certification table row '10.8 V to 13.2 V | 15 V to 25 V | 1.5 W'; Absolute Maximum POUT_VDD_MAX = 2.5 W at TA = 25 degC; the ROC rows '0.7 W' (8-18 V) and '1.2 W' (11.4-12.6 V) carry the condition '(VDD-VEE) = 25 V, TA = 85 degC'. SOA text: usable power = lower of the 1.5 W limit and the thermal derating curve at each VIN; TA > 125 degC not recommended.",
+      "correction": "Quote 2.5 W as the abs-max (25 degC), 1.5 W as the rating for 10.8-13.2 V at TA <= 85 degC, and the 1.2 W / 0.7 W rows as 25 V-output ROC conditions; the design's 12 V +/-10 % input lies inside the 1.5 W range. The SOA-curve read at 12 V / 19 V stays mandatory (agent already flagged)."
+    },
+    {
+      "item": "UCC14141-Q1 COM-VEE output mechanism and its consequence for a shared LS supply",
+      "status": "verified",
+      "evidence": "SLUSF10B 8.3.x / 9.2.2.2: 'COM-VEE output takes VDD-VEE output as its input'; 'uses the internal high-side or low-side FETs in series with the external current-limit resistor (RLIM) to charge or discharge the COM-VEE output voltage'; RLIM_INT 30 ohm typ; 'the two output rail load must always be balanced ... the RLIM pin provides an opposite current'; abs max IRLIM rms source/sink 0.125 A '(16 % average run time over lifetime of 24,500 hr)'.",
+      "correction": "Every load current that leaves VDD and returns to COM (sensing LDO, DESAT bias via R3/OC pull-down, R_GS, AIN source) must be sunk from COM to VEE through RLIM: I_sink,max = (COM-VEE)/(RLIM + 30 ohm). The agent noted qualitatively that LS RLIM must be 'lower' but did not compute it; see recomputed item 'RLIM sink requirement'."
+    },
+    {
+      "item": "UCC14141-Q1 isolation figures and certification status",
+      "status": "verified",
+      "evidence": "SLUSF10B: VIORM 1414 Vpk, VIOWM 1000 Vrms, VIOTM 7071 Vpk, VIMP 7692 Vpk, VIOSM 10000 Vpk, VDE 0884-17 and UL 1577 listed as 'Planned Certification Targets', certificate/file numbers '(planned)'. CIO value is not legible in the text extraction ('< 3.5 pF' remains unverified; a 5 pF value would raise i_CM to about 0.72 A with the driver)."
+    },
+    {
+      "item": "UCC14141-Q1 UVLO/OVLO, PG polarity, input current and feedback reference",
+      "status": "verified",
+      "evidence": "VVIN_UVLOP rising 7.8/8.2/8.5 V; VVIN_OVLO rising 20.9/22/23.1 V (falling 19/20/21 V); PG active-low open-drain, low when VIN inside UVLO/OVLO and VDD/VEE inside UVP/OVP windows; IVIN 40 mA no load, 200 mA at (VDD-VEE) = 25 V, 40 mA load (1.0 W); VFBVDD_REF = VFBVEE_REF = 2.5 V (2.4675-2.5325); 330 pF at FBVDD/FBVEE required. Recommended bottom-resistor value (16.2 k) not confirmed from the extraction."
+    },
+    {
+      "item": "Knowledge-rule applicability for KR-GD-001..012, KR-IS-001..005, KR-PR-001..003, KR-PCB-001/002/003/005, KR-ISO-001..004, KR-SN-001",
+      "status": "verified",
+      "evidence": "Rule texts read from knowledge/rules/engineering_rules.json. Conditions met for all except KR-GD-012 (applicability 'Power-module gate drives', applied 'direct' to a discrete TO-247-4) and the unrecorded KR-IS-001 conflict (TI factor-2 form, EC-014). KR-GD-005 exclusion (buck listed as single-ended) is correctly overridden because the synchronous buck is a complementary half bridge (also resolved by the assumptions agent, A-17).",
+      "correction": "Tag KR-GD-012 as 'adapted'; record the KR-IS-001 factor-2 conflict and show the budget both ways (0.119 W vs 0.2375 W per channel)."
+    },
+    {
+      "item": "Human-review rules surfaced rather than decided (KR-GD-004, KR-GD-010, KR-PR-001, KR-IS-004, KR-SN-001, KR-ISO-002, RLIM, CMTI acceptance)",
+      "status": "verified",
+      "evidence": "All appear in open_issues/verification_status with values given as proposals; DESAT reference values (6.4 V/1 us, 6.7 V/46 ns), 20 uF per rail, 2 ohm/1 ohm gate resistors explicitly not reused."
+    },
+    {
+      "item": "Reference instance values not copied",
+      "status": "verified",
+      "evidence": "R_G,ON 10 ohm coincides with the CGD15SG00D2 value but is derived from dv/dt and E_on; R1 2.2 k, R_GS 10 k and the BAT42W clamp coincide with CGD1700 RT25/RT33/DT5 (R_GS and the Schottky are acknowledged as reference-derived without an own derivation; low impact, see Schottky item)."
+    },
+    {
+      "item": "Cross-area: sensing-LDO load on the LS bias",
+      "status": "contradicted",
+      "evidence": "sensing_protection.json: TLV76050 fed from the LS +15 V through 270 ohm, load 16.9 mA typ / 23.1 mA max = 0.25 / 0.35 W 'to be budgeted by the gate-driver agent'; the agent budgets 41 mA / 0.615 W (task seed).",
+      "correction": "Use one agreed figure with margin in both results (e.g. 23.1 mA max + 20 %); the 41 mA seed is conservative for power, but the RLIM sink check shows that even 23 mA is far above what RLIM = 600 ohm-1 kohm can absorb."
+    },
+    {
+      "item": "Cross-area: heat-sink NTC chain ownership and insulation",
+      "status": "contradicted",
+      "evidence": "Gate-driver: Vishay NTCALUG01A103F via LS AIN with 3.3 k + (10 k || NTC) + 10 nF, 200 uA source only. Sensing: TDK B57703M0103G040 via UCC21710 AIN with 4.75 k / 15.0 k from 5V_ISO + 1.00 k + 10 nF, OTP 2.313 V = 95 degC, insulated mounting (150 V AC test voltage). Thermal: NTCALUG01A103F on the PE-bonded sink, 'direct ADC if control ground is PE-bonded, else isolated path - architecture decision'. Controller: TEMP_PWM_H and TEMP_PWM_L on eCAP1/eCAP2 from both drivers, while the agent leaves the HS AIN unused.",
+      "correction": "Single owner and one implementation. Add the missing requirement: the NTC element is at LS COM (= PGND) potential while the lug sits on the PE-bonded heatsink, so the element-to-lug insulation and the lead spacing to the sink (standards agent: 5.0 mm / 3.0 mm) must be rated for the PGND-to-PE working voltage - unverified for NTCALUG01A - or the sensor must be read on the SELV side."
+    },
+    {
+      "item": "Cross-area: fault/TZ interface",
+      "status": "contradicted",
+      "evidence": "Agent: FLT_HS/FLT_LS wired-AND -> TZ1; RDY_HS, RDY_LS, /PG_HS, /PG_LS through SN74LVC1G11 + SN74LVC2G04 -> TZ2. Controller agent: SN74LVC1G74 latch cleared by FAULT_COMB_N (FLT, RDY, OC, OVP, UVLO, OTP, eFuse, reset, E-stop), Q = FAULT_N -> TZ1 (GPIO12); sensing agent: I_OC_N -> TZ2 (GPIO13); pin map RESET_N GPIO4 -> RST/EN x2, BIAS_EN, PG_BIAS_H_N/L_N (pins 32/33), TEMP_PWM_H/L (pins 29/30).",
+      "correction": "Drop the agent's own TZ2 gating; feed FLT_x, RDY_x and PG_BIAS_x_N into the controller agent's fault bus and use its pin map; the UCC21710 RDY open-drain outputs may be paralleled (datasheet) so no AND gate is needed for RDY."
+    },
+    {
+      "item": "Cross-area: dead-time bring-up value",
+      "status": "contradicted",
+      "evidence": "Gate-driver and MOSFET agents: 250 ns (2.9 W body-diode loss); assumptions agent: initial 200 ns (2.2 W at 27.5 A). The derived minimum (150 ns) supports either.",
+      "correction": "Unify the firmware-contract value (DBRED = DBFED) across the three results."
+    },
+    {
+      "item": "Cross-area: board partition (KR-GD-008)",
+      "status": "verified",
+      "evidence": "architecture.json selected Option B: power PCB with drivers, bias modules and sensing isolators + stacked SELV control PCB via a 2 x 25-pin 2.54 mm mezzanine, no cables, no driver cards. The agent's conditional treatment is compatible; controller agent: 'RS-422 only for cabled links'. Fail-safe on an open connector is given by the UCC21710 internal pulls (IN+ pull-down, IN- pull-up, RST/EN 50 k pull-down -> output off).",
+      "correction": "State the resolution explicitly: single-ended links with RC filters at the driver pins; delete the RS-422 branch unless the architecture changes."
+    },
+    {
+      "item": "Cross-area: insulation distances",
+      "status": "verified",
+      "evidence": "standards_safety.json derives 9.0-10.0 mm reinforced PCB creepage, requires a slot under the UCC21710 DW body (8 mm package creepage) and uses 440 V DC working voltage; agent: 10 mm / 5.5 mm / 460 V. Same IEC 60664-1 rows (500 V, PD2, group IIIa; 6 kV impulse -> 5.5 mm).",
+      "correction": "Use one working-voltage figure (440 or 460 V DC) in the insulation file."
+    },
+    {
+      "item": "Cross-area: auxiliary 12 V protection and budget",
+      "status": "verified",
+      "evidence": "controller_aux_interconnect.json: TPS26400 UVLO 10.0 V, OVP 14.45 V, ILIM 1.5 A; software BIAS_EN floor 10.8 V; P_in model 0.48 W + 1.92 x P_out gives 1.09 W (HS) + 2.27 W (LS) = 3.4 W, matching the agent's 0.28 A / 3.4 W. Agent's downstream requirement (eFuse OVP <= 18 V, UVLO >= 9 V vs UCC14141 UVLO 8.5 V max rising, OVLO 20.9 V min) is satisfied."
+    },
+    {
+      "item": "Unused HS AIN pin treatment",
+      "status": "contradicted",
+      "evidence": "SLUSDH8D pin table: 'Isolated analog sensing input, parallel a small capacitor to COM for better noise immunity. Tie to COM if [not used]'; application text: 'When AIN is floating, the AIN voltage is 5 V and the APWM operates at 400 kHz with approximately 10 %' duty.",
+      "correction": "Tie the unused AIN to COM (or leave floating for a fixed ~10 % APWM) instead of the proposed 4.99 k to COM; reconcile with the controller agent's TEMP_PWM_H capture."
+    },
+    {
+      "item": "OC-pin negative excursion during third-quadrant conduction and the Schottky clamp",
+      "status": "contradicted",
+      "evidence": "SLUSDH8D: 'when ... the output is held in low state, the OC pin is pulled down by an internal MOSFET and held in LOW state' (IDCHG 40 mA). During the dead time (LS OUT low) the pull-down MOSFET holds OC near COM; after the LS turn-on command the OC node time constant R_th x C = 878 ohm x 680 pF = 597 ns limits the excursion during the ~50 ns until the channel takes over to about -0.67 V x 50/597 = -0.06 V.",
+      "correction": "The -0.67 V figure is a DC calculation of a state that does not occur; keep the Schottky only as a reference-derived precaution (DNP option) and delete the 'V_F <= 0.3 V' open issue, or document a real transient case."
+    },
+    {
+      "item": "Parasitic turn-on immunity claim (KR-GD-003)",
+      "status": "contradicted",
+      "evidence": "The 'capacitance-divider bound' 400 V / 630 = 0.63 V uses the small-signal C_rss/C_iss ratio at 1000 V. The Miller charge injected over a 0-400 V swing is the integral of the strongly nonlinear C_rss(V_DS): the agent's own datasheet reading gives Q_GD = 30 nC at 800 V, i.e. about 15-25 nC for 0-400 V, an implied ratio of about 1.2 % (not 0.16 %) and a charge bound of 4.8-8 V before RC bleed.",
+      "correction": "See recomputed item; reclassify the Miller clamp as required (not 'no-cost margin'), state the margin to the 2.0 V hot threshold as about 0-3 V pending measurement, and use the HS turn-on dv/dt (71-90 V/ns) as the aggressor for the LS gate (the 120 V/ns turn-off edge drives the LS gate negative)."
+    },
+    {
+      "item": "C4MS025120K device data (Q_G 125 nC, Q_GS 35 / Q_GD 30 nC, C_iss/C_oss/C_rss 3087/103/4.7 pF at 1000 V, R_G,int 2.6 ohm, E_on/E_off 470/64 uJ, V_SD 4.6 V, Figures 2/3/7/12/25/27 readings)",
+      "status": "unverified",
+      "evidence": "Not fetched by the verifier; values are consistent with mosfet.json (same datasheet Rev. 2) and used as given. Graph readings (plateau 7.5 V, td(on) 28 ns, td(off) 50 ns, t_f 13 ns, E_on x1.6/x1.9, I_sc 250 A) remain the agent's assumptions."
+    },
+    {
+      "item": "Secondary parts (Panasonic ERJ-P08, Diodes US1M-13-F, TDK C3216X7R1E475K160AC, Wuerth 744226S, Vishay NTCALUG01A103F, BAT42W-V, generic passives, SN74LVC gates)",
+      "status": "unverified",
+      "evidence": "Verification levels as declared by the agent (fetched for 744226S only); not re-fetched by the verifier. ERJ-P08 1206 0.66 W anti-surge and US1M 1000 V / 75 ns are plausible; none is decision-critical."
+    },
+    {
+      "item": "UCC14141-Q1 input capacitance",
+      "status": "contradicted",
+      "evidence": "Datasheet test condition CIN = 20 uF; the agent's 2 x 10 uF 25 V X7R 1210 at 12 V bias gives about 13 uF with the agent's own 35 % X7R loss assumption.",
+      "correction": "Use 3 x 10 uF or 50 V-rated parts to keep >= 20 uF effective at 13.2 V."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Gate-charge bias power per channel (KR-IS-001)",
+      "agent_value": "0.119 W (125 nC x 50 kHz x 19 V); 0.100 W with 105 nC",
+      "verifier_value": "0.11875 W; 0.0998 W with 105 nC; 0.2375 W with the TI factor-2 form (EC-014)",
+      "agrees": true,
+      "note": "Arithmetic correct; the recorded TI conflict is not shown by the agent although the controller agent used the factor-2 form."
+    },
+    {
+      "name": "Driver quiescent power",
+      "agent_value": "0.112 W (5.9 mA x 19 V)",
+      "verifier_value": "0.1121 W; IVDDQ max 5.9 mA confirmed in SLUSDH8D",
+      "agrees": true
+    },
+    {
+      "name": "DESAT bias current and power",
+      "agent_value": "I_R1 5.9/2.1 mA (HS), 7.2/2.1 mA (LS); 0.06-0.07 W",
+      "verifier_value": "5.89/2.07 mA (HS), 7.20/2.07 mA (LS); avg 4.0 / 4.6 mA; 0.060 / 0.070 W at 15 V, 0.076 / 0.088 W when charged to the module at VDD-VEE = 19 V (all of it returns to COM and is sunk to VEE through RLIM); node A sits at 10.45 V in the off state",
+      "agrees": true,
+      "note": "Minor accounting difference (15 V vs 19 V)."
+    },
+    {
+      "name": "Total HS bias load and utilisation",
+      "agent_value": "0.32 W, 27 % of 1.2 W",
+      "verifier_value": "0.316 W at the agent's accounting, about 0.33 W at 19 V accounting; 21-22 % of 1.5 W (TA <= 85 degC rating), 27 % of 1.2 W",
+      "agrees": true
+    },
+    {
+      "name": "Total LS bias load and utilisation",
+      "agent_value": "0.93 W (0.32 + 41 mA x 15 V), 78 % of 1.2 W",
+      "verifier_value": "1.09-1.10 W when the 41 mA LDO current is charged at VDD-VEE = 19 V (the module converts all VDD-sourced current at 19 V; the 4 V x I_COM-return is dissipated in RLIM and the internal FET); 0.75-0.77 W with the sensing agent's 23.1 mA maximum; 1.21 W with the TI factor-2 gate-power form and 41 mA; against 1.5 W (10.8-13.2 V, TA <= 85 degC) or the 1.2 W 25 V-output row",
+      "agrees": false,
+      "note": "Power accounting basis wrong by 0.16 W; conclusion (SOA check or dedicated sensing supply) stands and is strengthened by the RLIM sink limit."
+    },
+    {
+      "name": "RLIM sink requirement for the COM-VEE regulator (new check)",
+      "agent_value": "'per datasheet procedure (1 kohm start, HS; lower for LS)' - human review",
+      "verifier_value": "I_COM,return = I_LDO + I_DESAT,avg + I_RGS + I_AIN = 28.5 mA (23.1 mA LDO) / 46.4 mA (41 mA LDO) for LS, about 4.8-5.4 mA for HS; I_sink,max = (COM-VEE)/(RLIM + 30 ohm) -> RLIM <= 110 ohm / 57 ohm for LS (TI's 600 ohm gives 6.3 mA, 1 kohm gives 3.9 mA), RLIM <= about 750 ohm for HS (1 kohm start marginal); RLIM dissipation about 0.09-0.12 W plus 0.02-0.07 W in the internal 30 ohm FET; RLIM pin abs max 0.125 A rms is qualified for '16 % average run time over lifetime', not a continuous 28-46 mA sink",
+      "agrees": false,
+      "note": "This converts the LS 'power budget' issue into a regulator-capability issue; the dedicated isolated 5 V sensing supply should become the baseline."
+    },
+    {
+      "name": "Bias input current from 12 V",
+      "agent_value": "0.09 + 0.19 = 0.28 A (3.4 W)",
+      "verifier_value": "0.091 + 0.189 = 0.28 A at 12 V (3.35 W); 0.31 A at 10.8 V; matches the aux agent's 0.48 W + 1.92 x P_out model",
+      "agrees": true
+    },
+    {
+      "name": "UCC14141 feedback dividers",
+      "agent_value": "19.01 V / 4.006 V / 22.10 V; 0.15 mA",
+      "verifier_value": "2.5 x (1 + 107/16.2) = 19.01 V; 2.5 x (1 + 9.76/16.2) = 4.006 V; 2.5 x (1 + 127/16.2) = 22.10 V; 0.154 mA; 2.5 V reference confirmed (2.4675-2.5325 V)",
+      "agrees": true,
+      "note": "Datasheet also asks the output-capacitor ratio to follow the voltage ratio so the midpoint sits naturally; the agent's 9.4 uF (VDD-COM) vs 4.7 uF (COM-VEE) split does not follow it - review together with RLIM."
+    },
+    {
+      "name": "Rail decoupling from Q_G (KR-PCB-002)",
+      "agent_value": "C_eff >= 1.25 uF, C_nom >= 1.9 uF; droop 20 mV (VDD-COM), 30 mV (COM-VEE)",
+      "verifier_value": "1.25 uF; 1.92 uF; 20.5 mV; 41 mV with 125 nC (34 mV with 105 nC) on 4.7 uF x 0.65",
+      "agrees": true,
+      "note": "COM-VEE droop understated by about 10 mV; immaterial."
+    },
+    {
+      "name": "Peak gate currents",
+      "agent_value": "1.26 A (1.0-1.35) source; 3.06 A (2.9-3.2) sink",
+      "verifier_value": "19/(10+2.6+2.5) = 1.26 A (1.09-1.35 over ROUTH 1.5-4.9 ohm); 19/(3.3+2.6+0.3) = 3.06 A (2.88-3.17)",
+      "agrees": true
+    },
+    {
+      "name": "Gate-resistor power and pulse",
+      "agent_value": "R_ON 0.039 W avg, 16 W pulse; R_OFF 0.032 W, 31 W",
+      "verifier_value": "0.5 x 0.119 x 10/15.1 = 0.039 W; 1.26^2 x 10 = 15.9 W; 0.5 x 0.119 x 3.3/6.2 = 0.032 W; 3.06^2 x 3.3 = 30.9 W; tau 47 / 19 ns",
+      "agrees": true
+    },
+    {
+      "name": "Turn-on dv/dt envelope",
+      "agent_value": "71 V/ns (10 ohm) / 90 V/ns (6.8 ohm) peak; 41-53 mid-swing",
+      "verifier_value": "7.5 V/(15.1 ohm x 7 pF) = 71.0 V/ns; 7.5/(11.9 x 7 pF) = 90.0 V/ns; 41.4 / 52.5 V/ns at 12 pF",
+      "agrees": true,
+      "note": "Depends on the unverified C_rss(400 V) = 7 pF and plateau 7.5 V assumptions; the plateau at 21 A is likely lower, making the estimate slightly conservative."
+    },
+    {
+      "name": "Turn-off dv/dt envelope",
+      "agent_value": "110 V/ns (25 A) / 122 V/ns (27.5 A) at the top of the swing; 48 V/ns average; datasheet cross-check about 100 V/ns",
+      "verifier_value": "28.75/(2 x 130 pF) = 110.6 V/ns; 31.6/260 pF = 121.5 V/ns; t_v = 2 x 64 uJ/(800 V x 39.2 A) = 4.1 ns -> 196 V/ns at the test point, scaling by I and C_oss to about 122 V/ns at 400 V / 28.75 A; average about 48 V/ns with Q_oss(0-400 V) about 120 nC per device",
+      "agrees": true,
+      "note": "Physics (C_oss-limited turn-off at high current) is sound; the MOSFET agent's 20-40 V/ns turn-off figure is the one that needs revision."
+    },
+    {
+      "name": "CMTI margin",
+      "agent_value": "1.25 (peak) / 3.1 (average)",
+      "verifier_value": "150/120 = 1.25; 150/48 = 3.1; UCC14141 CMTI > 150 kV/us confirmed",
+      "agrees": true
+    },
+    {
+      "name": "Common-mode current through the HS barriers (KR-IS-003)",
+      "agent_value": "0.54 A (UCC14141 + driver), 1.3 A (RECOM), 0.2 A (LLC); about 4 ns, 2 nC",
+      "verifier_value": "(3.5 + 1) pF x 120 V/ns = 0.54 A; 1.32 A; 0.20 A; 400 V/120 V/ns = 3.3 ns; 1.8 nC",
+      "agrees": true,
+      "note": "CIO of the UCC14141 not legible in the extracted datasheet text (3.5 pF unverified; 5 pF would give 0.72 A)."
+    },
+    {
+      "name": "Parasitic turn-on excursion (KR-GD-003)",
+      "agent_value": "R-limited 6.0 V (no clamp) / 3.1 V (clamp); capacitance-divider bound 0.63 V; 'real excursion about 0.6-1.0 V', device inherently immune, about 5 V margin from -4 V",
+      "verifier_value": "R-limited values reproduced (8 pF x 120 V/ns x 6.2 ohm = 5.95 V; x 3.2 ohm = 3.07 V). The 0.63 V bound is invalid: the Miller charge for a 0-400 V swing is Q_rss = integral of C_rss(V) dV, about 15-25 nC (datasheet Q_GD = 30 nC at 800 V), giving 4.8-8 V across C_iss = 3.1 nF before RC bleed; with tau = 19 ns (no clamp) or 10 ns (clamp) against a 4.4-5.6 ns swing roughly 60-75 % remains -> expected 3-6 V; V_GS from -4 V reaches about -1 to +2 V against the 2.0 V hot threshold (margin 0-3 V, not 5 V); 0 V bias would exceed the threshold. The aggressor for the LS gate is the HS turn-on edge (71-90 V/ns), not the 120 V/ns turn-off edge.",
+      "agrees": false,
+      "note": "Design outcome (clamp populated, -4 V kept) is right; the justification and margin claim must be corrected and the PRD-06933 off-state V_GS measurement becomes decisive."
+    },
+    {
+      "name": "Gate-loop damping and V_GS extremes (KR-GD-001)",
+      "agent_value": "Z0 2.0 ohm; zeta 3.8 (on) / 1.6 (off); +15.7 / -4.6 V",
+      "verifier_value": "sqrt(12 nH / 3.1 nF) = 1.97 ohm; 15.1/3.93 = 3.84; 6.2/3.93 = 1.58; extremes consistent with +/-1.3 % rails and < 0.5 V overshoot; C4MS limits -10/+23 V, C3M -8/+19 V",
+      "agrees": true,
+      "note": "L_g = 12 nH is an assumption; TO-247-4 lead inductance alone can approach this value."
+    },
+    {
+      "name": "DESAT trip voltage (CB-GD-001 EC-001 pattern)",
+      "agent_value": "V_A 3.77/4.19/4.61 V; V_DS,trip 3.2/3.6/4.0 V",
+      "verifier_value": "0.63/0.70/0.77 x 5.99 = 3.774/4.193/4.612 V; minus 0.6 V = 3.17/3.59/4.01 V",
+      "agrees": true
+    },
+    {
+      "name": "DESAT trip current",
+      "agent_value": "about 70-85 A at 175 degC (75 A nominal), 2.4x the 31.6 A overload peak",
+      "verifier_value": "3.6 V / 52.6 mohm (typ R_DS(on) at 175 degC = 28 x 1.88) = 68 A linear estimate; a maximum-R_DS(on) device (33/25 x 28 x 1.88 = 69 mohm) trips near 52 A; range about 52-85 A, >= 1.6x the overload peak",
+      "agrees": false,
+      "note": "Range should include the R_DS(on) spread; conclusion unchanged."
+    },
+    {
+      "name": "False-trip margin at overload",
+      "agent_value": "V_OC 0.34 V vs 0.63 V min threshold -> 1.85x (46 mohm at 175 degC)",
+      "verifier_value": "1.84x at 46 mohm; 1.67x at the typical 52.6 mohm (175 degC); 1.35x for a max-R_DS(on) device (69 mohm, V_DS 2.21 V, V_OC 0.47 V)",
+      "agrees": false,
+      "note": "Margin overstated; still > 1 at the worst corner."
+    },
+    {
+      "name": "External blanking time (CB-GD-001 EC-002 pattern)",
+      "agent_value": "V_th 1.831 V, R_th 878 ohm; 252/288/326 ns; 229 ns at 18 V",
+      "verifier_value": "15 x 1000/8190 = 1.8315 V; 1000 x 7190/8190 = 877.9 ohm; -R_th C ln(1 - V_OCTH/V_th) = 251.7/287.5/325.6 ns; 228.9 ns at 18 V",
+      "agrees": true
+    },
+    {
+      "name": "Turn-on settling versus blanking",
+      "agent_value": "82 MHz ringing, about 150 ns settling, 1.7x below the 252 ns minimum blanking",
+      "verifier_value": "1/(2 pi sqrt(25 nH x 150 pF)) = 82.2 MHz; settling estimate plausible but unverified (depends on layout Q); the 10 pF diode displacement current at 120 V/ns (1.2 A, 3.6 nC) moves OC by only about 5 mV on 680 pF",
+      "agrees": true
+    },
+    {
+      "name": "Total protection response (KR-PR-001)",
+      "agent_value": "0.55 / 0.77 / 1.07 us",
+      "verifier_value": "252+150+85 nC/0.57 A = 551 ns; 288+270+212 = 771 ns; 326+400+340 = 1066 ns; tOCOFF defined to OUT(L) 90 % so no double counting of the 95-180 ns deglitch",
+      "agrees": true,
+      "note": "85 nC gate charge from 15 V to 3 V and the Gen-4 withstand time (about 2 us, press only) remain unverified; the agent flagged both."
+    },
+    {
+      "name": "Fault turn-off overshoot (KR-GD-011)",
+      "agent_value": "0.13 V/ns; 39 ns; 6.4 A/ns; 224 V; 684 V peak (57 %)",
+      "verifier_value": "0.4 A/3.1 nF = 0.129 V/ns; 5 V/0.129 = 38.8 ns; 250 A/38.8 ns = 6.45 A/ns; x 35 nH = 226 V; 686 V (57 % of 1200 V)",
+      "agrees": true
+    },
+    {
+      "name": "OC-pin excursion during third-quadrant conduction",
+      "agent_value": "-0.67 V unclamped vs -0.3 V abs min -> Schottky clamp needed, 0.74 mA",
+      "verifier_value": "DC arithmetic reproduced (-4.0 V x 1/5.99 = -0.668 V; (4.0-0.3)/4.99 k = 0.74 mA) but the state does not occur: the internal OC pull-down MOSFET is on while OUT is low (dead time), and after the turn-on command the 597 ns OC time constant limits the excursion in the ~50 ns third-quadrant interval to about -0.06 V",
+      "agrees": false
+    },
+    {
+      "name": "Dead-time requirement (KR-GD-009)",
+      "agent_value": "95 ns -> 150 ns minimum; 250 ns = 37.5 counts; 1.2 W per 100 ns",
+      "verifier_value": "30+30+50+13-28 = 95 ns; x1.5 = 142.5 -> 150 ns; 250 ns x 150 MHz = 37.5; 100 ns x 50 kHz x 4.6 V x 50 A = 1.15 W",
+      "agrees": true
+    },
+    {
+      "name": "E_on penalty of the external gate resistor",
+      "agent_value": "k_RG 1.9 (10 ohm) -> +3.8 W; 1.6 (6.8 ohm) -> +2.4 W",
+      "verifier_value": "(1.9-1.3) x 127.4 uJ x 50 kHz = 3.8 W; (1.6-1.3) x 127.4 uJ x 50 kHz = 1.9 W (2.4 W corresponds to k = 1.68)",
+      "agrees": false,
+      "note": "Internal inconsistency of about 0.5 W; immaterial to the hand-off."
+    },
+    {
+      "name": "Insulation coordination",
+      "agent_value": "working-voltage margin 4.6x / 3.1x; impulse 8.0 / 7.7 kV vs 6 kV; 10 mm reinforced creepage, 5.5 mm clearance",
+      "verifier_value": "2121/460 = 4.61; 1414/460 = 3.07; 8.0 / 7.692 kV vs 6 kV (OVC II 600 V row 4 kV basic, next step 6 kV reinforced); IEC 60664-1 500 V, PD2, group IIIa -> 5 mm basic / 10 mm reinforced; 6 kV -> 5.5 mm; consistent with the standards agent's 9.0-10.0 mm and slot requirement",
+      "agrees": true,
+      "note": "UCC14141 certifications are 'planned' per SLUSF10B - confirmed; status must be checked for the insulation file."
+    },
+    {
+      "name": "NTC network on AIN",
+      "agent_value": "2.6 / 1.66 / 0.79 / 0.73 V at -40/25/100/125 degC; duty 86-48 %",
+      "verifier_value": "200 uA x (3.3 k + R_NTC || 10 k) = 2.61 / 1.66 / 0.79 / 0.73 V; duty 85.5-47.7 % with the linear 88 %-at-0.6 V to 10 %-at-4.5 V map; 1.19 V at 50 degC, 0.85 V at 85 degC",
+      "agrees": true,
+      "note": "B25/85 extrapolation beyond 85 degC and the duplicate network of the sensing agent remain open."
+    },
+    {
+      "name": "UCC14141 input capacitance at 12 V bias",
+      "agent_value": "2 x 10 uF 25 V X7R (datasheet CIN = 20 uF)",
+      "verifier_value": "about 13 uF effective with the agent's own 35 % X7R loss assumption",
+      "agrees": false
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-GD-012 (applicability 'Power-module gate drives') tagged 'direct' for a discrete TO-247-4 design; it is applied by analogy and should be 'adapted' (conclusion unaffected).",
+    "KR-IS-001: the rule's recorded conflict (TI TIDA-010054 Eq. 30 with factor 2, EC-014) was not preserved; the controller/aux agent used the factor-2 form, so the two results size the same modules differently (0.119 W vs 0.2375 W gate power per channel).",
+    "KR-GD-003: the exclusion ('clamp not strictly needed with low R_G and low-inductance routing') was effectively invoked through an 'inherently immune' conclusion that rests on a non-conservative capacitance-divider bound (small-signal ratio at 1000 V); the clamp must be classed as required until the PRD-06933 off-state V_GS measurement exists.",
+    "CB-PR-002 was adapted independently by the gate-driver and sensing agents (and the thermal agent selected the NTC) with different NTC parts, bias networks and OTP thresholds, and the controller agent expects APWM from both drivers; the block needs a single owner.",
+    "CMP-UCC14141-Q1 / SLUSF10B were misread: the 1.5 W rating is stated for TA <= 85 degC (10.8-13.2 V), the abs-max is 2.5 W at 25 degC, and the 1.2 W / 0.7 W rows are (VDD-VEE) = 25 V, TA = 85 degC conditions; the datasheet's COM-VEE regulator description (RLIM charge/discharge path, 0.125 A rms pin limit with 16 % run-time qualification) was not used although it governs the shared-LS-supply decision (KR-IS-004).",
+    "Reference instance values R_GS 10 kohm and the BAT42W OC clamp (CGD1700 RT33/DT5) were adopted without an own derivation; acceptable as acknowledged reference-derived parts, but the Schottky's stated necessity is not supported by analysis."
+  ],
+  "required_changes": [
+    "LS bias budget: charge every VDD-sourced current at VDD-VEE = 19 V (gate 6.25 mA, IVDDQ 5.9 mA, DESAT 4.6 mA avg, R_GS 0.75 mA, AIN 0.2 mA, LDO 23.1 mA max per the sensing agent or 41 mA seed): 0.77 W / 1.10 W (1.21 W with the TI factor-2 form), compared with 1.5 W at TA <= 85 degC for 10.8-13.2 V and the SOA curve at 12 V / 19 V; stop quoting '1.5 W at 25 degC' and label the 1.2 W / 0.7 W rows as 25 V-output conditions.",
+    "Add the COM-VEE regulator sink check: I_COM,return <= (COM-VEE)/(RLIM + 30 ohm). LS needs RLIM <= 57-110 ohm (not 600 ohm or 1 kohm), dissipating about 0.09-0.12 W in RLIM plus 0.02-0.07 W in the module, with a continuous sink outside the RLIM pin's '0.125 A rms at 16 % average run time' qualification; HS imbalance about 5 mA needs RLIM <= about 750 ohm. Make the dedicated isolated 5 V sensing supply (or a load-limited sharing agreed with the sensing agent) the baseline and follow the datasheet output-capacitor ratio rule when finalising RLIM.",
+    "Rewrite the KR-GD-003 analysis: Q_rss-based bound (15-25 nC for 0-400 V from Q_GD = 30 nC at 800 V -> 4.8-8 V before RC bleed, about 3-6 V expected with tau 10-19 ns), aggressor = HS turn-on edge 71-90 V/ns for the LS gate; margin to the 2.0 V hot threshold about 0-3 V from -4 V; Miller clamp 'required', 0 V bias rejected with the corrected numbers; off-state V_GS measurement (PRD-06933) mandatory before any R_G,OFF or bias change.",
+    "Reconcile the sensing-LDO figure with the sensing agent (16.9 mA typ / 23.1 mA max through 270 ohm, 8.8 V LDO input headroom) and state one value with margin in both results.",
+    "Assign one owner for the heat-sink NTC chain (part, AIN network, APWM decode, OTP threshold) and add the insulation requirement: NTC element at LS COM (= PGND) potential on a PE-bonded sink -> element-to-lug insulation and lead spacing (5.0 mm / 3.0 mm heatsink rules of the standards agent) rated for the PGND-to-PE working voltage, or read the NTC on the SELV side as the thermal agent allows; the NTCALUG01A insulation rating is unverified.",
+    "Fault/TZ interface: remove the agent's SN74LVC1G11/2G04 TZ2 gating; feed FLT_HS/FLT_LS (wired-AND), RDY_HS/RDY_LS (parallelable open-drain) and PG_BIAS_H_N/L_N into the controller agent's SN74LVC1G74 fault bus (FAULT_COMB_N -> FAULT_N -> TZ1; TZ2 already carries I_OC_N) and adopt its pin map (RESET_N GPIO4 -> RST/EN x2, BIAS_EN, PG_BIAS pins 32/33, TEMP_PWM pins 29/30).",
+    "Unused HS AIN: tie to COM per the SLUSDH8D pin table (or leave floating for a fixed ~10 % APWM duty) and tell the controller agent whether TEMP_PWM_H carries data.",
+    "OC-pin Schottky: downgrade the rationale (internal pull-down active while OUT is low; 597 ns OC time constant); keep as a reference-derived DNP option and delete the 'V_F <= 0.3 V' open issue, or document a real transient case.",
+    "DESAT margins: state the trip-current range as about 52-85 A at 175 degC including the R_DS(on) spread (max-R device about 69 mohm) and the false-trip margin as 1.35x at maximum R_DS(on) (1.67x typical).",
+    "E_on penalty: +1.9 W at k = 1.6 (6.8 ohm) and +3.8 W at k = 1.9 (10 ohm); make the 2.4 W / 1.6 pair consistent before handing it to the efficiency budget.",
+    "Record the KR-IS-001 factor-2 conflict (show both budgets) and retag KR-GD-012 as 'adapted'.",
+    "UCC14141 input capacitors: 3 x 10 uF 25 V X7R or 50 V-rated parts to keep >= 20 uF effective at 12-13.2 V bias; correct the COM-VEE droop to about 41 mV (125 nC on 3.06 uF effective).",
+    "Dead time: unify the bring-up value (250 ns gate-driver/MOSFET vs 200 ns assumptions agent) in the firmware contract.",
+    "State the partition resolution for KR-GD-008: Option B stacked mezzanine, no cables -> single-ended PWM/FLT/RDY/APWM links with RC filters at the driver pins and the UCC21710 internal pulls as the open-connector fail-safe; remove the RS-422 branch unless the architecture changes.",
+    "Use one barrier working-voltage figure (440 V DC per the standards agent or 460 V OVP trip) across the insulation documentation.",
+    "Mark CIO of the UCC14141-Q1 as unverified (not legible in the datasheet extraction) and recompute i_CM for 5 pF (0.72 A with the driver) as the upper bound."
+  ],
+  "summary": "The gate-driver architecture (UCC21710-Q1 + UCC14141-Q1 per position, +15/-4 V, split R_G 10/3.3 ohm, DESAT 3.6 V with 288 ns blanking, cross-wired interlock, 150-250 ns dead time) is sound and 23 of 31 recomputed quantities agree with the agent to within rounding; the UCC21710-Q1 parameters and the UCC14141-Q1 isolation, UVLO/OVLO, PG and feedback data were confirmed from the TI datasheets fetched by the verifier. Corrections are required in four places: (1) the UCC14141-Q1 ratings were misread (1.5 W applies at TA <= 85 degC for 10.8-13.2 V, abs-max 2.5 W; the 1.2 W / 0.7 W rows are 25 V-output conditions) and the LS budget must be charged at 19 V (0.77-1.21 W depending on the LDO figure and the KR-IS-001 form); (2) the datasheet's COM-VEE regulator works through RLIM, so the shared LS supply must sink 28-46 mA of COM-return current, requiring RLIM <= 57-110 ohm (TI's 600 ohm absorbs 6 mA) and operating the RLIM pin outside its 16 %-run-time qualification - the dedicated sensing supply should become the baseline; (3) the parasitic-turn-on 'inherently immune' claim rests on a 1000 V small-signal ratio and understates the Miller charge by about 8x; a Q_GD-based estimate gives 3-6 V excursions, so the Miller clamp is required and the margin to the hot threshold is 0-3 V, not 5 V; (4) cross-area conflicts (LDO load 41 vs 23.1 mA, three different NTC implementations plus the unaddressed NTC insulation to the PE heatsink, TZ2 claimed twice, dead time 250 vs 200 ns) must be reconciled with the sensing, thermal, controller and assumptions agents. Minor items: unused AIN should be tied to COM per datasheet, the OC Schottky rationale is overstated (internal pull-down and 597 ns time constant), DESAT margins should include the R_DS(on) spread (trip 52-85 A, false-trip 1.35x worst case), the E_on penalty pair is internally inconsistent by 0.5 W, input capacitance falls to about 13 uF at 12 V bias, and KR-GD-012/KR-IS-001 applicability tags and conflicts need adjustment. Human-review rules were correctly surfaced and reference instance values were not copied except the acknowledged R_GS/Schottky parts."
+}
