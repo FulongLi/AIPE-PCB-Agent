@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "title": "V2 design baseline: orchestrator-resolved decisions for the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck",
   "status": "AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED; single source of truth for schematic, PCB, simulation and documents; derived from design/research/*.json (ten design areas) and the twenty independent verification reports design/research/verify_*.json; every document, model and calculation must cite these values and record the research record it came from",
   "date": "2026-10-10",
@@ -16,8 +16,14 @@
     "architecture": "AI-selected"
   },
   "assumptions_accepted": {
-    "vin_operating_range_V": [360, 440],
-    "uvlo_start_stop_V": [340, 320],
+    "vin_operating_range_V": [
+      360,
+      440
+    ],
+    "uvlo_start_stop_V": [
+      340,
+      320
+    ],
     "ovp_input_trip_V": 460,
     "survival_V_100ms": 480,
     "switch_node_overshoot_allowance_V": 90,
@@ -30,9 +36,15 @@
     "load_step_excursion_max_V": 10,
     "load_step_recovery_max_ms": 5,
     "load_dump_25A_excursion_V_allowed": "must stay below the 230 V output OVP (computed 215-218 V with 120 uF at fc 2.5 kHz)",
-    "voltage_loop_crossover_Hz": [2000, 2500],
+    "voltage_loop_crossover_Hz": [
+      2000,
+      2500
+    ],
     "inductor_ripple_target_pct_at_400V": 30,
-    "ambient_C": [0, 50],
+    "ambient_C": [
+      0,
+      50
+    ],
     "tj_design_limit_C": 150,
     "tj_preferred_C": 125,
     "cooling": "forced air over a shared PE-bonded heatsink with rated insulating pads; inductor in the same fan stream",
@@ -41,14 +53,23 @@
     "aux_12V": "external regulated 12 V +/-10 %; 2.0 A minimum, 2.5 A recommended; fan and relay coil included in the budget",
     "isolation_concept": "control electronics are a SELV domain; the single-point SGND-to-PE bond (PELV) is a PROPOSED DEVIATION from the SELV seed that the human reviewer must approve (assumption A-23); every HV crossing uses a reinforced-rated isolator",
     "environment": "OVC II, pollution degree 2, <= 2000 m, 5-85 % RH, laboratory/industrial cabinet, instructed persons, DVC C parts behind IPXXB covers",
-    "impulse_withstand_basis_V": {"basic": 4000, "reinforced": 6000, "note": "conservative 600 V-system row adopted because the DC source is unspecified; an OVC II 300 V system would allow 2.5 kV (1.5 / 3.0 mm) - recorded conflict for review"},
+    "impulse_withstand_basis_V": {
+      "basic": 4000,
+      "reinforced": 6000,
+      "note": "conservative 600 V-system row adopted because the DC source is unspecified; an OVC II 300 V system would allow 2.5 kV (1.5 / 3.0 mm) - recorded conflict for review"
+    },
     "pcb_material": "FR4 Tg >= 150 C, CTI >= 175 V (group IIIa, Isola 370HR class; CTI class unverified), ENIG",
     "unidirectional_power_flow": true,
     "load_type": "resistor bank or electronic load CC/CR; no battery, no constant-power below 20 % load without stability review",
     "source": "regulated DC bus or current-limited laboratory supply; current limit 18-25 A; controlled ramp; no hot-plug onto a stiff live bus",
     "firmware_input_current_limit_A": 15.6,
     "firmware_power_derating": "below 360 V the input current is limited to 15.6 A (the 320 V UVLO-stop corner at 27.5 A would otherwise draw 17.5 A)",
-    "dead_time_ns": {"minimum": 150, "programmed_bring_up": 300, "effective_target": 250, "upper_bound": 400},
+    "dead_time_ns": {
+      "minimum": 150,
+      "programmed_bring_up": 300,
+      "effective_target": 250,
+      "upper_bound": 400
+    },
     "corrections_to_seeds": [
       "overload peak current evaluated at the 440 V corner with the real choke: 31.6 A nominal / 32.0 A worst (seed 31.3 A)",
       "saturation requirement expressed for the soft-saturating powder core: L(41 A) >= 70 % of L(25 A) and B_dc + B_ac <= 0.8 x B_sat; the vendor-style I_sat (30 % drop from L0) is 37.3 A nominal / ~35 A worst and is reported alongside",
@@ -58,41 +79,118 @@
     ]
   },
   "operating_points": [
-    {"vin_V": 360, "D": 0.556, "iin_A_eta98": 14.17, "dIL_App": 6.5, "ipk_A_25A": 28.3, "ipk_A_27p5A": 30.8},
-    {"vin_V": 400, "D": 0.5, "iin_A_eta98": 12.76, "dIL_App": 7.3, "ipk_A_25A": 28.7, "ipk_A_27p5A": 31.2},
-    {"vin_V": 440, "D": 0.455, "iin_A_eta98": 11.6, "dIL_App": 8.0, "dIL_App_worst_minus8pct_AL": 8.7, "ipk_A_25A": 29.0, "ipk_A_27p5A": 31.6, "ipk_A_27p5A_worst": 32.0}
+    {
+      "vin_V": 360,
+      "D": 0.556,
+      "iin_A_eta98": 14.17,
+      "dIL_App": 6.5,
+      "ipk_A_25A": 28.3,
+      "ipk_A_27p5A": 30.8
+    },
+    {
+      "vin_V": 400,
+      "D": 0.5,
+      "iin_A_eta98": 12.76,
+      "dIL_App": 7.3,
+      "ipk_A_25A": 28.7,
+      "ipk_A_27p5A": 31.2
+    },
+    {
+      "vin_V": 440,
+      "D": 0.455,
+      "iin_A_eta98": 11.6,
+      "dIL_App": 8.0,
+      "dIL_App_worst_minus8pct_AL": 8.7,
+      "ipk_A_25A": 29.0,
+      "ipk_A_27p5A": 31.6,
+      "ipk_A_27p5A_worst": 32.0
+    }
   ],
   "power_stage": {
     "mosfet": {
-      "part": "C4MS025120K", "manufacturer": "Wolfspeed", "qty": 2, "package": "TO-247-4 Kelvin source",
+      "part": "C4MS025120K",
+      "manufacturer": "Wolfspeed",
+      "qty": 2,
+      "package": "TO-247-4 Kelvin source",
       "datasheet": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf (Rev. 2, Dec 2025, fetched); product page https://www.wolfspeed.com/products/power/sic-mosfets/1200v-c4ms-discrete-silicon-carbide-mosfets/c4ms025120k",
       "rds_on_25C_mohm": "28 typ at V_GS = 15 V (25 typ / 33 max at 18 V; no 15 V maximum published; 37 mohm is a scaled estimate)",
-      "rds_on_150C_mohm_est": 48.5, "id_A": "86 at T_C 25 C / 62 at T_C 100 C (specified at V_GS = 18 V)", "qg_nC": 125, "ciss_coss_crss_pF": [3087, 103, 4.7], "co_tr_pF_0_800V": 238,
-      "eon_eoff_uJ": "470 / 64 at 800 V, 39.2 A, R_G 1 ohm, T_J 175 C (394 / 57 at 25 C)", "err_uJ": 256, "vsd_V": "5.1 at 25 C / 4.6 at 175 C (19.6 A)", "rth_jc_K_W": 0.41, "vgs_abs_max_V": [-10, 23], "vgs_recommended_V": "+15..+18 / -5..0", "vgs_th_min_V_25C": 2.0,
+      "rds_on_150C_mohm_est": 48.5,
+      "id_A": "86 at T_C 25 C / 62 at T_C 100 C (specified at V_GS = 18 V)",
+      "qg_nC": 125,
+      "ciss_coss_crss_pF": [
+        3087,
+        103,
+        4.7
+      ],
+      "co_tr_pF_0_800V": 238,
+      "eon_eoff_uJ": "470 / 64 at 800 V, 39.2 A, R_G 1 ohm, T_J 175 C (394 / 57 at 25 C)",
+      "err_uJ": 256,
+      "vsd_V": "5.1 at 25 C / 4.6 at 175 C (19.6 A)",
+      "rth_jc_K_W": "0.41 typical (no maximum published)",
+      "vgs_abs_max_V": [
+        -10,
+        23
+      ],
+      "vgs_recommended_V": "+15..+18 / -5..0",
+      "vgs_th_min_V_25C": 2.0,
       "selection_basis": "1200 V class chosen for 42-46 % voltage utilisation including a 62-88 V overshoot allowance (25-35 nH loop at 2.5 A/ns); standing TO-247 leads add 15-25 nH per lead, so the real loop may reach 40-60 nH - the 1200 V margin absorbs it (even 150 V overshoot = 49 %); 650 V C3M0015065K rejected at 77-84 % utilisation; the 900 V C3M0030090K cited by the knowledge base is obsolete; utilisation limits 80/90/70 % are engineering judgement for human review",
-      "losses_W_per_pair": {"400V_25A_150C": "46.7 (HS switching 9.8 W at k_RG 1.3) to 52 (k_RG 2.0) plus ~1 W HS E_oss", "440V_27p5A_150C": 56.2, "360V_27p5A_150C_HS_hottest": "P_HS 30.4 typ / 34.1 max-R", "400V_25A_expected_100C": 41.5, "400V_25A_max_rds": 56.5},
-      "efficiency_share_of_5kW_pct": [0.83, 1.13],
+      "losses_W_per_pair": {
+        "400V_25A_150C": "46.7 (HS switching 9.8 W at k_RG 1.3) to 52 (k_RG 2.0) plus ~1 W HS E_oss",
+        "440V_27p5A_150C": 56.2,
+        "360V_27p5A_150C_HS_hottest": "P_HS 30.4 typ / 34.1 max-R",
+        "400V_25A_expected_100C": 41.5,
+        "400V_25A_max_rds": 56.5
+      },
+      "efficiency_share_of_5kW_pct": [
+        0.83,
+        1.13
+      ],
       "parasitic_turn_on": "charge-based estimate (Q_gd 20-27 nC into C_gs 3.08 nF through the 5.6 ohm off path, 8-13 ns edge) gives 4.5-5.2 V excursion from -4 V -> about +0.5 to +1.2 V versus V_GS(th) min 2.0 V (25 C; hot minimum unpublished): the active Miller clamp is REQUIRED, not optional; off-state V_GS to be measured per PRD-09301 section 6.1",
       "fallback": "C3M0021120K (same footprint and rails, +8 W; Rev. 4 June 2025 datasheet, check for newer)",
-      "open_checks": ["Wolfspeed Gen-4 750 V TO-247-4 industrial family: existence to be checked; would be the natural class for 440-480 V", "C4MS025120K availability: Arrow stock only, 13-week lead (Oct 2026 snippets)", "no published short-circuit withstand time"],
-      "tab_potentials": "HS tab = VIN+ (DC), LS tab = SW (switching; 2.3 A displacement-current pulses through the pad); both insulated from the PE-bonded heatsink"
+      "open_checks": [
+        "Wolfspeed Gen-4 750 V TO-247-4 industrial family: existence to be checked; would be the natural class for 440-480 V",
+        "C4MS025120K availability: Arrow stock only, 13-week lead (Oct 2026 snippets)",
+        "no published short-circuit withstand time"
+      ],
+      "tab_potentials": "HS tab = VIN+ (DC), LS tab = SW (switching; 2.3 A displacement-current pulses through the pad); both insulated from the PE-bonded heatsink",
+      "package_dimensions_mm": "TO-247-4L (Wolfspeed Rev. 2 table maxima): width E 16.13, height D 23.63, thickness A 5.21; exposed tab D1 x E1 ~ 17.0 x 13.6 (to confirm on the drawing)"
     },
     "gate_driver": {
-      "part": "UCC21710QDWRQ1", "qty": 2, "package": "SOIC-16 DW (7.5 x 10.3 mm body) - KiCad Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm", "vcc_V": 3.3,
+      "part": "UCC21710QDWRQ1",
+      "qty": 2,
+      "package": "SOIC-16 DW (7.5 x 10.3 mm body) - KiCad Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+      "vcc_V": 3.3,
       "isolation": "5.7 kVrms, VIORM 2121 Vpk, VIOWM 1500 Vrms / 2121 VDC, > 150 V/ns CMTI, > 8 mm package creepage (SLUSDH8D, fetched)",
       "inputs": "IN+ = own PWM, IN- = complementary PWM (cross-wired hardware interlock, KR-GD-009); 100 ohm + 100 pF + 10 k pull-down at each input pin; RST/EN internal pull-down 28.5-113 kohm",
-      "rails_V": {"vdd_com": 15.0, "vee_com": -4.0, "option_vdd_18V": "BOM option for C4MS only (FBVDD top resistor 127 k)", "why_negative": "computed off-state excursion up to +1.2 V from -4 V; 0 V turn-off would leave no margin (KR-GD-005 applied because the synchronous buck is a half bridge)"},
-      "rg_on_ohm": 10.0, "rg_on_tuning_target_ohm": 6.8, "rg_off_ohm": 3.3, "rg_packages": "1206 anti-surge Panasonic ERJ-P08 (0.66 W, 500 V)",
+      "rails_V": {
+        "vdd_com": 15.0,
+        "vee_com": -4.0,
+        "option_vdd_18V": "BOM option for C4MS only (FBVDD top resistor 127 k)",
+        "why_negative": "computed off-state excursion up to +1.2 V from -4 V; 0 V turn-off would leave no margin (KR-GD-005 applied because the synchronous buck is a half bridge)"
+      },
+      "rg_on_ohm": 10.0,
+      "rg_on_tuning_target_ohm": 6.8,
+      "rg_off_ohm": 3.3,
+      "rg_packages": "1206 anti-surge Panasonic ERJ-P08 (0.66 W, 500 V)",
       "peak_gate_current_A": "1.26 source / 3.06 sink versus +/-10 A capability",
       "eon_penalty_W": "+1.9 W at 6.8 ohm (k 1.6), +3.8 W at 10 ohm (k 1.9) relative to the MOSFET agent's k 1.3",
-      "gate_discharge_kohm": 10, "miller_clamp": "REQUIRED: CLMPI to gate through a 0 ohm 0603 link, path <= 15 mm, same Kelvin pour return",
+      "gate_discharge_kohm": 10,
+      "miller_clamp": "REQUIRED: CLMPI to gate through a 0 ohm 0603 link, path <= 15 mm, same Kelvin pour return",
       "gate_kelvin_rc_dnp": "0603 pads for 1 ohm + 470 pF, DNP (KR-GD-010 review)",
       "decoupling": "2 x 4.7 uF + 100 nF (VDD-COM), 1 x 4.7 uF + 100 nF (COM-VEE) between the driver output pins and the gate/Kelvin connection (C_eff >= 1.25 uF for 100 mV droop; COM-VEE droop ~41 mV)",
       "desat": {
         "diode": "US1M-13-F (1000 V, SMA), cathode to drain, one per channel (lifecycle unverified)",
         "network": "VDD -> 2.2 k -> node A -> diode; node A -> 4.99 k -> OC; OC -> 1.00 k -> COM; 680 pF C0G OC-COM; Schottky clamp COM->OC as a reference-derived DNP option (the -0.67 V DC case does not occur dynamically)",
-        "trip_vds_V": 3.6, "trip_current_A_175C": "52-85 (R_DS(on) spread; 75 typical)", "false_trip_margin_at_overload": "1.67x typical / 1.35x at maximum R_DS(on)", "blanking_external_ns": 288, "ic_deglitch_ns": "95-180",
-        "total_response_us": [0.55, 1.07], "response_budget_us": 1.5,
+        "trip_vds_V": 3.6,
+        "trip_current_A_175C": "52-85 (R_DS(on) spread; 75 typical)",
+        "false_trip_margin_at_overload": "1.67x typical / 1.35x at maximum R_DS(on)",
+        "blanking_external_ns": 288,
+        "ic_deglitch_ns": "95-180",
+        "total_response_us": [
+          0.55,
+          1.07
+        ],
+        "response_budget_us": 1.5,
         "withstand_note": "Wolfspeed publishes no short-circuit withstand time for C4MS025120K; PRD-08296 (separate Wolfspeed note, module data) and forum statements of 2-3 us are not datasheet values; destructive short-circuit test required (KR-PR-001 hard constraint, verification by test)"
       },
       "fault_signals": "FLT_N (open drain, latched) and RDY (open drain, parallelable) per driver; RST_EN from GPIO (low >= 1 us clears)",
@@ -100,29 +198,62 @@
       "vgs_probe": "2-pin probe loop at the device side of R_G on each driver island (HV referenced, isolated probe only)"
     },
     "bias_supply": {
-      "part": "UCC14141QDWNRQ1", "qty": "3 (HS gate, LS gate, sensing island)", "package": "36-pin DWN wide SOIC (custom footprint from TI drawing; no KiCad library part)",
+      "part": "UCC14141QDWNRQ1",
+      "qty": "3 (HS gate, LS gate, sensing island)",
+      "package": "36-pin DWN wide SOIC (custom footprint from TI drawing; no KiCad library part)",
       "isolation": "VISO 5000 Vrms, VIORM 1414 Vpk, VIOWM 1414 VDC (reinforced), CIO < 3.5 pF (not legible in the extraction; 5 pF upper bound used for i_CM = 0.72 A), > 8 mm; certifications were 'planned' in SLUSF10B (June 2023) - status to confirm",
       "ratings": "1.5 W output for VIN 10.8-13.2 V at TA <= 85 C; 1.0 W for 8-18 V; absolute maximum POUT_VDD 2.5 W (25 C); SOA curve at 19 V / 10.8 V / board ambient still to be read",
       "gate_channels": "VDD-VEE 19.0 V (107 k / 16.2 k 0.1 %), COM-VEE 4.0 V (9.76 k / 16.2 k 0.1 %), 330 pF C0G across each bottom resistor; RLIM per datasheet procedure (human review)",
       "sensing_channel": "VDD-VEE 15.0 V, COM-VEE 5.0 V (16.2 k / 16.2 k); VEE = PGND; COM = 5V_ISO feeds the two AMC1311 VDD1 pins directly (sourcing direction of the COM regulator, no LDO); load ~20 mA; see CR-12",
       "input": "12V_PROT through Wuerth 744226S CM choke, 3 x 10 uF 25 V X7R 1210 (>= 20 uF effective at 13.2 V) between choke and VIN pin, 100 nF at VIN; ENA = BIAS_EN; PG (active low) to the fault combiner",
       "output_caps": "2 x 4.7 uF (VDD-VEE) + 4.7 uF (COM-VEE) at the module",
-      "power_budget_W": {"hs_gate": 0.32, "ls_gate": 0.32, "sensing": 0.4, "kr_is_001_conflict": "Wolfspeed form Q_G f_sw dV = 0.119 W per device; TI TIDA-010054 Eq. 30 form (factor 2) = 0.24 W - both shown, budget uses the larger", "rating": 1.5},
+      "power_budget_W": {
+        "hs_gate": 0.32,
+        "ls_gate": 0.32,
+        "sensing": 0.4,
+        "kr_is_001_conflict": "Wolfspeed form Q_G f_sw dV = 0.119 W per device; TI TIDA-010054 Eq. 30 form (factor 2) = 0.24 W - both shown, budget uses the larger",
+        "rating": 1.5
+      },
       "input_current_A_12V_three_modules": 0.45
     }
   },
   "magnetics": {
     "inductor": {
       "type": "custom toroidal choke (no orderable standard part exists for 220-300 uH at 25-32 A; 13 families searched)",
-      "core": "2 x Magnetics 0058192A2 High Flux 60u, stacked (OD 58.0 mm, HT 16.1 mm each); catalogue selector lists the size as C058192A2 - orderable code to confirm", "turns": 34, "wire": "AWG 10 heavy build (alt 2 x AWG 13 bifilar); ~26 turns in the first inner-diameter layer, ~8 in the second",
-      "L_uH_nominal": {"0A": 319, "25A": 272, "31p6A": 248, "41A": 210},
-      "L_uH_worst_minus8pct_AL_min_curve": {"25A": 235, "31p5A": 215, "41A": 175, "46A": 160},
+      "core": "2 x Magnetics 0058192A2 High Flux 60u, stacked (OD 58.0 mm, HT 16.1 mm each); catalogue selector lists the size as C058192A2 - orderable code to confirm",
+      "turns": 34,
+      "wire": "AWG 10 heavy build (alt 2 x AWG 13 bifilar); ~26 turns in the first inner-diameter layer, ~8 in the second",
+      "L_uH_nominal": {
+        "0A": 319,
+        "25A": 272,
+        "31p6A": 248,
+        "41A": 210
+      },
+      "L_uH_worst_minus8pct_AL_min_curve": {
+        "25A": 235,
+        "31p5A": 215,
+        "41A": 175,
+        "46A": 160
+      },
       "isat_30pct_drop_from_L0_A": "37.3 nominal / ~35 worst",
-      "ripple_App": {"400V": 7.3, "440V_worst": 8.7, "440V_27p5A_worst": 9.0},
-      "dcr_mohm_20C_100C": [12.2, 16.0], "loss_W": {"400V_25A_typ": 16.4, "440V_27p5A_typ": 19.8, "440V_27p5A_bounded_worst_core": "23-26 (datasheet-maximum core loss 1.44x fit + DC-bias allowance)"},
+      "ripple_App": {
+        "400V": 7.3,
+        "440V_worst": 8.7,
+        "440V_27p5A_worst": 9.0
+      },
+      "dcr_mohm_20C_100C": [
+        12.2,
+        16.0
+      ],
+      "loss_W": {
+        "400V_25A_typ": 16.4,
+        "440V_27p5A_typ": 19.8,
+        "440V_27p5A_bounded_worst_core": "23-26 (datasheet-maximum core loss 1.44x fit + DC-bias allowance)"
+      },
       "temperature": "average surface rise 50-55 K typical / 62-69 K bounded in still air; hot spot 110-120 C with the +10-15 K internal allowance -> forced air over the inductor is REQUIRED (placed in the fan stream) or the 3-stack fallback; acceptance thermocouple at the inner-diameter winding, <= 110 C",
       "no_load_ccm_reverse_current_A": "-2.8 to -3.4",
-      "mass_g": 632, "envelope": "wound OD ~65-69 mm, height 40-43 mm; potted in a UL94 V-0 cup ~72 x 46 mm; keep-out circle 75 mm, height 48 mm",
+      "mass_g": 632,
+      "envelope": "wound OD ~65-69 mm, height 40-43 mm; potted in a UL94 V-0 cup ~72 x 46 mm; keep-out circle 75 mm, height 48 mm",
       "mounting": "cup bolted to 4 x M4 standoffs on a 60 x 60 mm pattern; mass never carried by solder joints",
       "pcb_footprint": "2 x PTH 3.2 mm finished hole, 6.0 mm pads on all layers, pitch 25.4 mm; 4 x 4.3 mm NPTH on 60 x 60 mm with 8 mm copper-free annulus; terminals >= 4 mm from other nets",
       "emi_handoff": "winding end-to-end capacitance / SRF and displacement current under the 110-120 V/ns SW dv/dt to be estimated; SW-side turns and lead kept away from the TMCS1133 path",
@@ -130,35 +261,136 @@
     }
   },
   "capacitors": {
-    "input_film": {"part": "B32776G8206K000", "manufacturer": "TDK (EPCOS)", "qty": 2, "value": "20 uF 800 V, 4-pin, pitch 37.5 x 10.2 mm", "i_rms_rating_A": 14.5, "i_rms_each_A_worst": 6.92, "ripple_Vpp_27p5A": 3.9, "stored_energy_J_440V": 4.3,
-      "footprint": "custom 4-pad: (+/-18.75, +/-5.10) mm, drill 1.6 mm, pad 3.0 mm, courtyard 28 x 42 mm, height 37 mm", "alternates": ["KEMET C4AQIBW5200A3JJ", "Vishay MKP1848C62080JP4 (terminal digit to confirm)"]},
-    "input_hf_ceramic": {"part": "CGA9P1X7T2J474M250KC", "manufacturer": "TDK", "qty": 10, "value": "0.47 uF 630 V X7T 2220", "effective_uF_at_440V_assumed": 1.88, "placement": "row 1 within 5 mm and row 2 within 15 mm of the HS drain / LS source pins, both sides of the device row", "alternate": "Knowles 2220Y1K00474KXTWS2 (1 kV; StackiCap height to verify)", "dc_bias_note": "60 % loss at 440 V assumed; TDK curve not fetched (open issue)",
-      "ring_current": "film-to-ceramic resonance ~670 kHz launched at every edge: ~1.1 W in the loop resistance (0.75-1.5 W for 20-40 nH), 0.75-1.4 A rms per MLCC - thermally tolerable, stated"},
+    "input_film": {
+      "part": "B32776G8206K000",
+      "manufacturer": "TDK (EPCOS)",
+      "qty": 2,
+      "value": "20 uF 800 V, 4-pin, pitch 37.5 x 10.2 mm",
+      "i_rms_rating_A": 14.5,
+      "i_rms_each_A_worst": 6.92,
+      "ripple_Vpp_27p5A": 3.9,
+      "stored_energy_J_440V": 4.3,
+      "footprint": "custom 4-pad: (+/-18.75, +/-5.10) mm, drill 1.6 mm, pad 3.0 mm, courtyard 28 x 42 mm, height 37 mm",
+      "alternates": [
+        "KEMET C4AQIBW5200A3JJ",
+        "Vishay MKP1848C62080JP4 (terminal digit to confirm)"
+      ]
+    },
+    "input_hf_ceramic": {
+      "part": "CGA9P1X7T2J474M250KC",
+      "manufacturer": "TDK",
+      "qty": 10,
+      "value": "0.47 uF 630 V X7T 2220",
+      "effective_uF_at_440V_assumed": 1.88,
+      "placement": "row 1 within 5 mm and row 2 within 15 mm of the HS drain / LS source pins, both sides of the device row",
+      "alternate": "Knowles 2220Y1K00474KXTWS2 (1 kV; StackiCap height to verify)",
+      "dc_bias_note": "60 % loss at 440 V assumed; TDK curve not fetched (open issue)",
+      "ring_current": "film-to-ceramic resonance ~670 kHz launched at every edge: ~1.1 W in the loop resistance (0.75-1.5 W for 20-40 nH), 0.75-1.4 A rms per MLCC - thermally tolerable, stated"
+    },
     "damping_leg_dnp": "1 uF 630 V film + 0.47 ohm >= 2 W (two 1 W 2512 in parallel) across the HF tier, DNP until the extracted loop inductance is known",
-    "output_film": {"part": "B32776G4606K000", "manufacturer": "TDK (EPCOS)", "qty": 2, "value": "60 uF 450 V, 4-pin", "footprint": "custom 4-pad: (+/-18.75, +/-10.15) mm, drill 1.6 mm, pad 3.0 mm, courtyard 30 x 45 mm, height 45 mm", "i_rms_each_A": 1.43, "ripple_Vpp": 0.25, "step_excursion_V_fc2p5kHz": 7.4, "load_dump_25A_V": 14.8, "fault_440V_survivable": true},
+    "output_film": {
+      "part": "B32776G4606K000",
+      "manufacturer": "TDK (EPCOS)",
+      "qty": 2,
+      "value": "60 uF 450 V, 4-pin",
+      "footprint": "custom 4-pad: (+/-18.75, +/-10.15) mm, drill 1.6 mm, pad 3.0 mm, courtyard 30 x 45 mm, height 45 mm",
+      "i_rms_each_A": 1.43,
+      "ripple_Vpp": 0.25,
+      "step_excursion_V_fc2p5kHz": 7.4,
+      "load_dump_25A_V": 14.8,
+      "fault_440V_survivable": true
+    },
     "bleeders": {
       "input": "3 x Vishay CRCW2512120KFKEG in series (360 k, 0.54 W at 440 V, 160 V per element at 480 V) plus indicator chain 3 x 150 k 1206 + red LED (DC-LINK LIVE; <= 160 V and 0.17 W per element)",
       "output": "2 x Vishay CRCW2512100KFKEG in series (200 k, 0.20 W; 0.97 W / 220 V per element under a high-side-short fault at 440 V) plus indicator chain 2 x 100 k 1206 + red LED",
-      "discharge_to_60V_s": "about 30 (coupled banks, merged networks)", "criterion": "< 60 V within 60 s with IEC 60417-5036 label; the compliant 5 s passive alternative costs about 4.5 W (60 k input / 32 k output) and is documented as the preferred option if the integrator demands 5 s"
+      "discharge_to_60V_s": "about 30 (coupled banks, merged networks)",
+      "criterion": "< 60 V within 60 s with IEC 60417-5036 label; the compliant 5 s passive alternative costs about 4.5 W (60 k input / 32 k output) and is documented as the preferred option if the integrator demands 5 s"
     },
     "snubber_dnp": "RC pads across the LS device (SW-PGND): 2512 resistor + 1812 1 kV capacitor, DNP until double-pulse results",
     "mov_optional": "TDK S20K385 = B72220S0381K101 (8 kA, 150 J, 1.0 W) across VIN+/PGND, DNP"
   },
   "sensing": {
-    "current": {"part": "TMCS1133C2AQDVGR", "placement": "inductor output path (L1 -> TMCS1133 -> VOUT bus)", "vs_V": 3.3, "transfer": "0.33 V + 0.05 V/A (range -4.6 to +57.4 A)", "adc_full_scale_A": 53.4, "lsb_mA": 14.65, "isolation": "950 Vrms / 1343 VDC reinforced, >= 8 mm (SBOSAG0E; TI product page shows 600 Vrms / 8.1 mm - datasheet governs, confirm with TI)", "conductor": "0.7 mohm, 0.53 W at 27.5 A; 80 Arms rating is at 25 C (44 Arms at 125 C)",
-      "oc_threshold_A": 37.5, "oc_setting": "VOC = 0.750 V from a REF3125 2.5 V via 2.32 k / 1.00 k on the power-board SELV strip", "oc_response_ns": "100 typ / 250 max (rows to quote)", "trip_chain_total_ns": 546, "overload_margin": "32.0 A worst overload peak vs 33.7 A worst-case low trip bound (1.7 A before sensor error)", "trip_overshoot_worst": "with L 175 uH: di/dt 2.5 A/us at 440 V, 1.4 A overshoot, worst peak ~42.6 A (soft roll-off core, CR-05)",
-      "outputs_to_control": ["ISENSE (0-3 V)", "ISENSE_REF (VREF out)", "OC_N"], "footprint": "custom DVG-16 with fused bar pads for IN+/IN- (25 A) and 8 individual SELV pins (TI drawing)"},
-    "vin": {"part": "AMC1311BDWVR", "ladder": "4 x 750 k 1206 0.1 % + 10.0 k, 1 nF across bottom + 100 pF at IN (TIDA ratio reused after recomputation)", "full_scale_V": 602, "adc_at_480V_V": 2.392, "conversion": "OPA2320 difference amplifier gain 1.5, 32 kHz filter, on the power-board SELV strip; single-ended VIN_SENSE over the mezzanine; 1 k + 1 nF at ADCINA0", "isolation": "7000 Vpk reinforced, 1500 Vrms / 2120 VDC, >= 8.5 mm (SBAS786C)"},
-    "vout": {"part": "AMC1311BDWVR", "ladder": "2 x 750 k 1206 0.1 % + 10.0 k, 1 nF + 100 pF", "full_scale_V": 302, "adc_at_240V_V": 2.384, "conversion": "OPA2320 gain 1.5 on the power-board SELV strip; VOUT_SENSE to ADCINB1"},
+    "current": {
+      "part": "TMCS1133C2AQDVGR",
+      "placement": "inductor output path (L1 -> TMCS1133 -> VOUT bus)",
+      "vs_V": 3.3,
+      "transfer": "0.33 V + 0.05 V/A (range -4.6 to +57.4 A)",
+      "adc_full_scale_A": 53.4,
+      "lsb_mA": 14.65,
+      "isolation": "950 Vrms / 1343 VDC reinforced, >= 8 mm (SBOSAG0E; TI product page shows 600 Vrms / 8.1 mm - datasheet governs, confirm with TI)",
+      "conductor": "0.7 mohm, 0.53 W at 27.5 A; 80 Arms rating is at 25 C (44 Arms at 125 C)",
+      "oc_threshold_A": 37.5,
+      "oc_setting": "VOC = 0.750 V from a REF3125 2.5 V via 2.32 k / 1.00 k on the power-board SELV strip",
+      "oc_response_ns": "100 typ / 250 max (rows to quote)",
+      "trip_chain_total_ns": 546,
+      "overload_margin": "32.0 A worst overload peak vs 33.7 A worst-case low trip bound (1.7 A before sensor error)",
+      "trip_overshoot_worst": "with L 175 uH: di/dt 2.5 A/us at 440 V, 1.4 A overshoot, worst peak ~42.6 A (soft roll-off core, CR-05)",
+      "outputs_to_control": [
+        "ISENSE (0-3 V)",
+        "ISENSE_REF (VREF out)",
+        "OC_N"
+      ],
+      "footprint": "custom DVG-16 with fused bar pads for IN+/IN- (25 A) and 8 individual SELV pins (TI drawing)"
+    },
+    "vin": {
+      "part": "AMC1311BDWVR",
+      "ladder": "4 x 750 k 1206 0.1 % + 10.0 k, 1 nF across bottom + 100 pF at IN (TIDA ratio reused after recomputation)",
+      "full_scale_V": 602,
+      "adc_at_480V_V": 2.392,
+      "conversion": "OPA2320 difference amplifier gain 1.5, 32 kHz filter, on the power-board SELV strip; single-ended VIN_SENSE over the mezzanine; 1 k + 1 nF at ADCINA0",
+      "isolation": "7000 Vpk reinforced, 1500 Vrms / 2120 VDC, >= 8.5 mm (SBAS786C)"
+    },
+    "vout": {
+      "part": "AMC1311BDWVR",
+      "ladder": "2 x 750 k 1206 0.1 % + 10.0 k, 1 nF + 100 pF",
+      "full_scale_V": 302,
+      "adc_at_240V_V": 2.384,
+      "conversion": "OPA2320 gain 1.5 on the power-board SELV strip; VOUT_SENSE to ADCINB1"
+    },
     "sensing_island_supply": "dedicated third UCC14141-Q1 (CR-12): 5V_ISO = COM-VEE 5.0 V, VEE = PGND; AMC1311 GND1 = PGND; the TIDA-010054 pattern (TLV76050 from the LS gate VDD, RLIM review, 25.1 mA / 0.38 W, R_pre <= 289 ohm) remains the documented alternative",
-    "heatsink_temperature": {"part": "Vishay NTCALUG01A103F (10 k lug NTC, 1500 Vac lug-to-terminal insulation; -161 variant with 160 mm leads if the route to the control board needs it)", "mounting": "M3 thread-forming hole on the sink top face beside the HS device footprint (there is no bare aluminium between the bodies at 28 mm pitch); spreading offset +4-6 K", "route": "two-wire lead to J_NTC on the control board; 2.2 k pull-up to 3.00 V (REF3125 buffered) + 100 nF; ADCINA2", "readout_V": {"25C": 2.46, "90C": 0.88, "100C": 0.71, "110C": 0.57}, "thresholds_C_review_proposals": {"warn_derate": 90, "firmware_trip": 100, "hardware_comparator_trip": 110}, "steady_state_sink_C_with_selected_sink": "67-72", "tj_mapping": "T_J,HS ~ T_NTC + 45 K at full load with max-R parts (KR-TH-003: cooling supervision, not junction protection; thresholds are human-review proposals)"},
+    "heatsink_temperature": {
+      "part": "Vishay NTCALUG01A103F (10 k +/-1 %, B25/85 3984 K, lug NTC; Vishay doc 29092 rev 14-Jan-2026: -55 to +150 C, 13 mW/K, thermal time constant 5 s, 1500 Vac / 100 Mohm lug-to-terminal insulation, AEC-Q200; -161 variant with 160 mm leads if the route to the control board needs it)",
+      "mounting": "M3 thread-forming hole on the sink top face beside the HS device footprint (there is no bare aluminium between the bodies at 28 mm pitch); spreading offset +4-6 K",
+      "route": "two-wire lead to J_NTC on the control board; 2.2 k pull-up to 3.00 V (REF3125 buffered) + 100 nF; ADCINA2",
+      "readout_V": {
+        "25C": 2.46,
+        "90C": 0.88,
+        "100C": 0.71,
+        "110C": 0.57
+      },
+      "thresholds_C_review_proposals": {
+        "warn_derate": 90,
+        "firmware_trip": 100,
+        "hardware_comparator_trip": 110
+      },
+      "steady_state_sink_C_with_selected_sink": "67-72",
+      "tj_mapping": "T_J,HS ~ T_NTC + 4-6 K spreading + P_HS x (R_pad + R_thJC) ~ T_NTC + 50-66 K at full load (1.4 K/W pad; up to 66 K with max-R parts) (KR-TH-003: cooling supervision, not junction protection; thresholds are human-review proposals)"
+    },
     "control_board_local_temperature": "LM61CIM3 (V1 pattern) on ADCINA3",
-    "aux_monitoring": {"v12_mon": "ADCINB3 via 0.1808 divider", "i12_mon": "TPS26400 IMON 14.7 k to ADCINB0"},
+    "aux_monitoring": {
+      "v12_mon": "ADCINB3 via 0.1808 divider",
+      "i12_mon": "TPS26400 IMON 14.7 k to ADCINB0"
+    },
     "adc_front_end": "1 k + 1 nF at every ADC pin (F28335 analog pins clamp a diode above VDDA2 with +/-2 mA; 0-3 V is the conversion range, not an absolute maximum)"
   },
   "protection": {
-    "fast_hardware": ["DESAT per switch (UCC21710, 0.55-1.07 us; the only protection against shoot-through)", "TMCS1133 OC 37.5 A -> latch -> RST_EN + TZ1, and OC_N -> TZ2 directly (inductor-current faults)"],
-    "comparators": {"part": "TLV1702AIDGKR x2 + REF3125AIDBZR", "ovp_in_V": 460, "ovp_out_V": 230, "ovp_out_divider": "953 ohm / 10.0 k on the 0.0099338 V/V output sense (229.8 V)", "uvlo_in_V": [340, 320], "uvlo_note": "non-latched run permit with auto-restart and soft start; open-collector hysteresis network is asymmetric - verify by simulation or implement bus UVLO in firmware", "otp_hardware_C": 110, "otp_note": "ratiometric to the 3.00 V NTC pull-up reference"},
+    "fast_hardware": [
+      "DESAT per switch (UCC21710, 0.55-1.07 us; the only protection against shoot-through)",
+      "TMCS1133 OC 37.5 A -> latch -> RST_EN + TZ1, and OC_N -> TZ2 directly (inductor-current faults)"
+    ],
+    "comparators": {
+      "part": "TLV1702AIDGKR x2 + REF3125AIDBZR",
+      "ovp_in_V": 460,
+      "ovp_out_V": 230,
+      "ovp_out_divider": "953 ohm / 10.0 k on the 0.0099338 V/V output sense (229.8 V)",
+      "uvlo_in_V": [
+        340,
+        320
+      ],
+      "uvlo_note": "non-latched run permit with auto-restart and soft start; open-collector hysteresis network is asymmetric - verify by simulation or implement bus UVLO in firmware",
+      "otp_hardware_C": 110,
+      "otp_note": "ratiometric to the 3.00 V NTC pull-up reference"
+    },
     "fault_latch": "SN74LVC1G74DCTR (SSOP-8; the DCKR suffix does not exist): D = 1, CLK = ARM (GPIO2), CLR_N = combined latched fault; Q = ARMED = FAULT_N to TZ1 (GPIO12) and to the PWM AND gates",
     "fault_combiner": "2 x SN74LV21A AND gates (tpd max 12 ns at 3.3 V). LATCHED group -> CLR_N: FLT_H_N, FLT_L_N, OC_N, OVP_IN_N, OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N. RUN-PERMIT group (not latched) -> PWM enable: UVLO_N, RDY_H, RDY_L, ARMED",
     "pwm_gating": "ePWM1A/1B -> SN74LVC2G08 (PWM AND ARMED AND RUN_PERMIT) -> 33 ohm -> mezzanine -> 100 ohm + 100 pF + 10 k at each UCC21710 input; 10 k pull-downs on PWM_H, PWM_L and ARM at the gate/latch inputs; pull-ups on DSP_TRIP_N and ESTOP_N (F28335 GPIO0-11 have no reset pull-ups)",
@@ -175,87 +407,603 @@
   "controller": {
     "dsp": "TMS320F28335PGFA, all 176 pins mapped (components/tms320f28335_pgf_pins.csv); 30 MHz oscillator on XCLKIN; 14-pin JTAG; 3.3 V UART; boot straps GPIO84-87; V1 patterns reused",
     "supplies": "12V_PROT -> TPS54302DDCR (5 V) -> TPS767D301PWPR (1.9 V adj 18.2 k / 30.1 k, 3.3 V fixed, core-first sequencing; EP variant NRND, TLV752 named alternative) ; TPS3808G01 5 V supervisor with 101 k / 10 k for a 4.5 V threshold (105 k would trip at 4.66 V); I_5V 0.54 A; P_LDO 1.39 W",
-    "aux_12V_protection": {"part": "TPS26400PWPR", "tvs": "SMBJ15CA", "uvlo_V": [10.0, 9.3], "ovp_V": [14.45, 13.4], "mode": "open = circuit breaker with 4 ms timeout and 540 ms auto-retry", "r_ilim_kohm": 6.04, "i_cb_A": "about 1.96 (12/R_ILIM - 0.03)", "dvdt_C_nF": 100, "ramp_ms": "8.9-12.2", "imon_R_kohm": 14.7, "bulk_uF": 100,
-      "budget_A_at_10p8V": {"gate_bias_modules": 0.4, "sensing_bias_module": 0.15, "control_board": 0.29, "relay_coil_pull_in": 0.42, "relay_coil_pwm_hold": 0.25, "heatsink_fan_max": 0.5, "total_worst_pull_in": 1.76, "total_steady_with_hold": 1.59}, "margin_to_i_cb": "1.11x during relay pull-in, 1.23x steady - external supply 2.5 A recommended; fan upstream of the eFuse is the fallback if margin proves insufficient"},
-    "pwm": {"tbprd_up_down_150MHz": 1500, "tick_ns": 6.667, "dead_band_ticks_bring_up": 45, "duty_ceiling_initial": 0.85, "adc_soc": "ePWM CTR = ZERO", "outer_loop_crossover_Hz": "2000-2500 with an inner current loop"},
+    "aux_12V_protection": {
+      "part": "TPS26400PWPR",
+      "tvs": "SMBJ15CA",
+      "uvlo_V": [
+        10.0,
+        9.3
+      ],
+      "ovp_V": [
+        14.45,
+        13.4
+      ],
+      "mode": "open = circuit breaker with 4 ms timeout and 540 ms auto-retry",
+      "r_ilim_kohm": 6.04,
+      "i_cb_A": "about 1.96 (12/R_ILIM - 0.03)",
+      "dvdt_C_nF": 100,
+      "ramp_ms": "8.9-12.2",
+      "imon_R_kohm": 14.7,
+      "bulk_uF": 100,
+      "budget_A_at_10p8V": {
+        "gate_bias_modules": 0.4,
+        "sensing_bias_module": 0.15,
+        "control_board": 0.29,
+        "relay_coil_pull_in": 0.42,
+        "relay_coil_pwm_hold": 0.25,
+        "heatsink_fan_max": 0.5,
+        "total_worst_pull_in": 1.76,
+        "total_steady_with_hold": 1.59
+      },
+      "margin_to_i_cb": "1.11x during relay pull-in, 1.23x steady - external supply 2.5 A recommended; fan upstream of the eFuse is the fallback if margin proves insufficient"
+    },
+    "pwm": {
+      "tbprd_up_down_150MHz": 1500,
+      "tick_ns": 6.667,
+      "dead_band_ticks_bring_up": 45,
+      "duty_ceiling_initial": 0.85,
+      "adc_soc": "ePWM CTR = ZERO",
+      "outer_loop_crossover_Hz": "2000-2500 with an inner current loop"
+    },
     "dsp_pin_map": [
-      ["PWM_H", 5, "GPIO0/EPWM1A"], ["PWM_L", 6, "GPIO1/EPWM1B"], ["ARM", 7, "GPIO2"], ["RELAY_ON", 10, "GPIO3"], ["RESET_N (driver RST/EN)", 11, "GPIO4"], ["BIAS_EN", 12, "GPIO5"], ["DSP_TRIP_N", 13, "GPIO6"],
-      ["FLT_H_N", 16, "GPIO7"], ["FLT_L_N", 17, "GPIO8"], ["RDY_H", 18, "GPIO9"], ["RDY_L", 19, "GPIO10"], ["OVP_N", 20, "GPIO11"], ["FAULT_N (= ARMED)", 21, "GPIO12/TZ1"], ["OC_N", 24, "GPIO13/TZ2"], ["UVLO_N", 25, "GPIO14/TZ3"], ["OTP_N", 26, "GPIO15/TZ4"],
-      ["FLT_12V_N", 27, "GPIO16"], ["PG_BIAS_H_N", 28, "GPIO17"], ["PG_BIAS_L_N", 62, "GPIO18"], ["ESTOP_N", 63, "GPIO19"], ["PG_BIAS_S_N", 64, "GPIO20"], ["LED_RUN", 65, "GPIO21"], ["LED_FAULT", 66, "GPIO22"], ["FAN_TACH", 68, "GPIO24/ECAP1"], ["SPARE_D2", 73, "GPIO27"],
-      ["UART_RX", 141, "GPIO28/SCIRXDA"], ["UART_TX", 2, "GPIO29/SCITXDA"],
-      ["VIN_SENSE", 42, "ADCINA0"], ["ISENSE", 41, "ADCINA1"], ["TEMP_HS_NTC", 40, "ADCINA2"], ["TEMP_CTRL (LM61)", 39, "ADCINA3"], ["ISENSE_REF", 38, "ADCINA4"],
-      ["I12V_MON", 46, "ADCINB0"], ["VOUT_SENSE", 47, "ADCINB1"], ["V12V_MON", 49, "ADCINB3"]
+      [
+        "PWM_H",
+        5,
+        "GPIO0/EPWM1A"
+      ],
+      [
+        "PWM_L",
+        6,
+        "GPIO1/EPWM1B"
+      ],
+      [
+        "ARM",
+        7,
+        "GPIO2"
+      ],
+      [
+        "RELAY_ON",
+        10,
+        "GPIO3"
+      ],
+      [
+        "RESET_N (driver RST/EN)",
+        11,
+        "GPIO4"
+      ],
+      [
+        "BIAS_EN",
+        12,
+        "GPIO5"
+      ],
+      [
+        "DSP_TRIP_N",
+        13,
+        "GPIO6"
+      ],
+      [
+        "FLT_H_N",
+        16,
+        "GPIO7"
+      ],
+      [
+        "FLT_L_N",
+        17,
+        "GPIO8"
+      ],
+      [
+        "RDY_H",
+        18,
+        "GPIO9"
+      ],
+      [
+        "RDY_L",
+        19,
+        "GPIO10"
+      ],
+      [
+        "OVP_N",
+        20,
+        "GPIO11"
+      ],
+      [
+        "FAULT_N (= ARMED)",
+        21,
+        "GPIO12/TZ1"
+      ],
+      [
+        "OC_N",
+        24,
+        "GPIO13/TZ2"
+      ],
+      [
+        "UVLO_N",
+        25,
+        "GPIO14/TZ3"
+      ],
+      [
+        "OTP_N",
+        26,
+        "GPIO15/TZ4"
+      ],
+      [
+        "FLT_12V_N",
+        27,
+        "GPIO16"
+      ],
+      [
+        "PG_BIAS_H_N",
+        28,
+        "GPIO17"
+      ],
+      [
+        "PG_BIAS_L_N",
+        62,
+        "GPIO18"
+      ],
+      [
+        "ESTOP_N",
+        63,
+        "GPIO19"
+      ],
+      [
+        "PG_BIAS_S_N",
+        64,
+        "GPIO20"
+      ],
+      [
+        "LED_RUN",
+        65,
+        "GPIO21"
+      ],
+      [
+        "LED_FAULT",
+        66,
+        "GPIO22"
+      ],
+      [
+        "FAN_TACH",
+        68,
+        "GPIO24/ECAP1"
+      ],
+      [
+        "SPARE_D2",
+        73,
+        "GPIO27"
+      ],
+      [
+        "UART_RX",
+        141,
+        "GPIO28/SCIRXDA"
+      ],
+      [
+        "UART_TX",
+        2,
+        "GPIO29/SCITXDA"
+      ],
+      [
+        "VIN_SENSE",
+        42,
+        "ADCINA0"
+      ],
+      [
+        "ISENSE",
+        41,
+        "ADCINA1"
+      ],
+      [
+        "TEMP_HS_NTC",
+        40,
+        "ADCINA2"
+      ],
+      [
+        "TEMP_CTRL (LM61)",
+        39,
+        "ADCINA3"
+      ],
+      [
+        "ISENSE_REF",
+        38,
+        "ADCINA4"
+      ],
+      [
+        "I12V_MON",
+        46,
+        "ADCINB0"
+      ],
+      [
+        "VOUT_SENSE",
+        47,
+        "ADCINB1"
+      ],
+      [
+        "V12V_MON",
+        49,
+        "ADCINB3"
+      ]
     ]
   },
   "interconnect": {
-    "type": "stacked mezzanine, 2 x 25 pins, 2.54 mm; socket Samtec SSW-125-01-G-D on the power-board SELV strip, header Samtec TSW-125-07-G-D on the control board (alt Wuerth WR-PHD); four M3 standoffs; stack height ~11 mm (unverified); 24 ground pins",
+    "type": "stacked mezzanine, 2 x 25 pins, 2.54 mm; socket Samtec SSW-125-01-G-D on the power-board SELV strip, header Samtec TSW-125-07-G-D on the control board (alt Wuerth WR-PHD); four M3 standoffs; mated height about 11.05 mm (SSW insulator 8.51 mm + TSW insulator 2.54 mm, Samtec catalog; drawing to confirm before fixing standoff length); 6.3 A per pin, 500 VAC rating; 24 ground pins",
     "signalling": "buffered single-ended with 100 ohm / 100 pF / 10 k at each receiving pin (KR-GD-008 exclusion for short on-board links, applied by adaptation to the mezzanine); RS-422 only if a cable > 150 mm is ever used",
     "pin_assignment": {
-      "1": "+12V_PROT", "2": "+12V_PROT", "3": "+12V_PROT", "4": "GND_CTRL", "5": "GND_CTRL", "6": "GND_CTRL", "7": "RELAY_ON", "8": "GND_CTRL", "9": "BIAS_EN", "10": "GND_CTRL",
-      "11": "RESET_N", "12": "GND_CTRL", "13": "GND_CTRL", "14": "PWM_H", "15": "GND_CTRL", "16": "GND_CTRL", "17": "PWM_L", "18": "GND_CTRL", "19": "GND_CTRL", "20": "FLT_H_N",
-      "21": "FLT_L_N", "22": "GND_CTRL", "23": "RDY_H", "24": "RDY_L", "25": "GND_CTRL", "26": "GND_CTRL", "27": "OC_N", "28": "GND_CTRL", "29": "FAN_TACH", "30": "PG_BIAS_S_N",
-      "31": "GND_CTRL", "32": "PG_BIAS_H_N", "33": "PG_BIAS_L_N", "34": "GND_CTRL", "35": "FAULT_N", "36": "SPARE_D1", "37": "SPARE_D2", "38": "GND_CTRL", "39": "+3V3_PWRBOARD", "40": "+3V3_PWRBOARD",
-      "41": "GND_CTRL", "42": "GND_CTRL", "43": "ISENSE", "44": "GND_CTRL", "45": "ISENSE_REF", "46": "GND_CTRL", "47": "VIN_SENSE", "48": "GND_CTRL", "49": "VOUT_SENSE", "50": "GND_CTRL"
+      "1": "+12V_PROT",
+      "2": "+12V_PROT",
+      "3": "+12V_PROT",
+      "4": "GND_CTRL",
+      "5": "GND_CTRL",
+      "6": "GND_CTRL",
+      "7": "RELAY_ON",
+      "8": "GND_CTRL",
+      "9": "BIAS_EN",
+      "10": "GND_CTRL",
+      "11": "RESET_N",
+      "12": "GND_CTRL",
+      "13": "GND_CTRL",
+      "14": "PWM_H",
+      "15": "GND_CTRL",
+      "16": "GND_CTRL",
+      "17": "PWM_L",
+      "18": "GND_CTRL",
+      "19": "GND_CTRL",
+      "20": "FLT_H_N",
+      "21": "FLT_L_N",
+      "22": "GND_CTRL",
+      "23": "RDY_H",
+      "24": "RDY_L",
+      "25": "GND_CTRL",
+      "26": "GND_CTRL",
+      "27": "OC_N",
+      "28": "GND_CTRL",
+      "29": "FAN_TACH",
+      "30": "PG_BIAS_S_N",
+      "31": "GND_CTRL",
+      "32": "PG_BIAS_H_N",
+      "33": "PG_BIAS_L_N",
+      "34": "GND_CTRL",
+      "35": "FAULT_N",
+      "36": "SPARE_D1",
+      "37": "SPARE_D2",
+      "38": "GND_CTRL",
+      "39": "+3V3_PWRBOARD",
+      "40": "+3V3_PWRBOARD",
+      "41": "GND_CTRL",
+      "42": "GND_CTRL",
+      "43": "ISENSE",
+      "44": "GND_CTRL",
+      "45": "ISENSE_REF",
+      "46": "GND_CTRL",
+      "47": "VIN_SENSE",
+      "48": "GND_CTRL",
+      "49": "VOUT_SENSE",
+      "50": "GND_CTRL"
     },
-    "power_board_selv_strip_also_carries": ["fan connector (12V_PROT, GND_CTRL, FAN_TACH)", "relay coil terminals (12V_PROT, K1_COIL_LOW)", "driver input RC networks and pull-downs", "bias-module CM chokes and input capacitors (3 modules)", "OPA2320 difference amplifiers, REF3125 and the TMCS1133 V_OC divider, 3V3 decoupling", "test points", "4 x M3 standoff holes for the control board"],
-    "control_board_connectors": ["J_12V 2-pin 5.08 mm terminal block (12 V in)", "J_NTC 2-pin (heatsink NTC)", "J_JTAG 14-pin TI", "J_UART 1x3", "J_BOOT 1x3", "J_ESTOP 1x2", "J_RESET 1x2"]
+    "power_board_selv_strip_also_carries": [
+      "fan connector (12V_PROT, GND_CTRL, FAN_TACH)",
+      "relay coil terminals (12V_PROT, K1_COIL_LOW)",
+      "driver input RC networks and pull-downs",
+      "bias-module CM chokes and input capacitors (3 modules)",
+      "OPA2320 difference amplifiers, REF3125 and the TMCS1133 V_OC divider, 3V3 decoupling",
+      "test points",
+      "4 x M3 standoff holes for the control board"
+    ],
+    "control_board_connectors": [
+      "J_12V 2-pin 5.08 mm terminal block (12 V in)",
+      "J_NTC 2-pin (heatsink NTC)",
+      "J_JTAG 14-pin TI",
+      "J_UART 1x3",
+      "J_BOOT 1x3",
+      "J_ESTOP 1x2",
+      "J_RESET 1x2"
+    ]
   },
   "architecture": {
     "option": "B: separate power PCB and DSP control PCB; drivers, bias modules and all isolators stay on the power board; the control board is entirely SELV",
-    "scores": {"A": 2.75, "B": 4.0, "C": 3.1},
-    "power_board": {
-      "outline_mm": [240, 180], "stretch_target_mm": [230, 170], "layers": 4, "copper_um": 70, "thickness_mm": 2.0,
-      "zones": "HV area 240 x 140 (top), ISO_BARRIER 10 mm copper-free on all layers, SELV strip 30 mm along the bottom edge",
-      "stackup": [["F.Cu", 70, "HF ceramics, VIN+/SW/VOUT+ pours, device pads, film pads, HV terminals, mezzanine socket"], ["prepreg", 0.2], ["In1.Cu", 70, "PGND return pour under the commutation loop and bus; GND_CTRL pour under the SELV strip"], ["core", 1.1], ["In2.Cu", 70, "Kelvin-source pours in the driver islands (shield), parallel VIN+/SW/VOUT+ pours, 12 V / 3V3 distribution in the SELV strip"], ["prepreg", 0.2], ["B.Cu", 70, "gate pours with drivers, DESAT, rail decoupling and bias modules under the device row; parallel PGND/VOUT pours; SELV-strip parts"]],
-      "net_classes": ["HV_VIN", "HV_SW", "HV_PGND", "HV_VOUT", "DRV_HS", "DRV_LS", "DESAT_HS", "DESAT_LS", "SENSE_ISO", "PE", "CTRL_SELV"],
-      "heatsink": "Fischer Elektronik LAM 5 D K 100 12 (double-width LAM 5 profile, ~100 x 100 mm plan, 50 mm high, integrated 12 V fan, 0.30 K/W distributor figure - datasheet to confirm; CR-13); both TO-247-4 vertical against one face at 28 mm pitch, leads trimmed short; reserve 175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 10 mm tall); PE-bonded; >= 5 mm HV copper keep-out; clip-to-lead >= 3 mm",
-      "placement_rules": ["commutation loop first: HF ceramics in columns beside the TO-247-4 legs, VIN+/PGND as overlapping pours on F.Cu/In1.Cu (<= 20 nH board target; 40-60 nH total with standing leads)", "drivers and decoupling on B.Cu within 15 mm of the device leads; gate pour B.Cu over Kelvin pour In2.Cu", "all barrier parts (3 x UCC14141, 2 x UCC21710, 2 x AMC1311, TMCS1133) on one straight barrier line; device row on the HV side of the driver islands; SELV strip at the board edge", "film capacitors and inductor in the fan stream beside the sink, >= 10 mm from it; nothing heat-sensitive in the exhaust", "HV terminals, relay-contact terminals and PTC at the input and output ends; PE stud M4"]
+    "scores": {
+      "A": 2.75,
+      "B": 4.0,
+      "C": 3.1
     },
-    "control_board": {"outline_mm": [120, 80], "layers": 4, "copper_um": 35, "thickness_mm": 1.6, "stackup": [["F.Cu", 35, "DSP, logic, comparators, supplies"], ["In1.Cu", 35, "solid GND_CTRL"], ["In2.Cu", 35, "1V9 / 3V3 / 5V / 12V_PROT islands"], ["B.Cu", 35, "signals, JTAG, mezzanine header"]], "mounting": "stacked ~11 mm above the SELV strip, overhanging the board edge by ~40 mm; no control-board copper above HV copper (air clearance >= 11 mm; the between-boards clearance argument is a standards review item); 4 x M3 standoffs"},
-    "mechanical": "open frame on a PE-bonded baseplate; power board on 6 x M4 x 15 mm standoffs; total height <= 80 mm; mass about 1.9 kg",
-    "target_metrics_after_layout": {"power_board_area_mm2_max": 43200, "hv_to_selv_clearance_mm_min": 9.0, "driver_to_gate_pin_mm_max": 15, "hf_cap_to_device_pin_mm_max": [5, 15], "commutation_loop_board_nH_target": 20}
+    "power_board": {
+      "outline_mm": [
+        240,
+        180
+      ],
+      "stretch_target_mm": [
+        230,
+        170
+      ],
+      "layers": 4,
+      "copper_um": 70,
+      "thickness_mm": 2.0,
+      "zones": "HV area 240 x 140 mm = 33,600 mm2 (73 % utilisation with the research envelopes, ~90 % with the heatsink strip), ISO_BARRIER 10 mm copper-free on all layers, SELV strip 30 mm along the bottom edge; the 230 x 170 mm stretch outline is unlikely - 240 x 180 mm is the target",
+      "stackup": [
+        [
+          "F.Cu",
+          70,
+          "HF ceramics, VIN+/SW/VOUT+ pours, device pads, film pads, HV terminals, mezzanine socket"
+        ],
+        [
+          "prepreg",
+          0.2,
+          "commutation-loop dielectric (fabricator to confirm 0.20 mm between two 70 um layers; 0.25-0.30 mm acceptable if adjacency is kept)"
+        ],
+        [
+          "In1.Cu",
+          70,
+          "PGND return pour under the commutation loop and bus; GND_CTRL pour under the SELV strip"
+        ],
+        [
+          "core",
+          1.32,
+          "gives 2.0 mm total with 4 x 70 um and 2 x 0.20 mm"
+        ],
+        [
+          "In2.Cu",
+          70,
+          "Kelvin-source pours in the driver islands (shield), parallel VIN+/SW/VOUT+ pours, 12 V / 3V3 distribution in the SELV strip"
+        ],
+        [
+          "prepreg",
+          0.2,
+          "gate-loop dielectric"
+        ],
+        [
+          "B.Cu",
+          70,
+          "gate pours with drivers, DESAT, rail decoupling and bias modules under the device row; parallel PGND/VOUT pours; SELV-strip parts"
+        ]
+      ],
+      "net_classes": [
+        "HV_VIN",
+        "HV_SW",
+        "HV_PGND",
+        "HV_VOUT",
+        "DRV_HS",
+        "DRV_LS",
+        "DESAT_HS",
+        "DESAT_LS",
+        "SENSE_ISO",
+        "PE",
+        "CTRL_SELV"
+      ],
+      "heatsink": "Fischer Elektronik LAM 5 D K 100 12 (double-width LAM 5 profile, ~100 x 100 mm plan, 50 mm high, integrated 12 V fan, 0.30 K/W distributor figure - datasheet to confirm; CR-13); both TO-247-4 vertical against one face at 28 mm pitch, leads trimmed short; reserve 175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 10 mm tall); PE-bonded; >= 5 mm HV copper keep-out; clip-to-lead >= 3 mm",
+      "placement_rules": [
+        "commutation loop first: HF ceramics in columns beside the TO-247-4 legs, VIN+/PGND as overlapping pours on F.Cu/In1.Cu (<= 20 nH board target; 40-60 nH total with standing leads)",
+        "drivers and decoupling on B.Cu within 15 mm of the device leads; gate pour B.Cu over Kelvin pour In2.Cu",
+        "all barrier parts (3 x UCC14141, 2 x UCC21710, 2 x AMC1311, TMCS1133) on one straight barrier line; device row on the HV side of the driver islands; SELV strip at the board edge",
+        "film capacitors and inductor in the fan stream beside the sink, >= 10 mm from it; nothing heat-sensitive in the exhaust",
+        "HV terminals, relay-contact terminals and PTC at the input and output ends; PE stud M4",
+        "HS/LS inter-island copper-free barrier (KR-ISO-001 second clause): 3.0 mm outer / 1.0 mm inner between DRV_HS/DESAT_HS and DRV_LS/DESAT_LS nets",
+        "inductor >= 20 mm and film capacitors >= 20 mm from the heatsink body, films >= 15 mm from the inductor; intake/exhaust corridors hold only parts <= 15 mm tall"
+      ]
+    },
+    "control_board": {
+      "outline_mm": [
+        120,
+        80
+      ],
+      "layers": 4,
+      "copper_um": 35,
+      "thickness_mm": 1.6,
+      "stackup": [
+        [
+          "F.Cu",
+          35,
+          "DSP, logic, comparators, supplies"
+        ],
+        [
+          "In1.Cu",
+          35,
+          "solid GND_CTRL"
+        ],
+        [
+          "In2.Cu",
+          35,
+          "1V9 / 3V3 / 5V / 12V_PROT islands"
+        ],
+        [
+          "B.Cu",
+          35,
+          "signals, JTAG, mezzanine header"
+        ]
+      ],
+      "mounting": "stacked ~11 mm above the SELV strip, overhanging the board edge by ~40 mm; no control-board copper above HV copper (air clearance >= 11 mm; the between-boards clearance argument is a standards review item); 4 x M3 standoffs"
+    },
+    "mechanical": "open frame on a PE-bonded baseplate; power board on 6 x M4 x 15 mm standoffs; total height 15 + 2 + 55 = 72 mm (< 80 mm); mass about 1.8-2.0 kg (power-board copper 0.3-0.5 kg)",
+    "target_metrics_after_layout": {
+      "power_board_area_mm2_max": 43200,
+      "hv_to_selv_clearance_mm_min": 9.0,
+      "driver_to_gate_pin_mm_max": 15,
+      "hf_cap_to_device_pin_mm_max": [
+        5,
+        15
+      ],
+      "commutation_loop_board_nH_target": 20
+    }
   },
   "thermal": {
-    "heatsink": "Fischer LAM 5 D K 100 12, R_th 0.30 K/W at nominal fan flow (unverified distributor figure); single-width LAM 5 K 100 12 (0.68 K/W) is the cost-down option only if measured R_pad <= 1 K/W and the OTP thresholds are raised consistently",
-    "interface_pad": "Bergquist Sil-Pad TSP A2000 0.254 mm (6 kVac class) custom cut 28 x 32 mm per device, no hole; design R_pad 1.1 K/W (clip ~40-60 N); Sil-Pad TSP 3500 (4 kVac, 0.96 K/W at 40 N) is the thermal alternative if the assembled-pad type test at the 4 kV impulse basis passes; the pad voltage rating vs impulse basis (2.5 kV OVC II vs 4 kV) is a preserved human-review conflict",
-    "hardware": "LAM 5 K retaining clips (force to verify >= 40 N); screw alternative Boyd 7721-7PPSG shoulder washer with M2.5; pad overhang >= 5 mm beyond the tab; clip metal >= 3 mm from the leads",
-    "results": {"400V_25A_typ": "T_sink ~64 C, T_J,HS ~102 C", "360V_27p5A_max_R_pad_1p1": "T_sink ~68 C, T_J,HS ~120 C (hottest HS corner)", "440V_27p5A_max_R": "T_J,HS ~118 C", "p_max_per_device_W_150C": 47.4, "margin_over_34p1W": 1.39, "fan_fail": "T_J exceeds 175 C in steady state at any natural-convection estimate -> OTP mandatory; time 68 -> 100 C sink about 50-100 s; FAN_TACH stall derating within 2 s", "spreading_allowance_K_W": "0.1-0.2 per device (+3-7 K) to be measured"},
+    "heatsink": "Fischer Elektronik LAM 5 D K 100 12, R_th 0.30 K/W at nominal fan flow (unverified distributor figure; the exact ordering string and the 12 V fan airflow must be confirmed from the Fischer datasheet). Single-width LAM 5 K 100 12 (0.68 K/W) is the cost-down option only if measured R_pad <= 1 K/W. The TIDA-010054 Ohmite CR201-50VE (and clip CLA-TO-21E) is DISCONTINUED since August 2024 and is removed from the alternatives; its datasheet does carry a forced-convection curve, so the TI 0.5 C/W figure was plausibly a chart reading.",
+    "interface_pad": "Bergquist Sil-Pad TSP A2000 0.254 mm (6 kVac class) custom cut 28 x 32 mm per device, no hole. Design R_pad 1.4 K/W: impedance 0.50 C-in2/W at ~25 psi clip pressure divided by the EXPOSED tab metal D1 x E1 ~ 17.0 x 13.6 mm = 2.3 cm2 = 0.36 in2 (the full 16 x 21 mm body outline used earlier gave an optimistic 0.96 K/W); 1.16 K/W if screw-mounted at 50 psi. TSP 3500 (4 kVac) would give 1.20 / 0.92 K/W. The pad voltage rating versus the impulse basis (2.5 kV OVC II vs 4 kV) is a preserved human-review conflict; the type test is defined by the isolation review.",
+    "hardware": "LAM 5 K retaining clips (force to verify >= 40 N; clip pressure 17-26 psi); screw alternative only with a TO-247 insulating bushing whose shoulder covers the full 2.2-2.5 mm hole depth and is rated for the working voltage - the Boyd 7721-7PPSG (0.81 mm shoulder) is NOT adequate; pad overhang >= 5 mm beyond the tab; clip metal >= 3 mm from the leads",
+    "results": {
+      "400V_25A_typ": "P_tot 46.7 W, P_HS 25.1 W -> T_sink 64 C, T_J,HS 109.4 C",
+      "360V_27p5A_max_R_HS_hottest": "P_tot 60.2 W, P_HS 34.1 W -> T_sink 68 C, T_J,HS 129.8 C",
+      "440V_27p5A_max_R": "P_tot 62.9 W, P_HS 31.7 W -> T_J,HS 126.2 C",
+      "p_max_per_device_W_150C": 41.5,
+      "margin_over_34p1W": 1.22,
+      "tj_preferred_125C": "met with typical parts at 400 V / 25 A, not met at the 360 V / 27.5 A max-R corner (about 130 C)",
+      "fan_fail": "T_J exceeds 175 C in steady state at any natural-convection estimate -> OTP mandatory; sink 68 -> 100 C in about 50-100 s; FAN_TACH stall derating within 2 s",
+      "spreading_allowance_K_W": "0.1-0.2 per device (+3-7 K) to be measured",
+      "rth_jc_note": "0.41 K/W is a typical value with no datasheet maximum; 48.5 / 57.2 mohm at 150 C are interpolated/scaled"
+    },
     "fan": "integrated 12 V fan of the LAM 5 D K; current budgeted 0.5 A maximum (datasheet value unknown); at 10.8 V flow -10 % -> R_th +6 %",
-    "copper": {"outer_70um_width_mm_25A_20K": 12, "inner_width_mm_25A": 22, "vias_per_25A_transition": "24 x 0.3 mm drill (or 21 x 0.5 mm)", "method": "IPC-2221 formula k = 0.048 / 0.024, exponents 0.44 / 0.725 (conservative relative to IPC-2152); via plating 25 um"},
-    "other_components": {"inductor": "16-20 W typical / 23-26 W bounded; must sit in the fan stream (CR-14)", "film_capacitors": ">= 20 mm from the sink, outside the exhaust (recommendation, SKILL-006 step 3); hot-spot <= 85 C design", "ceramics_at_legs": "rated >= 125 C"},
+    "copper": {
+      "outer_70um_width_mm_25A_20K": 12,
+      "inner_width_mm_25A": 22,
+      "vias_per_25A_transition": "24 x 0.3 mm drill (or 21 x 0.5 mm)",
+      "method": "IPC-2221 formula k = 0.048 / 0.024, exponents 0.44 / 0.725 (conservative relative to IPC-2152); via plating 25 um"
+    },
+    "other_components": {
+      "inductor": "16-20 W typical / 23-26 W bounded; must sit in the fan stream (CR-14); >= 20 mm from the sink; films >= 20 mm from the sink and >= 15 mm from the inductor (thermal spacing adopted over the inductor record's 10 mm)",
+      "film_capacitors": ">= 20 mm from the sink, outside the exhaust (recommendation, SKILL-006 step 3); hot-spot <= 85 C design",
+      "ceramics_at_legs": "rated >= 125 C"
+    },
     "limitations": "no CFD; equal-sharing lumped sink model (TI's factor 2 read as two devices per sink); distributor-level heatsink data; the 10 s overload treated as steady state (conservative)"
   },
   "standards_and_spacing": {
     "basis": "IEC 62477-1 general (clause numbers secondary-source); IEC 61800-5-1:2007 tables as the numeric source (impulse 4 kV basic / 6 kV reinforced, 440 V DC working; the consulted copy is not on record, so values are tagged secondary until a licensed copy is reviewed); IEC 60664-1 Annex F origin (Tables F.1/F.2/F.4 corroborated); IEC 61800-5-1:2022 Ed. 3 + COR1:2023 renumbers the discharge clause to 4.4.9; IPC-2221B Table 6-1 functional spacing; IPC-2221 current capacity",
-    "kicad_rules_mm": {"HV_or_DRV_or_DESAT_or_SENSE_ISO_to_CTRL_SELV_all_layers": 9.0, "ISO_BARRIER_keepout_width": 10.0, "HV_to_PE": 5.0, "HV_functional_outer": 3.0, "HV_functional_inner": 1.0, "same_reference_island": 0.3, "CTRL_SELV": 0.2, "HV_to_board_edge": 1.0, "slot_width_nonplated_nominal": 1.2, "slot_width_after_tolerance_min": 1.0, "to247_pin_field_exception": "per-package rule derived from pad geometry (2.54 mm pitch cannot meet 3.0 mm); creepage review item"},
+    "kicad_rules_mm": {
+      "HV_or_DRV_or_DESAT_or_SENSE_ISO_to_CTRL_SELV_all_layers": 9.0,
+      "ISO_BARRIER_keepout_width": 10.0,
+      "HV_to_PE": 5.0,
+      "HV_functional_outer": 3.0,
+      "HV_functional_inner": 1.0,
+      "same_reference_island": 0.3,
+      "CTRL_SELV": 0.2,
+      "HV_to_board_edge": 1.0,
+      "slot_width_nonplated_nominal": 1.2,
+      "slot_width_after_tolerance_min": 1.0,
+      "to247_pin_field_exception": "per-package rule derived from pad geometry (2.54 mm pitch cannot meet 3.0 mm); creepage review item"
+    },
     "slots": "1.2 mm nominal non-plated slots under every barrier part whose land gap g is < 9 mm (3 x UCC14141 DWN, 2 x UCC21710 DW, 2 x AMC1311 DWV, TMCS1133 DVG); each slot extends e >= 3 mm beyond the outermost pad edges so that the around-the-end surface path 2 x sqrt((g/2)^2 + e^2) >= 9.0 mm (the 'gap + 2 x board thickness' model is wrong for through-slots); the CGD1700HB2M-UNA 0.76 mm slot is not reusable at PD2",
     "between_boards": "control-board copper never above HV copper; air clearance >= 11 mm between the stacked boards (standards review must confirm the through-air argument at PD2)",
-    "copper": {"outer_70um_width_mm_25A": 12, "inner_width_mm_25A": 22, "vias_per_25A_transition": 24, "via_drill_mm": 0.3},
+    "copper": {
+      "outer_70um_width_mm_25A": 12,
+      "inner_width_mm_25A": 22,
+      "vias_per_25A_transition": 24,
+      "via_drill_mm": 0.3
+    },
     "discharge": "< 60 V within 60 s with IEC 60417-5036 label + time and DC-LINK LIVE LEDs per bank; 5 s passive option (~4.5 W) documented",
-    "labels": ["IEC 60417-5036 + 60 s", "ISO 7010 W012", "PE symbol (IEC 60417-5019)", "hot surface"],
+    "labels": [
+      "IEC 60417-5036 + 60 s",
+      "ISO 7010 W012",
+      "PE symbol (IEC 60417-5019)",
+      "hot surface"
+    ],
     "pe": "PE conductor cross-section >= supply conductor; bonding resistance <= 0.1 ohm; Y2 touch-current estimate (0.85-1.8 mA at 50 kHz) excludes mains-frequency ripple of a rectifier-derived bus"
   },
   "conflict_resolutions": [
-    {"id": "CR-01", "topic": "heatsink NTC route", "decision": "direct SELV NTC (Vishay NTCALUG01A103F, 1500 Vac lug insulation) to the control board; the heatsink is PE-bonded and SGND is PE-bonded at one point (proposed PELV deviation), so the lug potential equals the control reference. The CB-PR-002 path through the LS driver AIN would place the floating PGND-to-PE voltage across the NTC and is recorded as adapted-then-rejected for this grounding scheme; CB-PR-002 stays a fallback only. Both driver AIN pins tied to COM."},
-    {"id": "CR-02", "topic": "12 V auxiliary budget", "decision": "all 12 V loads behind the eFuse; R_ILIM 6.04 k -> circuit-breaker threshold about 1.96 A; worst-case 1.76 A during relay pull-in, 1.59 A steady with the mandatory PWM coil hold; external supply 2.5 A recommended; fan-upstream fallback documented."},
-    {"id": "CR-03", "topic": "bleeder networks", "decision": "capacitor agent's 2512 chains adopted; indicator strings 3 x 150 k (input) and 2 x 100 k (output) 1206 + LED (the sensing agent's 2 x 220 k 1206 string exceeded the 200 V / 0.25 W element limits); ~30 s coupled discharge under the 60 s + label criterion; 5 s option documented."},
-    {"id": "CR-04", "topic": "output OVP level", "decision": "230 V (15 %); divider 953 ohm / 10.0 k; a 25 A load dump (215-218 V) stays below the trip."},
-    {"id": "CR-05", "topic": "OC trip vs inductor saturation", "decision": "worst-case trip corner ~42.6 A (L 175 uH) versus soft roll-off (L(41 A) >= 175 uH worst, B 0.80 T = 53 % of B_sat): acceptable, no hard knee; recorded for review."},
-    {"id": "CR-06", "topic": "heatsink envelope and NTC position", "decision": "Fischer LAM 5 D K 100 12 (double width, 0.30 K/W) replaces both the architecture reservation (100 x 40 x 50) and the thermal agent's single-width choice; NTC moves to the sink top face beside the HS footprint; device pitch stays 28 mm for the commutation loop."},
-    {"id": "CR-07", "topic": "dead time", "decision": "program 300 ns (45 ticks) at bring-up for an effective >= 265 ns after skew erosion; target 250 ns; tune toward 200 ns by double-pulse test."},
-    {"id": "CR-08", "topic": "NTC part", "decision": "Vishay NTCALUG01A103F (fetched datasheet) instead of TDK B57703M0103G040 (whose lead length and 1000 Vac/1 s test voltage were also misquoted)."},
-    {"id": "CR-09", "topic": "HV functional spacing", "decision": "standards agent's 3.0 mm outer / 1.0 mm inner replaces the capacitor agent's provisional 2.5 / 1.5 mm (4 kV impulse basis)."},
-    {"id": "CR-10", "topic": "HV terminals", "decision": "Wuerth REDCUBE THR M5 74651195 for VIN+, PGND_IN, VOUT+, PGND_OUT and the two relay-contact terminals (ring lugs under IPXXB covers off-board); M4 PE stud pad."},
-    {"id": "CR-11", "topic": "V_GS probe", "decision": "2-pin probe-loop test points at the device side of R_G instead of MMCX jacks."},
-    {"id": "CR-12", "topic": "sensing-island supply", "decision": "dedicated third UCC14141-Q1 configured VDD-VEE 15 V / COM-VEE 5.0 V with VEE = PGND; the AMC1311s run from COM (sourcing direction of the COM regulator). The shared LS-gate-module + TLV76050 pattern (TIDA-010054 decision 7, CB-IS-002) fails the COM-VEE regulator sink check (RLIM would need <= ~100 ohm, outside the RLIM qualification) and the KR-IS-004 sharing review; it remains the documented alternative. RECOM R12P2 / Murata MGJ2 modules are basic-insulation parts (250 Vrms working) and are not acceptable for the HV-SELV barrier."},
-    {"id": "CR-13", "topic": "insulating pad", "decision": "Sil-Pad TSP A2000 (6 kVac) baseline for dielectric margin against the 4 kV impulse view; TSP 3500 alternative after an assembled-pad type test; pad voltage rating vs impulse category kept as a human-review conflict."},
-    {"id": "CR-14", "topic": "inductor cooling", "decision": "inductor placed in the fan stream (forced air mandatory; 110-120 C hot spot predicted in still air); 3-stack core fallback if the thermocouple acceptance (<= 110 C) fails."},
-    {"id": "CR-15", "topic": "fuse rating", "decision": "KLKD025.T (25 A) instead of 20 A: 88 % loading at the 320 V stop corner with 27.5 A and 50-60 C ambient derating ruled out the 20 A member; I2t coordination open."},
-    {"id": "CR-16", "topic": "analogue conditioning location", "decision": "OPA2320 difference stages, REF3125 and the TMCS1133 V_OC divider move to the power-board SELV strip so that only single-ended, ground-referenced VIN_SENSE / VOUT_SENSE / ISENSE / ISENSE_REF cross the mezzanine (the AMC1311 differential pairs otherwise lacked connector pins)."},
-    {"id": "CR-17", "topic": "fault-logic topology", "decision": "controller agent's SN74LV21A AND-gate combiner owns the fault bus; latched group vs run-permit group defined (UVLO and RDY are run permits with auto-restart); ARM clocks the latch; the sensing agent's wired-OR node is dropped."},
-    {"id": "CR-18", "topic": "eFuse mode and 5 V supervisor", "decision": "TPS26400 MODE open = circuit breaker (I_CB = 12/R_ILIM - 0.03 A, 4 ms, 540 ms retry) is the sizing basis; TPS3808G01 top resistor 101 k for the 4.5 V threshold."},
-    {"id": "CR-19", "topic": "part-number corrections from verification", "decision": "SN74LVC1G74DCTR (SSOP-8) replaces the non-existent DCKR; MOV S20K385 = B72220S0381K101; PTC to be re-selected (quoted code/parameter mismatch); relay freewheel diode >= 1 A; UCC14141 input capacitors 3 x 10 uF."},
-    {"id": "CR-20", "topic": "firmware input-current derating", "decision": "input current limited to 15.6 A below 360 V (A-02 / A-05 inconsistency at the 320 V stop corner); source current limit 18-25 A."}
+    {
+      "id": "CR-01",
+      "topic": "heatsink NTC route",
+      "decision": "direct SELV NTC (Vishay NTCALUG01A103F, 1500 Vac lug insulation) to the control board; the heatsink is PE-bonded and SGND is PE-bonded at one point (proposed PELV deviation), so the lug potential equals the control reference. The CB-PR-002 path through the LS driver AIN would place the floating PGND-to-PE voltage across the NTC and is recorded as adapted-then-rejected for this grounding scheme; CB-PR-002 stays a fallback only. Both driver AIN pins tied to COM."
+    },
+    {
+      "id": "CR-02",
+      "topic": "12 V auxiliary budget",
+      "decision": "all 12 V loads behind the eFuse; R_ILIM 6.04 k -> circuit-breaker threshold about 1.96 A; worst-case 1.76 A during relay pull-in, 1.59 A steady with the mandatory PWM coil hold; external supply 2.5 A recommended; fan-upstream fallback documented."
+    },
+    {
+      "id": "CR-03",
+      "topic": "bleeder networks",
+      "decision": "capacitor agent's 2512 chains adopted; indicator strings 3 x 150 k (input) and 2 x 100 k (output) 1206 + LED (the sensing agent's 2 x 220 k 1206 string exceeded the 200 V / 0.25 W element limits); ~30 s coupled discharge under the 60 s + label criterion; 5 s option documented."
+    },
+    {
+      "id": "CR-04",
+      "topic": "output OVP level",
+      "decision": "230 V (15 %); divider 953 ohm / 10.0 k; a 25 A load dump (215-218 V) stays below the trip."
+    },
+    {
+      "id": "CR-05",
+      "topic": "OC trip vs inductor saturation",
+      "decision": "worst-case trip corner ~42.6 A (L 175 uH) versus soft roll-off (L(41 A) >= 175 uH worst, B 0.80 T = 53 % of B_sat): acceptable, no hard knee; recorded for review."
+    },
+    {
+      "id": "CR-06",
+      "topic": "heatsink envelope and NTC position",
+      "decision": "Fischer LAM 5 D K 100 12 (double width, 0.30 K/W) replaces both the architecture reservation (100 x 40 x 50) and the thermal agent's single-width choice; NTC moves to the sink top face beside the HS footprint; device pitch stays 28 mm for the commutation loop."
+    },
+    {
+      "id": "CR-07",
+      "topic": "dead time",
+      "decision": "program 300 ns (45 ticks) at bring-up for an effective >= 265 ns after skew erosion; target 250 ns; tune toward 200 ns by double-pulse test."
+    },
+    {
+      "id": "CR-08",
+      "topic": "NTC part",
+      "decision": "Vishay NTCALUG01A103F (fetched datasheet) instead of TDK B57703M0103G040 (whose lead length and 1000 Vac/1 s test voltage were also misquoted)."
+    },
+    {
+      "id": "CR-09",
+      "topic": "HV functional spacing",
+      "decision": "standards agent's 3.0 mm outer / 1.0 mm inner replaces the capacitor agent's provisional 2.5 / 1.5 mm (4 kV impulse basis)."
+    },
+    {
+      "id": "CR-10",
+      "topic": "HV terminals",
+      "decision": "Wuerth REDCUBE THR M5 74651195 for VIN+, PGND_IN, VOUT+, PGND_OUT and the two relay-contact terminals (ring lugs under IPXXB covers off-board); M4 PE stud pad."
+    },
+    {
+      "id": "CR-11",
+      "topic": "V_GS probe",
+      "decision": "2-pin probe-loop test points at the device side of R_G instead of MMCX jacks."
+    },
+    {
+      "id": "CR-12",
+      "topic": "sensing-island supply",
+      "decision": "dedicated third UCC14141-Q1 configured VDD-VEE 15 V / COM-VEE 5.0 V with VEE = PGND; the AMC1311s run from COM (sourcing direction of the COM regulator). The shared LS-gate-module + TLV76050 pattern (TIDA-010054 decision 7, CB-IS-002) fails the COM-VEE regulator sink check (RLIM would need <= ~100 ohm, outside the RLIM qualification) and the KR-IS-004 sharing review; it remains the documented alternative. RECOM R12P2 / Murata MGJ2 modules are basic-insulation parts (250 Vrms working) and are not acceptable for the HV-SELV barrier."
+    },
+    {
+      "id": "CR-13",
+      "topic": "insulating pad",
+      "decision": "Sil-Pad TSP A2000 (6 kVac) baseline for dielectric margin against the 4 kV impulse view; TSP 3500 alternative after an assembled-pad type test; pad voltage rating vs impulse category kept as a human-review conflict."
+    },
+    {
+      "id": "CR-14",
+      "topic": "inductor cooling",
+      "decision": "inductor placed in the fan stream (forced air mandatory; 110-120 C hot spot predicted in still air); 3-stack core fallback if the thermocouple acceptance (<= 110 C) fails."
+    },
+    {
+      "id": "CR-15",
+      "topic": "fuse rating",
+      "decision": "KLKD025.T (25 A) instead of 20 A: 88 % loading at the 320 V stop corner with 27.5 A and 50-60 C ambient derating ruled out the 20 A member; I2t coordination open."
+    },
+    {
+      "id": "CR-16",
+      "topic": "analogue conditioning location",
+      "decision": "OPA2320 difference stages, REF3125 and the TMCS1133 V_OC divider move to the power-board SELV strip so that only single-ended, ground-referenced VIN_SENSE / VOUT_SENSE / ISENSE / ISENSE_REF cross the mezzanine (the AMC1311 differential pairs otherwise lacked connector pins)."
+    },
+    {
+      "id": "CR-17",
+      "topic": "fault-logic topology",
+      "decision": "controller agent's SN74LV21A AND-gate combiner owns the fault bus; latched group vs run-permit group defined (UVLO and RDY are run permits with auto-restart); ARM clocks the latch; the sensing agent's wired-OR node is dropped."
+    },
+    {
+      "id": "CR-18",
+      "topic": "eFuse mode and 5 V supervisor",
+      "decision": "TPS26400 MODE open = circuit breaker (I_CB = 12/R_ILIM - 0.03 A, 4 ms, 540 ms retry) is the sizing basis; TPS3808G01 top resistor 101 k for the 4.5 V threshold."
+    },
+    {
+      "id": "CR-19",
+      "topic": "part-number corrections from verification",
+      "decision": "SN74LVC1G74DCTR (SSOP-8) replaces the non-existent DCKR; MOV S20K385 = B72220S0381K101; PTC to be re-selected (quoted code/parameter mismatch); relay freewheel diode >= 1 A; UCC14141 input capacitors 3 x 10 uF."
+    },
+    {
+      "id": "CR-20",
+      "topic": "firmware input-current derating",
+      "decision": "input current limited to 15.6 A below 360 V (A-02 / A-05 inconsistency at the 320 V stop corner); source current limit 18-25 A."
+    },
+    {
+      "id": "CR-21",
+      "topic": "insulating pad resistance and mounting hardware",
+      "decision": "R_pad re-based on the exposed tab metal (2.3 cm2): TSP A2000 1.4 K/W clip / 1.16 K/W screw; T_J,HS up to ~130 C at the 360 V / 27.5 A max-R corner on the LAM 5 D K sink (P_max 41.5 W, margin 1.22); screw mounting only with a full-depth TO-247 insulating bushing (Boyd 7721-7PPSG rejected)."
+    },
+    {
+      "id": "CR-22",
+      "topic": "power-board geometry arithmetic",
+      "decision": "HV area 33,600 mm2 at 73 % utilisation (not 28,800 / 86 %); core 1.32 mm for the 2.0 mm stack; 240 x 180 mm is the target outline."
+    },
+    {
+      "id": "CR-23",
+      "topic": "thermal spacing and inter-island barrier",
+      "decision": "inductor and films >= 20 mm from the sink, films >= 15 mm from the inductor; HS/LS inter-island barrier 3.0 / 1.0 mm added to the placement rules."
+    },
+    {
+      "id": "CR-24",
+      "topic": "discontinued reference heatsink",
+      "decision": "Ohmite CR201-50VE / CLA-TO-21E removed (discontinued Aug 2024); knowledge-base feedback item."
+    }
   ],
   "open_items_for_human_review": [
     "C4MS025120K availability (Arrow stock only, 13-week lead) and unpublished short-circuit withstand time; Gen-4 750 V family check",
@@ -268,6 +1016,8 @@
     "Custom inductor winding house, core orderable code (0058192A2 vs C058192A2), potting cup part number, acoustic noise, worst-case core loss",
     "Efficiency budget: MOSFET 47-57 W + inductor 16-26 W + driver E_on penalty 2-4 W + copper ~3 W + aux ~8 W + ring ~1 W = 77-99 W (98.0-98.5 %) typical, no margin at the bounded worst case",
     "All distributor-only parameters (Samtec, G9EA-1 variants, KLKD I2t, SMBJ15CA, AO3400A, US1M lifecycle, BAT42W) to be confirmed from manufacturer datasheets",
-    "Knowledge-base maintenance: CMP-TMCS1133 orderable variants; stale cache paths in three component records; SKILL-006 TI instance values unsupported by datasheets; C3M0030090K obsolete; CB-PR-002 APWM polarity (88 % at 0.6 V, 10 % at 4.5 V); PE-PCB-* rules not retrievable through query.py; query.py console encoding"
+    "Knowledge-base maintenance: CMP-TMCS1133 orderable variants; stale cache paths in three component records; SKILL-006 TI instance values unsupported by datasheets; C3M0030090K obsolete; CB-PR-002 APWM polarity (88 % at 0.6 V, 10 % at 4.5 V); PE-PCB-* rules not retrievable through query.py; query.py console encoding",
+    "Pad resistance (1.4 K/W design) rests on the exposed-tab area read from the package table; measure the case-to-sink drop on the first assembly; the 125 C preference is not met at the hottest max-R corner",
+    "Signalling across the mezzanine is single-ended by adaptation of the KR-GD-008 exclusion (stacked boards, <= 100 mm segment); the assumptions and gate-driver records asked for RS-422 (CB-GD-003) when boards are separated - documented deviation for review"
   ]
 }
