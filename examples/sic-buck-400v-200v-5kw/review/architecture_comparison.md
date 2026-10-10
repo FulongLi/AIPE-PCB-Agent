@@ -25,7 +25,7 @@ analytically checked, [DS] fetched datasheet, [MP] manufacturer page, [SS] searc
    900 cm2 fin area" (unsupported; a taller CR201-50 has 474 cm2) is superseded by the baseline
    Fischer LAM 5 D K 100 12 (CR-06), reservation 175 x 110 mm, 50 mm high; the verify's
    single-width 185 x 60 x 55 mm proposal is itself superseded by CR-06. Height 15 + 2 + 50 =
-   67 mm (the baseline mechanical line sums 15 + 2 + 55 = 72 mm; the 55 mm sink term is
+   67 mm (the baseline mechanical line sums 15 + 2 + 50 = 67 mm (72 mm envelope); the 55 mm sink term is
    unexplained - orchestrator item; both below the 80 mm limit).
 3. The record's KR-TH-001 sanity table (0.5 K/W pad, mixed loss corners, 1.1 K/W called
    acceptable) is dropped; the baseline thermal results stand (schema 3, CR-21: R_pad 1.4 K/W):
@@ -93,7 +93,7 @@ HV zone utilisation with the baseline sink: the exclusive sum (sink body + fan 1
 inductor with band 6,375, films 5,160, HF tier 560, eight barrier zones 2,000, half-counted
 driver islands 1,050, small items and six standoff keep-outs about 5,600) is about
 33,400 mm2 = 99 % of 33,600 mm2, 119 % if the 30 mm intake and exhaust corridors (parts
-<= 10 mm allowed) are kept empty [AC, this document]. The record's 230 x 170 mm stretch
+<= 15 mm allowed) are kept empty [AC, this document]. The record's 230 x 170 mm stretch
 outline is therefore not credible for any option and the 240 x 180 mm target is at risk for B
 exactly as the 240 x 204 mm figure is for A: the comparison between options is unaffected
 because all three share the same HV area, but the absolute outlines must be re-derived by

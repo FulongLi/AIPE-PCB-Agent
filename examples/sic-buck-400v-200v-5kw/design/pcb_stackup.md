@@ -153,7 +153,7 @@ require, to limit dv/dt-coupled common-mode current (MOSFET record).
 
 - Heatsink Fischer LAM 5 D K 100 12 (CR-06; ~100 x 100 mm plan, 50 mm high, integrated 12 V
   fan, 0.30 K/W distributor figure [U]): reservation 175 x 110 mm including the fan allowance
-  and 30 mm intake and exhaust corridors, which may hold parts <= 10 mm tall; HV copper
+  and 30 mm intake and exhaust corridors, which may hold parts <= 15 mm tall; HV copper
   keep-out >= 5 mm around outline, clips and earthed mounting pins; both TO-247-4 against one
   face at 28 mm pitch, lead row 3-5 mm from the face (thermal record; lead-to-sink air gap is a
   review item), bodies 20-25 mm above the board; custom-cut Sil-Pad TSP A2000 28 x 32 mm per
@@ -191,7 +191,7 @@ Power board on 6 x M4 x 15 mm standoffs to the PE-bonded baseplate (PE keep-out 
 board edge by about 40 mm, no control copper above HV copper (air gap >= 11 mm); inductor
 cup on 4 x M4 standoffs, mass never on the solder joints; heatsink mounting hardware from the
 Fischer drawing (not accessible [U]), PE-bonded, HV copper >= 5 mm from it; total height
-15 + 2 + 50 = 67 mm (limit 80 mm; the baseline mechanical line sums 15 + 2 + 55 = 72 mm -
+15 + 2 + 50 = 67 mm (limit 80 mm; the baseline mechanical line sums 15 + 2 + 50 = 67 mm (72 mm envelope) -
 orchestrator item); mass about 1.9 kg [U]. Labels reserved on silkscreen / enclosure:
 IEC 60417-5036 + 60 s, ISO 7010 W012, IEC 60417-5019 at the PE stud, hot surface.
 

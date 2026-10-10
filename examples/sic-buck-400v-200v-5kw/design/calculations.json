@@ -3,7 +3,7 @@
   "title": "V2 calculation record: 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck (C4MS025120K, UCC21710-Q1, custom High Flux choke)",
   "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
   "generated_by": "python -m automation.scripts.calculate_sic_buck",
-  "precedence": "design_decisions.json (schema 3) > research record after its two verify_*.json required_changes > added assumptions (labelled)",
+  "precedence": "design_decisions.json (schema 4) > research record after its two verify_*.json required_changes > added assumptions (labelled)",
   "verification_levels_used": [
     "user-requirement",
     "fetched-datasheet",
@@ -1684,31 +1684,31 @@
       "name": "NTC_reference",
       "value": 3.0,
       "unit": "V",
-      "source": "design_decisions.json sensing.heatsink_temperature.route (REF3125 buffered)",
+      "source": "design_decisions.json sensing.heatsink_temperature.route (REF3130AIDBZR 3.0 V, CR-26)",
       "verification": "analytically-checked",
       "note": ""
     },
     {
       "name": "OTP_thresholds_degC",
       "value": {
-        "warn_derate": 90,
-        "firmware_trip": 100,
-        "hardware_comparator_trip": 110
+        "warn_derate_overload_inhibit": 80,
+        "firmware_trip": 90,
+        "hardware_comparator_trip": 100
       },
       "unit": "degC",
       "source": "design_decisions.json sensing.heatsink_temperature.thresholds_C_review_proposals",
       "verification": "analytically-checked",
-      "note": "human-review proposals (KR-TH-003)"
+      "note": "human-review proposals (KR-TH-003); ladder lowered from 90/100/110 degC by CR-25"
     },
     {
-      "name": "OTP_comparator_divider_proposal",
+      "name": "OTP_comparator_divider",
       "value": [
-        10000.0,
-        2370.0
+        32400.0,
+        10000.0
       ],
       "unit": "ohm",
-      "source": "added: E96 pair from the 3.00 V NTC reference for the 110 degC trip",
-      "verification": "added-assumption",
+      "source": "design_decisions.json sensing.heatsink_temperature.otp_comparator_divider (32.4 k / 10.0 k from REF3V0 = 0.708 V, about 100 degC; CR-25)",
+      "verification": "analytically-checked",
       "note": ""
     },
     {
@@ -4928,17 +4928,18 @@
         }
       ],
       "NTC_sensitivity_mV_per_K_90_100": 17.132927939175136,
-      "NTC_self_heating_K_at_110C": 0.04842264970962393,
+      "NTC_self_heating_K_at_100C": 0.05683288164276846,
       "OTP_threshold_voltages_V": {
-        "warn_derate": 0.8810258028608543,
-        "firmware_trip": 0.709696523469103,
-        "hardware_comparator_trip": 0.5698859111352224
+        "warn_derate_overload_inhibit": 1.0858237019765569,
+        "firmware_trip": 0.8810258028608543,
+        "hardware_comparator_trip": 0.709696523469103
       },
-      "OTP_hardware_divider_proposal": {
-        "R_top_ohm": 10000.0,
-        "R_bottom_ohm": 2370.0,
-        "V_th_V": 0.5747776879547292,
-        "trip_C": 109.61119642071213
+      "OTP_hardware_divider": {
+        "R_top_ohm": 32400.0,
+        "R_bottom_ohm": 10000.0,
+        "V_th_V": 0.7075471698113207,
+        "trip_C": 100.13884403265536,
+        "target_C": 100
       }
     }
   },
@@ -5304,7 +5305,8 @@
         "T_J_HS_ss_C": 213.17229861629727,
         "tau_s": 467.1,
         "initial_slope_K_per_s": 0.2276563875322142,
-        "time_to_100C_trip_s": 207.76793940891793
+        "time_to_firmware_trip_s": 131.44715165550684,
+        "time_to_hardware_trip_s": 207.76793940891793
       },
       {
         "R_nat_K_per_W": 1.73,
@@ -5313,7 +5315,8 @@
         "T_J_HS_ss_C": 213.17229861629727,
         "tau_s": 934.2,
         "initial_slope_K_per_s": 0.1138281937661071,
-        "time_to_100C_trip_s": 415.53587881783585
+        "time_to_firmware_trip_s": 262.8943033110137,
+        "time_to_hardware_trip_s": 415.53587881783585
       },
       {
         "R_nat_K_per_W": 2.5,
@@ -5322,7 +5325,8 @@
         "T_J_HS_ss_C": 260.5020615842446,
         "tau_s": 675.0,
         "initial_slope_K_per_s": 0.2276563875322142,
-        "time_to_100C_trip_s": 179.3929822526402
+        "time_to_firmware_trip_s": 117.23332485820396,
+        "time_to_hardware_trip_s": 179.3929822526402
       },
       {
         "R_nat_K_per_W": 2.5,
@@ -5331,7 +5335,8 @@
         "T_J_HS_ss_C": 260.5020615842446,
         "tau_s": 1350.0,
         "initial_slope_K_per_s": 0.1138281937661071,
-        "time_to_100C_trip_s": 358.7859645052804
+        "time_to_firmware_trip_s": 234.46664971640791,
+        "time_to_hardware_trip_s": 358.7859645052804
       }
     ],
     "ntc_to_TJ_offset_K": {
@@ -5341,7 +5346,7 @@
         50,
         66
       ],
-      "note": "baseline (schema 3) states T_NTC + 50-66 K at full load with the 1.4 K/W pad (4 K spreading offset, loss table without E_oss); the offsets here include E_oss and the 6 K upper offset for the max-R case and are load dependent (the earlier +45 K figure belonged to a 0.80 K/W pad)"
+      "note": "baseline (schema 4) states T_NTC + 50-66 K at full load with the 1.4 K/W pad (4 K spreading offset, loss table without E_oss); the offsets here include E_oss and the 6 K upper offset for the max-R case and are load dependent (the earlier +45 K figure belonged to a 0.80 K/W pad)"
     },
     "copper": {
       "ipc_widths": [
@@ -6587,7 +6592,7 @@
       "id": "KR-TH-003",
       "type": "rule",
       "applicability": "human-review",
-      "how_applied": "NTC readout and NTC-to-T_J offset computed; 90/100/110 degC thresholds are proposals (cooling supervision, not junction protection)."
+      "how_applied": "NTC readout and NTC-to-T_J offset computed; 80/90/100 degC thresholds (CR-25) are proposals (cooling supervision, not junction protection)."
     },
     {
       "id": "KR-PCB-006",
@@ -6729,8 +6734,8 @@
   ],
   "open_items": [
     "Parasitic turn-on: the charge-based RC model spans 3.6-7.0 V of off-state excursion over the stated Q_gd (20-27 nC) and edge (8-13 ns) ranges, i.e. V_GS up to about +3 V against the 2.0 V (25 degC) minimum threshold; the baseline's 4.5-5.2 V is the mid-range. Miller clamp mandatory; off-state V_GS measurement (PRD-09301 6.1) decides R_G,off and bias.",
-    "NTC-to-T_J offset with the 1.4 K/W design pad is 58 K (typical, 440 V / 27.5 A) to 69 K (max-R, 360 V / 27.5 A) at full load, consistent with the baseline's 50-66 K band; the 110 degC hardware trip then maps to T_J about 168-179 degC and the 100 degC firmware trip to about 158-169 degC at full load - neither threshold holds T_J at the 150 degC design limit at full load, so the 90/100/110 degC ladder needs review (KR-TH-003).",
-    "Fan-fail time to the 100 degC firmware trip from the 68 degC steady state is 179-416 s for the lumped D K sink (R_nat 1.73-2.5 K/W and mass 0.3-0.6 kg unverified), not the 50-100 s carried in the baseline (that figure was the single-width unit from 88 degC); the conclusion (T_J > 175 degC at stall, OTP and FAN_TACH derate mandatory) stands.",
+    "NTC-to-T_J offset with the 1.4 K/W design pad is 58 K (typical, 440 V / 27.5 A) to 69 K (max-R, 360 V / 27.5 A) at full load, consistent with the baseline's 50-66 K band; the 100 degC hardware comparator trip (CR-25) then maps to T_J about 158-169 degC and the 90 degC firmware trip to about 148-159 degC at full load - the hardware trip stays below the 175 degC absolute maximum, both levels exceed the 150 degC design limit toward the max-R overload corner, which the 80 degC derate / overload inhibit addresses; the earlier 90/100/110 degC ladder (hardware trip at T_J about 168-179 degC) was lowered by CR-25 and a firmware T_J estimator is recommended (KR-TH-003).",
+    "Fan-fail time from the 68 degC steady state is 117-263 s to the 90 degC firmware trip and 179-416 s to the 100 degC hardware trip (CR-25) for the lumped D K sink (R_nat 1.73-2.5 K/W and mass 0.3-0.6 kg unverified), not the 50-100 s to 100 degC carried in the baseline (that figure was the single-width unit from 88 degC); the conclusion (T_J > 175 degC at stall, OTP and FAN_TACH derate mandatory) stands.",
     "Merged bleeder + indicator networks discharge both banks in about 20 s (bleeders alone about 36 s); the baseline's 'about 30 s' is the nominal-C bleeder-only estimate. Output indicator chain (2 x 100 k 1206) sees 220 V / 0.48 W per element under a high-side-short fault at 440 V - above typical 1206 ratings; use >= 3 elements or 2512 parts if the fault must be survived.",
     "Aux 12 V: the pull-in total (1.76 A at 10.8 V) exceeds an assumed -10 % circuit-breaker minimum (1.76 A) with zero margin for the 50 ms relay operate time; stagger fan start and relay pull-in or move the fan upstream of the eFuse (baseline fallback).",
     "Mezzanine 12 V pins carry 0.43-0.49 A each (fan, relay coil and bias modules all sit on the power board), above the architecture's 0.4 A per-pin target but 6x below the 3 A WR-PHD rating.",

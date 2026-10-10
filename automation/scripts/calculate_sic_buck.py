@@ -6,7 +6,7 @@ Run from the repository root:
     python -m automation.scripts.calculate_sic_buck
 
 Single source of truth: examples/sic-buck-400v-200v-5kw/design/design_decisions.json
-(schema 3).  Where the baseline is silent, the research records
+(schema 4).  Where the baseline is silent, the research records
 design/research/<area>.json are used after applying the required_changes of their
 verify_*.json reports.  Every input is registered with its source and verification
 level (user-requirement / fetched-datasheet / manufacturer-page / search-snippet /
@@ -51,7 +51,7 @@ def param(name: str, value, unit: str, source: str, level: str, note: str = ""):
     return value
 
 
-BASE = "design_decisions.json"  # the baseline (schema 3); wins over every research record
+BASE = "design_decisions.json"  # the baseline (schema 4); wins over every research record
 
 # --- user requirements and accepted assumptions (baseline) ------------------ #
 V_OUT = param("V_OUT", 200.0, "V", f"{BASE} requirements_user.vout_V", LV_USER)
@@ -271,10 +271,10 @@ NTC_R25 = param("NTCALUG01A103F_R25", 10e3, "ohm", "Vishay 29092 rev 14-Jan-2026
 NTC_B = param("NTCALUG01A103F_B25_85", 3984.0, "K", "Vishay 29092", LV_DS)
 NTC_DISS = param("NTCALUG01A103F_dissipation_factor", 13e-3, "W/K", "Vishay 29092 rev 14-Jan-2026", LV_DS, "the thermal record quoted 23 mW/K from a superseded revision")
 R_NTC_PULLUP = param("NTC_pull_up", 2200.0, "ohm", f"{BASE} sensing.heatsink_temperature.route", LV_AN)
-V_NTC_REF = param("NTC_reference", 3.00, "V", f"{BASE} sensing.heatsink_temperature.route (REF3125 buffered)", LV_AN)
-T_OTP = param("OTP_thresholds_degC", {"warn_derate": 90, "firmware_trip": 100, "hardware_comparator_trip": 110}, "degC",
-              f"{BASE} sensing.heatsink_temperature.thresholds_C_review_proposals", LV_AN, "human-review proposals (KR-TH-003)")
-R_OTP_PROPOSAL = param("OTP_comparator_divider_proposal", [10000.0, 2370.0], "ohm", "added: E96 pair from the 3.00 V NTC reference for the 110 degC trip", LV_ASM)
+V_NTC_REF = param("NTC_reference", 3.00, "V", f"{BASE} sensing.heatsink_temperature.route (REF3130AIDBZR 3.0 V, CR-26)", LV_AN)
+T_OTP = param("OTP_thresholds_degC", {"warn_derate_overload_inhibit": 80, "firmware_trip": 90, "hardware_comparator_trip": 100}, "degC",
+              f"{BASE} sensing.heatsink_temperature.thresholds_C_review_proposals", LV_AN, "human-review proposals (KR-TH-003); ladder lowered from 90/100/110 degC by CR-25")
+R_OTP_DIVIDER = param("OTP_comparator_divider", [32400.0, 10000.0], "ohm", f"{BASE} sensing.heatsink_temperature.otp_comparator_divider (32.4 k / 10.0 k from REF3V0 = 0.708 V, about 100 degC; CR-25)", LV_AN)
 T_SPREAD_NTC = param("NTC_spreading_offset_K", [4.0, 6.0], "K", f"{BASE} sensing.heatsink_temperature.mounting", LV_ASM)
 
 # --- Thermal ----------------------------------------------------------------- #
@@ -1119,7 +1119,7 @@ def ntc_t_from_v(v: float) -> float:
 def comparators() -> dict:
     """Thresholds from REF3125 2.5 V: V_th = 2.5 R_b/(R_t + R_b); bus = V_th/(1.5 k_in); output = V_th/(1.5 k_out).
     UVLO hysteresis from a 0/3.3 V open-collector output through 21.5 k: shift = (V_o - V_th) R_th/(R_h + R_th).
-    OTP: ratiometric to the 3.00 V NTC reference; V_trip = V_NTC(T); proposal divider 10.0 k / 2.37 k.
+    OTP: ratiometric to the 3.00 V REF3130 NTC reference; V_trip = V_NTC(T); baseline divider 32.4 k / 10.0 k (0.708 V, about 100 degC; CR-25).
     Source: sensing_protection.json 'Comparator thresholds', CR-04, CR-01, KR-TH-003 (proposals)."""
     k_in = R_LADDER_BOT / (N_TOP_VIN * R_LADDER_TOP + R_LADDER_BOT) * G_OPA
     k_out = R_LADDER_BOT / (N_TOP_VOUT * R_LADDER_TOP + R_LADDER_BOT) * G_OPA
@@ -1131,16 +1131,16 @@ def comparators() -> dict:
     shift_lo = -v_uvlo * r_th / (R_UVLO_HYST + r_th)
     ntc_table = [dict(T_C=t, R_ohm=ntc_r(t), V_V=ntc_v(t)) for t in (25, 50, 70, 85, 90, 100, 110, 125)]
     v_otp = {k: ntc_v(v) for k, v in T_OTP.items()}
-    v_prop = V_NTC_REF * R_OTP_PROPOSAL[1] / sum(R_OTP_PROPOSAL)
+    v_div = V_NTC_REF * R_OTP_DIVIDER[1] / sum(R_OTP_DIVIDER)
     return dict(
         OVP_in={"V_th_V": v_ovp_in, "bus_V": v_ovp_in / k_in, "target_V": VIN_OVP},
         OVP_out={"V_th_V": v_ovp_out, "output_V": v_ovp_out / k_out, "target_V": VOUT_OVP},
         UVLO={"V_centre_V": v_uvlo, "bus_centre_V": v_uvlo / k_in, "on_V": (v_uvlo + shift_hi) / k_in, "off_V": (v_uvlo + shift_lo) / k_in,
               "targets_V": [UVLO_START, UVLO_STOP], "note": "open-collector hysteresis asymmetric; verify by simulation or implement in firmware (baseline)"},
         NTC_table=ntc_table, NTC_sensitivity_mV_per_K_90_100=(ntc_v(90) - ntc_v(100)) / 10.0 * 1e3,
-        NTC_self_heating_K_at_110C=ntc_v(110) ** 2 / ntc_r(110) / NTC_DISS,
+        NTC_self_heating_K_at_100C=ntc_v(100) ** 2 / ntc_r(100) / NTC_DISS,
         OTP_threshold_voltages_V=v_otp,
-        OTP_hardware_divider_proposal={"R_top_ohm": R_OTP_PROPOSAL[0], "R_bottom_ohm": R_OTP_PROPOSAL[1], "V_th_V": v_prop, "trip_C": ntc_t_from_v(v_prop)},
+        OTP_hardware_divider={"R_top_ohm": R_OTP_DIVIDER[0], "R_bottom_ohm": R_OTP_DIVIDER[1], "V_th_V": v_div, "trip_C": ntc_t_from_v(v_div), "target_C": T_OTP["hardware_comparator_trip"]},
     )
 
 
@@ -1161,18 +1161,20 @@ def p_max_kr_th_001(tj_lim: float, r_hs: float = R_TH_HS, r_pad: float = R_PAD) 
 
 
 def fan_failure(p_total: float, t_start: float) -> list[dict]:
-    """Natural-convection steady state T_ss = T_A + P R_nat; lumped time to the 100 degC firmware trip
-    t = -tau ln(1 - (T_trip - T_0)/(T_ss - T_0)), tau = m c_p R_nat; initial slope P/(m c_p).
+    """Natural-convection steady state T_ss = T_A + P R_nat; lumped time to the firmware trip (90 degC) and to the
+    hardware comparator trip (100 degC) of the CR-25 ladder, t = -tau ln(1 - (T_trip - T_0)/(T_ss - T_0)), tau = m c_p R_nat;
+    initial slope P/(m c_p).
     Source: research/thermal.json 'Fan failure' (R_nat and mass unverified for the D K unit)."""
     rows = []
     for r_nat in R_TH_NAT:
         for m in M_SINK:
             t_ss = T_A + p_total * r_nat
             tau = m * CP_AL * r_nat
-            t_trip = T_OTP["firmware_trip"]
-            t_to_trip = -tau * math.log(1.0 - (t_trip - t_start) / (t_ss - t_start)) if t_ss > t_trip else None
+            def t_to(t_trip: float):
+                return -tau * math.log(1.0 - (t_trip - t_start) / (t_ss - t_start)) if t_ss > t_trip else None
             rows.append(dict(R_nat_K_per_W=r_nat, mass_kg=m, T_sink_ss_C=t_ss, T_J_HS_ss_C=t_ss + 31.4 * (R_PAD + R_TH_JC),
-                             tau_s=tau, initial_slope_K_per_s=p_total / (m * CP_AL), time_to_100C_trip_s=t_to_trip))
+                             tau_s=tau, initial_slope_K_per_s=p_total / (m * CP_AL),
+                             time_to_firmware_trip_s=t_to(T_OTP["firmware_trip"]), time_to_hardware_trip_s=t_to(T_OTP["hardware_comparator_trip"])))
     return rows
 
 
@@ -1375,7 +1377,7 @@ KNOWLEDGE_APPLICABILITY = [
     ("KR-SN-005", "rule", "direct", "Hardware trip chain 546 ns computed; ADC loop shown too slow (output short ramps to trip in 4-7 us)."),
     ("KR-TH-001", "rule", "direct", "P_max = (T_J,lim - T_A)/(2 R_th,HS + R_pad + R_JC) = 41.5 W (margin 1.22 over the 34.1 W HS corner); T_J at every corner incl. the stacked worst case."),
     ("KR-TH-002", "rule", "direct", "Pad resistance 1.4 K/W (exposed-tab area, CR-21) in the budget; pad voltage rating vs impulse basis stays a human-review conflict (CR-13)."),
-    ("KR-TH-003", "rule", "human-review", "NTC readout and NTC-to-T_J offset computed; 90/100/110 degC thresholds are proposals (cooling supervision, not junction protection)."),
+    ("KR-TH-003", "rule", "human-review", "NTC readout and NTC-to-T_J offset computed; 80/90/100 degC thresholds (CR-25) are proposals (cooling supervision, not junction protection)."),
     ("KR-PCB-006", "rule", "adapted", "IPC-2221 copper widths and via counts (rule is a low-confidence pattern; sizing method added)."),
     ("KR-PE-001", "rule", "not-applicable", "Hard-switched buck; no soft-switching boundary."),
     ("KR-ISO-002", "rule", "human-review", "Element voltages of the bleeder/indicator chains computed; spacing itself comes from the standards agent (not recomputed here)."),
@@ -1489,7 +1491,7 @@ def calculate() -> dict:
         fan_failure=fan_failure(hs_hot_k13_max["P_total_W"], hs_hot_k13_max["T_sink_C"]),
         ntc_to_TJ_offset_K={"typ_440V_27p5A": T_SPREAD_NTC[0] + next(r for r in therm_rows if r["corner"] == "440V/27.5A" and r["R_variant"] == "typ" and r["k_RG"] == 1.3)["P_HS_W"] * (R_PAD + R_TH_JC),
                             "maxR_360V_27p5A": T_SPREAD_NTC[1] + p_hs_for_offset * (R_PAD + R_TH_JC),
-                            "baseline_statement_K": [50, 66], "note": "baseline (schema 3) states T_NTC + 50-66 K at full load with the 1.4 K/W pad (4 K spreading offset, loss table without E_oss); the offsets here include E_oss and the 6 K upper offset for the max-R case and are load dependent (the earlier +45 K figure belonged to a 0.80 K/W pad)"},
+                            "baseline_statement_K": [50, 66], "note": "baseline (schema 4) states T_NTC + 50-66 K at full load with the 1.4 K/W pad (4 K spreading offset, loss table without E_oss); the offsets here include E_oss and the 6 K upper offset for the max-R case and are load dependent (the earlier +45 K figure belonged to a 0.80 K/W pad)"},
         copper=copper(),
     )
     aux = aux_12v(gate["bias"])
@@ -1604,13 +1606,15 @@ def calculate() -> dict:
 
     off_typ = thermal["ntc_to_TJ_offset_K"]["typ_440V_27p5A"]
     off_max = thermal["ntc_to_TJ_offset_K"]["maxR_360V_27p5A"]
-    ff_times = [r["time_to_100C_trip_s"] for r in thermal["fan_failure"] if r["time_to_100C_trip_s"] is not None]
+    ff_times = [r["time_to_firmware_trip_s"] for r in thermal["fan_failure"] if r["time_to_firmware_trip_s"] is not None]
     ff_min, ff_max = min(ff_times), max(ff_times)
+    hw_times = [r["time_to_hardware_trip_s"] for r in thermal["fan_failure"] if r["time_to_hardware_trip_s"] is not None]
+    hw_min, hw_max = min(hw_times), max(hw_times)
     bw = next(sc for sc in eff["scenarios"] if sc["scenario"] == "bounded_worst")
     open_items = [
         "Parasitic turn-on: the charge-based RC model spans 3.6-7.0 V of off-state excursion over the stated Q_gd (20-27 nC) and edge (8-13 ns) ranges, i.e. V_GS up to about +3 V against the 2.0 V (25 degC) minimum threshold; the baseline's 4.5-5.2 V is the mid-range. Miller clamp mandatory; off-state V_GS measurement (PRD-09301 6.1) decides R_G,off and bias.",
-        f"NTC-to-T_J offset with the 1.4 K/W design pad is {off_typ:.0f} K (typical, 440 V / 27.5 A) to {off_max:.0f} K (max-R, 360 V / 27.5 A) at full load, consistent with the baseline's 50-66 K band; the 110 degC hardware trip then maps to T_J about {110 + off_typ:.0f}-{110 + off_max:.0f} degC and the 100 degC firmware trip to about {100 + off_typ:.0f}-{100 + off_max:.0f} degC at full load - neither threshold holds T_J at the 150 degC design limit at full load, so the 90/100/110 degC ladder needs review (KR-TH-003).",
-        f"Fan-fail time to the 100 degC firmware trip from the {hs_hot_k13_max['T_sink_C']:.0f} degC steady state is {ff_min:.0f}-{ff_max:.0f} s for the lumped D K sink (R_nat 1.73-2.5 K/W and mass 0.3-0.6 kg unverified), not the 50-100 s carried in the baseline (that figure was the single-width unit from 88 degC); the conclusion (T_J > 175 degC at stall, OTP and FAN_TACH derate mandatory) stands.",
+        f"NTC-to-T_J offset with the 1.4 K/W design pad is {off_typ:.0f} K (typical, 440 V / 27.5 A) to {off_max:.0f} K (max-R, 360 V / 27.5 A) at full load, consistent with the baseline's 50-66 K band; the {T_OTP['hardware_comparator_trip']} degC hardware comparator trip (CR-25) then maps to T_J about {T_OTP['hardware_comparator_trip'] + off_typ:.0f}-{T_OTP['hardware_comparator_trip'] + off_max:.0f} degC and the {T_OTP['firmware_trip']} degC firmware trip to about {T_OTP['firmware_trip'] + off_typ:.0f}-{T_OTP['firmware_trip'] + off_max:.0f} degC at full load - the hardware trip stays below the 175 degC absolute maximum, both levels exceed the 150 degC design limit toward the max-R overload corner, which the {T_OTP['warn_derate_overload_inhibit']} degC derate / overload inhibit addresses; the earlier 90/100/110 degC ladder (hardware trip at T_J about {110 + off_typ:.0f}-{110 + off_max:.0f} degC) was lowered by CR-25 and a firmware T_J estimator is recommended (KR-TH-003).",
+        f"Fan-fail time from the {hs_hot_k13_max['T_sink_C']:.0f} degC steady state is {ff_min:.0f}-{ff_max:.0f} s to the {T_OTP['firmware_trip']} degC firmware trip and {hw_min:.0f}-{hw_max:.0f} s to the {T_OTP['hardware_comparator_trip']} degC hardware trip (CR-25) for the lumped D K sink (R_nat 1.73-2.5 K/W and mass 0.3-0.6 kg unverified), not the 50-100 s to 100 degC carried in the baseline (that figure was the single-width unit from 88 degC); the conclusion (T_J > 175 degC at stall, OTP and FAN_TACH derate mandatory) stands.",
         "Merged bleeder + indicator networks discharge both banks in about 20 s (bleeders alone about 36 s); the baseline's 'about 30 s' is the nominal-C bleeder-only estimate. Output indicator chain (2 x 100 k 1206) sees 220 V / 0.48 W per element under a high-side-short fault at 440 V - above typical 1206 ratings; use >= 3 elements or 2512 parts if the fault must be survived.",
         "Aux 12 V: the pull-in total (1.76 A at 10.8 V) exceeds an assumed -10 % circuit-breaker minimum (1.76 A) with zero margin for the 50 ms relay operate time; stagger fan start and relay pull-in or move the fan upstream of the eFuse (baseline fallback).",
         "Mezzanine 12 V pins carry 0.43-0.49 A each (fan, relay coil and bias modules all sit on the power board), above the architecture's 0.4 A per-pin target but 6x below the 3 A WR-PHD rating.",
@@ -1625,7 +1629,7 @@ def calculate() -> dict:
         title="V2 calculation record: 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck (C4MS025120K, UCC21710-Q1, custom High Flux choke)",
         status=BANNER.strip("*"),
         generated_by="python -m automation.scripts.calculate_sic_buck",
-        precedence="design_decisions.json (schema 3) > research record after its two verify_*.json required_changes > added assumptions (labelled)",
+        precedence="design_decisions.json (schema 4) > research record after its two verify_*.json required_changes > added assumptions (labelled)",
         verification_levels_used=[LV_USER, LV_DS, LV_PAGE, LV_SNIP, LV_UNV, LV_AN, LV_ASM, LV_STD, "simulated: none"],
         inputs_register=REGISTER,
         operating_points=ops, mosfet=mosfet, gate_drive=gate, desat=des, dead_time=dtm, inductor=ind,
@@ -1672,7 +1676,7 @@ def markdown(d: dict) -> str:
     A("# V2 calculation record - 400 V to 200 V, 5 kW, 50 kHz SiC synchronous buck")
     A("")
     A("Generated by `python -m automation.scripts.calculate_sic_buck` (standard library only). Machine-readable results: [calculations.json](calculations.json). "
-      "Baseline: [design_decisions.json](design_decisions.json) (schema 3), which wins over every research record; where it is silent the research records "
+      "Baseline: [design_decisions.json](design_decisions.json) (schema 4), which wins over every research record; where it is silent the research records "
       "([research/mosfet.json](research/mosfet.json), [research/gate_driver.json](research/gate_driver.json), [research/inductor.json](research/inductor.json), "
       "[research/capacitors.json](research/capacitors.json), [research/sensing_protection.json](research/sensing_protection.json), [research/thermal.json](research/thermal.json), "
       "[research/controller_aux_interconnect.json](research/controller_aux_interconnect.json), [research/standards_safety.json](research/standards_safety.json)) are used after applying the "
@@ -1921,14 +1925,14 @@ def markdown(d: dict) -> str:
         L += table(["V / V", "AMC input / V", "ADC / V", "code", "V per resistor / V", "P per resistor / mW", "divider current / uA"],
                    [[fmt(r["V"], 0), fmt(r["V_AMC_V"], 3), fmt(r["V_ADC_V"], 3), r["code"], fmt(r["V_per_resistor_V"], 1), fmt(r["P_per_resistor_mW"], 1), fmt(r["I_divider_uA"], 0)] for r in lad["rows"]])
     c = sn["comparators"]
-    A("Comparators from REF3125 2.5 V (V_th = 2.5 R_b/(R_t+R_b)); UVLO hysteresis from the 0/3.3 V open-collector output through 21.5 k; OTP ratiometric to the 3.00 V NTC reference (NTC 10 k, B 3984 K, 2.2 k pull-up): V = 3.00 R_NTC/(2.2 k + R_NTC).")
+    A("Comparators from REF3125 2.5 V (V_th = 2.5 R_b/(R_t+R_b)); UVLO hysteresis from the 0/3.3 V open-collector output through 21.5 k; OTP ratiometric to the 3.00 V REF3130 NTC reference (CR-26; NTC 10 k, B 3984 K, 2.2 k pull-up): V = 3.00 R_NTC/(2.2 k + R_NTC).")
     A("")
     rows = [
         ["OVP_in 1.00 k / 11.0 k", fmt(c["OVP_in"]["V_th_V"], 4) + " V -> " + fmt(c["OVP_in"]["bus_V"], 1) + " V", "target 460 V"],
         ["OVP_out 953 / 10.0 k", fmt(c["OVP_out"]["V_th_V"], 4) + " V -> " + fmt(c["OVP_out"]["output_V"], 1) + " V", "target 230 V (CR-04)"],
         ["UVLO 1.00 k / 1.91 k centre; on / off with 21.5 k", fmt(c["UVLO"]["V_centre_V"], 4) + " V -> " + fmt(c["UVLO"]["bus_centre_V"], 1) + " V; " + fmt(c["UVLO"]["on_V"], 1) + " / " + fmt(c["UVLO"]["off_V"], 1) + " V", "targets 340 / 320 V; " + c["UVLO"]["note"]],
-        ["OTP voltages warn 90 / firmware 100 / hardware 110 degC", " / ".join(fmt(v, 3) for v in c["OTP_threshold_voltages_V"].values()) + " V", "sensitivity " + fmt(c["NTC_sensitivity_mV_per_K_90_100"], 1) + " mV/K; self-heating " + fmt(c["NTC_self_heating_K_at_110C"], 2) + " K"],
-        ["Hardware OTP divider proposal 10.0 k / 2.37 k from 3.00 V", fmt(c["OTP_hardware_divider_proposal"]["V_th_V"], 4) + " V -> " + fmt(c["OTP_hardware_divider_proposal"]["trip_C"], 1) + " degC", "proposal, KR-TH-003 human review"],
+        [f"OTP voltages derate / overload inhibit {T_OTP['warn_derate_overload_inhibit']} / firmware trip {T_OTP['firmware_trip']} / hardware trip {T_OTP['hardware_comparator_trip']} degC (CR-25)", " / ".join(fmt(v, 3) for v in c["OTP_threshold_voltages_V"].values()) + " V", "sensitivity " + fmt(c["NTC_sensitivity_mV_per_K_90_100"], 1) + " mV/K (90-100 degC); self-heating " + fmt(c["NTC_self_heating_K_at_100C"], 2) + " K at 100 degC"],
+        ["Hardware OTP divider 32.4 k / 10.0 k from the 3.00 V REF3130", fmt(c["OTP_hardware_divider"]["V_th_V"], 4) + " V -> " + fmt(c["OTP_hardware_divider"]["trip_C"], 1) + " degC", f"baseline (CR-25) for the {T_OTP['hardware_comparator_trip']} degC trip; KR-TH-003 human review"],
     ]
     L += table(["Threshold", "Value", "Remark"], rows)
     L += table(["T / degC", "R_NTC / ohm", "V readout / V"], [[r["T_C"], fmt(r["R_ohm"], 0), fmt(r["V_V"], 3)] for r in c["NTC_table"]])
@@ -1949,10 +1953,10 @@ def markdown(d: dict) -> str:
       "Hottest HS corner: " + th["hottest_HS_corner"]["corner"] + " (" + th["hottest_HS_corner"]["R_variant"] + " R, k_RG " + fmt(th["hottest_HS_corner"]["k_RG"], 1) + ") at " + fmt(th["hottest_HS_corner"]["T_J_HS_C"], 1) + " degC. "
       "KR-TH-001: P_max = (150 - 50)/(2 x 0.30 + 1.4 + 0.41) = " + fmt(th["P_max_W"]["150C"], 1) + " W per device (" + fmt(th["P_max_W"]["125C"], 1) + " W for 125 degC); margin over the hottest HS loss at k_RG 1.3 / max R (" + fmt(th["hottest_HS_corner_k1p3_maxR"]["P_HS_W"], 1) + " W) = " + fmt(th["P_max_margin_over_hottest_HS_k1p3_maxR"]) + "x.")
     A("")
-    A("Fan failure (natural convection; R_nat and mass of the D K unit unverified): T_ss = 50 + P R_nat; tau = m c_p R_nat; time from the 68-70 degC steady state to the 100 degC firmware trip t = -tau ln(1 - (100 - T_0)/(T_ss - T_0)):")
+    A(f"Fan failure (natural convection; R_nat and mass of the D K unit unverified): T_ss = 50 + P R_nat; tau = m c_p R_nat; time from the 68-70 degC steady state to the {T_OTP['firmware_trip']} degC firmware trip and to the {T_OTP['hardware_comparator_trip']} degC hardware trip (CR-25) t = -tau ln(1 - (T_trip - T_0)/(T_ss - T_0)):")
     A("")
-    L += table(["R_nat / K/W", "mass / kg", "T_sink,ss / degC", "T_J,HS,ss / degC", "tau / s", "initial slope / K/s", "time to 100 degC / s"],
-               [[fmt(r["R_nat_K_per_W"], 2), fmt(r["mass_kg"], 1), fmt(r["T_sink_ss_C"], 0), fmt(r["T_J_HS_ss_C"], 0), fmt(r["tau_s"], 0), fmt(r["initial_slope_K_per_s"], 3), fmt(r["time_to_100C_trip_s"], 0)] for r in th["fan_failure"]])
+    L += table(["R_nat / K/W", "mass / kg", "T_sink,ss / degC", "T_J,HS,ss / degC", "tau / s", "initial slope / K/s", f"time to {T_OTP['firmware_trip']} degC firmware trip / s", f"time to {T_OTP['hardware_comparator_trip']} degC hardware trip / s"],
+               [[fmt(r["R_nat_K_per_W"], 2), fmt(r["mass_kg"], 1), fmt(r["T_sink_ss_C"], 0), fmt(r["T_J_HS_ss_C"], 0), fmt(r["tau_s"], 0), fmt(r["initial_slope_K_per_s"], 3), fmt(r["time_to_firmware_trip_s"], 0), fmt(r["time_to_hardware_trip_s"], 0)] for r in th["fan_failure"]])
     off = th["ntc_to_TJ_offset_K"]
     A("NTC-to-T_J offset = spreading (4-6 K) + P_HS (R_pad + R_JC): typical 440 V / 27.5 A " + fmt(off["typ_440V_27p5A"], 0) + " K; max-R 360 V / 27.5 A " + fmt(off["maxR_360V_27p5A"], 0) + " K. " + off["note"] + ".")
     A("")

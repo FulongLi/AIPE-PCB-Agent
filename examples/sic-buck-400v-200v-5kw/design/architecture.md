@@ -4,7 +4,7 @@
 
 400 V (360-440 V) -> 200 V, 5 kW, 25 A, 50 kHz non-isolated SiC synchronous buck with a
 TMS320F28335 control board. This document describes the architecture as built from the
-orchestrator baseline [`design_decisions.json`](design_decisions.json) (schema 3), which
+orchestrator baseline [`design_decisions.json`](design_decisions.json) (schema 4), which
 supersedes the research records [`research/architecture.json`](research/architecture.json),
 [`research/controller_aux_interconnect.json`](research/controller_aux_interconnect.json) and
 [`research/standards_safety.json`](research/standards_safety.json) after their verification
@@ -96,12 +96,13 @@ ADCINB0) -> 100 uF -> 12V_PROT -> TPS54302DDCR 5 V -> TPS767D301PWPR 1.9 V and 3
 first, supervised by a TPS3808G01 (101 k / 10 k, 4.5 V, CR-18). TMS320F28335PGFA with a
 30 MHz oscillator on XCLKIN, 14-pin JTAG, 3.3 V UART and boot straps GPIO84-87; all 176 pins
 are mapped in `../components/tms320f28335_pgf_pins.csv`. Logic: SN74LVC2G08 PWM gating with
-33 ohm source resistors, SN74LVC1G74DCTR latch (SSOP-8, CR-19), 2 x SN74LV21A combiner.
-Comparators: 2 x TLV1702 with a second REF3125 (OVP_IN 460 V, OVP_OUT 230 V via 953 ohm /
-10.0 k, UVLO 340 / 320 V, OTP 110 C). Sensing: LM61CIM3 on ADCINA3; J_NTC with a 2.2 k
-pull-up to a 3.00 V reference (the baseline says "REF3125 buffered", but a 2.5 V reference cannot
-supply 3.00 V without a gain stage; `component_selection.md` carries a REF3130 3.0 V reference
-as an added assumption - orchestrator/schematic item); 1 k + 1 nF at every ADC pin. LEDs; J_ESTOP,
+33 ohm source resistors, SN74LVC1G74DCTR latch (SSOP-8, CR-19), 3 x SN74LV21A combiner with
+SN74LV04A inverters for the UVLO and PG polarities (CR-26). Comparators: 2 x TLV1702 with a
+second REF3125 (OVP_IN 460 V, OVP_OUT 230 V via 953 ohm / 10.0 k, UVLO 340 / 320 V) and the
+OTP comparator at 100 C (32.4 k / 10.0 k from the 3.00 V NTC reference = 0.708 V, ratiometric;
+CR-25). Sensing: LM61CIM3 on ADCINA3; J_NTC with a 2.2 k pull-up to the 3.00 V REF3130AIDBZR
+reference (CR-26; the earlier "REF3125 buffered" wording was withdrawn - a 2.5 V reference
+cannot supply 3.00 V without a gain stage); 1 k + 1 nF at every ADC pin. LEDs; J_ESTOP,
 J_RESET, J_BOOT, J_UART, J_JTAG.
 
 ## 3 Isolation domains and the barrier line
@@ -252,9 +253,9 @@ Wolfspeed publishes no short-circuit withstand time, so KR-PR-001 is closed only
 destructive test [HR]), the only protection against shoot-through; TMCS1133 OC at 37.5 A
 (trip chain 546 ns [AC]) -> OC_N -> TZ2 directly and into the latched group.
 
-LATCHED group, 13 active-low inputs AND-combined by 2 x SN74LV21A (tpd 12 ns max at 3.3 V
-[DS]) into CLR_N of the SN74LVC1G74 (D = 1, CLK = ARM on GPIO2): FLT_H_N, FLT_L_N, OC_N,
-OVP_IN_N (460 V), OVP_OUT_N (230 V), OTP_N (110 C), FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N,
+LATCHED group, 13 active-low inputs AND-combined by 3 x SN74LV21A (tpd 12 ns max at 3.3 V
+[DS]; CR-26) into CLR_N of the SN74LVC1G74 (D = 1, CLK = ARM on GPIO2): FLT_H_N, FLT_L_N, OC_N,
+OVP_IN_N (460 V), OVP_OUT_N (230 V), OTP_N (100 C), FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N,
 PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N. Any one clears Q = ARMED = FAULT_N asynchronously;
 ARMED drives TZ1 (GPIO12, one-shot) and the SN74LVC2G08 PWM gates and returns high only on a
 new ARM edge with every source released (KR-PR-002 direct). Worst-case fault-to-gate-off
@@ -262,19 +263,22 @@ through logic, mezzanine RC and driver is about 234 ns plus the source delay [AC
 
 RUN-PERMIT group, not latched, auto-restart with soft start: UVLO_N (340 V start / 320 V
 stop), RDY_H, RDY_L, ARMED -> PWM enable (PWM AND ARMED AND RUN_PERMIT). Gate count [AC, this
-document]: the 13 latched inputs consume all four 4-input gates of the two SN74LV21A (three
-first-stage gates plus one second-stage gate taking PG_BIAS_S_N and the three first-stage
-outputs); the run-permit AND needs a fifth 4-input gate (third SN74LV21A or a 1G11 + 1G08
-pair), which the baseline ("2 x SN74LV21A") does not list; `component_selection.md` therefore carries
-three SN74LV21A packages - schematic item (HR).
+document]: the 13 latched inputs consume four 4-input gates (three first-stage gates plus one
+second-stage gate taking PG_BIAS_S_N and the three first-stage outputs); the run-permit AND
+needs a fifth, so three SN74LV21A packages are used, plus SN74LV04A inverters for the UVLO and
+PG polarities - the schema 4 baseline (CR-26) now lists both, matching `component_selection.md`
+and the control-board schematic (the earlier "2 x SN74LV21A" text is withdrawn).
 
 Restart policy: operator reset only after a DESAT/OC fault (one attempt maximum); UVLO
 auto-restart with soft start; OTP auto-restart after cool-down optional. RST/EN low >= 1 us
 clears a driver fault. The heatsink NTC is cooling supervision, not junction protection
-(KR-TH-003 HR): 90 C warn / 100 C firmware trip / 110 C hardware comparator are proposals;
-T_J,HS is about T_NTC + 50-66 K at full load (1.4 K/W pad; up to 66 K with maximum-R parts at the
-overload corner), so the 110 C comparator cannot by itself hold T_J at the 150 C design limit - a
-KR-TH-003 review item ([`thermal_analysis.md`](thermal_analysis.md) section 6).
+(KR-TH-003 HR): 80 C derate and overload inhibit / 90 C firmware trip / 100 C hardware
+comparator (0.708 V) are proposals (CR-25 lowered the earlier 90 / 100 / 110 C ladder, whose
+hardware trip mapped to T_J 176-178 C); T_J,HS is about T_NTC + 50-66 K at full load (1.4 K/W
+pad; up to 66 K with maximum-R parts at the overload corner), so a 100 C sink means T_J,HS
+150-166 C - below the 175 C absolute maximum, above the 150 C design limit only at the max-R
+overload corner; a firmware T_J estimator is recommended - a KR-TH-003 review item
+([`thermal_analysis.md`](thermal_analysis.md) section 6).
 
 ## 7 Grounding, PE and the PELV deviation
 
@@ -307,7 +311,7 @@ RDY and PG within 50 ms -> RESET_N pulse -> precharge criterion -> RELAY_ON -> 1
 erosion, target 250 ns, bounds 150-400 ns, CR-07), duty ceiling 0.85 initially, ADC SOC at
 CTR = ZERO; an inner current loop with the outer voltage loop at 2.0-2.5 kHz; software limits
 ahead of the hardware trips (27.5 A for 10 s; input current 15.6 A below 360 V, CR-20);
-relay PWM hold; FAN_TACH stall derating within 2 s; OTP 90 / 100 C; fault logging and the
+relay PWM hold; FAN_TACH stall derating within 2 s; OTP 80 / 90 C (derate / trip, CR-25); fault logging and the
 one-retry rule. ADC map: VIN_SENSE A0, ISENSE A1, TEMP_HS_NTC A2, TEMP_CTRL A3, ISENSE_REF
 A4, I12V_MON B0, VOUT_SENSE B1, V12V_MON B3.
 
@@ -316,13 +320,13 @@ A4, I12V_MON B0, VOUT_SENSE B1, V12V_MON B3.
 Open frame on a PE-bonded aluminium baseplate (A-24: <= 300 x 250 x 80 mm). Power board on
 6 x M4 x 15 mm standoffs, bottom-side parts <= 10 mm; control board stacked 11 mm above the
 SELV strip, overhanging the board edge by about 40 mm, on 4 x M3 standoffs; heights 15 + 2 +
-50 = 67 mm (sink; the baseline mechanical line sums 15 + 2 + 55 = 72 mm with an unexplained
-55 mm sink term - orchestrator item, both below the 80 mm limit), 65 mm (inductor), 62 mm
+50 = 67 mm (sink; 72 mm envelope with a 5 mm allowance for clips and fan housing, CR-26; below
+the 80 mm limit), 65 mm (inductor), 62 mm
 (films), 38.6 mm (control stack) [AC]; mass about 1.9 kg [U, estimate]. Heatsink Fischer LAM 5 D K 100 12 (about 100 x 100 mm plan, 50 mm high,
 integrated 12 V fan, 0.30 K/W distributor figure [SS]; CR-06, CR-13) over the device row,
 both TO-247-4 vertical against one face at 28 mm pitch, leads trimmed short; reservation
-175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 10 mm
-tall); PE-bonded; HV copper keep-out >= 5 mm; clip-to-lead >= 3 mm. A fan failure drives T_J
+175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 15 mm
+tall, CR-26); PE-bonded; HV copper keep-out >= 5 mm; clip-to-lead >= 3 mm. A fan failure drives T_J
 above 175 C in steady state, so OTP is mandatory (thermal record). Inductor (keep-out circle
 75 mm, 48 mm high, cup on 4 x M4 at 60 x 60 mm)
 in the fan stream (CR-14, forced air mandatory), >= 20 mm from the sink; film capacitors

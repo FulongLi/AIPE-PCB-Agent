@@ -6,7 +6,7 @@ This document records how the Engineering Knowledge System (knowledge/, V0: 6 sk
 43 rules, 13 circuit blocks, 19 component records, 4 reference designs) influenced the
 V2 design, decision by decision, and where it was adapted, rejected or found wrong.
 Sources: the orchestrator baseline [design_decisions.json](design_decisions.json)
-(schema 3, wins over everything below), the ten research records
+(schema 4, wins over everything below), the ten research records
 [research/*.json](research/) with their `knowledge_queries` and `knowledge_used`
 sections, the twenty verification reports [research/verify_*.json](research/) with
 their `knowledge_misuse` lists, and the regenerated trace
@@ -207,9 +207,11 @@ limit is an added assumption, not a rule value) and to the film capacitors (step
 ">= 20 mm from the sink, outside the exhaust" - the knowledge base marks this step as a
 recommendation without source evidence, so it stays a recommendation). CR-14 places the
 inductor in the fan stream because its 110-120 C still-air hot spot is unacceptable.
-KR-TH-003 was applied as cooling supervision only; the 90 / 100 / 110 C thresholds are
+KR-TH-003 was applied as cooling supervision only; the 80 / 90 / 100 C thresholds (CR-25) are
 human-review proposals, not design values (thermal verifier), with T_J,HS ~ T_NTC + 50-66 K at
-full load, so the 100 C firmware trip does not bound T_J at the 150 C design limit (thermal_analysis.md section 6).
+full load: a 100 C sink corresponds to T_J,HS 150-166 C, so the earlier 90 / 100 / 110 C ladder
+(hardware trip at T_J 176-178 C) was lowered and a firmware T_J estimator is recommended
+(thermal_analysis.md section 6).
 The skill's Ohmite / Wakefield instance values were not reused (section 5, last paragraph).
 
 ## 3. Rule-by-rule table
@@ -257,11 +259,11 @@ M = manufacturer-page, S = search-snippet, U = unverified, H = human-review item
 | KR-ISO-003 | rec. | direct | Eleven net classes (HV_VIN, HV_SW, HV_PGND, HV_VOUT, DRV_HS, DRV_LS, DESAT_HS, DESAT_LS, SENSE_ISO, PE, CTRL_SELV) | - |
 | KR-ISO-004 | rec. | direct (model corrected) | 1.2 mm nominal (>= 1.0 mm) slots under eight barrier parts, e >= 3 mm; CGD1700 0.76 mm slot not reusable at PD2 | A, H |
 | KR-PR-001 | hard | direct, verification by test | DESAT 0.55-1.07 us vs no published withstand time; destructive short-circuit test required; fuse cannot protect the device | A, H |
-| KR-PR-002 | rec. | direct (adapted for the bus UVLO ladder) | SN74LVC1G74 latch, two SN74LV21A combiners, latched vs run-permit groups (CR-17), operator reset after DESAT/OC | M (logic), A |
+| KR-PR-002 | rec. | direct (adapted for the bus UVLO ladder) | SN74LVC1G74 latch, three SN74LV21A combiners with SN74LV04A inverters (CR-26), latched vs run-permit groups (CR-17), operator reset after DESAT/OC | M (logic), A |
 | KR-PR-003 | rec. | direct, thresholds human-review | TPS26400: UVLO 10.0 / 9.3 V, OVP 14.45 / 13.4 V, circuit-breaker mode I_CB ~1.96 A (R_ILIM 6.04 k) vs 1.76 A worst pull-in (CR-02, CR-18) | D, A, H |
 | KR-TH-001 | hard | direct (adapted for the inductor) | P_max 41.5 W vs 34.1 W (1.22, R_pad 1.4 K/W, CR-21); inductor P_max 28.7 W vs 19.8 W typical / 23-26 W bounded | A |
 | KR-TH-002 | rec. | direct, rating conflict human-review | Sil-Pad TSP A2000 (6 kVac class) 28 x 32 mm, R_pad 1.4 K/W on the exposed-tab area (CR-21); 2.5 kV vs 4 kV impulse view preserved (CR-13) | D, H |
-| KR-TH-003 | human-review | human-review | NTCALUG01A103F on the sink top face; 90 / 100 / 110 C are review proposals; T_J ~ T_NTC + 50-66 K at full load | D (NTC), A, H |
+| KR-TH-003 | human-review | human-review | NTCALUG01A103F on the sink top face; 80 / 90 / 100 C (CR-25) are review proposals; T_J ~ T_NTC + 50-66 K at full load | D (NTC), A, H |
 | KR-PE-001 | human-review | not applicable | Hard-switched buck; no ZVS boundary | - |
 | PE-PCB-001 | project | adapted (evidence prepared) | Gate loop: driver distance, adjacent-layer pair, decoupling inside the loop; overlay at layout review | H |
 | PE-PCB-002 | project | direct | HF ceramics in two rows within 5 / 15 mm of the HS drain / LS source pins | H |
@@ -303,8 +305,8 @@ CMP-B32716H8306K000 and CMP-B32716H1156K000 superseded by the TDK B32776 4-pin s
 (fetched datasheet); CMP-C1812V104KDRACTU no corresponding position. Not touched -
 CMP-GCM31CR71C106KA64L, CMP-AMC1306M05, CMP-AMC1336 (the latter two excluded with SKILL-005's
 bitstream path). V2 parts with no record: C4MS025120K, C3M0021120K, UCC14141 sensing
-configuration, B32776G8206K000 / G4606K000, TMCS1133C2AQDVGR, REF3125, TLV1702, OPA2320,
-SN74LVC1G74DCTR, SN74LV21A, TPS54302, TPS767D301, TPS3808G01, Fischer LAM 5 D K 100 12, Sil-Pad
+configuration, B32776G8206K000 / G4606K000, TMCS1133C2AQDVGR, REF3125, REF3130, TLV1702, OPA2320,
+SN74LVC1G74DCTR, SN74LV21A, SN74LV04A, TPS54302, TPS767D301, TPS3808G01, Fischer LAM 5 D K 100 12, Sil-Pad
 TSP A2000 / 3500, NTCALUG01A103F, Omron G9EA-1 DC12, KLKD025.T, Magnetics 0058192A2, Wuerth
 744226S, Samtec SSW/TSW, REDCUBE 74651195 (candidates for records, section 6).
 

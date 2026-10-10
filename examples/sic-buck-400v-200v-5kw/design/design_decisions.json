@@ -363,10 +363,11 @@
         "firmware_trip": 90,
         "hardware_comparator_trip": 100
       },
-      "steady_state_sink_C_with_selected_sink": "67-72",
+      "steady_state_sink_C_with_selected_sink": "64-68 C at full load (typical to max-R parts), up to 72 C at the bounded worst-case corner",
       "tj_mapping": "T_J,HS ~ T_NTC + 4-6 K spreading + P_HS x (R_pad + R_thJC) ~ T_NTC + 50-66 K at full load (1.4 K/W pad; up to 66 K with max-R parts) (KR-TH-003: cooling supervision, not junction protection; thresholds are human-review proposals)",
       "threshold_basis": "steady-state sink 64-68 C at full load; with the +50-66 K NTC-to-junction mapping a 100 C sink corresponds to T_J,HS 150-166 C (below the 175 C absolute maximum, above the 150 C design limit only at the max-R overload corner), 90 C to 140-156 C, 80 C to 130-146 C; the earlier 90/100/110 C ladder put the hardware trip at 176-178 C and was lowered (CR-25); a firmware T_J estimator from the loss model is recommended (KR-TH-003)",
-      "otp_comparator_divider": "32.4 k / 10.0 k from REF3V0 -> 0.708 V = NTC voltage at about 100 C (R_NTC 683 ohm, 2.2 k pull-up)"
+      "otp_comparator_divider": "32.4 k / 10.0 k from REF3V0 -> 0.708 V = NTC voltage at about 100 C (R_NTC 683 ohm, 2.2 k pull-up)",
+      "otp_divider_tolerance": "1 % resistors per the control BOM (R65/R66; about +/-0.6-0.9 K on the trip); 0.1 % optional"
     },
     "control_board_local_temperature": "LM61CIM3 (V1 pattern) on ADCINA3",
     "aux_monitoring": {
@@ -774,7 +775,7 @@
         "commutation loop first: HF ceramics in columns beside the TO-247-4 legs, VIN+/PGND as overlapping pours on F.Cu/In1.Cu (<= 20 nH board target; 40-60 nH total with standing leads)",
         "drivers and decoupling on B.Cu within 15 mm of the device leads; gate pour B.Cu over Kelvin pour In2.Cu",
         "all barrier parts (3 x UCC14141, 2 x UCC21710, 2 x AMC1311, TMCS1133) on one straight barrier line; device row on the HV side of the driver islands; SELV strip at the board edge",
-        "film capacitors and inductor in the fan stream beside the sink, >= 10 mm from it; nothing heat-sensitive in the exhaust",
+        "film capacitors and inductor in the fan stream beside the sink, >= 20 mm from it; nothing heat-sensitive in the exhaust",
         "HV terminals, relay-contact terminals and PTC at the input and output ends; PE stud M4",
         "HS/LS inter-island copper-free barrier (KR-ISO-001 second clause): 3.0 mm outer / 1.0 mm inner between DRV_HS/DESAT_HS and DRV_LS/DESAT_LS nets",
         "inductor >= 20 mm and film capacitors >= 20 mm from the heatsink body, films >= 15 mm from the inductor; intake/exhaust corridors hold only parts <= 15 mm tall"
@@ -835,7 +836,7 @@
       "p_max_per_device_W_150C": 41.5,
       "margin_over_34p1W": 1.22,
       "tj_preferred_125C": "met with typical parts at 400 V / 25 A, not met at the 360 V / 27.5 A max-R corner (about 130 C)",
-      "fan_fail": "T_J exceeds 175 C in steady state at any natural-convection estimate -> OTP mandatory; sink 68 -> 100 C in about 50-100 s; FAN_TACH stall derating within 2 s",
+      "fan_fail": "T_J exceeds 175 C in steady state at any natural-convection estimate -> OTP mandatory; after a fan stall the sink reaches the 90 C firmware trip in about 120-260 s and the 100 C hardware trip in about 180-420 s (calculations.json fan-fail rows); FAN_TACH stall derating within 2 s is the primary protection",
       "spreading_allowance_K_W": "0.1-0.2 per device (+3-7 K) to be measured",
       "rth_jc_note": "0.41 K/W is a typical value with no datasheet maximum; 48.5 / 57.2 mohm at 150 C are interpolated/scaled"
     },

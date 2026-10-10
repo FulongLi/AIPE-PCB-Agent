@@ -1347,12 +1347,12 @@
    "tempco_ppm_K": "20 (family)"
   },
   "operating_stress": {
-   "load": "2.2 k pull-up (<= 1.4 mA) + divider"
+   "load": "2.2 k pull-up (<= 1.4 mA) + 32.4 k / 10.0 k OTP divider (71 uA)"
   },
   "margins": {
    "ratiometric": "OTP threshold tracks the NTC supply"
   },
-  "selection_reason": "A 2.5 V part cannot supply the 3.00 V node that design_decisions.json specifies ('REF3125 buffered'); the orchestrator component list names REF3130 - adopted here and flagged.",
+  "selection_reason": "3.00 V reference named by design_decisions.json (schema 4, CR-26) for the NTC pull-up and the ratiometric OTP divider 32.4 k / 10.0 k (0.708 V = 100 C, CR-25); the earlier 'REF3125 buffered' wording was withdrawn because a 2.5 V part cannot supply 3.00 V. Control BOM U15; VIN minimum 3.05 V below the 3.234 V 3V3 minimum.",
   "alternatives": [
    "buffered 3.0 V from the 3.3 V rail with a divider (ratiometric, less accurate)"
   ],
@@ -1364,7 +1364,7 @@
    "CR-01"
   ],
   "open_issues": [
-   "resolve the REF3125-versus-REF3130 wording in design_decisions.json"
+   "REF3130 variant parameters to confirm against the REF31xx datasheet (family values assumed)"
   ],
   "dnp": false,
   "source": "orchestrator component list; design_decisions.json sensing.heatsink_temperature"
@@ -1386,13 +1386,13 @@
    "qualification": "AEC-Q200 grade 1"
   },
   "operating_stress": {
-   "readout_V": "2.46 / 0.88 / 0.71 / 0.57 at 25 / 90 / 100 / 110 C with 2.2 k to 3.00 V (15.5 mV/K)",
+   "readout_V": "2.46 / 1.09 / 0.88 / 0.71 / 0.57 at 25 / 80 / 90 / 100 / 110 C with 2.2 k to 3.00 V (15.5 mV/K at 100 C)",
    "self_heating_K": "about 0.06",
    "T_sink_C": "67-72 worst steady state",
    "T_J_mapping": "T_J,HS about T_NTC + 50-66 K at full load (1.4 K/W pad; 66 K with max-R parts at the overload corner)"
   },
   "margins": {
-   "thresholds_C": "90 warn / 100 firmware trip / 110 hardware trip - KR-TH-003 review proposals"
+   "thresholds_C": "80 derate and overload inhibit / 90 firmware trip / 100 hardware comparator trip (CR-25; the earlier 90 / 100 / 110 ladder mapped the hardware trip to T_J 176-178 C) - KR-TH-003 review proposals; firmware T_J estimator recommended"
   },
   "selection_reason": "Insulated-lug NTC at PE potential read directly on the SELV side under the PELV grounding (CR-01, CR-08); replaces the TDK B57703M0103G040 whose lead length and test voltage were misquoted.",
   "alternatives": [
@@ -1446,9 +1446,9 @@
   "source": "design_decisions.json sensing.control_board_local_temperature"
  },
  {
-  "mpn": "TLV1702AIDGKR + threshold dividers (1.00 k / 11.0 k; 953 ohm / 10.0 k; 1.00 k / 1.91 k + 21.5 k hysteresis; OTP e.g. 10.0 k / 2.37 k from 3.00 V)",
-  "manufacturer": "Texas Instruments (generic 0.1 % 0603 resistors)",
-  "function": "Hardware comparators: OVP_in 460 V, OVP_out 230 V, UVLO 340/320 V (run permit), OTP 110 C",
+  "mpn": "TLV1702AIDGKR + threshold dividers (1.00 k / 11.0 k; 953 ohm / 10.0 k; 1.00 k / 1.91 k + 21.5 k hysteresis; OTP 32.4 k / 10.0 k from the 3.00 V REF3130)",
+  "manufacturer": "Texas Instruments (0603 divider resistors: 1 % RC0603FR in the control BOM, 0.1 % optional)",
+  "function": "Hardware comparators: OVP_in 460 V, OVP_out 230 V, UVLO 340/320 V (run permit), OTP 100 C (CR-25)",
   "board": "control",
   "quantity": "2 packages (4 comparators)",
   "package_or_footprint": "VSSOP-8 DGK + 0603",
@@ -1459,7 +1459,7 @@
    "output": "open collector to 36 V"
   },
   "operating_stress": {
-   "thresholds": "2.2917 V = 459.9 V; 2.1872 V on 953 / 10.0 k = 229.8 V; 1.641 V centre = 329 V with +/-10 V hysteresis; OTP 0.575 V = 110 C (added assumption, ratiometric to 3.00 V)"
+   "thresholds": "2.2917 V = 459.9 V; 2.1872 V on 953 / 10.0 k = 229.8 V; 1.641 V centre = 329 V with +/-10 V hysteresis; OTP 0.708 V = 100 C (32.4 k / 10.0 k, ratiometric to the 3.00 V REF3130; CR-25)"
   },
   "margins": {
    "OVP_out": "25 A load dump 215-218 V stays below 230 V (CR-04)"
@@ -1479,7 +1479,7 @@
   ],
   "open_issues": [
    "UVLO open-collector hysteresis network is asymmetric - verify by simulation or implement bus UVLO in firmware",
-   "OTP divider values are an added assumption"
+   "OTP divider 32.4 k / 10.0 k is baseline (CR-25); the 1 % divider resistors of the control BOM (R65 / R66) add about +/-0.6-0.9 K - 0.1 % optional"
   ],
   "dnp": false,
   "source": "design_decisions.json protection.comparators"
@@ -1536,7 +1536,7 @@
   "margins": {
    "latency": "fault-to-gate <= 240 ns"
   },
-  "selection_reason": "13 latched signals need four first-stage and one second-stage 4-input gates, the run-permit group one more: six gates = three dual packages (added derivation; the baseline text still says '2 x' from the 12-input draft).",
+  "selection_reason": "13 latched signals need four first-stage and one second-stage 4-input gates, the run-permit group one more: six gates = three dual packages (adopted by the schema 4 baseline, CR-26: 3 x SN74LV21A plus SN74LV04A inverters for the UVLO and PG polarities).",
   "alternatives": [
    "wired-OR open-collector node (sensing draft) dropped, CR-17"
   ],
@@ -1548,11 +1548,43 @@
    "CB-GD-003 fault-combining pattern (adapted)",
    "CR-17"
   ],
-  "open_issues": [
-   "quantity 3 versus '2 x' in design_decisions.json text - ratify"
-  ],
+  "open_issues": [],
   "dnp": false,
   "source": "design_decisions.json protection.fault_combiner"
+ },
+ {
+  "mpn": "SN74LV04APWR",
+  "manufacturer": "Texas Instruments",
+  "function": "Hex inverter for polarity restoration in the fault combiner: UVLO comparator flag -> UVLO_N; UCC14141 PG (low = good) -> PG_BIAS_H/L/S_OK (high = good)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "TSSOP-14 PW",
+  "ratings": {
+   "V_CC_V": "2-5.5 (SN74LV family)",
+   "t_pd_ns": "not fetched in this run"
+  },
+  "operating_stress": {
+   "inputs": "4 of 6 inverters used (UVLO flag, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N); 2 spare with inputs tied"
+  },
+  "margins": {
+   "latency": "one gate delay ahead of the SN74LV21A groups; the fault-to-gate budget of <= 240 ns is not affected at this level"
+  },
+  "selection_reason": "Named by the schema 4 baseline (CR-26) together with the 3 x SN74LV21A combiner: the AND combiner needs high = OK, while the UCC14141 PG pin is low when good and the UVLO comparator output is high in under-voltage.",
+  "alternatives": [
+   "SN74LVC1G04 single inverters"
+  ],
+  "verification_level": "unverified (SN74LV04A datasheet not fetched in this run)",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lv04a.pdf",
+  "datasheet_revision": "not checked",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "CR-26"
+  ],
+  "open_issues": [
+   "confirm the PG and UVLO polarity at bring-up with BIAS_EN low (firmware_interface.md)"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.fault_combiner (CR-26); components/bom_control.csv U11"
  },
  {
   "mpn": "SN74LVC2G08DCTR",
