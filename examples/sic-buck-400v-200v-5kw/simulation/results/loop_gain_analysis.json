@@ -1,0 +1,315 @@
+{
+  "method": "continuous-time small-signal model: duty -> iL = Vin/(sL + DCR + Zp), Zp = (ESR + 1/sC) || R; comparator PWM modelled as a T/2 delay; current filter 10 kHz, voltage filter 20 kHz; inner loop closed analytically; no sampling effects (no firmware exists)",
+  "cases": [
+    {
+      "vin_V": 360.0,
+      "load_R_ohm": 8.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3684.9172359594254,
+            "phase_margin_deg": 44.64372617927634
+          }
+        ],
+        "gain_margin_dB": 12.741668710958223
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2335.5799182754754,
+            "phase_margin_deg": 46.69091426181495
+          }
+        ],
+        "gain_margin_dB": 4.799342275173154
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 86.72740649383456,
+            "phase_margin_deg": 92.47192107059072
+          }
+        ],
+        "gain_margin_dB": 7.663787897241109
+      }
+    },
+    {
+      "vin_V": 360.0,
+      "load_R_ohm": 16.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3684.9172359594254,
+            "phase_margin_deg": 44.54734094655274
+          }
+        ],
+        "gain_margin_dB": 12.741621024274853
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2353.5781386757158,
+            "phase_margin_deg": 44.0754526287476
+          }
+        ],
+        "gain_margin_dB": 4.624760257463388
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 86.72740649383456,
+            "phase_margin_deg": 93.0055687740633
+          },
+          {
+            "f_Hz": 939.7135719239969,
+            "phase_margin_deg": 20.618655817966044
+          }
+        ],
+        "gain_margin_dB": 1.493340665099328
+      }
+    },
+    {
+      "vin_V": 360.0,
+      "load_R_ohm": 1000000.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3684.9172359594254,
+            "phase_margin_deg": 44.450401094383494
+          }
+        ],
+        "gain_margin_dB": 12.741582921923978
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2371.71505522377,
+            "phase_margin_deg": 41.45432210490176
+          }
+        ],
+        "gain_margin_dB": 4.456842164144511
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 86.8606624436071,
+            "phase_margin_deg": 93.54580263700296
+          },
+          {
+            "f_Hz": 977.9839375018548,
+            "phase_margin_deg": -49.909878166871465
+          }
+        ],
+        "gain_margin_dB": -18.595344667504435
+      }
+    },
+    {
+      "vin_V": 400.0,
+      "load_R_ohm": 8.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3997.3020027236093,
+            "phase_margin_deg": 42.83075440592614
+          }
+        ],
+        "gain_margin_dB": 11.82651889974472
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2299.9953314952522,
+            "phase_margin_deg": 51.31288367360756
+          }
+        ],
+        "gain_margin_dB": 4.942425632146562
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 96.56745928044377,
+            "phase_margin_deg": 92.74781138543784
+          }
+        ],
+        "gain_margin_dB": 6.748638086027605
+      }
+    },
+    {
+      "vin_V": 400.0,
+      "load_R_ohm": 16.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3997.3020027236093,
+            "phase_margin_deg": 42.7559486417243
+          }
+        ],
+        "gain_margin_dB": 11.82647121306135
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2321.2804901629665,
+            "phase_margin_deg": 48.665093124450294
+          }
+        ],
+        "gain_margin_dB": 4.817644751802464
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 96.71583439073207,
+            "phase_margin_deg": 93.34830875114227
+          },
+          {
+            "f_Hz": 954.2524358472308,
+            "phase_margin_deg": 6.916542173885716
+          }
+        ],
+        "gain_margin_dB": 0.5781908538858261
+      }
+    },
+    {
+      "vin_V": 400.0,
+      "load_R_ohm": 1000000.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 3997.3020027236093,
+            "phase_margin_deg": 42.68076340600632
+          }
+        ],
+        "gain_margin_dB": 11.826433110710475
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2339.168517691299,
+            "phase_margin_deg": 46.09383434727977
+          }
+        ],
+        "gain_margin_dB": 4.664441636529919
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 96.71583439073207,
+            "phase_margin_deg": 93.94599630800349
+          },
+          {
+            "f_Hz": 984.0084619265253,
+            "phase_margin_deg": -50.50406741591712
+          }
+        ],
+        "gain_margin_dB": -19.510494478717938
+      }
+    },
+    {
+      "vin_V": 440.0,
+      "load_R_ohm": 8.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 4303.0094056972175,
+            "phase_margin_deg": 40.976961232731526
+          }
+        ],
+        "gain_margin_dB": 10.998665196580218
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2264.952906773545,
+            "phase_margin_deg": 54.96846480844437
+          }
+        ],
+        "gain_margin_dB": 5.0373027113610105
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 106.53801089874155,
+            "phase_margin_deg": 93.02584720128925
+          }
+        ],
+        "gain_margin_dB": 5.920784382863107
+      }
+    },
+    {
+      "vin_V": 440.0,
+      "load_R_ohm": 16.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 4303.0094056972175,
+            "phase_margin_deg": 40.91742304939197
+          }
+        ],
+        "gain_margin_dB": 10.99861750989685
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2282.4068681187746,
+            "phase_margin_deg": 52.42283439242692
+          }
+        ],
+        "gain_margin_dB": 4.924304455882207
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 106.70170567993159,
+            "phase_margin_deg": 93.68984257895067
+          },
+          {
+            "f_Hz": 963.0835035576397,
+            "phase_margin_deg": -0.05365889908966892
+          }
+        ],
+        "gain_margin_dB": -0.24966284927867238
+      }
+    },
+    {
+      "vin_V": 440.0,
+      "load_R_ohm": 1000000.0,
+      "cascade_inner": {
+        "crossovers": [
+          {
+            "f_Hz": 4309.620944407038,
+            "phase_margin_deg": 40.817379420400385
+          }
+        ],
+        "gain_margin_dB": 10.998579407545975
+      },
+      "cascade_outer": {
+        "crossovers": [
+          {
+            "f_Hz": 2299.9953314952522,
+            "phase_margin_deg": 49.87807746713409
+          }
+        ],
+        "gain_margin_dB": 4.816330477942943
+      },
+      "module_single_loop_pi": {
+        "crossovers": [
+          {
+            "f_Hz": 106.86565197681239,
+            "phase_margin_deg": 94.35744620278172
+          },
+          {
+            "f_Hz": 990.0700983048301,
+            "phase_margin_deg": -50.960211687225126
+          }
+        ],
+        "gain_margin_dB": -20.338348181882438
+      }
+    }
+  ],
+  "lc_filter": {
+    "f0_Hz": 928.589571192468,
+    "Z0_ohm": 1.5869840952317444,
+    "Q_at_8_ohm": 5.041008302500835,
+    "input_filter_f_Hz": 8388.202017414505,
+    "input_filter_Q": 10.155034233039112
+  }
+}

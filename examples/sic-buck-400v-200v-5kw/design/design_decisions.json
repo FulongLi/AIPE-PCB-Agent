@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "title": "V2 design baseline: orchestrator-resolved decisions for the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck",
   "status": "AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED; single source of truth for schematic, PCB, simulation and documents; derived from design/research/*.json (ten design areas) and the twenty independent verification reports design/research/verify_*.json; every document, model and calculation must cite these values and record the research record it came from",
   "date": "2026-10-10",
@@ -152,7 +152,7 @@
         "C4MS025120K availability: Arrow stock only, 13-week lead (Oct 2026 snippets)",
         "no published short-circuit withstand time"
       ],
-      "tab_potentials": "HS tab = VIN+ (DC), LS tab = SW (switching; 2.3 A displacement-current pulses through the pad); both insulated from the PE-bonded heatsink",
+      "tab_potentials": "HS tab = VIN+ (DC), LS tab = SW (switching; 2.8-4.1 A displacement-current pulses of ~10 ns through the TSP A2000 pad, Dk 7, 56-82 pF); both insulated from the PE-bonded heatsink",
       "package_dimensions_mm": "TO-247-4L (Wolfspeed Rev. 2 table maxima): width E 16.13, height D 23.63, thickness A 5.21; exposed tab D1 x E1 ~ 17.0 x 13.6 (to confirm on the drawing)"
     },
     "gate_driver": {
@@ -351,7 +351,7 @@
     "heatsink_temperature": {
       "part": "Vishay NTCALUG01A103F (10 k +/-1 %, B25/85 3984 K, lug NTC; Vishay doc 29092 rev 14-Jan-2026: -55 to +150 C, 13 mW/K, thermal time constant 5 s, 1500 Vac / 100 Mohm lug-to-terminal insulation, AEC-Q200; -161 variant with 160 mm leads if the route to the control board needs it)",
       "mounting": "M3 thread-forming hole on the sink top face beside the HS device footprint (there is no bare aluminium between the bodies at 28 mm pitch); spreading offset +4-6 K",
-      "route": "two-wire lead to J_NTC on the control board; 2.2 k pull-up to 3.00 V (REF3125 buffered) + 100 nF; ADCINA2",
+      "route": "two-wire lead to J_NTC on the control board; 2.2 k pull-up to 3.00 V from a REF3130AIDBZR (3.0 V) reference + 100 nF; 1 k + 1 nF to ADCINA2",
       "readout_V": {
         "25C": 2.46,
         "90C": 0.88,
@@ -359,12 +359,14 @@
         "110C": 0.57
       },
       "thresholds_C_review_proposals": {
-        "warn_derate": 90,
-        "firmware_trip": 100,
-        "hardware_comparator_trip": 110
+        "warn_derate_overload_inhibit": 80,
+        "firmware_trip": 90,
+        "hardware_comparator_trip": 100
       },
       "steady_state_sink_C_with_selected_sink": "67-72",
-      "tj_mapping": "T_J,HS ~ T_NTC + 4-6 K spreading + P_HS x (R_pad + R_thJC) ~ T_NTC + 50-66 K at full load (1.4 K/W pad; up to 66 K with max-R parts) (KR-TH-003: cooling supervision, not junction protection; thresholds are human-review proposals)"
+      "tj_mapping": "T_J,HS ~ T_NTC + 4-6 K spreading + P_HS x (R_pad + R_thJC) ~ T_NTC + 50-66 K at full load (1.4 K/W pad; up to 66 K with max-R parts) (KR-TH-003: cooling supervision, not junction protection; thresholds are human-review proposals)",
+      "threshold_basis": "steady-state sink 64-68 C at full load; with the +50-66 K NTC-to-junction mapping a 100 C sink corresponds to T_J,HS 150-166 C (below the 175 C absolute maximum, above the 150 C design limit only at the max-R overload corner), 90 C to 140-156 C, 80 C to 130-146 C; the earlier 90/100/110 C ladder put the hardware trip at 176-178 C and was lowered (CR-25); a firmware T_J estimator from the loss model is recommended (KR-TH-003)",
+      "otp_comparator_divider": "32.4 k / 10.0 k from REF3V0 -> 0.708 V = NTC voltage at about 100 C (R_NTC 683 ohm, 2.2 k pull-up)"
     },
     "control_board_local_temperature": "LM61CIM3 (V1 pattern) on ADCINA3",
     "aux_monitoring": {
@@ -388,11 +390,11 @@
         320
       ],
       "uvlo_note": "non-latched run permit with auto-restart and soft start; open-collector hysteresis network is asymmetric - verify by simulation or implement bus UVLO in firmware",
-      "otp_hardware_C": 110,
-      "otp_note": "ratiometric to the 3.00 V NTC pull-up reference"
+      "otp_hardware_C": 100,
+      "otp_note": "ratiometric to the 3.00 V REF3130 NTC pull-up reference; divider 32.4 k / 10.0 k (0.708 V)"
     },
     "fault_latch": "SN74LVC1G74DCTR (SSOP-8; the DCKR suffix does not exist): D = 1, CLK = ARM (GPIO2), CLR_N = combined latched fault; Q = ARMED = FAULT_N to TZ1 (GPIO12) and to the PWM AND gates",
-    "fault_combiner": "2 x SN74LV21A AND gates (tpd max 12 ns at 3.3 V). LATCHED group -> CLR_N: FLT_H_N, FLT_L_N, OC_N, OVP_IN_N, OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N. RUN-PERMIT group (not latched) -> PWM enable: UVLO_N, RDY_H, RDY_L, ARMED",
+    "fault_combiner": "3 x SN74LV21A dual 4-input AND gates (plus SN74LV04A inverters for UVLO and PG polarity) (tpd max 12 ns at 3.3 V). LATCHED group -> CLR_N: FLT_H_N, FLT_L_N, OC_N, OVP_IN_N, OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N. RUN-PERMIT group (not latched) -> PWM enable: UVLO_N, RDY_H, RDY_L, ARMED",
     "pwm_gating": "ePWM1A/1B -> SN74LVC2G08 (PWM AND ARMED AND RUN_PERMIT) -> 33 ohm -> mezzanine -> 100 ohm + 100 pF + 10 k at each UCC21710 input; 10 k pull-downs on PWM_H, PWM_L and ARM at the gate/latch inputs; pull-ups on DSP_TRIP_N and ESTOP_N (F28335 GPIO0-11 have no reset pull-ups)",
     "restart_policy": "operator reset only after a DESAT/OC fault (one attempt maximum); UVLO auto-restart with soft start; OTP auto after cool-down optional",
     "power_path": {
@@ -767,7 +769,7 @@
         "PE",
         "CTRL_SELV"
       ],
-      "heatsink": "Fischer Elektronik LAM 5 D K 100 12 (double-width LAM 5 profile, ~100 x 100 mm plan, 50 mm high, integrated 12 V fan, 0.30 K/W distributor figure - datasheet to confirm; CR-13); both TO-247-4 vertical against one face at 28 mm pitch, leads trimmed short; reserve 175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 10 mm tall); PE-bonded; >= 5 mm HV copper keep-out; clip-to-lead >= 3 mm",
+      "heatsink": "Fischer Elektronik LAM 5 D K 100 12 (double-width LAM 5 profile, ~100 x 100 mm plan, 50 mm high, integrated 12 V fan, 0.30 K/W distributor figure - datasheet to confirm; CR-13); both TO-247-4 vertical against one face at 28 mm pitch, leads trimmed short; reserve 175 x 110 mm including fan, intake and exhaust corridors (corridors may hold parts <= 15 mm tall); PE-bonded; >= 5 mm HV copper keep-out; clip-to-lead >= 3 mm",
       "placement_rules": [
         "commutation loop first: HF ceramics in columns beside the TO-247-4 legs, VIN+/PGND as overlapping pours on F.Cu/In1.Cu (<= 20 nH board target; 40-60 nH total with standing leads)",
         "drivers and decoupling on B.Cu within 15 mm of the device leads; gate pour B.Cu over Kelvin pour In2.Cu",
@@ -810,7 +812,7 @@
       ],
       "mounting": "stacked ~11 mm above the SELV strip, overhanging the board edge by ~40 mm; no control-board copper above HV copper (air clearance >= 11 mm; the between-boards clearance argument is a standards review item); 4 x M3 standoffs"
     },
-    "mechanical": "open frame on a PE-bonded baseplate; power board on 6 x M4 x 15 mm standoffs; total height 15 + 2 + 55 = 72 mm (< 80 mm); mass about 1.8-2.0 kg (power-board copper 0.3-0.5 kg)",
+    "mechanical": "open frame on a PE-bonded baseplate; power board on 6 x M4 x 15 mm standoffs; total height 15 + 2 + 50 = 67 mm (72 mm envelope with a 5 mm allowance for clips and fan housing; limit 80 mm); mass about 1.8-2.0 kg (power-board copper 0.3-0.5 kg)",
     "target_metrics_after_layout": {
       "power_board_area_mm2_max": 43200,
       "hv_to_selv_clearance_mm_min": 9.0,
@@ -1003,6 +1005,16 @@
       "id": "CR-24",
       "topic": "discontinued reference heatsink",
       "decision": "Ohmite CR201-50VE / CLA-TO-21E removed (discontinued Aug 2024); knowledge-base feedback item."
+    },
+    {
+      "id": "CR-25",
+      "topic": "heatsink NTC threshold ladder",
+      "decision": "lowered to 80 C derate/overload-inhibit, 90 C firmware trip, 100 C hardware comparator trip (divider 32.4 k / 10.0 k from REF3V0); the 90/100/110 C proposal mapped the hardware trip to T_J 176-178 C at the max-R overload corner. All three remain KR-TH-003 human-review proposals; a firmware junction-temperature estimator is recommended."
+    },
+    {
+      "id": "CR-26",
+      "topic": "consistency-review baseline fixes",
+      "decision": "3.00 V NTC reference is a REF3130AIDBZR (a REF3125 cannot be 'buffered' to 3.0 V); fault combiner is 3 x SN74LV21A; assembly height 67 mm (72 mm envelope); corridor part height 15 mm; inductor spacing 20 mm in every rule; LS-tab displacement current 2.8-4.1 A with the TSP A2000 pad."
     }
   ],
   "open_items_for_human_review": [

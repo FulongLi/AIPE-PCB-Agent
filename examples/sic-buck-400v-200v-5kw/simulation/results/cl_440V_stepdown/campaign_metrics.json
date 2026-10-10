@@ -1,0 +1,102 @@
+{
+  "controller": "cascade",
+  "events": [
+    {
+      "type": "load_step_off",
+      "t_event_s": 0.014,
+      "i_load_before_A": 24.999205054470956,
+      "i_load_after_A": 12.50004486915235,
+      "excursion_cycle_avg_V": 7.591396331135172,
+      "excursion_pct_of_vref": 3.795698165567586,
+      "t_excursion_after_event_s": 0.00011640000000000088,
+      "vout_raw_min_V": 199.89549897730862,
+      "vout_raw_max_V": 207.689750576563,
+      "il_max_A": 28.85220725563833,
+      "il_min_A": 7.037822018982839,
+      "recovery_band_V": 2.0,
+      "recovered_within_window": true,
+      "recovery_time_s": 0.0007508000000000011,
+      "window_s": 0.007990000000000002,
+      "limit_basis": "12.5 A load step: <= 10 V excursion, <= 5 ms recovery to the 1 % band",
+      "checks": {
+        "excursion_within_10V": true,
+        "recovery_within_5ms": true,
+        "vout_raw_below_ovp_230V": true,
+        "il_below_oc_trip_37p5A": true
+      }
+    }
+  ],
+  "steady_checks": {
+    "vout_ripple_below_2Vpp": true,
+    "vin_bus_ripple_below_2pct": true,
+    "il_peak_below_oc_trip_37p5A": true,
+    "il_peak_below_isat_worst_35A": true,
+    "cin_rms_per_part_below_14p5A": true,
+    "cout_rms_per_part_below_23p5A": true
+  },
+  "textbook": {
+    "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+    "dIL_App": 7.9928900477344165,
+    "il_peak_A": 16.496472841744268,
+    "il_rms_A": 12.71119793950586,
+    "i_hs_rms_A": 8.588137966671162,
+    "i_ls_rms_A": 9.371149306393496,
+    "i_cin_rms_A": 6.418491790000472,
+    "i_cout_rms_A": 2.3073486103312733,
+    "p_cond_hs_W": 3.5771715161270667,
+    "p_cond_ls_W": 4.259194307151886,
+    "p_cond_total_W": 7.836365823278953,
+    "p_deadtime_W": 1.4375031990558615,
+    "p_dcr_W": 2.5851928489167686,
+    "vout_ripple_Vpp": 0.21699216314775288,
+    "vin_ripple_Vpp": 1.7543076341483195,
+    "i_in_mean_A_ideal": 5.706056157826983
+  },
+  "controller_gains": {
+    "structure": "outer voltage PI (V -> A) -> i_ref clamp -> inner average-current PI (A -> duty) with Vref/Vin feedforward -> duty clamp [0, 0.85] -> module comparator PWM; inductor current = i(Vld) + i(Vcout) filtered by a first-order 10 kHz low-pass (stand-in for the ePWM CTR=ZERO average sampling); output voltage through the module 20 kHz feedback filter",
+    "kpv_A_per_V": 1.2325,
+    "kiv_A_per_V_s": 3097.7,
+    "outer_zero_Hz": 400.0,
+    "kpi_per_A": 0.01709,
+    "kii_per_A_s": 85.91,
+    "inner_zero_Hz": 800.0,
+    "iref_min_A": -10.0,
+    "iref_max_A": 35.0,
+    "d_min": 0.0,
+    "d_max": 0.85,
+    "fb_filter_hz": 20000.0,
+    "i_filter_hz": 10000.0,
+    "feedforward": true,
+    "design_basis": "kpi = 2 pi 4 kHz L / Vin(400 V) for an inner crossover of about 4 kHz (fs/12.5); kpv tuned by bisection on the small-signal loop gain (plant 1/(sC) || R, closed inner loop, 20 kHz filter, T/2 PWM delay) for an outer crossover of 2.3 kHz (middle of the 2.0-2.5 kHz band of design_decisions.json assumptions_accepted.voltage_loop_crossover_Hz); analytical margins are recomputed by the driver and stored in results/loop_gain_analysis.json",
+    "firmware_status": "NO FIRMWARE EXISTS (assumptions register A-34: hardware/firmware contract only). These gains are a behavioural stand-in for the TMS320F28335 implementation and must not be copied into firmware without a discrete-time redesign (sampling, one-sample delay, ADC scaling, anti-windup, current-reference clamp coordinated with the 37.5 A OC trip).",
+    "iref_max_basis": "35 A: below the TMCS1133 OC trip (37.5 A, design_decisions sensing.current.oc_threshold_A) and the vendor-style I_sat 37.3 A; added assumption",
+    "iref_min_basis": "-10 A: synchronous operation continues at no load (baseline magnetics no_load_ccm_reverse_current_A -2.8 to -3.4 A); added assumption"
+  },
+  "startup": {
+    "soft_start_s": 0.005,
+    "vout_peak_V": 201.30908462860913,
+    "overshoot_V": 1.3090846286091278,
+    "overshoot_pct": 0.6545423143045639,
+    "il_peak_A": 33.110362274200035,
+    "t_99pct_s": 0.004984828615999963,
+    "vout_cycle_avg_pkpk_last_50T_V": 0.0017156281322172617,
+    "checks": {
+      "vout_peak_below_ovp_230V": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "overshoot_within_1pct_static_band": true
+    }
+  },
+  "textbook_deviation_pct": {
+    "il_pkpk": 0.7242830932120212,
+    "il_peak": 0.11582778738196058,
+    "il_rms": 0.021992272620451007,
+    "i_hs_rms": 0.0849382546121316,
+    "i_cin_rms": 2.393119796216473,
+    "i_cout_rms": 0.40039689125696754,
+    "p_cond_hs": 0.16994865429523248,
+    "p_diode_deadtime": -16.09670048723697,
+    "p_l_dcr": 0.04398938184144692,
+    "vout_pkpk": -11.718091873468964,
+    "vin_bus_pkpk": 3.428784101900088
+  }
+}

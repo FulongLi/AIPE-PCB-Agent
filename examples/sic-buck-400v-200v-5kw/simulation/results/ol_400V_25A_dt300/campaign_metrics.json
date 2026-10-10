@@ -1,0 +1,43 @@
+{
+  "controller": "open-loop PWL gates",
+  "events": [],
+  "steady_checks": {
+    "vout_ripple_below_2Vpp": true,
+    "vin_bus_ripple_below_2pct": true,
+    "il_peak_below_oc_trip_37p5A": true,
+    "il_peak_below_isat_worst_35A": true,
+    "cin_rms_per_part_below_14p5A": true,
+    "cout_rms_per_part_below_23p5A": true
+  },
+  "textbook": {
+    "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+    "dIL_App": 7.27819117647059,
+    "il_peak_A": 28.64379583049399,
+    "il_rms_A": 25.09281516899442,
+    "i_hs_rms_A": 17.83326089968272,
+    "i_ls_rms_A": 17.65288018395763,
+    "i_cin_rms_A": 12.590560430648305,
+    "i_cout_rms_A": 2.1010328174744273,
+    "p_cond_hs_W": 15.4242219243334,
+    "p_cond_ls_W": 15.113772671274454,
+    "p_cond_total_W": 30.537994595607856,
+    "p_deadtime_W": 3.4506486334316993,
+    "p_dcr_W": 10.074389969685065,
+    "vout_ripple_Vpp": 0.19758941230936825,
+    "vin_ripple_Vpp": 3.5269393325779586,
+    "i_in_mean_A_ideal": 12.629449012460746
+  },
+  "textbook_deviation_pct": {
+    "il_pkpk": 1.0052885715533466,
+    "il_peak": 0.1227273127647161,
+    "il_rms": 0.025641221785870482,
+    "i_hs_rms": 0.055611247925974876,
+    "i_cin_rms": 2.436682161721709,
+    "i_cout_rms": 0.8811957813299274,
+    "p_cond_hs": 0.11125342196090227,
+    "p_diode_deadtime": 0.5313598788430718,
+    "p_l_dcr": 0.051289018294277615,
+    "vout_pkpk": -9.054185201955743,
+    "vin_bus_pkpk": 2.3930491990068683
+  }
+}

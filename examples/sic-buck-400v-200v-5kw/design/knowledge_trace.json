@@ -1,0 +1,4541 @@
+{
+  "areas": [
+    "architecture",
+    "assumptions",
+    "capacitors",
+    "controller_aux_interconnect",
+    "gate_driver",
+    "inductor",
+    "mosfet",
+    "sensing_protection",
+    "standards_safety",
+    "thermal"
+  ],
+  "rows": [
+    {
+      "area": "architecture",
+      "id": "KR-PCB-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Decisive for Option C: a separate driver card is justified only if it mates directly at the gate/Kelvin pins; with two TO-247-4 it adds connector inductance to the gate loop for no reuse benefit, so C is rejected. In Option B the drivers stay on the power board within 15 mm of the device leads (target metric).",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PCB-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Floor plan places the HF ceramic column and the L1/L2 Vin+/PGND pair (0.20 mm prepreg) for the commutation loop before the driver islands; connector inductance is kept outside both loops by passing only logic-level signals over the mezzanine.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PCB-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Power-board stack-up: gate pours on L4 with the drivers, Kelvin-source pours on L3 across a 0.20 mm prepreg, Kelvin layer between the gate layer and all other copper; this is the main argument for 4 rather than 2 layers.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PCB-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Partition keeps the Kelvin-source net inside the driver island (L3 pour) and never merges it with the power-source pour on L1/L2; carried into the pcb_constraints for the TO-247-4 footprint.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Parallel Vin+/SW/Vout+ pours on L1 and L3 and PGND on L2/L4 with via arrays; the rule's low confidence is noted, the sizing itself comes from the capacitor, inductor and standards agents (IPC-2221).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-ISO-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "10 mm copper-free ISO_BARRIER on all four power-board layers along the whole 240 mm length; the stacked control board must not carry copper above HV copper; Option C would create a second barrier instance per driver card (counted against C).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Distances are not derived here; the standards agent's 9.0 mm / 5.5 mm / 5.0 mm / 3.0 mm values are applied as geometry, and the air-gap argument for the stacked control board (12.1 mm worst case) is surfaced for insulation-coordination review.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-ISO-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Power board carries the ten standards-agent classes; the control board carries CTRL_SELV only, which is one of the reasons its DRC is trivial in Option B.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-ISO-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "All seven barrier parts (2 x UCC21710, 2 x UCC14141, 2 x AMC1311, TMCS1133) sit on one barrier line with 1.0 mm non-plated slots under every body whose land gap is below 9 mm.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "One PE-bonded heat sink for both TO-247-4 with rated insulating pads; a 5 mm HV-copper keep-out around the sink footprint is included in the heat-sink reservation (110 x 50 mm).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-TH-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "Used only as a sanity check of the heat-sink envelope: T_J = 105 / 122 / 139 degC for R_th,HS = 0.5 / 0.8 / 1.1 K/W at 56.2 W; the thermal agent owns the selection.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-GD-008",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The mezzanine (11 mm stack + <= 80 mm strip trace) is treated as the rule's short on-board exclusion: buffered single-ended PWM with RC at the driver pins (controller agent); RS-422 (CB-GD-003) becomes mandatory if a cable > ~150 mm is ever used.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "CB-GD-003",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Differential interface not needed for the stacked mezzanine; recorded as the fallback for a cabled variant.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PR-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The 12 V entry and TPS26400 eFuse (CB-PR-001) are placed on the control board at the connector, so the power board receives only protected 12 V over three mezzanine pins; relay-coil current conflict surfaced.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principles 1, 2, 4, 5, 6, 7 and 8 drive the stack-up, barrier line, net classes, slots and signal concept; the scope note (PRD-09301: separate driver boards typical for ~200 kW+) rejects Option C; procedure steps 1-2 are turned into the layer assignment table.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 4 (thermal placement must not lengthen electrical loops) puts the drivers on the bottom side under the device row while the devices stand on the sink; step 3 (films and magnetics out of the exhaust) is applied as the fan/exhaust-zone rule but flagged as a recommendation without source evidence; heat-sink envelope sized at about 900 cm2 fin area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (SELV control domain, every crossing a rated isolator) defines the barrier line and the SELV strip; the interface items of principle 9 are taken from the controller agent rather than re-derived.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Bias modules straddle the barrier with slots; their input CM chokes and capacitors are placed on the SELV strip side (KR-IS-002); module selection belongs to the bias agent.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Only the placement outputs of the capacitor agent (HF column within 5-15 mm of the pins, films within 30-40 mm, >= 20 mm pours on two layers) are used to size the HV area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Sensing isolators are placed on the barrier line; the Hall sensor sits in the output path at the barrier so that no SELV corridor crosses the HV area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 10 (power board + control card, drivers on the bottom beside each TO-247-4, LV circuitry along the edge, 300 x 180 mm 4 layers) is the pattern for Option B and the size benchmark; decision 9 (vertical sinks, two devices each) sets the heat-sink concept; TI's instance values are not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "architecture",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 6 island sizes (25.4 x 30.5 mm per channel on a 50.8 x 61 mm board) calibrate the 30 x 35 mm driver-island envelope; decision 4 confirms single-ended links are acceptable on-board; PRD-09301 scope note supports rejecting Option C.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "architecture",
+      "id": "REF-WS-CGD15SG00D2",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 7 (47.6 x 17.8 mm 4-layer 1 oz driver card with 1 mm slots) gives the Option C driver-card envelope (50 x 30 mm, 4 layers 35 um) used in the area and cost model; its 8 mm creepage is not generalised.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "architecture",
+      "id": "PE-PCB-001..008",
+      "exists": false,
+      "type": "project_rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "PE-PCB-007 (control separated from power structures) is implemented by the two-board partition; PE-PCB-002/003 by the HF column and L1/L2 loop; PE-PCB-006 by the parallel pours; PE-PCB-008 by per-pin decoupling on both boards; evidence remains human review per docs/pcb-design-rules.md.",
+      "reference_design": "docs/pcb-design-rules.md"
+    },
+    {
+      "area": "architecture",
+      "id": "V1 project precedent (examples/buck-48v-24v-1kw)",
+      "exists": false,
+      "type": "project-precedent",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "300 x 220 mm six-layer integrated board, control+aux bbox 128.5 x 93.7 mm at 15 % utilisation and known issue V1-09 (fine pitch on heavy copper) are the quantitative baseline that Option A would repeat and Option B avoids; V1's single-ground control practice is reused on the control board.",
+      "reference_design": "examples/buck-48v-24v-1kw"
+    },
+    {
+      "area": "architecture",
+      "id": "CB-PR-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "KR-CAP-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "KR-GD-007",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "KR-IS-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "KR-PR-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "PE-PCB-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "PE-PCB-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "architecture",
+      "id": "PE-PCB-007",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Thermal-budget method P_max = (T_J,max - T_A)/(R_thJC + R_iso + 2 R_hs) reused with ambient raised from TI's 40 degC to 50 degC and a parametric pad resistance (0.1-0.5 K/W); TI's warning that TIDA-010054 is intended for room ambient only drives the explicit 50 degC verification point (A-18) and the chamber/extrapolation item in the test approach (A-37). Fan airflow/aux-rail consideration drives A-19/A-22.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-TH-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "P_max sensitivity 57.3 W -> 52.1 W per device when T_A goes from 40 to 50 degC (R_thJC 0.42, R_iso 0.5, R_hs 0.5 K/W, parametric); basis for accepting the 50 degC ambient seed with a 9 % budget penalty.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Both TO-247-4 devices on one shared heat sink with a rated insulating pad (A-16); pad resistance carried in the thermal budget; pad voltage rating is a human-review item.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-TH-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Firmware scope A-34: NTC/heat-sink temperature is cooling supervision, not junction protection; fan-failure detection flagged (A-19).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (isolate every position) and principle 2 (Kelvin-source reference) define the SELV isolation concept A-21 and the one-TO-247-4-per-position arrangement A-16; principle 3 / KR-GD-001 make the selected device datasheet, not PRD-04814 numbers, govern gate levels (A-17).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "A synchronous buck is a half bridge with complementary switching, so the negative turn-off recommendation applies even though PRD-04814 lists the buck among single-ended topologies where 0 V may be used; decision handed to the gate-driver agent (A-17).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-009",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Dead time is generated by the F28335 dead-band module (initial 200 ns, 2 % of period, about 2.2 W body-diode loss at 27.5 A); the interlock is only a last barrier; both-inputs-high test is in A-37.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "DESAT trip must stay above the corrected 31.6 A overload peak over temperature; reference values (6.4 V/1 us, 6.7 V/46 ns) are not copied; derivation and measurement are surfaced for the gate-driver agent and reviewer (A-10, A-15).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-008",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Applicability depends on the board partition: differential PWM/fault (CB-GD-003) if drivers and controller are on separate boards, buffered single-ended with RC filters on one board (rule exclusion). Register A-21 is written to be compatible with both outcomes.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The skill excludes inductor-defined output filters, so the output ripple requirement A-09 uses C >= dI_L/(8 fs dV) and ESR <= dV/dI_L instead of the dQ method; the dQ method (KR-CAP-001) is noted as applicable to the pulsed buck input current for the capacitor agent; principle 4 (TI states no derating rule) is cited for A-04.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-CAP-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "Applies to the input DC-link (pulsed current, I_Cin,rms 12.4-13.75 A); not used for the output filter.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-CAP-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Output capacitor RMS current dI_L/sqrt(12) = 2.4 A and input capacitor RMS 12.4-13.75 A must be within rating at 50 kHz and the hot-spot temperature assumed in A-29.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-CAP-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Two-tier film plus local HV ceramics recorded as the layout assumption behind the EMC scope (A-28) and the PE-PCB-002/003 constraints.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-CAP-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "No transformer; no DC-blocking capacitor.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PE-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Phase-shift/DAB soft-switching boundary does not exist in a hard-switched buck.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Gate-power budget (KR-IS-001) evaluated for 118 nC, 19 V, 50 kHz = 0.11 W per device; module quiescent power dominates the 12 V budget (A-22). KR-IS-003/KR-IS-002 define the EMI-aware scope A-28. KR-IS-004 (bias sharing) is a human-review item for the gate-driver agent.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-IS-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Q_G * fs * (V_DD - V_EE) computed; shows gate power is negligible in the auxiliary budget.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Protection scope A-35: hardware short-circuit protection per switch is required because this is a complete prototype, not an evaluation fixture (rule exclusion does not apply).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PR-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Latched combined fault with UVLO lock-out required (A-35); converter-level UVLO ladder A-02 uses the same lock-out logic.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PR-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Auxiliary 12 V input must be protected (reverse polarity, OVP, UVLO consistent with bias-converter input range) - A-22; CB-PR-001 pattern cited, part choice left to the auxiliary agent (CMP-TPS2640 unverified here).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "KR-SN-001 and KR-SN-002 applied directly (isolation rating, divider headroom >= 1.1 x 480 V input, >= 1.25 x 200 V output); KR-SN-003 not applicable because the F28335 has no SDFM; KR-SN-005 fast hardware OC path required; Lab 2 stepwise commissioning practice shapes A-37.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-SN-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Delta-sigma bitstream sensing needs an SDFM peripheral; the TMS320F28335 has none, so analog isolated amplifiers / Hall sensors to the ADC are assumed.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "PCB constraints hand-off: isolation keep-outs on all layers (KR-ISO-001), net classes (KR-ISO-003), slots >= 1 mm (KR-ISO-004), V_GS probe points (KR-PCB-005) recorded in A-33/A-37 and pcb_constraints.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Environmental inputs for the standards agent fixed: CTI >= 175 V (group IIIa, Isola 370HR class 3 verified), pollution degree 2, altitude <= 2000 m, OVC II (A-25..A-27, A-30).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "70 um copper on every power-board layer with paralleled pours and via arrays (A-31); PE-PCB-006 evidence requirement noted.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "PE-PCB-001..008",
+      "exists": false,
+      "type": "project_rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "EMI-aware layout scope A-28 and the control/power separation assumptions reference the project rules; acceptance evidence remains human review per docs/pcb-design-rules.md.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 1: 700-800 V operating window compared with the +/-10 % seed; decision 8: 12 V aux protection pattern; decision 9: 40 degC thermal model and room-ambient warning; decision 10: 300 x 180 mm at 10 kW as a size benchmark for the mechanical envelope. Instance values (2 ohm, 6.4 V/1 us, 45/70 A, 60 uF) explicitly not copied.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "REF-WS-PRD-04814",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 1 gate-level guidance (+15 V, -3 to -4 V, maxima +19/-8 V) cited as method; the selected device datasheet governs (KR-GD-001); its single-ended 0 V note is overridden by the half-bridge nature of the synchronous buck (KR-GD-005).",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "REF-WS-CGD15SG00D2",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 7 observed PCB practice (Tg >= 170 degC, ENIG, 1 mm non-plated slots) supports the laminate and slot assumptions A-30/A-33; its 8 mm creepage is not generalised.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 4 differential signalling with fail-safe polarity and interlock becomes a conditional requirement if the architecture agent separates driver and control boards (A-21); decision 2 DESAT values not copied.",
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "CB-GD-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "CB-PR-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-GD-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-IS-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-IS-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-IS-004",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-ISO-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-ISO-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-ISO-004",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PCB-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PCB-004",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-PCB-005",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-SN-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-SN-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "KR-SN-005",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "PE-PCB-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "PE-PCB-006",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "assumptions",
+      "id": "PE-PCB-007",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "capacitors",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Procedure steps 1-4 and 6 followed (envelope, capacitor current/dQ/I_rms at every corner, film selection for C/V/I_rms, HV ceramics beside the leg, hand-off to layout). Step 5 (DC blocking) skipped. The DAB rectified-tank waveform is replaced by the buck's pulsating input current (Io during D, zero otherwise, plus ripple) and the triangular output current.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-CAP-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "C >= dQ_max/dV applied with dQ = D(1-D)*Io*Ts derived for the buck and evaluated at all nine corners (worst 137.5 uC at 400 V / 27.5 A); dV from the 2 % ripple assumption.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-CAP-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "I_Cin,rms computed at 50 kHz and compared with datasheet I_RMS ratings normalised to their temperature-rise bases (TDK dT 20 K at 70 degC, KEMET dT 30 K, Vishay dT 15 K at 85 degC); self-heating recomputed from ESR and R_th at 50 degC ambient.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-CAP-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Two-tier bank: 2 x 20 uF film plus 10 x 0.47 uF 630 V 2220 ceramics beside the half-bridge; ceramic quantity derived from the edge-charge / film-interconnect resonance model, not copied from TI's 14 pieces.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-CAP-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "No transformer or tank inductance in a non-isolated buck; no DC-blocking capacitor.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-PCB-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Ceramic tier placement and loop-inductance target (<= 20 nH) given priority over gate-driver routing; stated as PCB constraints 1-2.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Film capacitors connected with >= 20 mm wide Vin+/PGND pours on at least two 70 um layers with via stitching; current density computed (5 A/mm2 at 7 A RMS).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Provisional functional-insulation spacing (>= 2.5 mm creepage, >= 1.5 mm clearance, 3.0 mm recommended) stated for 440 V DC working voltage, PD2, CTI >= 175; the governing values must be derived from the standard by the isolation agent and reviewed.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-ISO-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "DC+, PGND and SW nets of the capacitor banks assigned to spacing classes so KiCad class-pair clearances can be encoded.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-ISO-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "At 440 V working voltage the required creepage is small enough that slots are not needed around the capacitor pads; revisit only if the isolation agent's values are larger.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "capacitors",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (power loop first) used to place the ceramic tier at the TO-247 pins and define the loop target.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "capacitors",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Step 3: film capacitors and bleeders kept out of the heat-sink exhaust; the knowledge base itself marks this recommendation as without source evidence, so it is listed for review and a 10 K local-air allowance is carried.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Concerns the MOSFET heat-sink interface, not capacitors; only the thermal environment it creates is considered.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 2: two-tier architecture and dQ -> C method reused; instance values (30/60 uF, 5 V ripple, 14 MLCC, B32716 parts, 630 V/1 kV choices) not copied. Decision 3 not applicable. Decision 10: bus copper repeated on several layers adopted as a pattern. Voltage ratios TI used (0.625, 0.73) noted as observations only.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "CMP-B32716H8306K000",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "Different TDK series (B32716) with no datasheet in the knowledge base; replaced by the B32776 37.5 mm 4-pin series after fetching the TDK datasheet.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "CMP-B32716H1156K000",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "1.1 kV part for an 800 V link; not needed at 440 V.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "CMP-CGA9P1X7T2J474M250KC",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Same TDK 630 V X7T 2220 part family selected for the HF tier at a 0.70 voltage ratio (TI used it at 0.79); quantity derived (10), DC-bias derating added as an explicit assumption because the curve could not be fetched; availability flagged.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "CMP-2220Y1K00474KETWS2",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Knowles 1 kV 0.47 uF 2220 listed as the higher-margin alternate (KXTWS2 FlexiCap variant); specifications only at search-snippet level.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "CMP-C1812V104KDRACTU",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "TI's 0.1 uF 1 kV 1812 positions are snubber/local decoupling in an 800 V stage; no such positions are defined here.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "capacitors",
+      "id": "PE-PCB-002",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "HF input capacitors (ceramic tier) placed within 5-15 mm of the half-bridge pins; evidence to be a pad-to-pad current-path overlay at layout review.",
+      "reference_design": "docs/pcb-design-rules.md"
+    },
+    {
+      "area": "capacitors",
+      "id": "PE-PCB-003",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Commutation-loop target <= 20 nH including packages; loop overlay including layer transitions required as evidence.",
+      "reference_design": "docs/pcb-design-rules.md"
+    },
+    {
+      "area": "capacitors",
+      "id": "PE-PCB-006",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Copper width and via stitching for the film-capacitor branches sized from the computed 7 A RMS per branch and 25 A bus current.",
+      "reference_design": "docs/pcb-design-rules.md"
+    },
+    {
+      "area": "capacitors",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Interface only: the input voltage-sense divider parallels the bleeder; its value is set by the sensing agent and is not credited in the discharge time.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (isolate every position) fixes the SELV/HV partition; principle 9 and procedure step 8 define the controller interface (interlock wiring, fault/RDY combination and latching, reset timing, signalling standard and filters). Instance values in 'Known limitations' were not copied.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-GD-008",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The exclusion for short on-board links is invoked for the stacked mezzanine (<= 15 mm + short traces): buffered single-ended PWM with RC filtering at every receiving pin. RS-422 (CB-GD-003) is documented as the mandatory fallback if a cable > ~15 cm is ever introduced.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-GD-009",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "UCC21710 IN+/IN- cross wiring gives the hardware interlock (both high -> both outputs low, SLUSDH8D Table 7-1); dead time is generated only in the ePWM dead-band module (30-60 ticks).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-PR-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "SN74LVC1G74 latch cleared asynchronously by the AND-combined fault bus (FLT, RDY, OC, OVP, UVLO, OTP, 12 V eFuse, reset, E-stop, software) and re-armed only by an explicit ARM edge; RDY low during bias UVLO keeps the latch cleared.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-PR-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Implemented with TPS26400 + SMBJ15CA; thresholds derived for 12 V +/-10 % and the UCC14141-Q1 ratings (UVLO 10.0 V, OVP 14.45 V, ILIM 1.5 A). The rule's verification method is human review of thresholds against downstream ratings, so the ladder values and tolerance bands are surfaced for review rather than closed.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CB-PR-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Alternative A (eFuse) chosen over alternative B (P-FET + Zener) because the budget needs UVLO/current limit/inrush control for three downstream converters; TI instance values (OVP 15 V, UVLO 9 V, 2.2 A, 36 V TVS) replaced by derived values; 'protection at the connector before distribution' kept as a PCB constraint.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CMP-TPS2640",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "TPS26400PWPR selected; datasheet SLVSFQ6A parameters (thresholds 1.19/1.1 V, R_ILIM table, dVdT Eq.1/2, IMON gain, FLT/MODE behaviour) used for all settings.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-IS-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Bias power per module computed with the larger TI factor-2 form (recorded EC-014 conflict) plus driver quiescent and the shared sensing LDO; compared with the UCC14141-Q1 1.0 W / 1.5 W ratings at the actual input range.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Procedure step 2 (input-voltage-dependent rating of UCC14141-Q1) and principle 7 (protect the auxiliary input) drive the 12 V budget and eFuse thresholds; module selection itself belongs to the bias-supply agent.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CB-IS-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Used for the input-power model and the optional shared 5 V sensing LDO on the low-side module (0.21 W added to the low-side budget); ENA/PG interface wired to the DSP (BIAS_EN, PG_BIAS_x_N).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CMP-UCC14141-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "SLUSF10B typ input currents (40 mA no load, 200 mA at 1.0 W, 12 V) converted to P_in = 0.48 W + 1.92 x P_out; PG polarity (active-low open-drain) and ENA limit (5.5 V) used for the interface.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CMP-UCC21710-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Interface parameters from SLUSDH8D: input thresholds, internal pull resistors, RST/EN 50 k pull-down and > 1000 ns reset, open-drain FLT/RDY, deglitch 28-60 ns, tPD 60-130 ns, 30 ns skew, APWM 400 kHz / 10-88 %.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CB-GD-003",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Differential RS-422 interface not used because the link is a mezzanine without cable (KR-GD-008 exclusion); its fault-combining (AND gates) and RC-filter-at-pin patterns were reused; recorded as the fallback for cabled variants.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-SN-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Delta-sigma bitstreams are not possible (F28335 has no SDFM) and the sensing points are close to the ADC over the mezzanine, so analogue isolated-amplifier/Hall outputs are carried on guarded pins at the far end of the connector; rule is human-review by definition, so trace lengths are listed for review.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-SN-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "TMCS1133 OC flag enters both the hardware latch and TZ2 directly; ADC-based limits are software back-ups only.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CB-SN-004",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Defines the OC_N and ISENSE interface (3.3 V supply from the control domain, analogue output + fault flag); trip levels are set by the sensing agent, TI's 45/70 A not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "CB-PR-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "TEMP_PWM from each driver's APWM is captured by eCAP1/eCAP2 and, RC-filtered, by ADC and by the hardware OTP comparator; NTC mapping left to the gate-driver/thermal agent.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-TH-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "OTP based on NTC/APWM is cooling supervision, not junction protection; flagged for review.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The control-side latch is the second barrier: its <= 240 ns path only blocks subsequent pulses; the primary short-circuit protection is the driver DESAT (gate-driver agent).",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-GD-011",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "No two-level turn-off in the control path; driver soft turn-off is relied on, the latch only inhibits re-triggering.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-PCB-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Drivers stay on the power board next to their switches; only logic-level PWM crosses the mezzanine, so connector inductance is outside the gate loop.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-ISO-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "All interconnect nets are SELV (control domain); no connector pin or trace crosses an isolation barrier; islands of each driver stay on the power board.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Creepage from the SELV connector/control area to 400 V copper on the power board must be checked by the isolation review for pollution degree 2, CTI >= 175 V.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-ISO-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "All connector nets belong to the control/primary spacing class and are routed tightly together.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "KR-SN-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Confirms that only rated isolators (drivers, bias modules, isolated amplifiers, Hall sensor, relay) bridge the barrier; the controller interconnect itself carries no barrier-crossing net.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 8 (eFuse protection) and decision 10 (control card connector and low-voltage circuitry along the board edge away from the power stage) reused as patterns; decision 4 instance values not copied.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 3 (combined latched fault, RESET >= 1000 ns, RC on reset) and decision 4 (interlock cross-wiring; RS-422 only for cabled links) reused; 120 ohm/56 pF filter instance not copied, 100 ohm/100 pF derived.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "REF-WS-PRD-04814",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "Bias-topology comparison belongs to the bias-supply agent; only the auxiliary-input protection recommendation (via KR-PR-003) touches this area.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 3 (analogue to a nearby ADC) and principle 5 (fast hardware OC path) define the ISENSE/OC_N interface; scaling is the sensing agent's.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Hand-off: RC filters and pull-downs placed at the driver input pins on the power board; single-ended segment kept short.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "PE-PCB-005/PE-PCB-007/PE-PCB-008",
+      "exists": false,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Analogue pins away from PWM pins with ground guards; control logic separated from power structures; per-pin decoupling for eFuse, buck, LDO, DSP and logic.",
+      "reference_design": ""
+    },
+    {
+      "area": "controller_aux_interconnect",
+      "id": "PE-PCB-005",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "gate_driver",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Procedure steps 1-9 executed for the C4MS025120K: device gate data collected from the Rev. 2 datasheet, isolation chosen for the 460 V switch node, rails +15/-4 V, driver features selected, R_G from datasheet curves, DESAT with CB-GD-001 formulas, discharge resistor, decoupling from Q_G, interlock/fault interface, hand-off to SKILL-002. Reference instance values (2 ohm, 1 ohm, 10 ohm, 6.4 V/1 us, 6.7 V/46 ns, 20 uF) were not copied.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2, REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Positions grouped by reference (HS: switch node; LS: PGND), power per supply computed with KR-IS-001, topology chosen with the PRD-04814 comparison (integrated module selected, LLC kept as fallback), rails generated by the module's regulated VDD/COM/VEE outputs, CM choke and decoupling added, isolation and i_CM estimated, PG/UVLO interaction defined. Bootstrap excluded per the skill's scope.",
+      "reference_design": "REF-WS-PRD-04814, REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Used only to formulate the layout hand-off (net classes, gate/Kelvin pours, decoupling in the loop, DESAT routing, probe points); actual placement/routing belongs to the PCB agent.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA (PRD-09301), REF-WS-CGD15SG00D2, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Only the principle that an NTC reads heat-sink/case temperature, not junction temperature, is used for the AIN/APWM channel; thermal budgeting is the MOSFET/thermal agents' area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Sensing design belongs to the sensing agent; only the sensing-supply tap on the LS bias supply (TIDA decision 7 pattern) is budgeted here.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Rails +15 V/-4 V with +/-1.3 % regulation plus estimated gate-loop overshoot (< 0.5 V, overdamped loop) checked against the C4MS025120K absolute maxima -10/+23 V read from its datasheet and against the C3M fallback -8/+19 V; measurement at the device side of R_G required.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Split OUTH/OUTL of the UCC21710-Q1 with separate R_G,ON = 10 ohm (6.8 ohm tuning target) and R_G,OFF = 3.3 ohm; steering-diode variant (CB-GD-002) not needed.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Parasitic turn-on excursion computed two ways (R-limited and capacitance-divider-limited) for C_iss/C_rss = 630, -4 V bias and the 6.2 ohm off-path: 0.6-1.0 V excursion, so the device is inherently immune; the internal clamp (0 ohm CLMPI link, short path) is still populated as a no-cost margin. Conflict preserved: Wolfspeed says the clamp is not strictly needed with low R_G and low-inductance routing.",
+      "reference_design": "REF-WS-CGD15SG00D2 (PRD-06933), REF-WS-CGD1700HB2M-UNA (PRD-09301 section 5.8)"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Trip V_DS = 3.6 V (3.2-4.0 V over V_OCTH tolerance) derived from the C4MS025120K 175 degC output curve (about 75 A at V_GS = 15 V) and the diode drop; blanking 252-326 ns derived from the turn-on settling estimate. TI's 6.4 V/1 us and Wolfspeed's 6.7 V/46 ns were not reused. Values must be confirmed on hardware.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Negative -4 V turn-off kept for both half-bridge positions; the 0 V alternative is discussed and rejected because the computed excursion (about 1 V) would leave only 1 V to the 2.0 V hot threshold.",
+      "reference_design": "REF-WS-PRD-04814, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "The UCC14141-Q1 feedback dividers make +15/-4 V (C4MS and C3M compatible) and +18/-4 V (C4MS only) population options; the DESAT blanking shift with VDD is quantified (288 ns -> 229 ns).",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-007",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "10 kohm gate-to-Kelvin-source resistor at the device side of R_G (10 k vs 47 k alternative noted; 10 k chosen for a 3 ms-class discharge with C_iss 3.1 nF and 11 mW dissipation).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-008",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "On one integrated board the PWM links are short single-ended 3.3 V lines with RC filters at the IC pins (allowed by PRD-09301 section 4.1); if the architecture agent separates the boards with a cable, the CB-GD-003 RS-422 interface must be added. Both options kept.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-009",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "IN+/IN- cross-wiring of the HS and LS drivers as hardware interlock; dead time generated by the F28335 ePWM dead-band (250 ns bring-up, 150-200 ns target, derived from skew and gate timing).",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-010",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Optional gate-Kelvin RC footprint (DNP) is provided only because the TO-247-4 has a Kelvin source; any population must be reviewed with double-pulse data.",
+      "reference_design": "REF-WS-PRD-04814 decision 6"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-011",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "UCC21710-Q1 400 mA soft turn-off selected over the UCC21732-Q1 two-level turn-off; fault overshoot estimated at 684 V worst case against the 1200 V rating.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-GD-012",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "No gate-Kelvin Zener; transient control by rails, damping (zeta 1.6-3.8) and layout.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-IS-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "P = Q_G*f_sw*(VDD-VEE) = 0.119 W plus quiescent, DESAT bias and the LS sensing-LDO load (0.615 W) compared with the UCC14141-Q1 ratings at the actual input range and temperature (1.5 W at 25 degC; 1.2 W at 85 degC for 11.4-12.6 V).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-IS-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Wuerth 744226S (10 uH, 1.6 A) at each module input with 2 x 10 uF between choke and module.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-IS-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "i_CM = C_iso*dv/dt computed per candidate (UCC14141 < 3.5 pF: 0.42 A; RECOM < 10 pF: 1.2 A; LLC transformer 0.68 pF: 0.08 A) for the HS position at 120 V/ns.",
+      "reference_design": "REF-WS-PRD-04814, REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-IS-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "The LS bias module also feeds the isolated-sensing LDO (two AMC1311 class loads) as in TIDA decision 7; flagged for review of the combined budget, RLIM setting and an alternative dedicated 5 V module.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-IS-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Regulated module (+/-1.3 % over line, load and temperature) chosen so no LDO post-regulation is needed; accuracy requirement set to +/-5 % (PRD-04814) and met with margin.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Total response blanking + detection + soft turn-off = 0.55-1.07 us computed from datasheet min/max values; Wolfspeed publishes no withstand time for C4MS025120K (press statements 'about 2 us' / 'up to 2.3 us' for Gen 4, conditions unknown). Short-circuit test and Wolfspeed confirmation required.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PR-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "FLT latched in the driver until RST/EN low >= 1 us; FLT_HS/FLT_LS wired-AND to TZ1, RDY_HS, RDY_LS and both bias PG signals combined to TZ2; outputs held low during UVLO.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PR-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Auxiliary 12 V input protection is the auxiliary/protection agent's block (CB-PR-001); this design states the downstream requirement: UCC14141 UVLO 8.2 V rising / OVLO 22 V, so an eFuse OVP at <= 18 V and UVLO >= 9 V are compatible.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PCB-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Hand-off: gate and Kelvin-source as adjacent-layer pours, Kelvin layer shielding the gate.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA (PRD-09301)"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PCB-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Decoupling sized from Q_G (2 x 4.7 uF + 100 nF on VDD-COM, 4.7 uF + 100 nF on COM-VEE) placed between IC and gate/Kelvin pins; the CGD1700 20 uF per rail was not copied.",
+      "reference_design": "REF-WS-CGD15SG00D2, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PCB-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "COM/VEE return only to the TO-247-4 driver-source pin; netlist check that Kelvin-source and power-source nets are distinct.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-PCB-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Driver IC within about 15 mm of the gate/Kelvin pins; V_GS probe point at the device side of R_G.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-ISO-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Three copper-free barriers: control/HS island, control/LS island, HS island/LS island; only UCC21710 and UCC14141 bridge them.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Working voltage 460 V DC class; preliminary IEC 60664-1 figures (10 mm reinforced creepage for 500 V, PD2, material group IIIa; 5.5 mm clearance for 6 kV impulse) given for the architecture/insulation review, not decided here.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-ISO-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Seven net classes defined: CONTROL, HS_DRV, LS_DRV, HS_DESAT_MID, LS_DESAT_MID, HV_DRAIN (VIN+), SW.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-ISO-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "A routed slot under the SOIC-16 DW / DWN-36 bodies is proposed because the package pad span (about 8 mm) is below the preliminary 10 mm reinforced PCB creepage.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "KR-SN-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "UCC21710-Q1 (VDE 0884-17 reinforced, UL 1577 5.7 kVrms) and UCC14141-Q1 (certifications listed as 'planned' in SLUSF10B) checked against a 460 V DC working voltage; the certificate status of the UCC14141-Q1 must be confirmed by the reviewer.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-GD-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "Topology and the trip/blanking formulas (EC-001/EC-002 pattern) used; every value re-derived for the C4MS025120K (R1 2.2 k, R2 4.99 k, R3 1.0 k, C 680 pF, one 1000 V diode).",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-GD-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Steering-diode turn-off path is unnecessary with split outputs.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-GD-003",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Fault combination and fail-safe idea reused; RS-422 transceivers only if the architecture uses cables; filter time constants re-derived against the 100 ns minimum pulse and 150-250 ns dead time.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-IS-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "UCC14141-Q1 per channel configured for +15/-4 V with re-derived dividers (107 k/16.2 k and 9.76 k/16.2 k, 0.1 %); TI's RLIM values not copied, RLIM derived from the datasheet procedure (human review).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-IS-003",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "SIP module + LDO path rejected (RECOM gives -3 V, Murata -5 V, both unregulated); kept as documented alternative.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-IS-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Open-loop LLC (UCC25800-Q1 + 750319177) retained only as the fallback if the UCC14141 SOA check fails; lowest C_iso (0.68 pF) noted.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-IS-004",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Zener split not needed because the module regulates VDD-COM and COM-VEE directly.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-PR-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "LS driver AIN/APWM used for a heat-sink NTC; the network (3.3 k series + 10 k parallel + 10 nF) re-derived so V_AIN stays within 0.6-4.5 V from -40 to 125 degC with the 200 uA source; Wolfspeed's 2.2 k/10 nF and TI's TMP6131 not copied.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CB-PR-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Auxiliary input protection is another agent's block; interface thresholds stated.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-UCC21710-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Re-verified against SLUSDH8D (June 2024): the knowledge record's 5.7 kVrms, 1.5 kVrms working, 10 A, 150 V/ns, 0.63/0.7/0.77 V, 270 ns, 400 mA, 4 A clamp, 130 ns figures all confirmed; UVLO 12 V, deglitch 120 ns and skew 30 ns added.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-UCC14141-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Re-verified against SLUSF10B: 1.5 W (10.8-13.2 V), 15-25 V adjustable +/-1.3 %, CIO < 3.5 pF, VIOWM 1000 Vrms; the rating's temperature dependence (1.2 W at 85 degC) found to matter for the LS budget.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-R12P21503D",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Evaluated as alternative: -3 V output, unregulated, < 10 pF series capacitance; rejected for this design.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-MGJ2D122005SC",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Family member MGJ2D121505SC (+15/-5 V) evaluated; -5 V sits at the C4MS limit and outside the C3M recommendation; rejected.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-UCC25800-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Fallback LLC bias (with CMP-750319177) if the integrated module's derated power is insufficient.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "CMP-UCC23514",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "No DESAT/soft turn-off; violates KR-PR-001 for a product design.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 4 (one isolated driver + one integrated bias module per switch) adopted structurally; decision 5 values (2 ohm, US1Q, 100 pF) replaced by derived ones; decision 7 (sensing LDO from LS bias) adopted with its power consequence quantified; decision 8 thresholds used as interface requirement.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "gate_driver",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decisions 1-5, 7, 8 used as patterns (split outputs, DESAT network topology, soft shutdown/latched fault, interlock, CM choke, gate/Kelvin routing, NTC via APWM); module-level values (1 ohm, 6.7 V, 46 ns, 20 uF, 2 x US3M) not transferred.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "gate_driver",
+      "id": "REF-WS-CGD15SG00D2",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decisions 3-6: LLC fallback, source-referenced decoupling at the output pins, Miller-clamp path length argument, 47 k vs 10 k pull-down conflict preserved; 10 ohm/+15/-3.3 V instance values not copied.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "gate_driver",
+      "id": "REF-WS-PRD-04814",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 1 levels (+15 V, -3 to -4 V, +/-5 %) adopted as -4 V with +/-1.3 % actual; decision 2/3 used for topology and C_iso; decision 6 for the optional gate-Kelvin RC.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "gate_driver",
+      "id": "PE-PCB-001",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Gate-loop minimisation turned into concrete constraints (driver distance, adjacent-layer pair, decoupling inside loop) for human review.",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "gate_driver",
+      "id": "PE-PCB-007",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Control-side logic (fault AND, RC filters) kept on the SELV side away from the switch node.",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "gate_driver",
+      "id": "PE-PCB-008",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Per-pin decoupling map given for UCC21710 (VCC, VDD, VEE) and UCC14141 (VIN, VDD-VEE, COM-VEE, FB caps).",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "inductor",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "SKILL-003 lists 'inductor-ripple output filters' as not applicable, so none of its capacitor equations (dQ/dV, DC-blocking C) are used for the inductor. What transfers is its procedure pattern (define the envelope, compute at every corner, select, hand placement to SKILL-002/SKILL-006) and the interface: the ripple computed here (dI = 6.5-8.7 App over corners/tolerance) is the input the output-capacitor agent needs for dQ = dI/(8 fs) and I_C,rms = dI/sqrt(12); KR-CAP-001/002 belong to that agent.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "inductor",
+      "id": "KR-TH-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "Applied by analogy to the inductor: P_loss,L must stay below P_max = (T_hot,max - T_A,max)/R_th,L. R_th,L comes from the Magnetics empirical surface-area model dT = (P_mW/A_cm2)^0.833 instead of a junction-case chain. With T_hot,max = 125 degC (added assumption), T_A = 50 degC and A_s = 161 cm2: P_max = 28.8 W versus 19.8 W worst-case overload loss (margin 1.45x).",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Procedure steps 1-3 adapted to a magnetic component: losses over the envelope (section 7), thermal budget (section 8), placement so the inductor's own 15-20 W gets airflow. Step 3 'keep capacitors/magnetics out of exhaust' is a flagged AIPE recommendation without source evidence: it is surfaced as a placement request for human review (inductor in a parallel air path, not downstream of the heat sink).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "inductor",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "25/27.5 A inductor terminals and the SW/VOUT pours are carried on wide 70 um pours repeated on two layers with via arrays; sized by IPC-2221 current/temperature-rise analysis (9.5 mm single-layer at 27.5 A/20 K -> specify >= 10 mm per layer on two paralleled layers, >= 30 stitching vias of 0.3 mm at ~1.2 A each). Rule confidence is 'low/single-reference', so the sizing rests on the IPC calculation, not on the rule alone.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "PE-PCB-006",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Human-review evidence prepared: copper widths, via plating assumption (25 um), current and temperature-rise rationale listed in pcb_constraints.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "PE-PCB-005",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "The inductor lead-exit gap and the SW-side terminal radiate 50 kHz ripple and 400 V dV/dt; the feedback divider, current-sense Kelvin pair and control connector must not pass under or beside the inductor footprint (keep-out circle plus 10 mm).",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "The inductor is not mounted on the shared MOSFET heat sink. If the mechanical design later bolts the potting cup to the heat sink, the toroid's 3000 VAC wire-to-wire coating test is not a rated insulation system and a rated insulating interface would be required (human review in that case).",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-TH-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "If a thermistor is added to the winding for supervision, its reading is a winding-surface temperature, not the hot spot inside the inner-diameter double layer; firmware must not treat it as a hot-spot limit without a validated offset.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 9 (forced-air steady-state thermal budget, 40 degC ambient) gives the pattern reused for the inductor budget at the design-basis 50 degC; decision 10 (power pours repeated on several layers; magnetics placed where they do not lengthen electrical loops) informs the footprint. Instance values (sinks, pads, planar transformer cut-out) are not copied.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-CAP-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Applies to the output/DC-link capacitor agents; the inductor supplies the ripple current they need (dI worst 8.7 App -> I_C,rms = 2.5 A).",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-PE-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Hard-switched buck with 30 % ripple: the inductor is not sized for ZVS (that would need ripple > 200 % of Io); soft-switching range is an architecture decision, not an inductor requirement here.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Inductor terminals sit at VOUT (200 V) and SW (0-400 V) against PGND. The footprint reserves >= 4 mm creepage/clearance (IEC 60664-1, PD2, material group IIIa, 400 V working, basic) to be confirmed by the isolation agent.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "CMP-750319177",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "Query hit is a gate-bias transformer record; it carries no reusable data for a 25 A output choke.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "Magnetics-2024-powder-core-catalog (external, proposed new SKILL)",
+      "exists": false,
+      "type": "external-method",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "No AIPE knowledge item covers magnetics design. The fetched Magnetics Inc. 2024 catalog supplies the LI^2 selector method, the percent-permeability-vs-H fit (%u = 1/(a + b H^c)), the Steinmetz fit (P = a B^b f^c, mW/cm3, T, kHz), the DC magnetisation fit and the temperature-rise model dT = (P_mW/A_cm2)^0.833. Proposed for capture as a new skill (powder-core inductor design) with these coefficients as evidence.",
+      "reference_design": ""
+    },
+    {
+      "area": "inductor",
+      "id": "KR-CAP-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Device selection is explicitly out of scope ('AIPE Transistor Database scope'); principles 2 (Kelvin source) and 6 (C_iss/C_rss ratio) and step 5 (R_G from dv/dt curves, tune by double-pulse test) were used as selection criteria and hand-off items only.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-PRD-04814"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Selection filter and hand-off: +15 V / -4 V +/-5 % rails checked against C4MS025120K (-10/+23 V) and the C3M0021120K fallback (-8/+19 V); the knowledge-base example limits (+19/-8 V) were not assumed for Gen-4 but read from its datasheet.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-TH-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "P_max = (T_J,max - T_A)/R_th,total recomputed with this design's 150 degC limit, 50 degC ambient, R_thJC 0.41 K/W, an assumed 0.5 K/W pad and the two-device shared-sink model; TI's 40 degC ambient and 0.1 K/W pad were not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Both TO-247-4 drains sit on one shared sink with rated insulating pads; pad resistance included in the budget; pad voltage rating and creepage flagged for human review.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "No datasheet short-circuit withstand time exists for the candidates; Wolfspeed PRD-08296 and forum evidence indicate a few microseconds at 400 V; a <= 1.5 us total protection response and a short-circuit test are surfaced as requirements, not decided here.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-PCB-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Turned into the L_loop = 25/35 nH assumption for the overshoot estimate and into the PCB constraint that the commutation loop is laid out before the gate loop.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "mosfet",
+      "id": "PE-PCB-003",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Commutation-loop minimisation is the condition under which the 25 nH typical loop assumption holds; human-review overlay requested.",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-CAP-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "HV ceramics beside the bridge leg are assumed when estimating L_loop; handed to the capacitor agent.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Parasitic turn-on margin computed from C_rss*dv/dt*(R_G,off+R_G,int) for the selected device (1.3 V above -4 V against V_GS(th) min 2.0 V); Miller clamp still recommended.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "DESAT trip/blanking must be derived from the C4MS025120K output characteristics; the TIDA 6.4 V / 1 us instance values are explicitly not reused.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Gate rails designed at +15 V / -4 V so that the C3M0021120K fallback is a drop-in; +18 V (C4MS only) kept as a BOM population option.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-009",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Dead time (250 ns per edge assumed) remains a controller function; its body-diode cost (2.9-3.2 W) is quantified for the firmware contract.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (steady-state budget along the real path) and principle 3 (loss estimates first) applied with this design's hard-switched loss split; TI's 50/69 W instance limits were recomputed, not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 1 device classes (C3M0075120K at 800 V = 0.67, C3M0030090K at 500 V = 0.56) used as utilisation evidence; shown not to transfer directly because the DAB is soft-switched, the 900 V class is obsolete and this buck has a 460 V OVP corner. Decision 9 (two TO-247-4 per insulated sink, forced air) adopted as the thermal model.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "mosfet",
+      "id": "REF-WS-PRD-04814",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 1 gate levels (+15 V, -3 to -4 V, +/-5 %) adopted as the common rail set; noted as Gen-3 guidance while the Gen-4 datasheet (PRD-09634 reference) allows +15 to +18 V / -5 to 0 V.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "area": "mosfet",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "PRD-09301 section 5.1 (ADC protection too slow) and the DESAT 300 ns example from PRD-08296 support the <= 1.5 us protection budget; module-specific items not transferred.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "mosfet",
+      "id": "EC-019",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "EC-020",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-GD-011",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-IS-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-PCB-003",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-SN-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "KR-SN-005",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "mosfet",
+      "id": "PE-PCB-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Design procedure steps 1-7 followed: quantities/ranges listed, element + isolator chosen per quantity (Hall for current, divider + AMC1311 for voltages), scaling at maximum operating and trip values, filters, isolated supply budgeted on the gate-bias module, hardware trip path to PWM trip, calibration planned.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (SELV control domain, every crossing a rated isolator) applied to all sensing; gate-driver FLT/RDY/RST-EN latched-fault interface used; DESAT itself left to the gate-driver agent.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Step 8: MMCX V_GS probe point at the device side of R_G per MOSFET; filtered single-ended segments at receiving pins; net-class spacing for sensing islands.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Bias power budget method used to quantify the 5V_ISO load (0.25 W typ / 0.35 W max) the gate-driver agent must add to the low-side module.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principle 5 / procedure step 5: NTC placed where it represents the supervised quantity (heatsink between the devices) and routed through the driver's isolated analog channel; thresholds deferred to the thermal model.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "DC-link capacitance is the capacitor agent's; only its value (assumed 60 uF) enters pre-charge and bleeder calculations.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-SN-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Barrier parts rated for the node: TMCS1133 950 Vrms / 1343 VDC reinforced at a 200 V node; AMC1311 1500 Vrms at 480 V / 240 V nodes; relay 2500 VAC coil-contacts; UCC21710 barrier per gate-driver agent.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-SN-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "480 V -> 1.595 V (80 % of 2 V), 240 V -> 1.589 V (79 %), 37.5 A trip -> 2.205 V of 3.0 V; 2 V linear range mapped exactly to 3.0 V ADC so the chain cannot clip before the isolator does.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-SN-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "TMS320F28335 has no sigma-delta filter module; bitstream isolators (AMC1306/AMC1336) cannot be decoded; analog isolated chains with short routes used instead.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-SN-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "No shunt selected (Hall sensor); would apply to the rejected AMC1302 alternative.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-SN-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Hardware OC path: TMCS1133 OC pin (100-250 ns) -> latch -> driver RST/EN and ePWM TZ1/TZ2; ADC loop shown to be too slow (output short ramps to trip in 4.4-7.3 us).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Inductor-path OC response computed (546 ns, 1.1 A overshoot); shoot-through/device short is invisible to the Hall sensor, so compliance depends on the gate-driver agent's DESAT response versus device withstand time - surfaced, not decided here.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-PR-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Latched combined FAULT_N (SN74LVC1G74) with power-on/brown-out lock-out (TPS3808), UVLO as non-latched run-permit, explicit DSP reset, no auto-restart for OC/DESAT/OVP.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-PR-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "12 V auxiliary protection (CB-PR-001 eFuse pattern) recommended to the owner of the 12 V distribution with thresholds matched to the bias modules.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Shared insulated heatsink implies the NTC tag must also be insulated from the heatsink (M703 test voltage only ~150 V AC).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-TH-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "NTC reading treated as heatsink temperature for cooling supervision; OTP threshold (95 degC) flagged for confirmation against the thermal agent's junction model; feedback isolated through the driver APWM channel.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-ISO-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Sensing islands (GND1/5V_ISO, sensor HV pins) confined; no copper across the barrier on any layer.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "8 mm package creepage of TMCS1133/AMC1311 compared with ~10 mm reinforced creepage at 480 V working voltage, PD2, material group IIIa; slot or CTI >= 400 laminate proposed - requires insulation-coordination review.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-PCB-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "V_GS probe point at the device for each switch; probe-loop inductance minimised with MMCX.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-CAP-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Capacitor sizing belongs to the capacitor agent; its result changes tau of pre-charge and discharge (sensitivities given).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-SN-004",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Hall-sensor block reused for the inductor-output path; TIDA instance values (45/70 A, 8.2k/1.2k divider, B1 variant) not copied; threshold derived from SBOSAG0E equation 21 with a precision reference, orderable number corrected to the A-suffix.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CMP-TMCS1133",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Record used and corrected: datasheet orderables are TMCS1133xxAQDVGR; TMCS1133B1QDVGR not listed; VIOWM 950 Vrms / 1343 VDC confirmed from the fetched datasheet.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-SN-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "adapted",
+      "how_applied": "800 V ladder (8 x 634 k) rescaled to 480 V (4 x 750 k + 10 k) and 240 V (2 x 750 k + 10 k); OPA2320 stage gain changed to 1.5 for the 0-3 V ADC; per-resistor stress recomputed.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CMP-AMC1311",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "AMC1311B used for both voltages; IDD1 7.1/9.7 mA, 2 V FSR, 2.516 V clipping, 1500 Vrms working voltage taken from SBAS786C.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-SN-003",
+      "exists": true,
+      "type": "block",
+      "validation_status": "analytically-checked",
+      "applicability": "not-applicable",
+      "how_applied": "Shunt + AMC1302 evaluated and rejected (no fast OC output, extra loss and HV supply); modulator variant impossible without SDFM.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CMP-AMC1302-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "Rejected alternative; parameters used only in the comparison table.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-PR-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "NTC via UCC21710 AIN/APWM; TDK M703 NTC instead of module NTC/TMP6131; bias network derived for 200 uA + 5V_ISO Thevenin source; transfer function and fail-safe states computed; potentiometer calibration kept.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CMP-UCC21710-Q1",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "AIN range 0.6-4.5 V, duty 88-10 %, I_AIN 200 uA, 400 kHz APWM, open-drain FLT/RDY/APWM, RST/EN >= 1000 ns reset, 130 ns propagation (SLUSDH8D) used for the temperature chain and the trip chain timing.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-IS-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Low-side gate bias -> series resistor -> TLV76050 -> 5V_ISO for both AMC1311 and the NTC bias; current 16.9/23.1 mA and R_pre 270 ohm derived for +15 V (390 ohm for +18 V).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-PR-001",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "TPS26400 eFuse pattern recommended for the 12 V auxiliary input; thresholds to be matched to the chosen bias modules by the owner.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CMP-TPS2640",
+      "exists": true,
+      "type": "component",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Recommendation only (not in this agent's BOM).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decisions 6-8 (sensing split, LDO from gate bias, aux eFuse) reused as methods; all instance values re-derived for this converter.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 3 (latched global fault, RESET/EN timing) and decision 8 (NTC through AIN/APWM, low-side reference, calibration) adapted to a discrete-FET buck; PRD-09301 section 3.4 and 5.1 cited.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "PE-PCB-004",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "No shunt; Hall conductor path needs copper sizing instead (PE-PCB-006).",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "PE-PCB-005",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Sensor placed in the DC output path, ladders and sense pairs routed away from the switch node.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "PE-PCB-006",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "TMCS1133 IN+/IN- pads and bypass-relay/PTC/fuse wiring sized for 27.5 A continuous.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "PE-PCB-007",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Comparators, latch and conversion stage on the SELV control board; sensor LV sides grouped in a SELV area of the power board.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "PE-PCB-008",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "100 nF at TMCS1133 VS, AMC1311 VDD1/VDD2, TLV760 in/out, comparator and latch supplies.",
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-GD-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "CB-SN-002",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-GD-004",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "sensing_protection",
+      "id": "KR-ISO-004",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-ISO-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Copper-free ISO_BARRIER rule area on every layer between the HV classes and CTRL_SELV and between DRV_HS and DRV_LS; only reinforced-rated components bridge it.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Distances derived here from the standard for 440 V DC working voltage, PD2, material group IIIa; DESAT midpoint nets treated as full-bus nets in their own classes.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-ISO-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Ten KiCad net classes grouped by reference potential (CTRL_SELV, HV_VIN, HV_SW, HV_PGND, HV_VOUT, DRV_HS, DRV_LS, DESAT_HS, DESAT_LS, PE) with class-pair clearance rules.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-ISO-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "1.0 mm non-plated slots under every barrier-crossing component whose land gap is below 9.0 mm; path arithmetic gap + 2 x board thickness shown.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-SN-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "Insulation-coordination review of each barrier part at 440 V DC reinforced: UCC21710-Q1, AMC1311, TMCS1133 pass on datasheet evidence; bias modules and relay coil-to-contact ratings surfaced as human-review items, not decided.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Protective-coordination expectation: DESAT/OC response < device SCWT; fuse shown analytically unable to protect the device (I^2t orders of magnitude apart) and assigned to wiring/board protection.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-SN-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Hardware overcurrent path to the ePWM trip zone required; ADC-based protection not accepted as the primary path.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Rated insulating pads (>= 4 kV AC breakdown) on the shared PE-bonded heatsink; 5.0 mm / 3.0 mm from heatsink to HV copper and pins.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Rule gives the pattern (paralleled pours, stitched vias); the sizing method (IPC-2221 formula, via barrel area and resistance, vias per ampere) is added here with numbers for this converter.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-GD-007",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Gate discharge resistors required so unpowered drivers cannot float gates during the start-up / shutdown sequence.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "KR-GD-009",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Hardware driver interlock listed as the last barrier in the interlock chain; dead time from the controller.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-001",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (isolation concept) and procedure step 2 (working voltage and insulation class at the node determine the driver rating) used to classify the barrier as reinforced at 440 V DC.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-002",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Principles 5-7 and procedure steps 1 and 5 (net classes, barrier keep-outs, slots) implemented; the skill explicitly leaves numeric distances to the standard, which this document supplies.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-004",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "PCB constraint that the bias transformer/module straddles the barrier with slots is carried into the slot rule; the module rating itself is left to the bias-supply agent with a KR-SN-001 flag.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-005",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Rate-every-barrier-part step and divider-ladder creepage note used for the isolated amplifier / Hall sensor and HV divider placement.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Shared-sink insulation and creepage from a grounded sink to HV pins turned into the 5.0 mm heatsink rule and the PE-bonding requirement.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "SKILL-003",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Not used for sizing; only the stored energy and discharge of whatever DC-link capacitance the capacitor agent selects is treated here, parametrically for 50-200 uF.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "REF-WS-CGD15SG00D2",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 7 used only as a cross-check (8 mm creepage for 800 Vpk basic, three 1 mm slots, Tg >= 170 C); the 8 mm figure is not copied, the derived 9.0-10.0 mm reinforced rule is shown to be consistent with it.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 6 class structure (PRIMARY, LOW-SIDE, HIGH-SIDE, DESAT-MIDPOINT, DRAIN) mirrored as KiCad classes; its 0.76 mm slot width noted; its distances were never extracted and are not reused.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 9 (insulating pads on shared sinks) and decision 10 (bus copper repeated on three layers) used as patterns; TI's part choices and 800 V ratings not carried over.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "REF-WS-PRD-04814",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "not-applicable",
+      "how_applied": "Concerns gate-bias supply architecture and isolation capacitance, which belong to the bias-supply agent; no spacing or safety content.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "PE-PCB-006",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Copper and via sizing rationale (widths, via plating assumption, loss) provided as the required evidence.",
+      "reference_design": ""
+    },
+    {
+      "area": "standards_safety",
+      "id": "PE-PCB-007",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "Control/power separation realised as the SELV domain behind the ISO_BARRIER keep-out.",
+      "reference_design": ""
+    },
+    {
+      "area": "thermal",
+      "id": "SKILL-006",
+      "exists": true,
+      "type": "skill",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Principles 1-5 and the six-step procedure applied: budget along the real path with this design's 50 degC ambient, 150/125 degC limits and 0.41 K/W R_thJC; shared-sink insulation; losses first; drivers under the device leads; NTC is not T_J. TI instance values (40 degC, 0.5 degC/W sink, 0.1 degC/W pad, 50/69 W limits) were not copied and were found not reproducible from the Ohmite/Wakefield datasheets.",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-TH-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "direct",
+      "how_applied": "Hard constraint evaluated: P_max = (T_J,lim - T_A)/(2*R_th,HS + R_pad + R_JC) = 38.9 W (150 degC) and 29.2 W (125 degC) against 28.7 W worst-case per device; required R_th,HS table derived for both limits.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-TH-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Rated insulating pad selected (Sil-Pad TSP 3500, 4 kVac) with its resistance (0.63-0.82 K/W) in the budget; pad oversized for edge creepage; capacitance/displacement current added as an extra selection criterion; voltage rating and creepage surfaced for human review as the rule requires.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-TH-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "human-review",
+      "how_applied": "NTC on the earthed sink treated as cooling supervision; T_J mapping given as an estimate (T_NTC + 39-43 K at full load, load dependent); trip levels, calibration and the isolation route are surfaced for review, not decided.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "CB-PR-002",
+      "exists": true,
+      "type": "block",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Isolated thermistor path via a gate-driver AIN/APWM channel offered as the isolation option if the control ground is not PE-bonded; the chosen sensor is a ring-lug NTC on the PE-potential heatsink rather than a module NTC; calibration with a fixed resistor adopted.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "REF-TI-TIDA-010054",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 9 model (two TO-247 per insulated forced-air sink) adopted; the factor 2 interpreted as shared-sink; TI's parts CR201-50VE and CD-02-05-247 evaluated as candidates and not selected (no forced-air data / 25-week lead; 76 um pad capacitance). Decision 10 driver placement reused.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "exists": true,
+      "type": "reference",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Decision 8 rationale (NTC isolation can fail after a catastrophic event) considered; here the NTC sits on a protectively earthed sink, so the hazard differs; isolation decision passed to the architecture agent.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-PCB-006",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Copper sizing by an IPC-2221/2152-style temperature-rise estimate for 25/27.5 A on 70 um copper, repeated on two layers with via arrays.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "PE-PCB-006",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Width, via count and loss rationale provided as the human-review evidence the rule asks for.",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-ISO-002",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "analytically-checked",
+      "applicability": "human-review",
+      "how_applied": "Creepage sink-to-tab and sink-to-HV copper estimated at 5.0 mm (500 V, PD2, group IIIa) and used to oversize the pads; the governing figure must be set by the isolation review.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-ISO-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Slots suggested around earthed heatsink mounting pins if surface creepage to HV copper is limiting.",
+      "reference_design": "REF-WS-CGD15SG00D2, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-PCB-005",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "direct",
+      "how_applied": "Via SKILL-006 principle 4: gate drivers and decoupling on the opposite board side directly below the TO-247 leads so the sink placement does not lengthen gate or commutation loops.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-PCB-004",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "Device pitch limited to 28 mm (pad-size driven) to keep the commutation loop short while meeting pad creepage.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "area": "thermal",
+      "id": "PE-PCB-003",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "adapted",
+      "how_applied": "Mechanical placement defined so the commutation loop overlay can still be minimised (devices adjacent on one sink face).",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "thermal",
+      "id": "PE-PCB-005",
+      "exists": true,
+      "type": "project-rule",
+      "validation_status": null,
+      "applicability": "direct",
+      "how_applied": "NTC and fan TACH wiring routed away from the switch node.",
+      "reference_design": "project rules"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-CAP-003",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "adapted",
+      "how_applied": "HV ceramics beside the legs are in the hottest PCB zone; a >= 125 degC rating requirement is handed to the capacitor agent.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "KR-PR-001",
+      "exists": true,
+      "type": "rule",
+      "validation_status": "reference-derived",
+      "applicability": "not-applicable",
+      "how_applied": "Short-circuit protection timing is not a thermal-path item; only noted that OTP is a slow (seconds) protection and must not be relied on for device faults.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "area": "thermal",
+      "id": "EC-019",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    },
+    {
+      "area": "thermal",
+      "id": "PE-PCB-001",
+      "type": "cited-in-text-only",
+      "applicability": "see text",
+      "how_applied": "cited in markdown without a knowledge_used entry",
+      "exists": true,
+      "validation_status": null,
+      "reference_design": ""
+    }
+  ],
+  "unknown_ids": [
+    [
+      "architecture",
+      "PE-PCB-001..008"
+    ],
+    [
+      "architecture",
+      "V1 project precedent (examples/buck-48v-24v-1kw)"
+    ],
+    [
+      "assumptions",
+      "PE-PCB-001..008"
+    ],
+    [
+      "controller_aux_interconnect",
+      "PE-PCB-005/PE-PCB-007/PE-PCB-008"
+    ],
+    [
+      "inductor",
+      "Magnetics-2024-powder-core-catalog (external, proposed new SKILL)"
+    ]
+  ],
+  "queries": {
+    "architecture": [
+      {
+        "command": "python -m automation.knowledge.query \"PCB architecture power board control card partition\" --json --limit 8",
+        "top_hits": [
+          "REF-TI-TIDA-010054",
+          "SKILL-002",
+          "REF-WS-CGD15SG00D2",
+          "CB-GD-001",
+          "SKILL-004",
+          "KR-PCB-003",
+          "SKILL-006",
+          "REF-WS-CGD1700HB2M-UNA"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate driver placed adjacent to switch separate driver board\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-005",
+          "SKILL-002",
+          "CB-GD-003",
+          "SKILL-001",
+          "REF-WS-CGD1700HB2M-UNA",
+          "REF-WS-CGD15SG00D2",
+          "KR-PCB-001",
+          "CB-PR-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"isolation barrier keep-out all layers net classes creepage slots\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-ISO-001",
+          "SKILL-001",
+          "KR-ISO-004",
+          "KR-ISO-002",
+          "KR-ISO-003",
+          "REF-WS-CGD15SG00D2"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"control card connector low-voltage circuitry board edge\" --json --limit 8",
+        "top_hits": [
+          "REF-TI-TIDA-010054",
+          "SKILL-002",
+          "KR-IS-003",
+          "KR-PCB-005",
+          "CB-GD-003",
+          "CB-PR-002",
+          "KR-TH-002",
+          "REF-WS-CGD1700HB2M-UNA"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate and Kelvin source pours adjacent layers stack-up\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-001",
+          "SKILL-002",
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-001",
+          "CB-GD-001",
+          "KR-ISO-001",
+          "KR-PCB-006",
+          "KR-GD-007"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get <ID> --json for KR-PCB-005, KR-PCB-004, KR-PCB-001, KR-PCB-006, KR-GD-008, KR-ISO-001, KR-ISO-002, KR-ISO-003, KR-ISO-004, KR-TH-002, CB-GD-003, REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2",
+        "top_hits": [
+          "full records read; related items PE-PCB-001, PE-PCB-002, PE-PCB-003, PE-PCB-006, PE-PCB-007, KR-CAP-003, SKILL-002, SKILL-006, CB-GD-003, KR-GD-009"
+        ]
+      },
+      {
+        "command": "read knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md, knowledge/skills/thermal/SKILL-006-thermal-placement.md, knowledge/references/ti/tida-010054/analysis.md (decisions 9-10), knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md (decisions 4, 6, 7), knowledge/references/wolfspeed/cgd15sg00d2/analysis.md (decision 7), docs/pcb-design-rules.md, examples/buck-48v-24v-1kw/design/{architecture,pcb_stackup,assumptions}.md and placement.json",
+        "top_hits": [
+          "SKILL-002 principles 1-8 and scope note (PRD-09301: separate drivers typical for ~200 kW+)",
+          "TIDA-010054 decision 10: 300 x 180 mm, 4 layers, drivers bottom side beside each TO-247-4, control card connector along the edge",
+          "CGD1700HB2M-UNA decision 6: isolated HS/LS sections 25.4 x 30.5 mm on a 50.8 x 61.0 mm 4-layer board",
+          "CGD15SG00D2 decision 7: 47.6 x 17.8 mm 4-layer 1 oz driver card with 1 mm slots",
+          "V1: 300 x 220 mm six layers, control+aux bbox 128.5 x 93.7 mm, 15 % utilisation, known issue V1-09"
+        ]
+      }
+    ],
+    "assumptions": [
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"ambient temperature assumption cooling airflow derating thermal design\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "KR-TH-003",
+          "REF-TI-TIDA-010054",
+          "KR-TH-001",
+          "SKILL-003",
+          "KR-GD-004",
+          "KR-TH-002",
+          "CMP-B32716H1156K000"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"input voltage range DC bus overvoltage transient surge UVLO\" --json --limit 8",
+        "top_hits": [
+          "CMP-TPS2640",
+          "CMP-AMC1311",
+          "KR-PR-003",
+          "KR-SN-002",
+          "CB-PR-001",
+          "CB-SN-001",
+          "CMP-AMC1336",
+          "CB-SN-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"output voltage ripple capacitor load transient\" --json --limit 8  (first attempt with a longer phrasing crashed with a cp1252 console UnicodeEncodeError in query.py; rerun with PYTHONIOENCODING=utf-8)",
+        "top_hits": [
+          "SKILL-003",
+          "REF-TI-TIDA-010054",
+          "CMP-B32716H8306K000",
+          "CB-IS-004",
+          "REF-WS-CGD15SG00D2",
+          "CMP-UCC25800-Q1",
+          "KR-CAP-001",
+          "CMP-UCC14141-Q1"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"inductor ripple current saturation margin peak current\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "CMP-B32716H1156K000",
+          "KR-CAP-004",
+          "KR-GD-005",
+          "KR-CAP-002",
+          "KR-CAP-001",
+          "KR-GD-011",
+          "REF-WS-CGD15SG00D2"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"efficiency target junction temperature heatsink forced air\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "REF-TI-TIDA-010054",
+          "KR-TH-003",
+          "KR-TH-001",
+          "SKILL-004",
+          "KR-ISO-004",
+          "KR-TH-002",
+          "SKILL-003"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"PCB manufacturing copper thickness clearance creepage track width\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "KR-ISO-002",
+          "KR-ISO-004",
+          "REF-WS-CGD1700HB2M-UNA",
+          "REF-TI-TIDA-010054",
+          "SKILL-003",
+          "SKILL-006",
+          "REF-WS-CGD15SG00D2"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"SELV isolation control domain isolated signal crossing\" --json --limit 8",
+        "top_hits": [
+          "KR-ISO-001",
+          "CB-GD-001",
+          "CB-SN-004",
+          "KR-SN-001",
+          "CB-IS-002",
+          "CB-SN-001",
+          "CB-PR-002",
+          "CB-GD-003"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"test commissioning low voltage bring-up protection fault\" --json --limit 8",
+        "top_hits": [
+          "SKILL-005",
+          "KR-PR-002",
+          "CMP-UCC21710-Q1",
+          "SKILL-001",
+          "KR-SN-002",
+          "CMP-750319177",
+          "REF-WS-CGD1700HB2M-UNA",
+          "CB-GD-001"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"DC-link capacitor voltage derating lifetime hot spot\" --json --limit 8  (PYTHONIOENCODING=utf-8)",
+        "top_hits": [
+          "SKILL-003",
+          "CMP-B32716H1156K000",
+          "REF-TI-TIDA-010054",
+          "KR-CAP-001",
+          "CMP-GCM31CR71C106KA64L",
+          "CMP-B32716H8306K000",
+          "CMP-CGA9P1X7T2J474M250KC",
+          "KR-CAP-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"gate driver design SiC discrete TO-247 Kelvin source\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001",
+          "KR-GD-010",
+          "CMP-R12P21503D",
+          "REF-WS-PRD-04814",
+          "KR-PCB-001",
+          "KR-PCB-003",
+          "CB-GD-002",
+          "SKILL-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"ambient temperature room ambient only warning thermal design reference\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "KR-TH-001",
+          "REF-TI-TIDA-010054",
+          "KR-TH-003",
+          "SKILL-001",
+          "KR-GD-004",
+          "SKILL-004",
+          "SKILL-003"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get SKILL-006 --json",
+        "top_hits": [
+          "related: CB-PR-002",
+          "KR-TH-001",
+          "KR-TH-002",
+          "KR-TH-003",
+          "KR-PCB-005",
+          "SKILL-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get KR-TH-001 --json ; --get KR-CAP-003 --json ; --get KR-PCB-006 --json ; --get CB-PR-001 --json ; --get KR-SN-005 --json",
+        "top_hits": [
+          "KR-TH-001 -> SKILL-006",
+          "KR-CAP-003 -> PE-PCB-002, PE-PCB-003, SKILL-002, SKILL-003",
+          "KR-PCB-006 -> PE-PCB-006",
+          "CB-PR-001 -> CMP-TPS2640, KR-PR-003, SKILL-004",
+          "KR-SN-005 -> CB-SN-004, CB-GD-001, KR-PR-001"
+        ]
+      },
+      {
+        "command": "Read: knowledge/skills/*/SKILL-001..006 .md, knowledge/references/{ti/tida-010054,wolfspeed/cgd15sg00d2,wolfspeed/cgd1700hb2m-una,wolfspeed/prd-04814}/analysis.md, knowledge/rules/engineering_rules.json (43 rules), knowledge/verification/evidence-checks.json (EC-003, EC-012, EC-014, EC-019, EC-020), docs/pcb-design-rules.md (PE-PCB-001..008), examples/buck-48v-24v-1kw/design/{assumptions,architecture,thermal_estimate,firmware_interface}.md, examples/sic-buck-400v-200v-5kw/input/requirements.yaml",
+        "top_hits": [
+          "SKILL-006 known limitations (40 degC model, room-ambient warning)",
+          "REF-TI-TIDA-010054 decisions 1, 8, 9, 10",
+          "REF-WS-CGD15SG00D2 decision 7",
+          "REF-WS-CGD1700HB2M-UNA decision 4",
+          "REF-WS-PRD-04814 decision 1"
+        ]
+      }
+    ],
+    "capacitors": [
+      {
+        "command": "python -m automation.knowledge.query \"DC-link capacitor selection film RMS ripple current\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "KR-CAP-002",
+          "CMP-B32716H8306K000",
+          "REF-TI-TIDA-010054",
+          "CMP-B32716H1156K000",
+          "KR-CAP-001",
+          "KR-CAP-003",
+          "KR-CAP-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"high-voltage MLCC decoupling commutation loop power loop layout\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "SKILL-002",
+          "KR-CAP-003",
+          "KR-PCB-003",
+          "KR-PCB-004",
+          "KR-PCB-002",
+          "REF-TI-TIDA-010054",
+          "KR-IS-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"bleeder discharge resistor creepage clearance isolation spacing\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "KR-ISO-003",
+          "KR-ISO-002",
+          "KR-ISO-004",
+          "KR-GD-007",
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-001",
+          "CB-GD-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"output capacitor load transient voltage ripple ESR electrolytic lifetime\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003 (Not applicable / out of scope section)",
+          "REF-TI-TIDA-010054",
+          "KR-CAP-002",
+          "CMP-B32716H1156K000",
+          "KR-GD-001",
+          "CMP-B32716H8306K000",
+          "CB-IS-004",
+          "REF-WS-CGD15SG00D2"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"capacitor voltage derating temperature thermal placement heatsink\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "SKILL-003",
+          "KR-TH-002",
+          "KR-TH-003",
+          "REF-TI-TIDA-010054",
+          "KR-TH-001",
+          "CMP-B32716H1156K000",
+          "CMP-GCM31CR71C106KA64L"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get SKILL-003 --json (plus --get KR-CAP-001, KR-CAP-002, KR-CAP-003, KR-PCB-004, KR-PCB-006, KR-ISO-002, CMP-B32716H8306K000, CMP-B32716H1156K000, CMP-2220Y1K00474KETWS2, CMP-CGA9P1X7T2J474M250KC, CMP-C1812V104KDRACTU); read knowledge/skills/capacitors/SKILL-003-dc-link-capacitors.md, knowledge/references/ti/tida-010054/analysis.md, docs/pcb-design-rules.md, SKILL-002 and SKILL-006 markdown excerpts",
+        "top_hits": [
+          "SKILL-003 record with related rules KR-CAP-001..004, KR-PCB-004, KR-PCB-006 and project rules PE-PCB-002/003",
+          "note: query CLI needs PYTHONIOENCODING=utf-8 on this Windows host (GBK UnicodeEncodeError otherwise)"
+        ]
+      }
+    ],
+    "controller_aux_interconnect": [
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"auxiliary 12 V input protection eFuse reverse polarity OVP UVLO TPS2640\" --json --limit 8",
+        "top_hits": [
+          "CMP-TPS2640",
+          "CB-PR-001",
+          "REF-TI-TIDA-010054",
+          "KR-PR-003",
+          "CB-GD-003",
+          "CMP-UCC23514",
+          "CB-IS-002",
+          "CMP-UCC14141-Q1"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"PWM buffer fault latch interlock gate driver IN+ IN- RS-422 differential link\" --json --limit 8",
+        "top_hits": [
+          "CB-GD-003",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-GD-008",
+          "CB-GD-001",
+          "SKILL-001",
+          "KR-PR-002",
+          "KR-GD-009",
+          "SKILL-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"control board power supply 5 V 3.3 V 1.9 V DSP sequencing reset supervisor\" --json --limit 8",
+        "top_hits": [
+          "CB-GD-003",
+          "CB-GD-001",
+          "KR-PR-002",
+          "CB-IS-002",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-PR-003",
+          "SKILL-004",
+          "CB-SN-004"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"board-to-board connector ribbon cable interconnect ground interleaving PWM noise immunity\" --json --limit 8",
+        "top_hits": [
+          "CB-GD-003",
+          "KR-GD-008",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-PCB-005",
+          "REF-WS-CGD15SG00D2",
+          "CMP-AMC1306M05",
+          "SKILL-001",
+          "KR-GD-009"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"fault handling FLT RDY trip zone latch soft start startup sequence precharge relay\" --json --limit 8",
+        "top_hits": [
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-001",
+          "CB-GD-001",
+          "CMP-UCC21710-Q1",
+          "CB-SN-004",
+          "CMP-TMCS1133",
+          "KR-PR-002",
+          "KR-GD-011"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"isolated signal domains SELV control ground separation sensing interface DSP\" --json --limit 8",
+        "top_hits": [
+          "KR-SN-003",
+          "CB-GD-003",
+          "CB-SN-004",
+          "SKILL-005",
+          "CB-PR-002",
+          "CB-SN-003",
+          "CB-SN-001",
+          "CB-IS-002"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"dead time complementary PWM shoot-through protection controller\" --json --limit 8",
+        "top_hits": [
+          "KR-GD-009",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-SN-005",
+          "CB-GD-001",
+          "CB-PR-002",
+          "CMP-UCC21710-Q1",
+          "KR-PR-001",
+          "CMP-UCC25800-Q1"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"isolated bias supply UCC14141 input power 12 V budget efficiency\" --json --limit 8",
+        "top_hits": [
+          "CMP-UCC14141-Q1",
+          "CB-IS-002",
+          "SKILL-004",
+          "CB-PR-001",
+          "KR-IS-001",
+          "SKILL-005",
+          "KR-PR-003",
+          "REF-TI-TIDA-010054"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"control PCB layout analog signals away from switching noise\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "KR-SN-004",
+          "KR-GD-005",
+          "SKILL-003",
+          "KR-GD-008",
+          "CB-GD-001",
+          "REF-TI-TIDA-010054",
+          "SKILL-001"
+        ]
+      },
+      {
+        "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get <ID> --json  (run for CB-PR-001, CMP-TPS2640, KR-PR-003, KR-GD-008, KR-GD-009, KR-PR-002, CB-GD-003, CMP-UCC14141-Q1, CB-IS-002, KR-IS-001, KR-SN-003, KR-PCB-005, CMP-UCC21710-Q1, KR-PR-001, KR-SN-005, KR-GD-011, CB-SN-004, CB-PR-002, CMP-TMCS1133, KR-SN-001, KR-ISO-001, KR-ISO-003, KR-TH-002)",
+        "top_hits": [
+          "full records read; related items listed in each record"
+        ]
+      },
+      {
+        "command": "read knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md, knowledge/skills/power_electronics/SKILL-004-isolated-gate-bias-supply.md, knowledge/skills/sensing/SKILL-005-current-voltage-sensing.md, knowledge/rules/engineering_rules.json (all 43 titles), knowledge/references/ti/tida-010054/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md",
+        "top_hits": [
+          "SKILL-001 principles 1, 7, 9",
+          "SKILL-004 principles 1, 7",
+          "SKILL-005 principles 3, 5, 7",
+          "REF-TI-TIDA-010054 decisions 4, 6, 8, 10",
+          "REF-WS-CGD1700HB2M-UNA decisions 3, 4",
+          "PE-PCB-005/007/008"
+        ]
+      }
+    ],
+    "gate_driver": [
+      {
+        "command": "python -m automation.knowledge.query \"isolated SiC gate driver IC selection CMTI isolation DESAT Miller clamp\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001",
+          "CMP-UCC21710-Q1",
+          "CB-GD-001",
+          "CMP-UCC23514",
+          "REF-WS-CGD15SG00D2",
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-002",
+          "CB-GD-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"isolated gate bias supply power budget isolation capacitance common-mode current\" --json --limit 8 (re-run with PYTHONIOENCODING=utf-8 after a GBK console error)",
+        "top_hits": [
+          "SKILL-004",
+          "KR-IS-002",
+          "KR-IS-003",
+          "REF-WS-PRD-04814",
+          "CB-IS-001",
+          "CMP-750319177",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-IS-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate resistor DESAT blanking soft turn-off short circuit protection dead time interlock\" --json --limit 8",
+        "top_hits": [
+          "KR-PR-001",
+          "CMP-UCC21710-Q1",
+          "SKILL-001",
+          "CB-GD-001",
+          "KR-GD-004",
+          "KR-GD-011",
+          "REF-TI-TIDA-010054",
+          "KR-GD-009"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate driver PCB layout decoupling Kelvin source gate loop isolation creepage\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "SKILL-001",
+          "KR-PCB-003",
+          "KR-PCB-002",
+          "SKILL-003",
+          "REF-WS-CGD1700HB2M-UNA",
+          "CB-GD-001",
+          "CB-IS-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate voltage rails negative bias UVLO absolute maximum turn-off voltage Wolfspeed\" --json --limit 6",
+        "top_hits": [
+          "SKILL-001",
+          "KR-GD-001",
+          "KR-GD-005",
+          "REF-WS-PRD-04814",
+          "CMP-UCC21710-Q1",
+          "KR-IS-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get SKILL-001 --json ; --get SKILL-004 --json",
+        "top_hits": [
+          "SKILL-001 (related: CB-GD-001/002/003, CMP-UCC21710-Q1, CMP-UCC23514, KR-GD-001..012, KR-PR-001/002, SKILL-002/004)",
+          "SKILL-004 (related: CB-IS-001..004, CB-PR-001, CMP-UCC14141-Q1, CMP-UCC25800-Q1, CMP-750319177, CMP-R12P21503D, CMP-MGJ2D122005SC, KR-IS-001..005, KR-GD-001/005, KR-PR-003)"
+        ]
+      },
+      {
+        "command": "direct reads: knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md, knowledge/skills/power_electronics/SKILL-004-isolated-gate-bias-supply.md, knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md, knowledge/rules/engineering_rules.json (KR-GD-*, KR-IS-*, KR-PR-*, KR-PCB-001/002/003/005, KR-ISO-*, KR-SN-001), knowledge/references/{ti/tida-010054, wolfspeed/cgd1700hb2m-una, wolfspeed/cgd15sg00d2, wolfspeed/prd-04814}/analysis.md, knowledge/components/driver_ics/*.json, knowledge/components/isolated_supplies/*.json, knowledge/circuit_blocks (CB-GD-001/003, CB-IS-002/003/004, CB-PR-002), docs/pcb-design-rules.md",
+        "top_hits": [
+          "SKILL-001",
+          "SKILL-004",
+          "SKILL-002",
+          "CB-GD-001",
+          "CB-IS-002",
+          "CB-PR-002",
+          "PE-PCB-001",
+          "PE-PCB-007",
+          "PE-PCB-008"
+        ]
+      }
+    ],
+    "inductor": [
+      {
+        "command": "python -m automation.knowledge.query \"output filter inductor design saturation ripple current powder core\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "REF-TI-TIDA-010054",
+          "CB-SN-003",
+          "SKILL-005",
+          "CMP-B32716H8306K000",
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-001",
+          "KR-CAP-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"inductor temperature rise thermal derating copper loss\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-006",
+          "SKILL-006",
+          "KR-TH-001",
+          "SKILL-003",
+          "KR-PE-001",
+          "KR-TH-003",
+          "REF-TI-TIDA-010054",
+          "CMP-B32716H8306K000"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"magnetic component placement heatsink exhaust airflow\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "SKILL-003",
+          "SKILL-002",
+          "KR-GD-007",
+          "REF-TI-TIDA-010054",
+          "KR-SN-001",
+          "KR-TH-002",
+          "REF-WS-PRD-04814"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"PCB copper width high current 25 A trace\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-006",
+          "SKILL-002",
+          "KR-SN-004",
+          "REF-TI-TIDA-010054",
+          "REF-WS-CGD1700HB2M-UNA",
+          "CB-IS-001",
+          "KR-CAP-003",
+          "KR-IS-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"inductor core loss Steinmetz flux swing\" --json --limit 8",
+        "top_hits": [
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-003",
+          "KR-PCB-001",
+          "SKILL-006",
+          "KR-TH-001",
+          "KR-CAP-004",
+          "KR-GD-002",
+          "CMP-CGA9P1X7T2J474M250KC"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"magnetics inductor winding litz wire AWG\" --json --limit 8",
+        "top_hits": [
+          "CMP-750319177",
+          "SKILL-003",
+          "SKILL-006",
+          "KR-PCB-003",
+          "CMP-UCC25800-Q1",
+          "CMP-UCC21710-Q1",
+          "REF-WS-CGD1700HB2M-UNA",
+          "REF-WS-PRD-04814"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"component temperature limit derating hotspot\" --json --limit 8",
+        "top_hits": [
+          "REF-TI-TIDA-010054",
+          "SKILL-006",
+          "SKILL-003",
+          "KR-TH-001",
+          "SKILL-004",
+          "KR-SN-001",
+          "CMP-750319177",
+          "CMP-B32716H1156K000"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"high current connector terminal mounting mechanical\" --json --limit 8",
+        "top_hits": [
+          "KR-SN-004",
+          "SKILL-006",
+          "KR-PCB-005",
+          "KR-PCB-006",
+          "SKILL-002",
+          "KR-CAP-003",
+          "REF-TI-TIDA-010054",
+          "KR-CAP-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get SKILL-003 / SKILL-006 / KR-TH-001 / KR-PCB-006 / KR-TH-002 / KR-TH-003 / KR-CAP-002 --json; plus knowledge/skills/capacitors/SKILL-003-dc-link-capacitors.md, knowledge/skills/thermal/SKILL-006-thermal-placement.md, knowledge/references/ti/tida-010054/analysis.md (decisions 9-10), docs/pcb-design-rules.md",
+        "top_hits": [
+          "SKILL-003",
+          "SKILL-006",
+          "KR-TH-001",
+          "KR-PCB-006",
+          "KR-TH-002",
+          "KR-TH-003",
+          "KR-CAP-002",
+          "PE-PCB-005",
+          "PE-PCB-006"
+        ]
+      }
+    ],
+    "mosfet": [
+      {
+        "command": "python -m automation.knowledge.query \"SiC MOSFET selection voltage margin derating 400 V bus\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "CMP-B32716H1156K000",
+          "CB-GD-001",
+          "SKILL-001",
+          "REF-WS-PRD-04814",
+          "CMP-GCM31CR71C106KA64L",
+          "KR-GD-001",
+          "CMP-UCC21710-Q1"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"gate voltage limits VGS absolute maximum SiC gate driver\" --json --limit 8",
+        "top_hits": [
+          "KR-GD-001",
+          "SKILL-001",
+          "CMP-UCC21710-Q1",
+          "KR-IS-004",
+          "KR-GD-002",
+          "CMP-TPS2640",
+          "KR-TH-001",
+          "REF-WS-PRD-04814"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"short circuit withstand time protection speed DESAT\" --json --limit 8",
+        "top_hits": [
+          "KR-PR-001",
+          "KR-SN-005",
+          "KR-GD-004",
+          "SKILL-001",
+          "REF-WS-CGD1700HB2M-UNA",
+          "REF-TI-TIDA-010054",
+          "SKILL-005",
+          "KR-GD-011"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"thermal path junction to heatsink MOSFET losses TO-247\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "KR-TH-001",
+          "REF-TI-TIDA-010054",
+          "KR-TH-002",
+          "KR-TH-003",
+          "CMP-CGA9P1X7T2J474M250KC",
+          "KR-GD-010",
+          "KR-PCB-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"transistor database scope MOSFET device choice C3M0075120K C3M0030090K\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001 (Not applicable: AIPE Transistor Database scope)",
+          "SKILL-006",
+          "KR-GD-001",
+          "REF-WS-PRD-04814",
+          "KR-GD-006",
+          "CB-GD-001",
+          "CMP-UCC21710-Q1",
+          "SKILL-005"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"commutation loop inductance overshoot di/dt parallel MOSFET sharing\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-004",
+          "SKILL-003",
+          "REF-WS-CGD15SG00D2",
+          "REF-WS-PRD-04814",
+          "KR-CAP-003",
+          "SKILL-002",
+          "KR-GD-002",
+          "SKILL-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"dead time body diode conduction reverse recovery Kelvin source gate resistor dv/dt\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001",
+          "CB-GD-001",
+          "REF-WS-CGD15SG00D2",
+          "KR-GD-009",
+          "KR-GD-007",
+          "REF-TI-TIDA-010054",
+          "CMP-UCC25800-Q1",
+          "CB-GD-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get KR-GD-001 --json ; --get KR-TH-001 ; --get KR-PR-001 ; --get KR-TH-002 ; --get KR-PCB-004",
+        "top_hits": [
+          "KR-GD-001 (full record, +19/-8 V example limited to Gen-3)",
+          "KR-TH-001 (P_max formula, EC-019/020)",
+          "KR-PR-001 (no universal withstand value)",
+          "KR-TH-002 (insulated interface, human review)",
+          "KR-PCB-004 (power loop first)"
+        ]
+      },
+      {
+        "command": "read knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md ; knowledge/skills/thermal/SKILL-006-thermal-placement.md ; knowledge/references/ti/tida-010054/analysis.md (decisions 1, 9) ; docs/pcb-design-rules.md (PE-PCB-001..008)",
+        "top_hits": [
+          "SKILL-001",
+          "SKILL-006",
+          "REF-TI-TIDA-010054",
+          "PE-PCB-002",
+          "PE-PCB-003"
+        ]
+      }
+    ],
+    "sensing_protection": [
+      {
+        "command": "python -m automation.knowledge.query \"isolated current sensing Hall sensor TMCS1133 overcurrent trip\" --json --limit 8",
+        "top_hits": [
+          "CB-SN-004",
+          "CMP-TMCS1133",
+          "SKILL-005",
+          "REF-TI-TIDA-010054",
+          "KR-SN-002",
+          "CMP-UCC21710-Q1",
+          "KR-GD-004",
+          "KR-SN-005"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"isolated voltage sensing AMC1311 resistive divider HV side 5 V LDO\" --json --limit 8",
+        "top_hits": [
+          "CMP-AMC1311",
+          "CB-SN-001",
+          "SKILL-005",
+          "CB-SN-002",
+          "CMP-AMC1336",
+          "REF-TI-TIDA-010054",
+          "CB-IS-002",
+          "CB-GD-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"fault handling latched trip zone restart policy protection comparator\" --json --limit 8",
+        "top_hits": [
+          "CB-SN-004",
+          "CMP-TMCS1133",
+          "KR-PR-002",
+          "KR-SN-002",
+          "CB-GD-001",
+          "SKILL-001",
+          "KR-SN-005",
+          "KR-GD-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"NTC heatsink temperature sensing UCC21710 AIN APWM over temperature\" --json --limit 8",
+        "top_hits": [
+          "CB-PR-002",
+          "REF-WS-CGD1700HB2M-UNA",
+          "SKILL-006",
+          "KR-TH-003",
+          "CB-GD-001",
+          "CMP-UCC21710-Q1",
+          "REF-TI-TIDA-010054",
+          "KR-SN-003"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"pre-charge inrush limiting DC-link relay bypass resistor\" --json --limit 8",
+        "top_hits": [
+          "KR-CAP-001",
+          "CMP-TPS2640",
+          "REF-TI-TIDA-010054",
+          "SKILL-003",
+          "KR-GD-007",
+          "CMP-B32716H8306K000",
+          "CB-PR-001",
+          "CMP-UCC14141-Q1"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"DC fuse input protection I2t coordination\" --json --limit 8",
+        "top_hits": [
+          "CB-IS-003",
+          "SKILL-004",
+          "CMP-UCC14141-Q1",
+          "CB-PR-001",
+          "KR-SN-001",
+          "CMP-TPS2640",
+          "KR-SN-002",
+          "REF-TI-TIDA-010054"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"DC-link discharge bleeder resistor safe voltage time\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001",
+          "CB-GD-001",
+          "KR-GD-007",
+          "SKILL-003",
+          "CMP-UCC21710-Q1",
+          "CMP-UCC25800-Q1",
+          "KR-CAP-001",
+          "KR-GD-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"input TVS MOV surge overvoltage protection UVLO OVP comparator\" --json --limit 8",
+        "top_hits": [
+          "CMP-TPS2640",
+          "CB-PR-001",
+          "REF-TI-TIDA-010054",
+          "KR-PR-003",
+          "KR-SN-002",
+          "KR-SN-005",
+          "SKILL-001",
+          "CMP-AMC1311"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"test points probe V_GS discharge indicator LED SELV\" --json --limit 8",
+        "top_hits": [
+          "SKILL-001",
+          "KR-PCB-005",
+          "SKILL-002",
+          "KR-GD-001",
+          "CB-IS-002",
+          "KR-GD-005",
+          "KR-GD-007",
+          "KR-SN-003"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"PCB creepage clearance isolation barrier sensing signals\" --json --limit 8",
+        "top_hits": [
+          "SKILL-002",
+          "SKILL-005",
+          "REF-WS-CGD15SG00D2",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-ISO-002",
+          "SKILL-001",
+          "CMP-TMCS1133",
+          "SKILL-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"shunt isolated amplifier AMC1302 sigma-delta SDFM not available\" --json --limit 8",
+        "top_hits": [
+          "SKILL-005",
+          "CB-SN-003",
+          "CMP-AMC1306M05",
+          "CMP-AMC1302-Q1",
+          "CB-SN-002",
+          "CMP-AMC1336",
+          "REF-TI-TIDA-010054",
+          "KR-SN-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get <ID> --json for KR-SN-001..005, KR-PR-001..003, KR-TH-002/003, KR-ISO-001/002, KR-PCB-005, KR-CAP-001, KR-GD-007, CMP-TMCS1133, CMP-AMC1311, CMP-AMC1302-Q1, CMP-TPS2640, CB-SN-001, CB-SN-003, CB-SN-004, CB-PR-001, CB-PR-002, CB-IS-002; read knowledge/skills SKILL-005/-006/-002 .md, knowledge/references/ti/tida-010054/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md",
+        "top_hits": [
+          "full records read; related items followed"
+        ]
+      }
+    ],
+    "standards_safety": [
+      {
+        "command": "python -m automation.knowledge.query \"insulation coordination clearance creepage 400 V DC link basic reinforced isolation\" --json --limit 8",
+        "top_hits": [
+          "KR-SN-001",
+          "REF-WS-CGD15SG00D2",
+          "CMP-TMCS1133",
+          "KR-ISO-002",
+          "KR-ISO-004",
+          "SKILL-002",
+          "CMP-750319177",
+          "CMP-UCC21710-Q1"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"PCB spacing slot cutout creepage net class KiCad high voltage\" --json --limit 8",
+        "top_hits": [
+          "KR-ISO-002",
+          "SKILL-002",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-ISO-003",
+          "KR-ISO-004",
+          "SKILL-004",
+          "SKILL-005",
+          "SKILL-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"DC link discharge bleeder time safety label hazardous voltage\" --json --limit 8",
+        "top_hits": [
+          "SKILL-003",
+          "SKILL-001",
+          "CB-GD-001",
+          "KR-CAP-001",
+          "KR-GD-004",
+          "KR-GD-009",
+          "KR-GD-007",
+          "CMP-B32716H1156K000"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"protection coordination fuse I2t short circuit withstand SiC DESAT speed\" --json --limit 8",
+        "top_hits": [
+          "KR-PR-001",
+          "KR-SN-005",
+          "SKILL-001",
+          "KR-GD-004",
+          "REF-WS-CGD1700HB2M-UNA",
+          "KR-GD-011",
+          "REF-TI-TIDA-010054",
+          "SKILL-005"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"heatsink grounding insulating pad chassis protective earth Y capacitor common mode\" --json --limit 8",
+        "top_hits": [
+          "KR-TH-002",
+          "SKILL-006",
+          "KR-IS-002",
+          "REF-TI-TIDA-010054",
+          "SKILL-004",
+          "CB-IS-003",
+          "SKILL-003",
+          "CB-IS-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"copper width current carrying via array barrel resistance IPC-2152 70 um\" --json --limit 8",
+        "top_hits": [
+          "KR-PCB-006",
+          "KR-CAP-002",
+          "SKILL-005",
+          "KR-ISO-004",
+          "KR-SN-004",
+          "SKILL-006",
+          "KR-ISO-001",
+          "REF-WS-CGD1700HB2M-UNA"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get <ID> --json for KR-ISO-001, KR-ISO-002, KR-ISO-003, KR-ISO-004, KR-SN-001, KR-PR-001, KR-TH-002, KR-PCB-006 (full records); read knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md, knowledge/references/wolfspeed/cgd15sg00d2/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md; grepped SKILL-001/005/006 and REF-TI-TIDA-010054 / REF-WS-PRD-04814 analyses for isolation and earthing statements; read CMP-UCC21710-Q1, CMP-UCC23514, CMP-AMC1311, CMP-AMC1302-Q1, CMP-AMC1336, CMP-TMCS1133, CMP-R12P21503D, CMP-MGJ2D122005SC, CMP-750319177 isolation fields",
+        "top_hits": [
+          "KR-ISO-001",
+          "KR-ISO-002",
+          "KR-ISO-003",
+          "KR-ISO-004",
+          "KR-SN-001",
+          "KR-PR-001",
+          "KR-TH-002",
+          "KR-PCB-006"
+        ]
+      }
+    ],
+    "thermal": [
+      {
+        "command": "python -m automation.knowledge.query \"thermal design heatsink junction temperature budget shared heatsink insulating pad\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "REF-TI-TIDA-010054 (Decision 9)",
+          "KR-TH-002",
+          "KR-TH-003",
+          "KR-TH-001",
+          "SKILL-003",
+          "KR-IS-001",
+          "SKILL-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"NTC over-temperature protection trip temperature mapping to junction\" --json --limit 8",
+        "top_hits": [
+          "KR-TH-003",
+          "SKILL-006",
+          "CB-PR-002",
+          "REF-WS-CGD1700HB2M-UNA (Decision 8)",
+          "KR-GD-004",
+          "CB-SN-004",
+          "SKILL-005",
+          "KR-TH-001"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"component placement hot spot capacitor distance from heatsink airflow inductor\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006",
+          "SKILL-003",
+          "KR-PCB-002",
+          "SKILL-002",
+          "KR-GD-007",
+          "REF-TI-TIDA-010054 (Decision 9)",
+          "KR-CAP-003",
+          "KR-IS-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"creepage clearance grounded heatsink drain tab insulation 400 V\" --json --limit 8",
+        "top_hits": [
+          "SKILL-006 (PCB constraints)",
+          "KR-TH-002",
+          "KR-ISO-002",
+          "SKILL-002",
+          "KR-ISO-004",
+          "KR-ISO-003",
+          "CB-GD-001",
+          "REF-WS-CGD1700HB2M-UNA (Decision 6)"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"copper temperature rise current carrying capacity IPC-2152 trace width\" --json --limit 6",
+        "top_hits": [
+          "KR-PCB-006",
+          "KR-CAP-002",
+          "CMP-B32716H8306K000",
+          "REF-TI-TIDA-010054 (Decision 10)",
+          "KR-PE-001",
+          "KR-ISO-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"fan failure natural convection over temperature shutdown\" --json --limit 6",
+        "top_hits": [
+          "SKILL-006",
+          "KR-GD-011",
+          "REF-WS-CGD1700HB2M-UNA (Decision 8)",
+          "SKILL-003",
+          "KR-PR-001",
+          "KR-PCB-004"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query \"Ohmite CR201-50VE heat sink Wakefield CD-02-05-247 pad TMP6131 thermistor\" --json --limit 6",
+        "top_hits": [
+          "SKILL-006",
+          "REF-TI-TIDA-010054 (Decision 9)",
+          "KR-TH-002",
+          "KR-TH-003",
+          "CB-PR-002"
+        ]
+      },
+      {
+        "command": "python -m automation.knowledge.query --get KR-TH-001 / KR-TH-002 / KR-TH-003 / CB-PR-002 / KR-PCB-006 / KR-ISO-002 --json",
+        "top_hits": [
+          "full records read; related: SKILL-006, CB-PR-002, PE-PCB-006, KR-ISO-003, KR-ISO-004"
+        ]
+      },
+      {
+        "command": "read knowledge/skills/thermal/SKILL-006-thermal-placement.md and .json; knowledge/references/ti/tida-010054/analysis.md (Decisions 9, 10, non-generalisable items); knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md (Decision 8); docs/pcb-design-rules.md (PE-PCB-001..008)",
+        "top_hits": [
+          "SKILL-006 principles 1-5",
+          "REF-TI-TIDA-010054 decision 9",
+          "REF-WS-CGD1700HB2M-UNA decision 8",
+          "PE-PCB-001, 003, 005, 006"
+        ]
+      }
+    ]
+  },
+  "verification_verdicts": {
+    "verify_applicable_standards_insulation_coordina_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_applicable_standards_insulation_coordina_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_assumptions_register_and_requirements_se_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_assumptions_register_and_requirements_se_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_controller_auxiliary_supplies_pwm_fault__engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_controller_auxiliary_supplies_pwm_fault__factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_dc_link_input_and_output_capacitor_desig_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_dc_link_input_and_output_capacitor_desig_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_isolated_sic_gate_driver_stage_and_gate__engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_isolated_sic_gate_driver_stage_and_gate__factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_output_inductor_design_and_selection_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_output_inductor_design_and_selection_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_pcb_architecture_selection_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_pcb_architecture_selection_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_power_semiconductor_selection_wolfspeed__engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_power_semiconductor_selection_wolfspeed__factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_sensing_protection_and_power_path_auxili_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_sensing_protection_and_power_path_auxili_factcheck": [
+      "confirmed-with-corrections"
+    ],
+    "verify_thermal_design_heatsink_interface_materi_engineering": [
+      "confirmed-with-corrections"
+    ],
+    "verify_thermal_design_heatsink_interface_materi_factcheck": [
+      "confirmed-with-corrections"
+    ]
+  },
+  "coverage": {
+    "skills": {
+      "used": 6,
+      "total": 6,
+      "ids": [
+        "SKILL-001",
+        "SKILL-002",
+        "SKILL-003",
+        "SKILL-004",
+        "SKILL-005",
+        "SKILL-006"
+      ]
+    },
+    "rules": {
+      "used": 43,
+      "total": 43,
+      "ids": [
+        "KR-CAP-001",
+        "KR-CAP-002",
+        "KR-CAP-003",
+        "KR-CAP-004",
+        "KR-GD-001",
+        "KR-GD-002",
+        "KR-GD-003",
+        "KR-GD-004",
+        "KR-GD-005",
+        "KR-GD-006",
+        "KR-GD-007",
+        "KR-GD-008",
+        "KR-GD-009",
+        "KR-GD-010",
+        "KR-GD-011",
+        "KR-GD-012",
+        "KR-IS-001",
+        "KR-IS-002",
+        "KR-IS-003",
+        "KR-IS-004",
+        "KR-IS-005",
+        "KR-ISO-001",
+        "KR-ISO-002",
+        "KR-ISO-003",
+        "KR-ISO-004",
+        "KR-PCB-001",
+        "KR-PCB-002",
+        "KR-PCB-003",
+        "KR-PCB-004",
+        "KR-PCB-005",
+        "KR-PCB-006",
+        "KR-PE-001",
+        "KR-PR-001",
+        "KR-PR-002",
+        "KR-PR-003",
+        "KR-SN-001",
+        "KR-SN-002",
+        "KR-SN-003",
+        "KR-SN-004",
+        "KR-SN-005",
+        "KR-TH-001",
+        "KR-TH-002",
+        "KR-TH-003"
+      ]
+    },
+    "blocks": {
+      "used": 13,
+      "total": 13,
+      "ids": [
+        "CB-GD-001",
+        "CB-GD-002",
+        "CB-GD-003",
+        "CB-IS-001",
+        "CB-IS-002",
+        "CB-IS-003",
+        "CB-IS-004",
+        "CB-PR-001",
+        "CB-PR-002",
+        "CB-SN-001",
+        "CB-SN-002",
+        "CB-SN-003",
+        "CB-SN-004"
+      ]
+    },
+    "components": {
+      "used": 16,
+      "total": 19,
+      "ids": [
+        "CMP-2220Y1K00474KETWS2",
+        "CMP-750319177",
+        "CMP-AMC1302-Q1",
+        "CMP-AMC1311",
+        "CMP-B32716H1156K000",
+        "CMP-B32716H8306K000",
+        "CMP-C1812V104KDRACTU",
+        "CMP-CGA9P1X7T2J474M250KC",
+        "CMP-MGJ2D122005SC",
+        "CMP-R12P21503D",
+        "CMP-TMCS1133",
+        "CMP-TPS2640",
+        "CMP-UCC14141-Q1",
+        "CMP-UCC21710-Q1",
+        "CMP-UCC23514",
+        "CMP-UCC25800-Q1"
+      ]
+    },
+    "references": {
+      "used": 4,
+      "total": 4,
+      "ids": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD15SG00D2",
+        "REF-WS-CGD1700HB2M-UNA",
+        "REF-WS-PRD-04814"
+      ]
+    },
+    "project_rules": {
+      "used": 10,
+      "total": 8,
+      "ids": [
+        "PE-PCB-001",
+        "PE-PCB-001..008",
+        "PE-PCB-002",
+        "PE-PCB-003",
+        "PE-PCB-004",
+        "PE-PCB-005",
+        "PE-PCB-005/PE-PCB-007/PE-PCB-008",
+        "PE-PCB-006",
+        "PE-PCB-007",
+        "PE-PCB-008"
+      ]
+    }
+  },
+  "by_applicability": {
+    "direct": 114,
+    "adapted": 101,
+    "not-applicable": 35,
+    "human-review": 23
+  }
+}

@@ -1,0 +1,591 @@
+{
+  "board": {
+    "3dviewports": [],
+    "design_settings": {
+      "rules": {
+        "min_clearance": 0.25,
+        "min_track_width": 0.25,
+        "min_via_diameter": 0.6,
+        "min_through_hole_diameter": 0.3,
+        "min_hole_clearance": 0.25,
+        "min_copper_edge_clearance": 0.5
+      }
+    },
+    "layer_presets": [],
+    "viewports": []
+  },
+  "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "AIPE_SiC_Buck_Power.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "bus_width": 12,
+        "clearance": 0.25,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.25,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "Default",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2147483647,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 3.0,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 2.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "HV_VIN",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.0,
+        "via_diameter": 1.2,
+        "via_drill": 0.6,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 3.0,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 2.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "HV_SW",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.0,
+        "via_diameter": 1.2,
+        "via_drill": 0.6,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 3.0,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 2.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "HV_PGND",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 3,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.0,
+        "via_diameter": 1.2,
+        "via_drill": 0.6,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 3.0,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 2.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "HV_VOUT",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 4,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.0,
+        "via_diameter": 1.2,
+        "via_drill": 0.6,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.3,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.5,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "DRV_HS",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 5,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.5,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.3,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.5,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "DRV_LS",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 6,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.5,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.3,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.3,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "DESAT_HS",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 7,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.3,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.3,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "DESAT_LS",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 8,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.3,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.3,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "SENSE_ISO",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 9,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 5.0,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 2.0,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "PE",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 10,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.0,
+        "via_diameter": 1.2,
+        "via_drill": 0.6,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.25,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.25,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "CTRL_SELV",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 11,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      }
+    ],
+    "meta": {
+      "version": 4
+    },
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "HV_VIN",
+        "pattern": "VIN_RAW"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "VIN"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "VIN_PRE"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "BLD_IN_*"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "IND_IN_*"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "DAMP_MID"
+      },
+      {
+        "netclass": "HV_VIN",
+        "pattern": "VIN_DIV_T*"
+      },
+      {
+        "netclass": "HV_SW",
+        "pattern": "SW"
+      },
+      {
+        "netclass": "HV_SW",
+        "pattern": "SNUB_MID"
+      },
+      {
+        "netclass": "HV_PGND",
+        "pattern": "PGND"
+      },
+      {
+        "netclass": "HV_PGND",
+        "pattern": "PE_REF_MID"
+      },
+      {
+        "netclass": "HV_VOUT",
+        "pattern": "VOUT"
+      },
+      {
+        "netclass": "HV_VOUT",
+        "pattern": "VOUT_L"
+      },
+      {
+        "netclass": "HV_VOUT",
+        "pattern": "BLD_OUT_*"
+      },
+      {
+        "netclass": "HV_VOUT",
+        "pattern": "IND_OUT_*"
+      },
+      {
+        "netclass": "HV_VOUT",
+        "pattern": "VOUT_DIV_T*"
+      },
+      {
+        "netclass": "DRV_HS",
+        "pattern": "HS_*"
+      },
+      {
+        "netclass": "DRV_HS",
+        "pattern": "G_H"
+      },
+      {
+        "netclass": "DRV_HS",
+        "pattern": "KS_H"
+      },
+      {
+        "netclass": "DRV_HS",
+        "pattern": "VDD_H"
+      },
+      {
+        "netclass": "DRV_HS",
+        "pattern": "VEE_H"
+      },
+      {
+        "netclass": "DRV_LS",
+        "pattern": "LS_*"
+      },
+      {
+        "netclass": "DRV_LS",
+        "pattern": "G_L"
+      },
+      {
+        "netclass": "DRV_LS",
+        "pattern": "KS_L"
+      },
+      {
+        "netclass": "DRV_LS",
+        "pattern": "VDD_L"
+      },
+      {
+        "netclass": "DRV_LS",
+        "pattern": "VEE_L"
+      },
+      {
+        "netclass": "DESAT_HS",
+        "pattern": "DESAT_H_*"
+      },
+      {
+        "netclass": "DESAT_LS",
+        "pattern": "DESAT_L_*"
+      },
+      {
+        "netclass": "SENSE_ISO",
+        "pattern": "ISO_*"
+      },
+      {
+        "netclass": "SENSE_ISO",
+        "pattern": "5V_ISO"
+      },
+      {
+        "netclass": "SENSE_ISO",
+        "pattern": "VIN_DIV"
+      },
+      {
+        "netclass": "SENSE_ISO",
+        "pattern": "VOUT_DIV"
+      },
+      {
+        "netclass": "PE",
+        "pattern": "PE"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "12V_BIAS_H"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "12V_BIAS_L"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "12V_BIAS_S"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "12V_PROT"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "3V3"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "BIAS_EN"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "BIAS_EN_F"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "FAN_TACH"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "FAULT_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "FLT_H_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "FLT_L_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "GNDP_H"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "GNDP_L"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "GNDP_S"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "GND_CTRL"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "ISENSE"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "ISENSE_REF"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "K1_LOW"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "OC_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PG_BIAS_H_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PG_BIAS_L_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PG_BIAS_S_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PWM_H"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PWM_H_F"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PWM_L"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "PWM_L_F"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RDY_H"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RDY_L"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "REF2V5_PB"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RELAY_ON"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RESET_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RESET_N_F"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "RLY_G"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "SPARE_D1"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "SPARE_D2"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VIN_AMP_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VIN_AMP_P"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VIN_OUTN"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VIN_OUTP"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VIN_SENSE"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOC_SET"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOUT_AMP_N"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOUT_AMP_P"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOUT_OUTN"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOUT_OUTP"
+      },
+      {
+        "netclass": "CTRL_SELV",
+        "pattern": "VOUT_SENSE"
+      }
+    ]
+  },
+  "pcbnew": {
+    "last_paths": {
+      "gencad": "",
+      "idf": "",
+      "netlist": "",
+      "plot": "",
+      "specctra_dsn": "",
+      "step": "",
+      "svg": "",
+      "vrml": ""
+    },
+    "page_layout_descr_file": ""
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "sheets": [],
+  "text_variables": {}
+}
