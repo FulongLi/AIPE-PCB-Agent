@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-10T22:01:52",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Control.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 9 [BIAS_EN]",
+                    "pos": {
+                        "x": 38.16,
+                        "y": 74.0
+                    },
+                    "uuid": "cf7b12d6-71ce-4c1e-be27-dc95c1281d89"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 12 [BIAS_EN]",
+                    "pos": {
+                        "x": 62.75,
+                        "y": 43.675
+                    },
+                    "uuid": "b79ff82b-aaeb-431c-848b-cad7650f0f29"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [ISENSE_REF] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 96.175,
+                        "y": 32.5
+                    },
+                    "uuid": "8e3f6245-1a69-44ff-8c1c-11cc0c6795fd"
+                },
+                {
+                    "description": "J8 的PTH 焊盘 45 [ISENSE_REF]",
+                    "pos": {
+                        "x": 83.88,
+                        "y": 74.0
+                    },
+                    "uuid": "3d5dc2cc-61d1-4c06-9b98-7f94b0ec69cb"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": []
+}

@@ -1,0 +1,302 @@
+{
+  "lens": "SOURCE FACT-CHECK",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "TDK B32776G8206K000 (C_IN selected): 20 uF, V_R,70degC 800 V / V_op,85degC 700 V, I_RMS,max 14.5 A (70 degC, 10 kHz, dT <= 20 K), ESR 7.5 mOhm, ESL 10 nH, 28.0 x 37.0 x 42.0 mm, P1 10.2 mm, 4-pin, 1.2 mm leads, K = +/-10 %, 105 degC case max, 1.33 %/degC derating 85-105 degC, datasheet dated June 2026",
+      "status": "verified",
+      "evidence": "TDK PDF https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf (text extracted locally with PyMuPDF): 'Series/Type: B3277*D/E/G/J/T Date: June 2026'; 800 V table header 'VR,70 degC = 800 V DC, Vop,85 degC = 700 V DC'; row '20 | 28.0 x 37.0 x 42.0 | 10.2 | B32776G8206+000 | 14.5 | 7.5 | 10.0'; footnote '2) Max ripple current IRMS at 70 degC, 10 kHz for dT <= 20 degC'; lead table '4-pin | 37.5 | 1.2 | B32776G'; 'K = +/-10%'; 'Max. operating temperature: 105 degC (case)'; 'For temperatures between 85 degC and 105 degC 1.33%/degC of Vop derating compared to Vop at 85 degC'."
+    },
+    {
+      "item": "TDK B32776G4606K000 (C_OUT selected): 60 uF, V_R,70 = V_op,85 = 450 V, 23.5 A, 3.6 mOhm, 14 nH, 30.0 x 45.0 x 42.0 mm, P1 20.3 mm",
+      "status": "verified",
+      "evidence": "Same TDK PDF: 450 V table header 'VR,70 degC = 450 V DC, Vop,85 degC = 450 V DC'; row '60 | 30.0 x 45.0 x 42.0 | 20.3 | B32776G4606+000 | 23.5 | 3.6 | 14.0'."
+    },
+    {
+      "item": "TDK B32776G4406K000 (3-piece C_OUT alternative): 40 uF 450 V, 17.5 A, 5.3 mOhm, 11 nH, 28 x 37 x 42 mm, P1 10.2",
+      "status": "verified",
+      "evidence": "Same TDK PDF row '40 | 28.0 x 37.0 x 42.0 | 10.2 | B32776G4406+000 | 17.5 | 5.3 | 11.0'."
+    },
+    {
+      "item": "TDK B32776G8306K000 (growth option): 30 uF 800 V, 19.5 A, 5.1 mOhm, 12 nH, 30 x 45 x 42 mm, P1 20.3",
+      "status": "verified",
+      "evidence": "Same TDK PDF row '30 | 30.0 x 45.0 x 42.0 | 20.3 | B32776G8306+000 | 19.5 | 5.1 | 12.0'."
+    },
+    {
+      "item": "Agent's footprint note that 2-pin TDK 'E' variants have 24-30 nH ESL",
+      "status": "verified",
+      "evidence": "Same TDK PDF: B32776E8146 23 nH, B32776E4306 28 nH, B32776E4356 24 nH, B32776E4506 30 nH (range 23-30 nH; agent's 24-30 nH is within it). Library C_Rect_L41.5mm_W*_P37.50mm footprints being 2-pin was not re-checked."
+    },
+    {
+      "item": "TDK B32776 series lifecycle status (active / NRND)",
+      "status": "unverified",
+      "evidence": "The datasheet (June 2026 edition) carries no lifecycle statement; the TDK product page was not fetched. Currency of the datasheet is the only indication that the series is in production."
+    },
+    {
+      "item": "KEMET C4AQIBW5200A3JJ (C_IN alternate): 20 uF, 800 V (V_OP85 700 V, V_OP105 550 V), I_rms 17.4 A, ESR 4.7 mOhm, ESL 10 nH, R_th 18 degC/W, dV/dt 13 V/us, I_pk 262 A, T 28 x H 37 x L 42 mm, S 37.5, S1 10.2 mm, W = 4 pins, 100,000 h at V_NDC / 70 degC hotspot, I_rms basis dT <= 30 degC, document F3114_C4AQ 6/14/2024",
+      "status": "verified",
+      "evidence": "KEMET PDF via CERN mirror https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20(converters)/C4AQ_Film-Capacitor_KEMET.pdf (text extracted): header 'F3114_C4AQ - 6/14/2024'; row '20 | 800 | 28 | 37 | 42 | 37.5 | 10.2 | 13 | 262 | 10 | 4.7 | 17.4 | 18 | ... | C4AQIBW5200A3JJ'; 'VNDC at 70degC = 800 VDC; VOP85 at 85degC = 700 VDC; VOP105 at 105degC = 550 VDC'; '100,000 hours at VNDC at hot spot temperature THS = +70degC'; 'Irms should be limited to values granting dT <= 30degC'; code key 'L = 500, C = 650, I = 800 ... U = 2 pins, W = 4 pins'. The tolerance letter key (J = +/-5 %) was not extracted from the text; inferred from the J/K suffix pattern of the part list only."
+    },
+    {
+      "item": "KEMET C4AQIBW5400A3OJ (single 40 uF option): 28.7 A, 2.5 mOhm, 14 nH, R_th 13 degC/W, 35 x 50 x 42 mm, S1 20.3",
+      "status": "verified",
+      "evidence": "Same KEMET PDF row '40 | 800 | 35 | 50 | 42 | 37.5 | 20.3 | 13 | 524 | 14 | 2.5 | 28.7 | 13 | ... | C4AQIBW5400A3OJ' (dV/dt 13 V/us, I_pk 524 A)."
+    },
+    {
+      "item": "KEMET C4AQCBW5400A3LJ (650 V output alternative): 24.9 A, 2.8 mOhm, 13 nH, R_th 15 degC/W, 30 x 45 x 42 mm",
+      "status": "verified",
+      "evidence": "Same KEMET PDF row '40 | 650 | 30 | 45 | 42 | 37.5 | 20.3 | 9 | 344 | 13 | 2.8 | 24.9 | 15 | ... | C4AQCBW5400A3LJ'; 650 V class 'VOP85 = 600 VDC; VOP105 = 450 VDC'."
+    },
+    {
+      "item": "Agent's secondary KEMET reference 'C4AQ-M F3125, 8/30/2021 (same values)'",
+      "status": "unverified",
+      "evidence": "Only the string 'C4AQ-M' appears in the F3114 text; the F3125 document was not fetched."
+    },
+    {
+      "item": "Vishay MKP1848C62080JP* (C_IN alternate): 20 uF, U_NDC 800 V at 85 degC, U_OPDC 960 V at 70 degC / 560 V at 105 degC, I_RMS 11 A (2-pin) / 12 A (4-pin) at 10 kHz, 85 degC, dT 15 K, ESR 7 / 6 mOhm, dV/dt 35 V/us, I_peak 700 A, 21.5 x 38.5 x 42.0 mm, P1 37.5, P2 10.2 mm; ESR valid 10-70 kHz for P = 37.5 mm; ESL < 1 nH/mm; up to 100 000 h at U_NDC and 70 degC; max pk-pk ripple voltage 0.2 x U_NDC; Document 26015 Rev 09-Aug-2023",
+      "status": "verified",
+      "evidence": "Vishay PDF https://www.vishay.com/docs/26015/mkp1848cdclink.pdf (text extracted): 'Revision: 09-Aug-2023 ... Document Number: 26015'; row '20 | 21.5 | 38.5 | 42.0 | 37.5 | 10.2 | 35 | 700 | 11 | 12 | 7 | 6 | ... | MKP1848C62080JP*'; notes '(2) Maximum RMS current at 10 kHz, +85 degC, dt = +15 degC', '(3) ESR typical values at f = 10 kHz to 70 kHz for P = 37.5 mm'; 'UNDC at 85 degC 500/600/800/900/1000/1200 V', 'UOPDC at 70 degC 600/720/960/1100/1200/1440 V', 'UOPDC at 105 degC 350/420/560/650/700/850 V'; '< 1 nH per mm of lead spacing'; 'up to 100 000 h at UNDC and 70 degC'; 'Maximum applicable peak to peak ripple voltage 0.2 x UNDC'."
+    },
+    {
+      "item": "Vishay MKP1848C66050JP* (C_OUT alternate): 60 uF, U_NDC 500 V, U_OPDC 600 V at 70 degC / 350 V at 105 degC, 16 A (2-pin) / 18 A (4-pin), ESR 3.5 / 3 mOhm, dV/dt 20 V/us, I_peak 1200 A, 30 x 57 x 42 mm, P1 37.5, P2 20.3",
+      "status": "verified",
+      "evidence": "Same Vishay PDF row '60 | 30.0 | 57.0 | 42.0 | 37.5 | 20.3 | 20 | 1200 | 16 | 18 | 3.5 | 3 | ... | MKP1848C66050JP*' and the 500 V column of the voltage table."
+    },
+    {
+      "item": "Full Vishay ordering code 'MKP1848C62080JP4' (terminal digit 4 = 4-pin)",
+      "status": "unverified",
+      "evidence": "Datasheet note '(1) Change the * symbol with special code for the terminals'; the composition-of-catalog-number table shows '2 PINS | 4 PINS' columns but the digits are in a graphic not recoverable from the text. The agent already lists this as an open issue; it remains open."
+    },
+    {
+      "item": "Vishay CRCW2512120KFKEG / CRCW2512100KFKEG: 2512, P70 1.0 W, 500 V maximum operating voltage, -55 to +155 degC, +/-1 % with +/-100 ppm/K, Document 20035 Rev 14-Apr-2026",
+      "status": "verified",
+      "evidence": "Vishay PDF https://www.vishay.com/docs/20035/dcrcwe3.pdf (text extracted): 'Revision: 14-Apr-2026 ... Document Number: 20035'; specification table for sizes 0402..2512 'Rated dissipation, P70 ... 1.0 W' and 'Operating voltage, Umax. ACRMS/DC ... 500 V' in the CRCW2512 column; 'Operating temperature range -55 degC to +155 degC'; 'CRCW2512 e3 ... +/- 100 ppm/K | +/- 1 % | 1 Ohm to 10 MOhm'; a 'Derating' graph and a 'film temperature' statement are present. Terminology: the datasheet calls the 500 V figure 'Operating voltage Umax', not 'limiting element voltage'.",
+      "correction": "Quote the 500 V as 'maximum operating voltage Umax (AC RMS / DC)' per Vishay wording; the derating-to-zero-at-155 degC statement is read from the graph only."
+    },
+    {
+      "item": "TDK CGA9P1X7T2J474M250KC (C_HF selected) basic ratings: 0.47 uF +/-20 %, 630 V, X7T, 2220 (5.7 x 5.0 x 2.5 mm), -55..125 degC",
+      "status": "verified",
+      "evidence": "Secondary sources only (TDK product page HTTP 403, Arrow-hosted TDK PDFs timed out twice): Avnet listing https://www.avnet.com/americas/product/tdk/cga9p1x7t2j474m250kc/evolve-5469961/ 'SMD Multilayer Ceramic Capacitor, 0.47 uF, 630 V, 2220 [5750 Metric], +/-20 %, X7T, CGA Series, 5.7 mm'; SnapEDA https://snapeda.com/parts/CGA9P1X7T2J474M250KC/TDK/view-part; sibling TDK sheet CGA9P1X7T2J474M250KE (Arrow conversion, dated 22 May 2025) '470nF +/-20% 630VDC X7T (+22/-33%), 5.70 x 5.00 x 2.50 mm'. Knowledge record CMP-CGA9P1X7T2J474M250KC repeats the TI BOM description (0.47 uF, 630 V, X7T, 2220)."
+    },
+    {
+      "item": "TDK CGA9P1X7T2J474M250KC lifecycle status, 'soft termination (KC/KE suffix)' claim, and DC-bias capacitance at 440 V (assumption A4: <= 60 % loss)",
+      "status": "unverified",
+      "evidence": "No TDK primary page reachable. Search results: the M250KE sibling datasheet lists 'soft termination' and 'Production' status; the Future Electronics listing of CGA9P1X7T2J474K250KC (https://www.futureelectronics.com/p/8129345) shows 'Active' but its spec list shows no soft termination; no listing states the status of the exact M250KC suffix. The DC-bias graph (315 V reference) exists in the TDK sheet but no numeric value could be read; the agent's 40 % remaining capacitance stays an assumption.",
+      "correction": "Treat 'soft termination' as applying to the KE suffix unless TDK confirms it for KC; keep the DC-bias and status checks as release blockers (already open issues)."
+    },
+    {
+      "item": "Availability conflict for CGA9P1X7T2J474M250KC (Avnet zero stock / long lead vs SnapEDA distributor stock)",
+      "status": "verified",
+      "evidence": "Search summary of the Avnet listing: 'none in stock with a long factory lead time'; SnapEDA: 'lists several distributors with inventory'. Consistent with the agent's open issue."
+    },
+    {
+      "item": "Knowles 2220Y1K00474KXTWS2 (C_HF alternate): 0.47 uF +/-10 %, 1000 V DC, X7R, 2220, FlexiCap termination",
+      "status": "verified",
+      "evidence": "Knowles product page https://product.knowles.com/products/2220y1k00474kxtws2 (search snippet; direct fetch HTTP 403): 'Capacitance 470nF; Tolerance +/-10%; DC Voltage 1000; Case Size 2220; Termination: FlexiCap Polymer termination, Nickel barrier, Sn Plated'; the page reportedly identifies the part as a StackiCap-type construction; stock at Mouser/TTI/DigiKey. Dimensions, thickness, AEC-Q200 and DC-bias not verified (Digi-Key URL 404).",
+      "correction": "Verify the body thickness: if the part is a StackiCap (stacked) construction its height differs from a standard 2220 and the footprint/courtyard must be adjusted."
+    },
+    {
+      "item": "KEMET C2220C474KCRACTU rated 500 V (rejected at 0.88 ratio)",
+      "status": "verified",
+      "evidence": "KEMET product page (search snippet of https://www.kemet.com/en/us/product/C2220C474KCRACTU.html; the page now redirects to yageogroup.com and renders empty without JavaScript): '0.47 uF, 10%, 500 VDC, X7R, 2220, -55 to +125 degC'; Radwell listing agrees (500 V). Note the Digi-Key look-alike C2220C474KARACTU is a 250 V part."
+    },
+    {
+      "item": "Nichicon LGW2E471MELB25 (electrolytic comparison, not selected): 470 uF 250 V, 30 x 25 mm, 3000 h at 105 degC, '2.2 A at 120 Hz; 3.3 A at 50 kHz (listing)'",
+      "status": "contradicted",
+      "evidence": "Nichicon LGW catalog https://www.nichicon.co.jp/english/series_items/catalog_pdf/e-lgw.pdf (CAT.8100N, text extracted): 'Snap-in Terminal Type, 105degC High Ripple Current ... Withstanding 3000 hours application of rated ripple current at 105degC'; frequency coefficient for 200-250 V parts '120 Hz 1.00 | 1 kHz 1.32 | 10 kHz 1.45 | 50 kHz or more 1.50'; the 250 V row lists LGW2E471MELZ40 and LGW2E471MELB25 with adjacent ripple values 1.83 and 2.01 A (column alignment), i.e. about 2.0 A at 120 Hz / 105 degC and about 3.0 A at >= 50 kHz, not 2.2 A / 3.3 A. Case code B25 = phi30 x 25 mm by the catalog's code pattern (A25 = phi25 x 25). Part-number existence and endurance verified.",
+      "correction": "Use the catalog value (about 2.0 A at 120 Hz, about 3.0 A at >= 50 kHz) or label the 2.2 A / 3.3 A figures as a distributor-listing value. No effect on the selection (part rejected)."
+    },
+    {
+      "item": "IEC 62477-1 clause 4.4.9 'Capacitor discharge' cited in assumption A3",
+      "status": "verified",
+      "evidence": "IEC 62477-1 Edition 1.0 2012-07 preview (https://assets.vde-verlag.de/iec-normen/preview-pdf/info_iec62477-1%7Bed1.0%7Db.pdf, text extracted) table of contents: '4.4.9 Capacitor discharge ... 58' and '6.5.2 Capacitor discharge ... 124' (marking clause). Clause number and title verified; the requirement text (voltage/time limits, marking option) was not accessible."
+    },
+    {
+      "item": "IEC 61800-5-1 clause 4.3.11 'Capacitor discharge' cited in assumption A3",
+      "status": "unverified",
+      "evidence": "IEC 61800-5-1 Ed. 2.0 2007-07 preview (https://assets.vde-verlag.de/iec-normen/preview-pdf/info_iec61800-5-1%7Bed2.0%7Db.pdf) table of contents lists only '4.3 Protection against electric shock ... 18' without subclauses; the Intertek UL 61800-5-1 PDF is a standards notice (effective date November 20, 2022) with no clause text. Edition 2.1 (2016) numbering may differ."
+    },
+    {
+      "item": "Discharge criterion '< 60 V within 60 s with warning label' (A3) as a standards-permitted option",
+      "status": "unverified",
+      "evidence": "Neither standard's clause text could be read. The agent correctly labels A3 as an assumption for human review, but the specific 60 s figure is not shown to come from IEC 62477-1 or IEC 61800-5-1; the standards' option is a marked discharge time, not necessarily 60 s.",
+      "correction": "State the 60 s figure as a project choice (the marking must state the actual time) until the clause text is checked."
+    },
+    {
+      "item": "Provisional spacing values (>= 2.5 mm creepage, >= 1.5 mm clearance, 3.0 mm recommended) for 440 V DC, PD2, CTI >= 175",
+      "status": "unverified",
+      "evidence": "KR-ISO-002 numerical limit reads 'per applicable standard (e.g. UL 61800-5-1, IEC 60664-1, IPC-2221A) ... no universal value'; the values are therefore the agent's own and are correctly marked human-review. IEC 60664-1 tables were not fetched in this check.",
+      "correction": "Have the isolation agent state the impulse-voltage line used: for a 400 V nominal DC system in OVC II the 4 kV line (not the 2.5 kV line behind 1.5 mm) may apply, which would make the 3.0 mm 'recommended' value the minimum."
+    },
+    {
+      "item": "SKILL-003 reading (applicability, exclusions, steps used)",
+      "status": "verified",
+      "evidence": "python -m automation.knowledge.query --get SKILL-003: applicable_conditions 'Voltage-source bridges with switched DC-link current', 'Hundreds of volts, tens to hundreds of kHz'; not_applicable 'Line-frequency hold-up sizing', 'Inductor-ripple output filters of low-voltage converters', 'Capacitor lifetime modelling'; procedure steps 1-6 with step 5 = 'Size DC-blocking capacitor'; known_limitations 'Film capacitor datasheets not acquired'. The agent used steps 1-4 and 6, skipped 5, flagged lifetime modelling as outside the KB and adapted the 200 V output filter (not low-voltage). Reading is correct."
+    },
+    {
+      "item": "KR-CAP-001, KR-CAP-002, KR-CAP-003, KR-CAP-004 readings",
+      "status": "verified",
+      "evidence": "KR-CAP-001 statement 'C >= dQ_max / dV_ripple,allowed', conditions 'Converters with switched DC-link currents (DAB, PSFB, bridges)' - applies to the buck half-bridge (agent: adapted). KR-CAP-002 'compare to datasheet ripple rating with frequency/temperature correction' - agent applied an ESR x R_th check. KR-CAP-003 conditions 'Board-mounted discrete SiC bridges at hundreds of volts', confidence medium, MLCC purpose 'inferred ... interpretation by AIPE' - agent derived its own count (10) rather than TI's 14. KR-CAP-004 conditions 'DAB or other bridges driving a transformer' - not applicable, correct."
+    },
+    {
+      "item": "KR-PCB-004 and KR-PCB-006 readings",
+      "status": "verified",
+      "evidence": "KR-PCB-004 'Minimise the high-frequency power commutation loop first, then the gate loop' (REF-WS-CGD1700HB2M-UNA PRD-09301). KR-PCB-006 'wide pours repeated on several copper layers, stitched with via arrays, sized by a current-density/temperature-rise analysis', confidence 'low', single-reference observation - the agent added its own current-density calculation, as the rule requires."
+    },
+    {
+      "item": "KR-ISO-002, KR-ISO-003, KR-ISO-004 readings",
+      "status": "verified",
+      "evidence": "KR-ISO-002 verification 'human-review ... Derive distances from the governing standard', evidence PRD-09301 section 2.7 (agent: human-review, correct reference design). KR-ISO-003 'Assign nets to spacing classes by reference potential' (agent: direct). KR-ISO-004 'Use board slots ... when creepage, not clearance, is limiting' with evidence from both Wolfspeed references (agent: not applicable at the small required creepage - consistent)."
+    },
+    {
+      "item": "SKILL-002, SKILL-005, SKILL-006 and KR-TH-002 readings",
+      "status": "verified",
+      "evidence": "SKILL-002 principle 'Power commutation loop has priority over the gate loop'; SKILL-006 procedure 'Place devices and keep capacitors/magnetics out of exhaust (review)' with sources TIDUES0 section 2.3.5.6 and PRD-09301 section 3.4; KR-TH-002 concerns the insulating interface of shared heat sinks (agent: not applicable, correct); SKILL-005 interface only. Minor: the agent says the KB marks the exhaust recommendation as 'without source evidence'; the record tags it '(review)' and does cite sources - a slight overstatement with no design impact."
+    },
+    {
+      "item": "Project rules PE-PCB-002, PE-PCB-003, PE-PCB-006",
+      "status": "verified",
+      "evidence": "docs/pcb-design-rules.md lines 14, 15, 18: 'PE-PCB-002 Put high-frequency input capacitors close to half bridge', 'PE-PCB-003 Minimise commutation loop', 'PE-PCB-006 Size high-current copper and vias', all human-review. The knowledge CLI returns 'unknown id' for PE- identifiers (they live in docs, not in the knowledge index)."
+    },
+    {
+      "item": "Component records CMP-B32716H8306K000, CMP-B32716H1156K000, CMP-CGA9P1X7T2J474M250KC, CMP-2220Y1K00474KETWS2, CMP-C1812V104KDRACTU and REF-TI-TIDA-010054: no reference instance value copied as a design value",
+      "status": "verified",
+      "evidence": "All five CMP records carry only capacitance and rated voltage taken from the TI BOM description (TIDRZW1), no datasheet. The agent's design values (2 x 20 uF / 800 V input, 2 x 60 uF / 450 V output, 2 % ripple target, 10 MLCC) differ from TI's instance values (30 uF / 60 uF, 5 V ripple, 14 MLCC, B32716 parts). The TDK 2220 part family is reused with a derived quantity (declared 'adapted'). The KB Knowles record is the KET termination variant; the agent chose KXT (FlexiCap) and said so."
+    },
+    {
+      "item": "Agent result file examples/sic-buck-400v-200v-5kw/design/research/capacitors.json",
+      "status": "verified",
+      "evidence": "File present (61,316 bytes, 10 Oct 2026 12:44) with keys decision_area, knowledge_queries, knowledge_used, candidates, selection, calculations, assumptions_added, pcb_constraints, open_issues, verification_status, markdown."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "I_Cin,rms worst corner (400 V, 27.5 A, 220 uH, dI 9.09 A)",
+      "agent_value": "13.87 A",
+      "verifier_value": "sqrt(0.5*(27.5^2 + 9.09^2/12) - 13.75^2) = 13.87 A",
+      "agrees": true
+    },
+    {
+      "name": "Input ripple charge dQ_max",
+      "agent_value": "137.5 uC",
+      "verifier_value": "0.5*0.5*27.5 A*20 us = 137.5 uC",
+      "agrees": true
+    },
+    {
+      "name": "C_in minimum for 8 Vpp and nominal with -10 % tolerance",
+      "agent_value": "17.2 uF / 19.1 uF",
+      "verifier_value": "17.19 uF / 19.1 uF",
+      "agrees": true
+    },
+    {
+      "name": "Realised capacitive ripple with C_min 36 uF",
+      "agent_value": "3.82 V",
+      "verifier_value": "137.5 uC / 36 uF = 3.82 V",
+      "agrees": true
+    },
+    {
+      "name": "ESR ripple term (I_C,pp and dV_ESR)",
+      "agent_value": "I_C,pp = Io + dI/2 + Iin = 44.1 A; 0.17 V",
+      "verifier_value": "Capacitor current swings from +D*Io to -(Io + dI/2 - D*Io), so I_C,pp = Io + dI/2 = 27.5 + 4.55 = 32.0 A; 3.75 mOhm x 32 A = 0.12 V (total 3.94 Vpp)",
+      "agrees": false,
+      "note": "Expression double-counts Iin; the stated 44.1 A also does not follow from the inputs. Error is conservative and changes the total ripple by 0.05 V only."
+    },
+    {
+      "name": "TDK B32776G8206 self-heating (6.92 A, 7.5 mOhm, rating 14.5 A / 20 K)",
+      "agent_value": "0.36 W, R_th 12.7 K/W, dT 4.6 K, hotspot 65 degC",
+      "verifier_value": "0.359 W; 20/(14.5^2 x 7.5e-3) = 12.68 K/W; 4.55 K; 50 + 10 + 4.6 = 64.6 degC",
+      "agrees": true
+    },
+    {
+      "name": "KEMET and Vishay alternates self-heating",
+      "agent_value": "KEMET 0.23 W, 4.1 K; Vishay 0.29 W, 5.0 K",
+      "verifier_value": "KEMET 6.92^2 x 4.7e-3 = 0.225 W x 18 K/W = 4.05 K; Vishay 0.287 W x 15/(12^2 x 6e-3) = 17.4 K/W -> 5.0 K",
+      "agrees": true
+    },
+    {
+      "name": "HF tier film-to-ceramic resonance model (30 nH, 1.88 uF, 31.3 A)",
+      "agent_value": "f_r 670 kHz, T/4 373 ns, dQ 11.7 uC, dV 6.2 V, Z0 0.13 Ohm",
+      "verifier_value": "f_r = 1/(2 pi sqrt(30e-9 x 1.88e-6)) = 670 kHz; T/4 = 373 ns; 31.3 A x 373 ns = 11.7 uC; 11.7 uC / 1.88 uF = 6.2 V; Z0 = sqrt(30e-9/1.88e-6) = 0.126 Ohm",
+      "agrees": true
+    },
+    {
+      "name": "Ceramic 50 kHz share and HF edge RMS current",
+      "agent_value": "5 %, 0.69 A total, 69 mA/piece; 1.28 A total, 0.13 A/piece",
+      "verifier_value": "1.88/(36 + 1.88) = 4.96 % x 13.87 A = 0.69 A; sqrt(2 x 50e3 x 31.3^2 x 50e-9/3) = 1.28 A",
+      "agrees": true
+    },
+    {
+      "name": "Output capacitor RMS current and ripple (9.92 A, 108 uF, 1.8 mOhm)",
+      "agent_value": "2.86 A; 0.25 Vpp; C >= 12.5 uF for 2 Vpp",
+      "verifier_value": "9.92/sqrt(12) = 2.86 A; 9.92/(8 x 50e3 x 108e-6) = 0.230 V + 0.018 V = 0.25 V; 9.92/(8 x 50e3 x 1.982) = 12.5 uF",
+      "agrees": true
+    },
+    {
+      "name": "Output capacitance for 12.5 A step (10 V) and realised excursions",
+      "agent_value": "79.8 uF (2.5 kHz) / 99.7 uF (2.0 kHz); 7.4 V / 9.2 V; load dump +14.8 V / +18.5 V",
+      "verifier_value": "12.5/(2 pi 2500 x 9.9775) = 79.7 uF; 99.7 uF; 12.5/(2 pi 2500 x 108e-6) + 0.02 = 7.4 V; 9.2 V; 25 A -> 14.8 V / 18.5 V",
+      "agrees": true
+    },
+    {
+      "name": "LC corner and inductor slew",
+      "agent_value": "889 Hz; 0.60 A/us, 21 us",
+      "verifier_value": "1/(2 pi sqrt(267e-6 x 120e-6)) = 889 Hz; (360-200)/267e-6 = 0.60 A/us; 12.5/0.6 = 20.9 us",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder discharge to 60 V (coupled banks)",
+      "agent_value": "35.7 s coupled; input alone 35.7 s; output alone from 220 V 34.3 s",
+      "verifier_value": "Input: 48.7 uF x 360 kOhm = 17.5 s x ln(460/60) = 35.7 s; output: 132 uF x 200 kOhm = 26.4 s x ln(220/60) = 34.3 s (31.8 s from 200 V). The input bank only falls to the output-bank voltage at about 43 s, when both are already near 38 V, so the body-diode coupling never acts above 60 V and the coupled time equals the input-alone 35.7 s",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder dissipation and element voltage",
+      "agent_value": "0.54 W / 0.18 W / 147 V (160 V at 480 V) input; 0.20 W / 0.10 W / 100-110 V output; 0.74 W total",
+      "verifier_value": "440^2/360k = 0.538 W, 0.179 W each, 146.7 V, 160 V; 200^2/200k = 0.200 W, 0.100 W, 100 V (110 V at 220 V); 0.74 W",
+      "agrees": true
+    },
+    {
+      "name": "Film-branch copper current density",
+      "agent_value": "1.4 mm2; 5.0 A/mm2 at 7 A; 17.9 A/mm2 at 25 A",
+      "verifier_value": "20 mm x 0.07 mm = 1.4 mm2; 7/1.4 = 5.0; 25/1.4 = 17.9 A/mm2",
+      "agrees": true
+    },
+    {
+      "name": "Voltage ratios",
+      "agent_value": "0.55 / 0.575 / 0.60 (800 V); 0.63 / 0.66 / 0.69 (700 V); 575 V class 0.77 / 0.80 / 0.83; output 0.44 / 0.49 / 0.98",
+      "verifier_value": "440/800 = 0.55, 460/800 = 0.575, 480/800 = 0.60; 440/700 = 0.629, 0.657, 0.686; 440/575 = 0.765, 0.80, 0.835; 200/450 = 0.444, 220/450 = 0.489, 440/450 = 0.978",
+      "agrees": true
+    },
+    {
+      "name": "Electrolytic 10-K-rule lifetime (comparison only)",
+      "agent_value": "96,000 / 68,000 / 48,000 h at 55 / 60 / 65 degC",
+      "verifier_value": "3000 x 2^5 = 96,000; 3000 x 2^4.5 = 67,882; 3000 x 2^4 = 48,000 h",
+      "agrees": true
+    },
+    {
+      "name": "Nichicon LGW2E471MELB25 ripple at 50 kHz",
+      "agent_value": "3.3 A (listing: 2.2 A x 1.5)",
+      "verifier_value": "Catalog 120 Hz value about 2.01 A x coefficient 1.50 (>= 50 kHz, 200-250 V) = 3.0 A",
+      "agrees": false,
+      "note": "Comparison part only; does not affect the all-film decision."
+    }
+  ],
+  "knowledge_misuse": [
+    "No material misuse found: SKILL-003 steps, KR-CAP-001..004, KR-PCB-004/006, KR-ISO-002..004, KR-TH-002 and the TI reference were read correctly and no TI instance value (30/60 uF, 5 V ripple, 14 MLCC, B32716 parts) was copied as a design value.",
+    "Minor mischaracterisation: the agent states the knowledge base marks SKILL-006 step 3 (capacitors out of the heat-sink exhaust) as 'without source evidence'; the record tags the step '(review)' and cites TIDUES0 section 2.3.5.6 and PRD-09301 section 3.4. No design impact.",
+    "KR-CAP-002 requires a frequency/temperature correction of the ripple rating. The agent's assumption A10 (10 kHz film ratings used unchanged at 50 kHz) is supported by a verified Vishay footnote (ESR flat 10-70 kHz for P = 37.5 mm) but TDK and KEMET state ESR at 10 kHz only; applying the Vishay statement to the TDK/KEMET parts is an unstated extrapolation (mitigated by the 2x current margin).",
+    "The provisional creepage/clearance numbers are not in the knowledge base (KR-ISO-002 explicitly has 'no universal value') and are not sourced to a standard table in the result; they are correctly flagged human-review."
+  ],
+  "required_changes": [
+    "Correct the ESR ripple term: I_C,pp = Io + dI/2 (about 32 A at 27.5 A / 220 uH), giving 0.12 V, not 'Io + dI/2 + Iin = 44.1 A' / 0.17 V; realised input ripple becomes about 3.9 Vpp (still about 1 %).",
+    "Nichicon LGW2E471MELB25 comparison data: replace '2.2 A at 120 Hz; 3.3 A at 50 kHz' with the catalog values (about 2.0 A at 120 Hz / 105 degC; coefficient 1.50 at >= 50 kHz -> about 3.0 A) or label them as a distributor-listing value.",
+    "TDK CGA9P1X7T2J474M250KC: record that no TDK primary source was reachable, that distributor data attribute 'soft termination' to the KE suffix (the K250KC listing shows none) and that the lifecycle status of the exact M250KC suffix is unconfirmed; keep DC-bias verification (A4) and procurement as release blockers.",
+    "Standards citations in A3: cite IEC 62477-1:2012 clause 4.4.9 'Capacitor discharge' (verified title; marking clause 6.5.2) and mark IEC 61800-5-1 clause 4.3.11 as 'number not verified'; state that the 60 s figure is a project choice to be printed on the marking, not a value taken from either standard's text.",
+    "Vishay MKP1848C alternate: keep the 4-pin terminal digit as unverified (datasheet note 1: replace * with the terminal code; digits not extractable) - already an open issue.",
+    "Assumption A10: state that the ESR-flat-to-50 kHz statement is verified for Vishay only; TDK/KEMET give ESR at 10 kHz, so the self-heating check for those parts relies on extrapolation plus the 2x current margin.",
+    "Knowles 2220Y1K00474KXTWS2 alternate: the manufacturer page reportedly classes it as a StackiCap construction; verify the body height before reusing the C_2220_5750Metric footprint and courtyard.",
+    "Cosmetic: use Vishay's wording 'maximum operating voltage Umax 500 V AC RMS / DC' for the CRCW2512 rating; the 155 degC zero-power derating is read from the datasheet graph.",
+    "Isolation hand-off: ask the isolation agent to state the rated impulse voltage line used for clearance (a 400 V nominal DC system in OVC II may fall on the 4 kV / 3.0 mm line rather than the 2.5 kV / 1.5 mm line); the agent's '3.0 mm recommended' would then become the minimum."
+  ],
+  "summary": "All selected and alternate film capacitors (TDK B32776G8206/G4606/G4406/G8306, KEMET C4AQIBW5200A3JJ/5400A3OJ, C4AQCBW5400A3LJ, Vishay MKP1848C62080/66050) and the Vishay CRCW2512 bleeder resistors were checked against the manufacturer datasheets fetched and text-extracted here (TDK June 2026, KEMET F3114 6/14/2024, Vishay 26015 rev 09-Aug-2023, Vishay 20035 rev 14-Apr-2026); every quoted capacitance, voltage class, I_RMS, ESR, ESL, dimension, pin pitch, rating basis and lifetime statement matches. Sixteen of eighteen recomputed quantities agree; the only arithmetic error in the design is the ESR pk-pk current term (44.1 A instead of about 32 A), which is conservative and immaterial. The TDK 630 V MLCC is confirmed only through distributor data (0.47 uF, 630 V, X7T, 2220) - its lifecycle status, soft-termination suffix and DC-bias capacitance remain unverified, as the agent itself flagged; the Nichicon comparison part's ripple figure (2.2 A / 3.3 A) is contradicted by the Nichicon catalog (about 2.0 A / 3.0 A) but the part was not selected. IEC 62477-1 clause 4.4.9 'Capacitor discharge' is verified by title; IEC 61800-5-1 4.3.11 and the 60 s marked-discharge option are unverified. Knowledge-base citations were read correctly and no TI reference instance value was copied. Verdict: confirmed with corrections."
+}

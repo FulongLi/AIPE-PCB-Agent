@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
   "title": "V1 (48 V -> 24 V / 1 kW Si buck) versus V2 (400 V -> 200 V / 5 kW SiC buck): process, knowledge, verification and layout comparison",
-  "generated_utc": "2026-10-11T07:08:16.188278+00:00",
+  "generated_utc": "2026-10-11T07:11:18.899919+00:00",
   "generated_by": "python -m automation.scripts.compare_v1_v2",
   "definitions": {
     "specific_power_W_per_dm2": "rated output power divided by the summed PCB area of all boards",
@@ -1816,18 +1816,18 @@
         "note": null
       },
       "release_frozen": {
-        "value": null,
+        "value": true,
         "unit": null,
-        "source": "releases/",
-        "basis": "not yet available",
-        "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+        "source": "v2",
+        "basis": "counted",
+        "note": null
       },
       "release_files": {
-        "value": null,
+        "value": 6,
         "unit": null,
         "source": "releases/",
-        "basis": "not yet available",
-        "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+        "basis": "counted",
+        "note": null
       },
       "documented_open_issues": {
         "value": 49,
@@ -1837,7 +1837,7 @@
         "note": null
       },
       "design_report_words": {
-        "value": 6848,
+        "value": 6844,
         "unit": null,
         "source": "review/design_report.md",
         "basis": "counted",
@@ -2073,7 +2073,7 @@
         "note": null
       },
       "documentation_words": {
-        "value": 153903,
+        "value": 153890,
         "unit": null,
         "source": "design/, review/, simulation/, verification/ (*.md)",
         "basis": "counted",
@@ -2129,6 +2129,7 @@
           "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_metrics_control.json",
           "examples/sic-buck-400v-200v-5kw/manufacturing/control_board/export-manifest.json",
           "examples/sic-buck-400v-200v-5kw/manufacturing/power_board/export-manifest.json",
+          "examples/sic-buck-400v-200v-5kw/releases/v2/SHA256SUMS.json",
           "examples/sic-buck-400v-200v-5kw/verification/known_issues.md",
           "examples/sic-buck-400v-200v-5kw/review/design_report.md",
           "examples/sic-buck-400v-200v-5kw/simulation/results/campaign_summary.json"
@@ -2478,8 +2479,8 @@
             "evidence": "releases/v1 frozen with SHA256SUMS.json (5 files) and review package zip"
           },
           "v2": {
-            "state": "not yet available",
-            "evidence": "releases/ empty"
+            "state": "done",
+            "evidence": "frozen release with 6 hashed files"
           }
         }
       },
@@ -2938,7 +2939,7 @@
           "v2": {
             "value": [
               22,
-              153903
+              153890
             ],
             "unit": null,
             "source": null,
@@ -2957,7 +2958,7 @@
             "note": null
           },
           "v2": {
-            "value": 6848,
+            "value": 6844,
             "unit": null,
             "source": "review/design_report.md",
             "basis": "counted",
@@ -3041,11 +3042,11 @@
             "note": null
           },
           "v2": {
-            "value": null,
+            "value": true,
             "unit": null,
-            "source": "releases/",
-            "basis": "not yet available",
-            "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+            "source": "v2",
+            "basis": "counted",
+            "note": null
           },
           "comment": ""
         }
@@ -3984,10 +3985,7 @@
       ]
     }
   },
-  "pending_v2_metrics": [
-    "release_files",
-    "release_frozen"
-  ],
+  "pending_v2_metrics": [],
   "caveats": [
     "Raw PCB area, component density and specific power do not prove that either generation is better engineered: V2 carries 5x the power at 8x the voltage with an isolation barrier that V1 never needed, so most density ratios are specification effects (table 1).",
     "V2 layout, DRC, placement, export and release metrics are produced by a concurrent PCB phase; every such entry is marked 'not yet available' and the script must be re-run to complete the tables.",

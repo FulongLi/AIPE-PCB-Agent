@@ -166,10 +166,11 @@ hash and keeps the verifier valid; the stored-fill diagnostic
 python -m automation.scripts.freeze_v2
 ```
 
-`freeze_v2` runs `verify_sic_buck` first and refuses to freeze when it fails. At the time
-of writing `freeze_v2` has not run and `releases/` is empty (`docs/status-v2.md` records
-when it runs). When the orchestrator runs it, the snapshot under `releases/v2/` will carry
-`SHA256SUMS.json` plus `releases/v2-review-package.zip` and must never be edited afterwards.
+`freeze_v2` runs `verify_sic_buck` first and refuses to freeze when it fails. It was run
+on 2026-10-11 from commit `f72052f` and wrote `releases/v2/` (868 files, `README.md`,
+`SHA256SUMS.json`) plus `releases/v2-review-package.zip`; the snapshot must never be edited.
+Running the command again fails on purpose (`releases/v2` already exists); a later reviewed
+generation gets its own snapshot.
 
 ## Knowledge system
 

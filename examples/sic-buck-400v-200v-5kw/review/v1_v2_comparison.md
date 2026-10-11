@@ -2,7 +2,7 @@
 
 # V1 (48 V -> 24 V / 1 kW Si buck) versus V2 (400 V -> 200 V / 5 kW SiC buck): process, knowledge, verification and layout comparison
 
-Generated 2026-10-11T07:08:16.188278+00:00 by `python -m automation.scripts.compare_v1_v2`. Machine-readable twin: `v1_v2_comparison.json`. V1 sources are the frozen files under `examples/buck-48v-24v-1kw/` (read-only); V2 sources are under `examples/sic-buck-400v-200v-5kw/`. 2 V2 metrics are marked 'not yet available' because the PCB phase is running; re-run the script after placement, routing, DRC, layout metrics, exports and release exist to complete the tables.
+Generated 2026-10-11T07:11:18.899919+00:00 by `python -m automation.scripts.compare_v1_v2`. Machine-readable twin: `v1_v2_comparison.json`. V1 sources are the frozen files under `examples/buck-48v-24v-1kw/` (read-only); V2 sources are under `examples/sic-buck-400v-200v-5kw/`. 0 V2 metrics are marked 'not yet available' because the PCB phase is running; re-run the script after placement, routing, DRC, layout metrics, exports and release exist to complete the tables.
 
 ## 0. How to read this comparison
 
@@ -50,9 +50,9 @@ States: done, not done, or not yet available (V2 PCB phase running). Evidence na
 | Native DRC (with parity and unrouted checks) clean | done - latest DRC 0 findings (14 runs recorded) | done - latest DRC findings power 0 / control 0 |
 | Power-layout metrics measured against the engineering rules | done - power-layout-metrics.json: 18 critical topology checks, rule review in pcb_rule_review.md | done - layout_metrics_*.json for control / power: power rows 58; within 27; exceeding 6; not_measured 0; control rows 31; within 2; exceeding 2; not_measured 10 |
 | Independent review / verification records | done - 2 review records (AI visual review, PCB rule review); known_issues.md 12 rows | done - 20 verify_*.json records (confirmed-with-corrections 20) + consistency review; PCB-level review not yet available |
-| Frozen release with hash manifest | done - releases/v1 frozen with SHA256SUMS.json (5 files) and review package zip | not yet available - releases/ empty |
+| Frozen release with hash manifest | done - releases/v1 frozen with SHA256SUMS.json (5 files) and review package zip | done - frozen release with 6 hashed files |
 
-Steps done: V1 10/12, V2 11/12 with 1 steps not yet available. V1 steps marked 'not done' (knowledge retrieval, simulation) were not part of the V1 workflow; this is the genuine process difference between the generations.
+Steps done: V1 10/12, V2 12/12 with 0 steps not yet available. V1 steps marked 'not done' (knowledge retrieval, simulation) were not part of the V1 workflow; this is the genuine process difference between the generations.
 
 ### 2.2 Knowledge utilisation
 
@@ -91,12 +91,12 @@ Steps done: V1 10/12, V2 11/12 with 1 steps not yet available. V1 steps marked '
 
 | Metric | V1 | V2 | Comment |
 |---|---|---|---|
-| Design documents (files / words) | 11 / 6869 | 22 / 153903 | V2 includes generated tables; volume is not quality |
-| Design report words | 1344 | 6848 |  |
+| Design documents (files / words) | 11 / 6869 | 22 / 153890 | V2 includes generated tables; volume is not quality |
+| Design report words | 1344 | 6844 |  |
 | Schematic sheets | 14 | 22 |  |
 | Automation test modules / functions | 1 / 6 | 16 / 253 | V1 figure from the V1-era module and docs/status.md; V2 counts every module in tests/ |
 | Export manifest commands / artifacts | 11 / 38 | 22 / 70 |  |
-| Frozen release | yes | not yet available (PCB phase running - re-run after the V2 boards are placed, routed and checked) |  |
+| Frozen release | yes | yes |  |
 
 ## 3. Layout and architecture metrics
 
@@ -206,12 +206,11 @@ It cannot show:
 - that more documents, citations or tests mean higher quality; they show traceability and coverage, which the human reviewer still has to judge;
 - anything about manufacturability beyond the stack-up statements and export manifests: no fabricator DFM review exists for either generation.
 
-### 6.1 V2 metrics not yet available (2)
+### 6.1 V2 metrics not yet available (0)
 
-- `release_files`
-- `release_frozen`
+- none
 
 ### 6.2 Sources
 
 V1 files read: 15; missing: 0.
-V2 files read: 51; missing: 0.
+V2 files read: 52; missing: 0.

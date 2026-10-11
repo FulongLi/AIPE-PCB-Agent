@@ -1,0 +1,87 @@
+{
+  "controller": "module",
+  "events": [
+    {
+      "type": "load_step_on",
+      "t_event_s": 0.028,
+      "i_load_before_A": 12.409769371556115,
+      "i_load_after_A": 25.1064754201835,
+      "excursion_cycle_avg_V": -16.20914728648961,
+      "excursion_pct_of_vref": -8.104573643244805,
+      "t_excursion_after_event_s": 0.00023000000000000104,
+      "vout_raw_min_V": 183.70403153161976,
+      "vout_raw_max_V": 214.20697044851323,
+      "il_max_A": 38.52009148009321,
+      "il_min_A": 9.061160392824734,
+      "recovery_band_V": 2.0,
+      "recovered_within_window": true,
+      "recovery_time_s": 0.005020400000000005,
+      "window_s": 0.008000000000000004,
+      "limit_basis": "12.5 A load step: <= 10 V excursion, <= 5 ms recovery to the 1 % band",
+      "checks": {
+        "excursion_within_10V": false,
+        "recovery_within_5ms": false,
+        "vout_raw_below_ovp_230V": true,
+        "il_below_oc_trip_37p5A": false
+      }
+    }
+  ],
+  "steady_checks": {
+    "vout_ripple_below_2Vpp": true,
+    "vin_bus_ripple_below_2pct": true,
+    "il_peak_below_oc_trip_37p5A": true,
+    "il_peak_below_isat_worst_35A": true,
+    "cin_rms_per_part_below_14p5A": true,
+    "cout_rms_per_part_below_23p5A": true
+  },
+  "textbook": {
+    "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+    "dIL_App": 7.279303421694255,
+    "il_peak_A": 28.729591080391202,
+    "il_rms_A": 25.17778278084646,
+    "i_hs_rms_A": 17.892306919695045,
+    "i_ls_rms_A": 17.7140085483473,
+    "i_cin_rms_A": 12.632910805605139,
+    "i_cout_rms_A": 2.1013538950140713,
+    "p_cond_hs_W": 15.52653037506551,
+    "p_cond_ls_W": 15.218625794269682,
+    "p_cond_total_W": 30.745156169335193,
+    "p_deadtime_W": 2.885343027497568,
+    "p_dcr_W": 10.142731932151815,
+    "vout_ripple_Vpp": 0.19761960770747738,
+    "vin_ripple_Vpp": 3.538950525320875,
+    "i_in_mean_A_ideal": 12.67060422735207
+  },
+  "controller_gains": {
+    "kp": 0.0002,
+    "ki": 1.5,
+    "note": "module single-loop PI"
+  },
+  "startup": {
+    "soft_start_s": 0.02,
+    "vout_peak_V": 201.81083349669683,
+    "overshoot_V": 1.81083349669683,
+    "overshoot_pct": 0.905416748348415,
+    "il_peak_A": 17.26772627663744,
+    "t_99pct_s": 0.01980952861600023,
+    "vout_cycle_avg_pkpk_last_50T_V": 2.9453164119645976,
+    "checks": {
+      "vout_peak_below_ovp_230V": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "overshoot_within_1pct_static_band": true
+    }
+  },
+  "textbook_deviation_pct": {
+    "il_pkpk": 9.42096115132055,
+    "il_peak": 1.417630834014773,
+    "il_rms": 0.38723395831318336,
+    "i_hs_rms": 0.4344421625064332,
+    "i_cin_rms": 2.8076603405442584,
+    "i_cout_rms": 1.4003425875211242,
+    "p_cond_hs": 0.8707717249384892,
+    "p_diode_deadtime": 2.41616744264575,
+    "p_l_dcr": 0.7759674180110988,
+    "vout_pkpk": 108.15283734726435,
+    "vin_bus_pkpk": 3.9857270239679963
+  }
+}

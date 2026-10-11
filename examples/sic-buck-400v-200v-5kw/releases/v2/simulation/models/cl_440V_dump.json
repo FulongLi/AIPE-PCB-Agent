@@ -1,0 +1,57 @@
+{
+  "vout_ref": 200.0,
+  "fs": 50000.0,
+  "dead_time": 2.5e-07,
+  "L": 0.000272,
+  "L_dcr": 0.016,
+  "Cout": 0.000108,
+  "Cout_esr": 0.004,
+  "Cin": 3.6e-05,
+  "Cin_esr": 0.0019,
+  "L_in": 1e-05,
+  "R_in": 0.05,
+  "Rds_on_hs": 0.0485,
+  "Rds_on_ls": 0.0485,
+  "body_diode_vf": 4.6,
+  "body_diode_rs": 0.044,
+  "body_diode_i_ref": 25.0,
+  "gate_edge": 1e-08,
+  "metric_cycles": 10,
+  "spice_options": {
+    "method": "gear",
+    "reltol": 0.001,
+    "abstol": 1e-06,
+    "vntol": 0.0001
+  },
+  "output": {
+    "csv_dt": 2e-06,
+    "zoom_cycles": 3,
+    "svg": true
+  },
+  "recovery_band": 0.01,
+  "parasitics": null,
+  "closed_loop": true,
+  "pwm": "comparator",
+  "t_step": 2.5e-08,
+  "pi": {
+    "kp": 0.0002,
+    "ki": 1.5,
+    "d_min": 0.0,
+    "d_max": 0.85,
+    "fb_filter_hz": 20000.0,
+    "feedforward": true
+  },
+  "name": "cl_440V_dump",
+  "vin": 440.0,
+  "load_R": 1000000.0,
+  "duty": null,
+  "soft_start_ms": 5.0,
+  "t_end": 0.022,
+  "load_step": {
+    "t": 1e-09,
+    "R_parallel": 8.0,
+    "t_rise": 1e-06,
+    "t_off": 0.014
+  },
+  "description": "25 A -> 0 A load dump at 14 ms at Vin 440 V: output OVP (230 V) check at the highest input. Closed loop, comparator PWM on a 25 ns solver grid (PWM resolution 0.5 V at the output). The campaign driver (results/run_campaign.py) replaces the module single-loop PI by the cascaded average-current-mode controller of models/campaign_manifest.json; the pi block here is the module fallback and is used only by the run whose manifest controller is 'module'. Sources: design/design_decisions.json (schema 3, 2026-10-10) with design/research/{mosfet,capacitors,inductor,gate_driver}.json after their verify_*.json corrections; task-provided values are labelled in simulation_report.md"
+}

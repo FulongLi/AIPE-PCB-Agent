@@ -1,0 +1,289 @@
+{
+  "schema": "aipe-v2-simulation-campaign-1",
+  "label": "AI-GENERATED BEHAVIOURAL SIMULATION CAMPAIGN - V2 - HUMAN REVIEW REQUIRED",
+  "driver": "results/run_campaign.py (reads this manifest; uses automation.simulation.buck_stage and ngspice_runner unmodified)",
+  "parameter_sources": "design/design_decisions.json (schema 3, 2026-10-10) with design/research/{mosfet,capacitors,inductor,gate_driver}.json after their verify_*.json corrections; task-provided values are labelled in simulation_report.md",
+  "runs": [
+    {
+      "name": "ol_360V_25A_Lnom",
+      "model": "ol_360V_25A_Lnom.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_25A_Lnom",
+      "model": "ol_400V_25A_Lnom.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_440V_25A_Lnom",
+      "model": "ol_440V_25A_Lnom.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_440V_25A_Lworst",
+      "model": "ol_440V_25A_Lworst.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_360V_27p5A_Lnom",
+      "model": "ol_360V_27p5A_Lnom.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_27p5A_Lnom",
+      "model": "ol_400V_27p5A_Lnom.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_440V_27p5A_Lworst",
+      "model": "ol_440V_27p5A_Lworst.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_25A_RdsMax",
+      "model": "ol_400V_25A_RdsMax.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_25A_dt300",
+      "model": "ol_400V_25A_dt300.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_2p5A_L319",
+      "model": "ol_400V_2p5A_L319.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "ol_400V_25A_esrRecord",
+      "model": "ol_400V_25A_esrRecord.json",
+      "controller": null,
+      "events": []
+    },
+    {
+      "name": "cl_400V_startup20ms_stepup",
+      "model": "cl_400V_startup20ms_stepup.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_on",
+          "t": 0.028
+        }
+      ]
+    },
+    {
+      "name": "cl_400V_startup20ms_fullload",
+      "model": "cl_400V_startup20ms_fullload.json",
+      "controller": "cascade",
+      "events": []
+    },
+    {
+      "name": "cl_400V_stepdown",
+      "model": "cl_400V_stepdown.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_off",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_400V_dump",
+      "model": "cl_400V_dump.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_off",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_360V_stepup",
+      "model": "cl_360V_stepup.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_on",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_440V_stepdown",
+      "model": "cl_440V_stepdown.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_off",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_440V_dump",
+      "model": "cl_440V_dump.json",
+      "controller": "cascade",
+      "events": [
+        {
+          "type": "load_step_off",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_400V_dump_irefmin0",
+      "model": "cl_400V_dump_irefmin0.json",
+      "controller": "cascade",
+      "controller_overrides": {
+        "iref_min_A": 0.0
+      },
+      "events": [
+        {
+          "type": "load_step_off",
+          "t": 0.014
+        }
+      ]
+    },
+    {
+      "name": "cl_400V_singleloop_modulePI",
+      "model": "cl_400V_singleloop_modulePI.json",
+      "controller": "module",
+      "events": [
+        {
+          "type": "load_step_on",
+          "t": 0.028
+        }
+      ]
+    }
+  ],
+  "cascade_controller": {
+    "structure": "outer voltage PI (V -> A) -> i_ref clamp -> inner average-current PI (A -> duty) with Vref/Vin feedforward -> duty clamp [0, 0.85] -> module comparator PWM; inductor current = i(Vld) + i(Vcout) filtered by a first-order 10 kHz low-pass (stand-in for the ePWM CTR=ZERO average sampling); output voltage through the module 20 kHz feedback filter",
+    "kpv_A_per_V": 1.2325,
+    "kiv_A_per_V_s": 3097.7,
+    "outer_zero_Hz": 400.0,
+    "kpi_per_A": 0.01709,
+    "kii_per_A_s": 85.91,
+    "inner_zero_Hz": 800.0,
+    "iref_min_A": -10.0,
+    "iref_max_A": 35.0,
+    "d_min": 0.0,
+    "d_max": 0.85,
+    "fb_filter_hz": 20000.0,
+    "i_filter_hz": 10000.0,
+    "feedforward": true,
+    "design_basis": "kpi = 2 pi 4 kHz L / Vin(400 V) for an inner crossover of about 4 kHz (fs/12.5); kpv tuned by bisection on the small-signal loop gain (plant 1/(sC) || R, closed inner loop, 20 kHz filter, T/2 PWM delay) for an outer crossover of 2.3 kHz (middle of the 2.0-2.5 kHz band of design_decisions.json assumptions_accepted.voltage_loop_crossover_Hz); analytical margins are recomputed by the driver and stored in results/loop_gain_analysis.json",
+    "firmware_status": "NO FIRMWARE EXISTS (assumptions register A-34: hardware/firmware contract only). These gains are a behavioural stand-in for the TMS320F28335 implementation and must not be copied into firmware without a discrete-time redesign (sampling, one-sample delay, ADC scaling, anti-windup, current-reference clamp coordinated with the 37.5 A OC trip).",
+    "iref_max_basis": "35 A: below the TMCS1133 OC trip (37.5 A, design_decisions sensing.current.oc_threshold_A) and the vendor-style I_sat 37.3 A; added assumption",
+    "iref_min_basis": "-10 A: synchronous operation continues at no load (baseline magnetics no_load_ccm_reverse_current_A -2.8 to -3.4 A); added assumption"
+  },
+  "module_pi_reference": {
+    "kp": 0.0002,
+    "ki": 1.5,
+    "note": "module defaults; single voltage loop; crossover about 97 Hz (analytical); used only by cl_400V_singleloop_modulePI"
+  },
+  "parasitic_sweep": {
+    "base_run": "ol_400V_25A_Lnom",
+    "cases": [
+      {
+        "L_loop": 2.5e-08,
+        "R_loop": 0.5,
+        "C_oss": 1.3e-10,
+        "cycles": 3,
+        "t_step": 2e-09
+      },
+      {
+        "L_loop": 3.5e-08,
+        "R_loop": 0.5,
+        "C_oss": 1.3e-10,
+        "cycles": 3,
+        "t_step": 2e-09
+      },
+      {
+        "L_loop": 5e-08,
+        "R_loop": 0.5,
+        "C_oss": 1.3e-10,
+        "cycles": 3,
+        "t_step": 2e-09
+      },
+      {
+        "L_loop": 2.5e-08,
+        "R_loop": 2.0,
+        "C_oss": 1.3e-10,
+        "cycles": 3,
+        "t_step": 2e-09
+      }
+    ],
+    "analytic_di_dt_A_per_ns": [
+      1.0,
+      2.5,
+      4.0
+    ],
+    "basis": "L_loop 25 nH typical / 35 nH worst board loop plus up to 50 nH with standing TO-247 leads (design_decisions power_stage.mosfet.selection_basis, KR-PCB-004 adapted); C_oss 130 pF per device at 400 V (gate_driver.json turn-off dv/dt envelope; datasheet 103 pF at 1000 V, Co(tr) 238 pF, fetched-datasheet); design di/dt 2.5 A/ns (gate_driver.json / verify of capacitors.json); R_loop 0.5 ohm is the module default (lightly damped, Q about 28 at 25 nH) with a 2 ohm sensitivity case"
+  },
+  "limits": {
+    "vout_ripple_max_Vpp": 2.0,
+    "vin_ripple_max_pct_pp": 2.0,
+    "load_step_excursion_max_V": 10.0,
+    "load_step_recovery_max_ms": 5.0,
+    "recovery_band_pct": 1.0,
+    "ovp_out_V": 230.0,
+    "oc_trip_A": 37.5,
+    "isat_30pct_nominal_A": 37.3,
+    "isat_30pct_worst_A": 35.0,
+    "cin_irms_rating_per_part_A": 14.5,
+    "cout_irms_rating_per_part_A": 23.5,
+    "source": "design_decisions.json assumptions_accepted, capacitors, magnetics, sensing, protection"
+  },
+  "analytical_reference": {
+    "source": "design_decisions.json operating_points / magnetics / capacitors; research records mosfet.json, capacitors.json, inductor.json (verified); calculations.json was not available when the campaign ran",
+    "corners": {
+      "360": {
+        "D": 0.556,
+        "dIL_App": 6.5,
+        "ipk_A_25A": 28.3,
+        "ipk_A_27p5A": 30.8,
+        "iin_A_eta98": 14.17
+      },
+      "400": {
+        "D": 0.5,
+        "dIL_App": 7.3,
+        "ipk_A_25A": 28.7,
+        "ipk_A_27p5A": 31.2,
+        "iin_A_eta98": 12.76
+      },
+      "440": {
+        "D": 0.455,
+        "dIL_App": 8.0,
+        "dIL_App_worst": 8.7,
+        "dIL_App_27p5A_worst": 9.0,
+        "ipk_A_25A": 29.0,
+        "ipk_A_27p5A": 31.6,
+        "ipk_A_27p5A_worst": 32.0,
+        "iin_A_eta98": 11.6
+      }
+    },
+    "formulas": {
+      "i_cin_rms": "sqrt(D (Io^2 + dI^2/12) - (D Io)^2) (capacitors.json KR-CAP-002): 12.50-12.64 A at 25 A, 13.74-13.87 A at 27.5 A",
+      "i_cout_rms": "dI/sqrt(12): 2.16 A at 400 V (7.49 A ripple), 2.86 A worst (9.92 A)",
+      "conduction_per_device_W": "I_rms^2 R_DS(on): 15.3 W per device at 400 V / 25 A / 48.5 mohm (mosfet.json)",
+      "dead_time_W": "2 t_d f_s V_SD I_o: 2.9 W at 25 A / 4.6 V / 250 ns (mosfet.json, KR-GD-009)",
+      "dcr_W": "I_rms^2 R_dc(100 C): 10.0 W at 25 A, 12.1 W at 27.5 A (inductor.json)",
+      "vout_ripple_Vpp": "dI/(8 fs C) + ESR dI: 0.25 Vpp (capacitors.json, 108 uF)",
+      "vin_ripple_Vpp": "dQ/C_min + ESR I_pp: 3.5 Vpp at 25 A, 3.9 Vpp at 27.5 A (capacitors.json corrected)",
+      "step_excursion_V": "dI_step/(2 pi fc C_min) + ESR dI_step: 7.4 V at 2.5 kHz, 9.2 V at 2.0 kHz, 8.1 V at 2.3 kHz (capacitors.json)",
+      "load_dump_V": "25 A/(2 pi fc C_min) + ESR 25 A: 14.8 V at 2.5 kHz, 18.5 V at 2.0 kHz, 16.1 V at 2.3 kHz -> 215-218 V vs 230 V OVP (CR-04)"
+    }
+  }
+}

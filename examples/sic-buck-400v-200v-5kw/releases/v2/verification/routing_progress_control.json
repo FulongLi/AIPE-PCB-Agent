@@ -1,0 +1,1254 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "project": "AIPE_SiC_Buck_Control",
+  "candidate": "B",
+  "generated_utc": "2026-10-11T00:27:55.381991+00:00",
+  "board": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
+  "board_sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+  "stage": "routed",
+  "router_status": "requires-native-DRC",
+  "tracks": 5995,
+  "vias": 798,
+  "zones": 20,
+  "router_report_counts": {
+    "tracks": 105864,
+    "vias": 6559,
+    "zones": 5
+  },
+  "pruned_vias": 58,
+  "pruned_dangling": {
+    "tracks": 173,
+    "vias": 3
+  },
+  "unresolved": [],
+  "unresolved_count": 0,
+  "signal_order_trials": [
+    {
+      "trial": 0,
+      "group": 0,
+      "order": "plan",
+      "unresolved": 35,
+      "track_mm": 5826.1,
+      "failed_nets": [
+        "ADCREFP",
+        "ADC_I12V",
+        "ADC_TEMP_CTRL",
+        "ADC_TEMP_HS",
+        "ADC_VIN",
+        "ARM",
+        "DSP_TRIP_N",
+        "EMU0",
+        "EPWM1A",
+        "EPWM1B",
+        "FAULT_N",
+        "FLT_H_N",
+        "G1_N",
+        "G3_N",
+        "GATE_EN",
+        "ISENSE",
+        "LED_FAULT",
+        "LED_RUN",
+        "OC_N",
+        "OVP_IN_N",
+        "PG_BIAS_H_N",
+        "PG_BIAS_L_N",
+        "PWM_H_G",
+        "RELAY_ON",
+        "RESET_N",
+        "TRST",
+        "UART_TX",
+        "UVLO",
+        "UVLO_N",
+        "UVLO_REF"
+      ]
+    },
+    {
+      "trial": 1,
+      "group": 0,
+      "order": "span_asc",
+      "unresolved": 8,
+      "track_mm": 6407.5,
+      "failed_nets": [
+        "ARM",
+        "DSP_TRIP_N",
+        "FLT_12V_N",
+        "PG_BIAS_L_N",
+        "PG_BIAS_S_N",
+        "RDY_H",
+        "XRS_N"
+      ]
+    },
+    {
+      "trial": 2,
+      "group": 0,
+      "order": "span_desc",
+      "unresolved": 31,
+      "track_mm": 6796.9,
+      "failed_nets": [
+        "ADCRESEXT",
+        "ADC_I12V",
+        "ADC_ISENSE",
+        "ADC_ISENSE_REF",
+        "ADC_TEMP_CTRL",
+        "ADC_TEMP_HS",
+        "ADC_V12V",
+        "ADC_VIN",
+        "EMU1",
+        "EPWM1B",
+        "FLT_H_N",
+        "G1_N",
+        "G3_N",
+        "LED_FAULT",
+        "OTP_N",
+        "OTP_REF",
+        "OVP_IN_REF",
+        "OVP_N",
+        "OVP_OUT_REF",
+        "PG_BIAS_H_OK",
+        "PG_BIAS_L_N",
+        "PG_BIAS_L_OK",
+        "PG_BIAS_S_OK",
+        "PWM_H_G",
+        "RDY_H",
+        "RELAY_ON",
+        "TRST",
+        "UVLO_N"
+      ]
+    },
+    {
+      "trial": 3,
+      "group": 0,
+      "order": "priority_span_asc",
+      "unresolved": 35,
+      "track_mm": 5829.5,
+      "failed_nets": [
+        "ADCREFP",
+        "ADC_I12V",
+        "ADC_TEMP_CTRL",
+        "ADC_TEMP_HS",
+        "ADC_VIN",
+        "ARM",
+        "DSP_TRIP_N",
+        "EMU0",
+        "EPWM1A",
+        "EPWM1B",
+        "FAULT_N",
+        "FLT_H_N",
+        "G1_N",
+        "G3_N",
+        "GATE_EN",
+        "ISENSE",
+        "LED_FAULT",
+        "LED_RUN",
+        "OC_N",
+        "OVP_IN_N",
+        "PG_BIAS_H_N",
+        "PG_BIAS_L_N",
+        "PWM_H_G",
+        "RELAY_ON",
+        "RESET_N",
+        "TRST",
+        "UART_TX",
+        "UVLO",
+        "UVLO_N"
+      ]
+    },
+    {
+      "trial": 4,
+      "group": 0,
+      "order": "perturb_4",
+      "unresolved": 13,
+      "track_mm": 5997.8,
+      "failed_nets": [
+        "ESTOP_N",
+        "FLT_H_N",
+        "FLT_L_N",
+        "GATE_EN",
+        "I12V_MON",
+        "OC_N",
+        "PG_BIAS_L_N",
+        "RDY_H",
+        "RELAY_ON",
+        "UART_TX",
+        "VIN_SENSE",
+        "XRS_N"
+      ]
+    },
+    {
+      "trial": 5,
+      "group": 0,
+      "order": "perturb_5",
+      "unresolved": 15,
+      "track_mm": 6432.8,
+      "failed_nets": [
+        "ADC_I12V",
+        "ADC_TEMP_CTRL",
+        "FLT_H_N",
+        "GATE_EN",
+        "ISENSE",
+        "ISENSE_REF",
+        "OC_N",
+        "PG_BIAS_H_N",
+        "PG_BIAS_L_N",
+        "RDY_H",
+        "RDY_L",
+        "TRST"
+      ]
+    }
+  ],
+  "signal_order_selected": "span_asc",
+  "ripup_rounds": [
+    {
+      "round": 0,
+      "net": "ARM",
+      "penalty": 40.0,
+      "victims": [
+        "ADC_VOUT",
+        "PG_BIAS_H_N"
+      ],
+      "result": "kept (8 -> 7)",
+      "ladder": 1.0
+    },
+    {
+      "round": 1,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "OC_N",
+        "OVP_IN_N",
+        "OVP_N",
+        "RDY_L"
+      ],
+      "result": "reverted (8 > 7)",
+      "ladder": 1.0
+    },
+    {
+      "round": 2,
+      "net": "DSP_TRIP_N",
+      "penalty": 40.0,
+      "result": "routed directly (7 -> 6)",
+      "ladder": 1.0
+    },
+    {
+      "round": 3,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ESTOP_N",
+        "FLT_12V_N"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 4,
+      "net": "PG_BIAS_S_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADC_ISENSE"
+      ],
+      "result": "kept (6 -> 5)",
+      "ladder": 1.0
+    },
+    {
+      "round": 5,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "OC_N",
+        "OVP_IN_N",
+        "OVP_N",
+        "RDY_L"
+      ],
+      "result": "reverted (8 > 5)",
+      "ladder": 1.0
+    },
+    {
+      "round": 6,
+      "net": "XRS_N",
+      "penalty": 40.0,
+      "victims": [
+        "TMS"
+      ],
+      "result": "kept (5 -> 4)",
+      "ladder": 1.0
+    },
+    {
+      "round": 7,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ESTOP_N",
+        "FLT_12V_N"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 8,
+      "net": "FLT_12V_N",
+      "penalty": 40.0,
+      "victims": [
+        "PG_BIAS_H_OK"
+      ],
+      "result": "kept (4 -> 4)",
+      "ladder": 1.0
+    },
+    {
+      "round": 9,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "OC_N",
+        "OVP_IN_N",
+        "OVP_N",
+        "RDY_L"
+      ],
+      "result": "reverted (7 > 4)",
+      "ladder": 1.0
+    },
+    {
+      "round": 10,
+      "net": "XRS_N",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "SPARE_D1",
+        "UVLO_N"
+      ],
+      "result": "kept (4 -> 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 11,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ISENSE_REF"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 12,
+      "net": "PG_BIAS_H_OK",
+      "penalty": 40.0,
+      "victims": [
+        "G3_N",
+        "PG_BIAS_L_OK"
+      ],
+      "result": "kept (3 -> 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 13,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "GATE_EN",
+        "OC_N",
+        "OVP_IN_N",
+        "OVP_N"
+      ],
+      "result": "reverted (6 > 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 14,
+      "net": "PG_BIAS_L_OK",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_LATCH_N",
+        "OVP_OUT_N",
+        "PG_BIAS_S_OK"
+      ],
+      "result": "reverted (4 > 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 15,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ISENSE_REF"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 16,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "OC_N",
+        "OVP_IN_N",
+        "OVP_N",
+        "UVLO_N",
+        "XRS_N"
+      ],
+      "result": "reverted (5 > 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 17,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ISENSE_REF"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 18,
+      "net": "PG_BIAS_L_OK",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_LATCH_N",
+        "PG_BIAS_H_OK",
+        "PG_BIAS_S_OK"
+      ],
+      "result": "kept (3 -> 3)",
+      "ladder": 1.0
+    },
+    {
+      "round": 19,
+      "net": "PG_BIAS_S_OK",
+      "penalty": 40.0,
+      "victims": [
+        "PG_BIAS_H_OK",
+        "PG_BIAS_L_N"
+      ],
+      "result": "kept (3 -> 2)",
+      "ladder": 1.0
+    },
+    {
+      "round": 20,
+      "net": "RDY_H",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_LATCH_N",
+        "FAULT_N",
+        "OC_N",
+        "OVP_N",
+        "XRS_N"
+      ],
+      "result": "kept (2 -> 2)",
+      "ladder": 1.0
+    },
+    {
+      "round": 21,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ADC_VOUT",
+        "ISENSE_REF",
+        "PG_BIAS_H_OK"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 22,
+      "net": "XRS_N",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "OVP_OUT_N",
+        "UVLO_N"
+      ],
+      "result": "kept (2 -> 2)",
+      "ladder": 1.0
+    },
+    {
+      "round": 23,
+      "net": "OVP_OUT_N",
+      "penalty": 40.0,
+      "victims": [
+        "FLT_12V_N",
+        "OC_N",
+        "OVP_IN_N"
+      ],
+      "result": "reverted (5 > 2)",
+      "ladder": 1.0
+    },
+    {
+      "round": 24,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ADC_VOUT",
+        "ISENSE_REF",
+        "PG_BIAS_H_OK"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 25,
+      "net": "PG_BIAS_L_N",
+      "penalty": 40.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_TEMP_HS",
+        "ADC_VOUT",
+        "ISENSE_REF",
+        "PG_BIAS_H_OK"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 1.0
+    },
+    {
+      "round": 26,
+      "net": "OVP_OUT_N",
+      "penalty": 40.0,
+      "victims": [
+        "OC_N",
+        "OVP_IN_N",
+        "PG_BIAS_L_OK"
+      ],
+      "result": "reverted (5 > 2)",
+      "ladder": 1.0
+    },
+    {
+      "round": 27,
+      "net": "PG_BIAS_L_N",
+      "penalty": 16.0,
+      "victims": [
+        "ADCRESEXT",
+        "ADC_VOUT",
+        "ISENSE_REF",
+        "PG_BIAS_H_OK"
+      ],
+      "result": "reverted (cycle: failure set seen before)",
+      "ladder": 0.4
+    },
+    {
+      "round": 28,
+      "net": "OVP_OUT_N",
+      "penalty": 16.0,
+      "victims": [
+        "OC_N",
+        "OVP_IN_N",
+        "PG_BIAS_L_OK"
+      ],
+      "result": "reverted (5 > 2)",
+      "ladder": 0.4
+    },
+    {
+      "round": 29,
+      "net": "PG_BIAS_L_N",
+      "penalty": 100.0,
+      "victims": [
+        "ADC_ISENSE",
+        "PG_BIAS_H_OK",
+        "PG_BIAS_S_N"
+      ],
+      "result": "reverted (3 > 2)",
+      "ladder": 2.5
+    },
+    {
+      "round": 30,
+      "net": "OVP_OUT_N",
+      "penalty": 100.0,
+      "victims": [
+        "FLT_12V_N",
+        "OC_N",
+        "OVP_IN_N"
+      ],
+      "result": "reverted (5 > 2)",
+      "ladder": 2.5
+    }
+  ],
+  "ripup_penalty_ladder": [
+    40.0,
+    16.0,
+    100.0
+  ],
+  "shared_router_sha256": "b78a49cc48f2c82656a382e94078d9cb442a54ad4d3e68f7237161798c48c7b3",
+  "net_length_mm": {
+    "12V_IN": 33.876,
+    "12V_PROT": 17.862,
+    "1V9": 50.003,
+    "1V9_BULK": 13.963,
+    "3V3": 121.357,
+    "3V3_BULK": 4.463,
+    "5V": 23.745,
+    "5V_BST": 2.55,
+    "5V_EN": 24.363,
+    "5V_FB": 54.052,
+    "5V_SW": 14.35,
+    "ADCREFM": 16.475,
+    "ADCREFP": 9.125,
+    "ADCRESEXT": 33.85,
+    "ADC_I12V": 34.65,
+    "ADC_ISENSE": 42.75,
+    "ADC_ISENSE_REF": 48.4,
+    "ADC_TEMP_CTRL": 51.0,
+    "ADC_TEMP_HS": 51.65,
+    "ADC_V12V": 40.25,
+    "ADC_VIN": 42.275,
+    "ADC_VOUT": 145.75,
+    "ARM": 106.906,
+    "BIAS_EN": 57.95,
+    "BOOT84": 65.205,
+    "BOOT85": 9.25,
+    "BOOT86": 17.6,
+    "BOOT87": 14.5,
+    "CLK30": 21.6,
+    "CLK30_SOURCE": 5.965,
+    "CORE_OK": 67.315,
+    "DSP_TRIP_N": 236.902,
+    "EFUSE_DVDT": 32.206,
+    "EFUSE_ILIM": 39.46,
+    "EFUSE_OVP": 36.656,
+    "EFUSE_RTN": 67.835,
+    "EFUSE_SHDN": 15.325,
+    "EFUSE_UVLO": 41.26,
+    "EMU0": 60.975,
+    "EMU1": 59.375,
+    "EPWM1A": 58.281,
+    "EPWM1B": 45.181,
+    "ESTOP_N": 408.277,
+    "FAN_TACH": 216.25,
+    "FAULT_LATCH_N": 67.747,
+    "FAULT_N": 325.434,
+    "FB19": 46.628,
+    "FLT_12V_N": 172.663,
+    "FLT_H_N": 106.177,
+    "FLT_L_N": 107.402,
+    "G1_N": 19.603,
+    "G2_N": 9.704,
+    "G3_N": 13.204,
+    "GATE_EN": 86.318,
+    "GND_CTRL": 227.538,
+    "I12V_MON": 149.75,
+    "IO_EN_N": 38.125,
+    "ISENSE": 122.175,
+    "ISENSE_REF": 54.55,
+    "LED_12V_A": 4.988,
+    "LED_ARMED_A": 18.237,
+    "LED_FAULT": 27.5,
+    "LED_FAULT_A": 26.488,
+    "LED_RUN": 34.1,
+    "LED_RUN_A": 24.237,
+    "MON5": 21.113,
+    "MR_N": 11.427,
+    "OC_N": 204.887,
+    "OTP_N": 78.954,
+    "OTP_REF": 29.427,
+    "OVP_IN_N": 67.907,
+    "OVP_IN_REF": 20.677,
+    "OVP_N": 26.252,
+    "OVP_OUT_N": 68.806,
+    "OVP_OUT_REF": 19.028,
+    "PG_BIAS_H_N": 163.778,
+    "PG_BIAS_H_OK": 23.025,
+    "PG_BIAS_L_N": 230.778,
+    "PG_BIAS_L_OK": 16.204,
+    "PG_BIAS_S_N": 213.927,
+    "PG_BIAS_S_OK": 22.603,
+    "PWM_H": 15.3,
+    "PWM_H_G": 11.121,
+    "PWM_L": 26.675,
+    "PWM_L_G": 8.871,
+    "RDY_H": 79.927,
+    "RDY_L": 115.237,
+    "REF2V5": 33.78,
+    "REF3V0": 22.48,
+    "RELAY_ON": 58.7,
+    "RESET_CT": 6.952,
+    "RESET_N": 67.675,
+    "SEQ_BASE": 12.555,
+    "SPARE_D1": 126.8,
+    "SPARE_D2": 101.825,
+    "TCK": 54.1,
+    "TDI": 40.125,
+    "TDO": 55.55,
+    "TEMP_CTRL": 30.005,
+    "TEMP_HS_NTC": 39.153,
+    "TMS": 46.975,
+    "TRST": 36.125,
+    "UART_RX": 72.245,
+    "UART_TX": 76.825,
+    "UVLO": 51.679,
+    "UVLO_N": 91.697,
+    "UVLO_REF": 26.977,
+    "V12V_MON": 167.65,
+    "VIN_SENSE": 111.528,
+    "VOUT_SENSE": 55.477,
+    "XRS_N": 228.36
+  },
+  "grid": {
+    "nx": 961,
+    "ny": 641,
+    "pitch": 0.125,
+    "margin_cells": 8,
+    "layers": [
+      "F.Cu",
+      "B.Cu"
+    ],
+    "directions": [
+      null,
+      null
+    ]
+  },
+  "routing_seconds": 1155.406,
+  "inner_layer": {
+    "layer": "In2.Cu",
+    "keepouts": 11,
+    "band_keepouts": 15,
+    "channels": [
+      {
+        "port": [
+          62.75,
+          46.5
+        ],
+        "axis": "y",
+        "direction": 1,
+        "rect": [
+          62.25,
+          46.0,
+          63.25,
+          47.5
+        ]
+      },
+      {
+        "port": [
+          82.0,
+          33.25
+        ],
+        "axis": "x",
+        "direction": 1,
+        "rect": [
+          81.5,
+          32.75,
+          84.5,
+          33.75
+        ]
+      }
+    ],
+    "tracks": 130,
+    "vias_added": [
+      {
+        "net": "PG_BIAS_L_N",
+        "xy": [
+          82.0,
+          33.25
+        ],
+        "kind": "fallback"
+      }
+    ],
+    "routed": [
+      {
+        "net": "BIAS_EN",
+        "kind": "net",
+        "start": [
+          62.75,
+          46.5
+        ],
+        "end": [
+          38.16,
+          74.0
+        ],
+        "waypoints": [
+          [
+            62.75,
+            46.5
+          ],
+          [
+            62.75,
+            50.25
+          ],
+          [
+            38.125,
+            50.25
+          ],
+          [
+            38.125,
+            74.0
+          ]
+        ],
+        "axis": "y",
+        "direction": 1,
+        "length_mm": 55.125
+      },
+      {
+        "net": "PG_BIAS_L_N",
+        "kind": "fallback",
+        "start": [
+          82.0,
+          33.25
+        ],
+        "end": [
+          88.125,
+          63.375
+        ],
+        "waypoints": [
+          [
+            82.0,
+            33.25
+          ],
+          [
+            86.0,
+            33.25
+          ],
+          [
+            86.0,
+            63.375
+          ],
+          [
+            88.125,
+            63.375
+          ]
+        ],
+        "axis": "x",
+        "direction": 1,
+        "length_mm": 44.75,
+        "source": {
+          "stage": "route",
+          "net": "PG_BIAS_L_N",
+          "start": [
+            656,
+            266,
+            null
+          ],
+          "end": [
+            574,
+            527,
+            1
+          ],
+          "expanded": 638,
+          "occupancy": {
+            "start": 100,
+            "end": 100,
+            "code": 100
+          }
+        },
+        "vias_recreated": [
+          [
+            82.0,
+            33.25
+          ]
+        ],
+        "recorded_ports": [
+          [
+            82.0,
+            33.25
+          ],
+          [
+            71.75,
+            65.875
+          ]
+        ]
+      },
+      {
+        "net": "OVP_OUT_N",
+        "kind": "fallback",
+        "start": [
+          72.375,
+          61.25
+        ],
+        "end": [
+          59.625,
+          59.75
+        ],
+        "waypoints": [
+          [
+            72.375,
+            61.25
+          ],
+          [
+            59.625,
+            59.75
+          ]
+        ],
+        "axis": "y",
+        "direction": null,
+        "length_mm": 20.0,
+        "source": {
+          "stage": "route",
+          "net": "OVP_OUT_N",
+          "start": [
+            579,
+            490,
+            1
+          ],
+          "end": [
+            477,
+            478,
+            1
+          ],
+          "expanded": 642788,
+          "occupancy": {
+            "start": 29,
+            "end": 29,
+            "code": 29
+          }
+        },
+        "vias_recreated": [],
+        "recorded_ports": [
+          [
+            72.375,
+            61.25
+          ],
+          [
+            59.625,
+            59.75
+          ]
+        ]
+      }
+    ],
+    "failed": [],
+    "band_mm": 3.0,
+    "port_hints": 115
+  },
+  "corridor_zones": 15,
+  "corridor_issues": [],
+  "sliver_trim": {
+    "rounds": [
+      6,
+      5,
+      0
+    ],
+    "adjusted": [
+      {
+        "net": "3V3",
+        "xy": [
+          61.25,
+          42.25
+        ],
+        "priority": 4,
+        "edge": "x0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.00342,
+        "sliver_bbox": [
+          60.5755,
+          42.6834,
+          60.6,
+          42.9245
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          79.25,
+          41.75
+        ],
+        "priority": 6,
+        "edge": "x0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.00389,
+        "sliver_bbox": [
+          78.571,
+          41.5755,
+          78.6,
+          41.8177
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          79.25,
+          41.75
+        ],
+        "priority": 6,
+        "edge": "y0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.00254,
+        "sliver_bbox": [
+          78.6614,
+          41.0772,
+          78.8146,
+          41.1
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          69.75,
+          19.75
+        ],
+        "priority": 3,
+        "edge": "x1",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.00342,
+        "sliver_bbox": [
+          70.4,
+          19.0755,
+          70.4245,
+          19.3166
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          61.25,
+          42.25
+        ],
+        "priority": 4,
+        "edge": "x0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.0002,
+        "sliver_bbox": [
+          60.4714,
+          42.7921,
+          60.475,
+          42.9069
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          79.25,
+          41.75
+        ],
+        "priority": 6,
+        "edge": "x0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.00027,
+        "sliver_bbox": [
+          78.4703,
+          41.5931,
+          78.475,
+          41.673
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          79.25,
+          41.75
+        ],
+        "priority": 6,
+        "edge": "y0",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.0002,
+        "sliver_bbox": [
+          78.5937,
+          40.9714,
+          78.7079,
+          40.975
+        ]
+      },
+      {
+        "net": "3V3",
+        "xy": [
+          69.75,
+          19.75
+        ],
+        "priority": 3,
+        "edge": "x1",
+        "step_mm": 0.125,
+        "sliver_mm2": 0.0002,
+        "sliver_bbox": [
+          70.525,
+          19.0931,
+          70.5286,
+          19.2079
+        ]
+      }
+    ],
+    "skipped": [],
+    "remaining": [],
+    "saved": {
+      "path": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
+      "footprints": 207,
+      "tracks": 5995,
+      "vias": 798,
+      "zones": 20,
+      "nets": 199
+    }
+  },
+  "rail_items_without_island_or_corridor": [],
+  "rail_fanout_failures": [],
+  "rail_zone_outlines": [
+    {
+      "net": "12V_PROT",
+      "priority": 2,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 1374.8,
+      "area_mm2": 1374.8
+    },
+    {
+      "net": "12V_PROT",
+      "priority": 7,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 6.2,
+      "area_mm2": 6.2
+    },
+    {
+      "net": "1V9",
+      "priority": 2,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 778.5,
+      "area_mm2": 778.5
+    },
+    {
+      "net": "1V9",
+      "priority": 12,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 2.0,
+      "area_mm2": 2.0
+    },
+    {
+      "net": "1V9",
+      "priority": 13,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 2.7,
+      "area_mm2": 2.7
+    },
+    {
+      "net": "1V9",
+      "priority": 14,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 1.6,
+      "area_mm2": 1.6
+    },
+    {
+      "net": "1V9",
+      "priority": 15,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 4.2,
+      "area_mm2": 4.2
+    },
+    {
+      "net": "1V9",
+      "priority": 16,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 3.4,
+      "area_mm2": 3.4
+    },
+    {
+      "net": "1V9",
+      "priority": 17,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 4.9,
+      "area_mm2": 4.9
+    },
+    {
+      "net": "3V3",
+      "priority": 1,
+      "outlines": 2,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 5200.2,
+      "area_mm2": 5200.3
+    },
+    {
+      "net": "3V3",
+      "priority": 3,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 3.8,
+      "area_mm2": 3.8
+    },
+    {
+      "net": "3V3",
+      "priority": 4,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 4.2,
+      "area_mm2": 4.2
+    },
+    {
+      "net": "3V3",
+      "priority": 5,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 2.4,
+      "area_mm2": 2.4
+    },
+    {
+      "net": "3V3",
+      "priority": 6,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 4.3,
+      "area_mm2": 4.3
+    },
+    {
+      "net": "5V",
+      "priority": 2,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 610.2,
+      "area_mm2": 610.2
+    },
+    {
+      "net": "5V",
+      "priority": 8,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 3.6,
+      "area_mm2": 3.6
+    },
+    {
+      "net": "5V",
+      "priority": 9,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 3.6,
+      "area_mm2": 3.6
+    },
+    {
+      "net": "5V",
+      "priority": 10,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 4.4,
+      "area_mm2": 4.4
+    },
+    {
+      "net": "5V",
+      "priority": 11,
+      "outlines": 1,
+      "outlines_over_1mm2": 1,
+      "largest_mm2": 3.5,
+      "area_mm2": 3.5
+    }
+  ],
+  "connectivity_unconnected": 0,
+  "drc": {
+    "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261011T002742Z-drc-0d33d344\\run.json",
+    "wrapper_exit_code": 0,
+    "tool_exit_code": 0,
+    "status": "passed",
+    "finding_count": 0,
+    "violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity": 0,
+    "details": [],
+    "error": null
+  },
+  "layout_metrics": {
+    "json": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_metrics_control.json",
+    "md": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_metrics_control.md"
+  },
+  "seconds": 1186.64,
+  "evidence_note": "Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals."
+}

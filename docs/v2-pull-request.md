@@ -174,9 +174,8 @@ Courtyard distance to the sink: input films C11 / C12 20.06 mm, L1 18.31 mm agai
 Renders exported by `kicad-cli` from the delivered board files (EX
 `manufacturing/*/export-manifest.json`; copies under EX `review/`). They show the stored
 zone fills, which for both boards are the rule-aware copper the DRC judged (stored-fill
-check 0 / 0, see the next section). The image links resolve once `feat/sic-buck-5kw-v2`
-is pushed to `MrCoconut616/AIPE-PCB-Agent` (`docs/status-v2.md` row "GitHub push / PR",
-pending at the time of writing); until then the files are EX
+check 0 / 0, see the next section). The links point at the pushed branch
+`feat/sic-buck-5kw-v2` of `MrCoconut616/AIPE-PCB-Agent`; the files are EX
 `review/pcb_{front,back,3d}_{power,control}.png`.
 
 Power board, 240 x 180 mm, front:
@@ -333,9 +332,9 @@ without human engineering review. The full register is EX `verification/known_is
   reproduced every track, via, footprint and zone (5995 / 798 / 207 / 20, 0 items in only
   one board) with 0 unresolved connections; file hashes differ through uuids and
   timestamps only. Byte-identical files across KiCad or module versions are not promised.
-- The release freeze (`automation/scripts/freeze_v2.py` -> EX `releases/v2/` with
-  `SHA256SUMS.json` and EX `releases/v2-review-package.zip`) is run by the orchestrator
-  after this body was written; `docs/status-v2.md` records whether it happened.
+- The release was frozen after the reports were finalised: `automation/scripts/freeze_v2.py`
+  (verifier re-run first) wrote `examples/sic-buck-400v-200v-5kw/releases/v2/` (868 files, `SHA256SUMS.json` with `source_commit` `f72052fb53aa70163fad21294c36379d3921aec0`, label "AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED", created 2026-10-11T07:10 UTC) and `releases/v2-review-package.zip` (32,070,559 bytes). The snapshot must never be edited;
+  `docs/status-v2.md` records the freeze and the GitHub hand-off.
 
 ## How to review and reproduce
 
@@ -358,10 +357,10 @@ documentation and tooling), `review/knowledge_utilisation_report.md`,
 `design/design_decisions.json` as the single source of truth. Regeneration commands,
 the real generator options and the caveats (regeneration writes new placement /
 routing-progress files and a new DRC manifest into the example; shared-router change;
-floorplan-candidate amendment) are in `docs/reproduce-v2.md`. The frozen snapshot, when
-the orchestrator runs `freeze_v2` after this body, will appear under EX `releases/v2/`
-with `README.md`, `SHA256SUMS.json` and `releases/v2-review-package.zip`; until then the
-example directory on this branch is the review package. Nothing here authorises
+floorplan-candidate amendment) are in `docs/reproduce-v2.md`. The frozen snapshot is EX
+`releases/v2/` (`README.md`, `SHA256SUMS.json`, 868 files, source commit `f72052f`) with the
+portable `releases/v2-review-package.zip`; the example directory on this branch is the same
+content plus the refreshed `review/v1_v2_comparison.*`. Nothing here authorises
 fabrication, purchase or energisation.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

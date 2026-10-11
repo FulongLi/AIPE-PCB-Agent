@@ -48,7 +48,8 @@ priorities and the freeze and GitHub handoff state.
 - [V2 execution status](docs/status-v2.md)
 - [V2 reproduction instructions](docs/reproduce-v2.md)
 - [Knowledge-base feedback from V2](docs/knowledge-feedback-v2.md)
-- Frozen V2: not yet written when this README was updated (`examples/sic-buck-400v-200v-5kw/releases/` is empty); `automation/scripts/freeze_v2.py` will create `releases/v2/` (`README.md`, `SHA256SUMS.json`) and `releases/v2-review-package.zip` there, and [docs/status-v2.md](docs/status-v2.md) records whether it has run
+- [Frozen V2](examples/sic-buck-400v-200v-5kw/releases/v2/README.md) (868 files, `SHA256SUMS.json`, source commit `f72052f`)
+- [Portable V2 review archive](examples/sic-buck-400v-200v-5kw/releases/v2-review-package.zip)
 
 ## V1 status
 

@@ -1,0 +1,208 @@
+reference,value,manufacturer,mpn,footprint,datasheet,dnp,note
+J1,12 V in,Phoenix Contact,1715022,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-2-508-1715022,no,"J_12V: external regulated 12 V +/-10 %, 2.5 A recommended; pin 1 +12 V, pin 2 return"
+D1,SMBJ15CA,Littelfuse,SMBJ15CA,Diode_SMD:D_SMB,https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj/smbj15ca,no,"bidirectional TVS 15 V standoff, V_BR 16.7-18.5 V > eFuse OVP 15.2 V max, V_C 24.4 V < 45 V abs max (distributor data, unverified)"
+U1,TPS26400PWPR,Texas Instruments,TPS26400PWPR,Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm,https://www.ti.com/lit/ds/symlink/tps2640.pdf,no,"eFuse, MODE open = circuit breaker with 4 ms timeout and 540 ms auto-retry (CR-18); RTN separate from GND (A-C3); PowerPad on RTN"
+C1,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,C(IN) local bypass (A-C2)
+R1,107k,Yageo,RC0603FR-07107KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ladder R1: UVLO 10.02 V rising / 9.26 V falling
+R2,4.42k,Yageo,RC0603FR-074K42L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ladder R2: OVP 14.45 V rising / 13.36 V falling
+R3,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ladder R3 to RTN
+R4,6.04k,Yageo,RC0603FR-076K04L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,R_ILIM: I_CB = 12/6.04 - 0.03 = 1.96 A (CR-02); I_OL about 1.99 A
+C2,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,C_dVdT: 8.9-12.2 ms output ramp at 12 V (verified dVdT relation)
+R5,14.7k,Yageo,RC0603FR-0714K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,R_IMON: 3.0 V at 2.4 A with 85 uA/A; no capacitor on IMON (datasheet)
+R6,100k,Yageo,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,SHDN enable pull-up (A-C1)
+R7,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,RFLTb 10 k (10-100 k allowed); FLT_12V_N -> GPIO16 and latched fault group
+C3,100u/25V,Panasonic,EEE-FK1E101P,Capacitor_SMD:CP_Elec_8x10.5,https://industrial.panasonic.com/ww/products/pt/aluminum-cap-smd/models/EEEFK1E101P,no,protected-rail bulk 100 uF (baseline); EEE-FK1E101P 25 V
+R8,150k,Yageo,RC0603FR-07150KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"V12 monitor divider top: 0.1812 ratio, 3.0 V at 16.55 V"
+R9,33.2k,Yageo,RC0603FR-0733K2L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,V12 monitor divider bottom
+U2,TPS54302DDCR,Texas Instruments,TPS54302DDCR,Package_TO_SOT_SMD:SOT-23-6,https://www.ti.com/lit/ds/symlink/tps54302.pdf,no,"12V_PROT -> 5 V, 400 kHz, I_5V 0.54 A; VFB 0.596 V; EN 1.23 V rising"
+C4,10u/25V,Murata,GRM32ER71E106KA12L,Capacitor_SMD:C_1210_3225Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23,no,buck input decoupling >= 10 uF ceramic (A-C4; the baseline's 10 uF)
+C5,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,buck input HF bypass (A-C4)
+R10,100k,Yageo,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,EN divider top: start about 7.4 V
+R11,20k,Yageo,RC0603FR-0720KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,EN divider bottom
+C6,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,BOOT capacitor 0.1 uF (SLVSDG6C 7.2.3.2)
+L1,10uH,Coilcraft,MSS1048-103MLC,Inductor_SMD:L_Coilcraft_MSS1048-XXX,https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/mss-mos/mss1048/mss1048-103/,no,"10 uH shielded (baseline, V1); ripple about 0.6 A pp at 12 V in"
+C7,22u/25V,Murata,GRM32ER71E226KE15L,Capacitor_SMD:C_1210_3225Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23,no,5 V output ceramic (2 x 22 uF)
+C8,22u/25V,Murata,GRM32ER71E226KE15L,Capacitor_SMD:C_1210_3225Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23,no,5 V output ceramic (2 x 22 uF)
+C9,220u/16V,Panasonic,EEU-FR1C221,Capacitor_THT:CP_Radial_D6.3mm_P2.50mm,https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1C221,no,5 V bulk / hold-up: power-down reset margin 1.1 ms >> 8 us (verified)
+R12,100k,Yageo,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,FB divider top: 0.596 V x 113.3/13.3 = 5.08 V
+R13,13.3k,Yageo,RC0603FR-0713K3L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,FB divider bottom
+C10,56p/50V,Murata,GRM1885C1H560JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H560JA01%23,no,feed-forward across the 100 k (A-C16)
+U3,TPS767D301PWPR,Texas Instruments,TPS767D301PWPR,Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm,https://www.ti.com/lit/ds/symlink/tps767d301.pdf,no,"dual LDO: 1 = 1.9 V adjustable core (always enabled), 2 = 3.3 V fixed enabled after core RESET1 (core-first); P_LDO 1.39 W; commercial part ACTIVE, -EP NRND, TLV752 named alternative (baseline)"
+R14,18.2k,Yageo,RC0603FR-0718K2L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,1V9 set point: 1.1834 V x (1 + 18.2/30.1) = 1.899 V
+R15,30.1k,Yageo,RC0603FR-0730K1L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,1V9 divider bottom (40 uA divider current per SLVS209H)
+R16,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,1RESET_N open-drain pull-up
+R17,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,2EN_N pull-up: 3.3 V regulator off until the core is good
+R18,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,sequencer base resistor
+R19,100k,Yageo,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,sequencer base pull-down
+Q1,"MMBT3904,215",Nexperia,"MMBT3904,215",Package_TO_SOT_SMD:SOT-23,https://assets.nexperia.com/documents/data-sheet/MMBT3904.pdf,no,core-first sequencer: CORE_OK high -> 2EN_N low -> 3.3 V enabled (V1 pattern)
+D2,"BAT54,215",Nexperia,"BAT54,215",Package_TO_SOT_SMD:SOT-23,https://assets.nexperia.com/documents/data-sheet/BAT54_SER.pdf,no,"core failure (1RESET_N low) asserts XRS_N (V1 pattern); anode XRS_N, cathode CORE_OK"
+R20,0.1,Yageo,RL0805FR-070R1L,Resistor_SMD:R_0805_2012Metric,https://www.yageogroup.com/component-documentation/download/specsheet/RL0805FR-070R1L,no,explicit ESR for the 1V9 polymer output capacitor (A-C15)
+C11,100u/6.3V,Panasonic,6SVP100M,Capacitor_SMD:CP_Elec_6.3x5.9,https://industrial.panasonic.com/ww/products/pt/os-con/models/6SVP100M,no,"1V9 LDO output bulk, low-ESR polymer behind 0.1 ohm (A-C15)"
+R21,0.1,Yageo,RL0805FR-070R1L,Resistor_SMD:R_0805_2012Metric,https://www.yageogroup.com/component-documentation/download/specsheet/RL0805FR-070R1L,no,explicit ESR for the 3V3 polymer output capacitor (A-C15)
+C12,100u/6.3V,Panasonic,6SVP100M,Capacitor_SMD:CP_Elec_6.3x5.9,https://industrial.panasonic.com/ww/products/pt/os-con/models/6SVP100M,no,"3V3 LDO output bulk, low-ESR polymer behind 0.1 ohm (A-C15)"
+C13,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,LDO input HF bypass
+C14,22u/25V,Murata,GRM32ER71E226KE15L,Capacitor_SMD:C_1210_3225Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23,no,LDO input bulk (V1 pattern)
+U4,TPS3808G01DBVR,Texas Instruments,TPS3808G01DBVR,Package_TO_SOT_SMD:SOT-23-6,https://www.ti.com/lit/ds/symlink/tps3808.pdf,no,5 V supervisor: SENSE 101 k / 10 k -> 4.4955 V (CR-18); CT 10 nF -> 57.6 ms; RESET open drain to XRS_N
+R22,101k,Yageo,RC0603FR-07101KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,supervisor divider top (CR-18: 105 k would trip at 4.66 V)
+R23,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,supervisor divider bottom
+C15,10n/50V,Murata,GRM188R71H103KA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H103KA01%23,no,reset delay capacitor: t_D = (10 nF / 175) + 0.5 ms = 57.6 ms (SBVS050N Eq. 1)
+C16,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,TPS3808 VDD bypass
+R24,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"XRS_N wired-OR pull-up (TPS3808 RESET, LDO 2RESET, DSP XRS, BAT54 from CORE_OK)"
+J2,J_RESET: manual reset through the supervisor MR pin (A-C9),Samtec,TSW-002-07-G-S,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,J_RESET: manual reset through the supervisor MR pin (A-C9)
+U5,TMS320F28335PGFA,Texas Instruments,TMS320F28335PGFA,Package_QFP:LQFP-176_24x24mm_P0.5mm,https://www.ti.com/lit/ds/symlink/tms320f28335.pdf,no,"150 MHz; ePWM1A/1B on GPIO0/1; TZ1 = FAULT_N (GPIO12), TZ2 = OC_N (GPIO13); ADC 0-3 V; pin map per design_decisions.json controller.dsp_pin_map"
+C17,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 4 VDD; place at the pin
+C18,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 9 VDDIO; place at the pin
+C19,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 15 VDD; place at the pin
+C20,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 23 VDD; place at the pin
+C21,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 29 VDD; place at the pin
+C22,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 31 VDD1A18; place at the pin
+C23,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 34 VDDA2; place at the pin
+C24,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 45 VDDAIO; place at the pin
+C25,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 59 VDD2A18; place at the pin
+C26,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 61 VDD; place at the pin
+C27,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 71 VDDIO; place at the pin
+C28,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 84 VDD3VFL; place at the pin
+C29,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 93 VDDIO; place at the pin
+C30,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 101 VDD; place at the pin
+C31,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 107 VDDIO; place at the pin
+C32,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 109 VDD; place at the pin
+C33,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 117 VDD; place at the pin
+C34,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 121 VDDIO; place at the pin
+C35,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 126 VDD; place at the pin
+C36,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 139 VDD; place at the pin
+C37,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 143 VDDIO; place at the pin
+C38,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 146 VDD; place at the pin
+C39,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 154 VDD; place at the pin
+C40,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 159 VDDIO; place at the pin
+C41,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 167 VDD; place at the pin
+C42,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,DSP pin 170 VDDIO; place at the pin
+C43,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,1V9 rail bulk ceramic at the DSP
+C44,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,1V9 rail bulk ceramic at the DSP
+C45,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,3V3 rail bulk ceramic at the DSP
+C46,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,3V3 rail bulk ceramic at the DSP
+C47,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,ADC reference low-ESR bypass (SPRS439Q)
+C48,2.2u/25V,Murata,GRM21BR71E225KA73L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71E225KA73%23,no,ADC reference low-ESR bypass (SPRS439Q)
+R25,22k,Yageo,RC0603FR-0722KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"ADC external current bias resistor, 22 k to analog ground (SPRS439Q pin table)"
+Y1,ASV-30.000MHZ-EJ-T,Abracon,ASV-30.000MHZ-EJ-T,Oscillator:Oscillator_SMD_SeikoEpson_SG8002CA-4Pin_7.0x5.0mm,https://abracon.com/Oscillators/ASV.pdf,no,"30 MHz 3.3 V HCMOS oscillator on XCLKIN (X1 grounded, X2 open); tri-state pin high = oscillating"
+C49,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,oscillator Vdd bypass
+R26,33,Yageo,RC0603FR-0733RL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,clock series termination
+R27,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R28,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R29,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R30,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R31,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R32,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R33,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R34,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,boot strap / JTAG pull-up (1111 = jump to flash)
+R35,2.2k,Yageo,RC0603FR-072K2L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,TRST pull-down (JTAG inactive without an emulator)
+R36,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,TCK pull-down
+J3,"J_JTAG: TI 14-pin, key pin 6 absent; TCK_RET tied to TCK; pin 4 TDIS to ground",Samtec,TSW-007-07-G-D,Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,"J_JTAG: TI 14-pin, key pin 6 absent; TCK_RET tied to TCK; pin 4 TDIS to ground"
+J4,"J_BOOT: jumper 1-2 = SCI-A boot, 2-3 or open = flash",Samtec,TSW-003-07-G-S,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,"J_BOOT: jumper 1-2 = SCI-A boot, 2-3 or open = flash"
+J5,"J_UART: SCI-A, 3.3 V levels only",Samtec,TSW-003-07-G-S,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,"J_UART: SCI-A, 3.3 V levels only"
+R37,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,SCI-A RX idle high
+U6,SN74LVC2G08DCTR,Texas Instruments,SN74LVC2G08DCTR,Package_SO:SSOP-8_2.95x2.8mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf,no,"PWM gating: PWM_H = ePWM1A AND GATE_EN, PWM_L = ePWM1B AND GATE_EN (tpd 4.7 ns max)"
+R38,33,Yageo,RC0603FR-0733RL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,series to the mezzanine (RC with 100 ohm + 100 pF on the power board: tau 13.3 ns)
+R39,33,Yageo,RC0603FR-0733RL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,series to the mezzanine
+R40,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,pull-down: GPIO0-11 have no reset pull-ups (SPRS439Q)
+R41,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,pull-down: GPIO0-11 have no reset pull-ups (SPRS439Q)
+R42,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,pull-down: GPIO0-11 have no reset pull-ups (SPRS439Q)
+U7,SN74LVC1G74DCTR,Texas Instruments,SN74LVC1G74DCTR,Package_SO:SSOP-8_2.95x2.8mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf,no,"fault latch: D = 1, CLK = ARM, CLR_N = FAULT_LATCH_N, Q = ARMED = FAULT_N (TZ1, mezzanine 35, LED); SSOP-8 DCT (CR-19)"
+U8,SN74LV21APWR,Texas Instruments,SN74LV21APWR,Package_SO:TSSOP-14_4.4x5mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf,no,"latched group g1 (FLT_H_N, FLT_L_N, OC_N, OVP_IN_N) and g2 (OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N)"
+U9,SN74LV21APWR,Texas Instruments,SN74LV21APWR,Package_SO:TSSOP-14_4.4x5mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf,no,"latched group g3 (ESTOP_N, DSP_TRIP_N, PG_BIAS_H_OK, PG_BIAS_L_OK) and g4 = g1 AND g2 AND g3 AND PG_BIAS_S_OK -> FAULT_LATCH_N"
+U10,SN74LV21APWR,Texas Instruments,SN74LV21APWR,Package_SO:TSSOP-14_4.4x5mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf,no,"run-permit g5 (UVLO_N, RDY_H, RDY_L, ARMED) -> GATE_EN; spare gate g6 = OVP_IN_N AND OVP_OUT_N -> OVP_N (GPIO11), unused inputs to 3V3"
+U11,SN74LV04APWR,Texas Instruments,SN74LV04APWR,Package_SO:TSSOP-14_4.4x5mm_P0.65mm,https://www.ti.com/lit/ds/symlink/sn74lv04a.pdf,no,"polarity restoration (A-C6, A-C7): UVLO flag -> UVLO_N; raw PG (low = good) -> PG_*_OK (high = good); gates 5/6 unused"
+R43,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R44,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R45,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R46,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R47,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R48,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R49,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R50,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,open-drain line from the power board
+R51,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"GPIO6 software kill, high = run (no reset pull-up on GPIO0-11)"
+R52,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,E-stop pull-down: open loop = fault
+J6,J_ESTOP: normally-closed E-stop loop between 3V3 and ESTOP_N,Samtec,TSW-002-07-G-S,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,J_ESTOP: normally-closed E-stop loop between 3V3 and ESTOP_N
+U12,REF3125AIDBZR,Texas Instruments,REF3125AIDBZR,Package_TO_SOT_SMD:SOT-23,https://www.ti.com/lit/gpn/ref3125,no,"2.5 V reference for the OVP / UVLO thresholds (0.2 %, 20 ppm/K)"
+C50,1u/50V,Murata,GRM21BR71H105KA12L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23,no,REF3125 supply bypass (A-C5)
+C51,1u/50V,Murata,GRM21BR71H105KA12L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23,no,REF2V5 output capacitor (A-C5)
+R53,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,OVP_IN threshold 2.5 x 11/12 = 2.2917 V = 459.9 V
+R54,11k,Yageo,RC0603FR-0711KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,
+C52,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,threshold node bypass
+R55,953,Yageo,RC0603FR-07953RL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,OVP_OUT threshold 2.5 x 10/10.953 = 2.2825 V = 229.8 V (CR-04)
+R56,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,
+C53,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,threshold node bypass
+R57,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,UVLO threshold 2.5 x 1.91/2.91 = 1.641 V = 329 V centre
+R58,1.91k,Yageo,RC0603FR-071K91L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,
+R59,21.5k,Yageo,RC0603FR-0721K5L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,hysteresis from the open-collector output: 336 V on / 319.5 V off with the 10 k pull-up (A-C6)
+C54,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,yes,DNP: footprint kept for simulation-tuning of the hysteresis node (A-C12)
+U13,TLV1702AIDGKR,Texas Instruments,TLV1702AIDGKR,Package_SO:VSSOP-8_3x3mm_P0.65mm,https://www.ti.com/lit/ds/symlink/tlv1702.pdf,no,OVP comparators: OVP_IN_N high while VIN_SENSE < 2.2917 V; OVP_OUT_N high while VOUT_SENSE < 2.2825 V (tpd 560 ns)
+U14,TLV1702AIDGKR,Texas Instruments,TLV1702AIDGKR,Package_SO:VSSOP-8_3x3mm_P0.65mm,https://www.ti.com/lit/ds/symlink/tlv1702.pdf,no,"UVLO flag (high = under-voltage, inverted to UVLO_N) and OTP_N (high while the NTC voltage is above 0.708 V = below 100 C)"
+R60,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,comparator open-collector pull-up
+R61,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,comparator open-collector pull-up
+R62,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,comparator open-collector pull-up
+R63,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,comparator open-collector pull-up
+C55,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,TLV1702 supply bypass
+C56,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,TLV1702 supply bypass
+C57,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LV21A supply bypass
+C58,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LV21A supply bypass
+C59,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LV21A supply bypass
+C60,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LVC1G74 supply bypass
+C61,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LVC2G08 supply bypass
+C62,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,SN74LV04A supply bypass
+U15,REF3130AIDBZR,Texas Instruments,REF3130AIDBZR,Package_TO_SOT_SMD:SOT-23,https://www.ti.com/lit/gpn/ref3130,no,3.00 V NTC pull-up / OTP reference; VIN min 3.05 V < 3.234 V (3V3 - 2 %)
+C63,1u/50V,Murata,GRM21BR71H105KA12L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23,no,REF3130 supply bypass (A-C5)
+C64,1u/50V,Murata,GRM21BR71H105KA12L,Capacitor_SMD:C_0805_2012Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23,no,REF3V0 output capacitor (A-C5)
+J7,"J_NTC: Vishay NTCALUG01A103F heatsink lug NTC (10 k, B 3984 K), SELV lead (CR-01)",Samtec,TSW-002-07-G-S,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,"J_NTC: Vishay NTCALUG01A103F heatsink lug NTC (10 k, B 3984 K), SELV lead (CR-01)"
+R64,2.2k,Yageo,RC0603FR-072K2L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"NTC pull-up: 2.46 V at 25 C, 0.88 V at 90 C, 0.71 V at 100 C, 0.57 V at 110 C"
+C65,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,NTC line filter (baseline)
+R65,32.4k,Yageo,RC0603FR-0732K4L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,OTP threshold 3.0 x 10/42.4 = 0.7075 V = 100 C hardware trip (ratiometric to REF3V0)
+R66,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,
+C66,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,threshold node bypass
+U16,LM61CIM3/NOPB,Texas Instruments,LM61CIM3/NOPB,Package_TO_SOT_SMD:SOT-23,https://www.ti.com/lit/ds/symlink/lm61.pdf,no,"control-board ambient sensor, 600 mV + 10 mV/K (V1 pattern)"
+C67,100n/50V,Murata,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23,no,LM61 supply bypass
+R67,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"ADC front end VIN_SENSE -> ADCINA0 (0.0049834 V/V, 2.392 V at 480 V)"
+C68,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,"ADC front end VIN_SENSE -> ADCINA0 (0.0049834 V/V, 2.392 V at 480 V); 1 k + 1 nF per baseline"
+R68,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end ISENSE -> ADCINA1 (0.33 V + 0.05 V/A)
+C69,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end ISENSE -> ADCINA1 (0.33 V + 0.05 V/A); 1 k + 1 nF per baseline
+R69,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end heatsink NTC -> ADCINA2
+C70,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end heatsink NTC -> ADCINA2; 1 k + 1 nF per baseline
+R70,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end LM61 -> ADCINA3
+C71,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end LM61 -> ADCINA3; 1 k + 1 nF per baseline
+R71,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end TMCS1133 VREF -> ADCINA4
+C72,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end TMCS1133 VREF -> ADCINA4; 1 k + 1 nF per baseline
+R72,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end eFuse IMON -> ADCINB0
+C73,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end eFuse IMON -> ADCINB0; 1 k + 1 nF per baseline
+R73,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end VOUT_SENSE -> ADCINB1 (0.0099338 V/V)
+C74,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end VOUT_SENSE -> ADCINB1 (0.0099338 V/V); 1 k + 1 nF per baseline
+R74,1k,Yageo,RC0603FR-071KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,ADC front end 12 V monitor -> ADCINB3
+C75,1n/50V,Murata,GRM1885C1H102JA01D,Capacitor_SMD:C_0603_1608Metric,https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23,no,ADC front end 12 V monitor -> ADCINB3; 1 k + 1 nF per baseline
+J8,J_MEZZ: 2 x 25 header to the power-board SSW-125-01-G-D socket; nets per design_decisions.json interconnect.pin_assignment,Samtec,TSW-125-07-G-D,Connector_PinHeader_2.54mm:PinHeader_2x25_P2.54mm_Vertical,https://www.samtec.com/products/tsw,no,J_MEZZ: 2 x 25 header to the power-board SSW-125-01-G-D socket; nets per design_decisions.json interconnect.pin_assignment
+R75,10k,Yageo,RC0603FR-0710KL,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,fan tachometer pull-up (A-C8)
+R76,4.7k,Yageo,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"12V_OK LED, about 2.1 mA"
+D3,LED red,Lite-On,LTST-C170KRKT,LED_SMD:LED_0805_2012Metric,https://optoelectronics.liteon.com/upload/download/DS-22-99-0150/LTST-C170KRKT.pdf,no,12V_OK: protected 12 V present
+R77,1.5k,Yageo,RC0603FR-071K5L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,"ARMED LED from the latch Q, about 0.9 mA"
+D4,LED green,Lite-On,LTST-C170KGKT,LED_SMD:LED_0805_2012Metric,https://optoelectronics.liteon.com/upload/download/DS22-2000-073/LTST-C170KGKT.pdf,no,"ARMED: latch set, no fault"
+R78,1.5k,Yageo,RC0603FR-071K5L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,RUN LED (GPIO21)
+D5,LED green,Lite-On,LTST-C170KGKT,LED_SMD:LED_0805_2012Metric,https://optoelectronics.liteon.com/upload/download/DS22-2000-073/LTST-C170KGKT.pdf,no,RUN (firmware)
+R79,1.5k,Yageo,RC0603FR-071K5L,Resistor_SMD:R_0603_1608Metric,https://www.yageo.com/en/Chart/Download/pdf/RC0603,no,FAULT LED (GPIO22)
+D6,LED red,Lite-On,LTST-C170KRKT,LED_SMD:LED_0805_2012Metric,https://optoelectronics.liteon.com/upload/download/DS-22-99-0150/LTST-C170KRKT.pdf,no,FAULT (firmware)
+TP1,3V3,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP2,1V9,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP3,5V,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP4,12V_PROT,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP5,GND_CTRL,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP6,GND_CTRL,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP7,PWM_H,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP8,PWM_L,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP9,FAULT_N,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP10,ARM,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP11,FAULT_LATCH_N,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP12,GATE_EN,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP13,XRS_N,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP14,VIN_SENSE,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP15,VOUT_SENSE,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+TP16,ISENSE,,,TestPoint:TestPoint_Pad_D2.0mm,,no,"bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate"
+H1,M3,,,MountingHole:MountingHole_3.2mm_M3,,no,"M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)"
+H2,M3,,,MountingHole:MountingHole_3.2mm_M3,,no,"M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)"
+H3,M3,,,MountingHole:MountingHole_3.2mm_M3,,no,"M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)"
+H4,M3,,,MountingHole:MountingHole_3.2mm_M3,,no,"M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)"

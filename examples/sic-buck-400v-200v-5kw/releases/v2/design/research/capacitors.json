@@ -1,0 +1,862 @@
+{
+  "decision_area": "DC-link input capacitor bank, high-frequency ceramic commutation tier, output capacitor bank and passive discharge (bleeder) resistors for the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck",
+  "knowledge_queries": [
+    {
+      "command": "python -m automation.knowledge.query \"DC-link capacitor selection film RMS ripple current\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003",
+        "KR-CAP-002",
+        "CMP-B32716H8306K000",
+        "REF-TI-TIDA-010054",
+        "CMP-B32716H1156K000",
+        "KR-CAP-001",
+        "KR-CAP-003",
+        "KR-CAP-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"high-voltage MLCC decoupling commutation loop power loop layout\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003",
+        "SKILL-002",
+        "KR-CAP-003",
+        "KR-PCB-003",
+        "KR-PCB-004",
+        "KR-PCB-002",
+        "REF-TI-TIDA-010054",
+        "KR-IS-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"bleeder discharge resistor creepage clearance isolation spacing\" --json --limit 8",
+      "top_hits": [
+        "SKILL-002",
+        "KR-ISO-003",
+        "KR-ISO-002",
+        "KR-ISO-004",
+        "KR-GD-007",
+        "REF-WS-CGD1700HB2M-UNA",
+        "SKILL-001",
+        "CB-GD-001"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"output capacitor load transient voltage ripple ESR electrolytic lifetime\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003 (Not applicable / out of scope section)",
+        "REF-TI-TIDA-010054",
+        "KR-CAP-002",
+        "CMP-B32716H1156K000",
+        "KR-GD-001",
+        "CMP-B32716H8306K000",
+        "CB-IS-004",
+        "REF-WS-CGD15SG00D2"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"capacitor voltage derating temperature thermal placement heatsink\" --json --limit 8",
+      "top_hits": [
+        "SKILL-006",
+        "SKILL-003",
+        "KR-TH-002",
+        "KR-TH-003",
+        "REF-TI-TIDA-010054",
+        "KR-TH-001",
+        "CMP-B32716H1156K000",
+        "CMP-GCM31CR71C106KA64L"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query --get SKILL-003 --json (plus --get KR-CAP-001, KR-CAP-002, KR-CAP-003, KR-PCB-004, KR-PCB-006, KR-ISO-002, CMP-B32716H8306K000, CMP-B32716H1156K000, CMP-2220Y1K00474KETWS2, CMP-CGA9P1X7T2J474M250KC, CMP-C1812V104KDRACTU); read knowledge/skills/capacitors/SKILL-003-dc-link-capacitors.md, knowledge/references/ti/tida-010054/analysis.md, docs/pcb-design-rules.md, SKILL-002 and SKILL-006 markdown excerpts",
+      "top_hits": [
+        "SKILL-003 record with related rules KR-CAP-001..004, KR-PCB-004, KR-PCB-006 and project rules PE-PCB-002/003",
+        "note: query CLI needs PYTHONIOENCODING=utf-8 on this Windows host (GBK UnicodeEncodeError otherwise)"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "SKILL-003",
+      "type": "skill",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "adapted",
+      "how_applied": "Procedure steps 1-4 and 6 followed (envelope, capacitor current/dQ/I_rms at every corner, film selection for C/V/I_rms, HV ceramics beside the leg, hand-off to layout). Step 5 (DC blocking) skipped. The DAB rectified-tank waveform is replaced by the buck's pulsating input current (Io during D, zero otherwise, plus ripple) and the triangular output current."
+    },
+    {
+      "id": "KR-CAP-001",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "adapted",
+      "how_applied": "C >= dQ_max/dV applied with dQ = D(1-D)*Io*Ts derived for the buck and evaluated at all nine corners (worst 137.5 uC at 400 V / 27.5 A); dV from the 2 % ripple assumption."
+    },
+    {
+      "id": "KR-CAP-002",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "direct",
+      "how_applied": "I_Cin,rms computed at 50 kHz and compared with datasheet I_RMS ratings normalised to their temperature-rise bases (TDK dT 20 K at 70 degC, KEMET dT 30 K, Vishay dT 15 K at 85 degC); self-heating recomputed from ESR and R_th at 50 degC ambient."
+    },
+    {
+      "id": "KR-CAP-003",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "direct",
+      "how_applied": "Two-tier bank: 2 x 20 uF film plus 10 x 0.47 uF 630 V 2220 ceramics beside the half-bridge; ceramic quantity derived from the edge-charge / film-interconnect resonance model, not copied from TI's 14 pieces."
+    },
+    {
+      "id": "KR-CAP-004",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "not-applicable",
+      "how_applied": "No transformer or tank inductance in a non-isolated buck; no DC-blocking capacitor."
+    },
+    {
+      "id": "KR-PCB-004",
+      "type": "rule",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "applicability": "direct",
+      "how_applied": "Ceramic tier placement and loop-inductance target (<= 20 nH) given priority over gate-driver routing; stated as PCB constraints 1-2."
+    },
+    {
+      "id": "KR-PCB-006",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "direct",
+      "how_applied": "Film capacitors connected with >= 20 mm wide Vin+/PGND pours on at least two 70 um layers with via stitching; current density computed (5 A/mm2 at 7 A RMS)."
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "applicability": "human-review",
+      "how_applied": "Provisional functional-insulation spacing (>= 2.5 mm creepage, >= 1.5 mm clearance, 3.0 mm recommended) stated for 440 V DC working voltage, PD2, CTI >= 175; the governing values must be derived from the standard by the isolation agent and reviewed."
+    },
+    {
+      "id": "KR-ISO-003",
+      "type": "rule",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "applicability": "direct",
+      "how_applied": "DC+, PGND and SW nets of the capacitor banks assigned to spacing classes so KiCad class-pair clearances can be encoded."
+    },
+    {
+      "id": "KR-ISO-004",
+      "type": "rule",
+      "reference_design": "REF-WS-CGD15SG00D2",
+      "applicability": "not-applicable",
+      "how_applied": "At 440 V working voltage the required creepage is small enough that slots are not needed around the capacitor pads; revisit only if the isolation agent's values are larger."
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (power loop first) used to place the ceramic tier at the TO-247 pins and define the loop target."
+    },
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "direct",
+      "how_applied": "Step 3: film capacitors and bleeders kept out of the heat-sink exhaust; the knowledge base itself marks this recommendation as without source evidence, so it is listed for review and a 10 K local-air allowance is carried."
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "not-applicable",
+      "how_applied": "Concerns the MOSFET heat-sink interface, not capacitors; only the thermal environment it creates is considered."
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "adapted",
+      "how_applied": "Decision 2: two-tier architecture and dQ -> C method reused; instance values (30/60 uF, 5 V ripple, 14 MLCC, B32716 parts, 630 V/1 kV choices) not copied. Decision 3 not applicable. Decision 10: bus copper repeated on several layers adopted as a pattern. Voltage ratios TI used (0.625, 0.73) noted as observations only."
+    },
+    {
+      "id": "CMP-B32716H8306K000",
+      "type": "component",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "not-applicable",
+      "how_applied": "Different TDK series (B32716) with no datasheet in the knowledge base; replaced by the B32776 37.5 mm 4-pin series after fetching the TDK datasheet."
+    },
+    {
+      "id": "CMP-B32716H1156K000",
+      "type": "component",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "not-applicable",
+      "how_applied": "1.1 kV part for an 800 V link; not needed at 440 V."
+    },
+    {
+      "id": "CMP-CGA9P1X7T2J474M250KC",
+      "type": "component",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "adapted",
+      "how_applied": "Same TDK 630 V X7T 2220 part family selected for the HF tier at a 0.70 voltage ratio (TI used it at 0.79); quantity derived (10), DC-bias derating added as an explicit assumption because the curve could not be fetched; availability flagged."
+    },
+    {
+      "id": "CMP-2220Y1K00474KETWS2",
+      "type": "component",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "adapted",
+      "how_applied": "Knowles 1 kV 0.47 uF 2220 listed as the higher-margin alternate (KXTWS2 FlexiCap variant); specifications only at search-snippet level."
+    },
+    {
+      "id": "CMP-C1812V104KDRACTU",
+      "type": "component",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "not-applicable",
+      "how_applied": "TI's 0.1 uF 1 kV 1812 positions are snubber/local decoupling in an 800 V stage; no such positions are defined here."
+    },
+    {
+      "id": "PE-PCB-002",
+      "type": "project_rule",
+      "reference_design": "docs/pcb-design-rules.md",
+      "applicability": "direct",
+      "how_applied": "HF input capacitors (ceramic tier) placed within 5-15 mm of the half-bridge pins; evidence to be a pad-to-pad current-path overlay at layout review."
+    },
+    {
+      "id": "PE-PCB-003",
+      "type": "project_rule",
+      "reference_design": "docs/pcb-design-rules.md",
+      "applicability": "direct",
+      "how_applied": "Commutation-loop target <= 20 nH including packages; loop overlay including layer transitions required as evidence."
+    },
+    {
+      "id": "PE-PCB-006",
+      "type": "project_rule",
+      "reference_design": "docs/pcb-design-rules.md",
+      "applicability": "direct",
+      "how_applied": "Copper width and via stitching for the film-capacitor branches sized from the computed 7 A RMS per branch and 25 A bus current."
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "reference_design": "REF-TI-TIDA-010054",
+      "applicability": "human-review",
+      "how_applied": "Interface only: the input voltage-sense divider parallels the bleeder; its value is set by the sensing agent and is not credited in the discharge time."
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "B32776G8206K000",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "capacitance": "20 uF +/-10 % (K); J = +/-5 % available",
+        "rated_voltage": "V_R,70degC = 800 V DC; V_op,85degC = 700 V DC; -1.33 %/degC above 85 degC; 105 degC case max",
+        "I_RMS_max": "14.5 A at 70 degC, 10 kHz, dT <= 20 K",
+        "ESR_typ": "7.5 mOhm at 70 degC, 10 kHz",
+        "ESL_typ": "10 nH",
+        "dimensions": "w 28.0 x h 37.0 x l 42.0 mm max",
+        "lead_spacing": "37.5 mm, P1 10.2 mm, 4 pins, lead 1.2 mm",
+        "lifetime": "not extracted from text (use TDK lifetime curves)"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+      "datasheet_revision": "Film Capacitors - Capacitors for DC Link, Series/Type B3277*D/E/G/J/T, Date: June 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "SELECTED for C_IN (qty 2). 0.48 of I_RMS rating per part, dT 4.6 K, voltage ratio 0.55-0.60; 4-pin low-ESL version in the 37.5 mm pitch; custom 4-pad footprint required."
+    },
+    {
+      "part_number": "C4AQIBW5200A3JJ",
+      "manufacturer": "KEMET",
+      "key_parameters": {
+        "capacitance": "20 uF +/-5 %",
+        "rated_voltage": "V_NDC 800 V at 70 degC; V_OP85 700 V; V_OP105 550 V",
+        "I_rms": "17.4 A at 70 degC, 10 kHz for dT about 30 K (hotspot 100 degC, reduced life)",
+        "ESR_typ": "4.7 mOhm at 70 degC, 10 kHz",
+        "ESL": "10 nH",
+        "R_th": "18 degC/W hotspot-to-ambient",
+        "dV/dt": "13 V/us, I_pk 262 A",
+        "dimensions": "T 28 x H 37 x L 42 mm, S 37.5 mm, S1 10.2 mm",
+        "life": "100,000 h at V_NDC and THS 70 degC"
+      },
+      "datasheet_url": "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20(converters)/C4AQ_Film-Capacitor_KEMET.pdf",
+      "datasheet_revision": "KEMET F3114_C4AQ, 6/14/2024 (CERN mirror of the KEMET PDF)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Alternate for C_IN, same footprint; dT 4.1 K at 6.9 A. Note the KEMET rating basis (dT 30 K) is less conservative than TDK's."
+    },
+    {
+      "part_number": "MKP1848C62080JP4",
+      "manufacturer": "Vishay Roederstein",
+      "key_parameters": {
+        "capacitance": "20 uF +/-5 %",
+        "rated_voltage": "U_NDC 800 V at 85 degC; U_OPDC 960 V at 70 degC, 560 V at 105 degC",
+        "I_RMS": "12 A (4-pin) / 11 A (2-pin) at 10 kHz, 85 degC, dT 15 K",
+        "ESR_typ": "6 mOhm (4-pin), valid 10-70 kHz for P = 37.5 mm",
+        "ESL": "< 1 nH per mm of lead spacing (series statement)",
+        "dV/dt": "35 V/us, I_peak 700 A",
+        "dimensions": "w 21.5 x h 38.5 x l 42.0 mm, P1 37.5 mm, P2 10.2 mm",
+        "life": "> 100,000 h at U_NDC and 70 degC; max pk-pk ripple voltage 0.2 x U_NDC"
+      },
+      "datasheet_url": "https://www.vishay.com/docs/26015/mkp1848cdclink.pdf",
+      "datasheet_revision": "Document 26015, Revision 09-Aug-2023",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Alternate for C_IN; narrowest body; the final ordering-code digit for the 4-pin version (4 or 5) must be confirmed against the datasheet ordering key."
+    },
+    {
+      "part_number": "C4AQIBW5400A3OJ",
+      "manufacturer": "KEMET",
+      "key_parameters": {
+        "capacitance": "40 uF +/-5 %",
+        "rated_voltage": "800 V DC",
+        "I_rms": "28.7 A (dT 30 K basis)",
+        "ESR_typ": "2.5 mOhm",
+        "ESL": "14 nH",
+        "R_th": "13 degC/W",
+        "dimensions": "35 x 50 x 42 mm, S 37.5 mm, S1 20.3 mm"
+      },
+      "datasheet_url": "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20(converters)/C4AQ_Film-Capacitor_KEMET.pdf",
+      "datasheet_revision": "KEMET F3114_C4AQ, 6/14/2024 (same values in C4AQ-M F3125, 8/30/2021)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Single-capacitor option (dT 6.2 K at 13.84 A). Not selected: two parts give current sharing, placement on both sides of the half-bridge and redundancy."
+    },
+    {
+      "part_number": "B32776G8306K000",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "capacitance": "30 uF",
+        "rated_voltage": "800 V DC",
+        "I_RMS_max": "19.5 A",
+        "ESR_typ": "5.1 mOhm",
+        "ESL_typ": "12 nH",
+        "dimensions": "30 x 45 x 42 mm, P1 20.3 mm"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+      "datasheet_revision": "June 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Growth option if a 1 % ripple target at overload or lower hotspot is demanded (2 x 30 uF -> 2.5 Vpp); not needed."
+    },
+    {
+      "part_number": "B32776G4606K000",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "capacitance": "60 uF +/-10 %",
+        "rated_voltage": "V_R,70degC = 450 V DC = V_op,85degC",
+        "I_RMS_max": "23.5 A at 70 degC, 10 kHz, dT <= 20 K",
+        "ESR_typ": "3.6 mOhm",
+        "ESL_typ": "14 nH",
+        "dimensions": "w 30.0 x h 45.0 x l 42.0 mm",
+        "lead_spacing": "37.5 mm, P1 20.3 mm, 4 pins"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+      "datasheet_revision": "June 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "SELECTED for C_OUT (qty 2 = 120 uF). 0.06 of I_RMS rating, ratios 0.44/0.49, survives 440 V under a high-side-short fault."
+    },
+    {
+      "part_number": "B32776G4406K000",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "capacitance": "40 uF",
+        "rated_voltage": "450 V DC",
+        "I_RMS_max": "17.5 A",
+        "ESR_typ": "5.3 mOhm",
+        "ESL_typ": "11 nH",
+        "dimensions": "28 x 37 x 42 mm, P1 10.2 mm"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+      "datasheet_revision": "June 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "3-piece alternative (120 uF) sharing the C_IN footprint; more board area (3 x 28 x 42 mm) but one footprint for all film parts."
+    },
+    {
+      "part_number": "MKP1848C66050JP*",
+      "manufacturer": "Vishay Roederstein",
+      "key_parameters": {
+        "capacitance": "60 uF +/-5 %",
+        "rated_voltage": "U_NDC 500 V at 85 degC; U_OPDC 600 V at 70 degC, 350 V at 105 degC",
+        "I_RMS": "18 A (4-pin) at 10 kHz, 85 degC",
+        "ESR_typ": "3 mOhm (4-pin)",
+        "dV/dt": "20 V/us, I_peak 1200 A",
+        "dimensions": "30 x 57 x 42 mm, P1 37.5 mm, P2 20.3 mm"
+      },
+      "datasheet_url": "https://www.vishay.com/docs/26015/mkp1848cdclink.pdf",
+      "datasheet_revision": "Document 26015, Revision 09-Aug-2023",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Alternate for C_OUT; taller (57 mm)."
+    },
+    {
+      "part_number": "C4AQCBW5400A3LJ",
+      "manufacturer": "KEMET",
+      "key_parameters": {
+        "capacitance": "40 uF",
+        "rated_voltage": "650 V DC",
+        "I_rms": "24.9 A (dT 30 K basis)",
+        "ESR_typ": "2.8 mOhm",
+        "ESL": "13 nH",
+        "R_th": "15 degC/W",
+        "dimensions": "30 x 45 x 42 mm, S 37.5 mm, S1 20.3 mm"
+      },
+      "datasheet_url": "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20(converters)/C4AQ_Film-Capacitor_KEMET.pdf",
+      "datasheet_revision": "KEMET F3114_C4AQ, 6/14/2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Over-rated (650 V) output alternative; KEMET 500 V ('L' code) rows at 37.5 mm were not fully extracted."
+    },
+    {
+      "part_number": "LGW2E471MELB25",
+      "manufacturer": "Nichicon",
+      "key_parameters": {
+        "capacitance": "470 uF +/-20 %",
+        "rated_voltage": "250 V",
+        "ripple_current": "2.2 A at 120 Hz; 3.3 A at 50 kHz (listing)",
+        "ESR": "not found",
+        "life": "3000 h at 105 degC",
+        "dimensions": "30 mm dia x 25 mm, 10 mm lead spacing",
+        "price": "USD 6.68 (1), 4.66 (10) per Digi-Key listing"
+      },
+      "datasheet_url": "https://www.nichicon.co.jp/english/series_items/catalog_pdf/e-lgw.pdf",
+      "datasheet_revision": "not fetched (Digi-Key listing data)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Electrolytic comparison part only; NOT selected (lifetime model outside the knowledge base, 50 kHz ESR not found, vents under a high-side-short fault)."
+    },
+    {
+      "part_number": "CGA9P1X7T2J474M250KC",
+      "manufacturer": "TDK",
+      "key_parameters": {
+        "capacitance": "0.47 uF +/-20 % (K250KC = +/-10 %)",
+        "rated_voltage": "630 V DC",
+        "dielectric": "X7T (+22/-33 %, -55..125 degC)",
+        "size": "2220, 5.7 x 5.0 x 2.5 mm",
+        "features": "AEC-Q200, soft termination (KC/KE suffix)",
+        "DC_bias": "not found (datasheet graph referenced at 315 V bias; curve not readable)",
+        "availability": "conflicting: Avnet 0 stock / 168-week lead; SnapEda lists Newark 1,500 pcs"
+      },
+      "datasheet_url": "https://static6.arrow.com/aropdfconversion/c71957a84d97d95bd2b4757994de297083c510d4/cga9p1x7t2j474m250ke.pdf",
+      "datasheet_revision": "not readable (fetch timeout); TDK product page returned HTTP 403",
+      "parameter_verification": "search-snippet",
+      "assessment": "SELECTED for C_HF (qty 10) pending DC-bias verification and procurement check; K250KC variant acceptable."
+    },
+    {
+      "part_number": "2220Y1K00474KXTWS2",
+      "manufacturer": "Knowles (Syfer)",
+      "key_parameters": {
+        "capacitance": "0.47 uF +/-10 %",
+        "rated_voltage": "1000 V DC",
+        "dielectric": "X7R, 125 degC",
+        "size": "2220",
+        "termination": "FlexiCap (X) tin (T), AEC-Q200 family",
+        "DC_bias": "not found"
+      },
+      "datasheet_url": "https://product.knowles.com/products/2220y1k00474kxtws2",
+      "datasheet_revision": "not fetched (HTTP 403)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Alternate for C_HF with 0.44 voltage ratio and lower expected bias loss; dimensions and bias curve to verify."
+    },
+    {
+      "part_number": "C2220C474KCRACTU",
+      "manufacturer": "KEMET",
+      "key_parameters": {
+        "capacitance": "0.47 uF +/-10 %",
+        "rated_voltage": "500 V DC (KEMET product page)",
+        "dielectric": "X7R, -55..125 degC"
+      },
+      "datasheet_url": "https://www.kemet.com/en/us/product/C2220C474KCRACTU.html",
+      "datasheet_revision": "product page",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "REJECTED: 440/500 = 0.88 ratio."
+    },
+    {
+      "part_number": "CRCW2512120KFKEG",
+      "manufacturer": "Vishay Dale",
+      "key_parameters": {
+        "resistance": "120 kOhm +/-1 %, +/-100 ppm/K",
+        "power": "1.0 W at 70 degC (P70), linear derating to 0 at 155 degC film temperature",
+        "limiting_element_voltage": "500 V AC_RMS/DC",
+        "operating_temperature": "-55 to +155 degC",
+        "size": "2512 (RR6332M)"
+      },
+      "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "datasheet_revision": "Document 20035, Revision 14-Apr-2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "SELECTED for the input bleeder chain (qty 3 in series, 360 kOhm): 147/160 V and 0.18 W per resistor."
+    },
+    {
+      "part_number": "CRCW2512100KFKEG",
+      "manufacturer": "Vishay Dale",
+      "key_parameters": {
+        "resistance": "100 kOhm +/-1 %",
+        "power": "1.0 W at 70 degC",
+        "limiting_element_voltage": "500 V",
+        "size": "2512"
+      },
+      "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "datasheet_revision": "Document 20035, Revision 14-Apr-2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "SELECTED for the output bleeder chain (qty 2 in series, 200 kOhm): 100/110 V and 0.10 W per resistor."
+    }
+  ],
+  "selection": {
+    "input_bank": {
+      "parts": "2 x TDK B32776G8206K000 (alt: KEMET C4AQIBW5200A3JJ, Vishay MKP1848C62080JP4)",
+      "capacitance_nominal_uF": 40,
+      "capacitance_min_uF": 36,
+      "rated_voltage_V": 800,
+      "voltage_ratio_440_460_480": [
+        0.55,
+        0.575,
+        0.6
+      ],
+      "I_rms_worst_A": 13.87,
+      "I_rms_per_part_A": 6.92,
+      "rating_per_part_A": 14.5,
+      "ESR_bank_mOhm": 3.75,
+      "ESL_per_part_nH": 10,
+      "ripple_pp_V_at_27p5A": 3.82,
+      "ripple_pp_percent": 0.95,
+      "self_heating_K": 4.6,
+      "hotspot_estimate_C": 65
+    },
+    "hf_ceramic_tier": {
+      "parts": "10 x TDK CGA9P1X7T2J474M250KC (or K250KC); alt 10 x Knowles 2220Y1K00474KXTWS2",
+      "nominal_uF": 4.7,
+      "effective_uF_at_440V_assumed": 1.88,
+      "requirement_effective_uF": 1.5,
+      "voltage_ratio_440_480": [
+        0.7,
+        0.76
+      ],
+      "current_50kHz_per_piece_mA": 69,
+      "hf_edge_current_per_piece_A": 0.13,
+      "placement": "within 5 mm (row 1) / 15 mm (row 2) of the TO-247-4 HS drain and LS source pins"
+    },
+    "output_bank": {
+      "parts": "2 x TDK B32776G4606K000 (alt: Vishay MKP1848C66050JP*, 3 x TDK B32776G4406K000)",
+      "technology_decision": "all-film; electrolytic and hybrid rejected (lifetime model outside knowledge base, 50 kHz ESR not found, fault venting)",
+      "capacitance_nominal_uF": 120,
+      "capacitance_min_uF": 108,
+      "rated_voltage_V": 450,
+      "voltage_ratio_200_220": [
+        0.44,
+        0.49
+      ],
+      "I_rms_worst_A": 2.86,
+      "rating_per_part_A": 23.5,
+      "ripple_pp_V": 0.25,
+      "step_12p5A_excursion_V_fc2500": 7.4,
+      "step_12p5A_excursion_V_fc2000": 9.2,
+      "load_dump_25A_excursion_V_fc2500": 14.8
+    },
+    "bleeders": {
+      "input": "3 x Vishay CRCW2512120KFKEG in series = 360 kOhm, 0.54 W at 440 V, 147/160 V per resistor",
+      "output": "2 x Vishay CRCW2512100KFKEG in series = 200 kOhm, 0.20 W at 200 V",
+      "discharge_to_60V_s_coupled": 35.7,
+      "criterion": "< 60 V within 60 s with warning label (assumption A3)"
+    },
+    "footprints": {
+      "C_IN": "custom 4-pad: pads at x = +/-18.75 mm, y = +/-5.10 mm, drill 1.6 mm, pad 3.0 mm, courtyard 28 x 42 mm (+0.5 mm), height 37 mm; fits TDK/KEMET/Vishay 20 uF 800 V alternates",
+      "C_OUT": "custom 4-pad: pads at x = +/-18.75 mm, y = +/-10.15 mm, drill 1.6 mm, pad 3.0 mm, courtyard 30 x 45 mm (+0.5 mm), height 45 mm",
+      "C_HF": "KiCad C_2220_5750Metric with pad-to-pad gap about 3.5-4 mm",
+      "note": "KiCad C_Rect_L41.5mm_W*_P37.50mm footprints are 2-pin and do not fit the 4-pin parts"
+    }
+  },
+  "calculations": [
+    {
+      "name": "Duty and inductor ripple at corners",
+      "expression": "D = Vout/Vin; dI = Vout*(1-D)/(L*fs)",
+      "inputs": {
+        "Vout": "200 V",
+        "Vin": "360/400/440 V",
+        "L": "267 uH (220 uH low bound)",
+        "fs": "50 kHz"
+      },
+      "result": "D = 0.556/0.500/0.455; dI = 6.66/7.49/8.17 A (267 uH), 8.08/9.09/9.92 A (220 uH)",
+      "knowledge_ref": "SKILL-003 step 1"
+    },
+    {
+      "name": "Input capacitor RMS current",
+      "expression": "I_Cin,rms = sqrt(D*(Io^2 + dI^2/12) - (D*Io)^2)",
+      "inputs": {
+        "Io": "25 A / 27.5 A",
+        "D": "per corner",
+        "dI": "per corner"
+      },
+      "result": "12.50-12.64 A at 25 A; 13.74-13.87 A at 27.5 A (worst 400 V, 27.5 A, 220 uH); base term Io*sqrt(D(1-D)) = 12.42-12.50 A / 13.66-13.75 A",
+      "knowledge_ref": "KR-CAP-002; SKILL-003 step 2 (adapted waveform)"
+    },
+    {
+      "name": "Input ripple charge",
+      "expression": "dQ = D*(1-D)*Io*Ts (exact since Io - dI/2 > D*Io at all corners)",
+      "inputs": {
+        "Ts": "20 us",
+        "Io": "25 / 27.5 A"
+      },
+      "result": "123.5 / 125.0 / 124.0 uC at 25 A; 135.8 / 137.5 / 136.4 uC at 27.5 A; max 137.5 uC",
+      "knowledge_ref": "KR-CAP-001"
+    },
+    {
+      "name": "Input capacitance requirement",
+      "expression": "C_in >= dQ_max / dV; dV = 2 % x 400 V = 8 V; nominal = C_min / 0.9",
+      "inputs": {
+        "dQ_max": "137.5 uC",
+        "dV": "8 V",
+        "tolerance": "-10 %"
+      },
+      "result": "C_in >= 17.2 uF; >= 19.1 uF nominal (1 % target would need 34.4 uF / 38.2 uF nominal)",
+      "knowledge_ref": "KR-CAP-001; assumption A1"
+    },
+    {
+      "name": "Realised input ripple",
+      "expression": "dV_C = dQ_max / C_min + ESR_bank * I_C,pp",
+      "inputs": {
+        "C_min": "36 uF (2 x 20 uF, -10 %)",
+        "ESR_bank": "3.75 mOhm",
+        "I_C,pp": "Io + dI/2 + Iin = 44.1 A"
+      },
+      "result": "3.82 V + 0.17 V = 4.0 Vpp (1.0 %) at 27.5 A; 3.5 Vpp at 25 A",
+      "knowledge_ref": "KR-CAP-001"
+    },
+    {
+      "name": "Input film RMS margin and self-heating",
+      "expression": "I_part = I_Cin,rms/2; P = I_part^2 * ESR; R_th = dT_rated/(I_rated^2*ESR); dT = P*R_th; T_hs = 50 + 10 + dT",
+      "inputs": {
+        "I_part": "6.92 A",
+        "TDK": "14.5 A, 7.5 mOhm, dT 20 K",
+        "KEMET": "17.4 A, 4.7 mOhm, R_th 18 K/W",
+        "Vishay": "12 A, 6 mOhm, dT 15 K"
+      },
+      "result": "TDK: 0.48 of rating, 0.36 W, R_th 12.7 K/W, dT 4.6 K, T_hs 65 degC; KEMET: 0.40, 0.23 W, dT 4.1 K; Vishay: 0.58, 0.29 W, dT 5.0 K; single 40 uF KEMET: 0.48 W, dT 6.2 K",
+      "knowledge_ref": "KR-CAP-002; assumption A6"
+    },
+    {
+      "name": "Input voltage derating ratios",
+      "expression": "V/V_R and V/V_op,85",
+      "inputs": {
+        "V": "440 / 460 / 480 V",
+        "V_R": "800 V",
+        "V_op,85": "700 V"
+      },
+      "result": "0.55 / 0.575 / 0.60 of V_R; 0.63 / 0.66 / 0.69 of V_op,85 (575 V class would be 0.77 / 0.80 / 0.83: rejected)",
+      "knowledge_ref": "SKILL-003 principle 4"
+    },
+    {
+      "name": "HF ceramic tier requirement",
+      "expression": "f_r = 1/(2 pi sqrt(L_int C_eff)); dQ = I_pk * (1/(4 f_r)); dV = dQ/C_eff; Z0 = sqrt(L_int/C_eff)",
+      "inputs": {
+        "L_int": "20 / 30 / 40 nH",
+        "C_eff": "1.0 / 1.5 / 1.88 uF",
+        "I_pk": "31.3 A"
+      },
+      "result": "1.88 uF, 30 nH: f_r 670 kHz, T/4 373 ns, dQ 11.7 uC, dV 6.2 V (1.5 %), Z0 0.13 Ohm; 1.0 uF, 30 nH: dV 8.5 V (2.1 %) -> require C_eff >= 1.5 uF",
+      "knowledge_ref": "KR-CAP-003; KR-PCB-004; assumption A5"
+    },
+    {
+      "name": "HF ceramic effective capacitance and count",
+      "expression": "C_eff = n * C_nom * (1 - bias_loss)",
+      "inputs": {
+        "n": "10",
+        "C_nom": "0.47 uF",
+        "bias_loss": "<= 60 % at 440 V (assumption A4)"
+      },
+      "result": "C_eff >= 1.88 uF (4.7 uF nominal)",
+      "knowledge_ref": "SKILL-003 principle 6"
+    },
+    {
+      "name": "Ceramic current share",
+      "expression": "I_cer,50k = I_Cin,rms * C_eff/(C_film,min + C_eff); I_hf,rms = sqrt(2 fs * I_pk^2 t_edge/3)",
+      "inputs": {
+        "C_eff": "1.88 uF",
+        "C_film,min": "36 uF",
+        "t_edge": "50 ns",
+        "I_pk": "31.3 A"
+      },
+      "result": "5 % share: 0.69 A total, 69 mA per piece; HF edges 1.28 A total, 0.13 A per piece",
+      "knowledge_ref": "KR-CAP-002"
+    },
+    {
+      "name": "Commutation overshoot vs loop inductance",
+      "expression": "dV = L_loop * di/dt",
+      "inputs": {
+        "L_loop": "15 / 20 / 30 nH",
+        "di/dt": "1-2 A/ns"
+      },
+      "result": "15-30 V at 1 A/ns, 30-60 V at 2 A/ns -> target L_loop <= 20 nH including two TO-247-4 packages",
+      "knowledge_ref": "KR-PCB-004; PE-PCB-003"
+    },
+    {
+      "name": "Output capacitor RMS current",
+      "expression": "I_Cout,rms = dI/sqrt(12)",
+      "inputs": {
+        "dI": "7.49 A (400 V, 267 uH) / 9.92 A (440 V, 220 uH)"
+      },
+      "result": "2.16 A / 2.86 A; per part 1.43 A vs 23.5 A rating; P = 7 mW",
+      "knowledge_ref": "KR-CAP-002"
+    },
+    {
+      "name": "Output capacitance for ripple",
+      "expression": "C >= dI / (8 fs (dV - ESR*dI))",
+      "inputs": {
+        "dI": "9.92 A",
+        "dV": "2.0 Vpp",
+        "ESR": "1.8 mOhm"
+      },
+      "result": "12.5 uF (not limiting); realised 0.23 + 0.02 = 0.25 Vpp (0.12 %) with 108 uF",
+      "knowledge_ref": "SKILL-003 (adapted: inductor-ripple output filter)"
+    },
+    {
+      "name": "Output capacitance for load step",
+      "expression": "C >= dI_step / (2 pi fc (dV_max - ESR*dI_step)); nominal = C/0.9",
+      "inputs": {
+        "dI_step": "12.5 A",
+        "dV_max": "10 V",
+        "fc": "2.0 / 2.5 / 3.0 kHz",
+        "ESR": "1.8 mOhm"
+      },
+      "result": "99.7 / 79.8 / 66.5 uF -> 110.8 / 88.6 / 73.8 uF nominal; selected 120 uF nominal (108 uF min): 9.2 V at 2 kHz, 7.4 V at 2.5 kHz",
+      "knowledge_ref": "assumption A2"
+    },
+    {
+      "name": "Output load-dump excursion vs OVP",
+      "expression": "dV = 25 A / (2 pi fc C_min) + ESR*25 A",
+      "inputs": {
+        "C_min": "108 uF",
+        "fc": "2.0 / 2.5 kHz"
+      },
+      "result": "+18.5 V / +14.8 V -> 218.5 V / 214.8 V against the 220 V OVP trip (open issue)",
+      "knowledge_ref": "assumption A2"
+    },
+    {
+      "name": "Inductor slew and LC corner",
+      "expression": "di/dt = (Vin - Vout)/L; f0 = 1/(2 pi sqrt(L C))",
+      "inputs": {
+        "Vin": "360 V",
+        "L": "267 uH",
+        "C": "120 uF"
+      },
+      "result": "0.60 A/us (12.5 A in 21 us, faster than the loop); f0 = 889 Hz",
+      "knowledge_ref": "assumption A2"
+    },
+    {
+      "name": "Output voltage derating ratios",
+      "expression": "V/V_R",
+      "inputs": {
+        "V": "200 / 220 / 440 (HS-short fault) V",
+        "V_R": "450 V"
+      },
+      "result": "0.44 / 0.49 / 0.98 (fault survivable within V_op,85 = 450 V)",
+      "knowledge_ref": "SKILL-003 principle 4"
+    },
+    {
+      "name": "Electrolytic lifetime estimate (comparison only)",
+      "expression": "L = L0 * 2^((105 - T_core)/10)",
+      "inputs": {
+        "L0": "3000 h at 105 degC (Nichicon LGW listing)",
+        "T_core": "55 / 60 / 65 degC"
+      },
+      "result": "96,000 / 68,000 / 48,000 h — outside the knowledge base; not used for selection",
+      "knowledge_ref": "SKILL-003 not-applicable item (lifetime modelling)"
+    },
+    {
+      "name": "Bleeder discharge time (coupled banks)",
+      "expression": "numerical two-bank RC decay with ideal diode clamp when Vout - Vin > 0.7 V; t until both < 60 V",
+      "inputs": {
+        "C_in": "48.7 uF (44 uF film + 4.7 uF ceramics)",
+        "C_out": "132 uF",
+        "R_in": "360 kOhm",
+        "R_out": "200 kOhm",
+        "V0": "460 V / 200 V"
+      },
+      "result": "35.7 s (480k/240k: 47.6 s; 300k/200k: 31.0 s); input alone 35.7 s; output alone from 220 V 34.3 s",
+      "knowledge_ref": "assumption A3"
+    },
+    {
+      "name": "Bleeder dissipation and element stress",
+      "expression": "P = V^2/R; V_elem = V/n",
+      "inputs": {
+        "V": "440 V (400 V nominal), 480 V transient",
+        "R_in": "360 kOhm (3 x 120 kOhm)",
+        "R_out": "200 kOhm (2 x 100 kOhm)"
+      },
+      "result": "input 0.54 W at 440 V (0.44 W at 400 V), 0.18 W and 147 V (160 V at 480 V) per resistor vs 1 W / 500 V; output 0.20 W, 0.10 W and 100-110 V per resistor; standby total 0.74 W",
+      "knowledge_ref": "assumption A3"
+    },
+    {
+      "name": "Film-branch copper",
+      "expression": "A = w * t; J = I/A",
+      "inputs": {
+        "w": "20 mm",
+        "t": "70 um",
+        "I": "7 A RMS per branch; 25 A bus"
+      },
+      "result": "1.4 mm2 per layer; 5.0 A/mm2 (7 A), 17.9 A/mm2 (25 A, one layer) -> use two layers",
+      "knowledge_ref": "KR-PCB-006; PE-PCB-006"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "A1 Input ripple target",
+      "value": "<= 2 % pk-pk of Vin (8 Vpp at 400 V); realised about 1 %",
+      "basis": "Keeps asynchronous ADC sampling error of the input-voltage feedforward within +/-1 %, keeps 440 V + ripple/2 + overshoot below the 460 V OVP, limits the 50 kHz component at the input terminals; comparable to the 1 % TI achieved on the 500 V DAB link (observation, not copied)."
+    },
+    {
+      "name": "A2 Voltage-loop crossover",
+      "value": "fc = 2.5 kHz design (fs/20), 2.0 kHz checked as the lower bound",
+      "basis": "One-sample-delay digital loop on the F28335 with an inner average-current loop; typical 1/20-1/25 of fs; inductor slew is faster than the loop so C dominates the excursion."
+    },
+    {
+      "name": "A3 Discharge criterion",
+      "value": "< 60 V within 60 s after disconnection, with a warning label stating the time",
+      "basis": "IEC 61800-5-1 clause 4.3.11 / IEC 62477-1 clause 4.4.9 permit a longer discharge time with marking when 5 s is impracticable; 5 s would need about 3 W continuous or an active discharge (human review)."
+    },
+    {
+      "name": "A4 MLCC DC-bias derating",
+      "value": "<= 60 % capacitance loss at 440 V for the TDK 630 V X7T 2220 part (40 % remaining, 0.19 uF per piece)",
+      "basis": "Shape of high-voltage X7T characteristics plotted by TDK around the 315 V reference; the curve itself could not be fetched (HTTP 403) and must be read before release."
+    },
+    {
+      "name": "A5 HF tier capacitance requirement",
+      "value": "C_eff >= 1.5 uF at bias so the bus dip during a 31 A edge stays <= 2 % with 30 nH film interconnect",
+      "basis": "Quarter-period charge model of the film-to-ceramic resonance; conservative because the film path begins to supply current before T/4."
+    },
+    {
+      "name": "A6 Local air temperature around film capacitors",
+      "value": "+10 K above the 50 degC ambient (60 degC) before self-heating",
+      "basis": "Film capacitors placed out of the heat-sink exhaust per SKILL-006 step 3; allowance to be confirmed by measurement."
+    },
+    {
+      "name": "A7 Switching edge and interconnect",
+      "value": "31.3 A commutated in 30-50 ns (about 1 A/ns); film-to-ceramic interconnect 20-40 nH; loop target <= 20 nH",
+      "basis": "Typical TO-247-4 SiC hard-switching edges with gate resistors in the ohms range; to be replaced by the gate-driver agent's dv/dt and the layout extraction."
+    },
+    {
+      "name": "A8 Film capacitance tolerance",
+      "value": "-10 % (K code) for minimum capacitance",
+      "basis": "TDK ordering-code tolerance K = +/-10 %; J (+/-5 %) parts would raise C_min."
+    },
+    {
+      "name": "A9 Working voltage for spacing",
+      "value": "440 V DC continuous between Vin+ and PGND (480 V transient), functional insulation, PD2, CTI >= 175",
+      "basis": "Design basis values; distances to be derived by the isolation agent (KR-ISO-002)."
+    },
+    {
+      "name": "A10 Rating-basis normalisation",
+      "value": "10 kHz film I_RMS ratings used unchanged at 50 kHz; heating checked with ESR x R_th",
+      "basis": "Vishay 26015 footnote 3 (ESR flat 10-70 kHz for P = 37.5 mm); TDK and KEMET define the rating as a thermal limit (dT 20 K / 30 K at 70 degC)."
+    }
+  ],
+  "pcb_constraints": [
+    "C_HF ceramics: first row within 5 mm, second row within 15 mm of the TO-247-4 high-side drain and low-side source pins, distributed on both sides of the device row; Vin+ and PGND as overlapping pours on adjacent layers beneath them (KR-CAP-003, KR-PCB-004, PE-PCB-002).",
+    "Commutation loop (C_HF -> HS drain -> SW -> LS source -> PGND -> C_HF) target <= 20 nH including packages; evidence: full loop overlay with layer transitions (PE-PCB-003).",
+    "Film capacitors C_IN1/2 within 30-40 mm of the half-bridge, one per side; C_OUT1/2 at the inductor output; connections as >= 20 mm wide Vin+/PGND (and Vout/PGND) pours on at least two 70 um layers, via-stitched, all four pins tied to both layers (KR-PCB-006, PE-PCB-006).",
+    "Custom 4-pad footprints: C_IN pads at (+/-18.75, +/-5.10) mm, C_OUT pads at (+/-18.75, +/-10.15) mm, drill 1.6 mm, pad 3.0 mm, courtyards 28 x 42 mm and 30 x 45 mm plus clearance, heights 37 / 45 mm; library C_Rect_L41.5mm_W*_P37.50mm 2-pin footprints do not fit.",
+    "Spacing between Vin+ and PGND (440 V DC working, 480 V transient): provisional >= 2.5 mm creepage / >= 1.5 mm clearance, 3.0 mm recommended around capacitor pads and bleeder chains; final values from the isolation agent per KR-ISO-002 (human review); 2220 pad gap about 3.5-4 mm.",
+    "Bleeder resistors routed as straight series chains along the capacitor edge, <= 160 V per 2512 element, away from gate-driver areas; discharge-time marking near the input terminals.",
+    "Keep film capacitors and bleeders out of the heat-sink exhaust (SKILL-006 step 3); if unavoidable, re-measure the local air temperature against assumption A6.",
+    "Net classes: DC_PLUS (Vin+), PGND, SW, VOUT assigned to spacing classes so KiCad class-pair clearance rules can be generated (KR-ISO-003).",
+    "Board partition: all capacitors and bleeders remain on the power board regardless of the architecture choice; only the sense-divider/bleeder interface touches the control board.",
+    "Mechanical: film capacitor height 37-45 mm sets the minimum power-board component envelope; keep the inductor and connectors clear of the film-capacitor footprints."
+  ],
+  "open_issues": [
+    "MLCC DC-bias capacitance at 440 V for TDK CGA9P1X7T2J474M250KC is unverified (TDK pages blocked); if the remaining capacitance is below 40 %, increase the count or switch to the 1 kV Knowles alternate.",
+    "Availability of CGA9P1X7T2J474M250KC conflicts between distributors (Avnet zero stock / 168-week lead; SnapEda lists Newark stock); procurement check needed; K250KC (+/-10 %) is an acceptable substitute.",
+    "Output OVP at 220 V leaves only 1.5-5 V margin to a full 25 A load dump (214.8-218.5 V); propose raising the trip to about 230 V (15 %) with blanking or increasing C_OUT to 180 uF — to be coordinated with the protection/sensing agent.",
+    "Film-to-ceramic bus resonance (about 670 kHz, Z0 0.13 Ohm) is lightly damped; simulate with the extracted interconnect inductance and add a 1 uF + 0.47 Ohm RC leg if ringing exceeds 2 %.",
+    "Discharge criterion: the 60 s with-label option is assumed; if the system integrator requires 5 s, an active discharge (relay-switched resistor or converter-assisted) must be added — human review.",
+    "Vishay MKP1848C 4-pin ordering-code digit (JP4 vs JP5) must be confirmed if the Vishay alternate is used.",
+    "Film capacitor lifetime at the 0.55 (input) and 0.44 (output) voltage ratios should be read from the TDK/KEMET/Vishay lifetime curves; no exponent asserted.",
+    "The MOSFET agent's dv/dt and gate-resistor choice set the real edge rate; if di/dt exceeds 2 A/ns, the <= 20 nH loop target becomes mandatory rather than recommended.",
+    "The input voltage-sense divider value (SKILL-005 agent) parallels the bleeder; its dissipation and discharge contribution should be added to the final discharge calculation.",
+    "Distributor prices of the film capacitors were not verified; the all-film output costs several times the hybrid option — if cost pressure reopens the hybrid, electrolytic lifetime modelling is outside the knowledge base and needs human review."
+  ],
+  "verification_status": "Analytically checked at all nine corners (Vin 360/400/440 V, Io 25/27.5 A, L 267/220 uH): input RMS 13.87 A max, dQ 137.5 uC, C_in 40 uF nominal, ripple 1 %; HF tier model; output RMS 2.86 A, 120 uF for the 12.5 A step; bleeder discharge 35.7 s and 0.74 W. Film capacitors and bleeder resistors verified against fetched manufacturer datasheets (TDK June 2026, KEMET F3114 6/2024 and F3125 8/2021, Vishay 26015 rev 09-Aug-2023, Vishay 20035 rev 14-Apr-2026). MLCC parameters at search-snippet level only; DC-bias curve, availability, interconnect inductance, lifetime at voltage ratio and prices unverified. Human review required for discharge-time option, creepage/clearance values, output OVP margin, ceramic voltage ratio with overshoot, bus damping and heat-sink exhaust placement.",
+  "markdown": "# DC-link input and output capacitor design — 400 V to 200 V, 5 kW, 50 kHz SiC synchronous buck\n\nAI-GENERATED ENGINEERING PROTOTYPE V2 — HUMAN REVIEW REQUIRED. Result file: examples/sic-buck-400v-200v-5kw/design/research/capacitors.json.\n\n## 1. Scope and knowledge basis\n\nThis section sizes (a) the input DC-link film bank, (b) the high-frequency ceramic tier at the half-bridge, (c) the output bank and (d) the passive discharge (bleeder) resistors. The method is the SKILL-003 procedure, steps 1-4 and 6; step 5 (DC-blocking capacitor, KR-CAP-004) does not apply because there is no transformer. Rules applied: KR-CAP-001 (charge balance, adapted to the buck current waveform), KR-CAP-002 (RMS current at f_sw and temperature, direct), KR-CAP-003 (bulk film plus distributed HV ceramics, direct), KR-PCB-004 with PE-PCB-002/003 (power-loop priority, direct), KR-PCB-006 with PE-PCB-006 (paralleled bus copper, direct), KR-ISO-002/003 (spacing per standard, human review), SKILL-006 step 3 (film capacitors out of the heat-sink exhaust, direct, itself flagged for review in the knowledge base). From REF-TI-TIDA-010054 decision 2 only the two-tier architecture and the dQ -> C method are reused; the instance values (30 uF / 60 uF banks, 5 V ripple target, 14 MLCC per bridge, B32716 parts) are not copied, and the DAB rectified-tank capacitor waveform is replaced by the buck's pulsating input current and triangular output current (adaptation). Electrolytic lifetime modelling is outside the knowledge base (SKILL-003 \"not applicable\"); it appears only in the technology comparison and is flagged.\n\n## 2. Operating envelope\n\nVin 360 / 400 / 440 V [SEED], Vout 200 V [USER], Io 25 A with 27.5 A for 10 s [SEED], fs 50 kHz [USER], D = Vout/Vin = 0.556 / 0.500 / 0.455, L = 267 uH nominal with 220 uH as the low bound of the accepted 220-300 uH window [SEED], ambient 50 degC [SEED]. Inductor ripple dI = Vout(1-D)/(L fs): 6.66 A (360 V) / 7.49 A (400 V) / 8.17 A (440 V) at 267 uH and 8.08 / 9.09 / 9.92 A at 220 uH.\n\n## 3. Input DC-link bank\n\n### 3.1 Capacitor current (SKILL-003 step 2; KR-CAP-002)\n\nThe high-side switch draws i_L during D*Ts and nothing otherwise; the source supplies Iin = D*Io. Including the inductor ripple, I_Cin,rms = sqrt( D*(Io^2 + dI^2/12) - (D*Io)^2 ).\n\n| Vin (V) | D | Io (A) | Io*sqrt(D(1-D)) (A) | I_Cin,rms, 267 uH (A) | I_Cin,rms, 220 uH (A) | dQ (uC) |\n|---|---|---|---|---|---|---|\n| 360 | 0.556 | 25.0 | 12.42 | 12.50 | 12.54 | 123.5 |\n| 400 | 0.500 | 25.0 | 12.50 | 12.59 | 12.64 | 125.0 |\n| 440 | 0.455 | 25.0 | 12.45 | 12.55 | 12.60 | 124.0 |\n| 360 | 0.556 | 27.5 | 13.66 | 13.74 | 13.78 | 135.8 |\n| 400 | 0.500 | 27.5 | 13.75 | 13.83 | 13.87 | 137.5 |\n| 440 | 0.455 | 27.5 | 13.69 | 13.79 | 13.83 | 136.4 |\n\nWorst case 13.87 A RMS at 400 V, 27.5 A, 220 uH; the ripple term adds under 1 % to Io*sqrt(D(1-D)).\n\n### 3.2 Ripple charge and capacitance (KR-CAP-001)\n\nBecause Io - dI/2 > D*Io at every corner, the capacitor current is positive during the whole on-time and the ripple charge is exactly dQ = D(1-D)*Io*Ts: 123.5-125 uC at 25 A and 137.5 uC worst case at 400 V / 27.5 A. Ripple target (assumption A1): <= 2 % pk-pk of Vin, i.e. 8 Vpp at 400 V. Justification: it keeps the DSP input-voltage sample error from ripple that is asynchronous to the ADC trigger within +/-1 %, keeps 440 V + half ripple + commutation overshoot well below the 460 V OVP trip, and limits the 50 kHz component presented to the external source; TIDA-010054 achieved about 1 % on its 500 V link (reference observation, not copied). C_in >= 137.5 uC / 8 V = 17.2 uF; with the -10 % tolerance >= 19.1 uF nominal.\n\n### 3.3 RMS rating, technology and count (KR-CAP-002; SKILL-003 principle 2)\n\n13.9 A RMS at 50 kHz excludes aluminium electrolytics (250-450 V snap-ins carry 2-4 A each at 50 kHz) and leads to metallised-polypropylene film. Two capacitors share the current (6.9 A each) and allow one on each side of the half-bridge. Film ratings are given at 10 kHz; for MKP box capacitors the ESR is essentially flat from 10 kHz to about 70-100 kHz (Vishay 26015 footnote 3: ESR typical values valid 10-70 kHz for P = 37.5 mm; TDK defines I_RMS,max as the thermal limit for dT <= 20 K at 70 degC), so the 10 kHz rating is used unchanged at 50 kHz and self-heating is checked through ESR: dT = I^2 * ESR * R_th.\n\nSelected: 2 x TDK B32776G8206K000 (20 uF +/-10 %, V_R,70degC = 800 V DC, V_op,85degC = 700 V DC, I_RMS,max 14.5 A at 70 degC / 10 kHz / dT <= 20 K, ESR 7.5 mOhm typical, ESL 10 nH, 28 x 37 x 42 mm, lead spacing 37.5 mm, P1 = 10.2 mm, 4 pins; TDK datasheet B3277*D/E/G/J/T dated June 2026). Per capacitor: 6.92 A = 0.48 of rating; P = 6.92^2 x 7.5 mOhm = 0.36 W; implied R_th = 20 K / (14.5^2 x 7.5 mOhm) = 12.7 K/W, so dT = 4.6 K; hotspot about 65 degC at 50 degC ambient with a 10 K local-air allowance (assumption A6), below the 70 degC at which the full V_R applies (above 85 degC TDK derates V_op by 1.33 %/degC; 105 degC case maximum). Alternates with the same 4-pin pattern: KEMET C4AQIBW5200A3JJ (20 uF +/-5 %, 800 V, I_rms 17.4 A on a dT = 30 K basis, ESR 4.7 mOhm, R_th 18 degC/W -> dT 4.1 K, dV/dt 13 V/us) and Vishay MKP1848C62080JP4 (20 uF +/-5 %, U_NDC 800 V at 85 degC, I_RMS 12 A at 10 kHz / 85 degC / dT 15 K, ESR 6 mOhm, dV/dt 35 V/us -> dT 5.0 K). Resulting ripple with C_min = 36 uF: 3.8 Vpp (0.95 %) at 27.5 A and 3.5 Vpp at 25 A; the ESR term is 3.75 mOhm x 44 A pk-pk capacitor current = 0.17 V.\n\n### 3.4 Voltage rating (SKILL-003 principle 4)\n\nRatios: 440/800 = 0.55 continuous, 460/800 = 0.575 at the OVP trip, 480/800 = 0.60 for the 100 ms transient; against TDK V_op,85 = 700 V the transient ratio is 0.69. The 575 V class (ratios 0.77 / 0.83) was rejected for margin against commutation overshoot and for lifetime. KEMET and Vishay state 100,000 h at V_NDC / U_NDC and 70 degC hotspot; the voltage-lifetime curves in the datasheets must be read for the actual 0.55 ratio — no exponent is asserted because TI states no derating rule and the knowledge base does not contain one.\n\n## 4. High-frequency ceramic tier (KR-CAP-003; KR-PCB-004; PE-PCB-002)\n\nThe film path has about 10 nH ESL per part plus 20-40 nH of interconnect. At the switching edges (about 31 A in 30-50 ns, roughly 1 A/ns) this would produce 20-40 V of bus droop/overshoot if the film had to supply the edge current. Ceramics beside the TO-247 pins supply the edge charge until the film path takes over, i.e. for about a quarter period of the film-to-ceramic resonance: with L_int = 30 nH and C_eff = 1.88 uF, f_r = 670 kHz, T/4 = 373 ns, dQ = 31.3 A x 373 ns = 11.7 uC and the dip is 6.2 V (1.5 %); with 1.0 uF effective it would be 8.5 V (2.1 %). Requirement: C_eff >= 1.5 uF at 440 V bias (assumption A5).\n\nSelected: 10 x TDK CGA9P1X7T2J474M250KC (2220, 0.47 uF, 630 V, X7T, AEC-Q200, soft termination; the K250KC +/-10 % variant is interchangeable). Nominal 4.7 uF; counted as 1.88 uF assuming at most 60 % DC-bias loss at 440 V (assumption A4). The TDK datasheet plots the DC-bias characteristic with a 315 V reference point, but TDK's product page and the mirrored PDF could not be read (HTTP 403 / timeout), so the curve value is unverified and must be read before release. Alternate with lower bias loss and a 0.44 voltage ratio: Knowles 2220Y1K00474KXTWS2 (0.47 uF, 1 kV, X7R, 2220, FlexiCap). KEMET C2220C474KCRACTU is a 500 V part on KEMET's product page (ratio 0.88) and is rejected. Current in the ceramics: the 50 kHz share is 1.88/(36 + 1.88) = 5 %, i.e. 0.69 A total or 69 mA per piece; the HF edge current is about 1.3 A RMS total (triangular 50 ns edges), 0.13 A per piece — heating is negligible. Voltage ratio 440/630 = 0.70 (0.76 at 480 V) plus commutation overshoot: human review against the TDK rated-voltage definition. The film-to-ceramic resonance is lightly damped (Z0 about 0.13 Ohm versus 3.75 mOhm film ESR): keep L_int small; if simulation shows bus ringing, add a 1 uF + 0.47 Ohm RC damping leg (open issue).\n\n## 5. Output bank\n\n### 5.1 Requirements\n\nI_Cout,rms = dI/sqrt(12) = 2.16 A (400 V, 267 uH) to 2.86 A (440 V, 220 uH). Ripple: dV = dI/(8 fs C) + ESR*dI -> C >= 12.5 uF for 2.0 Vpp with 1.8 mOhm bank ESR (not limiting). Load step (assumption A2: outer voltage-loop crossover fc = 2.5 kHz, i.e. fs/20 for a one-sample-delay digital loop with an inner average-current loop; the inductor slew limit (Vin - Vout)/L >= 0.6 A/us, 21 us for 12.5 A, is faster than the loop): dV = dI/(2 pi fc C) + ESR*dI -> C >= 79.8 uF at 2.5 kHz and 99.7 uF at 2.0 kHz; with -10 % tolerance 89-111 uF nominal. Selected 120 uF nominal (108 uF minimum). LC corner 889 Hz with 267 uH.\n\n### 5.2 Technology comparison and selection\n\nFilm: 2 x TDK B32776G4606K000 (60 uF +/-10 %, V_R,70 = V_op,85 = 450 V DC, I_RMS 23.5 A, ESR 3.6 mOhm, ESL 14 nH, 30 x 45 x 42 mm, lead spacing 37.5 mm, P1 = 20.3 mm). Per part 1.43 A (0.06 of rating, 7 mW); ratios 200/450 = 0.44 and 220/450 = 0.49; a shorted high-side switch connects the 440 V bus to the output bank and 440/450 = 0.98 is survivable for the fuse-clearing interval (V_op,85 = 450 V); volume 113 cm3; distributor price not verified. Aluminium electrolytic: 2 x Nichicon LGW2E471MELB25 (470 uF, 250 V snap-in, 3.3 A at 50 kHz, 3000 h at 105 degC, 30 x 25 mm, about USD 4.7 at 10 pieces per the Digi-Key listing): 940 uF in 35 cm3, ratios 0.80 / 0.88, 10-K-rule estimate 48,000-96,000 h at 55-65 degC core — but the 50 kHz ESR was not found, lifetime modelling is outside the knowledge base, and the bank would vent under the high-side-short fault. Hybrid (1 x 20 uF film for the 50 kHz ripple plus 2 x 470 uF electrolytic for the step): lowest cost per microfarad, inherits the electrolytic limitations. Selection: all-film — robust at 50 degC, 100,000 h class without a lifetime model, fault tolerant, consistent with SKILL-003 and TIDA-010054. Alternates: Vishay MKP1848C66050JP* (60 uF, U_NDC 500 V, 18 A, 3 mOhm, 30 x 57 x 42 mm) or 3 x TDK B32776G4406K000 (40 uF, 450 V). Results with 108 uF: 12.5 A step -> 7.4 V at 2.5 kHz / 9.2 V at 2.0 kHz (<= 10 V); ripple 0.25 Vpp (0.12 %); full 25 A load dump -> +14.8 V (2.5 kHz) / +18.5 V (2.0 kHz), i.e. 215-218.5 V against the 220 V output OVP (open issue). Optional: 4 x 0.47 uF 630 V 2220 at the output terminals for HF noise/EMI (not needed for ripple).\n\n## 6. Bleeder (discharge) resistors\n\nAssumption A3: discharge to below 60 V within 60 s with a warning label, following the IEC 61800-5-1 clause 4.3.11 / IEC 62477-1 clause 4.4.9 option of a longer discharge time with marking; the 5 s option needs about 3 W of continuous dissipation or an active discharge circuit and is left for human review. Coupling: when Vin falls below Vout the high-side body diode conducts through L and the output bank discharges into the input bank, so both bleeders act on both banks. A two-bank ideal-diode simulation (C_in 48.7 uF including ceramics at +10 %, C_out 132 uF, start 460 V / 200 V) gives 35.7 s to below 60 V with R_in = 360 kOhm and R_out = 200 kOhm (input alone 35.7 s; output alone from 220 V 34.3 s). Input: 3 x Vishay CRCW2512120KFKEG in series (120 kOhm, 1 %, 1 W at 70 degC, 500 V limiting element voltage, datasheet 20035 rev 14-Apr-2026): 147 V / 160 V per resistor at 440 / 480 V, 0.54 W total at 440 V (0.18 W each, 18 % of P70; derating linear to zero at 155 degC film temperature). Output: 2 x CRCW2512100KFKEG (100 kOhm): 100 / 110 V each, 0.20 W total. Standby loss 0.74 W. Without bleeders the film self-discharge time constant exceeds 10,000 s. The input voltage-sense divider (SKILL-005 agent) adds a parallel path and is not credited.\n\n## 7. Capacitor and bleeder BOM\n\n| Ref | Qty | Part | Key verified parameters | Verification | Datasheet |\n|---|---|---|---|---|---|\n| C_IN1, C_IN2 | 2 | TDK B32776G8206K000 | 20 uF +/-10 %, 800 V DC, 14.5 A (70 degC/10 kHz), 7.5 mOhm, 10 nH, 28x37x42 mm, P 37.5 / P1 10.2 mm | fetched datasheet, June 2026 | tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf |\n| alt C_IN | 2 | KEMET C4AQIBW5200A3JJ | 20 uF +/-5 %, 800 V, 17.4 A (dT 30 K), 4.7 mOhm, 10 nH, R_th 18 degC/W, 28x37x42 mm | fetched datasheet F3114, 6/14/2024 (CERN mirror) | sy-dep-epc-lpc.web.cern.ch/.../C4AQ_Film-Capacitor_KEMET.pdf |\n| alt C_IN | 2 | Vishay MKP1848C62080JP4 | 20 uF +/-5 %, 800 V, 12 A (85 degC), 6 mOhm, 35 V/us, 21.5x38.5x42 mm | fetched datasheet 26015 rev 09-Aug-2023 | vishay.com/docs/26015/mkp1848cdclink.pdf |\n| C_HF1-10 | 10 | TDK CGA9P1X7T2J474M250KC | 0.47 uF +/-20 %, 630 V, X7T, 2220 5.7x5.0x2.5 mm, AEC-Q200 | search snippet (Arrow/RS/Avnet) | TDK product page blocked (403) |\n| alt C_HF | 10 | Knowles 2220Y1K00474KXTWS2 | 0.47 uF, 1 kV, X7R, 2220, FlexiCap | search snippet | product.knowles.com (403) |\n| C_OUT1, C_OUT2 | 2 | TDK B32776G4606K000 | 60 uF +/-10 %, 450 V, 23.5 A, 3.6 mOhm, 14 nH, 30x45x42 mm, P 37.5 / P1 20.3 mm | fetched datasheet, June 2026 | same TDK document |\n| alt C_OUT | 2 | Vishay MKP1848C66050JP* | 60 uF, 500 V, 18 A (4-pin), 3 mOhm, 30x57x42 mm | fetched datasheet 26015 | same Vishay document |\n| R_BL_IN1-3 | 3 | Vishay CRCW2512120KFKEG | 120 kOhm 1 %, 1 W, 500 V, -55..155 degC | fetched datasheet 20035 | vishay.com/docs/20035/dcrcwe3.pdf |\n| R_BL_OUT1-2 | 2 | Vishay CRCW2512100KFKEG | 100 kOhm 1 %, 1 W, 500 V | fetched datasheet 20035 | same |\n\n## 8. Placement and PCB constraints (SKILL-002 principle 1; KR-PCB-004; KR-PCB-006; KR-ISO-002)\n\n1. C_HF ceramics: first row within 5 mm, second row within 15 mm of the high-side drain and low-side source pins of the TO-247-4 pair, split on both sides of the device row; Vin+ and PGND as overlapping pours on adjacent layers under the ceramics; target commutation-loop inductance <= 20 nH including the two packages (about 20 V overshoot at 1 A/ns on a 1200 V device).\n2. Film capacitors within 30-40 mm of the half-bridge, each on its own side, connected by Vin+ / PGND pours >= 20 mm wide (70 um copper: 1.4 mm2 per layer, 5 A/mm2 at 7 A RMS) repeated on at least two layers and stitched with via arrays (KR-PCB-006, PE-PCB-006); the four pins of each capacitor connect to both layers.\n3. Custom KiCad footprints: a 4-pad pattern with pads at x = +/-18.75 mm, y = +/-5.10 mm (P1 10.2 mm) for the 20 uF parts and y = +/-10.15 mm (P1 20.3 mm) for the 60 uF parts; drill 1.6 mm, pad 3.0 mm for 1.2 mm leads; courtyards 28 x 42 mm and 30 x 45 mm plus clearance, heights 37 mm and 45 mm. The library C_Rect_L41.5mm_W*_P37.50mm footprints are 2-pin and do not fit; the 2-pin TDK \"E\" variants would fit but have 24-30 nH ESL and are not preferred.\n4. Spacing: Vin+ to PGND working voltage 440 V DC (480 V transient): functional insulation, PD2, CTI >= 175 (group IIIa) — provisional >= 2.5 mm creepage and >= 1.5 mm clearance around capacitor pads and the bleeder chain, 3.0 mm recommended; the governing values are set by the isolation agent per KR-ISO-002 (human review); 2220 pad-to-pad gap is about 3.5-4 mm.\n5. Bleeder chains routed as a straight series string along the capacitor edge, each resistor dropping <= 160 V, away from the gate-driver area; mark the discharge time near the input terminals.\n6. Keep film capacitors and the bleeders out of the heat-sink exhaust airflow (SKILL-006 step 3); if the film capacitors sit downstream of the heat sink, re-evaluate the 10 K local-air allowance with a measurement.\n7. If the architecture agent splits power and control boards, the whole capacitor set stays on the power board; only the bleeders and the sense divider interface matter for the control board.\n\n## 9. Margin summary\n\n| Item | Requirement | Result | Margin |\n|---|---|---|---|\n| Input RMS current | 13.87 A at 50 kHz, 50 degC | 2 x 14.5 A rating (dT 20 K basis), dT 4.6 K | 2.1x on current, 4.3x on dT |\n| Input ripple | <= 8 Vpp (2 %) | 3.8 Vpp (0.95 %) at 27.5 A | 2.1x |\n| Input voltage ratio | <= about 0.6 of V_R (assumption) | 0.55 / 0.575 / 0.60 (440 / 460 / 480 V) | meets |\n| HF tier capacitance | >= 1.5 uF effective at 440 V | 1.88 uF assumed (4.7 uF nominal) | 1.25x, DC bias unverified |\n| Output RMS current | 2.86 A | 2 x 23.5 A | 16x |\n| Output ripple | <= 2.0 Vpp | 0.25 Vpp | 8x |\n| Load step | <= 10 V for 12.5 A | 7.4 V (2.5 kHz) / 9.2 V (2.0 kHz) | 1.35x / 1.09x |\n| Output voltage ratio | 200 V / 220 V OVP | 0.44 / 0.49 of 450 V | meets |\n| Discharge | < 60 V within 60 s | 35.7 s coupled | 1.7x |\n| Bleeder element voltage | <= 500 V | 160 V max | 3.1x |\n\n## 10. Verification status\n\nAnalytically checked: input RMS current, ripple charge and capacitance at all nine corners; ESR and self-heating of all three film candidates against datasheet ratings; voltage ratios; HF-tier charge/dip model; output RMS, ripple and load-step capacitance; coupled bleeder discharge time and dissipation; copper current density. Verified against fetched datasheets: TDK B32776 (June 2026), KEMET C4AQ (6/2024) and C4AQ-M (8/2021), Vishay MKP1848C (rev 09-Aug-2023), Vishay CRCW e3 (rev 14-Apr-2026). Unverified: MLCC DC-bias curve and availability (TDK and Knowles pages blocked; Avnet shows zero stock / 168-week lead for the M250KC variant while SnapEda lists stock at Newark), Vishay 4-pin ordering-code digit, film-capacitor lifetime at the actual voltage ratio (curves not read), distributor prices, interconnect inductance (needs layout extraction), electrolytic 50 kHz ESR. Human review required: discharge-time option (60 s with label versus 5 s), creepage/clearance values per KR-ISO-002, output OVP threshold versus the load-dump excursion, 630 V versus 1 kV ceramic rating with overshoot, bus resonance damping, placement relative to the heat-sink exhaust, and the electrolytic option if cost pressure reopens it (lifetime modelling outside the knowledge base).\n"
+}

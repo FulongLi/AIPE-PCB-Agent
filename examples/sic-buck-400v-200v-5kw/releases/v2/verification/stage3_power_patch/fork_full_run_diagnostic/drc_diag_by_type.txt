@@ -1,0 +1,107 @@
+violations 624, unconnected 154, parity 0
+
+=== clearance / HV functional clearance (outer layers): 262 (error) ===
+  - need/actual ['3.0000', '0.4578'] @ {'x': 169.0, 'y': 132.0}
+      TRACK [VIN] F.Cu (169.000,132.000)-(172.125,132.000) w=0.60
+      TRACK [5V_ISO] F.Cu (168.500,132.875)-(168.375,132.875) w=0.50
+  - need/actual ['3.0000', '0.5801'] @ {'x': 117.25, 'y': 134.25}
+      TRACK [VEE_L] B.Cu (117.250,134.250)-(117.250,134.125) w=0.80
+      PAD D5.1 [SW] B @(119.000,132.500) size 2.50x1.80
+  - need/actual ['3.0000', '0.7250'] @ {'x': 116.625, 'y': 133.0}
+      TRACK [VEE_L] B.Cu (116.625,133.000)-(116.125,133.000) w=0.80
+      PAD D5.1 [SW] B @(119.000,132.500) size 2.50x1.80
+  ... 259 more
+
+=== via_dangling / -: 133 (warning) ===
+  - need/actual [] @ {'x': 127.125, 'y': 151.375}
+      VIA [3V3] @(127.125,151.375) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 216.5, 'y': 151.5}
+      VIA [3V3] @(216.500,151.500) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 155.0, 'y': 169.125}
+      VIA [3V3] @(155.000,169.125) d=0.60 drill=0.30
+  ... 130 more
+
+=== clearance / HV side to CTRL_SELV (all layers): 100 (error) ===
+  - need/actual ['9.0000', '8.1811'] @ {'x': 100.445, 'y': 149.65}
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+      TRACK [DESAT_H_OC] F.Cu (99.175,140.350)-(99.125,140.375) w=0.30
+  - need/actual ['9.0000', '8.8500'] @ {'x': 99.125, 'y': 140.375}
+      TRACK [DESAT_H_OC] F.Cu (99.125,140.375)-(99.125,138.625) w=0.30
+      TRACK [3V3] F.Cu (99.175,149.650)-(99.125,149.625) w=0.50
+  - need/actual ['9.0000', '8.9766'] @ {'x': 100.445, 'y': 140.35}
+      TRACK [KS_H] F.Cu (100.445,140.350)-(100.500,140.375) w=0.25
+      TRACK [3V3] F.Cu (99.125,149.625)-(99.125,151.375) w=0.50
+  ... 97 more
+
+=== items_not_allowed / -: 60 (error) ===
+  - need/actual [] @ {'x': 157.5, 'y': 140.0}
+      TRACK [PGND] F.Cu (157.500,140.000)-(156.625,140.000) w=0.25
+  - need/actual [] @ {'x': 168.5, 'y': 140.0}
+      TRACK [PGND] F.Cu (168.500,140.000)-(169.375,140.000) w=0.25
+  - need/actual [] @ {'x': 72.5, 'y': 150.0}
+      TRACK [GNDP_H] F.Cu (72.500,150.000)-(71.625,150.000) w=0.40
+  ... 57 more
+
+=== clearance / HV side to PE: 39 (error) ===
+  - need/actual ['5.0000', '4.9738'] @ {'x': 39.75, 'y': 11.25}
+      TRACK [PE] B.Cu (39.750,11.250)-(39.625,11.250) w=2.00
+      VIA [VIN] @(44.000,6.500) d=0.80 drill=0.40
+  - need/actual ['5.0000', '4.9799'] @ {'x': 40.375, 'y': 11.875}
+      TRACK [PE] B.Cu (40.375,11.875)-(40.375,11.750) w=2.00
+      VIA [VIN] @(44.000,6.500) d=0.80 drill=0.40
+  - need/actual ['5.0000', '4.9799'] @ {'x': 38.75, 'y': 10.375}
+      TRACK [PE] B.Cu (38.750,10.375)-(38.750,10.125) w=2.00
+      VIA [VIN] @(44.000,6.500) d=0.80 drill=0.40
+  ... 36 more
+
+=== items_not_allowed / ISO_BARRIER: 15 (error) ===
+  - need/actual [] @ {'x': 156.625, 'y': 140.0}
+      VIA [PGND] @(156.625,140.000) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 169.375, 'y': 140.0}
+      VIA [PGND] @(169.375,140.000) d=0.60 drill=0.30
+  - need/actual [] @ {'x': 84.375, 'y': 150.0}
+      VIA [GNDP_H] @(84.375,150.000) d=0.60 drill=0.30
+  ... 12 more
+
+=== clearance / CTRL_SELV: 8 (error) ===
+  - need/actual ['0.2500', '0.2250'] @ {'x': 140.375, 'y': 150.0}
+      TRACK [12V_BIAS_L] F.Cu (140.375,150.000)-(140.250,150.000) w=0.40
+      TRACK [GNDP_L] F.Cu (141.025,149.975)-(141.000,150.000) w=0.40
+  - need/actual ['0.2500', '0.2250'] @ {'x': 140.375, 'y': 149.975}
+      TRACK [12V_BIAS_L] F.Cu (140.375,149.975)-(140.375,150.000) w=0.40
+      TRACK [GNDP_L] F.Cu (141.025,149.975)-(141.000,150.000) w=0.40
+  - need/actual ['0.2500', '0.2250'] @ {'x': 162.025, 'y': 149.975}
+      TRACK [GNDP_S] F.Cu (162.025,149.975)-(162.000,150.000) w=0.40
+      TRACK [12V_BIAS_S] F.Cu (161.375,149.975)-(161.375,150.000) w=0.40
+  ... 5 more
+
+=== silk_edge_clearance / -: 4 (warning) ===
+  - need/actual [] @ {'x': 116.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(116.23,144.38)-(131.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(118.68,141.08)-(118.80,148.92)
+  - need/actual [] @ {'x': 116.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(116.23,144.38)-(131.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(129.20,141.08)-(129.32,148.92)
+  - need/actual [] @ {'x': 88.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(88.23,144.38)-(103.77,144.43)
+      SHAPE of U1 F.Silkscreen Line bbox=(90.68,141.08)-(90.80,148.92)
+  ... 1 more
+
+=== clearance / HV functional clearance (inner layers): 2 (error) ===
+  - need/actual ['1.0000', '0.3753'] @ {'x': 168.125, 'y': 132.625}
+      VIA [5V_ISO] @(168.125,132.625) d=0.60 drill=0.30
+      VIA [VIN] @(169.000,132.000) d=0.80 drill=0.40
+  - need/actual ['1.0000', '0.3753'] @ {'x': 168.125, 'y': 132.625}
+      VIA [5V_ISO] @(168.125,132.625) d=0.60 drill=0.30
+      VIA [VIN] @(169.000,132.000) d=0.80 drill=0.40
+
+=== clearance / DRV_LS: 1 (error) ===
+  - need/actual ['0.3000', '0.2500'] @ {'x': 141.675, 'y': 140.025}
+      TRACK [VDD_L] F.Cu (141.675,140.025)-(141.625,140.000) w=0.40
+      TRACK [VEE_L] F.Cu (142.325,140.025)-(142.375,140.000) w=0.40
+
+=== unconnected (154) ===
+  3V3:29, GNDP_S:13, GNDP_L:10, GNDP_H:8, 12V_BIAS_H:5, 12V_BIAS_S:5, 12V_BIAS_L:5, VIN:4, VDD_H:4, VEE_L:4, VDD_L:4, VOUT_SENSE:3, BIAS_EN_F:3, VEE_H:3, HS_FB_VDD:3, PE:3, LS_FB_VDD:3, PGND:2, VIN_SENSE:2, HS_FB_VEE:2, RDY_L:2, DESAT_L_OC:2, FLT_L_N:2, FAN_TACH:2, LS_FB_VEE:2, ISO_FB_VEE:2, G_L:2, SPARE_D1:1, VIN_AMP_N:1, VIN_AMP_P:1, VOUT_AMP_N:1, PG_BIAS_H_N:1, HS_RLIM:1, FAULT_N:1, LS_RLIM:1, KS_L:1, LS_OUTH:1, LS_OUTL:1, LS_CLMP:1, RELAY_ON:1, OC_N:1, PG_BIAS_S_N:1, PG_BIAS_L_N:1, SPARE_D2:1, HS_OUTH:1, HS_OUTL:1, HS_CLMP:1, ISO_15V:1, ISO_RLIM:1, ISO_FB_VDD:1, HS_GK:1, LS_GK:1
+  - PAD C3.1 [VIN] F @(66.600,129.050) size 1.80x5.40 | ZONE  [VIN] F.Cu prio=2 bbox=(14.0,120.0)-(88.3,139.9)
+  - PAD C2.1 [VIN] F @(72.800,129.050) size 1.80x5.40 | PAD C1.1 [VIN] F @(79.000,129.050) size 1.80x5.40
+  - PAD D3.1 [VIN] F @(84.500,131.500) size 2.50x1.80 | PAD C1.1 [VIN] F @(79.000,129.050) size 1.80x5.40

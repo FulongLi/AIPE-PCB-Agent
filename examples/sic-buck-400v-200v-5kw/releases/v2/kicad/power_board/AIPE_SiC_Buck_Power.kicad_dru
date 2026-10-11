@@ -1,0 +1,141 @@
+(version 1)
+# Design basis: examples/sic-buck-400v-200v-5kw/design/design_decisions.json (schema 3, 2026-10-10) - single source of truth; electrical model automation/kicad_tools/sic_buck_power_model.py; generator automation/kicad_tools/generate_sic_schematics.py.
+# 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine.
+# AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+# Rule order matters: later rules override earlier ones. Net-class clearances (project file) apply first.
+(rule "HV functional clearance (inner layers)" (layer inner)
+  (condition "(((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS')) || ((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV')) || ((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV')) || ((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS'))) || (((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS'))) || (((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV'))) || ((A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')) || ((A.NetClass == 'HV_SW' && B.NetClass == 'HV_SW')) || ((A.NetClass == 'HV_PGND' && B.NetClass == 'HV_PGND')) || ((A.NetClass == 'HV_VOUT' && B.NetClass == 'HV_VOUT'))")
+  (constraint clearance (min 1mm)))
+(rule "HV functional clearance (outer layers)" (layer outer)
+  (condition "(((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS')) || ((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV')) || ((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_VIN') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_VIN'))) || (((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV')) || ((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS'))) || (((A.NetClass == 'HV_SW' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_SW' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS'))) || (((A.NetClass == 'HV_PGND' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'HV_PGND' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV'))) || ((A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')) || ((A.NetClass == 'HV_SW' && B.NetClass == 'HV_SW')) || ((A.NetClass == 'HV_PGND' && B.NetClass == 'HV_PGND')) || ((A.NetClass == 'HV_VOUT' && B.NetClass == 'HV_VOUT'))")
+  (constraint clearance (min 3mm)))
+(rule "Same reference island (SW island, PGND island)"
+  (condition "(((A.NetClass == 'HV_SW') && (B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS')) || ((A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_SW'))) || (((A.NetClass == 'HV_PGND') && (B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV')) || ((A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_PGND')))")
+  (constraint clearance (min 0.3mm)))
+(rule "HV side to PE"
+  (condition "((A.NetClass == 'HV_VIN' || A.NetClass == 'HV_SW' || A.NetClass == 'HV_PGND' || A.NetClass == 'HV_VOUT' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'PE')) || ((A.NetClass == 'PE') && (B.NetClass == 'HV_VIN' || B.NetClass == 'HV_SW' || B.NetClass == 'HV_PGND' || B.NetClass == 'HV_VOUT' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV'))")
+  (constraint clearance (min 5mm)))
+(rule "HV side to CTRL_SELV (all layers)"
+  (condition "((A.NetClass == 'HV_VIN' || A.NetClass == 'HV_SW' || A.NetClass == 'HV_PGND' || A.NetClass == 'HV_VOUT' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV') && (B.NetClass == 'CTRL_SELV' || B.NetClass == 'CTRL_PWR' || B.NetClass == 'Default')) || ((A.NetClass == 'CTRL_SELV' || A.NetClass == 'CTRL_PWR' || A.NetClass == 'Default') && (B.NetClass == 'HV_VIN' || B.NetClass == 'HV_SW' || B.NetClass == 'HV_PGND' || B.NetClass == 'HV_VOUT' || B.NetClass == 'DRV_HS' || B.NetClass == 'DESAT_HS' || B.NetClass == 'DRV_LS' || B.NetClass == 'DESAT_LS' || B.NetClass == 'SENSE_ISO' || B.NetClass == 'PGND_LV'))")
+  (constraint clearance (min 9mm)))
+(rule "HV side to board edge"
+  (condition "(A.NetClass == 'HV_VIN' || A.NetClass == 'HV_SW' || A.NetClass == 'HV_PGND' || A.NetClass == 'HV_VOUT' || A.NetClass == 'DRV_HS' || A.NetClass == 'DESAT_HS' || A.NetClass == 'DRV_LS' || A.NetClass == 'DESAT_LS' || A.NetClass == 'SENSE_ISO' || A.NetClass == 'PGND_LV')")
+  (constraint edge_clearance (min 1mm)))
+# Pin-field exceptions derived from pad geometry, one per footprint and class pair: 14 barrier (HV side to SELV inside a barrier package - the 1.2 mm isolation slot is mandatory), 17 HV (package shorter than the HV rule - creepage review), 8 pitch (0.65 mm pitch leaves 0.15-0.2 mm between pads - fabricator confirmation).
+(rule "pin field C15 HV_PGND-HV_SW (hv)"
+  (condition "A.memberOfFootprint('C15') && B.intersectsCourtyard('C15') && (((A.NetClass == 'HV_PGND') && (B.NetClass == 'HV_SW')) || ((A.NetClass == 'HV_SW') && (B.NetClass == 'HV_PGND')))")
+  (constraint clearance (min 2.69mm)))
+(rule "pin field D3 DESAT_HS-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('D3') && B.intersectsCourtyard('D3') && (((A.NetClass == 'DESAT_HS') && (B.NetClass == 'HV_VIN')) || ((A.NetClass == 'HV_VIN') && (B.NetClass == 'DESAT_HS')))")
+  (constraint clearance (min 1.49mm)))
+(rule "pin field D5 DESAT_LS-HV_SW (hv)"
+  (condition "A.memberOfFootprint('D5') && B.intersectsCourtyard('D5') && (((A.NetClass == 'DESAT_LS') && (B.NetClass == 'HV_SW')) || ((A.NetClass == 'HV_SW') && (B.NetClass == 'DESAT_LS')))")
+  (constraint clearance (min 1.49mm)))
+(rule "pin field R4 HV_VIN-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('R4') && B.intersectsCourtyard('R4') && (A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R5 HV_VIN-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('R5') && B.intersectsCourtyard('R5') && (A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R6 HV_VIN-PGND_LV (hv)"
+  (condition "A.memberOfFootprint('R6') && B.intersectsCourtyard('R6') && (((A.NetClass == 'HV_VIN') && (B.NetClass == 'PGND_LV')) || ((A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VIN')))")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R9 HV_VOUT-HV_VOUT (hv)"
+  (condition "A.memberOfFootprint('R9') && B.intersectsCourtyard('R9') && (A.NetClass == 'HV_VOUT' && B.NetClass == 'HV_VOUT')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R10 HV_VOUT-PGND_LV (hv)"
+  (condition "A.memberOfFootprint('R10') && B.intersectsCourtyard('R10') && (((A.NetClass == 'HV_VOUT') && (B.NetClass == 'PGND_LV')) || ((A.NetClass == 'PGND_LV') && (B.NetClass == 'HV_VOUT')))")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R14 HV_PGND-PE (hv)"
+  (condition "A.memberOfFootprint('R14') && B.intersectsCourtyard('R14') && (((A.NetClass == 'HV_PGND') && (B.NetClass == 'PE')) || ((A.NetClass == 'PE') && (B.NetClass == 'HV_PGND')))")
+  (constraint clearance (min 4.69mm)))
+(rule "pin field R16 HV_PGND-PE (hv)"
+  (condition "A.memberOfFootprint('R16') && B.intersectsCourtyard('R16') && (((A.NetClass == 'HV_PGND') && (B.NetClass == 'PE')) || ((A.NetClass == 'PE') && (B.NetClass == 'HV_PGND')))")
+  (constraint clearance (min 4.69mm)))
+(rule "pin field R59 HV_VIN-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('R59') && B.intersectsCourtyard('R59') && (A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R60 HV_VIN-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('R60') && B.intersectsCourtyard('R60') && (A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R61 HV_VIN-HV_VIN (hv)"
+  (condition "A.memberOfFootprint('R61') && B.intersectsCourtyard('R61') && (A.NetClass == 'HV_VIN' && B.NetClass == 'HV_VIN')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R62 HV_VIN-SENSE_ISO (hv)"
+  (condition "A.memberOfFootprint('R62') && B.intersectsCourtyard('R62') && (((A.NetClass == 'HV_VIN') && (B.NetClass == 'SENSE_ISO')) || ((A.NetClass == 'SENSE_ISO') && (B.NetClass == 'HV_VIN')))")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R64 HV_VOUT-HV_VOUT (hv)"
+  (condition "A.memberOfFootprint('R64') && B.intersectsCourtyard('R64') && (A.NetClass == 'HV_VOUT' && B.NetClass == 'HV_VOUT')")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field R65 HV_VOUT-SENSE_ISO (hv)"
+  (condition "A.memberOfFootprint('R65') && B.intersectsCourtyard('R65') && (((A.NetClass == 'HV_VOUT') && (B.NetClass == 'SENSE_ISO')) || ((A.NetClass == 'SENSE_ISO') && (B.NetClass == 'HV_VOUT')))")
+  (constraint clearance (min 1.79mm)))
+(rule "pin field U1 CTRL_SELV-DESAT_HS (barrier)"
+  (condition "A.memberOfFootprint('U1') && B.intersectsCourtyard('U1') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DESAT_HS')) || ((A.NetClass == 'DESAT_HS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U1 CTRL_SELV-DRV_HS (barrier)"
+  (condition "A.memberOfFootprint('U1') && B.intersectsCourtyard('U1') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DRV_HS')) || ((A.NetClass == 'DRV_HS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U1 DESAT_HS-Default (barrier)"
+  (condition "A.memberOfFootprint('U1') && B.intersectsCourtyard('U1') && (((A.NetClass == 'DESAT_HS') && (B.NetClass == 'Default')) || ((A.NetClass == 'Default') && (B.NetClass == 'DESAT_HS')))")
+  (constraint clearance (min 7.27mm)))
+(rule "pin field U1 DRV_HS-Default (barrier)"
+  (condition "A.memberOfFootprint('U1') && B.intersectsCourtyard('U1') && (((A.NetClass == 'DRV_HS') && (B.NetClass == 'Default')) || ((A.NetClass == 'Default') && (B.NetClass == 'DRV_HS')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U2 CTRL_SELV-CTRL_SELV (pitch)"
+  (condition "A.memberOfFootprint('U2') && B.intersectsCourtyard('U2') && (A.NetClass == 'CTRL_SELV' && B.NetClass == 'CTRL_SELV')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U2 CTRL_SELV-DRV_HS (barrier)"
+  (condition "A.memberOfFootprint('U2') && B.intersectsCourtyard('U2') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DRV_HS')) || ((A.NetClass == 'DRV_HS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 8.09mm)))
+(rule "pin field U2 DRV_HS-DRV_HS (pitch)"
+  (condition "A.memberOfFootprint('U2') && B.intersectsCourtyard('U2') && (A.NetClass == 'DRV_HS' && B.NetClass == 'DRV_HS')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U3 CTRL_SELV-DESAT_LS (barrier)"
+  (condition "A.memberOfFootprint('U3') && B.intersectsCourtyard('U3') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DESAT_LS')) || ((A.NetClass == 'DESAT_LS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U3 CTRL_SELV-DRV_LS (barrier)"
+  (condition "A.memberOfFootprint('U3') && B.intersectsCourtyard('U3') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DRV_LS')) || ((A.NetClass == 'DRV_LS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U3 DESAT_LS-Default (barrier)"
+  (condition "A.memberOfFootprint('U3') && B.intersectsCourtyard('U3') && (((A.NetClass == 'DESAT_LS') && (B.NetClass == 'Default')) || ((A.NetClass == 'Default') && (B.NetClass == 'DESAT_LS')))")
+  (constraint clearance (min 7.27mm)))
+(rule "pin field U3 DRV_LS-Default (barrier)"
+  (condition "A.memberOfFootprint('U3') && B.intersectsCourtyard('U3') && (((A.NetClass == 'DRV_LS') && (B.NetClass == 'Default')) || ((A.NetClass == 'Default') && (B.NetClass == 'DRV_LS')))")
+  (constraint clearance (min 7.24mm)))
+(rule "pin field U4 CTRL_SELV-CTRL_SELV (pitch)"
+  (condition "A.memberOfFootprint('U4') && B.intersectsCourtyard('U4') && (A.NetClass == 'CTRL_SELV' && B.NetClass == 'CTRL_SELV')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U4 CTRL_SELV-DRV_LS (barrier)"
+  (condition "A.memberOfFootprint('U4') && B.intersectsCourtyard('U4') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'DRV_LS')) || ((A.NetClass == 'DRV_LS') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 8.09mm)))
+(rule "pin field U4 DRV_LS-DRV_LS (pitch)"
+  (condition "A.memberOfFootprint('U4') && B.intersectsCourtyard('U4') && (A.NetClass == 'DRV_LS' && B.NetClass == 'DRV_LS')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U5 CTRL_SELV-CTRL_SELV (pitch)"
+  (condition "A.memberOfFootprint('U5') && B.intersectsCourtyard('U5') && (A.NetClass == 'CTRL_SELV' && B.NetClass == 'CTRL_SELV')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U5 CTRL_SELV-HV_PGND (barrier)"
+  (condition "A.memberOfFootprint('U5') && B.intersectsCourtyard('U5') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'HV_PGND')) || ((A.NetClass == 'HV_PGND') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 8.09mm)))
+(rule "pin field U5 CTRL_SELV-SENSE_ISO (barrier)"
+  (condition "A.memberOfFootprint('U5') && B.intersectsCourtyard('U5') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'SENSE_ISO')) || ((A.NetClass == 'SENSE_ISO') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 8.09mm)))
+(rule "pin field U5 HV_PGND-SENSE_ISO (pitch)"
+  (condition "A.memberOfFootprint('U5') && B.intersectsCourtyard('U5') && (((A.NetClass == 'HV_PGND') && (B.NetClass == 'SENSE_ISO')) || ((A.NetClass == 'SENSE_ISO') && (B.NetClass == 'HV_PGND')))")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U5 SENSE_ISO-SENSE_ISO (pitch)"
+  (condition "A.memberOfFootprint('U5') && B.intersectsCourtyard('U5') && (A.NetClass == 'SENSE_ISO' && B.NetClass == 'SENSE_ISO')")
+  (constraint clearance (min 0.19mm)))
+(rule "pin field U8 CTRL_SELV-CTRL_SELV (pitch)"
+  (condition "A.memberOfFootprint('U8') && B.intersectsCourtyard('U8') && (A.NetClass == 'CTRL_SELV' && B.NetClass == 'CTRL_SELV')")
+  (constraint clearance (min 0.14mm)))
+(rule "pin field U10 CTRL_SELV-HV_VOUT (barrier)"
+  (condition "A.memberOfFootprint('U10') && B.intersectsCourtyard('U10') && (((A.NetClass == 'CTRL_SELV') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'CTRL_SELV')))")
+  (constraint clearance (min 7.74mm)))
+(rule "pin field U10 Default-HV_VOUT (barrier)"
+  (condition "A.memberOfFootprint('U10') && B.intersectsCourtyard('U10') && (((A.NetClass == 'Default') && (B.NetClass == 'HV_VOUT')) || ((A.NetClass == 'HV_VOUT') && (B.NetClass == 'Default')))")
+  (constraint clearance (min 7.74mm)))
+(rule "pin field U10 HV_VOUT-HV_VOUT (hv)"
+  (condition "A.memberOfFootprint('U10') && B.intersectsCourtyard('U10') && (A.NetClass == 'HV_VOUT' && B.NetClass == 'HV_VOUT')")
+  (constraint clearance (min 0.66mm)))
