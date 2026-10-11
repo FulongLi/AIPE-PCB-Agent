@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "title": "Control board regeneration check with the current shared grid router (diagnostic, not a verification record)",
+  "generated_utc": "2026-10-11T06:20:00+00:00",
+  "purpose": "The delivered control board was generated while grid_router.py had sha256 b78a49cc...; the power-board convergence changed the shared module afterwards. This check regenerates candidate B from the committed generator and placement/plan inputs with the CURRENT module into a scratch directory and compares it with the delivered board. The evidence for the delivered board remains its own kicad-cli DRC manifest (verification/drc/20261011T051246Z-drc-f801ed3c).",
+  "delivered_board": {
+    "path": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb",
+    "sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+    "router_sha256_at_generation": "b78a49cc48f2c82656a382e94078d9cb442a54ad4d3e68f7237161798c48c7b3"
+  },
+  "regenerated_board": {
+    "scratch_path": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\repro_control\\AIPE_SiC_Buck_Control.kicad_pcb",
+    "sha256": "b87775eae00fc97c1175622f3e9eeaa148274197320bf2a27208a1d79abd9572",
+    "router_sha256": "c666ba734e5450014c683fafc87b9e4debffc9e4dddba71a28dd0f07416df860",
+    "current_repository_router_sha256": "c666ba734e5450014c683fafc87b9e4debffc9e4dddba71a28dd0f07416df860",
+    "routing_seconds": 1189.8,
+    "unresolved_count": 0,
+    "board_counts": {
+      "tracks": 5995,
+      "vias": 798,
+      "zones": 20
+    },
+    "connectivity_unconnected": 0,
+    "corridor_issues": []
+  },
+  "geometry_comparison": {
+    "method": "pcbnew 10.0.7: sorted tuples of (net, layer, start, end, width) for tracks, (net, position, diameter, drill) for vias, (reference, position, rotation, layer) for footprints and (net, name, layers, outline vertices) for zones; uuids and timestamps ignored",
+    "tracks": {
+      "delivered": 5995,
+      "regenerated": 5995,
+      "only_in_one": 0
+    },
+    "vias": {
+      "delivered": 798,
+      "regenerated": 798,
+      "only_in_one": 0
+    },
+    "footprints": {
+      "delivered": 207,
+      "regenerated": 207,
+      "only_in_one": 0
+    },
+    "zones": {
+      "delivered": 20,
+      "regenerated": 20,
+      "only_in_one": 0
+    },
+    "identical": true,
+    "file_hash_identical": false,
+    "note": "The file hashes differ only through uuids/timestamps; every geometric item of the delivered board is reproduced."
+  },
+  "drc_of_regenerated_board": {
+    "without_project_files": {
+      "manifest": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\repro_control\\drc\\20261011T061546Z-drc-95924e6f\\run.json",
+      "finding_counts": {
+        "violations": 211,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      },
+      "note": "Artefact of running kicad-cli on a bare .kicad_pcb: 199 lib_footprint_issues warnings (no fp-lib-table) and 12 clearance errors against the KiCad default 0.2 mm rule where the project net class allows 0.15 mm; not a board defect."
+    },
+    "with_project_copy": {
+      "manifest": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\repro_control\\drc_project\\20261011T061707Z-drc-83f668f3\\run.json",
+      "finding_counts": {
+        "violations": 1,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      },
+      "tool_exit_code": 5,
+      "findings": [
+        {
+          "type": "lib_footprint_issues",
+          "severity": "warning"
+        }
+      ],
+      "note": "Scratch copy of kicad/control_board with the regenerated board swapped in: 0 unconnected, 0 schematic parity, one lib_footprint_issues warning (TerminalBlock_Phoenix library path, footprint J1) that is a copied-path artefact already noted in stored_zone_fill_check.json and absent when the project is checked in place."
+    }
+  },
+  "conclusion": "The control board reproduces geometrically identical with the current grid_router.py (0 unresolved, same counts, project-complete DRC 0 unconnected / 0 parity / no clearance finding); the recorded shared_router_sha256 in routing_progress_control.json refers to the module version at generation time and is superseded by this check for reproducibility purposes."
+}

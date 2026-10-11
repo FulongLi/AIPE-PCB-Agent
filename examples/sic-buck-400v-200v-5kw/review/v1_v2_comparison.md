@@ -2,7 +2,7 @@
 
 # V1 (48 V -> 24 V / 1 kW Si buck) versus V2 (400 V -> 200 V / 5 kW SiC buck): process, knowledge, verification and layout comparison
 
-Generated 2026-10-11T05:47:10.919935+00:00 by `python -m automation.scripts.compare_v1_v2`. Machine-readable twin: `v1_v2_comparison.json`. V1 sources are the frozen files under `examples/buck-48v-24v-1kw/` (read-only); V2 sources are under `examples/sic-buck-400v-200v-5kw/`. 4 V2 metrics are marked 'not yet available' because the PCB phase is running; re-run the script after placement, routing, DRC, layout metrics, exports and release exist to complete the tables.
+Generated 2026-10-11T07:08:16.188278+00:00 by `python -m automation.scripts.compare_v1_v2`. Machine-readable twin: `v1_v2_comparison.json`. V1 sources are the frozen files under `examples/buck-48v-24v-1kw/` (read-only); V2 sources are under `examples/sic-buck-400v-200v-5kw/`. 2 V2 metrics are marked 'not yet available' because the PCB phase is running; re-run the script after placement, routing, DRC, layout metrics, exports and release exist to complete the tables.
 
 ## 0. How to read this comparison
 
@@ -85,14 +85,14 @@ Steps done: V1 10/12, V2 11/12 with 1 steps not yet available. V1 steps marked '
 | Simulation checks passed (steady / event) | - | steady 120/120; event 23/32 | failing checks in cl_400V_dump (load_step_off), cl_400V_dump_irefmin0 (load_step_off), cl_400V_singleloop_modulePI (load_step_on), cl_440V_dump (load_step_off): the 12.5 A-step limits (10 V / 5 ms) applied to the 25 A load-dump events, whose design-basis limit is the 230 V output OVP, plus the deliberately failing single-loop reference case |
 | Simulated output ripple (Vpp) | - | 0.153-0.411 Vpp | limit 2.0 Vpp; range over all runs |
 | Simulated load-step excursion (V) / recovery (ms) | - | 7.5-16.2 V / 0.751-5.0 ms | ranges over all load events including the 25 A dumps and the deliberately failing single-loop reference case; limits for the 12.5 A step are 10 V / 5 ms |
-| Documented open issues (PCB-level register) | 12 | not yet available (PCB-level known-issues register not written yet; design-level open items are counted separately) | V2 design-level open items: 13 in design_decisions.json, 10 in calculations.json |
+| Documented open issues (PCB-level register) | 12 | 49 | V2 design-level open items: 13 in design_decisions.json, 10 in calculations.json |
 
 ### 2.4 Documentation volume, automation tests and release
 
 | Metric | V1 | V2 | Comment |
 |---|---|---|---|
-| Design documents (files / words) | 11 / 6869 | 20 / 134039 | V2 includes generated tables; volume is not quality |
-| Design report words | 1344 | not yet available (PCB phase running - re-run after the V2 boards are placed, routed and checked) |  |
+| Design documents (files / words) | 11 / 6869 | 22 / 153903 | V2 includes generated tables; volume is not quality |
+| Design report words | 1344 | 6848 |  |
 | Schematic sheets | 14 | 22 |  |
 | Automation test modules / functions | 1 / 6 | 16 / 253 | V1 figure from the V1-era module and docs/status.md; V2 counts every module in tests/ |
 | Export manifest commands / artifacts | 11 / 38 | 22 / 70 |  |
@@ -206,14 +206,12 @@ It cannot show:
 - that more documents, citations or tests mean higher quality; they show traceability and coverage, which the human reviewer still has to judge;
 - anything about manufacturability beyond the stack-up statements and export manifests: no fabricator DFM review exists for either generation.
 
-### 6.1 V2 metrics not yet available (4)
+### 6.1 V2 metrics not yet available (2)
 
-- `design_report_words`
-- `documented_open_issues`
 - `release_files`
 - `release_frozen`
 
 ### 6.2 Sources
 
 V1 files read: 15; missing: 0.
-V2 files read: 49; missing: 0.
+V2 files read: 51; missing: 0.
