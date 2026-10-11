@@ -1,0 +1,56 @@
+* AIPE behavioural synchronous buck: cl_440V_stepdown
+Vin src 0 DC 440
+Lin src inf 1e-05
+Rin inf in 0.05
+Cin in cinx 3.6e-05
+Rcin cinx cins 0.0019
+Vcin cins 0 0
+Vhs in hs_a 0
+Shs hs_a sw ghs 0 SWHS
+Dhs sw hs_a DBODY
+Sls sw ls_a gls 0 SWLS
+Dls dls_a sw DBODY
+Vdls ls_a dls_a 0
+Vls ls_a 0 0
+L1 sw lx 0.000272
+Rdcr lx out 0.016
+Cout out cx 0.000108
+Resr cx cs 0.004
+Vcout cs 0 0
+Vld out ld 0
+Rload ld 0 16
+Vgld gld 0 PWL(0 0 1e-09 0 1.001e-06 1 0.014 1 0.014001 0)
+Sld ld ld2 gld 0 SWLD
+Rstep ld2 0 16
+.model SWLD SW(Ron=1e-3 Roff=1e9 Vt=0.5 Vh=0.1)
+* --- campaign controller: cascaded average-current-mode PI (replaces the module single-loop PI) ---
+Bref ref 0 V = 200*min(1, time/0.005)
+Rfb out fb 1000
+Cfb fb 0 7.95774715459e-09
+Bintv 0 vintv I = (((V(iref_raw) >= 35) && (V(ref) > V(fb))) || ((V(iref_raw) <= -10) && (V(ref) < V(fb)))) ? 0 : 3097.7*(V(ref)-V(fb))
+Cintv vintv 0 1
+Rintv vintv 0 1G
+.ic V(vintv)=0
+Birefraw iref_raw 0 V = 1.2325*(V(ref)-V(fb)) + V(vintv)
+Biref iref 0 V = max(-10, min(35, V(iref_raw)))
+Bil il 0 V = i(Vld) + i(Vcout)
+Rif il ilf 1000
+Cif ilf 0 1.59154943092e-08
+Binti 0 vinti I = (((V(duty_raw) >= 0.85) && (V(iref) > V(ilf))) || ((V(duty_raw) <= 0) && (V(iref) < V(ilf)))) ? 0 : 85.91*(V(iref)-V(ilf))
+Cinti vinti 0 1
+Rinti vinti 0 1G
+.ic V(vinti)=0
+Bdutyraw duty_raw 0 V = V(ref)/440 + 0.01709*(V(iref)-V(ilf)) + V(vinti)
+Bduty duty 0 V = max(0, min(0.85, V(duty_raw)))
+Vsaw saw 0 PULSE(0 1 0 1.9998e-05 1n 1n 2e-05)
+Bghs ghs 0 V = (V(duty) > V(saw)) ? 1 : 0
+Bgls gls 0 V = ((V(saw) > V(duty) + 0.0125) && (V(saw) < 0.9875)) ? 1 : 0
+Rghs ghs 0 1Meg
+Rgls gls 0 1Meg
+.model SWHS SW(Ron=0.0485 Roff=1e6 Vt=0.5 Vh=0.1)
+.model SWLS SW(Ron=0.0485 Roff=1e6 Vt=0.5 Vh=0.1)
+.model DBODY D(Is=9.93024e-29 N=2 Rs=0.044)
+.ic V(out)=0
+.options method=gear reltol=0.001 abstol=1e-06 vntol=0.0001
+.tran 2.5e-08 0.022
+.end

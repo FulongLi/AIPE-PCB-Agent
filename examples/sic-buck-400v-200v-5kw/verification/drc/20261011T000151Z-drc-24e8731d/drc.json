@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-11T08:02:03",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Control.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [PG_BIAS_L_N] (F.Cu), 长度: 1.2500 mm",
+                    "pos": {
+                        "x": 81.375,
+                        "y": 64.625
+                    },
+                    "uuid": "84b2d5a7-5989-4fc7-b0ae-418cf2c1bd50"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 62 [PG_BIAS_L_N]",
+                    "pos": {
+                        "x": 80.675,
+                        "y": 33.25
+                    },
+                    "uuid": "b6d7f08f-abaf-4af9-8ae1-26e0b8f21d72"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 9 [BIAS_EN]",
+                    "pos": {
+                        "x": 38.16,
+                        "y": 74.0
+                    },
+                    "uuid": "01cdc55d-8d50-404f-87f2-e65c947c9587"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 12 [BIAS_EN]",
+                    "pos": {
+                        "x": 62.75,
+                        "y": 43.675
+                    },
+                    "uuid": "d100bb34-92f5-480b-97e7-9dde8c756e07"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": []
+}

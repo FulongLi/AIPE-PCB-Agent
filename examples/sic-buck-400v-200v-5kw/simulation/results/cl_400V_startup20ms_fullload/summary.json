@@ -1,0 +1,348 @@
+{
+  "label": "AI-GENERATED BEHAVIOURAL SIMULATION - V2 - HUMAN REVIEW REQUIRED",
+  "name": "cl_400V_startup20ms_fullload",
+  "description": "20 ms soft start directly into the 25 A load at 400 V (startup overshoot and inductor peak at full load). Closed loop, comparator PWM on a 25 ns solver grid (PWM resolution 0.5 V at the output). The campaign driver (results/run_campaign.py) replaces the module single-loop PI by the cascaded average-current-mode controller of models/campaign_manifest.json; the pi block here is the module fallback and is used only by the run whose manifest controller is 'module'. Sources: design/design_decisions.json (schema 3, 2026-10-10) with design/research/{mosfet,capacitors,inductor,gate_driver}.json after their verify_*.json corrections; task-provided values are labelled in simulation_report.md",
+  "ngspice": {
+    "version": "ngspice-46",
+    "library": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\ngspice.dll",
+    "points": 1145091,
+    "runtime_s": 15.320941800000583,
+    "warnings": []
+  },
+  "parameters": {
+    "name": "cl_400V_startup20ms_fullload",
+    "vin": 400.0,
+    "vout_ref": 200.0,
+    "fs": 50000.0,
+    "closed_loop": true,
+    "duty": 0.5,
+    "dead_time": 2.5e-07,
+    "L": 0.000272,
+    "L_dcr": 0.016,
+    "Cout": 0.000108,
+    "Cout_esr": 0.004,
+    "Cin": 3.6e-05,
+    "Cin_esr": 0.0019,
+    "L_in": 1e-05,
+    "R_in": 0.05,
+    "Rds_on_hs": 0.0485,
+    "Rds_on_ls": 0.0485,
+    "body_diode_vf": 4.6,
+    "body_diode_rs": 0.044,
+    "body_diode_i_ref": 25.0,
+    "load_R": 8.0,
+    "load_P": null,
+    "load_step": null,
+    "soft_start_ms": 20.0,
+    "t_end": 0.028,
+    "t_step": 2.5e-08,
+    "metric_cycles": 10,
+    "pwm": "comparator",
+    "gate_edge": 1e-08,
+    "pi": {
+      "kp": 0.0002,
+      "ki": 1.5,
+      "d_min": 0.0,
+      "d_max": 0.85,
+      "fb_filter_hz": 20000.0,
+      "feedforward": true
+    },
+    "parasitics": null,
+    "spice_options": {
+      "method": "gear",
+      "reltol": 0.001,
+      "abstol": 1e-06,
+      "vntol": 0.0001
+    },
+    "output": {
+      "csv_dt": 2e-06,
+      "zoom_cycles": 3,
+      "svg": true
+    },
+    "recovery_band": 0.01,
+    "period": 2e-05,
+    "i_out_nominal": 25.0,
+    "soft_start": 0.02
+  },
+  "metrics": {
+    "window": {
+      "t0": 0.027800000000000002,
+      "t1": 0.028,
+      "cycles": 10
+    },
+    "duty": 0.5062174938783907,
+    "vout_mean": 199.99961311258213,
+    "vout_pkpk": 0.17419932507118574,
+    "vout_min": 199.91281117668058,
+    "vout_max": 200.08701050175176,
+    "vin_bus_mean": 399.36919013346477,
+    "vin_bus_pkpk": 3.618747899813286,
+    "il_mean": 24.999685452139143,
+    "il_pkpk": 7.354073512397569,
+    "il_peak": 28.665670734660086,
+    "il_min": 21.311597222262517,
+    "il_rms": 25.08944598168179,
+    "i_hs_rms": 17.82972990091325,
+    "i_hs_mean": 12.622477637993864,
+    "i_hs_peak": 28.666066814854275,
+    "i_ls_rms": 17.65166181546903,
+    "i_ls_mean": 12.377207814127017,
+    "i_ls_channel_rms": 17.206666617343522,
+    "i_diode_mean": 0.6112221754073422,
+    "i_cin_rms": 12.8914192077806,
+    "i_cin_mean": 0.00511889859677011,
+    "i_cout_rms": 2.119281114864555,
+    "i_load_mean": 24.99995163907296,
+    "i_in_mean": 12.627596536661446,
+    "i_in_rms": 12.631844109195285,
+    "vsw_max": 400.0141802239749,
+    "vsw_min": -4.7743552520815085,
+    "p_out": 4999.981145914239,
+    "p_in": 5051.038614664579,
+    "p_loss_total": 51.05746875033947,
+    "efficiency": 0.9898916890870513,
+    "p_cond_hs": 15.41811451446672,
+    "p_cond_ls": 14.359364739899593,
+    "p_diode_deadtime": 2.8239284213026234,
+    "p_diode_deadtime_estimate": 2.8749638269960007,
+    "p_l_dcr": 10.071684794683657,
+    "p_cout_esr": 0.01796540977528621,
+    "p_cin_esr": 0.31575850946239575,
+    "p_r_in": 7.978174279950581,
+    "i_cin_rms_formula": 12.592550441346855,
+    "p_loss_modelled_sum": 50.984990669540856,
+    "steady_state": {
+      "vout_cycle_avg_pkpk_V": 0.005035576671360786,
+      "pwm_lsb_V": 0.4999999999999999,
+      "limit_cycle_suspected": false,
+      "energy_balance_pct": 0.0014495670820246307
+    },
+    "startup": {
+      "vout_peak": 200.4067044262728,
+      "target": 200.0,
+      "overshoot_V": 0.4067044262727961,
+      "overshoot_pct": 0.20335221313639806,
+      "il_peak": 29.678106880358037,
+      "soft_start_s": 0.02
+    }
+  },
+  "numpy_model": {
+    "method": "exact matrix-exponential periodic steady state (4 intervals per cycle)",
+    "duty": 0.50504009496108,
+    "load_R": 8.0,
+    "ccm": true,
+    "vout_mean": 199.9999999954215,
+    "vout_pkpk": 0.17116949524725555,
+    "il_mean": 24.99999999943446,
+    "il_pkpk": 7.345811618740861,
+    "il_peak": 28.672866921728204,
+    "il_min": 21.327055302987343,
+    "il_rms": 25.089714394550583,
+    "i_hs_rms": 17.83142665998522,
+    "i_ls_rms": 17.65032554004846,
+    "i_ls_channel_rms": 17.19269969654164,
+    "i_diode_mean": 0.6249963688438365,
+    "i_cin_rms": 12.590648858534527,
+    "i_cout_rms": 2.118777466585741,
+    "i_in_mean": 12.626770689749408,
+    "p_cond_hs": 15.421049171425933,
+    "p_cond_ls": 14.336062758489959,
+    "p_diode_deadtime": 2.8890703187792806,
+    "p_l_dcr": 10.0719002944019,
+    "p_cout_esr": 0.01795687181164596,
+    "p_cin_esr": 0.3011964334899419,
+    "formula_il_pkpk": 7.278822132925294,
+    "x0": [
+      21.327055302987343,
+      200.00076537137076
+    ]
+  },
+  "comparison": [
+    {
+      "metric": "vout_mean",
+      "spice": 199.99961311258213,
+      "numpy": 199.9999999954215,
+      "deviation_pct": -0.00019344141968690023
+    },
+    {
+      "metric": "vout_pkpk",
+      "spice": 0.17419932507118574,
+      "numpy": 0.17116949524725555,
+      "deviation_pct": 1.7700758067631006
+    },
+    {
+      "metric": "il_mean",
+      "spice": 24.999685452139143,
+      "numpy": 24.99999999943446,
+      "deviation_pct": -0.0012581891812999807
+    },
+    {
+      "metric": "il_pkpk",
+      "spice": 7.354073512397569,
+      "numpy": 7.345811618740861,
+      "deviation_pct": 0.11247080765902995
+    },
+    {
+      "metric": "il_peak",
+      "spice": 28.665670734660086,
+      "numpy": 28.672866921728204,
+      "deviation_pct": -0.025097549846557612
+    },
+    {
+      "metric": "il_min",
+      "spice": 21.311597222262517,
+      "numpy": 21.327055302987343,
+      "deviation_pct": -0.0724810833245287
+    },
+    {
+      "metric": "il_rms",
+      "spice": 25.08944598168179,
+      "numpy": 25.089714394550583,
+      "deviation_pct": -0.001069812372396136
+    },
+    {
+      "metric": "i_hs_rms",
+      "spice": 17.82972990091325,
+      "numpy": 17.83142665998522,
+      "deviation_pct": -0.009515554219654138
+    },
+    {
+      "metric": "i_ls_rms",
+      "spice": 17.65166181546903,
+      "numpy": 17.65032554004846,
+      "deviation_pct": 0.0075708259178457245
+    },
+    {
+      "metric": "i_cin_rms",
+      "spice": 12.8914192077806,
+      "numpy": 12.590648858534527,
+      "deviation_pct": 2.3888391505907
+    },
+    {
+      "metric": "i_cout_rms",
+      "spice": 2.119281114864555,
+      "numpy": 2.118777466585741,
+      "deviation_pct": 0.023770702056121144
+    },
+    {
+      "metric": "i_in_mean",
+      "spice": 12.627596536661446,
+      "numpy": 12.626770689749408,
+      "deviation_pct": 0.006540444364833242
+    },
+    {
+      "metric": "p_cond_hs",
+      "spice": 15.41811451446672,
+      "numpy": 15.421049171425933,
+      "deviation_pct": -0.019030202981583363
+    },
+    {
+      "metric": "p_cond_ls",
+      "spice": 14.359364739899593,
+      "numpy": 14.336062758489959,
+      "deviation_pct": 0.16254101144914979
+    },
+    {
+      "metric": "p_diode_deadtime",
+      "spice": 2.8239284213026234,
+      "numpy": 2.8890703187792806,
+      "deviation_pct": -2.254770230174997
+    }
+  ],
+  "notes": [
+    "Switches are ideal Ron/Roff elements: no switching, gate or Coss losses in the main run.",
+    "Body diodes: exponential model (N=2) fitted to body_diode_vf at body_diode_i_ref; body_diode_rs 44 mohm keeps the fitted saturation current above the ngspice floor (about 1e-28 A) so that 4.6 V at 25 A is reproduced.",
+    "Metrics are taken over the last metric_cycles periods; the load event must have recovered by then.",
+    "Controller: cascaded average-current-mode PI from models/campaign_manifest.json replaces the module PI (the 'pi' block in parameters is NOT what ran). No firmware exists."
+  ],
+  "campaign": {
+    "controller": "cascade",
+    "events": [],
+    "steady_checks": {
+      "vout_ripple_below_2Vpp": true,
+      "vin_bus_ripple_below_2pct": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "il_peak_below_isat_worst_35A": true,
+      "cin_rms_per_part_below_14p5A": true,
+      "cout_rms_per_part_below_23p5A": true
+    },
+    "textbook": {
+      "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+      "dIL_App": 7.261507442964843,
+      "il_peak_A": 28.630705360555382,
+      "il_rms_A": 25.087680366094823,
+      "i_hs_rms_A": 17.84962442618263,
+      "i_ls_rms_A": 17.62902759642641,
+      "i_cin_rms_A": 12.587677202391376,
+      "i_cout_rms_A": 2.096216638459112,
+      "p_cond_hs_W": 15.452540969555114,
+      "p_cond_ls_W": 15.072956778784853,
+      "p_cond_total_W": 30.525497748339966,
+      "p_deadtime_W": 2.87499443849339,
+      "p_dcr_W": 10.070267298421435,
+      "vout_ripple_Vpp": 0.19713647984049004,
+      "vin_ripple_Vpp": 3.5260769406764685,
+      "i_in_mean_A_ideal": 12.65541286581248
+    },
+    "controller_gains": {
+      "structure": "outer voltage PI (V -> A) -> i_ref clamp -> inner average-current PI (A -> duty) with Vref/Vin feedforward -> duty clamp [0, 0.85] -> module comparator PWM; inductor current = i(Vld) + i(Vcout) filtered by a first-order 10 kHz low-pass (stand-in for the ePWM CTR=ZERO average sampling); output voltage through the module 20 kHz feedback filter",
+      "kpv_A_per_V": 1.2325,
+      "kiv_A_per_V_s": 3097.7,
+      "outer_zero_Hz": 400.0,
+      "kpi_per_A": 0.01709,
+      "kii_per_A_s": 85.91,
+      "inner_zero_Hz": 800.0,
+      "iref_min_A": -10.0,
+      "iref_max_A": 35.0,
+      "d_min": 0.0,
+      "d_max": 0.85,
+      "fb_filter_hz": 20000.0,
+      "i_filter_hz": 10000.0,
+      "feedforward": true,
+      "design_basis": "kpi = 2 pi 4 kHz L / Vin(400 V) for an inner crossover of about 4 kHz (fs/12.5); kpv tuned by bisection on the small-signal loop gain (plant 1/(sC) || R, closed inner loop, 20 kHz filter, T/2 PWM delay) for an outer crossover of 2.3 kHz (middle of the 2.0-2.5 kHz band of design_decisions.json assumptions_accepted.voltage_loop_crossover_Hz); analytical margins are recomputed by the driver and stored in results/loop_gain_analysis.json",
+      "firmware_status": "NO FIRMWARE EXISTS (assumptions register A-34: hardware/firmware contract only). These gains are a behavioural stand-in for the TMS320F28335 implementation and must not be copied into firmware without a discrete-time redesign (sampling, one-sample delay, ADC scaling, anti-windup, current-reference clamp coordinated with the 37.5 A OC trip).",
+      "iref_max_basis": "35 A: below the TMCS1133 OC trip (37.5 A, design_decisions sensing.current.oc_threshold_A) and the vendor-style I_sat 37.3 A; added assumption",
+      "iref_min_basis": "-10 A: synchronous operation continues at no load (baseline magnetics no_load_ccm_reverse_current_A -2.8 to -3.4 A); added assumption"
+    },
+    "startup": {
+      "soft_start_s": 0.02,
+      "vout_peak_V": 200.4067044262728,
+      "overshoot_V": 0.4067044262727961,
+      "overshoot_pct": 0.20335221313639806,
+      "il_peak_A": 29.678106880358037,
+      "t_99pct_s": 0.01983020361600025,
+      "vout_cycle_avg_pkpk_last_50T_V": 0.005035576671360786,
+      "checks": {
+        "vout_peak_below_ovp_230V": true,
+        "il_peak_below_oc_trip_37p5A": true,
+        "overshoot_within_1pct_static_band": true
+      }
+    },
+    "textbook_deviation_pct": {
+      "il_pkpk": 1.274750045493744,
+      "il_peak": 0.12212543723381734,
+      "il_rms": 0.007037779345096094,
+      "i_hs_rms": -0.1114562681789359,
+      "i_cin_rms": 2.413010760488207,
+      "i_cout_rms": 1.1002906847642207,
+      "p_cond_hs": -0.22278831136070842,
+      "p_diode_deadtime": -1.7762127295636523,
+      "p_l_dcr": 0.014076053993568058,
+      "vout_pkpk": -11.63516503280547,
+      "vin_bus_pkpk": 2.628160437107163
+    }
+  },
+  "files": {
+    "deck": "cl_400V_startup20ms_fullload.cir",
+    "parameters": "parameters.json",
+    "waveforms_csv": "waveforms.csv",
+    "zoom_csv": "waveforms_zoom.csv",
+    "svg_vout": "vout.svg",
+    "svg_il": "il.svg",
+    "svg_zoom_vout": "zoom_vout.svg",
+    "svg_zoom_currents": "zoom_currents.svg",
+    "svg_zoom_capacitors": "zoom_capacitor_currents.svg",
+    "svg_zoom_vsw": "zoom_vsw.svg",
+    "summary": "summary.json"
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY - output inductor L1 design and selection (400 V -> 200 V, 5 kW, 25 A, 50 kHz SiC synchronous buck)",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "Core datasheet 0058192A2 (rev 10/6/2021): AL 138 nH/T^2 +/-8 %, OD 58.04 max / ID 25.58 min / HT 16.13 max mm, Wa 514 mm2, Ae 229 mm2, le 125 mm, Ve 28,600 mm3, 218 g, core loss 900 mW/cm3 max at 100 kHz/100 mT, DC bias min 80 % at 90 Oe and 50 % at 170 Oe, 3000 VAC wire-to-wire, Curie 500 degC, coating 200 degC, MLT 77.8 mm and surface area 12,000 mm2 at 40 % winding factor",
+      "status": "verified",
+      "evidence": "Fetched and read the Magnetics PDF (one page): every value the agent quotes appears on it exactly; the 40 % WF MLT (77.8 mm) and surface area (120 cm2) used as the single-core basis are also on the sheet."
+    },
+    {
+      "item": "Percent-permeability-vs-H fit for High Flux toroids 60u: %u = 1/(0.01 + 6.413E-08 H^2.291)",
+      "status": "verified",
+      "evidence": "Magnetics High Flux material-curves coefficient table (High Flux Toroids: 60u -> 0.01, 6.413E-08, 2.291) read directly from the published image."
+    },
+    {
+      "item": "DC magnetisation fit for High Flux toroids 60u: 3.828E-02, 1.800E-02, 7.012E-04, 7.063E-02, 4.502E-04, x = 1.630",
+      "status": "verified",
+      "evidence": "Magnetics DC-magnetisation coefficient table for High Flux toroids read directly; all six coefficients match."
+    },
+    {
+      "item": "Core-loss fit Pv = 246.54 B^2.218 f^1.311 mW/cm3 (B in T, f in kHz)",
+      "status": "verified",
+      "evidence": "Fit-formula header confirmed (P = a B^b f^c, B in Tesla, f in kHz). The coefficient table itself was not fetched, but the fit reproduces the published 60u toroid curve: 252 mW/cm3 at 50 kHz/0.1 T and 625 at 100 kHz/0.1 T versus about 250 and 620 read from the chart; at 50 kHz/64 mT the chart reads 90-100 vs fit 94. The datasheet maximum (900 at 100 kHz/100 mT) is 1.44x the typical fit."
+    },
+    {
+      "item": "High Flux permeability vs temperature: ~4.5 % over -60 to 200 degC, < 3 % over 0-125 degC",
+      "status": "verified",
+      "evidence": "Magnetics curve read: the 60u line runs from about -1.3 % (-60 degC) to +3.1 % (200 degC), about -0.4 % to +1.8 % over 0-125 degC; permeability increases with temperature (benign for the saturation margin)."
+    },
+    {
+      "item": "Temperature-rise correlation dT = (P_mW / A_cm2)^0.833 with +/-30 % caveat",
+      "status": "unverified",
+      "evidence": "The 2024 catalogue PDF exceeds the fetch size limit and the correlation is not on the material-curves page. It is the long-standing Magnetics formula; the implied heat-transfer coefficient at 17.7 W / 161 cm2 / 50 K is 22 W/m2K, consistent with natural convection (7-10) plus radiation (10-11 at a 100 degC surface, emissivity 0.9), so the physics is plausible."
+    },
+    {
+      "item": "Relative core cost (High Flux 4-6x Kool Mu, XFlux 1.2x) and the Kool Mu / XFlux permeability and loss figures used to reject those options",
+      "status": "unverified",
+      "evidence": "Not fetched here. Kool Mu 60u at 126 Oe ~37 % and XFlux loss ~2.3x High Flux are plausible for those material families; the rejections do not depend on precision (24-26 W copper or 13-16 W core loss against 16-18 W total for the selected design)."
+    },
+    {
+      "item": "Standard-part survey (Coilcraft AGP4233-224ME Isat 6.4-7.6 A; Vishay IHXL/IHDM; Wuerth WE-HCF; Bourns; Bel; Pulse; Hammond 195C30; Triad; Schaffner; TDK-EPCOS) -> no orderable 220-300 uH / 29-32 A part",
+      "status": "unverified",
+      "evidence": "Individual datasheets not re-fetched (the agent labelled each verification level honestly). The conclusion is robust: 0.5 L I^2 = 0.22 J at 40.7 A and LI^2 = 262 mH A^2 at 31.3 A are beyond catalogue power inductors; a 135 g ferrite 220 uH part cannot store it."
+    },
+    {
+      "item": "Ferrite alternative 2 x E70/33/32 N87, s = 5 mm, 23 T: L = 268 uH, Bpk(41 A) = 0.38 T vs Bsat(100 degC) 0.39 T",
+      "status": "unverified",
+      "evidence": "Arithmetic recomputed and agrees (AL_set = 903 x 5^-0.789 = 254 nH, L = 268 uH, dB = 69 mT, Bpk(28.75/31.3/41 A) = 0.280/0.302/0.385 T). The TDK K1/K2 fit constants and the N87 points come from search snippets and were not verified; the rejection also rests on mass (1.3 kg) and Litz fill, so it stands."
+    },
+    {
+      "item": "Claim that the added saturation criterion L(1.3 x Ipk,ovl) >= 70 % of L(Io) is 'stricter than typical 30 %-drop Isat definitions (Coilcraft, Wuerth)'",
+      "status": "contradicted",
+      "evidence": "Vendor Isat definitions reference the zero-bias inductance L0. 70 % of L(25 A) = 190 uH is only 60 % of L0 = 319 uH, so the agent's criterion is LESS strict. Recomputed: L falls to 70 % of L0 at H = 128 Oe -> 37.3 A nominal (about 35 A at AL -8 % with the datasheet-minimum curve), below the seed's 1.3 x 31.6 A = 41 A, below the assumptions agent's A-15 (I_sat >= 42 A) and below the sensing agent's 42.3 A worst trip corner.",
+      "correction": "Report both definitions: Isat(30 % drop from L0) = 37.3 A nominal / ~35 A worst; L(41 A)/L(25 A) = 0.77 nominal / 0.74 worst; B(41 A) = 0.80 T = 53 % of Bsat (no hard knee). State that the seed requirement is met only under the inductance-ratio definition and request ratification; note that the 3-stack fallback (28 T) reaches 70 % of L0 at ~45 A and would satisfy the sensing agent's >= 45 A and A-15's >= 42 A under the vendor definition."
+    },
+    {
+      "item": "Hand-off 'the protection agent can rely on L >= 190 uH up to 46 A'",
+      "status": "contradicted",
+      "evidence": "True only at nominal AL and the typical bias curve. With AL -8 % and the datasheet-minimum curve (80 % at 90 Oe, 50 % at 170 Oe, interpolated): L(25 A) = 239 uH, L(31.5 A) = 215 uH, L(41 A) = 178 uH, L(46 A) = 160 uH.",
+      "correction": "Hand off worst-case values (L(41 A) ~175-180 uH, L(46 A) ~160 uH); the sensing agent's trip-overshoot calculation (L_min = 220 uH, di/dt 2.0 A/us, 1.09 A overshoot) should be re-run with ~175 uH: di/dt 2.5 A/us at 440 V, ~1.4 A overshoot, worst I_pk ~42.6 A."
+    },
+    {
+      "item": "Core-loss uncertainty statement ('+20 % uncertainty noted'; open issue '+10-30 %')",
+      "status": "contradicted",
+      "evidence": "The datasheet maximum (900 mW/cm3 at 100 kHz/100 mT) is 1.44x the typical fit (625) before any DC-bias effect. Worst-case core loss at 440 V is therefore up to 10.4 W (typical 7.2 W), and 12-13 W with the agent's own +20-30 % bias allowance.",
+      "correction": "Add a bounded worst case: Ptot(440 V, 27.5 A) ~23-26 W -> dT ~62-69 K surface (natural convection) -> 112-119 degC at 50 degC ambient; still below P_max 28.7 W / 125 degC, but the 110 degC test acceptance then requires the >= 2 m/s airflow credit or the 3-stack."
+    },
+    {
+      "item": "Thermal result labelled 'hot spot 100-105 degC' from dT = 50-55 K",
+      "status": "contradicted",
+      "evidence": "The Magnetics correlation estimates the average surface rise of the wound part, not the internal hot spot. The ID double layer under potting is hotter than the surface (conduction through epoxy and through the second layer).",
+      "correction": "Label 50-55 K as surface rise; add an internal allowance (~+10-15 K) -> hot spot ~110-120 degC in natural convection; specify the acceptance thermocouple at the ID winding; the forced-air benefit (~2x lower rise, h ~35-40 W/m2K incl. radiation) may be credited only after measurement."
+    },
+    {
+      "item": "Ripple current and peaks at corners (dI 6.5/7.3/8.0 App; AL -8 % 7.1/8.0/8.7; Ipk 28.3/28.7/29.0 A; overload 31.5 A / 31.9 A worst)",
+      "status": "verified",
+      "evidence": "Recomputed dI = 6.52/7.34/8.01 A (7.09/7.98/8.70 at AL -8 %), Ipk 28.26/28.67/29.00 A (29.35 worst), roll-off-at-peak dI(440 V) = 8.51 A: all agree.",
+      "correction": "Minor: the 27.5 A corner should use L(27.5 A) = 263 uH, giving dI(440 V) = 8.3 A (9.0 at AL -8 %) and Ipk = 31.65 A nominal / 32.0 A worst instead of 31.5 / 31.9 A."
+    },
+    {
+      "item": "Inductance vs current table (319 uH at 0 A, 272 at 25 A, 263 at 27.5 A, 258 at 28.7 A, 248 at 31.5 A, 210 at 41 A, 190 at 46 A, 160 at 55 A; 235 uH at AL -8 % with the minimum curve)",
+      "status": "verified",
+      "evidence": "Recomputed H = 85.5/94.0/98.3/107.7/140.1/157.2/188 Oe and L = 319.1/272.5/263.1/258.3/247.3/208.4/188.7/156.4 uH; 234.8 uH with AL -8 % and the flat 80 % minimum; fit vs datasheet anchors 83.9 % at 90 Oe and 54.8 % at 170 Oe as stated."
+    },
+    {
+      "item": "AC flux swing, DC flux and core loss (dB 114/128/140 mT; Bdc 0.49/0.60/0.73 T; Pv 73/94/114 mW/cm3; Pcore 4.6/5.9/7.2 W with 1.10 waveform factor)",
+      "status": "verified",
+      "evidence": "Recomputed dB = 114.2/128.4/140.1 mT, Bdc = 0.494/0.597/0.734 T, Pv = 72.6/94.3/114.4 mW/cm3, Pcore = 4.57/5.93/7.20 W. The 1.10 triangular allowance is conservative: iGSE with alpha 1.311 / beta 2.218 gives P_tri/P_sin ~0.95 at D = 0.455-0.556 for equal Bpk."
+    },
+    {
+      "item": "DC and AC copper loss (Rdc 12.2 / 16.0 mohm; Pdc 10.0 / 12.1 W; delta 0.339 mm; F_R 5.9; Pac 0.34/0.43/0.51 W)",
+      "status": "verified",
+      "evidence": "Recomputed Rdc = 12.26 mohm (20 degC), 16.11 mohm (100 degC); Pdc = 10.07 / 12.18 W; delta = 0.339 mm (0.296 at 20 degC); x = F_R = 5.88; Pac = 0.340/0.429/0.515 W; harmonic factor sum n^-3.5 (odd) = 1.027.",
+      "correction": "Wire length excludes the two leads (~0.25 m, about +1 mohm); the ~8 turns in the second ID layer see F_R ~17.6 (2-layer Dowell), adding < 0.3 W - acceptable to neglect but should be stated."
+    },
+    {
+      "item": "Fill factor, MLT, wire length, copper mass (38 %, 110 mm, 3.73 m, 176 g, bare 632 g; residual hole >= 14 mm; '~29 turns fit on the ID')",
+      "status": "verified",
+      "evidence": "Recomputed fill 38.4 %, MLT = 77.8 + 2 x 16.13 = 110.1 mm, 3.74 m, 176 g, residual hole 14.7 mm.",
+      "correction": "The first ID layer holds ~26 turns on the wire-centre circumference pi(25.58 - 2.72)/2.72, not ~29, so ~8 turns (not ~5) sit in the second ID layer."
+    },
+    {
+      "item": "Thermal arithmetic (dT 50/55 K at 17.7/19.8 W, P_max 28.8 W at 125 degC, R_th ~2.8 K/W, overload treated as steady state)",
+      "status": "verified",
+      "evidence": "Recomputed dT = 50.2 / 55.1 K, P_max = 28.7 W, R_th = 2.83 K/W; thermal capacity ~270 J/K gives tau ~750 s, so the 10 s overload adds < 0.1 K (steady-state treatment is very conservative). Wound-geometry surface estimate 170 cm2 vs the agent's 161 cm2 (within the stated +/-15 %)."
+    },
+    {
+      "item": "PCB copper and vias (IPC-2221: 907 / 1034 mil2 -> 8.4 / 9.5 mm at 20 K; 12.7 mm at 10 K; via 1.2 A; >= 30 vias)",
+      "status": "verified",
+      "evidence": "Recomputed 907 mil2 -> 8.36 mm, 1034 mil2 -> 9.53 mm, 1381 mil2 -> 12.73 mm; via barrel 0.0236 mm2 = 36.5 mil2 -> 1.22 A, 30 vias -> 36.5 A. Two 10 mm x 70 um layers in parallel give only ~5-6 K rise at 27.5 A: conservative."
+    },
+    {
+      "item": "LI^2 / energy core-selector index (262 mH A^2 at 31.3 A; 0.22 J at 40.7 A)",
+      "status": "verified",
+      "evidence": "Recomputed 261.6 mH A^2 and 0.221 J; a 2-stack 58192 at 107 Oe gives L I^2 = 243 mH A^2, consistent with the chosen size."
+    },
+    {
+      "item": "3-stack fallback (28 T: L(25 A) 293 uH, L(41 A) 243 uH, ~17.7 W, dT 41 K, ~0.84 kg, HT ~57 mm)",
+      "status": "verified",
+      "evidence": "Recomputed L0 = 324.6 uH, L(25 A) = 292.5 uH, L(41 A) = 242 uH, Pcore(440 V) = 6.75 W, Pcu(25 A) = 10.7 W, total ~18 W, dT = 41.9 K at 203 cm2, fill 31.7 %, HT ~59 mm; Isat(30 % drop from L0) ~45 A."
+    },
+    {
+      "item": "Knowledge applicability: KR-TH-001 by analogy (labelled adapted), KR-TH-002 not applicable unless the cup is bolted to the sink, KR-TH-003 human review, KR-PE-001 not applicable (rule is DAB/phase-shift), KR-ISO-002 deferred to the isolation agent, KR-PCB-006 used with its low confidence noted, PE-PCB-005/006 evidence prepared for human review, SKILL-006 step 3 '(review)' surfaced, TIDA-010054 instance values not copied",
+      "status": "verified",
+      "evidence": "Rule texts fetched with automation.knowledge.query: statements, applicability and categories match the agent's handling; no human-review rule was decided and no reference instance value appears in the design."
+    },
+    {
+      "item": "SKILL-003 exclusion quoted as 'inductor-ripple output filters'",
+      "status": "contradicted",
+      "evidence": "The record reads 'Inductor-ripple output filters of low-voltage converters'; this is a 200 V output. The agent's conclusion (SKILL-003 is a DC-link capacitor skill and gives no inductor equations) is still right.",
+      "correction": "Quote the exclusion exactly and justify non-use by scope (capacitor skill), not by the exclusion."
+    },
+    {
+      "item": "Consistency with other areas: capacitor agent (dI 9.92 App from 220 uH), sensing agent (L_min 220 uH, trip 37.5 A, worst 42.3 A), assumptions agent (A-15 I_sat >= 42 A, inductor 20-25 W placeholder), thermal agent (inductor 6-10 W placeholder, h = 8 W/m2K natural), architecture agent (cup on 4 x M4, 65 mm height result)",
+      "status": "verified",
+      "evidence": "Capacitor and assumptions inputs are equal to or more conservative than the inductor result (consistent); the architecture envelope is consistent. Two mismatches need hand-offs: the thermal agent still carries 6-10 W (actual 16-20 W, 23-26 W bounded) and its convection-only model would predict ~137 K at 17.7 W (omits radiation; the Magnetics correlation implies ~22 W/m2K); the sensing and assumptions agents' saturation requirements (>= 42-45 A) are not met under the vendor-style definition (see above)."
+    },
+    {
+      "item": "Omission check: load-transient slew capability",
+      "status": "verified",
+      "evidence": "Not computed by the agent but harmless: (Vin - Vout)/L = 0.59-0.88 A/us up, 0.74 A/us down -> 12.5 A step in 14-21 us, far below the 5 ms recovery (matches the capacitor agent's 21 us)."
+    },
+    {
+      "item": "Omission check: winding capacitance / SRF and SW-node dV/dt displacement current",
+      "status": "unverified",
+      "evidence": "Not estimated by the agent. With the gate-driver agent's 110-120 V/ns turn-off dv/dt, a 10-30 pF end-to-end winding capacitance injects 1-3 A, few-ns pulses toward the output / current sensor: an EMI hand-off item, not a design failure."
+    },
+    {
+      "item": "Omission check: no-load CCM reverse current and potting effects",
+      "status": "unverified",
+      "evidence": "Complementary PWM gives dI(no load) = 5.6-6.8 App, so I_L reaches -2.8 to -3.4 A at light load (informational hand-off to the MOSFET/sensing agents; the TMCS1133 0.33 V offset leaves ~6.6 A negative headroom). Potting compound temperature class and stress-induced inductance shift on the powder core are not specified."
+    }
+  ],
+  "recomputed": [
+    {"name": "L_ideal = Vout(1-D)/(dI fs)", "agent_value": "266.7 uH", "verifier_value": "266.7 uH", "agrees": true},
+    {"name": "Duty at 360/400/440 V", "agent_value": "0.556 / 0.500 / 0.455", "verifier_value": "0.5556 / 0.5000 / 0.4545", "agrees": true},
+    {"name": "LI^2 at 31.3 A and energy at 40.7 A", "agent_value": "262 mH A^2; 0.22 J", "verifier_value": "261.6 mH A^2; 0.221 J", "agrees": true},
+    {"name": "H at 25 / 31.3 / 40.7 A (N = 34, le = 12.5 cm)", "agent_value": "85.5 / 107 / 139 Oe", "verifier_value": "85.5 / 107.0 / 139.1 Oe", "agrees": true},
+    {"name": "Percent permeability at those H", "agent_value": "85 / 78 / 66 %", "verifier_value": "85.4 / 77.8 / 65.7 % (fit at anchors 83.9 % at 90 Oe, 54.8 % at 170 Oe)", "agrees": true},
+    {"name": "L0 and L(25 A), L(31.5 A), L(41 A)", "agent_value": "319 / 272 / 248 / 210 uH", "verifier_value": "319.1 / 272.5 / 247.3 / 208.4 uH", "agrees": true},
+    {"name": "L(25 A) at AL -8 % and datasheet-minimum curve", "agent_value": "235 uH", "verifier_value": "234.8 uH (flat 80 %); 239 uH with interpolated minimum-curve ratio", "agrees": true},
+    {"name": "Worst-case L at 41 A and 46 A (AL -8 %, datasheet-minimum curve)", "agent_value": "not given (hand-off states L >= 190 uH to 46 A)", "verifier_value": "L(41 A) = 178 uH, L(46 A) = 160 uH", "agrees": false, "note": "Hand-off is nominal-only; worst case is about 15 % lower."},
+    {"name": "Current at 70 % of L0 (vendor-style Isat)", "agent_value": "not given; claims the criterion is stricter than vendor 30 %-drop definitions", "verifier_value": "37.3 A nominal (H = 128 Oe); ~35 A worst", "agrees": false, "note": "Below 41 A (seed), 42 A (A-15) and 42.3 A (sensing worst trip corner). The 3-stack reaches 70 % of L0 at ~45 A."},
+    {"name": "Current at 70 % of L(25 A) and 50 % of L0", "agent_value": "46 A; 55 A", "verifier_value": "45.5 A; 54.1 A", "agrees": true},
+    {"name": "Ripple dI at 360/400/440 V, 25 A", "agent_value": "6.5 / 7.3 / 8.0 App (7.1 / 8.0 / 8.7 at AL -8 %); 8.5 with roll-off at 440 V", "verifier_value": "6.52 / 7.34 / 8.01 (7.09 / 7.98 / 8.70); 8.51 with roll-off", "agrees": true},
+    {"name": "Peak currents nominal / overload", "agent_value": "29.0 A (29.4 worst) / 31.5 A (31.9 worst)", "verifier_value": "29.00 (29.35) / 31.65 (32.0) using L(27.5 A) = 263 uH", "agrees": true, "note": "Overload peak 0.15 A higher when the inductance at 27.5 A is used; immaterial but should be propagated."},
+    {"name": "dB and Bpk,ac at 360/400/440 V", "agent_value": "114 / 128 / 140 mT; 57 / 64 / 70 mT", "verifier_value": "114.2 / 128.4 / 140.1 mT; 57.1 / 64.2 / 70.1 mT", "agrees": true},
+    {"name": "B_dc at 25 / 31.3 / 41 A (magnetisation fit)", "agent_value": "0.49 / 0.60 / 0.73 T (0.80 T incl. AC = 53 % Bsat)", "verifier_value": "0.494 / 0.597 / 0.734 T; 0.80 T", "agrees": true},
+    {"name": "Core-loss density and core loss", "agent_value": "73 / 94 / 114 mW/cm3; 4.6 / 5.9 / 7.2 W", "verifier_value": "72.6 / 94.3 / 114.4 mW/cm3; 4.57 / 5.93 / 7.20 W (typical fit)", "agrees": true, "note": "Datasheet maximum is 1.44x typical: bounded Pcore(440 V) = 10.4 W."},
+    {"name": "Rdc 20 / 100 degC and Pdc 25 / 27.5 A", "agent_value": "12.2 / 16.0 mohm; 10.0 / 12.1 W", "verifier_value": "12.26 / 16.11 mohm; 10.07 / 12.18 W", "agrees": true},
+    {"name": "Skin depth, Dowell factor, Pac", "agent_value": "0.339 mm; F_R 5.9; 0.34 / 0.43 / 0.51 W", "verifier_value": "0.339 mm; x = F_R = 5.88; 0.340 / 0.429 / 0.515 W; harmonic factor 1.027", "agrees": true},
+    {"name": "Total loss at corners", "agent_value": "25 A: 14.9 / 16.4 / 17.7 W; 27.5 A: 17.0 / 18.5 / 19.8 W", "verifier_value": "15.0 / 16.4 / 17.8 W; 17.1 / 18.5 / 19.9 W", "agrees": true},
+    {"name": "Temperature rise and P_max", "agent_value": "50 / 55 K; P_max 28.8 W; R_th 2.8 K/W", "verifier_value": "50.2 / 55.1 K; 28.7 W; 2.83 K/W; bounded worst case 23-26 W -> 62-69 K", "agrees": true, "note": "Agrees arithmetically; the result is a surface rise, not a hot spot."},
+    {"name": "Winding fill, MLT, wire length, copper mass", "agent_value": "38 %; 110 mm; 3.73 m; 176 g", "verifier_value": "38.4 %; 110.1 mm; 3.74 m; 176 g (about 0.25 m of leads not included)", "agrees": true},
+    {"name": "Turns in first ID layer / residual hole", "agent_value": "~29 turns; >= 14 mm", "verifier_value": "~26 turns (wire-centre circumference); 14.7 mm", "agrees": false, "note": "~8 turns in the second ID layer, not ~5; hole requirement still met."},
+    {"name": "IPC-2221 copper width 25 / 27.5 A at 20 K; 25 A at 10 K", "agent_value": "8.4 / 9.5 mm; 12.7 mm", "verifier_value": "8.36 / 9.53 mm; 12.73 mm", "agrees": true},
+    {"name": "Via current (0.3 mm, 25 um, 20 K)", "agent_value": "1.2 A; >= 30 vias", "verifier_value": "1.22 A; 30 vias = 36.5 A", "agrees": true},
+    {"name": "Core-loss waveform factor", "agent_value": "1.10 (within ~10 % of sinusoidal)", "verifier_value": "iGSE ratio P_tri/P_sin = 0.95 at D = 0.455-0.556 -> 1.10 is conservative", "agrees": true},
+    {"name": "Gapped-ferrite option L and Bpk", "agent_value": "268 uH; 0.302 T at 31.3 A; 0.382 T at 41 A", "verifier_value": "268 uH; 0.302 T; 0.385 T (dB = 69 mT)", "agrees": true},
+    {"name": "3-stack fallback", "agent_value": "L(25 A) 293, L(41 A) 243 uH; 17.7 W; 41 K", "verifier_value": "292.5 / 242 uH; ~18 W; 41.9 K; Isat(70 % of L0) ~45 A", "agrees": true},
+    {"name": "Thermal time constant / overload treatment", "agent_value": "many minutes; steady state is conservative", "verifier_value": "C_th ~270 J/K, tau ~750 s; 10 s overload adds < 0.1 K", "agrees": true},
+    {"name": "Load-transient slew (omitted by agent)", "agent_value": "not computed", "verifier_value": "0.59-0.88 A/us -> 12.5 A in 14-21 us, far below 5 ms", "agrees": true, "note": "No issue; add for completeness."}
+  ],
+  "knowledge_misuse": [
+    "SKILL-003 'not_applicable' entry misquoted: the record excludes 'Inductor-ripple output filters of low-voltage converters'; the agent dropped the qualifier. Conclusion (no capacitor equations used for the inductor) unaffected.",
+    "KR-TH-001 is a hard constraint for heat-sinked power semiconductors; the agent applied it by analogy (correctly labelled 'adapted'), but the 125 degC winding limit is an added assumption and must not be presented as derived from KR-TH-001.",
+    "The statement that the added saturation criterion is 'stricter than typical 30 %-drop Isat definitions (Coilcraft, Wuerth)' misrepresents those definitions (they reference L0): the agent's criterion (60 % of L0) is weaker.",
+    "External Magnetics methods (bias fit, magnetisation fit, loss fit, dT correlation) are not in the AIPE knowledge base; the agent proposed capture as a new skill, which is appropriate. Bias and magnetisation coefficients verified here against Magnetics' published tables; the loss fit verified against the published curve; the dT correlation and the relative-cost table were not verifiable in this session.",
+    "No TIDA-010054 instance value was copied; human-review rules (KR-TH-003, PE-PCB-005/006, SKILL-006 step 3, KR-ISO-002) were surfaced, not decided."
+  ],
+  "required_changes": [
+    "Saturation margin: remove the 'stricter than vendor definitions' claim; report Isat(30 % drop from L0) = 37.3 A nominal / ~35 A worst (AL -8 %, datasheet-minimum curve) next to L(41 A)/L(25 A) = 0.77 nominal / 0.74 worst and B(41 A) = 0.80 T (53 % of Bsat). State explicitly that the seed's 1.3 x 31.6 A = 41 A, the assumptions agent's A-15 (I_sat >= 42 A) and the sensing agent's 42.3 A worst trip corner are met only under the inductance-ratio definition, and offer the 3-stack (Isat(70 % of L0) ~45 A, L(41 A) = 243 uH) as the option that satisfies the vendor-style definition. Assumptions agent to ratify.",
+    "Replace the hand-off 'L >= 190 uH up to 46 A' with worst-case values: L(25 A) 235-294 uH, L(31.5 A) >= 215 uH, L(41 A) >= 175 uH, L(46 A) >= 160 uH (AL -8 %, datasheet-minimum bias curve); ask the sensing agent to re-run the trip overshoot with ~175 uH (di/dt ~2.5 A/us at 440 V, ~1.4 A overshoot, worst I_pk ~42.6 A).",
+    "Add a bounded worst-case core loss using the datasheet maximum (900/625 = 1.44 x typical) plus the stated DC-bias allowance: Pcore(440 V) 10.4-13 W, Ptot(440 V, 27.5 A) ~23-26 W, surface rise ~62-69 K; confirm that P_max 28.7 W still covers it and state that the 110 degC acceptance then depends on the >= 2 m/s airflow credit or on the 3-stack.",
+    "Rename the 50-55 K result 'average surface rise' and add an internal hot-spot allowance (~+10-15 K for the ID double layer under potting): hot spot ~110-120 degC in natural convection at 50 degC ambient. Specify the acceptance thermocouple at the ID winding, the potting compound temperature class (>= 130 degC) and an L(I) measurement on the potted sample (stress-induced permeability shift).",
+    "Evaluate the 27.5 A corner with L(27.5 A) = 263 uH: dI(440 V) = 8.3 App (9.0 at AL -8 %), Ipk = 31.65 A nominal / 32.0 A worst; propagate to the sensing and MOSFET agents.",
+    "Send the thermal agent the real inductor heat (16-20 W typical, 23-26 W bounded) and surface temperature (100-119 degC) to replace its 6-10 W placeholder, and agree one convective model (its h = 8 W/m2K natural-convection-only model predicts ~137 K at 17.7 W because it omits radiation; the Magnetics correlation implies ~22 W/m2K including radiation).",
+    "Correct the winding description: ~26 turns fit in the first ID layer (wire-centre circumference), so ~8 turns form the second ID layer; include lead length (~0.25 m, about +1 mohm) in the DCR; note that the 2-layer F_R (~17.6) on those turns adds < 0.3 W.",
+    "Quote the SKILL-003 exclusion exactly ('...of low-voltage converters') and justify non-use by scope.",
+    "Add an estimate of the winding end-to-end capacitance / SRF and the displacement current under the gate-driver agent's 110-120 V/ns SW dv/dt as an EMI hand-off; keep the SW-side turns and lead away from the TMCS1133 sensor path.",
+    "State the no-load CCM reverse inductor current (-2.8 to -3.4 A at 360-440 V with L0 = 319 uH) in the hand-off to the MOSFET and sensing agents (informational)."
+  ],
+  "summary": "All of the agent's numerical results were recomputed from the stated inputs and agree within rounding: duty, LI^2, H and percent permeability, L(I) including AL tolerance and the datasheet-minimum curve, ripple and peaks at 360/400/440 V and 25/27.5 A, volt-second flux swing, DC flux from the magnetisation fit, Steinmetz core loss, DC/AC copper loss, fill factor, MLT, mass, the Magnetics temperature-rise correlation, P_max, IPC-2221 copper and via sizing, and the ferrite and 3-stack alternatives. The core datasheet (0058192A2 rev 10/6/2021) and the Magnetics 60u bias and DC-magnetisation fit coefficients were fetched and match exactly; the core-loss fit matches the published 60u toroid curve; the permeability-vs-temperature claim matches the curve. Knowledge rules were applied within their applicability, human-review rules were surfaced, and no reference instance values were copied. Corrections required: (1) the saturation-margin claim is wrong in direction - the added criterion (70 % of L(25 A) = 60 % of L0) is weaker than vendor 30 %-drop definitions, under which Isat = 37.3 A nominal (~35 A worst), below the 41-45 A demanded by the seed, the assumptions agent (A-15) and the sensing agent; the functional argument (B = 0.80 T, L_worst(42 A) ~175 uH, no hard knee) is sound but must be ratified, and the 3-stack (Isat ~45 A) is the option that satisfies the vendor definition; (2) the 'L >= 190 uH to 46 A' hand-off is nominal-only (worst case 160 uH at 46 A, 178 uH at 41 A); (3) core loss should be bounded by the datasheet maximum (1.44 x typical), giving a 23-26 W worst case and 62-69 K surface rise - still inside the 125 degC / 28.7 W limit but not the 110 degC acceptance without forced air; (4) the 50-55 K figure is a surface rise, not a hot spot; (5) the thermal agent still carries a 6-10 W placeholder and a convection-only model that must be reconciled with the 16-26 W inductor; minor items: overload peak 31.65/32.0 A with L(27.5 A), the ID layer holds ~26 turns, SKILL-003 misquote, winding-capacitance/EMI and no-load reverse-current hand-offs. Verdict: confirmed with corrections; the 2 x 0058192A2 / 34 T AWG10 design is physically sound, but the saturation-margin definition and its inter-agent consequences must be settled before the design freezes."
+}

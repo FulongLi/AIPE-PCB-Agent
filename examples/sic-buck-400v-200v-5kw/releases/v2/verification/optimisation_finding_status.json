@@ -1,0 +1,78 @@
+{
+  "LR-01": {
+    "status": "applied",
+    "detail": "automation/kicad_tools/generate_sic_power_board.py written (no power generator existed; the task's generate_sic_boards.py is not in the tree). Board kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb produced: 237 footprints, 3624 tracks, 548 vias, 33 zones. kicad-cli DRC (--schematic-parity --severity-all) manifest verification/drc/20261010T164654Z-drc-ccea4530/run.json: 284 violations / 183 unconnected / 0 parity; router unresolved 174. Metrics against the corrected layout_spec_power.json in engineering_checks/layout_metrics_power.{json,md}."
+  },
+  "LR-02": {
+    "status": "applied (partially effective)",
+    "detail": "Routing room and order: logic region moved to y >= 57 mm (DSP at y = 31), outward F.Cu escape stubs for the DSP's bottom pins, candidate signal_priority, routing-order trials and rip-up negotiation in grid_router. Unconnected items 39 -> 1 (DRC manifest verification/drc/20261010T141539Z-drc-a497f454/run.json); router unresolved: BIAS_EN. NOT taken from the proposal: 0.15 mm track/clearance - the frozen .kicad_dru minimum is 0.2 mm and rules are not downgraded; a pre-routed XRS_N spine was not added because the DSP-side geometry of the remaining failures changes with every trial."
+  },
+  "LR-03": {
+    "status": "applied",
+    "detail": "J8 on B.Cu (candidate fixed entry [28.0, 74.0, 270, 'B']; load_candidate accepts a side field, the placer flips the footprint). Measured side B.Cu, pin 1 at [28.0, 74.0] (left end, as documented), silkscreen 'J8 PIN 1 >' and 'MEZZANINE (B.Cu)' re-derived. JTAG J3 stays on F.Cu for accessibility (documented in the candidate)."
+  },
+  "LR-04": {
+    "status": "applied (partially effective)",
+    "detail": "New adc_filters region beside the ADC pins (C68-C75, C47, C48, R25 assigned). DSP pin to filter capacitor pad: max 17.27 -> 14.75 mm; per pin: {'U5.38->C72': 14.75, 'U5.39->C71': 10.35, 'U5.40->C70': 9.41, 'U5.41->C69': 8.48, 'U5.42->C68': 6.83, 'U5.46->C73': 9.84, 'U5.47->C74': 9.67, 'U5.49->C75': 10.42}. The proposed 3-5 mm is not reached: the capacitors sit outside the LQFP's outward escape via rows (15.9 mm radius) and the region is shared by ten parts; ADCREFM/P capacitors {'U5.55->C47': 7.38, 'U5.56->C48': 7.87} -> {'U5.55->C47': 4.88, 'U5.56->C48': 5.6} mm."
+  },
+  "LR-05": {
+    "status": "applied",
+    "detail": "C5 (19.9, 19.6) and C4 (21.2, 23.4) at the U2 VIN/GND pins, C6 at the pins, 5V_SW pre-routed on F.Cu as a 0.7 mm track U2.2 -> L1.1 with the C6 branch, 5V_BST pre-routed 0.3 mm. U2.3 to C4.1 / C5.1: 21.24 / 17.7 -> 4.23 / 2.04 mm; 5V_SW segments/vias/layers 10/3/['B.Cu', 'F.Cu'] -> 4/0/['F.Cu']."
+  },
+  "LR-06": {
+    "status": "applied",
+    "detail": "exposed_pad_vias arrays (2 x 4, 0.3 mm drill) in U1 pad 17 (EFUSE_RTN, joined by 0.4 mm B.Cu combs because the net has no plane) and U3 pad 29 (GND_CTRL to In1.Cu). Vias in pad: U1.17 1 -> 8, U3.29 1 -> 8."
+  },
+  "LR-07": {
+    "status": "applied (EFUSE_RTN kept at 0.4 mm)",
+    "detail": "NET_RULES: 12V_IN 1.0 mm (pre-routed bus) , 12V_PROT 1.0 mm with three 0.3 mm vias at the eFuse output, 5V 0.6 mm, 5V_SW 0.7 mm, 0.4 mm fanout stubs where the HTSSOP/SOT pads limit; 12V_PROT and 5V In2.Cu corridor fingers >= 2 mm (CORRIDOR_HALF_WIDTH_BY_NET). Measured 12V_IN width 0.5-1.0 mm, 12V_PROT 0.4-1.0 mm / 11 vias. EFUSE_RTN stays 0.4 mm: it is a net of 0603 sense-divider pads and the PowerPad array on an isolated net (LR-10) - its current is the divider/PowerPad return, not the 1.96 A load path, and a 1.0 mm track between the 0.65 mm pitch HTSSOP pins is not routable at 0.2 mm clearance."
+  },
+  "LR-08": {
+    "status": "applied",
+    "detail": "layout_spec_power.json rewritten from circuit_power.json: barrier_parts U1, U3 (UCC21710), U2, U4, U5 (UCC14141), U6, U7 (AMC1311), U10 (TMCS1133); gate loops Q1 -> U1, Q2 -> U3 with the placed footprint's pad numbers; MOSFET pads 1 drain / 2 source / 3 Kelvin / 4 gate; full CTRL_SELV pattern list; ISO_BARRIER zone and rectangle; heights; sensing pairs. Used for layout_metrics_power."
+  },
+  "LR-09": {
+    "status": "applied",
+    "detail": "J5 (4.5, 25) and J4 (4.5, 35) in the left edge strip next to J2 (4.5, 44). Distance to the nearer edge: {'J4': 44.0, 'J5': 44.0} -> {'J4': 4.5, 'J5': 4.5} mm."
+  },
+  "LR-10": {
+    "status": "not applied - schematic-level, recorded as open issue",
+    "detail": "EFUSE_RTN is isolated from GND_CTRL in the model; routed as drawn (PowerPad array joined on B.Cu). Schematic owner to decide; no layout change made."
+  },
+  "LR-11": {
+    "status": "applied",
+    "detail": "check_sic_layout.control_metrics honours control.exclude_refs (['J8', 'U5'] in layout_spec_control.json) for the section-separation groups; the result records excluded_refs."
+  },
+  "LR-12": {
+    "status": "applied",
+    "detail": "verify_sic_buck.py: hashes_valid is derived only from 'source changed' / 'dependency changed' / report-hash problems; the DRC pass/fail message no longer flips it."
+  },
+  "LR-13": {
+    "status": "applied (18.0 mm, not 17.3 mm)",
+    "detail": "dsp_bypass 3V3 ring radius 18.5 -> 18.0 mm; 17.3 mm collided with the outward F.Cu escape stubs/vias of the LQFP escape plan (the stubs end at 46.5 mm below the body, i.e. 15.5 mm from the centre, plus via and courtyard clearance). DSP bypass pin-to-capacitor max/mean 5.849/4.571 -> 5.381/4.402 mm."
+  },
+  "LR-14": {
+    "status": "not applied - manual plan entry, open",
+    "detail": "ISENSE/ISENSE_REF pair not pre-routed (no differential mode in the grid router). Measured {'ISENSE': 105.2, 'ISENSE_REF': 89.0, 'mismatch': 16.2}."
+  },
+  "LR-15": {
+    "status": "not resolved",
+    "detail": "Corridor fingers of island_corridors() widened to >= 2 mm for 12V_PROT / 5V and the board re-filled, but the In2.Cu background-fill fragments between the background and the higher-priority corridor zones were not removed: slivers < 0.01 mm2 7 -> 9. A fill-grid snap of the corridor edges remains open."
+  },
+  "LR-16": {
+    "status": "applied (partially effective)",
+    "detail": "Y1 fixed at (72.5, 7.4) rotation 180 next to the XCLKIN escape (the proposed ~5 mm collides with the top escape via rows and the 3V3 ring); Y1 centre / pad 3 to XCLKIN pin: 13.02 / 14.4 -> 11.06 / 8.86 mm."
+  },
+  "LR-17": {
+    "status": "not applied - library-level, open",
+    "detail": "U1, U3, Y1 3D models are absent from the KiCad 10.0.7 bundle; libraries are frozen for the layout agents. STEP/renders still show the three parts bodiless."
+  },
+  "LR-18": {
+    "status": "not applied - documentation/mechanical, open",
+    "detail": "architecture.md / pcb_stackup.md overhang and hole pattern text not changed (docs are frozen for this agent). Power-board J7 and H8-H11 were placed from the control board's J8 pin 1 (28.0, 74.0) and H3/H4 as proposed."
+  },
+  "LR-19": {
+    "status": "applied",
+    "detail": "run_check manifests now carry report_sha256 and finding_counts (violations / unconnected_items / schematic_parity); verify_sic_buck.py recomputes the report hash (report_hash_checked)."
+  }
+}

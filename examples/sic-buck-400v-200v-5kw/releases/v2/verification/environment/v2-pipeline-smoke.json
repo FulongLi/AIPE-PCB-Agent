@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "purpose": "End-to-end smoke of the V2 automation modules (project_footprints, project_schematic, grid_router, run_check, export_outputs, buck_stage) on a disposable mini half-bridge project generated into a scratch directory; see automation/kicad_tools/v2_pipeline_smoke.py.",
+  "generated_utc": "2026-10-10T05:43:24.745102+00:00",
+  "host": "Windows 10 10.0.26300",
+  "host_python": "3.10.11",
+  "status": "passed",
+  "runtime_s": 7.546,
+  "tools": {
+    "kicad_cli": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+    "kicad_cli_version": "10.0.7",
+    "pcbnew_version": "10.0.7",
+    "ngspice_version": "ngspice-46"
+  },
+  "module_versions": {
+    "project_footprints": {
+      "sha256": "08420943431e008553acee03e6b99504c5ddde41f7db3e388a19d05d98c37b18",
+      "lines": 496
+    },
+    "project_schematic": {
+      "sha256": "09d3ed1f321c947e3fde04ae76e7ecb7db06a4dd4b1d2a3b9439fd45a7084072",
+      "lines": 791
+    },
+    "grid_router": {
+      "sha256": "dd63eced3528eeb1dfd16c003ce437262b3b652a350593356a65a7262f53637d",
+      "lines": 898
+    },
+    "buck_stage": {
+      "sha256": "a38a6a4f8de92a67093ff56cf8ec3c3815c7d88ad4168b8a2fd8f16c333cba67",
+      "lines": 906
+    },
+    "ngspice_runner": {
+      "sha256": "c3ab6bb98d92ba5aef95ebf94105f73285ff6a9b0cf1bc5f5cde9d769e4d3f33",
+      "lines": 313
+    },
+    "v2_pipeline_smoke": {
+      "sha256": "2e33ca5f0a0cf11da40a7476f2a241aaaa77bfbe03f53db36bbad319ab535554",
+      "lines": 779
+    },
+    "run_check": {
+      "sha256": "b34e8639bbcbe03d6e8f7273b649d9b9a2f54ec319f909ff222091d0cf9eb65c",
+      "lines": 89
+    },
+    "export_outputs": {
+      "sha256": "1179ed5437e53d9772ce044593bc021bc4747f53bdef6a4e9048236cbaaeb880",
+      "lines": 91
+    }
+  },
+  "model": {
+    "parts": 16,
+    "power_parts": 15,
+    "control_parts": [
+      "J2"
+    ],
+    "nets": 15,
+    "custom_footprints": [
+      "C_Film_41.5x20x39.5_P37.5x10.2",
+      "HS_Envelope_50x10x35",
+      "L_Toroid_D40_P30_Flat"
+    ]
+  },
+  "schematic": {
+    "sheets": [
+      "01_power",
+      "02_driver",
+      "03_mechanical"
+    ],
+    "parts_placed": 15,
+    "skipped": {
+      "J2": "board 'control'"
+    },
+    "symbol_fallbacks": {
+      "Q1": "generated:fet",
+      "Q2": "generated:fet"
+    },
+    "flags": [
+      "VIN",
+      "12V",
+      "PGND",
+      "BOOT_H"
+    ],
+    "net_classes": [
+      "Default",
+      "HV",
+      "GATE"
+    ]
+  },
+  "pin_field_rules": [
+    {
+      "ref": "Q1",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "pads": [
+        "2",
+        "3"
+      ],
+      "gap_mm": 0.635,
+      "required_mm": 2.5
+    },
+    {
+      "ref": "Q2",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "pads": [
+        "2",
+        "3"
+      ],
+      "gap_mm": 0.635,
+      "required_mm": 3.0
+    }
+  ],
+  "erc": {
+    "status": "passed",
+    "finding_count": 0,
+    "tool_exit_code": 0
+  },
+  "board": {
+    "status": "passed",
+    "size_mm": [
+      120.0,
+      80.0
+    ],
+    "copper_layers": 4,
+    "stackup_present": true,
+    "footprints": 15,
+    "tracks": 134,
+    "vias": 20,
+    "zones": 8,
+    "pruned_vias": 1,
+    "unresolved": 0,
+    "routing_seconds": 0.281,
+    "saved": {
+      "path": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\v2_pipeline_smoke\\evidence_run\\kicad\\AIPE_V2_Smoke.kicad_pcb",
+      "footprints": 15,
+      "tracks": 134,
+      "vias": 19,
+      "zones": 8,
+      "nets": 18
+    }
+  },
+  "drc": {
+    "status": "passed",
+    "finding_count": 0,
+    "violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity": 0,
+    "tool_exit_code": 0
+  },
+  "exports": {
+    "status": "passed",
+    "commands": 11,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "files": 35
+  },
+  "simulation": {
+    "status": "passed",
+    "name": "sic-buck-400v-200v-5kw",
+    "points": 333607,
+    "ngspice_runtime_s": 1.9903790999997,
+    "vout_mean_V": 200.0323752730822,
+    "il_pkpk_A": 7.453046427553662,
+    "efficiency": 0.991827863126907,
+    "warnings": 0
+  },
+  "step_seconds": {
+    "model": 0.0,
+    "libraries": 0.016,
+    "schematic": 0.094,
+    "erc": 0.218,
+    "board": 0.547,
+    "drc": 0.531,
+    "exports": 3.359,
+    "simulation": 2.391
+  },
+  "notes": [
+    "Smoke circuit only: part values, the TO-247-4 pin order (G/D/S/KS in KiCad footprint pad order) and the bootstrap bias of the high-side channel are placeholders for exercising the pipeline, not V2 design decisions.",
+    "HV net-class clearance 2.5 mm and the HV-to-PGND rule 3.0 mm cannot be met inside a TO-247-4 pin field (2.54 mm pitch); the generated .kicad_dru adds one explicit pin-field rule per such package, derived from pad geometry, instead of lowering the classes. The real design needs the same treatment plus a creepage review.",
+    "HV nets are connected by zones only (no HV tracks or fanout vias); PGND reaches SMD pads through the fanout vias of the grid router.",
+    "Signal nets may run on In1.Cu where PGND is poured; the fill yields to them. Layout quality is not assessed here.",
+    "Router occupancy is conservative; kicad-cli DRC with schematic parity is the acceptance gate, not the router report."
+  ]
+}

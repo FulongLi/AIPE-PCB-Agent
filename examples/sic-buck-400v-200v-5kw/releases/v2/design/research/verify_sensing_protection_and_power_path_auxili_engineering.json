@@ -1,0 +1,322 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "TMCS1133C2A sensitivity 50 mV/A, zero-current 0.33 V, linear range at 3.3 V",
+      "status": "verified",
+      "evidence": "SBOSAG0E (Oct 2023, rev. May 2026) p.3 device table: C2A 50 mV/A, 0.33 V, -4.6 A to 57.4 A at 3.3 V (-4.6 to 91.4 A at 5 V); p.24 text '-5 A to 57 A'. Extracted from the TI PDF downloaded in this run."
+    },
+    {
+      "item": "TMCS1133 OC equation, VOC range, VOC pin impedance, hysteresis",
+      "status": "verified",
+      "evidence": "p.9/p.24 Eq. 21 VOC = S x IOC / 2.5, VOC range 0.3 V to VS, 120 kOhm pin impedance, hysteresis TMCS1133x2A 3.5 A; p.25 requires R2 < 10 kOhm (agent uses 1.00 kOhm - compliant)."
+    },
+    {
+      "item": "TMCS1133 OC response 250 ns max and threshold error +-2 % typ / +-10 % max",
+      "status": "unverified",
+      "evidence": "Only '100 ns' (typ, p.1 features) located in the text layer; the max response and the threshold-error rows were not found by extraction. Plausible but not confirmed in this run."
+    },
+    {
+      "item": "TMCS1133 R_IN 0.7 mOhm, 80 Arms continuous, orderable numbers",
+      "status": "verified",
+      "evidence": "p.8 R_IN 0.7 mOhm typ, 80 Arms at 25 degC; p.38 orderables TMCS1133A1A..A5A, B1A..B8A, C1A..C4AQDVGR 'Active Production'; TMCS1133B1QDVGR (TIDA BOM) absent - agent's correction of CMP-TMCS1133 confirmed. A C9A (66 mV/A, -3.4..43.4 A at 3.3 V) also exists."
+    },
+    {
+      "item": "TMCS1133 VIOWM 950 Vrms / 1343 VDC reinforced",
+      "status": "unverified",
+      "evidence": "Insulation table found (VIORM 1697 Vpk, VIOWM row present) but the numeric VIOWM values were truncated in extraction; knowledge record CMP-TMCS1133 carries 950 Vrms / 1343 VDC from the same datasheet. Not independently re-read."
+    },
+    {
+      "item": "UCC21710-Q1 AIN/APWM channel parameters",
+      "status": "verified",
+      "evidence": "SLUSDH8D p.9: V_AIN 0.6-4.5 V, I_AIN 196/200/209 uA (+-3 % over temperature, p.29), f_APWM 380/400/420 kHz, BW 10 kHz, D_APWM 88 % (86.5-89.5) at 0.6 V, 50 % at 2.5 V, 10 % (7.5-11.5) at 4.5 V; p.41 Eq. 12 D(%) = -20 x V_AIN + 100, identical to the agent's D = 0.88 - 0.2 (V_AIN - 0.6).",
+      "correction": "The +-1.5 % absolute duty tolerance (= +-50 mV of V_T = +-5.8 K at 8.6 mV/K) is not in the agent's OTP error budget."
+    },
+    {
+      "item": "UCC21710-Q1 RST/EN, deglitch, propagation, open-drain outputs, OC timing",
+      "status": "verified",
+      "evidence": "p.3 FLT reset when RST/EN low > 1000 ns, FLT/RDY open-drain parallelable; p.8 T_INFIL (IN+, IN-, RST/EN) 28/40/60 ns, T_RSTFIL 400/650/800 ns; p.10 tPD 60/90/130 ns; p.9 R_ODON 30 Ohm, V_ODL 0.3 V, tOCOFF 150/270/400 ns, tOCFLT 300/530/750 ns, tFLTMUTE 0.55-1 ms."
+    },
+    {
+      "item": "Omron G9EA-1 DC12 ratings",
+      "status": "verified",
+      "evidence": "Cat. No. J186-E1-01 p.1-2: rated load 60 A at 400 VDC (100 A at 120 VDC), carry 60 A, maximum switching voltage 400 V, max switching current 100 A, coil 12 VDC 417 mA / 28.8 Ohm / approx. 5 W, must-operate <= 75 %, must-release >= 8 %, max 130 %, endurance 400 VDC 60 A 3000 ops, contact resistance 30 mOhm max (0.6 mOhm typ), contact drop 0.1 V max at 60 A, operate 50 ms max, release 30 ms max.",
+      "correction": "Maximum switching voltage is 400 V: the claim that the relay can break 14-16 A 'in abnormal cases' holds only at <= 400 V, not over the 360-440 V operating range or at the 460 V OVP point. Coil-contact dielectric 2500 VAC not located in extraction (unverified)."
+    },
+    {
+      "item": "TMS320F28335 pin mapping and ADC clamp behaviour",
+      "status": "verified",
+      "evidence": "tms320f28335_pgf_pins.csv: pin 21 GPIO12 (TZ1), pin 24 GPIO13 (TZ2), ADCINA0-A4 pins 42-38; SPRS439 mux pages list GPIO12/TZ1, GPIO13/TZ2, ECAP1 on GPIO5/GPIO24/GPIO34. SPRS439 7.1 note 3: continuous clamp current +-2 mA per pin, analog inputs clamp to a diode drop above VDDA2 / below VSSA2; VDDA2 abs max 4.6 V.",
+      "correction": "The agent's statement 'F28335 analog absolute maximum 3.0 V' is wrong: 3.0 V is the conversion full scale; the pin clamps at about VDDA2 + 0.7 V. With the OPA2320 saturating at 3.3 V no clamp current flows at all; the 1 kOhm series resistor remains good practice."
+    },
+    {
+      "item": "Knowledge rules applied within applicability; human-review rules surfaced not decided",
+      "status": "verified",
+      "evidence": "Rule texts re-read via automation.knowledge.query for KR-SN-001..005, KR-PR-001..003, KR-TH-002/003, KR-ISO-001/002/004, KR-PCB-005, KR-GD-004, KR-CAP-001. KR-SN-003 correctly excluded (condition 'MCU with sigma-delta filter peripheral'); KR-SN-004 correctly not applicable (no shunt); KR-SN-001, KR-TH-003, KR-ISO-002, KR-GD-004, KR-PR-001 (verification method human-review/measurement) are listed as open issues, not decided."
+    },
+    {
+      "item": "Reference instance values not copied",
+      "status": "verified",
+      "evidence": "CB-SN-004 instance (8.2 k / 1.2 k, 45/70 A, B1 variant) replaced by 2.32 k / 1.00 k from REF3125 and 37.5 A via Eq. 21; CB-SN-001 8 x 634 k ladder re-derived as 4 x 750 k + 10 k; CB-IS-002 600 Ohm series resistor re-derived as 270 Ohm; CB-PR-002 'V_AIN = I_AIN x R' extended with an external Thevenin bias (datasheet p.29/p.43 explicitly permit external dividers with I_AIN accounted)."
+    },
+    {
+      "item": "Cross-area: DC-link and output capacitance",
+      "status": "contradicted",
+      "evidence": "capacitors.json: input bank 2 x B32776G8206K000 = 40 uF nominal, 48.7 uF effective with 4.7 uF ceramics (36 uF min); output 2 x B32776G4606K000 = 120 uF nominal, 132 uF used (108 uF min); bleeders already specified: 3 x CRCW2512120KFKEG (360 k, 1 W / 500 V parts) and 2 x CRCW2512100KFKEG (200 k); coupled discharge 35.7 s.",
+      "correction": "Replace the 60 uF / 40 uF assumptions: pre-charge tau 5.8 ms (4.4-7.3 ms), t99 27 ms (20-34 ms), E 4.7 / 5.6 J, dT_PTC 2.7 K; output discharge with 300 k and 132 uF = 54.8 s from 240 V (47.7 s from 200 V) - marginal against the 60 s target; merge to one bleeder set (120 k combined output -> 22 s; input 222 k || 360 k = 137.5 k -> 1.41 W standby if both are kept)."
+    },
+    {
+      "item": "Cross-area: heatsink temperature and OTP thresholds",
+      "status": "contradicted",
+      "evidence": "thermal.json: T_sink 88.2 degC typ (88-93 degC with max-R devices) at 5 kW, 50 degC ambient with the LAM 5 K 100 12 sink; thermal agent thresholds 90 degC warn / 100 degC firmware trip / 110 degC hardware trip (T_J <= 150 at 110 degC sink); sensor Vishay NTCALUG01A103F (1500 Vac terminal-to-lug test voltage, AEC-Q200).",
+      "correction": "The sensing agent's 85 degC warning is below the normal full-load sink temperature (permanently asserted) and the 95 degC OTP leaves 2-7 K margin, less than the uncalibrated chain uncertainty (+-1.5 % duty = +-5.8 K, 3.3 V rail +-2 % vs the 2.5 V-referenced comparator = +-5.4 K, NTC +-2 % R / +-1 % B = +-1.5 K). Adopt the thermal agent's 90 / 100 / 110 degC and reconcile the NTC part (the TDK M703 has only ~150 Vac test voltage)."
+    },
+    {
+      "item": "Cross-area: gate-driver rail and bias budget",
+      "status": "verified",
+      "evidence": "gate_driver.json: VDD_COM +15.0 V +-1.3 % (14.8-15.2 V); LS UCC14141 budget already includes a 0.615 W sensing-LDO load (P_LS 0.93 W = 78 % of 1.2 W); RST/EN 'active-low pulse >= 1 us; low also disables'.",
+      "correction": "R_pre 270 Ohm remains valid (LDO input >= 14.8 - 6.24 = 8.56 V). Report the 0.35 W maximum to the gate-driver agent so the 0.615 W placeholder can be relaxed; agree who drives RST/EN (FAULT_N AND DRV_EN here vs 'from GPIO' there)."
+    },
+    {
+      "item": "Cross-area: fault-combiner topology and UVLO latching",
+      "status": "contradicted",
+      "evidence": "controller_aux_interconnect.json: latch SN74LVC1G74 with D=1, CLK=ARM (GPIO2), CLR_N = FAULT_COMB_N produced by 2 x SN74LV21A AND gates whose inputs include FLT_H_N, FLT_L_N, RDY_H, RDY_L, OC_N, OVP_N, UVLO_N, OT...; this agent: wired-OR open-collector node with 4.7 k pull-up, UVLO as a non-latched run-permit and RDY in the PWM-enable AND.",
+      "correction": "One owner must fix the combiner type (wired-OR vs AND gates) and whether bus UVLO and RDY are latched; the design-basis 340/320 V hysteresis implies auto-restart, which favours this agent's non-latched UVLO. Document in the HW/FW contract."
+    },
+    {
+      "item": "Cross-area: inductor value and saturation behaviour",
+      "status": "verified",
+      "evidence": "inductor.json: custom High Flux 60u choke, L(25 A) = 272 uH (251-294 uH at AL +-8 %), soft roll-off to 210 uH at 41 A, nominal peak 29 A, overload peak 31.5 A.",
+      "correction": "Reword the 'exceeds the seed saturation margin' issue: the powder core has no hard knee; at the worst-case trip point L is about 205-210 uH (-25 %), di/dt = 440 / 210 uH = 2.1 A/us, overshoot 1.14 A, peak 42.4 A. The 110 % overload peak at 440 V with L_min 251 uH is 31.85 A (32.5 A with the design-basis 220 uH), not 31.25 A."
+    },
+    {
+      "item": "Cross-area: insulation coordination basis",
+      "status": "verified",
+      "evidence": "standards_safety.json: working voltage HV-to-SELV 440 V DC (480 V treated as temporary overvoltage), reinforced HV-SELV clearance 5.5 mm, creepage 'other insulators IIIa' 8.8 mm interpolated / 10.0 mm at the 500 V row, PWB column 5.0 raised to 5.5 mm; architecture.json: ISO_BARRIER 10 mm copper-free on all layers.",
+      "correction": "The agent's '~10 mm at 480 V' is the conservative end; it mixes the package creepage (over mold compound with its own CTI) with the PCB surface path (laminate CTI 175) and ignores the printed-wiring-board column the standards agent applied. Keep as human review but present both interpretations."
+    },
+    {
+      "item": "Cross-area: MOSFET short-circuit coordination",
+      "status": "verified",
+      "evidence": "mosfet.json: C4MS025120K, short-circuit withstand not specified by Wolfspeed; proposed hardware response <= 1.5 us; gate-driver DESAT tOCOFF 400 ns max + 288 ns blanking. The 546 ns inductor-OC chain is compatible; shoot-through remains DESAT-only as the agent states."
+    },
+    {
+      "item": "Knowledge record datasheet cache paths",
+      "status": "contradicted",
+      "evidence": "CMP-TMCS1133, CMP-AMC1311 and CMP-UCC21710-Q1 cite cache_path .cache/references/datasheets/*.pdf; that directory does not exist in this checkout (only .cache/datasheets/ with V1 parts: ref3125, sn74lvc1g74, tps3808, tlv9004, tms320f28335, ...). Verification in this run used freshly downloaded TI/Omron PDFs."
+    },
+    {
+      "item": "AMC1311B, TLV1702, REF3125, SN74LVC1G74, TPS3808, TDK PTC B59773, TDK M703 NTC, SIOV S20K385, KLKD020.T parameters",
+      "status": "unverified",
+      "evidence": "Not re-fetched in this run (tool budget); REF3125/SN74LVC1G74/TPS3808/TLV9004 PDFs are present in .cache/datasheets but were not re-read. Agent's own grading (KLKD I2t not found, G9EJ-1-E carry current not found, TLV760 Iq max not found, ladder resistor/LED/MMCX/MOV unverified) is accepted as stated."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Input current at design corners",
+      "agent_value": "14.17 / 12.76 / 11.60 A; overload 15.59 / 14.03 / 12.76 A",
+      "verifier_value": "14.17 / 12.76 / 11.60 A; 15.59 / 14.03 / 12.76 A; additionally 15.94 A (320 V UVLO-stop) and 17.54 A at 110 % / 320 V",
+      "agrees": true,
+      "note": "Arithmetic agrees; the 320-360 V hysteresis region is an operating corner the agent did not evaluate."
+    },
+    {
+      "name": "Current sensor transfer and ADC codes",
+      "agent_value": "0.330/1.580/1.705/1.768/1.893/2.205/2.330 V; codes 450/2157/2327/2413/2583/3010/3181; FS 53.4 A; 14.65 mA/LSB",
+      "verifier_value": "same voltages; codes 450.6/2157.2/2327.9/2413.2/2583.9/3010.6/3181.2 (agent truncates); FS 53.4 A; 14.65 mA/LSB",
+      "agrees": true,
+      "note": "C2A table confirmed (-4.6 to 57.4 A at 3.3 V)."
+    },
+    {
+      "name": "OC threshold voltage and divider",
+      "agent_value": "V_OC 0.750 V unloaded, 0.7487 V loaded -> 37.4 A; band 36.7-38.2 A typ, 33.7-41.2 A max; hysteresis 3.5 A",
+      "verifier_value": "0.7530 V unloaded, 0.7487 V loaded (1 k || 120 k = 991.7 Ohm) -> 37.43 A; 36.7-38.2 / 33.7-41.2 A; hysteresis 3.5 A (datasheet x2A)",
+      "agrees": true,
+      "note": "Eq. 21 confirmed; R2 < 10 k requirement met. Threshold error percentages themselves unverified."
+    },
+    {
+      "name": "Hardware trip chain response",
+      "agent_value": "546 ns",
+      "verifier_value": "545.9 ns (250 + 5.9 + 60 + 130 + 100); deglitch 60 ns max and tPD 130 ns max confirmed in SLUSDH8D",
+      "agrees": true,
+      "note": "Compatible with the MOSFET agent's <= 1.5 us requirement. OC 250 ns max unverified; OC-pin pull-up RC and the 33 Ohm/100 pF TZ filter add < 10 ns."
+    },
+    {
+      "name": "Current overshoot after trip and peak current",
+      "agent_value": "di/dt 2.0 A/us; dI 1.09 A; 39.3 A typ / 42.3 A worst; seed requirement 40.6 A",
+      "verifier_value": "2.0 A/us at 220 uH -> 1.09 A; with the selected choke (210 uH at 41 A) 2.1 A/us -> 1.14 A; 39.4 / 42.4 A; 1.3 x 31.25 = 40.6 A",
+      "agrees": true,
+      "note": "Framing must change: the High Flux core rolls off softly (about -25 % L at 42 A), there is no hard saturation event."
+    },
+    {
+      "name": "Output-short ramp time to trip",
+      "agent_value": "4.4-7.3 us",
+      "verifier_value": "4.375 us (440 V, 220 uH) to 7.29 us (360 V, 300 uH); 8.1 us from the ripple valley",
+      "agrees": true
+    },
+    {
+      "name": "Input voltage ladder scaling",
+      "agent_value": "k 3.3223e-3; 1.595 V at 480 V; ADC 2.392 V; 2 V = 602 V; LSB 0.147 V",
+      "verifier_value": "k 3.32226e-3; 1.0631/1.1296/1.196/1.3289/1.4618/1.5282/1.5947 V; ADC 1.595/1.694/1.794/1.993/2.193/2.292/2.392 V; 602.0 V; 0.147 V/LSB",
+      "agrees": true
+    },
+    {
+      "name": "Input ladder per-resistor stress",
+      "agent_value": "109.6 V / 16.0 mW at 440 V; 119.6 V / 19.1 mW at 480 V; 146 / 159 uA",
+      "verifier_value": "109.6 V / 16.03 mW; 119.6 V / 19.07 mW; 146.2 / 159.5 uA",
+      "agrees": true
+    },
+    {
+      "name": "Output voltage ladder scaling and stress",
+      "agent_value": "k 6.6225e-3; 1.325/1.457/1.589 V; ADC 1.987/2.185/2.384 V; FS 302 V; LSB 73.7 mV; 119.2 V / 18.9 mW at 240 V",
+      "verifier_value": "k 6.62252e-3; 1.3245/1.457/1.5894 V; 1.987/2.185/2.384 V; 302.0 V; 73.7 mV; 109.3 V/15.9 mW at 220 V, 119.2 V/18.95 mW at 240 V",
+      "agrees": true
+    },
+    {
+      "name": "Sense-chain filter corners",
+      "agent_value": "16.0 / 32.2 / 159 kHz",
+      "verifier_value": "15.97 kHz (R_th 9.967 k, 1 nF) / 32.15 kHz / 159.2 kHz",
+      "agrees": true
+    },
+    {
+      "name": "5V_ISO current and power budget",
+      "agent_value": "16.9 mA typ / 23.1 mA max; 0.25 / 0.35 W",
+      "verifier_value": "16.94 / 23.14 mA; 0.254 / 0.347 W at 15.0 V (0.352 W at the gate-driver agent's 15.2 V maximum)",
+      "agrees": true,
+      "note": "Gate-driver agent currently budgets 0.615 W for this load - reconcile."
+    },
+    {
+      "name": "Series resistor before the LDO",
+      "agent_value": "<= 313 Ohm -> 270 Ohm 0.5 W; drop 6.25 V; 145 mW in R_pre, 87 mW in LDO",
+      "verifier_value": "313.9 Ohm max; 6.24 V drop; 144 mW; LDO 69 mW at (14.25 V, 23.1 mA), 87 mW at (15 V, 23.1 mA), 105 mW worst at (15.75 V, 16.9 mA); with VDD 14.8-15.2 V the LDO input stays >= 8.56 V",
+      "agrees": true
+    },
+    {
+      "name": "NTC resistance",
+      "agent_value": "10.0 k / 3.55 k / 1.73 k / 1.06 k / 786 / 680 / 514 Ohm",
+      "verifier_value": "10000 / 3553 / 1731 / 1064 / 786 / 680 / 514 Ohm (B = 3988 K)",
+      "agrees": true,
+      "note": "Beta-model error vs the TDK R/T 8016 table is a few percent at 95-110 degC; calibration planned."
+    },
+    {
+      "name": "AIN voltage with bias network",
+      "agent_value": "3.40 / 2.52 / 1.95 / 1.64 / 1.50 / 1.44 / 1.34 V; open 4.52 V; short 0.98 V",
+      "verifier_value": "V_th 3.797 V, R_th 3.608 k, I_Norton 1.2526 mA; 3.403 / 2.521 / 1.947 / 1.644 / 1.496 / 1.436 / 1.336 V; open 4.519 V; short 0.981 V",
+      "agrees": true,
+      "note": "Open-NTC 4.52 V is marginally above the 4.5 V specified AIN range (duty saturates near 10 %), not 'inside' it."
+    },
+    {
+      "name": "APWM duty and filtered voltage",
+      "agent_value": "D 31.9/49.6/61.1/67.1/70.1/71.3/73.3 %; V_T 1.05/1.64/2.02/2.22/2.31/2.35/2.42 V; OTP 2.312 V; open 0.33 V; short 2.65 V",
+      "verifier_value": "Eq. 12 confirmed; D 31.9/49.6/61.1/67.1/70.1/71.3/73.3 %; V_T 1.054/1.636/2.015/2.215/2.312/2.352/2.418 V; open 9.6 % -> 0.32 V; short 80.4 % -> 2.653 V",
+      "agrees": true,
+      "note": "Duty tolerance +-1.5 % absolute (+-5.8 K) and the 3.3 V pull-up rail tolerance (+-5.4 K per 2 %) are missing from the OTP error budget; the 2.5 V-referenced comparator is not ratiometric to V_T."
+    },
+    {
+      "name": "Temperature resolution",
+      "agent_value": "8.6 mV/K; 1.03 K per eCAP count; 0.085 K per ADC LSB",
+      "verifier_value": "8.58 mV/K (90-100 degC); 1.03 K/count (375 counts); 0.085 K/LSB",
+      "agrees": true
+    },
+    {
+      "name": "Fuse loading",
+      "agent_value": "71 % continuous, 78 % overload (20 A)",
+      "verifier_value": "70.9 % / 78.0 % at 360 V; 79.7 % / 87.7 % at the 320 V UVLO-stop corner; with a 25 A fuse 56.7 % / 62.4 % (70.1 % at 320 V / 110 %)",
+      "agrees": false,
+      "note": "Arithmetic agrees but the corner set is incomplete and no ambient (50-60 degC enclosure) derating was applied; continuous loading of a fast-acting midget fuse above ~75 % after derating is not acceptable practice."
+    },
+    {
+      "name": "Pre-charge energy, time, peak current, I2t",
+      "agent_value": "E 5.81 / 6.91 J; tau 7.2 ms (5.4-9.0); t99 33 ms (25-41); I_pk 3.67 / 5.33 A; I2t 0.08 A2s",
+      "verifier_value": "With the assumed 60 uF: 5.81 / 6.91 J, 7.2 ms (5.4-9.0), 24.8-41.4 ms, 3.67 / 5.33 A, 0.0768 A2s. With the capacitor agent's 48.7 uF: 4.71 / 5.61 J, tau 5.8 ms (4.4-7.3), t99 27 ms (20-34), 0.062 A2s",
+      "agrees": true,
+      "note": "Arithmetic correct; input assumption superseded by capacitors.json (direction conservative)."
+    },
+    {
+      "name": "PTC thermal check",
+      "agent_value": "dT 3.3 K; N 0.047 -> 1 element",
+      "verifier_value": "3.29 K; N 0.0470 at 60 uF; 2.67 K / 0.038 at 48.7 uF",
+      "agrees": true
+    },
+    {
+      "name": "Relay closing voltage difference",
+      "agent_value": "0.12-0.24 V",
+      "verifier_value": "1-2 mA bleeder + 0.3 mA ladders -> 0.12-0.28 V across 120 Ohm; zero-voltage closing confirmed",
+      "agrees": true,
+      "note": "Relay operate time 50 ms max / release 30 ms max (J186-E1-01) should enter the sequencing timeline."
+    },
+    {
+      "name": "Input DC-link discharge",
+      "agent_value": "R_par 222 k; tau 13.3 s; 27.8 s from 480 V, 26.6 s from 440 V (46.3 s at 100 uF); 0.87 W at 440 V; per resistor <= 160 V and 143 mW",
+      "verifier_value": "R_par 222.5 k; tau 13.35 s; 27.76 / 26.60 s (46.26 s at 100 uF; 22.5 s at 48.7 uF); 0.870 W at 440 V, 1.036 W at 480 V. 3 x 150 k string: 146.7 V / 143 mW at 440 V, 160 V / 171 mW at 480 V. 2 x 220 k indicator string: 220 V / 220 mW at 440 V, 240 V / 262 mW at 480 V",
+      "agrees": false,
+      "note": "Discharge arithmetic agrees; the per-resistor stress claim is wrong for the LED string (exceeds a 1206's 200 V limiting element voltage and 250 mW rating) and mixes conditions for the 150 k string (143 mW is the 440 V value, 160 V the 480 V value)."
+    },
+    {
+      "name": "Output discharge",
+      "agent_value": "tau 12 s; 16.6 s / 15.6 s; 0.16 W at 220 V (40 uF)",
+      "verifier_value": "At 40 uF: 12.0 s, 16.6 / 15.6 s, 0.161 W. At the capacitor agent's 132 uF: tau 39.6 s, 54.8 s from 240 V, 47.7 s from 200 V; combined with the capacitor agent's 200 k: 120 k, tau 15.8 s, 22 s from 240 V",
+      "agrees": false,
+      "note": "Arithmetic agrees for the stated input, but the input is wrong by 3.3x; with the real bank the 300 k string alone is marginal against the 60 s target."
+    },
+    {
+      "name": "Comparator thresholds from 2.5 V",
+      "agent_value": "2.2917 V = 459.9 V; 2.1872 V = 220.2 V; UVLO 1.641 V centre = 329 V, +-0.050 V = +-10 V (~320/340 V); OTP 2.313 V = 95 degC",
+      "verifier_value": "2.2917 V -> 459.86 V; 2.1872 V -> 220.18 V; 2.3134 V; UVLO 1.6409 V -> 329.3 V, hysteresis +49.1 mV / -42.7 mV (R_th 656 Ohm, 21.5 k) -> 339.1 V on / 320.7 V off with an ideal 3.3 V source, 337.4 V on with a 4.7 k pull-up",
+      "agrees": true,
+      "note": "Works only with the threshold on the non-inverting input and the hysteresis resistor to that node, giving an active-high under-voltage flag; the agent's 'UVLO_N' polarity would then need inversion - its own 'verify by simulation' flag is justified."
+    },
+    {
+      "name": "Sensor conductor and ADC clamp checks",
+      "agent_value": "0.53 W in the conductor; clamp current < 0.3 mA (abs max 3.0 V)",
+      "verifier_value": "27.5^2 x 0.7 mOhm = 0.529 W (0.44 W at 25 A; R_IN rises ~2.1 uOhm/K); clamp current 0 mA because the OPA2320 saturates at 3.3 V, below the VDDA2 + diode clamp (~4.0 V)",
+      "agrees": false,
+      "note": "Power agrees; the '3.0 V absolute maximum' premise is incorrect (SPRS439 note 3), although the conclusion (safe) stands."
+    },
+    {
+      "name": "Capacitance assumptions (C_in, C_out)",
+      "agent_value": "C_in ~31 uF ripple-charge estimate -> 60 uF assumed; C_out >= 9.4 uF -> 40 uF assumed",
+      "verifier_value": "dQ = I_o D(1-D)/f_s = 125 uC -> 31.25 uF for 4 Vpp; dI/(8 f dV) = 9.375 uF; capacitor agent's actual values 48.7 uF / 132 uF",
+      "agrees": true,
+      "note": "Correct physics, stale inputs."
+    },
+    {
+      "name": "Required reinforced creepage at the sensing isolators",
+      "agent_value": "~10 mm reinforced at 480 V, PD2, CTI 175 (IIIa); clearance 5.5 mm satisfied",
+      "verifier_value": "IEC 60664-1 F.4 interpolation: 480 V basic 4.8 mm -> reinforced 9.6 mm; at the standards agent's 440 V working voltage 8.8 mm (10.0 mm at the 500 V row); PWB column 5.5 mm; clearance 5.5 mm (6 kV reinforced)",
+      "agrees": true,
+      "note": "Agrees as the conservative interpretation; see knowledge_misuse for the mixed package/PCB reasoning."
+    },
+    {
+      "name": "Overload-peak corner for the OC lower bound",
+      "agent_value": "31.25 A overload peak vs 33.7 A worst-case low trip bound (2.5 A margin)",
+      "verifier_value": "Ripple = V_out(1-D)/(L f_s): 9.92 App at 440 V / 220 uH -> 32.46 A peak (design-basis range); 8.69 App at 440 V / 251 uH (selected choke minimum) -> 31.85 A; margin 1.2-1.9 A before sensitivity/offset error",
+      "agrees": false,
+      "note": "The agent used the nominal 7.5 App ripple instead of the L_min / V_in,max corner."
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-ISO-002 (hard constraint, human review): the agent compared the isolator PACKAGE creepage (8 mm over mold compound with the package's own CTI) against a laminate-based requirement (CTI 175, group IIIa) and used the 480 V temporary overvoltage as the working voltage, whereas the standards agent uses 440 V DC and the printed-wiring-board column (5.5 mm) of IEC 61800-5-1 Table 10 / IEC 60664-1 Table F.4. The item is correctly left to human review, but the stated '~10 mm required' should be presented as one (conservative) interpretation, and the PCB-surface path under the body (laminate) distinguished from the package body.",
+    "KR-CAP-001: marked not-applicable, yet its ripple-charge method was used to generate the agent's own 60 uF / 40 uF assumptions although the capacitor agent's result (48.7 uF / 132 uF plus its own bleeders) was available in the same research folder; pre-charge, discharge and bleeder numbers are therefore stale and the bleeders are duplicated.",
+    "KR-TH-003 (human-review requirement): applied correctly in spirit (heatsink temperature only, isolation, potentiometer calibration), but concrete OTP/warning thresholds (95 / 85 degC) were fixed without the thermal model; they conflict with the thermal agent's 88-93 degC steady-state sink temperature and its 90 / 100 / 110 degC ladder. The thresholds should have been expressed as a dependency on thermal.json rather than as values.",
+    "SPRS439Q absolute-maximum note 3 was paraphrased with an added, incorrect '3.0 V absolute maximum' for the analog inputs; the datasheet states a +-2 mA continuous clamp current with clamping a diode drop above VDDA2 (abs max 4.6 V).",
+    "CB-SN-004 / SBOSAG0E: the OC response '100-250 ns' and threshold error '+-2 % typ / +-10 % max' are cited as datasheet values but could not be located in the datasheet text layer in this run; they should carry 'unverified' until the specification table rows are quoted.",
+    "KR-SN-005 rationale is applied to the inductor-current path only; the agent correctly states that shoot-through is invisible to the Hall sensor, so KR-PR-001 compliance rests entirely on the gate-driver DESAT (owner correctly identified, not a misuse, but the OC sensor must not be described as the switch-level protection)."
+  ],
+  "required_changes": [
+    "Indicator string: replace 2 x 220 kOhm 1206 (220 V / 220 mW per resistor at 440 V, 240 V / 262 mW at 480 V - above a 1206's 200 V limiting element voltage and 250 mW rating) by >= 3 x 150 kOhm 1206 or by 2512 500 V / 1 W parts (as the capacitor agent used); correct the pcb_constraint text '<= 160 V per element' and state the 150 k string stress consistently (160 V / 171 mW at 480 V, 147 V / 143 mW at 440 V).",
+    "Adopt the capacitor agent's values C_in = 48.7 uF effective (36 uF min film) and C_out = 132 uF (108 uF min) and re-issue: pre-charge tau 5.8 ms (4.4-7.3 ms), t99 27 ms (20-34 ms), E 4.7 / 5.6 J, dT_PTC 2.7 K; output discharge 54.8 s from 240 V with 300 k alone. Merge to one bleeder set with the capacitor agent (recommend keeping its 3 x 120 k / 2 x 100 k 2512 strings and adding only the 3-resistor LED indicator string here); otherwise standby loss rises to about 1.4 W at the input.",
+    "Temperature supervision: adopt the thermal agent's thresholds (90 degC derate/warn, 100 degC firmware trip, 110 degC hardware trip) or justify a deviation against its 88.2 degC typical / 93 degC max-R steady-state sink temperature; with the agent's bias network these map to V_T = 2.267 / 2.352 / 2.418 V. Reconcile the NTC part with the thermal agent (Vishay NTCALUG01A103F, 1500 Vac test voltage, insulated lug) instead of the TDK B57703M0103G040 (~150 Vac) and agree the read-out route (driver AIN/APWM vs direct ADC) with the architecture agent's PGND-to-PE decision.",
+    "Make the hardware OTP comparator ratiometric to the APWM pull-up rail (derive its threshold divider from the same 3.3 V rail rather than from REF3125) or implement the OTP trip from the eCAP duty; add the +-1.5 % APWM duty tolerance (+-5.8 K), the 3.3 V rail tolerance (+-5.4 K per +-2 %) and the NTC tolerance (+-1.5 K) to the OTP error budget and the calibration plan.",
+    "Restate the 110 % overload peak at the L_min / V_in,max corner: 32.5 A with the design-basis 220 uH (31.85 A with the selected choke's 251 uH minimum) versus the 33.7 A worst-case lower OC bound - margin 1.2-1.9 A before sensor sensitivity/offset error; keep I_OC = 37.5 A but show this margin explicitly. Reword the magnetics open issue for a soft-saturating High Flux core (L about 205-210 uH at 42 A, di/dt 2.1 A/us, overshoot 1.14 A, peak 42.4 A) instead of a hard saturation limit.",
+    "Fuse: evaluate the 320 V UVLO-stop corner (15.9 A continuous = 80 %, 17.5 A at 110 % = 88 % of 20 A) and apply the Littelfuse ambient derating for a 50-60 degC enclosure; either prove the 20 A KLKD rating with the time-current/derating curves or move to the 25 A member (57 % / 62 % at 360 V, 70 % at 320 V / 110 %) and raise the source-current-limit assumption to <= 25 A. Add the fuse I2R loss (about 0.9 W cold at 14.2 A) to the auxiliary loss list.",
+    "Relay: state that the Omron G9EA-1 maximum switching voltage is 400 V (J186-E1-01) so the relay must never be commanded open under load anywhere in the 360-440 V operating range or at the 460 V OVP point; delete the 'rated to break 14-16 A at 400 VDC in abnormal cases' as a general claim; include operate 50 ms max / release 30 ms max in the sequencing; include contact loss (0.6 mOhm typ -> 0.45 W at 27.5 A; 0.1 V max drop) in the loss list.",
+    "Reconcile the fault architecture with the controller/interconnect agent: combiner type (wired-OR open-collector node with 4.7 k vs 2 x SN74LV21A AND gates), whether bus UVLO_N and RDY are latched (interconnect) or non-latched run-permits (this agent), the latch clock source (FAULT_RESET vs ARM on GPIO2) and who drives UCC21710 RST/EN (FAULT_N AND DRV_EN vs a GPIO). Record the outcome in the HW/FW contract.",
+    "Correct the F28335 ADC statement: 3.0 V is the conversion full scale; the pins clamp a diode drop above VDDA2 with +-2 mA continuous clamp current (SPRS439 7.1 note 3). Keep the 1 kOhm + 1 nF but remove the '< 0.3 mA clamp current' derivation (no clamp current flows at 3.3 V).",
+    "Open-NTC state: V_AIN = 4.52 V is at/above the 4.5 V specified AIN range; change 'inside the pin range' to 'at the upper limit (duty saturates near 10 %)' - the open-sensor detection (< 15 % duty) remains valid.",
+    "12 V budget: confirm with the interconnect agent that the 0.417 A relay coil plus the 0.3 A fan, 0.28 A bias and about 0.25 A for the 5 V buck (about 1.25 A total, 88 % of the 1.425 A minimum eFuse limit) fit, or implement the PWM coil hold (Omron specifies must-release >= 8 % only; a 50-60 % hold must be validated).",
+    "Mark the TMCS1133 OC response maximum (250 ns) and threshold error (+-2 % / +-10 %) as 'unverified' until the SBOSAG0E specification rows are quoted; keep the VIOWM 950 Vrms / 1343 VDC value but note it was taken from the knowledge record, not re-read here.",
+    "Knowledge maintenance: fix the stale cache_path (.cache/references/datasheets/) in CMP-TMCS1133, CMP-AMC1311 and CMP-UCC21710-Q1 or restore the cached PDFs; the orderable-variant correction to TMCS1133B1AQDVGR (and the existence of C2AQDVGR / C9AQDVGR) is confirmed from SBOSAG0E p.38."
+  ],
+  "summary": "Core engineering of the sensing/protection area is sound: every calculation was recomputed from the stated inputs and the arithmetic agrees (current scaling, OC divider with 120 k loading, 546 ns trip chain, ladders and resistor stress, filters, 5V_ISO budget and R_pre, NTC/AIN/APWM transfer, comparator thresholds, pre-charge and PTC checks). Key datasheet facts were independently confirmed from freshly downloaded PDFs: TMCS1133C2A 50 mV/A / 0.33 V / -4.6..57.4 A at 3.3 V, Eq. 21 VOC = S x IOC / 2.5, 120 k pin impedance, 3.5 A hysteresis, R_IN 0.7 mOhm, A-suffixed orderables; UCC21710 AIN 0.6-4.5 V, I_AIN 200 uA +-3 %, Eq. 12 duty law, 60 ns deglitch, 130 ns tPD, RST/EN > 1000 ns; Omron G9EA-1 60 A / 400 VDC, 400 V maximum switching voltage, 5 W coil; F28335 TZ1/TZ2/eCAP1 mapping and the +-2 mA clamp note. The result nevertheless needs corrections: (1) the 2 x 220 k LED indicator string exceeds 1206 voltage and power ratings (220 V / 220 mW per resistor at 440 V) contrary to the stated '<= 160 V per element'; (2) the 60 uF / 40 uF capacitance assumptions contradict the capacitor agent's 48.7 uF / 132 uF and its already-specified bleeders (output discharge becomes 55 s, bleeders duplicated); (3) the 85 degC warning / 95 degC OTP conflict with the thermal agent's 88-93 degC full-load sink temperature and its 90/100/110 degC ladder, the NTC part differs between agents, and the OTP comparator is not ratiometric to the APWM rail (+-5 K per 2 % rail error, +-5.8 K duty tolerance omitted); (4) the overload peak was taken at nominal ripple instead of the L_min / V_in,max corner (32.5 A, margin to the worst-case low trip bound 1.2-1.9 A); (5) the fuse analysis omits the 320 V UVLO-stop corner (88 % loading at 110 %) and ambient derating; (6) the relay cannot break load above its 400 V maximum switching voltage, so the 'abnormal-case breaking' claim is invalid over the operating range; (7) the fault-combiner/UVLO-latching architecture conflicts with the interconnect agent's result; (8) the F28335 '3.0 V absolute maximum' premise is wrong. Human-review items (isolator creepage, DESAT coordination, NTC insulation, discharge standard) were surfaced rather than decided, and reference instance values were not copied. Verdict: confirmed with corrections."
+}

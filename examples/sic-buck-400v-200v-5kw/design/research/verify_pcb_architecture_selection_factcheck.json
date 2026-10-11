@@ -1,0 +1,372 @@
+{
+  "lens": "SOURCE FACT-CHECK",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "KR-PCB-005 reading (driver beside switch; separate boards mate at gate/source pins; V_GS probe point)",
+      "status": "verified",
+      "evidence": "Record statement: 'Place each gate driver (and its local decoupling) immediately beside its switch; for separate driver boards, mate as close as possible to the gate/source pins and provide a V_GS probe point at the device.' Applicability: board-mounted and plug-in gate drivers. Confidence medium.",
+      "correction": "The rule carries no distance; the '<= 15 mm driver-to-device' target and the phrase 'only justified if the card mates at the gate pins' are the agent's own, not rule text. Label them as assumptions."
+    },
+    {
+      "item": "KR-PCB-004 (commutation loop before gate loop)",
+      "status": "verified",
+      "evidence": "Record: 'Minimise the high-frequency power commutation loop first, then the gate loop; driver routing must not compromise the power loop.' Applied as HF ceramic column + L1/L2 pair before driver islands - consistent."
+    },
+    {
+      "item": "KR-PCB-001 (gate/Kelvin adjacent-layer pours, Kelvin layer as shield)",
+      "status": "verified",
+      "evidence": "Record: 'Route gate and Kelvin-source connections as wide pours on adjacent PCB layers, with the Kelvin-source layer between the gate and other circuitry.' Applicability: multilayer gate-driver PCBs for SiC. Agent: gate pours on L4, Kelvin on L3 across 0.20 mm prepreg - consistent.",
+      "correction": "'>= 80 % pour overlap' is an agent metric, not a rule value."
+    },
+    {
+      "item": "KR-PCB-003 hard constraint (Kelvin source never tied to power source)",
+      "status": "verified",
+      "evidence": "Record category hard-constraint, confidence high; evidence PRD-09301 s1.1 and TIDUES0 s2.3.4.8. Carried into pcb_constraints."
+    },
+    {
+      "item": "KR-PCB-006 (parallel bus copper, low confidence)",
+      "status": "verified",
+      "evidence": "Record confidence 'low', generality 'single-reference-observation' (TIDRZW3 top/inner1/bottom pours). Agent correctly notes the low confidence and defers sizing to IPC-2221 (standards agent: 25 A -> 8.4 mm external / 21.7 mm internal at 70 um, 20 K)."
+    },
+    {
+      "item": "KR-ISO-001 (no copper crossing a barrier on any layer)",
+      "status": "verified",
+      "evidence": "Record: hard-constraint, 'No copper (traces, pours, planes) on any layer may cross a gate-driver isolation barrier ...; only components rated for the barrier may bridge it.' Agent: 10 mm copper-free ISO_BARRIER on all four layers - consistent.",
+      "correction": "The rule governs copper on one PCB. 'No control-board copper above HV copper of the power board' is an agent extension for the stacked assembly; keep it but attribute it to the agent and to the standards agent's clearance review, not to KR-ISO-001."
+    },
+    {
+      "item": "KR-ISO-002 (creepage/clearance per standard, no universal value)",
+      "status": "verified",
+      "evidence": "Record numerical_limits: 'per applicable standard (e.g. UL 61800-5-1, IEC 60664-1, IPC-2221A) ... no universal value'; validation analytically-checked. Agent applies the standards agent's 9.0 / 5.5 / 5.0 / 3.0 mm and flags human review - consistent with standards_safety.json lines 456-485, 663-666."
+    },
+    {
+      "item": "KR-ISO-003 (net classes by potential) and KR-ISO-004 (slots when creepage limits)",
+      "status": "verified",
+      "evidence": "KR-ISO-003: 'Assign nets to spacing classes by reference potential ...'. KR-ISO-004: 'Use board slots or cut-outs across isolation gaps when creepage, not clearance, is limiting'; evidence includes CGD1700 0.030 in slots and CGD15SG00D2 grooves. Agent's 1.0 mm slots under parts with land gap < 9 mm matches standards_safety.json line 119."
+    },
+    {
+      "item": "KR-TH-002 (rated insulating interface on shared sinks)",
+      "status": "verified",
+      "evidence": "Record: 'When several exposed-drain packages share a heat sink, use a rated insulating thermal interface and include its thermal resistance in the budget.' Applied: one PE-bonded sink, rated pads.",
+      "correction": "KR-TH-002 contains no distance. The '>= 5.0 mm HV copper to heat sink (KR-TH-002)' target in section 11 must be attributed to the standards agent's DRC (HV/DRV/DESAT to PE >= 5.0 mm, absolute minimum 3.0 mm)."
+    },
+    {
+      "item": "KR-TH-001 adapted sanity check",
+      "status": "verified",
+      "evidence": "Record statement P_max = (T_J,max - T_A,max)/R_th,total including the device's share of the sink. Agent's T_sink = T_A + R_HS x P_total, T_J = T_sink + (R_pad + R_JC) x P_device is the same model; R_thJC 0.41 K/W confirmed in the Wolfspeed datasheet (Rev. 2, Dec 2025).",
+      "correction": "Inputs are inconsistent: P_total 56.2 W but P_device 29.4 W (2 x 29.4 = 58.8 W); the thermal agent uses 28.7 W worst case per device."
+    },
+    {
+      "item": "KR-GD-008 exclusion used for the mezzanine PWM link",
+      "status": "verified",
+      "evidence": "Record exclusions: 'Short on-board links, where buffered single-ended PWM with RC filtering is acceptable (PRD-09301 s4.1; TI uses SN74LVC126A buffers).' CGD1700HB2M-UNA decision 4 applicability: 'on-board short single-ended links are acceptable with buffering and RC filtering'.",
+      "correction": "The exclusion says 'on-board'. Treating an 11 mm board-to-board mezzanine plus <= 80 mm trace as on-board is an agent extension, and the '<= 100 mm single-ended segment' and '~150 mm cable' thresholds are not in the rule. Record both as assumptions_added."
+    },
+    {
+      "item": "CB-GD-003 marked not-applicable (fallback only)",
+      "status": "verified",
+      "evidence": "Block operating_conditions: 'Driver boards connected to the controller by ribbon or twisted-pair cable; bus voltages below ~2 kV ...'; alternatives list 'Short single-ended buffered PWM with RC filters on the same PCB' (PRD-09301 s4.1, TIDUES0 s3.6). Agent's reading is correct."
+    },
+    {
+      "item": "KR-PR-003 / CB-PR-001 (eFuse at the 12 V entry on the control board)",
+      "status": "verified",
+      "evidence": "KR-PR-003: protect the auxiliary rail feeding bias supplies. CB-PR-001 pcb_constraints: 'Protection at the connector before distribution to isolated islands'; TPS26400 (CMP-TPS2640) is alternative A. Agent places TPS26400 at the connector on the control board - consistent."
+    },
+    {
+      "item": "KR-PR-001 cited as the basis for double-pulse / bench-PWM testability",
+      "status": "contradicted",
+      "evidence": "KR-PR-001 statement: 'Every SiC switch position in a product design must have hardware short-circuit/overcurrent protection whose total response ... is shorter than the selected device's short-circuit withstand time'. It contains nothing about test methods or double-pulse testing.",
+      "correction": "Replace with the real basis: A-37 commissioning plan and CGD1700HB2M-UNA decision 2/7 verification ('double-pulse tuning'), or drop the citation."
+    },
+    {
+      "item": "KR-IS-002 and SKILL-004 (CM choke at bias-module input, capacitor between choke and module)",
+      "status": "verified",
+      "evidence": "KR-IS-002: 'place a common-mode choke at the bias-converter input, physically close to the converter, with the converter's input capacitor between choke and converter'. SKILL-004 principle 3 identical. Agent places chokes on the SELV strip adjacent to the barrier-line modules - consistent if the strip abuts the barrier line."
+    },
+    {
+      "item": "KR-CAP-003 and KR-GD-007",
+      "status": "verified",
+      "evidence": "KR-CAP-003: bulk film plus distributed HV ceramics beside each bridge (confidence medium, TI purpose inferred). KR-GD-007: gate-source discharge resistor at device side of R_G; alternatives 10 k (CGD1700) / 47 k (CGD15SG00D2) recorded as instance values. Agent uses both qualitatively only."
+    },
+    {
+      "item": "SKILL-002 principles 1, 2, 4-8 and procedure steps 1-2",
+      "status": "verified",
+      "evidence": "Record principles: [1] power loop priority, [2] gate/Kelvin adjacent pours, [4] driver adjacent / connectors dominate, [5] no copper crossing barriers, [6] net classes, [7] slots, [8] differential pairs and short single-ended segments. Procedure steps 1-2: spacing classes and stack-up with gate/Kelvin adjacency. Agent's layer table follows them."
+    },
+    {
+      "item": "SKILL-002 'scope note (PRD-09301: separate drivers typical for ~200 kW+)' used to reject Option C",
+      "status": "verified",
+      "evidence": "SKILL-002-gate-driver-pcb-layout.md line 20, under 'Not applicable / out of scope': 'Power-stage busbar or laminated-bus design (PRD-09301 notes ~200 kW+ systems typically separate drivers from the power stage).' Line 16 (applicable): 'Drivers integrated on the power board (TIDA-010054) or on plug-in driver boards (CGD15SG00D2, CGD1700HB2M-UNA).'",
+      "correction": "The note exists but is a scope remark about busbar design, and SKILL-002 explicitly covers plug-in driver boards. It does not establish that separate driver cards are inappropriate at 5 kW; the Option C rejection should rest on KR-PCB-005 (connector inductance), the second barrier instance and the extra connectors/assemblies."
+    },
+    {
+      "item": "SKILL-006 principle 4 and step 3 (exhaust rule flagged as recommendation without evidence)",
+      "status": "verified",
+      "evidence": "SKILL-006 principles: 'Thermal placement must not lengthen electrical loops'; SKILL-006-thermal-placement.md line 35: 'keep film capacitors and magnetics out of exhaust where possible (AIPE recommendation without source evidence - review)'. Agent's flag is accurate."
+    },
+    {
+      "item": "SKILL-001 principle 1 and principle 9",
+      "status": "verified",
+      "evidence": "Record principle 1: 'Isolated driver for every switch position (PRD-09301 s1.2)'; principle 9: 'Differential or filtered signalling with hardware interlock'.",
+      "correction": "The design-basis paraphrase 'SELV control domain, every crossing a rated isolator' is broader than principle 1's text; harmless but note the paraphrase."
+    },
+    {
+      "item": "SKILL-003 and SKILL-005 (adapted)",
+      "status": "verified",
+      "evidence": "SKILL-003 principle 3 'Bulk film plus distributed HV ceramics at each bridge leg'; SKILL-005 principle 1 'Rate every barrier part for the node'. Agent takes only placement outputs from the capacitor and sensing agents."
+    },
+    {
+      "item": "Reference ID 'REF-WS-PRD-04814' cited for SKILL-004",
+      "status": "unverified",
+      "evidence": "No reference record of that ID is retrievable; the string appears only as an evidence source inside CB-IS-001.json (line 144), CB-IS-004.json and CMP-R12P21503D.json. PRD-04814 is a Wolfspeed app note cited in CGD1700HB2M-UNA decision 5.",
+      "correction": "Cite PRD-04814 through REF-WS-CGD1700HB2M-UNA decision 5 or CB-IS-001, or have the KB add a proper reference record."
+    },
+    {
+      "item": "REF-TI-TIDA-010054 decision 10 (300 x 180 mm, four layers, drivers bottom-side beside each TO-247-4, LV circuitry along the edge) and decision 9 (two TO-247 per insulated sink)",
+      "status": "verified",
+      "evidence": "analysis.md Decision 10: 'gate drivers and bias modules on the bottom side in a column directly beside each TO-247-4; control card connector, eFuse and low-voltage circuitry along the board edge away from the power stage ... 300 x 180 mm, four copper layers. (TIDRZW3)'; evidence 'visual only'. Decision 9: 'four Ohmite CR201-50VE heat sinks, two FETs per sink, Wakefield-Vette CD-02-05-247 pads, two 12 V fans'. No TI instance value is copied: 300 x 180 is used as a benchmark only (also A-24 basis), CR201-50VE is evaluated and excluded."
+    },
+    {
+      "item": "REF-WS-CGD1700HB2M-UNA decision 6 (HS/LS sections 25.4 x 30.5 mm; board 50.8 x 61.0 mm) and decision 4 (single-ended on-board links acceptable)",
+      "status": "verified",
+      "evidence": "analysis.md Decision 6: 'Isolated HS and LS sections 25.4 x 30.5 mm; whole board 50.8 x 61.0 mm'; Decision 4 applicability: 'on-board short single-ended links are acceptable with buffering and RC filtering (PRD-09301 s4.1)'. The 30 x 35 mm island envelope is an agent assumption calibrated on 25.4 x 30.5, not a copied value.",
+      "correction": "KB-internal discrepancy: reference.json ratings give 'board_size: 50.8 x 59.69 mm, 4 layers, 1.6 mm FR4' while analysis.md says 50.8 x 61.0 mm. The agent quoted analysis.md faithfully; flag for KB maintenance."
+    },
+    {
+      "item": "REF-WS-CGD15SG00D2 decision 7 (47.6 x 17.8 mm, 4-layer, 1 oz, three 1 mm non-plated slots; 8 mm creepage not generalised)",
+      "status": "verified",
+      "evidence": "analysis.md Decision 7: 'three 1 mm non-plated slots ... 4-layer, 62.4 mil, 1 oz, ENIG, Tg >= 170 degC ... 47.6 x 17.8 mm board'; 'The 8 mm creepage relates to this board's 800 Vpk basic insulation rating - not a universal value'. Agent's 50 x 30 mm Option C card is a derived envelope, not a copied value."
+    },
+    {
+      "item": "PE-PCB-001..008 project rules",
+      "status": "verified",
+      "evidence": "docs/pcb-design-rules.md lines 13-20 list PE-PCB-001 (gate loop), -002 (HF input caps close to half bridge), -003 (commutation loop), -006 (high-current copper and vias), -007 (separate control from noisy power structures), -008 (decoupling next to IC pins), all with 'human-review' evidence, as the agent states.",
+      "correction": "'python -m automation.knowledge.query --get PE-PCB-00x' returns exit 1 (not indexed); the agent's claim of having read them must rest on the docs file, which it cites."
+    },
+    {
+      "item": "V1 precedent: 300 x 220 mm, six layers, 70 um outer copper, known issue V1-09",
+      "status": "verified",
+      "evidence": "examples/buck-48v-24v-1kw/design/pcb_stackup.md: 'Final outline: 300 x 220 mm', six copper layers F.Cu 70 um / In1 35 um / In2 70 um / In3 70 um / In4 35 um / B.Cu 70 um. review/known_issues.md V1-09: 'Six-layer heavy-copper build contains fine-pitch DSP/logic, plated slots and exposed-pad vias'.",
+      "correction": "V1 inner layers 2 and 5 are 35 um, so 'heavy copper on every layer' describes Option A, not V1; the agent's text ('70 um outer copper') is correct, but the V1 cost-index comparison must say which copper factor it used."
+    },
+    {
+      "item": "V1 control+aux section 128.5 x 93.7 mm, 1,789 mm2 footprints, 15 % utilisation",
+      "status": "verified",
+      "evidence": "Recomputed from design/placement.json (240 items): lower-right cluster x >= 150, y >= 115 excluding mounting holes gives bbox 131.3 x 94.8 mm = 12,454 mm2, footprint sum 1,788 mm2, 14.4 %; a tighter cluster gives 120.0 x 93.7 mm, 14.6 %. The agent's numbers are reproduced within 2-3 %."
+    },
+    {
+      "item": "A-24 (open frame on M4 standoffs >= 15 mm; <= 300 x 250 mm; <= 80 mm height) and A-33 (slots >= 1 mm; 0.25 mm track/space preferred on 70 um)",
+      "status": "verified",
+      "evidence": "research/assumptions.json 'Mechanical envelope (A-24)': 'Open frame on M4 standoffs >= 15 mm; <= 300 x 250 mm footprint, <= 80 mm height incl. heat sink'; 'A-33': 'Slots >= 1 mm; 0.25 mm track/space preferred on 70 um layers'."
+    },
+    {
+      "item": "Samtec SSW-125-01-G-D ratings and insulator height",
+      "status": "verified",
+      "evidence": "Samtec SSW catalog page (suddendocs.samtec.com/catalog_english/ssw_th.pdf, text extracted): 'Mates: TSW, MTSW, MTLW ...'; 'Current Rating: (SSW/TSM) = 4.7 A per pin; (SSQ/TSW) = 6.3 A per pin'; 'Voltage Rating: 465 VAC/655 VDC'; insulator height '.335 (8.51)'. Distributor data disagree (Arrow: 5.7 A, 550 VAC, 8.51 mm; RS for -T-D: 4.7 A, 465/655 V). Product page samtec.com returned HTTP 429 twice; lifecycle not confirmed.",
+      "correction": "Insulator height is available (8.51 mm) - change 'not found'. The SSW+TSW pairing is rated 6.3 A per pin by Samtec; 4.7 A is the SSW/TSM figure, so the agent's value is conservative."
+    },
+    {
+      "item": "Samtec TSW-125-07-G-D lead style -07 and ratings",
+      "status": "verified",
+      "evidence": "Samtec TSW catalog page (suddendocs.samtec.com/catalog_english/tsw_th.pdf, text extracted): lead style '-07 (10.92) .430 overall, (2.54) .100 tail, (5.84) .230 post'; insulator .100 in (2.54 mm); 'Voltage Rating: mated with SSW; 500 VAC/707 VDC'; 'Board Mates: SSW, SSQ, SSM, ESW, ESQ'. Product page returned HTTP 403; lifecycle not confirmed.",
+      "correction": "The 5.84 mm post is now a Samtec-confirmed value, not distributor data."
+    },
+    {
+      "item": "Mezzanine mated stack height 11 mm (design value)",
+      "status": "unverified",
+      "evidence": "Samtec states no mated height on the catalog pages read. Derived: SSW insulator 8.51 mm + TSW insulator 2.54 mm = 11.05 mm board-to-board when the 5.84 mm post is fully seated; consistent with the design value.",
+      "correction": "Record 11.05 mm as 'derived from catalog insulator heights; confirm seating depth on the SSW drawing' instead of 'not found'."
+    },
+    {
+      "item": "Wurth 61305021121 WR-PHD header ratings and 50-pin orderability; WR-PHD 50-pin socket",
+      "status": "unverified",
+      "evidence": "we-online 6130xx21121.pdf (text extracted): 'CURRENT RATING: 3A', 'WORKING VOLTAGE: 250V AC', 'DIELECTRIC WITHSTANDING VOLTAGE: 500V AC/MN', PA6T insulator, -40 to 105 degC, UL E323964 - ratings verified. The drawing is generic ('WERI PART NO: 613 0xx 211 21', A = 2.54 x (NB PINS/2 - 1)) and lists no pin counts, so the 50-pin header is not confirmed orderable; the 50-pin socket 61305021821 was not found (search found only 61302021821, 20-pin, 8.40 mm height, distributor data).",
+      "correction": "Keep both orderability items open; the agent's status is correct."
+    },
+    {
+      "item": "TI TMDSCNCD28335 controlCARD",
+      "status": "verified",
+      "evidence": "ti.com/tool/TMDSCNCD28335 (read 2026-10-10): 'TMDSCNCD28335 is a DIMM100 controlCARD based evaluation and development tool for the F2833x series'; 'The TMDSCNCD28335 control card requires a baseboard to function' (bundle link points to TMDSDOCK28335); 'Small form factor', no dimensions; '5V power and JTAG debug probe required (provided with baseboard bundles)'.",
+      "correction": "Lifecycle status is not stated on the page - record as unverified rather than implied active."
+    },
+    {
+      "item": "Omron G9EA-1 DC12 relay",
+      "status": "verified",
+      "evidence": "omronfs.omron.com en-g9ea.pdf (text extracted): 'A compact relay (73 x 36 x 67.2 mm (L x W x H)) capable of switching 400-V'; 'Two M5 screws are provided for the contact terminal connection'; 'Two M3.5 screws are provided for the coil terminal connection' (-B screw-terminal variant; blank = lead wires); coil table '12 VDC 417 [mA] 28.8 [ohm]'; 'Rated load 60 A at 400 VDC'; 'Rated carry current 60 A'; mounting 'Two, M6 or 6.5-dia. holes'; impulse withstand 4,500 V. Document revision/catalog number not in the extracted text (file metadata 2012); lifecycle not stated."
+    },
+    {
+      "item": "Ohmite CR201-50VE heat sink",
+      "status": "verified",
+      "evidence": "Ohmite CR-series datasheet copies (novapart.co/datasheet/farnell:4037071, farnell.com/datasheets/3759653.pdf via search): CR201 profile width 34 mm x height 75 mm; lengths 25/50/75 mm with natural-convection thermal resistance 4.7 / 3.3 / 2.6 degC/W (70 degC rise per the Farnell text), surface area 47,409 mm2 and 103 g for CR201-50; forced-air chart present (two TO-247 at 50 mm spacing, 10 W) but not numeric; aluminium 6063-T5, cam clip for TO-247/TO-264. DigiKey: Active, 25-week lead; DigiKey lists 50.00 mm length x 75.00 mm 'width'. The '27 mm also quoted' value was not found by this check.",
+      "correction": "The agent's exclusion (75 mm tall -> 92 mm stack) stands. However the architecture's '~900 cm2 fin area' for a 100 x 40 x 50 mm reservation is unsupported: the taller 75 x 34 x 50 mm CR201-50 has 474 cm2."
+    },
+    {
+      "item": "Wolfspeed C4MS025120K TO-247-4 package envelope and status",
+      "status": "verified",
+      "evidence": "wolfspeed.com product page: 'Order Status Active', TO-247-4, 1200 V, 25 mOhm at 25 degC, 86 A, datasheet dated 12/2025. Datasheet PDF (text extracted here): 'Rev. 2, December 2025'; Package Dimensions table E 15.75-16.13 mm (body width), D 23.30-23.63 mm, A 4.83-5.21 mm (thickness), A1 2.23-2.54 mm; RthJC 0.41 degC/W; Qg 125 nC; Coss 103 pF; Eoss 63 uJ.",
+      "correction": "Upgrade the envelope from 'distributor data' to datasheet maxima (16.13 x 23.63 x 5.21 mm); lead pitch still to be read from the drawing by the footprint agent."
+    },
+    {
+      "item": "TDK B32776G8206K000 and B32776G4606K000 film capacitor envelopes",
+      "status": "verified",
+      "evidence": "TDK MKP_B32774_778.pdf (Date: June 2026, text extracted): 800 V DC section row '20 [uF] 28.0 x 37.0 x 42.0 [w x h x l mm] 10.2 B32776G8206+000'; 450 V DC section row '60 [uF] 30.0 x 45.0 x 42.0 20.3 B32776G4606+000'; ordering table '4-pin 37.5 [mm] 1.2 [mm lead] B32776G'. Matches the agent's 28 x 42 footprint / 37 high and 30 x 42 / 45 high, 4 pins at 37.5 mm pitch."
+    },
+    {
+      "item": "Sibling-agent inputs reused (standards 9.0/5.5/5.0/3.0 mm and 10 mm ISO_BARRIER; controller 0.77 A budget, ILIM 1.425 A, coil 75-92 mA, Samtec/Wurth choice; sensing G9EA-1 417 mA; capacitor film dimensions; inductor 750-800 g potted, wound OD <= 69 mm, height 40-43 mm)",
+      "status": "verified",
+      "evidence": "standards_safety.json lines 391, 456-485, 663-666; controller_aux_interconnect.json lines 341, 538-565, 628-651; sensing_protection.json lines 634-642, 724; capacitors.json lines 250-251, 338-339; inductor.json line 58. All values match the architecture result; the relay-coil budget conflict (417 mA vs 75-92/100 mA) is real."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "HV zone sum",
+      "agent_value": "24,645 mm2",
+      "verifier_value": "24,645 mm2 (5500+6375+2494+2666+560+1500+1050+4500)",
+      "agrees": true
+    },
+    {
+      "name": "HV area and zone utilisation",
+      "agent_value": "240 x 140 mm = 28,800 mm2, 86 %",
+      "verifier_value": "240 x 140 mm = 33,600 mm2; 24,645/33,600 = 73.3 % (28,800 mm2 would be 240 x 120 mm)",
+      "agrees": false,
+      "note": "Arithmetic slip; outlines are unaffected because they use the 140 mm depth, but the utilisation statement and the stretch-outline argument must be corrected."
+    },
+    {
+      "name": "Control-board area at 25/30/35 % utilisation",
+      "agent_value": "11,476 / 9,563 / 8,197 mm2 -> 120 x 80 mm",
+      "verifier_value": "11,476 / 9,563 / 8,197 mm2; 120 x 80 = 9,600 mm2",
+      "agrees": true
+    },
+    {
+      "name": "Option A control depth and outline",
+      "agent_value": "54 mm; 240 x 204 mm = 48,960 mm2",
+      "verifier_value": "13,000/240 = 54.2 mm; 48,960 mm2",
+      "agrees": true
+    },
+    {
+      "name": "Outlines, areas and ratios to V1",
+      "agent_value": "A 48,960; B 52,800 (occupied 48,000, bbox 240 x 220); C 53,400 mm2; 0.74/0.80/0.81",
+      "verifier_value": "48,960; 52,800 (48,000); 53,400 mm2; 0.742/0.800/0.809",
+      "agrees": true
+    },
+    {
+      "name": "Height stack",
+      "agent_value": "67 (sink) / 65 (inductor) / 62 (films) / 38.6 (control top) / 92 (CR201 class) mm",
+      "verifier_value": "67 / 65 / 62 / 38.6 / 92 mm",
+      "agrees": true
+    },
+    {
+      "name": "Volumes",
+      "agent_value": "A 3.28 L; B 3.54 / 3.08 L; C about 3.5 L",
+      "verifier_value": "3.280; 3.538 / 3.086; C bbox 3.58 L",
+      "agrees": true
+    },
+    {
+      "name": "Cost index",
+      "agent_value": "A 13.2 / 20.6; B 13.4 / 8.2; C 13.3 / 8.4; V1 about 24",
+      "verifier_value": "A 13.2 / 20.6; B 13.4 / 8.2; C 13.3 / 8.4; V1 = 27.7 with the 70 um factor or 18.5 with the 35 um factor",
+      "agrees": false,
+      "note": "Options A/B/C reproduce exactly; the V1 figure 'about 24' is not reproducible from the stated factors (V1 stack is 70/35/70/70/35/70 um)."
+    },
+    {
+      "name": "Fine-pitch etch budget",
+      "agent_value": "0.10 mm (70 um) fail; 0.16 mm (35 um) pass",
+      "verifier_value": "0.5-0.28-0.12 = 0.10; 0.5-0.28-0.06 = 0.16 mm",
+      "agrees": true
+    },
+    {
+      "name": "Weighted scores",
+      "agent_value": "A 2.75, B 4.00, C 3.10; equal weights 2.82 / 4.00 / 3.27",
+      "verifier_value": "2.75 / 4.00 / 3.10 (weights sum 1.00); equal 2.82 / 4.00 / 3.27",
+      "agrees": true,
+      "note": "The other two sensitivity sets cannot be reproduced because their weights are not stated."
+    },
+    {
+      "name": "Air gap HV copper to stacked control-board copper",
+      "agent_value": "11.0 / 12.1 / 14.9 mm",
+      "verifier_value": "11.00 / 12.08 / 14.87 mm",
+      "agrees": true
+    },
+    {
+      "name": "Barrier heat conduction",
+      "agent_value": "69 K/W",
+      "verifier_value": "0.010/(0.3 x 0.24 x 0.002) = 69.4 K/W",
+      "agrees": true
+    },
+    {
+      "name": "Heat-sink sanity T_J",
+      "agent_value": "105 / 122 / 139 degC at 0.5 / 0.8 / 1.1 K/W",
+      "verifier_value": "104.9 / 121.7 / 138.6 degC with the stated inputs",
+      "agrees": true,
+      "note": "Inputs inconsistent: P_total 56.2 W vs 2 x P_device 29.4 W = 58.8 W; RthJC 0.41 K/W confirmed by the datasheet."
+    },
+    {
+      "name": "Mezzanine 12 V pin current",
+      "agent_value": "0.26 / 0.38 A per pin at 0.77 / 1.13 A",
+      "verifier_value": "0.257 / 0.377 A; but 0.77 A + 0.417 A - (0.075..0.092 A budgeted coil) = 1.09-1.10 A, or 1.19 A if simply added",
+      "agrees": true,
+      "note": "Per-pin arithmetic correct; the 1.13 A input is not derivable from the stated figures."
+    },
+    {
+      "name": "Mass estimate",
+      "agent_value": "1.65 kg (power PCB 0.18 kg)",
+      "verifier_value": "Sum of stated parts = 1.65 kg; but power PCB: FR4 0.16 kg + copper 4 x 70 um over 0.432 m2 = up to 1.08 kg at full coverage (0.3-0.5 kg at realistic pour coverage) -> total ~1.8-2.0 kg",
+      "agrees": false,
+      "note": "Order-of-magnitude estimate as labelled; the PCB term is low."
+    },
+    {
+      "name": "Barrier area share",
+      "agent_value": "2,400 mm2 = 5.6 % of the power board",
+      "verifier_value": "240 x 10 = 2,400 mm2; 2,400/43,200 = 5.6 %",
+      "agrees": true
+    },
+    {
+      "name": "Mezzanine stack height",
+      "agent_value": "11 mm (unverified)",
+      "verifier_value": "8.51 mm (SSW insulator) + 2.54 mm (TSW insulator) = 11.05 mm board-to-board when the 5.84 mm post is fully seated",
+      "agrees": true,
+      "note": "Derived from Samtec catalog values, not a Samtec-stated mated height."
+    },
+    {
+      "name": "V1 control+aux bounding box and utilisation",
+      "agent_value": "128.5 x 93.7 mm = 12,040 mm2; 1,789 mm2; 15 %",
+      "verifier_value": "131.3 x 94.8 mm = 12,454 mm2; 1,788 mm2; 14.4 % (cluster x >= 150, y >= 115, no mounting holes)",
+      "agrees": true,
+      "note": "Reproduced within 3 %; depends on which peripheral parts are counted."
+    },
+    {
+      "name": "Heat-sink fin area assumption",
+      "agent_value": "about 900 cm2 for a 100 x 40 x 50 mm reservation",
+      "verifier_value": "Ohmite CR201-50 (75 x 34 x 50 mm) = 47,409 mm2 = 474 cm2 per the Ohmite table",
+      "agrees": false,
+      "note": "A shorter, slimmer envelope with nearly twice the surface area is optimistic; the thermal agent must confirm with a real profile."
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-PR-001 is cited as the basis for double-pulse / bench-PWM testability of the power board; the rule concerns hardware short-circuit protection response time and contains no test-method content.",
+    "KR-TH-002 is cited as the source of the '>= 5.0 mm HV copper to heat sink' target; the rule has no distance - the 5.0 mm (3.0 mm absolute minimum) is the standards agent's DRC value.",
+    "The SKILL-002 'PRD-09301 ~200 kW+' remark sits under 'Not applicable / out of scope' and concerns busbar / laminated-bus design; SKILL-002 explicitly lists plug-in driver boards as applicable, so the remark does not support rejecting Option C as a knowledge rule (the connector-inductance and barrier-count arguments do).",
+    "KR-GD-008's exclusion reads 'short on-board links'; applying it to a board-to-board mezzanine and the thresholds '<= 100 mm single-ended segment' / '~150 mm cable' are agent assumptions presented as rule content.",
+    "KR-ISO-001 is a same-PCB copper rule; the inter-board 'no control copper above HV copper' requirement is an agent extension that should be labelled as such and reviewed by the standards agent.",
+    "KR-PCB-005 and KR-PCB-001 contain no numbers; the '<= 15 mm driver-to-device' and '>= 80 % pour overlap' targets are agent metrics, not rule values.",
+    "'REF-WS-PRD-04814' is not a retrievable reference record (it appears only as an evidence source string inside CB-IS-001/CB-IS-004/CMP-R12P21503D); cite PRD-04814 via REF-WS-CGD1700HB2M-UNA decision 5 or CB-IS-001.",
+    "No reference instance value was copied as a design value: TIDA 300 x 180 mm is a benchmark only, CR201-50VE is evaluated and excluded, 25.4 x 30.5 mm and 47.6 x 17.8 mm calibrate stated assumptions, and the CGD15SG00D2 8 mm creepage is explicitly not generalised."
+  ],
+  "required_changes": [
+    "Correct the HV-area arithmetic: 240 x 140 mm = 33,600 mm2 and zone utilisation = 24,645/33,600 = 73 % (not 28,800 mm2 / 86 %); restate the stretch-outline (230 x 170 mm) argument on the corrected figure.",
+    "Replace the KR-PR-001 citation for testability with A-37 and the CGD1700HB2M-UNA decision 2/7 double-pulse verification practice, or remove it.",
+    "Attribute the 5.0 mm HV-copper-to-heat-sink distance to the standards agent's DRC (HV/DRV/DESAT to PE >= 5.0 mm, absolute minimum 3.0 mm), not to KR-TH-002.",
+    "Reword the Option C rejection: drop 'PRD-09301 places separate driver boards in the ~200 kW+ class' as a rule-level argument (it is a scope note about busbar design; SKILL-002 covers plug-in driver boards) and keep KR-PCB-005, the second barrier instance and the extra connectors/assemblies.",
+    "Mark the KR-GD-008 reading as an extension (mezzanine treated as on-board) and move the '<= 100 mm single-ended segment' and '~150 mm cable' thresholds into assumptions_added.",
+    "Update the Samtec candidate from the Samtec catalog pages: SSW insulator .335 in (8.51 mm), TSW insulator .100 in (2.54 mm), -07 post .230 in (5.84 mm) and tail .100 in; SSW+TSW current 6.3 A per pin (4.7 A is SSW/TSM); TSW-with-SSW voltage 500 VAC/707 VDC (SSW 465 VAC/655 VDC); record the mated height as 11.05 mm derived (confirm seating depth), and note that Arrow's 5.7 A / 550 VAC figures conflict with Samtec.",
+    "Upgrade the TO-247-4 envelope to Wolfspeed datasheet Rev. 2 (Dec 2025) package-table maxima (E 16.13, D 23.63, A 5.21 mm) and record 'Active' status; RthJC 0.41 K/W confirmed.",
+    "Flag the '~900 cm2 fin area' for the 100 x 40 x 50 mm heat-sink reservation as optimistic/unverified (Ohmite CR201-50 at 75 x 34 x 50 mm has 474 cm2) and state the R_th <= 0.6 K/W at 2 m/s requirement as a hand-off to the thermal agent.",
+    "Make the heat-sink sanity inputs consistent (P_total 56.2 W vs 2 x 29.4 W) and show how the 1.13 A relay-included 12 V current is derived (0.77 A with the 75-92 mA coil budget replaced by 417 mA gives 1.09-1.10 A).",
+    "Revise the power-PCB mass (copper of four 70 um layers over 0.432 m2 is 0.3-0.5 kg at realistic coverage) so the total reads about 1.8-2.0 kg, still labelled an estimate.",
+    "State the copper factor used for the V1 cost index 'about 24' (V1 is 70/35/70/70/35/70 um); with the stated factors the value is 27.7 or 18.5.",
+    "Keep the Wurth 50-pin header/socket orderability and the TMDSCNCD28335, G9EA-1, Samtec and TDK lifecycle statuses as 'unverified' (sources read do not state them); only C4MS025120K (Wolfspeed) and CR201-50VE (DigiKey) are confirmed Active.",
+    "Knowledge-base maintenance notes: CGD1700HB2M-UNA board size differs between analysis.md (50.8 x 61.0 mm) and reference.json ratings (50.8 x 59.69 mm); PE-PCB-* rules are not retrievable with 'query --get'; the query tool emits non-UTF-8 bytes when redirected on Windows."
+  ],
+  "summary": "The architecture result's knowledge citations are substantially correct: KR-PCB-001/003/004/005/006, KR-ISO-001..004, KR-TH-001/002, KR-GD-007/008, KR-IS-002, KR-CAP-003, CB-GD-003, CB-PR-001/KR-PR-003, SKILL-001..006, the three reference-design decisions (TIDA-010054 9-10, CGD1700HB2M-UNA 4/6/7, CGD15SG00D2 7), the PE-PCB project rules and the V1 precedent (300 x 220 mm, six layers, V1-09, control section ~1.79e3 mm2 at ~15 %) were all confirmed against the records and files, and no reference instance value was copied as a design value. Component facts were confirmed from primary or near-primary sources: Omron G9EA-1 (73 x 36 x 67.2 mm, 12 V coil 417 mA / 28.8 ohm, 60 A at 400 VDC, M5/M3.5 screws, M6 or 6.5 mm holes), TDK B32776G8206K/G4606K dimensions (June 2026 datasheet), Wolfspeed C4MS025120K (Active; Rev. 2 Dec 2025 package table E 15.75-16.13, D 23.30-23.63, A 4.83-5.21 mm; RthJC 0.41 K/W), TMDSCNCD28335 (DIMM100, baseboard required), Ohmite CR201 (34 x 75 mm profile, 3.3 K/W natural at 50 mm; Active), Wurth 6130xx21121 ratings (3 A, 250 V AC, 500 V AC withstand) and - beyond what the agent could read - the Samtec catalog values (SSW 8.51 mm insulator, 4.7 A SSW/TSM and 6.3 A SSW/TSW, 465 VAC/655 VDC; TSW -07 post 5.84 mm, insulator 2.54 mm, 500 VAC/707 VDC mated), which make the 11 mm stack height a derivable 11.05 mm. Refutations/corrections: the HV-area statement 240 x 140 mm = 28,800 mm2 / 86 % is wrong (33,600 mm2 / 73 %); KR-PR-001 is mis-cited for testability; the 5.0 mm sink distance is wrongly attributed to KR-TH-002; the SKILL-002 '~200 kW+' remark is a scope note, not a rule against Option C; the KR-GD-008 exclusion is extended beyond 'on-board' with agent-invented thresholds; the ~900 cm2 fin-area assumption and the 0.18 kg power-PCB mass are unsupported/low; minor input inconsistencies exist in the heat-sink sanity (56.2 vs 58.8 W) and the 1.13 A relay case; the V1 cost index 'about 24' is not reproducible. Option B's selection is not overturned by any of these - all area/cost/score computations for A/B/C reproduce exactly - so the verdict is confirmed-with-corrections. Unverifiable items remain: Wurth 50-pin header/socket orderability and the lifecycle status of G9EA-1, TMDSCNCD28335, Samtec and TDK parts."
+}

@@ -1,0 +1,298 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY - Controller, auxiliary supplies, PWM/fault logic and interconnect",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "TPS2640 UVLO/OVP pin thresholds 1.19 V rising (1.225 max) / 1.1 V falling (1.125 max) and the derived ladder 107k/4.42k/10k -> UVLO 10.02/9.26 V, OVP 14.45/13.36 V",
+      "status": "verified",
+      "evidence": "SLVSFQ6A text (fetched in this run): V(UVLOR) 1.19 typ / 1.225 max, V(UVLOF) 1.1 typ / 1.125 max, V(OVPR)/V(OVPF) identical. Ladder recomputed: 10.02 / 9.26 / 14.45 / 13.36 V; worst case 9.55-10.50 V and 13.76-15.16 V as stated. Side note: the OVP re-enable (falling) threshold can be as low as 12.72 V worst case, inside the 10.8-13.2 V band - a recovery-hysteresis effect, not a false trip."
+    },
+    {
+      "item": "TPS2640 current limit: R_ILIM 8 k -> I_OL 1.425/1.5/1.575 A; 12 k -> 0.95/1.0/1.05 A",
+      "status": "verified",
+      "evidence": "SLVSFQ6A current-limit table rows for 120 k, 12 k, 8 k and 5.36 k match the agent's values exactly."
+    },
+    {
+      "item": "eFuse trip margin stated as I_OL(min) 1.425 A / 0.77 A = 1.85x with MODE = open",
+      "status": "contradicted",
+      "evidence": "SLVSFQ6A section 9.3.5.1.2: in circuit-breaker mode (MODE open) the device does not current-limit; it starts a timer when I_LOAD exceeds the circuit-breaker threshold I(CB) = 12/R_ILIM - 0.03 A (Eq. 4; table: 120 k -> 0.045/0.073/0.11 A, 5.36 k -> 2.0/2.21/2.4 A), turns the FET off after tCB(dly) 4 ms and retries after 540 ms. For 8.06 k: I_CB = 1.46 A typ, roughly 1.3 A minimum.",
+      "correction": "Quote the margin against I_CB (about 1.3-1.6 A for 8.06 k): about 1.7x at 0.77 A; re-check once the relay/fan budget is settled."
+    },
+    {
+      "item": "TPS2640 dVdT: t = 8e3 x V_IN x C -> 9.6 ms at 12 V, slew 1.25 V/ms; default ramp 23.9 V in 1.6 ms",
+      "status": "verified",
+      "evidence": "SLVSFQ6A: I(dVdT) 4/4.7/5.5 uA, GAIN(dVdT) 24.6, tdVdT 10 ms for 23.9 V with 47 nF and 1.6 ms with C open. Gain form: slew = 24.6 x 4.7 uA / 100 nF = 1156 V/s typ (984-1353 V/s) -> 10.4 ms at 12 V (8.9-12.2 ms); the agent's 8e3 constant is 8 % optimistic in time; I_C 0.19-0.26 A vs 0.24 A stated - immaterial.",
+      "correction": "Use slew = 24.6 x I_dVdT / C with the 4-5.5 uA tolerance and quote the 8.9-12.2 ms band."
+    },
+    {
+      "item": "TPS2640 IMON gain 72/78.28/85 uA/A, R_ON 210 mohm max at 85 degC, MODE options, reverse blocking to -42 V",
+      "status": "verified",
+      "evidence": "SLVSFQ6A: GAIN(IMON) 72/78.28/85 uA/A; RON 210 mohm max at TJ 85 degC; MODE open = circuit breaker with auto-retry, 402 k = current limiting with latch, short = current limiting with auto-retry; Figure 9-5 reverse input protection at -42 V."
+    },
+    {
+      "item": "UCC14141-Q1 input current model P_in = 0.48 W + 1.92 x P_out (40 mA no load, 200 mA at 1.0 W)",
+      "status": "verified",
+      "evidence": "SLUSF10B: IVIN_ON_NO_LOAD 40 mA; IVIN_ON_FULL_LOAD 200 mA at IVDD-VEE = 40 mA x 25 V (1.0 W) and 270 mA at 60 mA x 25 V (1.5 W, 11.4-12.6 V). The 1.5 W point gives k = 1.84; the 1.92 used is slightly conservative."
+    },
+    {
+      "item": "UCC14141-Q1 claim 'both modules < 1.0 W (8-18 V rating), so a dip below 10.8 V degrades nothing'",
+      "status": "contradicted",
+      "evidence": "SLUSF10B electrical table: input range 8-18 V is specified for 0.7 W at (VDD-VEE) = 25 V, TA = 85 degC, and 1.2 W for 11.4-12.6 V at 85 degC; the Features line gives 1.5 W (10.8-13.2 V) and 1 W (8-18 V) at TA <= 85 degC; section 7.10 defines the SOA as the lower of the 1.5 W limit and the thermal derating curve at each VIN. A flat 1.0 W figure does not cover the 10.8 V / power-board-temperature corner. The gate-driver agent flagged the same.",
+      "correction": "Replace the flat claim by a reading of the SOA/derating curves at 10.8 V and the actual power-board ambient, using a consistent LS load."
+    },
+    {
+      "item": "UCC14141-Q1 UVLOP rising 7.8/8.2/8.5 V, PG active-low open-drain, ENA thresholds, soft-start time-out 28.4 ms",
+      "status": "verified",
+      "evidence": "SLUSF10B: VVIN_UVLOP_RISING 7.8/8.2/8.5 V; 'Active low power-good open-drain output pin'; VEN_IR 2.1 V max rising, VEN_IF 0.8 V min falling (3.3 V GPIO drive is adequate; ENA absolute maximum 7 V); tSOFT_START_TIME_OUT 28.4 ms. The ENA threshold the agent listed as unverified is now verified."
+    },
+    {
+      "item": "UCC21710-Q1 interface parameters: VINH 1.85-2.31 V, VINL 0.99-1.52 V, R_IN 28.5-113 k, TINFIL 28/40/60 ns, tPD 60/90/130 ns, skew 30 ns, IVCCQ 4 mA max, IVDDQ 5.9 mA max, RST/EN low > 1000 ns, TRSTFIL 400-800 ns, 50 k internal pull-down, FLT/RDY open drain, APWM 380-420 kHz, interlock",
+      "status": "verified",
+      "evidence": "SLUSDH8D text (fetched): all values found as stated; 'The RST/EN is pulled down internally by a 50k resistor, and is thus disabled by default when this pin is floating'; Table 7-1 and section 8: 'the output is logic low while both IN+ and IN- are logic high', cross-wiring PWM_T/PWM_B exactly as the agent describes."
+    },
+    {
+      "item": "APWM decode: 'duty 10 % at 0.6 V to 88 % at 4.5 V', D = 0.10 + 0.2 x (V_AIN - 0.6)",
+      "status": "contradicted",
+      "evidence": "SLUSDH8D: 'The AIN voltage input range is from 0.6V to 4.5V, and the corresponding duty cycle of the APWM output ranges from 88% to 10%. The duty cycle increases linearly from 10% to 88% while the AIN voltage decreases from 4.5V to 0.6V ... When AIN is floating ... approximately 10% duty cycle.' The sensing agent's 'open sensor = 10 % duty' matches the datasheet; the controller agent's polarity is inverted.",
+      "correction": "D = 0.88 - 0.200 x (V_AIN - 0.6 V). A hot NTC (low V_AIN) gives a HIGHER duty and a higher RC-filtered voltage, so the OTP comparator and the firmware decode must trip on rising filtered voltage / duty. Magnitudes (0.2/V, 13 mV and 67 ohm per eCAP count) are unchanged."
+    },
+    {
+      "item": "TMS320F28335 supply currents (IDD 290/315 mA, IDDIO 30/50, IDD3VFL 35/40, IDDA18 30/35, IDDA33 1.5/2 mA), XRS timing, power sequencing",
+      "status": "verified",
+      "evidence": "SPRS439 text (V1 cache): operational row 290/315, 30/50, 35/40, 30/35, 1.5/2 mA; 'XRS must be pulled low at least 8 us prior to VDD reaching 1.5 V' and 'low at least 1 ms after VDD reaches 1.5 V'; 7.9.2: VDD reaches 0.7 V before or at the same time as VDDIO."
+    },
+    {
+      "item": "Default state of DSP-driven control nets at reset",
+      "status": "contradicted",
+      "evidence": "SPRS439: 'The pullups on GPIO0-GPIO11 pins are not enabled at reset.' PWM_H/L (GPIO0/1), ARM (GPIO2), RELAY_ON (GPIO3), RESET_N (GPIO4), BIAS_EN (GPIO5) and DSP_TRIP_N (GPIO6) float from XRS release until firmware configures them. The agent defines pull-downs only on RELAY_ON and BIAS_EN and relies on the UCC21710 internal 50 k on RST/EN (verified). Safety is preserved because RDY low keeps the latch cleared, but ARM, PWM_H, PWM_L and DSP_TRIP_N are undefined CMOS inputs (SN74LV21A datasheet: unused inputs must be held at VCC or GND).",
+      "correction": "Add 10 k pull-downs on PWM_H, PWM_L and ARM at the gate/latch inputs and a pull-up on DSP_TRIP_N (and on ESTOP_N for an unpopulated header)."
+    },
+    {
+      "item": "TPS3808G01 supervisor: 105 k / 10 k = 4.5 V threshold, CT open 20 ms",
+      "status": "contradicted",
+      "evidence": "TPS3808 datasheet (V1 cache): TPS3808G01 VIT = 0.405 V, hysteresis 1.5 % typ / 3 % max, CT open 20 ms (12-28 ms). 105 k / 10 k gives 0.405 x 11.5 = 4.66 V (release up to about 4.80 V), not 4.5 V; 4.5 V needs about 101 k / 10 k.",
+      "correction": "Either state 4.66 V (power-down margin becomes 1.18 ms; the 5 V rail must stay above about 4.80 V) or change the top resistor to 101-102 k."
+    },
+    {
+      "item": "TPS54302 (4.5-28 V, 3 A, 400 kHz, EN threshold) and TPS767D301 (dropout 350 mV at 1 A, theta_JA, T_J max 125 degC)",
+      "status": "verified",
+      "evidence": "TPS54302 datasheet: fixed 400 kHz, VEN rising 1.23 V typ / 1.28 V max, falling 1.16 V, VIN UVLO 4.1 V rising; TPS767D3 datasheet: thermal resistance 28 degC/W for the 28-terminal PWP, dropout 350 mV typ at 1 A, TJ max 125 degC. The agent's 40 K/W is a conservative bound (T_J 89 degC at 28 K/W versus 106 degC stated). The EN threshold listed as unverified is now verified."
+    },
+    {
+      "item": "Logic timing: SN74LVC1G74 5.9 ns, SN74LVC2G08 4.7 ns, SN74LV21A assumed 15 ns at 3.3 V",
+      "status": "verified",
+      "evidence": "LVC1G74: 'Maximum tpd of 5.9-ns at 3.3-V'; LVC2G08: 'Max tpd of 4.7 ns at 3.3 V'; SN74LV21A (SCES340F, fetched): VCC 3.3 V +/- 0.3 V tpd max 8.5 ns (15 pF) / 12 ns (50 pF), 6 ns max at 5 V. The 15 ns assumption is conservative; latency becomes 2 x 12 + 5.9 + 4.7 + 9 + 60 + 130 = 234 ns."
+    },
+    {
+      "item": "DSP pin numbers against components/tms320f28335_pgf_pins.csv and GPIO mux functions",
+      "status": "verified",
+      "evidence": "Every pin number in dsp_pin_map matches the CSV (GPIO0-6 = 5,6,7,10,11,12,13; GPIO7-17 = 16-20,21,24-28; GPIO18/19 = 62/63; GPIO21/22 = 65/66; GPIO24-27 = 68,69,72,73; GPIO28 = 141; GPIO29 = 2; ADCINA0-A4 = 42,41,40,39,38; ADCINB0-B3 = 46-49; XRS 80; XCLKIN 105; X1 104; X2 102; GPIO84-87 = 169,172,173,174; JTAG 76-79 and 85-87; ADCREFM/P/RESEXT 55/56/57). EPWM1A/B on GPIO0/1, TZ1-6 on GPIO12-17, ECAP1-4 on GPIO24-27 and SCIRXDA/TXDA on GPIO28/29 are correct F28335 mux options; the A1/B1 simultaneous pair is valid."
+    },
+    {
+      "item": "Connector pin assignment: '25 ground pins', PWM pins guarded, analogue group separated",
+      "status": "contradicted",
+      "evidence": "Counting the listed assignment gives 24 GND pins (3 x 12 V, 17 digital, 2 x 3V3, 4 analogue, 24 GND = 50). PWM_H (14) neighbours 12/13/16 and PWM_L (17) neighbours 15/18/19 are all GND, so the guard claim holds.",
+      "correction": "State 24 ground pins."
+    },
+    {
+      "item": "Connector nets versus the architecture partition (OPA2320 difference amplifiers and REF3125 on the control board; AMC1311 and TMCS1133 on the power board)",
+      "status": "contradicted",
+      "evidence": "architecture.json places 'OPA2320 front ends' and REF3125 on the control board and the two AMC1311B on the power-board barrier line; sensing_protection.json derives the TMCS1133 V_OC (0.750 V) from REF3125 through 2.32 k / 1.00 k. The controller's connector carries only single-ended VIN_SENSE / VOUT_SENSE and no V_OC net, so the AMC1311 OUTP/OUTN pairs and the OC reference have no path.",
+      "correction": "Either move the OPA2320 difference stages and the V_OC divider to the power-board SELV strip (ratiometric from 3V3_PWRBOARD) or add four analogue pins (VIN_P/N, VOUT_P/N) plus a V_OC pin to the analogue group; define or drop ISENSE_REF, which the sensing agent does not specify."
+    },
+    {
+      "item": "Relay coil budget (83 mA, TE T9AS1D12-12 class) and 1N4148W flyback diode",
+      "status": "contradicted",
+      "evidence": "sensing_protection.json selects Omron G9EA-1 DC12 with a 417 mA coil; architecture.json records the conflict (about 1.13 A at 10.8 V). Recomputed: 0.402 + 0.294 + 0.417 = 1.11 A at 10.8 V -> 1.28x on I_OL(min) 1.425 A and about 1.17x on I_CB(min) about 1.3 A; a 1N4148W-class diode (150-300 mA) is undersized as the freewheel path for 417 mA.",
+      "correction": "Re-run the budget with the relay actually selected; if G9EA-1 stays, use PWM hold (sensing agent's proposal) or a lower-power relay, re-select R_ILIM, and use a >= 1 A freewheel diode."
+    },
+    {
+      "item": "Fan connection point",
+      "status": "unverified",
+      "evidence": "The design basis says 'external 12 V fan'; assumptions.json budgets a 6 W (<= 0.5 A) fan inside the 2 A auxiliary supply; the agent writes 'fans external'. If the fan hangs on the protected rail the load reaches about 1.6 A at 10.8 V with the G9EA-1 coil, above I_CB.",
+      "correction": "State explicitly that the fan is fed upstream of the eFuse (directly from the 12 V entry) or include it in the ILIM/I_CB selection."
+    },
+    {
+      "item": "KR-GD-008 applied through its exclusion (buffered single-ended PWM for short links) to a board-to-board mezzanine",
+      "status": "verified",
+      "evidence": "Rule text: exclusion 'Short on-board links, where buffered single-ended PWM with RC filtering is acceptable'. A <= 15 mm stacked mezzanine with 24 ground pins is a defensible extension; the agent labelled it 'adapted', recorded CB-GD-003 as the fallback and kept RC filters and pull-downs at every receiving pin. The rule's verification (measurement; open-connector test keeps outputs off) must be carried into the test plan; the 10 k pull-downs plus the UCC21710 internal pull-downs give fail-safe-off on an open connector."
+    },
+    {
+      "item": "KR-GD-009, KR-PR-002, KR-PR-001, KR-GD-011, KR-SN-005, KR-PCB-005, KR-ISO-001/003 applied within scope; KR-PR-003, KR-TH-003, KR-ISO-002 surfaced as human review; KR-SN-003 marked not applicable",
+      "status": "verified",
+      "evidence": "Rule records read with --get; conditions match (half-bridge leg, gate-driver subsystem, product SiC converter, drivers beside switches, SELV connector nets). KR-SN-003 conditions require an MCU sigma-delta filter peripheral, which the F28335 lacks."
+    },
+    {
+      "item": "Reference instance values not copied; EC-014 conflict preserved",
+      "status": "verified",
+      "evidence": "Ladder 107k/4.42k/10k, ILIM 8.06 k, TVS SMBJ15CA, filter 100 ohm / 100 pF and relay budget differ from the TI (9 V / 15 V / 2.2 A, SMBJ36CA) and Wolfspeed (120 ohm / 56 pF) instances; KR-IS-001 computed with both the TI factor-2 form and the Wolfspeed form."
+    },
+    {
+      "item": "SMBJ15CA, Samtec TSW/SSW, Wurth 61305021121 50-pin, TE T9AS1D12-12, AO3400A and V1 supporting parts",
+      "status": "unverified",
+      "evidence": "Distributor/search data only in the agent's result; not re-fetched in this run. The SMBJ15CA values (V_BR 16.7-18.5 V, V_C 24.4 V at 24.6 A) are consistent with the Littelfuse SMBJ series table but remain unverified here."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "bias_power_per_module",
+      "agent_value": "P_HS 0.59 W, P_LS 0.80 W (Q_G 250 nC bound, TI factor 2, I_VDDQ 5.9 mA, LDO 0.21 W)",
+      "verifier_value": "P_gate WS 0.2375 W / TI 0.475 W; P_q 0.112 W; P_HS 0.587 W; P_LS 0.797 W. With the MOSFET agent's Q_G 125 nC and the sensing agent's 0.35 W max LDO load: P_LS 0.70 W; with the gate-driver agent's 41 mA (0.62 W) load: 0.97 W",
+      "agrees": true,
+      "note": "Arithmetic agrees; inputs are inconsistent across areas (LDO load 0.21 / 0.35 / 0.62 W; Q_G 250 vs 125 nC) and the rating comparison must use the derating curve."
+    },
+    {
+      "name": "bias_input_power",
+      "agent_value": "P_in LS 2.01 W, HS 1.61 W, sum 3.62 W, +20 % 4.34 W -> 0.402 A at 10.8 V, 0.329 A at 13.2 V",
+      "verifier_value": "2.010 / 1.607 / 3.618 / 4.341 W -> 0.402 / 0.329 A",
+      "agrees": true
+    },
+    {
+      "name": "control_5V_rail",
+      "agent_value": "I_1.9V 0.350 A, I_3.3V 0.179 A, I_5V 0.539 A, P_in 3.17 W -> 0.294 / 0.240 A",
+      "verifier_value": "0.350 / 0.179 / 0.539 A, P_5V 2.695 W, P_in 3.171 W -> 0.294 / 0.240 A; F28335 maxima verified in SPRS439",
+      "agrees": true
+    },
+    {
+      "name": "ldo_dissipation",
+      "agent_value": "1.39 W, T_J <= 106 degC at 40 K/W",
+      "verifier_value": "1.389 W; T_J 105.6 degC at 40 K/W; 88.9 degC at the datasheet 28 degC/W (PWP)",
+      "agrees": true
+    },
+    {
+      "name": "relay_coil",
+      "agent_value": "75 / 83 / 92 mA, 1.21 W at 13.2 V",
+      "verifier_value": "75.0 / 83.3 / 91.7 mA, 1.21 W for the assumed 144 ohm coil; the relay selected by the sensing agent (G9EA-1 DC12) draws 417 mA",
+      "agrees": false,
+      "note": "Arithmetic agrees for the assumed coil; the input conflicts with the sensing agent's selection."
+    },
+    {
+      "name": "aux_12V_budget",
+      "agent_value": "0.77 A at 10.8 V (8.3 W), 0.71 A at 12 V, 0.66 A at 13.2 V; 2.6x supply margin",
+      "verifier_value": "0.771 / 0.709 / 0.661 A with the 144 ohm coil; 1.11 A at 10.8 V (0.99 A at 13.2 V) with the G9EA-1 coil; about 1.6 A if a 0.5 A fan is on the protected rail",
+      "agrees": false,
+      "note": "Agrees only for the controller agent's own relay assumption and with the fan upstream of the eFuse."
+    },
+    {
+      "name": "efuse_current_limit",
+      "agent_value": "I_OL(min) 1.425 A -> 1.85x margin; P_RON 125 mW",
+      "verifier_value": "I_OL table verified; in MODE = open the trip is I_CB = 12/8.06 - 0.03 = 1.46 A typ (about 1.3 A min) after 4 ms -> about 1.7x at 0.77 A, about 1.17x at 1.11 A; P_RON 125 mW (261 mW at 1.11 A)",
+      "agrees": false,
+      "note": "Wrong threshold cited for the selected mode; small impact at 0.77 A, significant with the G9EA-1 relay."
+    },
+    {
+      "name": "efuse_inrush",
+      "agent_value": "t 9.6 ms at 12 V, 1.25 V/ms, I_C 0.24 A; default ramp 2.9 A; with buck load 0.88 A",
+      "verifier_value": "Gain form 1156 V/s typ (984-1353) -> 10.4 ms (8.9-12.2), I_C 0.22 A (0.19-0.26); default 23.9 V / 1.6 ms = 14.9 kV/s -> 2.90 A; 0.22-0.24 + 0.634 = 0.86-0.88 A < I_CB",
+      "agrees": true,
+      "note": "8e3 constant is 8 % optimistic in time; conclusion unchanged."
+    },
+    {
+      "name": "efuse_uvlo_ovp_ladder",
+      "agent_value": "UVLO 10.02 (9.55-10.50) / 9.26 V; OVP 14.45 (13.76-15.16) / 13.36 V; 99 uA",
+      "verifier_value": "10.02 / 9.26 / 14.45 / 13.36 V; worst case 9.55-10.50 and 13.76-15.16 V; 98.8 uA; OVP falling worst case 12.72-14.01 V",
+      "agrees": true
+    },
+    {
+      "name": "tvs_coordination",
+      "agent_value": "15 V >= 13.2 V; 16.7 V > 15.2 V; 24.4 V < 45 V",
+      "verifier_value": "Same inequalities hold with the stated (unverified distributor) TVS values",
+      "agrees": true
+    },
+    {
+      "name": "efuse_imon_scaling",
+      "agent_value": "3.00 V at 2.4 A (85 uA/A); 0.89 V at 0.77 A; 0.6 mA/LSB",
+      "verifier_value": "2.999 V; 0.886 V; 0.59 mA/LSB at max gain (0.64 mA at typ gain); gain 72/78.28/85 verified",
+      "agrees": true
+    },
+    {
+      "name": "v12_monitor_divider",
+      "agent_value": "0.1808; 2.39 V at 13.2 V; FS 16.6 V",
+      "verifier_value": "0.1808; 2.387 V; 16.59 V",
+      "agrees": true
+    },
+    {
+      "name": "powerdown_reset_margin",
+      "agent_value": "1.10 ms from a 4.5 V reset threshold",
+      "verifier_value": "1.10 ms at 4.5 V; the 105k/10k divider with VIT 0.405 V trips at 4.66 V -> 1.18 ms; both >> 8 us",
+      "agrees": true,
+      "note": "Conclusion holds; the threshold value is wrong."
+    },
+    {
+      "name": "epwm_timebase",
+      "agent_value": "TBPRD 1500; 6.667 ns; 30-60 ticks; 0.067 %",
+      "verifier_value": "1500; 6.667 ns; 30 / 45 / 60 ticks for 200 / 300 / 400 ns; 0.0667 %",
+      "agrees": true
+    },
+    {
+      "name": "dead_time_erosion",
+      "agent_value": "<= 35 ns (30 ns skew + 5 ns RC/buffer mismatch); program required + 40 ns",
+      "verifier_value": "UCC21710 part-to-part skew 30 ns verified; RC threshold spread (VINH 1.85-2.31 V) adds up to 5.1 ns at tau 13.3 ns -> 35 ns; recommendation sound",
+      "agrees": true
+    },
+    {
+      "name": "driver_input_rc",
+      "agent_value": "tau 13.3 ns, t50 9.2 ns, rise 29 ns",
+      "verifier_value": "13.3 ns / 9.2 ns / 29.3 ns; DC level at the IN pin 3.26 V with the 10 k pull-down; far below TINFIL 28 ns min and the 200 ns minimum pulse",
+      "agrees": true
+    },
+    {
+      "name": "fault_to_gate_latency",
+      "agent_value": "<= 240 ns",
+      "verifier_value": "239.6 ns with the 15 ns assumption; 233.6 ns with the verified SN74LV21A 12 ns max (50 pF, 3.3 V)",
+      "agrees": true
+    },
+    {
+      "name": "temp_pwm_decode",
+      "agent_value": "slope 0.200/V, eCAP resolution 0.27 % -> 13 mV -> 67 ohm; RC ripple 0.8 % of 3.3 V; D rises with V_AIN",
+      "verifier_value": "slope magnitude 0.200/V, 0.267 %, 13.3 mV, 67 ohm agree; RC 10 k / 100 nF ripple about 2 mVpp (0.06 % at D = 0.5; 0.25 % bound) so 0.8 % is conservative; polarity inverted: D = 0.88 - 0.2 x (V_AIN - 0.6)",
+      "agrees": false,
+      "note": "Magnitudes agree; the sign of the transfer function is contradicted by SLUSDH8D."
+    },
+    {
+      "name": "connector_current",
+      "agent_value": "0.26 A/pin, 12x / 18x margin, 5.1 mV drop",
+      "verifier_value": "0.257 A/pin (0.16 A/pin counting only the loads that cross: bias + TE relay; 0.27 A/pin with the G9EA-1 coil); 11.7x / 18.3x; 5.1 mV",
+      "agrees": true
+    },
+    {
+      "name": "adc_front_end",
+      "agent_value": "tau 100 ns; 640 ns window; droop ~0.2 %",
+      "verifier_value": "100 ns; 16 / 25 MHz = 640 ns; droop 0.16 % for a 1.64 pF class sample capacitor",
+      "agrees": true,
+      "note": "The sensing agent specifies 1 k + 1 nF for VIN/VOUT; both work, values should be harmonised."
+    },
+    {
+      "name": "ldo_1V9_set_point",
+      "agent_value": "1.899 V from 18.2k / 30.1k and V_FB 1.1834 V",
+      "verifier_value": "1.8989 V",
+      "agrees": true
+    },
+    {
+      "name": "sn74lvc126a_3state_decay",
+      "agent_value": "10 k x ~200 pF -> about 2 us",
+      "verifier_value": "2.0 us",
+      "agrees": true
+    }
+  ],
+  "knowledge_misuse": [
+    "UCC14141-Q1 '1.0 W over 8-18 V' (CMP-UCC14141-Q1 Features-line parameter, condition TA <= 85 degC) was used as an unconditional rating to claim that a dip below 10.8 V 'degrades nothing'; the datasheet electrical table specifies 0.7 W for 8-18 V at TA = 85 degC / 25 V output and defines the SOA as the lower of the 1.5 W limit and the thermal derating curve at each VIN (section 7.10). The knowledge record omits the table conditions - knowledge maintenance suggested.",
+    "CMP-TPS2640 was used with I_OL as the trip threshold although MODE = open selects circuit-breaker mode, whose threshold is I_CB = 12/R_ILIM - 0.03 A with a 4 ms timeout and a 540 ms retry (SLVSFQ6A 9.3.5.1.2). The record describes the device as a '2 A eFuse' without the circuit-breaker threshold - knowledge maintenance suggested.",
+    "CB-PR-002 / CMP-UCC21710-Q1 APWM transfer function applied with inverted polarity (the records do not state polarity; the datasheet does: 88 % at 0.6 V, 10 % at 4.5 V) - add the polarity to CB-PR-002.",
+    "KR-GD-008 exclusion ('short on-board links') extended to a board-to-board mezzanine; acceptable as an 'adapted' application with the documented RS-422 fallback, but the rule's measurement verification (common-mode injection, open-connector test) must appear in the test plan rather than being treated as closed."
+  ],
+  "required_changes": [
+    "Correct the APWM decode polarity everywhere (firmware contract, eCAP decode, hardware OTP comparator sense): D = 0.88 - 0.200 x (V_AIN - 0.6 V); hot NTC -> higher duty -> higher filtered voltage; open sensor -> about 10 % duty.",
+    "Replace the eFuse margin statement: in MODE = open the trip is the circuit-breaker threshold I_CB = 12/R_ILIM - 0.03 A (about 1.46 A typ, about 1.3 A min for 8.06 k) after tCB(dly) 4 ms with a 540 ms auto-retry; quote the margin against I_CB and describe the consequence of a retry (control power cycles, drivers disabled through RST/EN, relay releases after about 15 ms at near-zero current).",
+    "Re-run the 12 V budget with the relay actually selected by the sensing agent (Omron G9EA-1 DC12, 417 mA -> 1.11 A at 10.8 V) or agree a lower-power relay / PWM hold; re-select R_ILIM accordingly and replace the 1N4148W-class freewheel diode by a >= 1 A part if the 417 mA coil stays.",
+    "State the fan connection point: the external 12 V fan must be fed upstream of the TPS26400 (directly from the 12 V entry) or be included in the ILIM/I_CB selection.",
+    "Remove the claim that the UCC14141-Q1 budget is covered by a flat 1.0 W rating over 8-18 V; evaluate the LS module against the SLUSF10B SOA/derating curve at 10.8 V and the actual power-board ambient with a consistent LS load (Q_G 125 nC from the MOSFET agent; sensing LDO 0.25 W typ / 0.35 W max from the sensing agent; 41 mA case from the gate-driver agent), and coordinate the firmware 10.8 V floor / eFuse UVLO with that result (KR-PR-003 review input).",
+    "Fix the 5 V supervisor statement: TPS3808G01 VIT = 0.405 V, so 105 k / 10 k trips at 4.66 V (release up to about 4.80 V); either state 4.66 V and confirm the 5 V set-point tolerance keeps the rail above 4.80 V, or use about 101-102 k for a 4.5 V threshold.",
+    "Add defined pull resistors on every DSP-driven control net in the GPIO0-GPIO11 group (no reset pull-ups per SPRS439): 10 k pull-downs on PWM_H, PWM_L and ARM at the SN74LVC2G08 / SN74LVC1G74 inputs, a pull-up on DSP_TRIP_N and on the E-stop input; keep the RELAY_ON and BIAS_EN pull-downs and the UCC21710 internal 50 k on RST/EN.",
+    "Reconcile the mezzanine net list with the architecture partition: route the AMC1311 OUTP/OUTN pairs (or move the OPA2320 difference stages to the power-board SELV strip) and provide the TMCS1133 V_OC reference on the power board (ratiometric from 3V3_PWRBOARD) or on a connector pin; define or drop ISENSE_REF; correct the ground-pin count to 24; note that only the LS NTC/APWM channel is used by the gate-driver and sensing agents (TEMP_PWM_H becomes a spare).",
+    "Use the datasheet dVdT relation (slew = 24.6 x I_dVdT / C, I_dVdT 4-5.5 uA): 8.9-12.2 ms ramp at 12 V with 100 nF (10.4 ms typ) and 0.19-0.26 A charging current.",
+    "Harmonise the ADC front-end values with the sensing agent (100 ohm / 1 nF here versus 1 k + 1 nF for VIN/VOUT) and the precharge closing criterion (320 V here versus 340 V in the sensing agent's sequence; both rely on the dV/dt settling test).",
+    "Move 'UCC14141-Q1 ENA threshold', 'TPS54302 EN threshold' and 'SN74LV21A tpd at 3.3 V' from unverified to verified (2.1 V max rising / 0.8 V min falling; 1.23 V typ / 1.28 V max rising, 1.16 V falling; 8.5 ns max at 15 pF, 12 ns at 50 pF) and keep SMBJ15CA, Samtec/Wurth connector data, relay and AO3400A as unverified."
+  ],
+  "summary": "The section's architecture (SELV control domain, TPS26400 eFuse with a derived UVLO/OVP ladder, V1 supply chain, SN74LVC2G08 gating + SN74LVC1G74 latch + SN74LV21A combiner, UCC21710 cross-wired interlock, stacked 2x25 mezzanine, F28335 pin map) is sound and 18 of 22 calculations reproduce exactly; TPS2640, UCC21710, UCC14141 input-current, F28335, TPS54302, TPS767D3, TPS3808 and logic parameters were confirmed from datasheet text. Four statements are contradicted by datasheets: the APWM duty polarity is inverted (88 % at 0.6 V, 10 % at 4.5 V), the TPS3808 105k/10k divider trips at 4.66 V not 4.5 V, the eFuse margin must be quoted against the circuit-breaker threshold I_CB (about 1.46 A typ) rather than I_OL in MODE = open, and the flat '1.0 W over 8-18 V' UCC14141 rating is not what the electrical table specifies (0.7 W at 85 degC / 25 V; SOA by derating curve). Cross-area inconsistencies remain: the sensing agent's 417 mA relay coil (1.11 A total, about 1.17x on I_CB), an undefined fan connection point, and connector nets missing for the AMC1311 differential outputs and the TMCS1133 V_OC reference under the architecture's partition. GPIO0-11 have no reset pull-ups (verified), so ARM/PWM/DSP_TRIP_N need defined pull resistors. None of these overturn the design; all are precise corrections."
+}

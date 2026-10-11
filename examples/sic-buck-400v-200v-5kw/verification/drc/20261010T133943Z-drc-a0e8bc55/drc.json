@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-10T21:39:51",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Control.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [XRS_N] (F.Cu), 长度: 0.2500 mm",
+                    "pos": {
+                        "x": 78.625,
+                        "y": 24.0
+                    },
+                    "uuid": "e3713112-23c9-4ea8-ac30-c999ffe5e2c9"
+                },
+                {
+                    "description": "F.Cu 上 U8 的焊盘 13 [XRS_N]",
+                    "pos": {
+                        "x": 70.3625,
+                        "y": 58.7
+                    },
+                    "uuid": "716120ce-34e5-4f73-8635-bdacf4b20d52"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 9 [BIAS_EN]",
+                    "pos": {
+                        "x": 38.16,
+                        "y": 74.0
+                    },
+                    "uuid": "bf4df890-9c54-43a1-a056-a6972a779ecb"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 12 [BIAS_EN]",
+                    "pos": {
+                        "x": 62.75,
+                        "y": 43.675
+                    },
+                    "uuid": "23a8a684-8f58-4acb-9212-8ed6b1586598"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 37 [SPARE_D2]",
+                    "pos": {
+                        "x": 73.72,
+                        "y": 74.0
+                    },
+                    "uuid": "7b3ff8a2-27cd-45ff-905e-06ce3266d979"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 73 [SPARE_D2]",
+                    "pos": {
+                        "x": 80.675,
+                        "y": 27.75
+                    },
+                    "uuid": "f183010c-cc0a-4e80-9056-c5f6c2a084b3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [ISENSE_REF] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 96.175,
+                        "y": 32.5
+                    },
+                    "uuid": "9292ed3c-a87a-41d0-ae13-668a7e307ea9"
+                },
+                {
+                    "description": "J8 的PTH 焊盘 45 [ISENSE_REF]",
+                    "pos": {
+                        "x": 83.88,
+                        "y": 74.0
+                    },
+                    "uuid": "a8b2032d-6166-47f5-937b-a2d80ccd7ba7"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": []
+}

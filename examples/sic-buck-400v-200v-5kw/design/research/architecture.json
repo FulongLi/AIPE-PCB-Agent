@@ -1,0 +1,877 @@
+{
+  "decision_area": "PCB architecture selection (Options A / B / C): board partition, outlines, layer counts and copper weights, stack-ups, part-to-board partition, interconnect and mechanical assembly concept for the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck",
+  "knowledge_queries": [
+    {
+      "command": "python -m automation.knowledge.query \"PCB architecture power board control card partition\" --json --limit 8",
+      "top_hits": [
+        "REF-TI-TIDA-010054",
+        "SKILL-002",
+        "REF-WS-CGD15SG00D2",
+        "CB-GD-001",
+        "SKILL-004",
+        "KR-PCB-003",
+        "SKILL-006",
+        "REF-WS-CGD1700HB2M-UNA"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"gate driver placed adjacent to switch separate driver board\" --json --limit 8",
+      "top_hits": [
+        "KR-PCB-005",
+        "SKILL-002",
+        "CB-GD-003",
+        "SKILL-001",
+        "REF-WS-CGD1700HB2M-UNA",
+        "REF-WS-CGD15SG00D2",
+        "KR-PCB-001",
+        "CB-PR-002"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"isolation barrier keep-out all layers net classes creepage slots\" --json --limit 8",
+      "top_hits": [
+        "SKILL-002",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-ISO-001",
+        "SKILL-001",
+        "KR-ISO-004",
+        "KR-ISO-002",
+        "KR-ISO-003",
+        "REF-WS-CGD15SG00D2"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"control card connector low-voltage circuitry board edge\" --json --limit 8",
+      "top_hits": [
+        "REF-TI-TIDA-010054",
+        "SKILL-002",
+        "KR-IS-003",
+        "KR-PCB-005",
+        "CB-GD-003",
+        "CB-PR-002",
+        "KR-TH-002",
+        "REF-WS-CGD1700HB2M-UNA"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"gate and Kelvin source pours adjacent layers stack-up\" --json --limit 8",
+      "top_hits": [
+        "KR-PCB-001",
+        "SKILL-002",
+        "REF-WS-CGD1700HB2M-UNA",
+        "SKILL-001",
+        "CB-GD-001",
+        "KR-ISO-001",
+        "KR-PCB-006",
+        "KR-GD-007"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query --get <ID> --json for KR-PCB-005, KR-PCB-004, KR-PCB-001, KR-PCB-006, KR-GD-008, KR-ISO-001, KR-ISO-002, KR-ISO-003, KR-ISO-004, KR-TH-002, CB-GD-003, REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2",
+      "top_hits": [
+        "full records read; related items PE-PCB-001, PE-PCB-002, PE-PCB-003, PE-PCB-006, PE-PCB-007, KR-CAP-003, SKILL-002, SKILL-006, CB-GD-003, KR-GD-009"
+      ]
+    },
+    {
+      "command": "read knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md, knowledge/skills/thermal/SKILL-006-thermal-placement.md, knowledge/references/ti/tida-010054/analysis.md (decisions 9-10), knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md (decisions 4, 6, 7), knowledge/references/wolfspeed/cgd15sg00d2/analysis.md (decision 7), docs/pcb-design-rules.md, examples/buck-48v-24v-1kw/design/{architecture,pcb_stackup,assumptions}.md and placement.json",
+      "top_hits": [
+        "SKILL-002 principles 1-8 and scope note (PRD-09301: separate drivers typical for ~200 kW+)",
+        "TIDA-010054 decision 10: 300 x 180 mm, 4 layers, drivers bottom side beside each TO-247-4, control card connector along the edge",
+        "CGD1700HB2M-UNA decision 6: isolated HS/LS sections 25.4 x 30.5 mm on a 50.8 x 61.0 mm 4-layer board",
+        "CGD15SG00D2 decision 7: 47.6 x 17.8 mm 4-layer 1 oz driver card with 1 mm slots",
+        "V1: 300 x 220 mm six layers, control+aux bbox 128.5 x 93.7 mm, 15 % utilisation, known issue V1-09"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "KR-PCB-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Decisive for Option C: a separate driver card is justified only if it mates directly at the gate/Kelvin pins; with two TO-247-4 it adds connector inductance to the gate loop for no reuse benefit, so C is rejected. In Option B the drivers stay on the power board within 15 mm of the device leads (target metric).",
+      "reference_design": "REF-TI-TIDA-010054, REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-PCB-004",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Floor plan places the HF ceramic column and the L1/L2 Vin+/PGND pair (0.20 mm prepreg) for the commutation loop before the driver islands; connector inductance is kept outside both loops by passing only logic-level signals over the mezzanine.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-PCB-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Power-board stack-up: gate pours on L4 with the drivers, Kelvin-source pours on L3 across a 0.20 mm prepreg, Kelvin layer between the gate layer and all other copper; this is the main argument for 4 rather than 2 layers.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "id": "KR-PCB-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Partition keeps the Kelvin-source net inside the driver island (L3 pour) and never merges it with the power-source pour on L1/L2; carried into the pcb_constraints for the TO-247-4 footprint.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-PCB-006",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Parallel Vin+/SW/Vout+ pours on L1 and L3 and PGND on L2/L4 with via arrays; the rule's low confidence is noted, the sizing itself comes from the capacitor, inductor and standards agents (IPC-2221).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-ISO-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "10 mm copper-free ISO_BARRIER on all four power-board layers along the whole 240 mm length; the stacked control board must not carry copper above HV copper; Option C would create a second barrier instance per driver card (counted against C).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "Distances are not derived here; the standards agent's 9.0 mm / 5.5 mm / 5.0 mm / 3.0 mm values are applied as geometry, and the air-gap argument for the stacked control board (12.1 mm worst case) is surfaced for insulation-coordination review.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-ISO-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Power board carries the ten standards-agent classes; the control board carries CTRL_SELV only, which is one of the reasons its DRC is trivial in Option B.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-ISO-004",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "All seven barrier parts (2 x UCC21710, 2 x UCC14141, 2 x AMC1311, TMCS1133) sit on one barrier line with 1.0 mm non-plated slots under every body whose land gap is below 9 mm.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2"
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "One PE-bonded heat sink for both TO-247-4 with rated insulating pads; a 5 mm HV-copper keep-out around the sink footprint is included in the heat-sink reservation (110 x 50 mm).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-TH-001",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "Used only as a sanity check of the heat-sink envelope: T_J = 105 / 122 / 139 degC for R_th,HS = 0.5 / 0.8 / 1.1 K/W at 56.2 W; the thermal agent owns the selection.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-GD-008",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "The mezzanine (11 mm stack + <= 80 mm strip trace) is treated as the rule's short on-board exclusion: buffered single-ended PWM with RC at the driver pins (controller agent); RS-422 (CB-GD-003) becomes mandatory if a cable > ~150 mm is ever used.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "CB-GD-003",
+      "type": "block",
+      "applicability": "not-applicable",
+      "how_applied": "Differential interface not needed for the stacked mezzanine; recorded as the fallback for a cabled variant.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-PR-003",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "The 12 V entry and TPS26400 eFuse (CB-PR-001) are placed on the control board at the connector, so the power board receives only protected 12 V over three mezzanine pins; relay-coil current conflict surfaced.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Principles 1, 2, 4, 5, 6, 7 and 8 drive the stack-up, barrier line, net classes, slots and signal concept; the scope note (PRD-09301: separate driver boards typical for ~200 kW+) rejects Option C; procedure steps 1-2 are turned into the layer assignment table.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-CGD15SG00D2, REF-TI-TIDA-010054"
+    },
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 4 (thermal placement must not lengthen electrical loops) puts the drivers on the bottom side under the device row while the devices stand on the sink; step 3 (films and magnetics out of the exhaust) is applied as the fan/exhaust-zone rule but flagged as a recommendation without source evidence; heat-sink envelope sized at about 900 cm2 fin area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (SELV control domain, every crossing a rated isolator) defines the barrier line and the SELV strip; the interface items of principle 9 are taken from the controller agent rather than re-derived.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Bias modules straddle the barrier with slots; their input CM chokes and capacitors are placed on the SELV strip side (KR-IS-002); module selection belongs to the bias agent.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "id": "SKILL-003",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Only the placement outputs of the capacitor agent (HF column within 5-15 mm of the pins, films within 30-40 mm, >= 20 mm pours on two layers) are used to size the HV area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Sensing isolators are placed on the barrier line; the Hall sensor sits in the output path at the barrier so that no SELV corridor crosses the HV area.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 10 (power board + control card, drivers on the bottom beside each TO-247-4, LV circuitry along the edge, 300 x 180 mm 4 layers) is the pattern for Option B and the size benchmark; decision 9 (vertical sinks, two devices each) sets the heat-sink concept; TI's instance values are not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 6 island sizes (25.4 x 30.5 mm per channel on a 50.8 x 61 mm board) calibrate the 30 x 35 mm driver-island envelope; decision 4 confirms single-ended links are acceptable on-board; PRD-09301 scope note supports rejecting Option C.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "REF-WS-CGD15SG00D2",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 7 (47.6 x 17.8 mm 4-layer 1 oz driver card with 1 mm slots) gives the Option C driver-card envelope (50 x 30 mm, 4 layers 35 um) used in the area and cost model; its 8 mm creepage is not generalised.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "id": "PE-PCB-001..008",
+      "type": "project_rule",
+      "applicability": "direct",
+      "how_applied": "PE-PCB-007 (control separated from power structures) is implemented by the two-board partition; PE-PCB-002/003 by the HF column and L1/L2 loop; PE-PCB-006 by the parallel pours; PE-PCB-008 by per-pin decoupling on both boards; evidence remains human review per docs/pcb-design-rules.md.",
+      "reference_design": "docs/pcb-design-rules.md"
+    },
+    {
+      "id": "V1 project precedent (examples/buck-48v-24v-1kw)",
+      "type": "project-precedent",
+      "applicability": "adapted",
+      "how_applied": "300 x 220 mm six-layer integrated board, control+aux bbox 128.5 x 93.7 mm at 15 % utilisation and known issue V1-09 (fine pitch on heavy copper) are the quantitative baseline that Option A would repeat and Option B avoids; V1's single-ground control practice is reused on the control board.",
+      "reference_design": "examples/buck-48v-24v-1kw"
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "Option B: power PCB 240 x 180 mm (4 x 70 um) + control PCB 120 x 80 mm (4 x 35 um), stacked mezzanine",
+      "manufacturer": "AIPE partition (TIDA-010054 decision 10 pattern)",
+      "key_parameters": {
+        "total_pcb_area_mm2": 52800,
+        "occupied_plan_area_mm2": 48000,
+        "plan_bbox_mm": "240 x 220",
+        "height_mm": 67,
+        "volume_L_bbox_occupied": "3.54 / 3.08",
+        "cost_index": "13.4 (4L power) / 8.2 (2L power) + 1 connector pair",
+        "weighted_score": 4.0
+      },
+      "datasheet_url": "not applicable",
+      "parameter_verification": "unverified",
+      "assessment": "SELECTED: wins every criterion except raw area/volume (within 10 % of A) and connector count; removes the fine-pitch DSP from heavy copper; power stage testable with bench PWM; control board reusable."
+    },
+    {
+      "part_number": "Option A: single integrated PCB 240 x 204 mm, 4-6 layers, 70 um every layer",
+      "manufacturer": "AIPE partition (V1 pattern)",
+      "key_parameters": {
+        "total_pcb_area_mm2": 48960,
+        "plan_bbox_mm": "240 x 204",
+        "height_mm": 67,
+        "volume_L": 3.28,
+        "cost_index": "13.2 (4L) / 20.6 (6L)",
+        "fine_pitch_effective_gap_mm": "0.10 vs 0.20 minimum on 70 um",
+        "weighted_score": 2.75
+      },
+      "datasheet_url": "not applicable",
+      "parameter_verification": "unverified",
+      "assessment": "REJECTED: repeats V1-09 (LQFP-176 on 70 um), SELV plane must stop at the barrier on the switch-node board, whole-board respins, no standalone test."
+    },
+    {
+      "part_number": "Option C: power PCB 240 x 170 mm + 2 driver cards 50 x 30 mm (4 x 35 um) + control PCB 120 x 80 mm",
+      "manufacturer": "AIPE partition (CGD15SG00D2 / CGD1700HB2M-UNA pattern)",
+      "key_parameters": {
+        "total_pcb_area_mm2": 53400,
+        "plan_bbox_mm": "240 x 220",
+        "height_mm": 67,
+        "cost_index": "13.3 (4L) / 8.4 (2L) + 3 connector sets + 3 assemblies",
+        "connectors_in_gate_loop": 2,
+        "weighted_score": 3.1
+      },
+      "datasheet_url": "not applicable",
+      "parameter_verification": "unverified",
+      "assessment": "REJECTED: only justified if the cards mate at the gate pins (KR-PCB-005); PRD-09301 places separate driver boards at ~200 kW+; adds two gate-loop connectors and a second barrier instance for two devices."
+    },
+    {
+      "part_number": "TSW-125-07-G-D + SSW-125-01-G-D",
+      "manufacturer": "Samtec",
+      "key_parameters": {
+        "pins": "2 x 25, 2.54 mm",
+        "SSW_current_per_pin_A": "4.7 (distributor data)",
+        "SSW_voltage": "465 VAC / 655 VDC (distributor data)",
+        "TSW_07_post_mm": "5.84 (distributor data)",
+        "insulator_height_mm": "not found (catalog PDF not text-readable, samtec.com HTTP 429)",
+        "mated_stack_height_mm": "not found; 11 mm design value"
+      },
+      "datasheet_url": "https://suddendocs.samtec.com/catalog_english/ssw_th.pdf (fetched, not text-readable); https://www.samtec.com/products/ssw",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Adopted mezzanine pair from the controller agent; socket on the power board, header on the control board; stack height must be confirmed from the Samtec drawings before standoff length is fixed."
+    },
+    {
+      "part_number": "61305021121 (WR-PHD 2 x 25 header) + WR-PHD socket",
+      "manufacturer": "Wurth Elektronik",
+      "key_parameters": {
+        "current_per_pin_A": "3 (series datasheet, fetched by the controller agent)",
+        "working_voltage": "250 V AC",
+        "dielectric": "500 V AC",
+        "socket_50pin_orderable": "not found (61305021821.pdf returned HTTP 404; 32-pin 61303221821 listed at 12.5 mm height)"
+      },
+      "datasheet_url": "https://www.we-online.com/katalog/datasheet/6130xx21121.pdf",
+      "datasheet_revision": "not found",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Alternate mezzanine family; 50-pin socket orderability and height still to be confirmed."
+    },
+    {
+      "part_number": "TMDSCNCD28335",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "form_factor": "DIMM100 controlCARD, TMS320F28335",
+        "requires_baseboard": "yes (TMDSDOCK28335 named)",
+        "dimensions": "not stated on ti.com; 90 x 25 mm per a distributor listing (implausible, unverified)",
+        "onboard_emulator": "not stated; JTAG probe supplied with baseboard bundles"
+      },
+      "datasheet_url": "https://www.ti.com/tool/TMDSCNCD28335",
+      "datasheet_revision": "product page read 2026-10-10",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Evidence of TI's control-card practice (Option B pattern). Not used as the control board because the fault logic, supplies and comparators still need a baseboard; acceptable as a bring-up aid only."
+    },
+    {
+      "part_number": "G9EA-1 DC12",
+      "manufacturer": "Omron",
+      "key_parameters": {
+        "dimensions_mm": "73 x 36 x 67.2 (L x W x H)",
+        "terminals": "M5 contact screws (-B variant), M3.5 coil screws or lead wires",
+        "mounting": "two M6 or 6.5 mm holes, chassis",
+        "coil_12V": "417 mA, 28.8 ohm, approx. 5 W",
+        "rated_load": "60 A at 400 VDC"
+      },
+      "datasheet_url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g9ea.pdf",
+      "datasheet_revision": "Omron G9EA datasheet (text extracted from the fetched PDF; catalogue number not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Off-board chassis-mounted relay (sensing agent's choice); its 417 mA coil exceeds the controller agent's 100 mA coil budget -> open issue; envelope excluded from the PCB area."
+    },
+    {
+      "part_number": "CR201-50VE (profile class)",
+      "manufacturer": "Ohmite",
+      "key_parameters": {
+        "length_mm": 50,
+        "profile": "75 mm tall x 34 mm deep (distributor data; 27 mm also quoted)",
+        "R_th_natural_K_per_W": "3.3 at 70 K rise (datasheet table via search snippet)",
+        "R_th_forced_air": "chart image, not readable"
+      },
+      "datasheet_url": "https://www.farnell.com/datasheets/3759653.pdf (fetch timed out twice)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "TIDA-010054 sink class; too tall for the 80 mm envelope (92 mm with standoffs and board); the thermal agent must choose a <= 55 mm profile or lay the extrusion on its side. Reservation here: 100 x 40 x 50 mm."
+    },
+    {
+      "part_number": "C4MS025120K (TO-247-4 package envelope)",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "package_body_mm": "about 16.1 x 23.6 x 5.2 (distributor data for the Wolfspeed TO-247-4 family)",
+        "lead_pitch_mm": "not found",
+        "datasheet_package_drawing": "present (Rev. 2, December 2025) but not text-readable in this run"
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 2, December 2025 (electrical data fetched by the MOSFET agent)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Envelope input only; two devices standing against the sink face; footprint from the datasheet drawing must be taken by the footprint agent."
+    },
+    {
+      "part_number": "B32776G8206K000 / B32776G4606K000",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "C_IN_body_mm": "28 x 42 footprint, 37 high",
+        "C_OUT_body_mm": "30 x 42 footprint, 45 high",
+        "pins": "4, 37.5 mm pitch"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+      "datasheet_revision": "June 2026 (fetched by the capacitor agent; not re-fetched here)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Envelope inputs for the HV area; tallest board-level parts after the heat sink and inductor."
+    }
+  ],
+  "selection": {
+    "recommended_option": "B",
+    "summary": "Separate power PCB and DSP control PCB joined by a stacked 2 x 25-pin 2.54 mm mezzanine on a SELV strip along one long edge of the power board; drivers, bias modules and sensing isolators stay on the power board (barrier on the power board, control board entirely SELV); no separate driver cards.",
+    "weighted_scores": {
+      "A": 2.75,
+      "B": 4.0,
+      "C": 3.1,
+      "sensitivity": {
+        "area_volume_weighted": [
+          3.1,
+          4.0,
+          3.05
+        ],
+        "equal_weights": [
+          2.82,
+          4.0,
+          3.27
+        ],
+        "modularity_test_weighted": [
+          2.45,
+          4.0,
+          3.45
+        ]
+      }
+    },
+    "boards": {
+      "power_board": {
+        "outline_mm": "240 x 180 target (stretch 230 x 170)",
+        "zones_mm": "HV area 240 x 140; ISO_BARRIER 240 x 10 copper-free on all layers; SELV strip 240 x 30 along the bottom edge",
+        "layers": 4,
+        "copper_um": 70,
+        "thickness_mm": 2.0,
+        "two_layer_option": "allowed only if the layout agent proves gate/Kelvin adjacency and the <= 20-25 nH loop target with 2 layers",
+        "min_features": "0.25 mm track/space preferred, 0.20 mm minimum; 0.3 mm drill; 1.0 mm non-plated slots",
+        "stackup": [
+          {
+            "layer": "L1 F.Cu",
+            "copper_um": 70,
+            "content": "HF ceramics, Vin+/SW/Vout+ pours, device pads, film pads, HV terminals, mezzanine socket"
+          },
+          {
+            "dielectric": "prepreg 0.20 mm (commutation loop)"
+          },
+          {
+            "layer": "L2 In1.Cu",
+            "copper_um": 70,
+            "content": "PGND return pour under the commutation loop and bus; GND_CTRL pour under the SELV strip"
+          },
+          {
+            "dielectric": "core about 1.1 mm"
+          },
+          {
+            "layer": "L3 In2.Cu",
+            "copper_um": 70,
+            "content": "Kelvin-source pours in the driver islands (shield between gate layer and all other copper, KR-PCB-001); parallel Vin+/SW/Vout+ pours (KR-PCB-006); 12 V / 3V3 distribution in the SELV strip"
+          },
+          {
+            "dielectric": "prepreg 0.20 mm (gate loop)"
+          },
+          {
+            "layer": "L4 B.Cu",
+            "copper_um": 70,
+            "content": "gate pours with drivers, DESAT, rail decoupling and bias modules under the device row (bottom side); parallel PGND/Vout pours; SELV-strip parts"
+          }
+        ],
+        "net_classes": [
+          "HV_VIN",
+          "HV_SW",
+          "HV_PGND",
+          "HV_VOUT",
+          "DRV_HS",
+          "DRV_LS",
+          "DESAT_HS",
+          "DESAT_LS",
+          "PE",
+          "CTRL_SELV"
+        ]
+      },
+      "control_board": {
+        "outline_mm": "120 x 80",
+        "layers": 4,
+        "copper_um": 35,
+        "thickness_mm": 1.6,
+        "min_features": "0.15 mm track/space, 0.3 mm drill",
+        "stackup": [
+          {
+            "layer": "L1 F.Cu",
+            "copper_um": 35,
+            "content": "DSP, logic, comparators, supplies, signals"
+          },
+          {
+            "layer": "L2 In1.Cu",
+            "copper_um": 35,
+            "content": "solid GND_CTRL (one ground net, no splits under ADC or PWM tracks)"
+          },
+          {
+            "layer": "L3 In2.Cu",
+            "copper_um": 35,
+            "content": "power islands 1V9, 3V3, 5V, 12V_PROT"
+          },
+          {
+            "layer": "L4 B.Cu",
+            "copper_um": 35,
+            "content": "signals, JTAG, mezzanine header"
+          }
+        ],
+        "net_classes": [
+          "CTRL_SELV",
+          "PE (mounting holes if bonded)"
+        ]
+      }
+    },
+    "partition": {
+      "power_board_HV_area": [
+        "2 x C4MS025120K TO-247-4 on the shared PE-bonded heat sink with rated insulating pads",
+        "10 x CGA9P1X7T2J474M HF tier at the device pins",
+        "2 x B32776G8206K C_IN, 2 x B32776G4606K C_OUT",
+        "L1 custom 2 x 0058192A2 toroid in potting cup on 4 x M4 standoffs",
+        "input bleeders 3 x CRCW2512120K + DC-LINK LIVE LED, output bleeders 2 x CRCW2512100K, optional MOV S20K385",
+        "RC snubber pads",
+        "PTC B59773C0120A070 + relay-contact terminals",
+        "HV terminals Vin+, PGND_in, Vout+, PGND_out; PE stud M4"
+      ],
+      "power_board_driver_islands_bottom_side": [
+        "2 x UCC21710-Q1 with gate resistors, DESAT diodes, Miller clamp link, gate discharge resistors (KR-GD-007), rail decoupling",
+        "TLV76050 5V_ISO LDO on the low-side island",
+        "NTC connector (via driver AIN), 2 x MMCX V_GS jacks"
+      ],
+      "power_board_barrier_line": [
+        "2 x UCC14141-Q1 bias modules",
+        "2 x UCC21710-Q1 (isolation inside the package)",
+        "2 x AMC1311B with HV ladders",
+        "TMCS1133C2AQDVGR in the output path",
+        "1.0 mm slots under every body with land gap < 9 mm"
+      ],
+      "power_board_SELV_strip": [
+        "mezzanine socket 2 x 25",
+        "driver input RC filters and pull-downs",
+        "bias-module input CM chokes and capacitors (KR-IS-002)",
+        "protected 12 V distribution, 3V3_PWRBOARD",
+        "relay-coil switch AO3400A + flyback diode + coil terminals",
+        "test points, 4 x M3 standoff holes"
+      ],
+      "control_board": [
+        "12 V entry connector, SMBJ15CA, TPS26400 eFuse, TPS54302, TPS767D301, TPS3808",
+        "TMS320F28335PGFA, 30 MHz oscillator, decoupling, ADC reference parts, boot straps, 14-pin JTAG, UART header",
+        "SN74LVC2G08 PWM gating, SN74LVC1G74 latch, 2 x SN74LV21A combiner",
+        "2 x TLV1702, REF3125, OPA2320 front ends, ADC RC filters, LM61",
+        "LEDs, E-stop header, mezzanine header"
+      ],
+      "off_board": [
+        "KLKD020.T fuse in 10 x 38 mm holder on the input lead",
+        "Omron G9EA-1 DC12 bypass relay, chassis-mounted (73 x 36 x 67.2 mm)",
+        "external 12 V supply",
+        "external 80 mm 12 V fan"
+      ]
+    },
+    "interconnect": {
+      "type": "stacked mezzanine, 2 x 25 pins 2.54 mm, controller agent's pin assignment adopted unchanged",
+      "parts": "Samtec SSW-125-01-G-D socket on the power board + TSW-125-07-G-D header on the control board (alt. Wurth WR-PHD)",
+      "stack_height_mm": "11 design value (unverified; confirm from Samtec drawings)",
+      "pins_12V": "3 pins, 0.26 A each at 0.77 A (0.38 A if the G9EA-1 coil is kept)",
+      "signal_class": "SELV only; no barrier-crossing net (KR-ISO-001)",
+      "signalling": "buffered single-ended with 100 ohm / 100 pF / 10 k at each driver pin (KR-GD-008 exclusion); RS-422 (CB-GD-003) mandatory if cabled > ~150 mm"
+    },
+    "mechanical": {
+      "baseplate": "PE-bonded aluminium plate, open frame (A-24)",
+      "power_board_standoffs": "6 x M4 x 15 mm; bottom-side parts <= 10 mm",
+      "heat_sink": "reservation 100 x 40 x 50 mm, fins along x, about 900 cm2 fin area, PE-bonded, >= 5 mm from HV copper; both TO-247-4 vertical against its face, leads straight into the board, drivers underneath",
+      "control_board_mount": "11 mm above the SELV strip and barrier zone, overhanging the edge by 40 mm, all 4 x M3 standoffs to the baseplate (2 through clearance holes in the strip); no copper above HV copper; worst-case air gap 12.1 mm",
+      "inductor": "beyond the fins in a parallel air path, >= 10 mm from the sink, cup on 4 x M4 standoffs",
+      "films": "beside the sink, not in its exhaust",
+      "fan_airflow": "external 80 mm fan at the input-terminal end blowing along the fins; exhaust end carries only terminals, bleeders and PE stud",
+      "height_above_baseplate_mm": 67,
+      "mass_estimate_kg": 1.65
+    },
+    "target_metrics_after_layout": {
+      "power_board_area_mm2": "<= 43200 (stretch 37400)",
+      "control_board_area_mm2": "<= 9600",
+      "total_pcb_area_mm2": "<= 52800 (-20 % vs V1)",
+      "plan_bbox_mm": "<= 240 x 220",
+      "height_mm": "<= 67 (limit 80)",
+      "commutation_loop_nH": "<= 20-25 incl. packages",
+      "driver_to_device_mm": "<= 15",
+      "gate_kelvin_pour_overlap": ">= 80 % on L4/L3",
+      "barrier": "9.0 mm DRC clean on all layers, slots under 7 isolators",
+      "single_ended_pwm_segment_mm": "<= 100",
+      "hv_to_heatsink_mm": ">= 5.0",
+      "mezzanine_12V_pin_current_A": "<= 0.4"
+    }
+  },
+  "calculations": [
+    {
+      "name": "HV-area zone sum",
+      "expression": "sum of (footprint + local keep-out) per HV item",
+      "inputs": {
+        "heat_sink_reservation": "110 x 50 mm",
+        "inductor": "75 x 75 + 75 x 10 mm",
+        "C_IN": "2 x 29 x 43 mm",
+        "C_OUT": "2 x 31 x 43 mm",
+        "HF_tier": "10 x 8 x 7 mm",
+        "isolator_zones": "3 x 25 x 20 mm",
+        "driver_islands_bottom": "0.5 x 2 x 30 x 35 mm",
+        "terminals_relay_PTC_bleeders_snubber_NTC_PE_holes": "1600 + 1000 + 400 + 200 + 300 + 400 + 600 mm2"
+      },
+      "result": "24,645 mm2 -> HV area 240 x 140 mm = 28,800 mm2 (86 % zone utilisation)",
+      "knowledge_ref": "KR-CAP-003, KR-TH-002, SKILL-006 principle 4, inductor/capacitor agents"
+    },
+    {
+      "name": "Control-board area",
+      "expression": "A = sum(footprints) / utilisation",
+      "inputs": {
+        "footprint_sum_mm2": 2869,
+        "utilisation": "0.25 / 0.30 / 0.35",
+        "V1_measured": "1789 mm2 in 12,040 mm2 = 15 %"
+      },
+      "result": "11,476 / 9,563 / 8,197 mm2 -> 120 x 80 mm = 9,600 mm2 (30 %)",
+      "knowledge_ref": "V1 placement.json; TIDA-010054 decision 10 (control card)"
+    },
+    {
+      "name": "Option A control section at 70 um density",
+      "expression": "depth = A_ctrl,70um / width",
+      "inputs": {
+        "A_ctrl_70um_mm2": 13000,
+        "width_mm": 240
+      },
+      "result": "54 mm -> single board 240 x 204 mm = 48,960 mm2",
+      "knowledge_ref": "assumption (coarser features on 70 um); V1 precedent"
+    },
+    {
+      "name": "Outlines and areas",
+      "expression": "A: 240 x (140 + 10 + 54); B: 240 x (140 + 10 + 30) + 120 x 80; C: 240 x 170 + 2 x 50 x 30 + 120 x 80",
+      "inputs": {
+        "HV_depth_mm": 140,
+        "barrier_mm": 10,
+        "SELV_strip_mm": 30,
+        "V1_mm2": 66000
+      },
+      "result": "A 48,960; B 52,800 (occupied 48,000, bbox 240 x 220); C 53,400 mm2; ratios to V1 0.74 / 0.80 / 0.81",
+      "knowledge_ref": "KR-ISO-001 (barrier width from standards agent)"
+    },
+    {
+      "name": "Height stack and A-24 check",
+      "expression": "h = standoff + board + tallest part",
+      "inputs": {
+        "standoff_mm": 15,
+        "board_mm": 2.0,
+        "heat_sink_mm": 50,
+        "inductor_mm": 48,
+        "films_mm": 45,
+        "mezzanine_mm": 11,
+        "control_board_mm": 1.6,
+        "JTAG_header_mm": 9
+      },
+      "result": "67 mm (sink), 65 mm (inductor), 62 mm (films), control stack top 38.6 mm; limit 80 mm; CR201-50VE class would give 92 mm",
+      "knowledge_ref": "A-24 (assumptions agent), SKILL-006"
+    },
+    {
+      "name": "Volumes",
+      "expression": "V = plan area x height",
+      "inputs": {
+        "A": "48,960 mm2 x 67 mm",
+        "B_bbox": "52,800 x 67",
+        "B_occupied": "43,200 x 67 + 4,800 x 40"
+      },
+      "result": "A 3.28 L; B 3.54 L bounding / 3.08 L occupied; C about 3.5 L",
+      "knowledge_ref": "task criterion (stacking vs flat)"
+    },
+    {
+      "name": "Cost index",
+      "expression": "sum(area_dm2 x layer_factor x copper_factor); layer 2L 1.0 / 4L 1.8 / 6L 2.8; copper 70 um 1.5 / 35 um 1.0",
+      "inputs": {
+        "A": "4.896 dm2, 4L or 6L, 70 um",
+        "B": "4.32 dm2 power (2L or 4L, 70 um) + 0.96 dm2 control (4L, 35 um)",
+        "C": "4.08 dm2 power + 2 x 0.15 dm2 cards (4L, 35 um) + 0.96 dm2 control"
+      },
+      "result": "A 13.2 / 20.6; B 13.4 / 8.2 (+1 connector pair); C 13.3 / 8.4 (+3 connector sets, 3 assemblies); V1 about 24",
+      "knowledge_ref": "assumption (pooled-fabrication price structure)"
+    },
+    {
+      "name": "Fine-pitch DFM on heavy copper",
+      "expression": "gap_eff = pitch - pad - 2 x etch_allowance",
+      "inputs": {
+        "pitch_mm": 0.5,
+        "pad_mm": 0.28,
+        "etch_70um_mm_per_side": 0.06,
+        "etch_35um_mm_per_side": 0.03,
+        "min_space_70um_mm": 0.2,
+        "min_space_35um_mm": 0.15
+      },
+      "result": "70 um: 0.10 mm < 0.20 (fail); 35 um: 0.16 mm >= 0.15 (pass)",
+      "knowledge_ref": "V1 known issue V1-09; A-33"
+    },
+    {
+      "name": "Weighted score",
+      "expression": "S = sum(w_i x s_i), s in 1..5",
+      "inputs": {
+        "weights": "0.20 cost/DFM, 0.15 EMI, 0.15 barrier/grounding, 0.10 test, 0.10 area, 0.05 each volume/cooling/connectors/modularity/layout/redesign"
+      },
+      "result": "A 2.75, B 4.00, C 3.10; sensitivity A 2.45-3.10, B 4.00, C 3.05-3.45",
+      "knowledge_ref": "KR-PCB-005, KR-PCB-004, KR-ISO-001, KR-PR-001, TIDA-010054 decision 10"
+    },
+    {
+      "name": "Air gap from HV copper to stacked control-board copper",
+      "expression": "d = sqrt(lateral^2 + stack^2)",
+      "inputs": {
+        "lateral_mm": "0 / 5 / 10 (control copper kept over the barrier zone or SELV strip only)",
+        "stack_mm": 11
+      },
+      "result": "11.0 / 12.1 / 14.9 mm >= 5.5 mm reinforced clearance and >= 9.0 mm project rule",
+      "knowledge_ref": "KR-ISO-002 (human review), standards agent values"
+    },
+    {
+      "name": "Heat conduction across the copper-free barrier (Option A)",
+      "expression": "R_th = L / (k x A)",
+      "inputs": {
+        "L_m": 0.01,
+        "k_W_per_mK": 0.3,
+        "A_m2": "0.24 x 0.002"
+      },
+      "result": "69 K/W -> negligible board conduction into the control section",
+      "knowledge_ref": "SKILL-006 step 3 context"
+    },
+    {
+      "name": "Heat-sink envelope sanity",
+      "expression": "T_sink = T_A + R_th,HS x P_total; T_J = T_sink + (R_pad + R_thJC) x P_device",
+      "inputs": {
+        "T_A_degC": 50,
+        "P_total_W": 56.2,
+        "P_device_W": 29.4,
+        "R_pad_K_per_W": 0.5,
+        "R_thJC_K_per_W": 0.41,
+        "R_th_HS_K_per_W": "0.5 / 0.8 / 1.1"
+      },
+      "result": "T_J 105 / 122 / 139 degC (limit 150); CR201-50VE natural 3.3 K/W x assumed forced-air factor 0.25-0.33 = 0.8-1.1 K/W -> reservation sized for about 900 cm2 fin area",
+      "knowledge_ref": "KR-TH-001 (adapted), MOSFET agent losses"
+    },
+    {
+      "name": "Mezzanine 12 V pin current",
+      "expression": "I_pin = I_12V / 3",
+      "inputs": {
+        "I_12V_A": "0.77 (controller agent) / 1.13 (with G9EA-1 coil 417 mA)"
+      },
+      "result": "0.26 / 0.38 A per pin vs 3 A (WR-PHD) or 4.7 A (SSW)",
+      "knowledge_ref": "controller agent connector_current; KR-PR-003"
+    },
+    {
+      "name": "Mass estimate",
+      "expression": "sum of component masses",
+      "inputs": {
+        "inductor_kg": 0.78,
+        "films_kg": "4 x 0.09 (estimate)",
+        "heat_sink_kg": "0.30 (estimate)",
+        "power_PCB_kg": 0.18,
+        "control_PCB_kg": 0.03
+      },
+      "result": "1.65 kg plus hardware",
+      "knowledge_ref": "inductor agent mass; estimates"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "Control-board footprint utilisation",
+      "value": "30 %",
+      "basis": "V1 control+aux region reached 15 % with loose placement; TI controlCARDs are much denser; 30 % is a conservative mid value for a 4-layer 35 um board with an LQFP-176"
+    },
+    {
+      "name": "Control section density on 70 um copper (Option A)",
+      "value": "13,000 mm2",
+      "basis": "Coarser track/space (0.25 mm) and larger passives on heavy copper; about 1.35 x the 35 um area"
+    },
+    {
+      "name": "HV area and strip geometry",
+      "value": "HV 240 x 140 mm, barrier 240 x 10 mm, SELV strip 240 x 30 mm",
+      "basis": "Zone sum 24,645 mm2 at 86 % utilisation plus bus copper and 3 mm functional spacing; barrier width from the standards agent"
+    },
+    {
+      "name": "Heat-sink reservation",
+      "value": "100 x 40 x 50 mm, about 900 cm2 fin area, PE-bonded",
+      "basis": "Two TO-247-4 side by side with insulating pads; CR201-50VE class is 75 mm tall and would exceed the 80 mm envelope; thermal agent to confirm R_th <= 0.6 K/W at 2 m/s"
+    },
+    {
+      "name": "Forced-air factor for the sanity check",
+      "value": "0.25-0.33 of the natural-convection resistance at 2 m/s",
+      "basis": "Typical extrusion behaviour; the Ohmite chart could not be read"
+    },
+    {
+      "name": "Standoff height and board thickness",
+      "value": "15 mm M4 standoffs, 2.0 mm power board, 1.6 mm control board",
+      "basis": "A-24 (>= 15 mm) and 4 x 70 um stack-up"
+    },
+    {
+      "name": "Mezzanine mated stack height",
+      "value": "11 mm",
+      "basis": "SSW socket height plus TSW insulator (Samtec drawings not readable in this run); standoff length follows the confirmed value"
+    },
+    {
+      "name": "Cost factors",
+      "value": "layer factor 2L 1.0 / 4L 1.8 / 6L 2.8; copper factor 70 um 1.5 / 35 um 1.0",
+      "basis": "Pooled-fabrication price structure; relative only, no quotation"
+    },
+    {
+      "name": "Etch allowance",
+      "value": "+/-0.06 mm per side at 70 um, +/-0.03 mm at 35 um; LQFP pad width 0.28 mm",
+      "basis": "Etch factor roughly proportional to copper thickness; typical fabricator capability statements"
+    },
+    {
+      "name": "Driver island envelope",
+      "value": "30 x 35 mm per channel",
+      "basis": "CGD1700HB2M-UNA isolated sections 25.4 x 30.5 mm plus the larger UCC14141 module"
+    },
+    {
+      "name": "Option C driver-card envelope",
+      "value": "50 x 30 mm, 4 layers 35 um",
+      "basis": "CGD15SG00D2 47.6 x 17.8 mm plus connector and DESAT parts"
+    },
+    {
+      "name": "Control-board copper keep-out above HV copper",
+      "value": "no control-board copper within the plan projection of HV copper",
+      "basis": "Keeps the HV-to-SELV path an air clearance >= 11 mm; to be confirmed by the standards agent"
+    },
+    {
+      "name": "Scoring weights and scores",
+      "value": "weights 0.20/0.15/0.15/0.10/0.10/5 x 0.05; integer scores 1-5",
+      "basis": "Engineering judgement anchored on the V1 failure mode and the knowledge rules; sensitivity shown"
+    },
+    {
+      "name": "Fan position and airflow",
+      "value": "external 80 mm fan at the input end blowing along the fins (+x)",
+      "basis": "SKILL-006 step 3 recommendation (no source evidence) and the inductor agent's parallel-path request"
+    },
+    {
+      "name": "Mass estimates",
+      "value": "films 90 g each, heat sink 300 g, PCBs from FR4/Cu density",
+      "basis": "Order-of-magnitude values; not from datasheets"
+    }
+  ],
+  "pcb_constraints": [
+    "Power board: 4 layers, 70 um on every layer, 2.0 mm; L1/L2 separated by 0.20 mm prepreg for the commutation loop, L3/L4 by 0.20 mm prepreg for the gate loop; symmetric stack with a ~1.1 mm core (KR-PCB-001, KR-PCB-004, KR-PCB-006, PE-PCB-003).",
+    "ISO_BARRIER rule area 10 mm wide on all four power-board layers along the full 240 mm length between the HV/DRV/DESAT classes and CTRL_SELV; 9.0 mm class-pair clearance; 1.0 mm non-plated slots under UCC21710 x2, UCC14141 x2, AMC1311 x2 and TMCS1133 (KR-ISO-001, KR-ISO-002 review, KR-ISO-004).",
+    "All seven barrier parts on one straight barrier line; the device row immediately on the HV side of the driver islands; the SELV strip is the board edge; no SELV corridor may cross the HV area (KR-ISO-001, KR-PCB-005).",
+    "Drivers, DESAT, rail decoupling and bias modules on L4 directly under the device row within 15 mm of the TO-247-4 leads; gate pour on L4, Kelvin-source pour on L3, Kelvin-source net never merged with the power source (KR-PCB-001, KR-PCB-003, KR-PCB-005, SKILL-006 principle 4, PE-PCB-001).",
+    "Heat-sink footprint reservation 100 x 40 mm with a 5 mm HV-copper keep-out (PE class); both devices on rated insulating pads; sink height <= 55 mm (KR-TH-002, A-24).",
+    "Control board: 4 layers 35 um, solid GND_CTRL on L2, no plane splits under ADC or PWM tracks; copper never above HV copper of the power board; analogue connector pins at the far end from PWM pins (PE-PCB-007, PE-PCB-008, controller agent).",
+    "Mezzanine socket on the power-board SELV strip, header on the control board; four M3 standoffs to the baseplate; stack height per confirmed connector drawing; parts under the control board <= 8 mm tall.",
+    "Inductor keep-out circle 75 mm, >= 10 mm from the heat sink, in a parallel air path; films beside the sink, not in the exhaust; exhaust zone holds only terminals, bleeders and the PE stud (SKILL-006 step 3, flagged recommendation).",
+    "HV terminals, relay-contact terminals and PTC grouped at the input and output ends; PE stud M4 bonded to the heat sink and baseplate; HV copper >= 1.0 mm from the board edge, >= 5.0 mm where the earthed baseplate edge can touch.",
+    "Net classes per the standards agent on the power board; CTRL_SELV only on the control board (KR-ISO-003).",
+    "Target metrics after layout as listed in selection.target_metrics_after_layout; evidence per docs/pcb-design-rules.md remains human review."
+  ],
+  "open_issues": [
+    "Relay-coil budget conflict: the sensing agent's Omron G9EA-1 coil draws 417 mA (fetched datasheet) while the controller agent budgeted 100 mA and sized the eFuse at 1.425 A minimum; the 12 V bus rises to about 1.13 A at 10.8 V (margin 1.26x). Resolve by PWM hold (sensing agent's suggestion), a lower-power relay with >= 16 A carry current, or a higher ILIM.",
+    "Heat-sink envelope: the 80 mm height limit (A-24) excludes 75 mm vertical profiles such as CR201-50VE; the thermal agent must select a <= 55 mm profile with R_th <= 0.6 K/W at 2 m/s (sanity check: T_J 122 degC at 0.8 K/W) or lay the extrusion on its side, which changes the footprint reservation.",
+    "Mezzanine stack height (11 mm design value) and the Wurth 50-pin socket orderability are unverified (Samtec PDF not text-readable, samtec.com HTTP 429, we-online 61305021821.pdf HTTP 404); standoff length follows the confirmed value.",
+    "Power board 2 versus 4 layers: the seed allows 2-4; this design recommends 4 (gate/Kelvin adjacency, thin commutation-loop dielectric, parallel pours, SELV-strip ground). A 2-layer build saves about 40 % of the power-board cost index and is acceptable only if the layout agent demonstrates the loop and adjacency targets in two layers.",
+    "Barrier area cost: the strict 9.0 mm all-layer rule plus the 10 mm keep-out consumes 2,400 mm2 (5.6 % of the power board); if the standards review accepts the 5.5 mm minimum, the SELV strip can shrink by 4 mm.",
+    "Stacked control board over the barrier zone relies on an air-clearance argument (>= 11 mm) between boards; the standards agent must confirm that clearance through air applies between two boards at pollution degree 2 and that control-board copper may be above the copper-free barrier zone.",
+    "HV terminal type (M5/M6 studs with ring lugs versus 2-pole screw terminal blocks), the fuse-holder and relay harness, and finger-safe covers (IPXXB) are not yet chosen; they affect the input/output end zones (1,600 mm2 reserved).",
+    "Airflow direction and the exhaust-zone rule follow SKILL-006 step 3, which the knowledge base flags as a recommendation without source evidence; the thermal agent should confirm with the fan curve and heat-sink impedance.",
+    "TO-247-4 package drawing was not text-readable (Wolfspeed Rev. 2 PDF); the footprint agent must take lead pitch and body dimensions from the datasheet drawing.",
+    "Area estimates carry about +/-15 % uncertainty; the stretch outline 230 x 170 mm should be attempted first in placement, and the 240 x 180 mm target is the acceptance limit.",
+    "Option C remains available if a future >= 50 kW variant uses modules; it must then follow KR-PCB-005 (cards mating at the gate pins) and carry its own barrier per card (KR-ISO-001).",
+    "Knowledge maintenance: SKILL-002 and SKILL-006 could record the partition pattern used here (barrier line through all isolators, device row adjacent to the barrier, SELV strip at the edge, control board stacked over SELV only) as a reusable placement pattern once the layout confirms it."
+  ],
+  "verification_status": "Analytically checked: HV zone sum and HV area, control-board sizing, outlines and areas for A/B/C, height stack and A-24 check, volumes, cost index, fine-pitch etch budget, weighted scoring with three sensitivity sets, air gap for the stacked control board, barrier heat conduction, heat-sink sanity, mezzanine pin current, mass. Component inputs: Omron G9EA-1 dimensions and coil from the fetched datasheet; TDK film dimensions, UCC21710/UCC14141/AMC1311/TMCS1133 data from sibling agents' fetched datasheets; TI controlCARD practice from ti.com (manufacturer page); Samtec, Ohmite CR201 and TO-247-4 body dimensions at search-snippet level; mezzanine stack height, standoff hardware, utilisation factors, cost factors and masses unverified. No layout has been run; all areas are estimates (+/-15 %). Human review: the 9.0 mm all-layer barrier and the inter-board air-gap argument (KR-ISO-002), 2 vs 4 layers, heat-sink height, relay-coil budget, exhaust placement, terminal type, scoring weights. Result file written: D:/Cursor Workspace/AIPE-PCB-Agent/examples/sic-buck-400v-200v-5kw/design/research/architecture.json (the only file created).",
+  "markdown": "# PCB architecture selection (Options A / B / C)\n\nAI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED. This section becomes `review/architecture_comparison.md` and `design/architecture.md`.\n\n## 1 Scope and inputs\n\nThe task is to choose how the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck is partitioned into printed-circuit boards and to fix outlines, layer counts, copper weights, stack-ups, the part-to-board partition, the interconnect and the mechanical concept. Component envelopes come from the other design agents: two Wolfspeed C4MS025120K TO-247-4 on one insulated, PE-bonded heat sink (KR-TH-002); 2 x TDK B32776G8206K input films (28 x 42 mm footprint, 37 mm high) and 2 x B32776G4606K output films (30 x 42 mm, 45 mm); ten 2220 HF ceramics in a column at the device pins (KR-CAP-003, PE-PCB-002); a custom 2-stack High Flux toroid with a 75 mm keep-out circle and 48 mm height; the barrier parts TMCS1133, 2 x AMC1311, 2 x UCC21710-Q1 and 2 x UCC14141-Q1; the controller agent's 2 x 25-pin 2.54 mm mezzanine. The standards agent fixes the geometry of the SELV / HV barrier: 9.0 mm between any HV, DRV or DESAT class and CTRL_SELV on every layer, a 10 mm copper-free ISO_BARRIER rule area (KR-ISO-001, KR-ISO-002 human review), 5.0 mm from HV copper to the PE heat sink and 3.0 mm between HV functional groups (KR-ISO-003). The benchmark is V1: 300 x 220 mm, six layers, 70 um outer copper with an LQFP-176 (known issue V1-09), a control-plus-auxiliary section measuring 128.5 x 93.7 mm at 15 % footprint utilisation (measured from `design/placement.json`).\n\n## 2 Options\n\n| Option | Boards | Pattern in the knowledge base |\n|---|---|---|\n| A | one integrated power + control PCB, 70 um on every layer, 4 layers (6 if routing demands, as V1 needed) | V1 (project precedent) |\n| B | power PCB (MOSFETs, drivers, bias, DC-link, inductor, output capacitors, sensing isolators, fast protection, thermal) + DSP control PCB (F28335, supplies, PWM/fault logic, ADC front ends, comms, JTAG, clock/reset), stacked mezzanine | REF-TI-TIDA-010054 decision 10 (power board + control card, LV circuitry along the edge) |\n| C | as B plus one plug-in gate-driver card per switch mating at the device pins | REF-WS-CGD15SG00D2 decision 7 (47.6 x 17.8 mm, 4 layers), REF-WS-CGD1700HB2M-UNA (module driver board) |\n\n## 3 Area and volume model\n\nHV-side zones (footprint plus local keep-out) sum to 24,645 mm2: heat-sink reservation 100 x 40 mm plus the 5 mm PE keep-out (5,500), inductor 75 x 75 plus a 10 mm band to the sink (6,375), output films (2,666), input films (2,494), terminals (1,600), relay/PTC interface (1,000), isolator zones with slots (1,500), driver islands on the bottom side (1,050, half counted because they sit under the sink footprint, SKILL-006 principle 4), HF tier (560) and small items (1,900). With the bus copper, the 3 mm HV functional spacing and the film-capacitor pours, the HV area is set to 240 x 140 mm (28,800 mm2, 86 % zone utilisation). The barrier adds 240 x 10 mm and the SELV strip 240 x 30 mm.\n\nThe control section footprints sum to 2,869 mm2 (LQFP-176 courtyard 751, 40 decoupling capacitors 172, supplies 625, logic and comparators 289, mezzanine 324, JTAG/UART/boot 274, remainder 234). At 30 % utilisation (V1 reached 15 %; TI controlCARDs are denser) a 120 x 80 mm, 4-layer, 35 um control board follows:\n\n    A_ctrl = 2,869 mm2 / 0.30 = 9,563 mm2 -> 120 x 80 mm = 9,600 mm2\n\nOn a 70 um board (Option A) the same functions need coarser features (0.25 mm track/space, 0603 passives): 13,000 mm2 assumed, i.e. 54 mm of depth across 240 mm.\n\n| Metric | A | B | C | V1 |\n|---|---|---|---|---|\n| Outline(s), mm | 240 x 204 | power 240 x 180 + control 120 x 80 | power 240 x 170 + 2 driver cards 50 x 30 + control 120 x 80 | 300 x 220 |\n| Total PCB area, mm2 | 48,960 | 52,800 | 53,400 | 66,000 |\n| Occupied plan area, mm2 | 48,960 | 48,000 (control board overhangs 40 mm beyond the power-board edge) | 48,000 | 66,000 |\n| Plan bounding box, mm | 240 x 204 | 240 x 220 | 240 x 220 | 300 x 220 |\n| Height above baseplate, mm | 67 | 67 (control stack top 39) | 67 | not recorded |\n| Volume, L (bounding / occupied) | 3.28 / 3.28 | 3.54 / 3.08 | 3.54 / 3.1 | - |\n\nHeight: 15 mm standoffs (A-24) + 2.0 mm board + 50 mm heat-sink reservation = 67 mm, inside the 80 mm limit; inductor top 65 mm, films 62 mm. A CR201-50VE-class vertical sink (75 mm tall, distributor data) would reach 92 mm and is therefore excluded from the envelope; the thermal agent must select a profile <= 55 mm tall or lay the extrusion on its side.\n\n## 4 Cost and manufacturability\n\n    cost index = sum over boards of area[dm2] x layer factor (2L 1.0, 4L 1.8, 6L 2.8) x copper factor (70 um 1.5, 35 um 1.0)\n\nA: 13.2 (4 layers) or 20.6 (6 layers); B: 13.4 with a 4-layer 70 um power board, 8.2 with 2 layers, plus one connector pair; C: 13.3 / 8.4 plus three connector sets and three assemblies; V1 for reference about 24. The raw board cost of A and B is therefore equal at four layers. The decisive difference is DFM: the LQFP-176 at 0.5 mm pitch has a nominal pad gap of 0.22 mm; with +/-0.06 mm per side etch allowance on 70 um copper the effective gap is 0.10 mm against the 0.20 mm minimum space, so Option A needs a special fine-line heavy-copper process or mixed copper weights (exactly V1-09). On 35 um the effective gap is 0.16 mm >= 0.15 mm. Heat conduction across the copper-free barrier is negligible in every option (R_th = L/(k A) = 0.010 m / (0.3 W/mK x 0.24 m x 0.002 m) = 69 K/W), so the cooling difference between A and B is only exhaust air and radiation (SKILL-006 step 3, flagged recommendation).\n\n## 5 Weighted scoring\n\nWeights: manufacturing cost/DFM 0.20 (the V1 failure mode), EMI loop integrity 0.15 and barrier/grounding 0.15 (hard-switched 400 V SiC; KR-PCB-004, KR-ISO-001), testability 0.10 (nine-step commissioning A-37; double-pulse per KR-PR-001), total area 0.10, and 0.05 each for volume, cooling, connector reliability, modularity, layout complexity and future redesign (secondary for a 5 kW laboratory prototype).\n\n| Criterion (weight) | A | B | C |\n|---|---|---|---|\n| Manufacturing cost and DFM (0.20) | 2 | 4 | 3 |\n| EMI: commutation and gate loops, CM coupling (0.15) | 3 | 4 | 2 |\n| Isolation barrier and grounding (0.15) | 3 | 4 | 3 |\n| Ease of testing (0.10) | 2 | 4 | 4 |\n| Total PCB area (0.10) | 4 | 4 | 3 |\n| Assembly volume (0.05) | 4 | 4 | 4 |\n| Cooling interaction (0.05) | 3 | 4 | 3 |\n| Connector reliability (0.05) | 5 | 4 | 2 |\n| Modularity / reuse (0.05) | 1 | 4 | 5 |\n| Layout complexity (0.05) | 2 | 4 | 3 |\n| Future redesign (0.05) | 2 | 4 | 4 |\n| Weighted total | 2.75 | 4.00 | 3.10 |\n\nSensitivity: area/volume-weighted 3.10 / 4.00 / 3.05; equal weights 2.82 / 4.00 / 3.27; modularity/test-weighted 2.45 / 4.00 / 3.45. Option B leads under every weighting tried.\n\n## 6 Recommendation: Option B\n\nOption B is selected. It removes the fine-pitch DSP from the heavy-copper board, gives the control board a continuous 35 um ground plane (PE-PCB-007/008, V1 single-ground practice), lets the power board be tested with a bench PWM source at the mezzanine (double-pulse, KR-PR-001) and the control board with a simulator, and keeps the drivers on the power board beside their switches (KR-PCB-005, SKILL-002 principle 4). Only logic-level SELV signals cross the connector, so connector inductance is outside both the gate loop and the commutation loop (KR-PCB-004). The mezzanine is a short on-board-class link (11 mm stack plus <= 80 mm of trace), which is the explicit exclusion of KR-GD-008: buffered single-ended PWM with 100 ohm / 100 pF filters at the driver pins is acceptable; RS-422 (CB-GD-003) is the mandatory fallback if a cable longer than about 150 mm is ever introduced.\n\nOption C is rejected: a separate driver card is only justified if it mates directly at the gate / Kelvin-source pins (KR-PCB-005), and PRD-09301 places separate driver boards in the ~200 kW+ class (SKILL-002 scope note). For two TO-247-4 devices it adds two connectors in the gate loop, two assemblies and a second barrier instance (KR-ISO-001) for no reuse benefit. Option A is rejected because it repeats V1: the control section forces a fine-pitch process onto a 70 um board, the SELV plane must stop at the barrier on a board shared with the 400 V switch node, and any change respins the whole heavy-copper board.\n\n## 7 Board definitions\n\n| Board | Outline target (stretch) | Layers / copper | Thickness | Minimum features |\n|---|---|---|---|---|\n| Power board | 240 x 180 mm (230 x 170) | 4 x 70 um (2 x 70 um only if the layout agent proves gate/Kelvin adjacency and the loop target in two layers) | 2.0 mm | 0.25 mm track/space preferred, 0.20 mm minimum; 0.3 mm drill; 1.0 mm non-plated slots |\n| Control board | 120 x 80 mm | 4 x 35 um | 1.6 mm | 0.15 mm; 0.3 mm drill |\n\nPower-board stack-up (symmetric, KR-PCB-001, KR-PCB-006, SKILL-002 principles 1-2):\n\n| Layer | Copper | Content |\n|---|---|---|\n| L1 (top) | 70 um | HF ceramics, Vin+ / SW / Vout+ pours, device pads, film pads, HV terminals, mezzanine socket |\n| prepreg 0.20 mm | | commutation-loop dielectric |\n| L2 | 70 um | PGND return pour under the whole commutation loop and bus; GND_CTRL pour under the SELV strip |\n| core about 1.1 mm | | |\n| L3 | 70 um | Kelvin-source pours in each driver island (shield between the gate layer and everything else); parallel Vin+ / SW / Vout+ pours; 12 V and 3V3 distribution in the SELV strip |\n| prepreg 0.20 mm | | gate-loop dielectric |\n| L4 (bottom) | 70 um | gate pours with the drivers, DESAT, rail decoupling and bias modules directly under the device row (TIDA-010054 decision 10); parallel PGND / Vout pours; SELV-strip parts |\n\nControl-board stack-up: L1 components and signals, L2 solid GND_CTRL, L3 power islands (1V9, 3V3, 5V, 12V_PROT), L4 signals, JTAG, mezzanine header; one ground net, no splits under ADC or PWM tracks (V1 practice). Net classes follow the standards agent (HV_VIN, HV_SW, HV_PGND, HV_VOUT, DRV_HS, DRV_LS, DESAT_HS, DESAT_LS, PE, CTRL_SELV); the control board carries CTRL_SELV only.\n\n## 8 Partition\n\nPower board, HV area: 2 x C4MS025120K on the shared heat sink with rated insulating pads; 10 x CGA9P1X7T2J474M; 2 x B32776G8206K; 2 x B32776G4606K; L1 toroid in its potting cup on four M4 standoffs; input bleeder chain (3 x CRCW2512120K) with DC-LINK LIVE LED, output bleeders (2 x CRCW2512100K), optional MOV S20K385; RC snubber pads; PTC B59773C0120A070 with the relay-contact terminals; HV terminals Vin+, PGND_in, Vout+, PGND_out; PE stud M4. Driver islands (bottom side): 2 x UCC21710-Q1 with gate resistors, DESAT diodes, Miller clamp link, gate discharge resistors (KR-GD-007), rail decoupling, TLV76050 5V_ISO LDO on the low-side island, NTC connector, MMCX V_GS jacks. Barrier line (slots under every body with a land gap < 9 mm, KR-ISO-004): 2 x UCC14141-Q1, 2 x UCC21710-Q1, 2 x AMC1311B with their HV ladders, TMCS1133C2AQDVGR in the output path. SELV strip (30 mm): mezzanine socket, driver-input RC filters and pull-downs, bias-module input CM chokes and capacitors (KR-IS-002, SKILL-004), protected 12 V distribution, 3V3_PWRBOARD, relay-coil switch AO3400A with flyback diode and coil terminals, test points, four M3 standoff holes.\n\nControl board: 12 V entry connector, SMBJ15CA, TPS26400 eFuse (CB-PR-001 / KR-PR-003), TPS54302, TPS767D301, TPS3808; TMS320F28335PGFA with oscillator, decoupling, ADC reference parts, boot straps, 14-pin JTAG and UART header; SN74LVC2G08, SN74LVC1G74, 2 x SN74LV21A; 2 x TLV1702 and REF3125; OPA2320 front ends and ADC RC filters; LM61; LEDs; E-stop header; mezzanine header.\n\nOff-board: KLKD020.T fuse in a 10 x 38 mm holder on the input lead, Omron G9EA-1 DC12 bypass relay (73 x 36 x 67.2 mm, screw terminals, chassis-mounted), external 12 V supply and 80 mm fan.\n\n## 9 Interconnect\n\nThe controller agent's 50-pin assignment is adopted unchanged (3 x 12V_PROT, 25 x GND_CTRL, PWM_H / PWM_L ground-guarded, fault and ready lines, TEMP_PWM, analogue group at the far end). The socket (Samtec SSW-125-01-G-D or Wurth WR-PHD) sits on the power-board SELV strip so that live SELV pins are never exposed and a bench fixture can plug in; the header (TSW-125-07-G-D) sits on the control board, mirroring the TI controlCARD / baseboard practice (TMDSCNCD28335 is a DIMM100 card that requires a baseboard). The 12 V pins carry 0.26 A each at the controller agent's 0.77 A budget and 0.38 A if the G9EA-1 coil (417 mA) is kept, against 3 A (WR-PHD, datasheet) or 4.7 A (SSW, distributor data). Mated stack height is designed at 11 mm and must be confirmed from the Samtec drawings.\n\n## 10 Mechanical assembly concept\n\nBoth boards mount on a PE-bonded aluminium baseplate (open frame, A-24). The power board sits on six M4 x 15 mm standoffs; bottom-side parts are limited to 10 mm. The heat sink (reservation 100 x 40 x 50 mm, fins along x, about 900 cm2 fin area) stands in the middle of the board over the device row; both TO-247-4 stand vertically against its face with leads straight into the board; the drivers are underneath. The device row borders the barrier; the SELV strip is the bottom edge of the board. The control board (120 x 80 mm) stacks 11 mm above the SELV strip and the barrier zone and overhangs the board edge by 40 mm; all four of its M3 standoffs go to the baseplate (two through clearance holes in the strip), so nothing is cantilevered. Control-board copper never lies above HV copper: the worst-case air gap from the barrier's HV edge to control-board copper is sqrt(5^2 + 11^2) = 12.1 mm >= 9.0 mm. The inductor sits beyond the fins in a parallel air path, >= 10 mm from the sink; the films sit beside the sink, not in its exhaust; the 80 mm fan blows along the fins from the input-terminal end, and the exhaust end carries only terminals, bleeders and the PE stud. Estimated mass 1.65 kg plus hardware.\n\n## 11 Target metrics to check after layout\n\n| Metric | Target |\n|---|---|\n| Power-board area | <= 43,200 mm2 (stretch 37,400) |\n| Control-board area | <= 9,600 mm2 |\n| Total PCB area / plan bounding box | <= 52,800 mm2, -20 % versus V1 / <= 240 x 220 mm |\n| Height above baseplate | <= 67 mm (limit 80) |\n| Commutation loop | <= 20-25 nH including packages (PE-PCB-003) |\n| Driver-to-device distance | <= 15 mm (KR-PCB-005) |\n| Gate / Kelvin pour overlap on L4 / L3 | >= 80 % of the gate pour area (KR-PCB-001) |\n| Barrier | 9.0 mm DRC clean on all four layers, slots under seven isolators (KR-ISO-001/004) |\n| Single-ended PWM segment | <= 100 mm (KR-GD-008 exclusion) |\n| HV copper to heat sink | >= 5.0 mm (KR-TH-002) |\n| 12 V mezzanine pins | <= 0.4 A per pin |\n\n## 12 Verification status\n\nAnalytically checked: zone sums, control-board sizing, outlines, heights and volumes, cost index, weighted scores with three sensitivity sets, barrier air gap, fine-pitch etch budget, barrier heat conduction, heat-sink sanity (T_J 105-139 degC for 0.5-1.1 K/W), connector current.\nUnverified: TO-247-4 package drawing (Wolfspeed PDF not text-readable; 16.1 x 23.6 x 5.2 mm from distributor data), Samtec insulator and mated stack height, Wurth 50-pin socket orderability, heat-sink profile and forced-air resistance (CR201 natural 3.3 K/W at 50 mm, forced-air chart not readable), control-board utilisation, 70 um density assumption, cost factors, mass estimates, standoff hardware.\nHuman review: the 9.0 mm all-layer barrier and the air-gap argument for the stacked control board (KR-ISO-002), 2- versus 4-layer power board, heat-sink height versus A-24, relay-coil current versus the 12 V budget, exhaust placement (SKILL-006 step 3), HV terminal type and off-board harness, scoring weights.\n"
+}

@@ -1,0 +1,278 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "Decisive voltage classes (61800-5-1 Table 3: DVC A <=25 Vrms/35.4 Vpk/60 Vdc, B <=50/71/120, C <=1000/4500/1500) and the DVC assignment (400 V bus, SW, driver islands, DESAT, 200 V output = DVC C; 12 V aux/DSP/JTAG/UART/fan = DVC A)",
+      "status": "verified",
+      "evidence": "Values match IEC 61800-5-1:2007 Table 3 as known to the verifier; 200 V DC > 120 V DC so the output is DVC C; the standard text itself was not available in the repository."
+    },
+    {
+      "item": "Impulse withstand basis: 600 V system row OVC II 4000 V / OVC III 6000 V, 300 V row OVC II 2500 V / OVC III 4000 V; design 4000 V basic/functional, 6000 V reinforced (one preferred step higher)",
+      "status": "verified",
+      "evidence": "Matches IEC 60664-1 Table F.1 and the reinforced-insulation rule (next higher impulse step). A 400 V DC nominal (440 V max) supply taken as the system voltage falls in the 600 V row, so 4000 V is the OVC II value, not merely a conservative choice; 2500 V applies only if the bus is treated as the DC link of a 230/400 V mains-fed system. Agent states this correctly and lists it as an open issue consistent with assumptions register A-27 (OVC II, 'standards agent confirms')."
+    },
+    {
+      "item": "Clearance table (PD2, inhomogeneous field): 2500 V -> 1.5 mm, 4000 V -> 3.0 mm, 6000 V -> 5.5 mm, 8000 V -> 8.0 mm",
+      "status": "verified",
+      "evidence": "Matches IEC 60664-1 Table F.2 case A."
+    },
+    {
+      "item": "Creepage table rows (PWB PD2 and other insulators PD2 group III): 200 V 0.63/2.0; 250 V 1.0/2.5; 320 V 1.6/3.2; 400 V 2.0/4.0; 500 V 2.5/5.0; 630 V 3.2/6.3; interpolation permitted; reinforced = 2 x basic; creepage never below clearance; PWB column valid for all groups except IIIb; CTI 175-399 = IIIa",
+      "status": "verified",
+      "evidence": "Matches IEC 60664-1 Table F.4 and the material-group definitions. Interpolated 440 V values recomputed as 2.2/4.4 mm basic and 4.4/8.8 mm reinforced (agree)."
+    },
+    {
+      "item": "Working-voltage table (Section 2): creepage from DC/rms, clearance from recurring peak; SW rms = Vin*sqrt(D); SW-VOUT rms; VIN+ to VOUT+ = Vin - 200 V",
+      "status": "verified",
+      "evidence": "Recomputed SW-PGND 268.3/282.8/296.6 Vrms and SW-VOUT 178.9/200.0/219.1 Vrms (sqrt(D(1-D))*Vin, identical to the exact two-level rms); VIN-VOUT 160/200/240 V, 280 V at 480 V TOV. SW recurring peak 1.2 x 440 = 528 V -> 530 V (assumption A1)."
+    },
+    {
+      "item": "Statement that 1.6 x TOV = 4080 V (2550 V crest case) 'would interpolate to 6.4 mm'",
+      "status": "contradicted",
+      "evidence": "Not reproducible from any row quoted in the document: interpolating the impulse column (4000 V -> 3.0 mm, 6000 V -> 5.5 mm) gives 3.1 mm; using IEC 60664-1 Table F.7a-type steady-state/TOV clearances (4 kV -> 3.8 mm, 5 kV -> 5.7 mm) gives about 3.9 mm. The agent's quoted recurring-peak rows stop at 2600 V -> 3.0 mm.",
+      "correction": "Show the two Table 9 rows actually used or correct the figure to the reproducible value (3.1-3.9 mm). The design conclusion (9.0 mm rule covers the case) is unchanged."
+    },
+    {
+      "item": "Slot creepage model 'path = land gap + 2 x board thickness = 10.8-11.2 mm >= 9.0 mm' for non-plated through-slots under the isolators",
+      "status": "contradicted",
+      "evidence": "For a through-slot the walls do not lead to the opposite pad (the bottom of the slot is air), so the wall path does not exist; the only surface path is around the slot ends. With the agent's own rule 'extend >= 1 mm beyond the pad rows' the around-end path is 2*sqrt((g/2)^2 + e^2) = 7.86 mm (g = 7.6 mm) / 8.25 mm (g = 8.0 mm), below the 9.0 mm rule. The 'gap + 2t' formula is valid only for a blind groove.",
+      "correction": "Specify the slot end extension e >= 2.5 mm (>= 2.41 mm at g = 7.6 mm, >= 2.06 mm at g = 8.0 mm; 3 mm recommended with tolerance) beyond the outermost pad edges, and state the around-end formula as the check. Propagate to architecture.json, which adopted '1.0 mm slots under 7 isolators'."
+    },
+    {
+      "item": "Slot width 1.0 mm nominal",
+      "status": "unverified",
+      "evidence": "1.0 mm equals the IEC 60664-1 X-value for PD2 (a gap narrower than X is bridged when measuring creepage); a routed slot at 1.0 mm nominal can come out below X. The CGD1700HB2M-UNA 0.030 in (0.76 mm) slot would not count as a creepage interruption at PD2.",
+      "correction": "Specify minimum 1.0 mm after fabrication tolerance (nominal 1.2 mm) and state why the 0.76 mm reference value is not reusable."
+    },
+    {
+      "item": "Required-distance table and KiCad DRC values (reinforced HV-SELV 9.0 mm all layers / 10 mm keep-out; basic HV-PE 5.0 mm, 3.0 mm absolute minimum; functional HV-HV 3.0 mm outer / 1.0 mm inner; same-reference 0.3 mm; CTRL_SELV 0.15-0.2 mm)",
+      "status": "verified",
+      "evidence": "All adopted values are at or above the derived standard minima (5.5 mm reinforced clearance; 8.8-10.0 mm reinforced creepage in the strict column; 3.0 mm basic clearance; 4.4-5.0 mm basic creepage). Architecture.json applies the same 9.0/5.5/5.0/3.0 mm values as geometry. Conservatism (strict column) is correctly flagged as a board-area open issue."
+    },
+    {
+      "item": "IPC-2221B Table 6-1 values (301-500 V: B1 0.25 / B2 2.5 / B4 0.8 mm; above 500 V +0.0025 / +0.005 / +0.00305 mm per V; 171-250 V: 0.2 / 1.25 / 0.4 mm)",
+      "status": "verified",
+      "evidence": "Match the verifier's knowledge of IPC-2221B Table 6-1; recomputed 530 V: 0.325 / 2.65 / 0.892 mm; 600 V: 0.50 / 3.0 / 1.105 mm. Agent correctly tags them [S]."
+    },
+    {
+      "item": "IPC-2221 conductor sizing (k = 0.048 / 0.024, exponents 0.44 and 0.725, 20 K, 70 um)",
+      "status": "verified",
+      "evidence": "Recomputed: 12.5 A 349 mil2 = 0.225 mm2 -> 3.2 mm external, 907 mil2 = 0.585 mm2 -> 8.4 mm internal; 25 A 8.4 mm external / 21.7 mm internal; 27.5 A 9.5 mm external; rise at 27.5 A on the 25 A width 24.8 K by the IPC exponent (agent 24 K by I^2) - immaterial."
+    },
+    {
+      "item": "Via barrel area, resistance and current (0.5 mm, 25 um plating, 1.6 mm board)",
+      "status": "verified",
+      "evidence": "Recomputed 0.0412 mm2 (64 mil2), 0.667 mOhm, 1.83 A (k = 0.024) / 3.65 A (k = 0.048); 0.3 mm via 0.0255 mm2, 1.078 mOhm, 1.29 A; 14 vias for 25 A, 21 with 1.5x; 0.032 mOhm / 0.020 W.",
+      "correction": "Architecture selected a 2.0 mm power board: 0.835 mOhm per via, 0.040 mOhm and 0.025 W for 21 vias; current capacity unchanged. Update assumption A5."
+    },
+    {
+      "item": "Bleeder table (50/100/200 uF, 480 V -> 60 V, 5 s and 60 s) and output bank (200 uF, 220 V)",
+      "status": "verified",
+      "evidence": "Arithmetic agrees exactly (48.1/24.0/12.0 kOhm with 4.03/8.05/16.1 W; 577/288/144 kOhm with 0.34/0.67/1.34 W; 5.8/11.5/23.0 J; output 230.9 kOhm, 0.173 W, 4.84 J).",
+      "correction": "The capacitor agent has since fixed C_in = 40 uF nominal (36 uF min, 800 V) and C_out = 120 uF (108 uF min, 450 V), outside the 50-200 uF placeholder range. At the actual values a 5 s passive discharge costs only ~3.2 W (60 kOhm, input) + ~1.3-1.5 W (32 kOhm, output) = ~4.5 W (0.09 % of P_out), so the '60 s + label' recommendation should be re-opened with the real trade-off. The capacitor agent's 360 kOhm / 200 kOhm chains give 29.9 s / 31.2 s uncoupled (35.7 s coupled through the HS body diode per that agent), consistent with the 60 s criterion both agents adopted. Stored energy 4.6 J / 2.9 J at 480 V / 220 V."
+    },
+    {
+      "item": "Discharge rule citation: 61800-5-1:2007 4.3.11 (< 60 V or < 50 uC within 5 s, else 6.5.2 label IEC 60417-5036 + time; 1 s for tool-less connectors); IPXXB for DVC C (4.3.3)",
+      "status": "unverified",
+      "evidence": "Consistent with the verifier's recollection of IEC 61800-5-1:2007 and with the capacitor agent's independent citation (4.3.11 / 62477-1 4.4.9); the standard text could not be opened in this run."
+    },
+    {
+      "item": "Input fuse Littelfuse KLKD020.T: I_in 14.17 A (360 V, 5 kW), 15.59 A at 110 %; 20 A x 0.8 = 16 A; ratio 1.41",
+      "status": "verified",
+      "evidence": "Recomputed identically (also 12.76 A at 400 V, 11.60 A at 440 V). Same fuse selected independently by the sensing agent (71 % / 78 % loading). Ratings (600 V DC, 10 kA vs 50 kA DC interrupting, melting I2t) remain unverified as the agent states.",
+      "correction": "Add the applicability limit: with a current-limited laboratory source (sensing agent assumes <= 20 A) a fast-acting 20 A fuse never opens; wiring/board protection then rests on the source limit plus the DC-link energy (~4.6 J); the fuse protects only on a stiff DC bus."
+    },
+    {
+      "item": "Device I2t versus fuse (200-300 A, 2-3 us -> 0.08-0.27 A2s)",
+      "status": "verified",
+      "evidence": "Recomputed 0.08 / 0.27 A2s; the conclusion that no 20 A fuse protects the device holds regardless of the unknown fuse I2t."
+    },
+    {
+      "item": "Protective-coordination statement 'DESAT/OC response < device SCWT, typically a few microseconds for 1200 V SiC (device-specific, from the datasheet)'",
+      "status": "contradicted",
+      "evidence": "mosfet.json: no C3M/C4MS datasheet states a short-circuit withstand time; C4MS025120K selected; a <= 1.5 us total response is proposed and a destructive short-circuit test required. gate_driver.json: total response 0.55-1.07 us (blanking 252-326 ns), Wolfspeed publishes no SCWT. KR-PR-001 verification method is measurement.",
+      "correction": "Replace the datasheet wording with the actual status and the 0.55-1.07 us versus <= 1.5 us comparison, proven by test."
+    },
+    {
+      "item": "Barrier-part ratings: UCC21710-Q1 5.7 kVrms / 1.5 kVrms working / > 8 mm; AMC1311 7000 Vpk / 1500 Vrms working / 100 kV/us; TMCS1133 950 Vrms / 1343 VDC reinforced working / >= 8 mm",
+      "status": "verified",
+      "evidence": "Match the knowledge records CMP-UCC21710-Q1 (SLUSDH8D), CMP-AMC1311 (SBAS786C) and CMP-TMCS1133 (SBOSAG0E VIOWM; older TI guide value 1100 VDC flagged in the record); all exceed 440 V DC reinforced working voltage."
+    },
+    {
+      "item": "Bias-module human-review item (RECOM R12P21503D / Murata MGJ2D122005SC) and the relay coil-to-contact item",
+      "status": "contradicted",
+      "evidence": "The gate-driver agent selected UCC14141-Q1 (VIOWM 1500 Vrms / 2121 VDC, VIOTM 8000 Vpk, > 8 mm creepage, CTI > 600, certificate status to be confirmed) per position, not RECOM/Murata; the sensing and architecture agents selected the Omron G9EA-1 DC12 bypass relay with a 12 V SELV coil. The standards result's Section 6, candidate list and open issues still name the stale parts and leave the relay generic.",
+      "correction": "Re-point KR-SN-001 review to UCC14141-Q1 (passes on datasheet evidence; slot under the DWN body) and to the G9EA-1 coil-to-contact insulation, which must be shown reinforced for 440 V DC (6 kV impulse basis, >= 8.8-10 mm creepage) or the coil moved behind a separate reinforced barrier; the verifier recalls the G9EA-1 coil-contact dielectric strength as 2.5 kVac/1 min, a basic-level figure - unverified, to be checked against the fetched Omron datasheet."
+    },
+    {
+      "item": "Heatsink and insulating pad: Sil-Pad 2000, 4000 Vac breakdown, 5.0 mm / 3.0 mm heatsink-to-HV copper and pins",
+      "status": "verified",
+      "evidence": "Consistent with thermal.json (Sil-Pad TSP 3500 = former Sil-Pad 2000, 0.254 mm, 4 kVac, custom cut 28 x 32 mm, no hole, cam-clip mounted, 5.0 mm edge creepage estimate, 6 kVac TSP A2000 alternative) and architecture.json (5 mm HV keep-out around the sink).",
+      "correction": "Close the KR-TH-002 'creepage at the package edge' item explicitly: pad overhang beyond the drain tab >= 5.0 mm (confirm against the C4MS025120K tab outline), clip mounting (no screw through the tab) as a rule, clip-to-lead distance >= 5.0/3.0 mm, and the TO-247 lead-to-sink-face air gap (typically ~2.3-2.5 mm with a 0.25 mm pad if the sink face continues beside the leads, i.e. below the 3.0 mm basic clearance) shown compliant by a face relief or by the pad extending below the body. Mark the 4 kVac ASTM D149 breakdown as a destructive ramp value, not a withstand rating."
+    },
+    {
+      "item": "Heatsink NTC (TDK B57703M0103G040, LS-island referenced, mounted on the PE-bonded sink)",
+      "status": "contradicted",
+      "evidence": "Omitted from the HV-to-PE insulation list; sensing_protection.json notes its own test voltage is only ~150 Vac and that an insulating pad/washer is needed.",
+      "correction": "Add the NTC as a basic-insulation HV-to-PE item: rated insulating interface for the 4 kV impulse basis, 5.0 mm creepage / 3.0 mm clearance from its leads to the sink, or an NTC with rated insulation."
+    },
+    {
+      "item": "Earthing: SGND bonded to PE at one point (PELV), PGND not hard-bonded, 2 x 1 MOhm reference, optional Y2",
+      "status": "unverified",
+      "evidence": "Technically acceptable class I scheme, but it changes the shared design basis ('SELV domain') to PELV; assumptions.json A-23 lists the PE strategy as a human (H) decision for the standards agent and the user, not as decided.",
+      "correction": "Record the SELV -> PELV bond as a proposed deviation requiring approval, with the JTAG/USB ground-loop and EMI consequences, and keep the unbonded SELV alternative; add PE conductor sizing and bonding resistance (<= 0.1 Ohm) requirements."
+    },
+    {
+      "item": "Y-capacitor touch current 0.85 / 1.81 mA at 2 Vpp, 50 kHz",
+      "status": "verified",
+      "evidence": "Recomputed identically (Vrms = 0.577 V).",
+      "correction": "Covers only the switching-ripple component; a rectifier-derived DC bus can carry mains-frequency common-mode ripple to PE that is not estimated. Keep Y2 DNP until the source is defined; confirm the B32021 DC rating (>= 1 kV) from the TDK datasheet."
+    },
+    {
+      "item": "Environment inputs (OVC II, PD2, <= 2000 m, CTI 175-399 group IIIa, Tg >= 150 C)",
+      "status": "verified",
+      "evidence": "Consistent with assumptions.json A-25..A-27, A-30 (Isola 370HR CTI class 3) and the shared design basis."
+    },
+    {
+      "item": "Reference-instance values not copied",
+      "status": "verified",
+      "evidence": "CGD15SG00D2 analysis decision 7 confirms 8 mm creepage / 800 Vpk basic, three 1 mm slots, Tg >= 170 C, 'not a universal value'; agent uses it only as a cross-check (6.3 mm at the 630 V row -> 27 % margin recomputed correctly). CGD1700HB2M-UNA decision 6 distances were never extracted; only the class structure is mirrored."
+    },
+    {
+      "item": "Standards basis (IEC 62477-1 general, 61800-5-1:2007 as numeric source, 60664-1 origin, IPC-2221/2152, UL 840 and 62368-1 cross-reference only)",
+      "status": "verified",
+      "evidence": "Appropriate for a non-isolated DC/DC PECS prototype; the numeric tables derive from IEC 60664-1 in both product standards, so using the 2007 drive-standard text as the numeric source is acceptable while the 62477-1 clause numbers stay [U] as the agent marks them."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Input current at operating corners",
+      "agent_value": "14.17 A (360 V, 5 kW); 15.59 A (360 V, 110 %); 12.76 A (400 V); 11.60 A (440 V)",
+      "verifier_value": "14.17 / 15.59 / 12.76 / 11.60 A (also 14.03 A at 400 V and 12.76 A at 440 V for 5.5 kW)",
+      "agrees": true
+    },
+    {
+      "name": "Fuse application margin",
+      "agent_value": "16.0 A >= 15.6 A; ratio 1.41",
+      "verifier_value": "20 x 0.8 = 16.0 A; 20/14.17 = 1.41",
+      "agrees": true,
+      "note": "A current-limited source at <= 20 A never opens a fast-acting 20 A fuse; applicability limit to be stated."
+    },
+    {
+      "name": "Switch-node rms working voltage",
+      "agent_value": "268 / 283 / 297 Vrms (SW-PGND); 179 / 200 / 219 Vrms (SW-VOUT)",
+      "verifier_value": "268.3 / 282.8 / 296.6 Vrms; 178.9 / 200.0 / 219.1 Vrms",
+      "agrees": true
+    },
+    {
+      "name": "Reinforced clearance alternatives",
+      "agent_value": "1.6 x 480 = 768 V -> 0.2 mm; 2 x 530 = 1060 V -> <= 1.6 mm; governing 5.5 mm; 6.4 mm if TOV 2550 V crest applied",
+      "verifier_value": "768 V and 1060 V correct; 1060 V -> ~0.66 mm by the agent's own recurring-peak rows; governing 5.5 mm agreed; 4080 V -> 3.1 mm by impulse-column interpolation or ~3.9 mm by 60664-1 Table F.7a-type values, not 6.4 mm",
+      "agrees": false,
+      "note": "Governing value unaffected; the 6.4 mm figure is not reproducible from the quoted rows."
+    },
+    {
+      "name": "Creepage interpolation at 440 V",
+      "agent_value": "PWB 2.2 mm basic / 4.4 mm reinforced; other IIIa 4.4 / 8.8 mm",
+      "verifier_value": "2.2 / 4.4 mm; 4.4 / 8.8 mm",
+      "agrees": true
+    },
+    {
+      "name": "Slot creepage extension under isolators",
+      "agent_value": "gap + 2 x 1.6 mm = 10.8 / 11.2 mm >= 9.0 mm",
+      "verifier_value": "Through-slot: wall path does not exist; around-end path with 1 mm extension = 7.86 mm (g 7.6) / 8.25 mm (g 8.0) < 9.0 mm; extension needed >= 2.41 / 2.06 mm (3 mm recommended)",
+      "agrees": false,
+      "note": "Physics of the creepage path is wrong for a through-slot; the agent's own 'check around the slot ends' criterion is the right one but its 1 mm extension fails it."
+    },
+    {
+      "name": "IPC-2221B spacing above 500 V",
+      "agent_value": "480 V: 0.25 / 2.5 / 0.8 mm; 530 V: 0.33 / 2.65 / 0.89 mm; 600 V: 0.50 / 3.0 / 1.1 mm",
+      "verifier_value": "0.25 / 2.5 / 0.8; 0.325 / 2.65 / 0.892; 0.50 / 3.0 / 1.105 mm",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder resistance and dissipation (50/100/200 uF)",
+      "agent_value": "5 s: 48 / 24 / 12 kOhm, 4.0 / 8.1 / 16 W; 60 s: 577 / 288 / 144 kOhm, 0.34 / 0.67 / 1.34 W; 5.8 / 11.5 / 23 J",
+      "verifier_value": "48.1 / 24.0 / 12.0 kOhm, 4.03 / 8.05 / 16.1 W; 577 / 288 / 144 kOhm, 0.34 / 0.67 / 1.34 W; 5.8 / 11.5 / 23.0 J",
+      "agrees": true,
+      "note": "Actual banks are 40 uF / 120 uF: input 5 s 60.1 kOhm / 3.2 W, 60 s 721 kOhm; output 5 s 32.1 kOhm / 1.25 W (1.5 W at 220 V), 60 s 385 kOhm; capacitor agent's 360 / 200 kOhm -> 29.9 / 31.2 s uncoupled (35.7 s coupled); 4.6 J / 2.9 J stored."
+    },
+    {
+      "name": "Output bank bleeder (200 uF, 220 V, 60 s)",
+      "agent_value": "<= 231 kOhm, 0.17 W, 4.8 J",
+      "verifier_value": "230.9 kOhm, 0.173 W, 4.84 J",
+      "agrees": true,
+      "note": "C_out fixed at 120 uF -> 385 kOhm, 2.9 J."
+    },
+    {
+      "name": "IPC-2221 conductor width at 20 K, 70 um",
+      "agent_value": "12.5 A: 3.2 mm ext / 8.4 mm int; 25 A: 8.4 / 21.7 mm; 27.5 A: 9.5 mm ext, rise 24 K",
+      "verifier_value": "3.2 / 8.4 mm; 8.4 / 21.7 mm; 9.5 mm ext (24.8 mm int); rise 24.8 K by the IPC exponent",
+      "agrees": true
+    },
+    {
+      "name": "Via barrel area, resistance and current",
+      "agent_value": "0.5 mm: 0.0412 mm2, 0.667 mOhm, 1.83 / 3.65 A; 0.3 mm: 0.0255 mm2, 1.08 mOhm, 1.29 A; 14 vias, 21 with 1.5x (0.032 mOhm, 0.02 W)",
+      "verifier_value": "Identical at 1.6 mm; at the architecture's 2.0 mm board 0.835 mOhm per via, 0.040 mOhm / 0.025 W for 21 vias",
+      "agrees": true,
+      "note": "Board thickness assumption A5 (1.6 mm) superseded by architecture (2.0 mm)."
+    },
+    {
+      "name": "Y-capacitor ripple (touch) current",
+      "agent_value": "0.85 mA (4.7 nF) / 1.81 mA (10 nF)",
+      "verifier_value": "0.85 / 1.81 mA",
+      "agrees": true
+    },
+    {
+      "name": "Device short-circuit I2t versus fuse",
+      "agent_value": "0.08-0.27 A2s",
+      "verifier_value": "200 A x 2 us = 0.08 A2s; 300 A x 3 us = 0.27 A2s",
+      "agrees": true,
+      "note": "Placeholder currents/times; the selected C4MS025120K has no published SCWT."
+    },
+    {
+      "name": "VIN+ to VOUT+ working voltage",
+      "agent_value": "160 / 200 / 240 V DC, 280 V transient",
+      "verifier_value": "160 / 200 / 240 / 280 V",
+      "agrees": true
+    },
+    {
+      "name": "Switch-node recurring peak (A1)",
+      "agent_value": "530 Vpk (<= 20 % overshoot of 440 V)",
+      "verifier_value": "1.2 x 440 = 528 V",
+      "agrees": true
+    },
+    {
+      "name": "Impulse / clearance / creepage table values",
+      "agent_value": "Table 7: 300 V row 2500/4000 V, 600 V row 4000/6000 V; Table 9: 1.5/3.0/5.5/8.0 mm; Table 10 rows 200-630 V",
+      "verifier_value": "Identical to IEC 60664-1 Tables F.1, F.2 (case A) and F.4",
+      "agrees": true
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-ISO-004 applied with a physically wrong creepage-path model for through-slots ('gap + 2 x board thickness'); the correct check is the surface path around the slot ends, which the agent's '>= 1 mm beyond the pad rows' rule fails (7.9-8.3 mm < 9.0 mm). Slot width 1.0 mm nominal equals the PD2 X-value with no tolerance.",
+    "KR-PR-001 presented as a datasheet comparison ('SCWT ... from the datasheet, typically a few microseconds') although the selected C4MS025120K has no published withstand time (mosfet.json, gate_driver.json); the rule's verification method is measurement and the actual design values (0.55-1.07 us response vs <= 1.5 us requirement) are not referenced.",
+    "KR-SN-001 human-review items are surfaced (correct) but on stale parts: RECOM R12P2 / Murata MGJ2 instead of the selected UCC14141-Q1 bias module, and a generic relay instead of the selected Omron G9EA-1 DC12 whose coil-to-contact insulation is the real reinforced-barrier question.",
+    "KR-TH-002 verification procedure ('creepage at the package edge') not carried out by the standards agent; the thermal agent oversized the pad to an estimated 5.0 mm and explicitly asks the isolation review to set the figure, so the loop is unclosed; TO-247 lead-to-sink clearance and mounting hardware (clip, no screw) not addressed; heatsink NTC (HV-referenced on a PE sink) omitted.",
+    "SKILL-003 / KR-CAP-001 discharge sizing left parametric (50-200 uF) although the capacitor agent fixed 40 uF / 120 uF; the '60 s + label' recommendation was not re-evaluated at the actual ~4.5 W cost of the compliant 5 s option; the bleeder part choice (PR02) duplicates the capacitor agent's ownership (CRCW2512 chains).",
+    "Design-basis seed 'SELV control domain' changed to PELV (SGND bonded to PE) without marking it as a deviation; assumptions register A-23 reserves this as a human decision.",
+    "Reference-instance values correctly not copied (CGD15SG00D2 8 mm / 800 Vpk used only as a cross-check; CGD1700 distances never extracted) - no misuse; however the 0.76 mm reference slot should be stated as not reusable at PD2 (below X = 1.0 mm) rather than merely 'noted'.",
+    "The '6.4 mm' reinforced-clearance figure attributed to a [V] table interpolation is not reproducible from any row quoted; it should be substantiated or corrected (does not change the DRC values)."
+  ],
+  "required_changes": [
+    "Section 4 rule 6 / pcb_constraints / calculations: replace 'path = land gap + 2 x t_board' with the around-the-slot-end surface path 2*sqrt((g/2)^2 + e^2) and require the slot to extend e >= 2.5 mm (3 mm recommended) beyond the outermost pad edges of every slotted isolator (2 x UCC21710-Q1, 2 x UCC14141-Q1, 2 x AMC1311, TMCS1133) so the path is >= 9.0 mm; where it does not fit, record a local fallback to the standard-minimum PWB creepage (5.5 mm, still >= the 5.5 mm clearance). Propagate to architecture.json.",
+    "Specify the non-plated slot width as >= 1.0 mm after fabrication tolerance (1.2 mm nominal), citing the PD2 X-value, and state that the CGD1700HB2M-UNA 0.76 mm slot is not reusable at PD2.",
+    "Correct or substantiate the '6.4 mm at 4080 V' statement (reproducible values: 3.1 mm from the impulse column, ~3.9 mm from steady-state/TOV clearance values); show the Table 9 rows used.",
+    "Section 6, candidates and open issues: replace RECOM R12P21503D / Murata MGJ2 with the selected UCC14141-Q1 (VIOWM 1500 Vrms / 2121 VDC, VIOTM 8 kVpk, > 8 mm, CTI > 600; passes 440 V DC reinforced on datasheet evidence; certificate status open; slot under body) and name the Omron G9EA-1 DC12 relay: its coil-to-contact insulation must be shown reinforced for 440 V DC (6 kV impulse basis, >= 8.8-10 mm creepage) or the coil circuit moved behind a separate reinforced barrier; verify against the fetched Omron datasheet.",
+    "Add the heatsink NTC B57703M0103G040 (LS-island referenced, ~150 Vac own test voltage) to the HV-to-PE basic-insulation list: rated insulating interface, 5.0 mm creepage / 3.0 mm clearance leads-to-sink, or an NTC with rated insulation.",
+    "Close KR-TH-002 numerically: pad overhang beyond the drain tab >= 5.0 mm (thermal agent's 28 x 32 mm cut; confirm against the C4MS025120K tab outline), clip mounting with no screw through the tab, clip-to-lead >= 5.0/3.0 mm, and the TO-247 lead-to-sink-face air gap (typically ~2.3-2.5 mm with a 0.25 mm pad) shown >= 3.0 mm by a heatsink face relief or by the pad extending below the body; describe the pad's 4 kVac D149 breakdown as a destructive ramp value and make the 6 kVac grade the default unless the thermal budget forbids it.",
+    "Section 5: rewrite with the fixed banks (C_in 40 uF nominal / 36 uF min, 800 V; C_out 120 uF / 108 uF min, 450 V): 5 s passive discharge costs ~3.2 W (60 kOhm) + ~1.3-1.5 W (32 kOhm) = ~4.5 W (0.09 % of P_out), so present '5 s passive, no label' as the preferred compliant option beside '60 s + label'; adopt the capacitor agent's coupled-discharge figure (35.7 s with 360 kOhm / 200 kOhm) and defer bleeder part numbers to the capacitor agent (keep only the requirements: time, element voltage, dissipation, 3.0 mm functional spacing along the chain).",
+    "Record the SGND-to-PE bond (PELV) as a proposed deviation from the SELV design basis / assumptions A-23 for approval, with JTAG/USB ground-loop and EMI consequences and the unbonded alternative; add PE conductor sizing (>= supply conductor cross-section) and bonding resistance (<= 0.1 Ohm) requirements with the 61800-5-1 clause to be verified.",
+    "Section 7: state the fuse applicability limit (a <= 20 A current-limited source never opens a fast 20 A fuse; protection then rests on the source limit and ~4.6 J of DC-link energy; the fuse protects only on a stiff DC bus) and keep 'melting I2t to be obtained'.",
+    "Section 7: replace 'SCWT typically a few microseconds, from the datasheet' with: Wolfspeed publishes no SCWT for C4MS025120K; design value = gate-driver total response 0.55-1.07 us against the MOSFET agent's <= 1.5 us requirement, to be proven by destructive short-circuit test (KR-PR-001 verification = measurement).",
+    "Assumption A5: update to the architecture's 2.0 mm power board (0.835 mOhm per 0.5 mm via; 0.040 mOhm / 0.025 W for 21 vias; capacity unchanged).",
+    "Section 6: note that the Y2 touch-current estimate covers only the 50 kHz ripple and that a rectifier-derived bus may carry mains-frequency common-mode ripple to PE; keep Y2 DNP until the source is defined and confirm the B32021 DC rating from the TDK datasheet."
+  ],
+  "summary": "All fourteen stated calculations were recomputed from the given inputs and agree numerically (input currents, fuse margin, SW rms, 440 V creepage interpolation, IPC-2221B spacing, bleeder values, IPC-2221 widths, via resistance/current, Y-capacitor current, I2t, VIN-VOUT); the impulse, clearance and creepage table values match IEC 60664-1 Tables F.1/F.2/F.4 and the insulation-coordination logic (OVC II at the 600 V row -> 4 kV basic / 6 kV reinforced, reinforced creepage 2 x basic, never below clearance, strict 'other insulators' column adopted) is sound and conservative; reference-instance values were not copied and human-review rules were surfaced. Corrections are required for: (1) the slot creepage model - 'gap + 2 x thickness' is physically wrong for a through-slot and the agent's 1 mm end extension gives only 7.9-8.3 mm around the slot ends, below its own 9.0 mm rule (need >= 2.5 mm, and slot width >= 1.0 mm after tolerance); (2) the unreproducible '6.4 mm' TOV clearance figure (3.1-3.9 mm from the quoted tables; DRC values unaffected); (3) stale consistency with sibling areas - the bias module is UCC14141-Q1 (passes), the relay is the Omron G9EA-1 whose coil-contact insulation is the real reinforced-barrier question, the banks are 40 uF / 120 uF so the compliant 5 s passive discharge costs only ~4.5 W, and the power board is 2.0 mm; (4) omissions - heatsink NTC on the PE sink, TO-247 lead-to-sink clearance and pad-edge creepage (KR-TH-002), fuse ineffectiveness with a current-limited source, no published SCWT for the selected device, and the unflagged SELV -> PELV change. Standards clause texts (61800-5-1 4.3.11, 6.5.2, 4.3.3, 62477-1 numbering, touch-current limit) remain unverified in this run, as the agent itself marks."
+}

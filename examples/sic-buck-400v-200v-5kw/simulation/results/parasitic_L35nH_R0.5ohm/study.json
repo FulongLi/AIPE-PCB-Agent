@@ -1,0 +1,42 @@
+{
+  "runtime_s": 0.2559161999997741,
+  "points": 30957,
+  "warnings": [],
+  "L_loop": 3.5e-08,
+  "R_loop": 0.5,
+  "C_oss": 1.3e-10,
+  "cycles": 3,
+  "vsw_max": 747.4951129958272,
+  "vsw_min": -5.077867310584152,
+  "vsw_overshoot_above_vin": 347.4951129958272,
+  "v_ds_hs_max": 534.6099246009378,
+  "il_min": 20.08493331399389,
+  "il_max": 27.812842302134733,
+  "estimate_hs_turn_off_overshoot_V": 456.36015544674916,
+  "estimate_sw_turn_on_step_overshoot_V": 400.0,
+  "ring_frequency_Hz": 74612988.16108528,
+  "note": "Ideal-switch commutation with lumped L_loop and C_oss: HS turn-off rings L_loop with C_oss (estimate I*sqrt(L/C)); HS turn-on applies a voltage step to the L_loop/C_oss(LS) tank, which undamped would overshoot by Vin. Real di/dt, diode capacitance, package and gate-loop parasitics are not modelled. Use as an order-of-magnitude indicator only.",
+  "case": "parasitic_L35nH_R0.5ohm",
+  "vin_V": 400.0,
+  "il_peak_used_A": 28.672862250400183,
+  "ideal_switch_di_dt_off_A_per_ns": 9.009277490065168,
+  "ideal_switch_di_dt_on_A_per_ns": 11.548043209813171,
+  "analytic_L_didt": {
+    "1_A_per_ns": {
+      "L_didt_overshoot_V": 35.0,
+      "vsw_peak_V_at_vin": 435.0
+    },
+    "2.5_A_per_ns": {
+      "L_didt_overshoot_V": 87.50000000000001,
+      "vsw_peak_V_at_vin": 487.5
+    },
+    "4_A_per_ns": {
+      "L_didt_overshoot_V": 140.0,
+      "vsw_peak_V_at_vin": 540.0
+    }
+  },
+  "energy_bound_I_sqrt_L_over_C_V": 456.36015544674916,
+  "Z0_ohm": 16.40825308284734,
+  "Q_loop": 32.81650616569468,
+  "interpretation": "The behavioural switch commutates in about one solver step, so the deck's overshoot is the energy-transfer bound of an instantaneous commutation damped only by R_loop; it is NOT a prediction of the C4MS025120K turn-off overshoot. The engineering estimate is L_loop x di/dt at the gate-driver design edge (2.5 A/ns) - see analytic_L_didt - to be replaced by double-pulse measurement."
+}

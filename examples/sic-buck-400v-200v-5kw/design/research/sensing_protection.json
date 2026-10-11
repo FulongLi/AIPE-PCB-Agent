@@ -1,0 +1,1091 @@
+{
+  "decision_area": "Sensing, protection and power-path auxiliaries (current/voltage/temperature sensing, fast OC trip, fuse, pre-charge, bypass relay, DC-link discharge, surge, UVLO/OVP, fault latch, test interfaces, controller signal list)",
+  "knowledge_queries": [
+    {
+      "command": "python -m automation.knowledge.query \"isolated current sensing Hall sensor TMCS1133 overcurrent trip\" --json --limit 8",
+      "top_hits": [
+        "CB-SN-004",
+        "CMP-TMCS1133",
+        "SKILL-005",
+        "REF-TI-TIDA-010054",
+        "KR-SN-002",
+        "CMP-UCC21710-Q1",
+        "KR-GD-004",
+        "KR-SN-005"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"isolated voltage sensing AMC1311 resistive divider HV side 5 V LDO\" --json --limit 8",
+      "top_hits": [
+        "CMP-AMC1311",
+        "CB-SN-001",
+        "SKILL-005",
+        "CB-SN-002",
+        "CMP-AMC1336",
+        "REF-TI-TIDA-010054",
+        "CB-IS-002",
+        "CB-GD-001"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"fault handling latched trip zone restart policy protection comparator\" --json --limit 8",
+      "top_hits": [
+        "CB-SN-004",
+        "CMP-TMCS1133",
+        "KR-PR-002",
+        "KR-SN-002",
+        "CB-GD-001",
+        "SKILL-001",
+        "KR-SN-005",
+        "KR-GD-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"NTC heatsink temperature sensing UCC21710 AIN APWM over temperature\" --json --limit 8",
+      "top_hits": [
+        "CB-PR-002",
+        "REF-WS-CGD1700HB2M-UNA",
+        "SKILL-006",
+        "KR-TH-003",
+        "CB-GD-001",
+        "CMP-UCC21710-Q1",
+        "REF-TI-TIDA-010054",
+        "KR-SN-003"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"pre-charge inrush limiting DC-link relay bypass resistor\" --json --limit 8",
+      "top_hits": [
+        "KR-CAP-001",
+        "CMP-TPS2640",
+        "REF-TI-TIDA-010054",
+        "SKILL-003",
+        "KR-GD-007",
+        "CMP-B32716H8306K000",
+        "CB-PR-001",
+        "CMP-UCC14141-Q1"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"DC fuse input protection I2t coordination\" --json --limit 8",
+      "top_hits": [
+        "CB-IS-003",
+        "SKILL-004",
+        "CMP-UCC14141-Q1",
+        "CB-PR-001",
+        "KR-SN-001",
+        "CMP-TPS2640",
+        "KR-SN-002",
+        "REF-TI-TIDA-010054"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"DC-link discharge bleeder resistor safe voltage time\" --json --limit 8",
+      "top_hits": [
+        "SKILL-001",
+        "CB-GD-001",
+        "KR-GD-007",
+        "SKILL-003",
+        "CMP-UCC21710-Q1",
+        "CMP-UCC25800-Q1",
+        "KR-CAP-001",
+        "KR-GD-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"input TVS MOV surge overvoltage protection UVLO OVP comparator\" --json --limit 8",
+      "top_hits": [
+        "CMP-TPS2640",
+        "CB-PR-001",
+        "REF-TI-TIDA-010054",
+        "KR-PR-003",
+        "KR-SN-002",
+        "KR-SN-005",
+        "SKILL-001",
+        "CMP-AMC1311"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"test points probe V_GS discharge indicator LED SELV\" --json --limit 8",
+      "top_hits": [
+        "SKILL-001",
+        "KR-PCB-005",
+        "SKILL-002",
+        "KR-GD-001",
+        "CB-IS-002",
+        "KR-GD-005",
+        "KR-GD-007",
+        "KR-SN-003"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"PCB creepage clearance isolation barrier sensing signals\" --json --limit 8",
+      "top_hits": [
+        "SKILL-002",
+        "SKILL-005",
+        "REF-WS-CGD15SG00D2",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-ISO-002",
+        "SKILL-001",
+        "CMP-TMCS1133",
+        "SKILL-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"shunt isolated amplifier AMC1302 sigma-delta SDFM not available\" --json --limit 8",
+      "top_hits": [
+        "SKILL-005",
+        "CB-SN-003",
+        "CMP-AMC1306M05",
+        "CMP-AMC1302-Q1",
+        "CB-SN-002",
+        "CMP-AMC1336",
+        "REF-TI-TIDA-010054",
+        "KR-SN-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query --get <ID> --json for KR-SN-001..005, KR-PR-001..003, KR-TH-002/003, KR-ISO-001/002, KR-PCB-005, KR-CAP-001, KR-GD-007, CMP-TMCS1133, CMP-AMC1311, CMP-AMC1302-Q1, CMP-TPS2640, CB-SN-001, CB-SN-003, CB-SN-004, CB-PR-001, CB-PR-002, CB-IS-002; read knowledge/skills SKILL-005/-006/-002 .md, knowledge/references/ti/tida-010054/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md",
+      "top_hits": [
+        "full records read; related items followed"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Design procedure steps 1-7 followed: quantities/ranges listed, element + isolator chosen per quantity (Hall for current, divider + AMC1311 for voltages), scaling at maximum operating and trip values, filters, isolated supply budgeted on the gate-bias module, hardware trip path to PWM trip, calibration planned."
+    },
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (SELV control domain, every crossing a rated isolator) applied to all sensing; gate-driver FLT/RDY/RST-EN latched-fault interface used; DESAT itself left to the gate-driver agent."
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Step 8: MMCX V_GS probe point at the device side of R_G per MOSFET; filtered single-ended segments at receiving pins; net-class spacing for sensing islands."
+    },
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Bias power budget method used to quantify the 5V_ISO load (0.25 W typ / 0.35 W max) the gate-driver agent must add to the low-side module."
+    },
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 5 / procedure step 5: NTC placed where it represents the supervised quantity (heatsink between the devices) and routed through the driver's isolated analog channel; thresholds deferred to the thermal model."
+    },
+    {
+      "id": "SKILL-003",
+      "type": "skill",
+      "applicability": "not-applicable",
+      "how_applied": "DC-link capacitance is the capacitor agent's; only its value (assumed 60 uF) enters pre-charge and bleeder calculations."
+    },
+    {
+      "id": "KR-SN-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Barrier parts rated for the node: TMCS1133 950 Vrms / 1343 VDC reinforced at a 200 V node; AMC1311 1500 Vrms at 480 V / 240 V nodes; relay 2500 VAC coil-contacts; UCC21710 barrier per gate-driver agent."
+    },
+    {
+      "id": "KR-SN-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "480 V -> 1.595 V (80 % of 2 V), 240 V -> 1.589 V (79 %), 37.5 A trip -> 2.205 V of 3.0 V; 2 V linear range mapped exactly to 3.0 V ADC so the chain cannot clip before the isolator does."
+    },
+    {
+      "id": "KR-SN-003",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "TMS320F28335 has no sigma-delta filter module; bitstream isolators (AMC1306/AMC1336) cannot be decoded; analog isolated chains with short routes used instead."
+    },
+    {
+      "id": "KR-SN-004",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "No shunt selected (Hall sensor); would apply to the rejected AMC1302 alternative."
+    },
+    {
+      "id": "KR-SN-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Hardware OC path: TMCS1133 OC pin (100-250 ns) -> latch -> driver RST/EN and ePWM TZ1/TZ2; ADC loop shown to be too slow (output short ramps to trip in 4.4-7.3 us)."
+    },
+    {
+      "id": "KR-PR-001",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "Inductor-path OC response computed (546 ns, 1.1 A overshoot); shoot-through/device short is invisible to the Hall sensor, so compliance depends on the gate-driver agent's DESAT response versus device withstand time - surfaced, not decided here."
+    },
+    {
+      "id": "KR-PR-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Latched combined FAULT_N (SN74LVC1G74) with power-on/brown-out lock-out (TPS3808), UVLO as non-latched run-permit, explicit DSP reset, no auto-restart for OC/DESAT/OVP."
+    },
+    {
+      "id": "KR-PR-003",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "12 V auxiliary protection (CB-PR-001 eFuse pattern) recommended to the owner of the 12 V distribution with thresholds matched to the bias modules."
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Shared insulated heatsink implies the NTC tag must also be insulated from the heatsink (M703 test voltage only ~150 V AC)."
+    },
+    {
+      "id": "KR-TH-003",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "NTC reading treated as heatsink temperature for cooling supervision; OTP threshold (95 degC) flagged for confirmation against the thermal agent's junction model; feedback isolated through the driver APWM channel."
+    },
+    {
+      "id": "KR-ISO-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Sensing islands (GND1/5V_ISO, sensor HV pins) confined; no copper across the barrier on any layer."
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "8 mm package creepage of TMCS1133/AMC1311 compared with ~10 mm reinforced creepage at 480 V working voltage, PD2, material group IIIa; slot or CTI >= 400 laminate proposed - requires insulation-coordination review."
+    },
+    {
+      "id": "KR-PCB-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "V_GS probe point at the device for each switch; probe-loop inductance minimised with MMCX."
+    },
+    {
+      "id": "KR-CAP-001",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "Capacitor sizing belongs to the capacitor agent; its result changes tau of pre-charge and discharge (sensitivities given)."
+    },
+    {
+      "id": "CB-SN-004",
+      "type": "block",
+      "applicability": "adapted",
+      "how_applied": "Hall-sensor block reused for the inductor-output path; TIDA instance values (45/70 A, 8.2k/1.2k divider, B1 variant) not copied; threshold derived from SBOSAG0E equation 21 with a precision reference, orderable number corrected to the A-suffix."
+    },
+    {
+      "id": "CMP-TMCS1133",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "Record used and corrected: datasheet orderables are TMCS1133xxAQDVGR; TMCS1133B1QDVGR not listed; VIOWM 950 Vrms / 1343 VDC confirmed from the fetched datasheet."
+    },
+    {
+      "id": "CB-SN-001",
+      "type": "block",
+      "applicability": "adapted",
+      "how_applied": "800 V ladder (8 x 634 k) rescaled to 480 V (4 x 750 k + 10 k) and 240 V (2 x 750 k + 10 k); OPA2320 stage gain changed to 1.5 for the 0-3 V ADC; per-resistor stress recomputed."
+    },
+    {
+      "id": "CMP-AMC1311",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "AMC1311B used for both voltages; IDD1 7.1/9.7 mA, 2 V FSR, 2.516 V clipping, 1500 Vrms working voltage taken from SBAS786C."
+    },
+    {
+      "id": "CB-SN-003",
+      "type": "block",
+      "applicability": "not-applicable",
+      "how_applied": "Shunt + AMC1302 evaluated and rejected (no fast OC output, extra loss and HV supply); modulator variant impossible without SDFM."
+    },
+    {
+      "id": "CMP-AMC1302-Q1",
+      "type": "component",
+      "applicability": "not-applicable",
+      "how_applied": "Rejected alternative; parameters used only in the comparison table."
+    },
+    {
+      "id": "CB-PR-002",
+      "type": "block",
+      "applicability": "adapted",
+      "how_applied": "NTC via UCC21710 AIN/APWM; TDK M703 NTC instead of module NTC/TMP6131; bias network derived for 200 uA + 5V_ISO Thevenin source; transfer function and fail-safe states computed; potentiometer calibration kept."
+    },
+    {
+      "id": "CMP-UCC21710-Q1",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "AIN range 0.6-4.5 V, duty 88-10 %, I_AIN 200 uA, 400 kHz APWM, open-drain FLT/RDY/APWM, RST/EN >= 1000 ns reset, 130 ns propagation (SLUSDH8D) used for the temperature chain and the trip chain timing."
+    },
+    {
+      "id": "CB-IS-002",
+      "type": "block",
+      "applicability": "adapted",
+      "how_applied": "Low-side gate bias -> series resistor -> TLV76050 -> 5V_ISO for both AMC1311 and the NTC bias; current 16.9/23.1 mA and R_pre 270 ohm derived for +15 V (390 ohm for +18 V)."
+    },
+    {
+      "id": "CB-PR-001",
+      "type": "block",
+      "applicability": "adapted",
+      "how_applied": "TPS26400 eFuse pattern recommended for the 12 V auxiliary input; thresholds to be matched to the chosen bias modules by the owner."
+    },
+    {
+      "id": "CMP-TPS2640",
+      "type": "component",
+      "applicability": "adapted",
+      "how_applied": "Recommendation only (not in this agent's BOM)."
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decisions 6-8 (sensing split, LDO from gate bias, aux eFuse) reused as methods; all instance values re-derived for this converter."
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 3 (latched global fault, RESET/EN timing) and decision 8 (NTC through AIN/APWM, low-side reference, calibration) adapted to a discrete-FET buck; PRD-09301 section 3.4 and 5.1 cited."
+    },
+    {
+      "id": "PE-PCB-004",
+      "type": "project-rule",
+      "applicability": "not-applicable",
+      "how_applied": "No shunt; Hall conductor path needs copper sizing instead (PE-PCB-006)."
+    },
+    {
+      "id": "PE-PCB-005",
+      "type": "project-rule",
+      "applicability": "direct",
+      "how_applied": "Sensor placed in the DC output path, ladders and sense pairs routed away from the switch node."
+    },
+    {
+      "id": "PE-PCB-006",
+      "type": "project-rule",
+      "applicability": "direct",
+      "how_applied": "TMCS1133 IN+/IN- pads and bypass-relay/PTC/fuse wiring sized for 27.5 A continuous."
+    },
+    {
+      "id": "PE-PCB-007",
+      "type": "project-rule",
+      "applicability": "direct",
+      "how_applied": "Comparators, latch and conversion stage on the SELV control board; sensor LV sides grouped in a SELV area of the power board."
+    },
+    {
+      "id": "PE-PCB-008",
+      "type": "project-rule",
+      "applicability": "direct",
+      "how_applied": "100 nF at TMCS1133 VS, AMC1311 VDD1/VDD2, TLV760 in/out, comparator and latch supplies."
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "TMCS1133C2AQDVGR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "sensitivity": "50 mV/A",
+        "zero_current_output": "0.33 V (unidirectional C family)",
+        "linear_range_at_3p3V": "-5 A to 57 A (datasheet statement for C2A)",
+        "continuous_current": "80 Arms",
+        "conductor_resistance": "0.7 mohm",
+        "bandwidth": "1 MHz; propagation 50 ns",
+        "overcurrent_detection": "V_OC = S x I_OC / 2.5; 100 ns typ / 250 ns max; error +-2 % typ / +-10 % max; hysteresis 3.5 A (x2A); V_OC pin 120 kohm, range 0.3 V to VS",
+        "isolation": "VIOWM 950 Vrms / 1343 VDC reinforced (TDDB <1 ppm); VIOTM 7071 Vpk; VIOSM 10 kVpk; VISO 5000 Vrms; 8 mm creepage/clearance (package), TI page lists 8.1 mm",
+        "supply": "3.0-5.5 V",
+        "package": "SOIC-10 DVG 10.3 x 10.3 mm",
+        "orderables_in_datasheet": "TMCS1133{A1-A5,B1-B5,B7,B8,C1-C4}AQDVGR; TMCS1133B1QDVGR (TIDA BOM) not listed"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+      "datasheet_revision": "SBOSAG0E, October 2023, revised May 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected: isolated inductor/output current sensing with built-in fast OC; unidirectional 0.33 V reference and 50 mV/A give 14.65 mA/LSB and 53.4 A ADC full scale at VS = 3.3 V. Lead time 12 weeks (Digi-Key)."
+    },
+    {
+      "part_number": "TMCS1133B1AQDVGR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "sensitivity": "25 mV/A",
+        "zero_current_output": "1.65 V at 3.3 V (bidirectional)",
+        "orderable_status": "Digi-Key: orderable, not normally stocked, 12-week lead"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+      "datasheet_revision": "SBOSAG0E (May 2026)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Alternative (the variant TIDA-010054 intended); halves resolution (29 mA/LSB) and places V_OC at 0.375 V near the 0.3 V minimum. Not selected."
+    },
+    {
+      "part_number": "AMC1302QDWVRQ1 + 1.0 mohm 3 W shunt",
+      "manufacturer": "Texas Instruments / Vishay",
+      "key_parameters": {
+        "input": "+-50 mV, gain 41",
+        "isolation": "7000 Vpk reinforced, 1.5 kVrms working",
+        "shunt_signal_at_trip": "37.5 A x 1.0 mohm = 37.5 mV",
+        "shunt_loss_at_27p5A": "0.76 W"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/amc1302-q1.pdf",
+      "datasheet_revision": "SBAS920B (June 2022) per knowledge record CMP-AMC1302-Q1",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Rejected: no fast OC output, needs 5V_ISO, Kelvin routing and a shunt; AMC1306 bitstream variant impossible (no SDFM)."
+    },
+    {
+      "part_number": "INA240-class non-isolated low-side shunt amplifier (V1 pattern)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "barrier": "none"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ina240.pdf",
+      "datasheet_revision": "cached V1 datasheet",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Rejected: PGND is a hazardous 400 V node; violates the SELV isolation concept (KR-SN-001)."
+    },
+    {
+      "part_number": "AMC1311BDWVR (x2)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "input": "0-2 V specified linear range, 2.516 V clipping, gain 1",
+        "accuracy": "B grade +-0.2 % gain error, +-1.5 mV offset",
+        "supply": "VDD1 4.5-5.5 V (B grade also 3.0-5.5 V), VDD2 3.0-5.5 V",
+        "IDD1": "7.1 mA typ / 9.7 mA max",
+        "IDD2": "5.3 mA typ / 7.2 mA max (3.0-3.6 V)",
+        "isolation": "7000 Vpk reinforced, 1500 Vrms working, CMTI 100 kV/us (B)",
+        "output": "differential OUTP/OUTN, 1.44 V common mode",
+        "package": "SOIC-8 DWV"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+      "datasheet_revision": "SBAS786C, December 2017, revised June 2022",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected for input (480 V -> 1.595 V) and output (240 V -> 1.589 V) voltage sensing."
+    },
+    {
+      "part_number": "OPA2320AIDGKR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "GBW": "20 MHz",
+        "slew": "10 V/us",
+        "offset": "150 uV max",
+        "supply": "1.8-5.5 V, rail-to-rail I/O",
+        "Iq": "1.45 mA/channel"
+      },
+      "datasheet_url": "https://www.ti.com/product/OPA2320",
+      "datasheet_revision": "OPAx320 datasheet Rev. F, Dec 2016 (product page)",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected for the two difference amplifiers (gain 1.5); orderable suffix not shown on the page."
+    },
+    {
+      "part_number": "TLV9004IPWR (alternative)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "GBW": "1 MHz",
+        "offset": "0.4 mV",
+        "IO": "rail-to-rail"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tlv9004.pdf",
+      "datasheet_revision": "SBOS833R (Nov 2021), cached",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Acceptable lower-cost alternative for the conversion stage."
+    },
+    {
+      "part_number": "TLV76050DBZR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "input": "4.2-30 V",
+        "output": "5 V fixed, 100 mA",
+        "dropout": "0.7 V typ, 1.2 V max at 100 mA",
+        "Iq": "2 mA typ (max not found)",
+        "package": "SOT-23"
+      },
+      "datasheet_url": "https://www.ti.com/product/TLV760",
+      "datasheet_revision": "TLV760 datasheet Rev. A, Oct 2017 (product page)",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected HV-side 5V_ISO LDO fed from the low-side gate rail through 270 ohm; load 16.9 mA typ / 23.1 mA max."
+    },
+    {
+      "part_number": "UCC21710-Q1 AIN/APWM channel (gate-driver agent's part)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "V_AIN_range": "0.6-4.5 V",
+        "I_AIN": "196 / 200 / 209 uA",
+        "duty": "88 % at 0.6 V, 50 % at 2.5 V, 10 % at 4.5 V (+-1.5 %)",
+        "f_APWM": "380 / 400 / 420 kHz",
+        "outputs": "FLT, RDY, APWM open-drain (RODON 30 ohm)",
+        "RST/EN": "low >= 1000 ns resets FLT; deglitch 28-60 ns",
+        "propagation": "130 ns max"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+      "datasheet_revision": "SLUSDH8D, January 2019, revised June 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Interface used for the isolated temperature channel and the latched-fault chain; selection owned by the gate-driver agent."
+    },
+    {
+      "part_number": "B57703M0103G040",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "R25": "10 kohm +-2 %",
+        "B25/100": "3988 K +-1 % (R/T 8016)",
+        "construction": "metal-tag (ring) encapsulation, AWG30 PTFE leads 500 mm",
+        "test_voltage": "approx. 150 V AC (M703 general data)",
+        "max_power": "150 mW",
+        "operating_range": "-55 to 125 degC (distributor)"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/50/db/ntc/NTC_Probe_ass_M703.pdf",
+      "datasheet_revision": "TDK NTC probe assemblies M703 datasheet (date not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected heatsink NTC; must be mounted with an insulating pad/washer because its own test voltage is ~150 V AC."
+    },
+    {
+      "part_number": "TLV1702AIDGKR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "propagation_delay": "560 ns",
+        "offset": "300 uV",
+        "outputs": "open-collector, pull-up to any rail up to 36 V",
+        "supply": "2.2-36 V",
+        "channels": "2"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tlv1702.pdf",
+      "datasheet_revision": "TLV170x datasheet (literature number not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected for OVP_in, OVP_out, UVLO and OTP comparators (two packages); open-collector outputs suit the wired-OR fault node."
+    },
+    {
+      "part_number": "REF3125AIDBZR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "output": "2.5 V",
+        "initial_accuracy": "+-0.2 %",
+        "tempco": "20 ppm/K max",
+        "output_current": "+-10 mA"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ref3125.pdf",
+      "datasheet_revision": "SBVS046E, December 2003, revised April 2026 (cached)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected reference for the OC threshold divider and all comparator thresholds (V1 pattern reused)."
+    },
+    {
+      "part_number": "SN74LVC1G74DCKR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "function": "D flip-flop with asynchronous /PRE and /CLR",
+        "tpd": "5.9 ns max at 3.3 V",
+        "Icc": "10 uA max"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf",
+      "datasheet_revision": "SCES794G, October 2009, revised September 2021 (cached)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected fault latch (/CLR = wired-OR fault node, CLK = FAULT_RESET)."
+    },
+    {
+      "part_number": "TPS3808G33DBVR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "function": "3.3 V supervisor, open-drain active-low RESET, capacitor-programmable delay"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+      "datasheet_revision": "cached V1 datasheet (revision not re-read)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected power-on/brown-out lock-out source for the fault latch (KR-PR-002); detailed thresholds not re-verified in this run."
+    },
+    {
+      "part_number": "KLKD020.T",
+      "manufacturer": "Littelfuse",
+      "key_parameters": {
+        "rating": "20 A, 600 VAC / 600 VDC, fast-acting, 10 x 38 mm midget",
+        "interrupting": "100 kA AC; DC 10 kA (UL 248-19) / 50 kA (UL 248-14) for 1/10-30 A",
+        "cold_resistance": "4.5 mohm (distributor)",
+        "melting_I2t": "not found"
+      },
+      "datasheet_url": "https://www.littelfuse.com/products/fuses-overcurrent-protection/fuses/ul-supplemental-midget-fuses/klkd/klkd020",
+      "datasheet_revision": "KLKD datasheet revised 11/14/2022 (Mouser copy; not readable in this run)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Selected input fuse: 71 % loading at 14.2 A, 78 % at the 10 s overload. I2t and time-current data must be obtained for the final coordination."
+    },
+    {
+      "part_number": "PV-20A10F",
+      "manufacturer": "Eaton Bussmann",
+      "key_parameters": {
+        "rating": "20 A, 1000 VDC gPV, 10 x 38 mm (from memory, not verified)"
+      },
+      "datasheet_url": "https://www.eaton.com",
+      "datasheet_revision": "not found",
+      "parameter_verification": "unverified",
+      "assessment": "Alternative DC fuse family if KLKD data remain unavailable."
+    },
+    {
+      "part_number": "B59773C0120A070",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "Vmax": "560 V AC",
+        "Vlink_max": "800 V DC",
+        "R25": "120 ohm +-25 %",
+        "Tref": "130 degC (typ)",
+        "Cth": "2.1 J/K",
+        "thermal_time_constant": "120 s",
+        "behaviour": "not damaged when connected directly to Vmax without additional current limitation; self-protecting on relay or capacitor short"
+      },
+      "datasheet_url": "https://www.farnell.com/datasheets/2921121.pdf",
+      "datasheet_revision": "TDK PTC thermistors for inrush current limiting (23-page datasheet hosted by Farnell; edition not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected pre-charge element across the bypass relay: tau 7.2 ms, 3.7 A peak at 440 V, 3.3 K rise per charge, N = 0.05 -> one element; eliminates the second relay. Confirm the ordering-code-to-rating row in the current TDK datasheet."
+    },
+    {
+      "part_number": "G9EA-1 DC12",
+      "manufacturer": "Omron",
+      "key_parameters": {
+        "rated_load": "60 A at 400 VDC (100 A at 120 VDC)",
+        "carry_current": "60 A",
+        "max_switching_voltage": "400 V",
+        "endurance": "400 VDC / 60 A: 3000 ops; reverse-polarity interruption 180 A at 400 VDC",
+        "dielectric": "2500 VAC 1 min coil-contacts",
+        "coil_12VDC": "417 mA, 28.8 ohm, approx. 5 W; must operate <= 75 %, release >= 8 %, max 130 % of rated",
+        "document": "Omron Cat. No. J186-E1-01"
+      },
+      "datasheet_url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g9ea.pdf",
+      "datasheet_revision": "J186-E1-01",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected DC-link bypass relay (never makes/breaks load under normal sequencing; rated to break 14-16 A at 400 VDC in abnormal cases). Coil power 5 W is the main drawback."
+    },
+    {
+      "part_number": "G9EJ-1-E DC12",
+      "manufacturer": "Omron",
+      "key_parameters": {
+        "rated_load": "400 V 15 A DC (Omron page)",
+        "coil": "12 VDC, 120 ohm, 100 mA, ~1.2 W (distributor)",
+        "carry_current": "not found",
+        "dielectric": "not found"
+      },
+      "datasheet_url": "https://components.omron.com/eu-en/products/relays/G9EJ-1-E",
+      "datasheet_revision": "not found (HTTP 403)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Lower-power alternative; acceptable only if a carry current >= 16 A is confirmed."
+    },
+    {
+      "part_number": "B72210S0381K101 (SIOV S20K385)",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "V_RMS": "385 V",
+        "V_DC": "505 V",
+        "i_max_8_20us": "8000 A",
+        "P_max": "1.0 W",
+        "clamping_voltage": "~1.025 kV at 100 A per distributor listing (unverified)"
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/70/db/var/SIOV_Leaded_StandarD.pdf",
+      "datasheet_revision": "TDK SIOV leaded standard series datasheet (edition not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Optional input surge absorber downstream of the fuse; 480 V / 100 ms is below its 505 VDC rating."
+    },
+    {
+      "part_number": "TPS26400PWPR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "operating_voltage": "4.2-42 V",
+        "current_limit": "0.1-2.23 A adjustable",
+        "reverse_polarity": "to -42 V",
+        "Ron": "150 mohm"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps2640.pdf",
+      "datasheet_revision": "SLVSFQ6A (June 2021) per knowledge record CMP-TPS2640",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Recommended (CB-PR-001) eFuse for the 12 V auxiliary input; owner is the architecture/gate-driver agent."
+    },
+    {
+      "part_number": "RT1206BRD07750KL (750 kohm 0.1 % 1206) and RT1206BRD0710KL (10.0 kohm)",
+      "manufacturer": "Yageo",
+      "key_parameters": {
+        "tolerance": "0.1 %",
+        "limiting_voltage_1206": "200 V (series value, not verified here)"
+      },
+      "datasheet_url": "not found",
+      "datasheet_revision": "not found",
+      "parameter_verification": "unverified",
+      "assessment": "Ladder resistors by analogy to the TIDA-010054 RT0805BRD07634KL; verify limiting voltage and availability of 750 k in the RT 1206 series."
+    },
+    {
+      "part_number": "LTST-C190KRKT (red 0603, 2 mA class) ; Keystone 5015 test point ; MMCX edge-mount jack (e.g. Amphenol RF 908-22100)",
+      "manufacturer": "Lite-On ; Keystone ; Amphenol RF",
+      "key_parameters": {
+        "LED": "low-current red, ~1 mA drive in the bleeder string",
+        "probe": "MMCX for V_GS"
+      },
+      "datasheet_url": "not found",
+      "datasheet_revision": "not found",
+      "parameter_verification": "unverified",
+      "assessment": "Indicator, SELV test points and V_GS probe connectors; part numbers to be confirmed at BOM stage."
+    }
+  ],
+  "selection": {
+    "current_sensing": "TMCS1133C2AQDVGR in the inductor-output (200 V DC) path, VS = 3.3 V; V = 0.33 V + 0.05 V/A x I_L; ADC full scale 53.4 A, 14.65 mA/LSB; 110 % warning in firmware at 27.5 A (code 2327, 10 s); hardware OC 37.5 A via V_OC = 0.750 V from REF3125 (2.32 k / 1.00 k), band 36.7-38.2 A typ / 33.7-41.2 A max; OC_N -> latch -> DRV_RST_EN + TZ1, and OC_N -> TZ2 directly; total response ~0.55 us.",
+    "voltage_sensing": "AMC1311BDWVR x2 with 4 x 750 k + 10.0 k (Vin, 602 V = 2 V = 3 V ADC) and 2 x 750 k + 10.0 k (Vout, 302 V full scale); 1 nF across the bottom resistor + 100 pF at IN; OPA2320 difference amplifiers gain 1.5 with 330 pF (32 kHz); 1 kohm + 1 nF to ADCINA0/A1.",
+    "hv_side_supply": "TLV76050DBZR from the low-side gate VDD (+15 V assumed) via 270 ohm 0.5 W; load 16.9 mA typ / 23.1 mA max = 0.25 / 0.35 W to be budgeted by the gate-driver agent; both AMC1311 GND1 and the NTC network referenced to the low-side driver COM.",
+    "temperature": "TDK B57703M0103G040 on the heatsink between the MOSFETs (insulated mounting), biased by UCC21710 I_AIN 200 uA plus 4.75 k / 15.0 k from 5V_ISO and 1.00 k series, 10 nF at AIN; APWM 400 kHz 10-88 % to eCAP and RC-filtered (10 k / 100 nF) to ADC; OTP comparator 2.313 V = 95 degC heatsink (assumption), warning 85 degC, hysteresis 15 K; open sensor = 10 % duty, short = trip.",
+    "fuse": "Littelfuse KLKD020.T, 20 A 600 VDC fast-acting midget in a 10 x 38 holder at the input terminal (I2t to be obtained).",
+    "pre_charge_and_relay": "TDK PTC B59773C0120A070 across Omron G9EA-1 DC12 (60 A / 400 VDC) bypass relay; close when V_bus > 340 V and dV/dt < 2 V/10 ms (500 ms timeout -> PRECHARGE_FAIL), open only >= 10 ms after PWM stop; coil 12 V 417 mA via low-side MOSFET + freewheel diode.",
+    "dc_link_discharge": "Input: 3 x 150 k (bleeder) || 2 x 220 k + LED (indicator) = 222 k, 480 -> 60 V in 27.8 s at 60 uF, 0.87 W at 440 V; output: 2 x 150 k, 240 -> 60 V in 16.6 s at 40 uF, 0.16 W; optional MOV S20K385 at the input.",
+    "comparators_and_fault_logic": "TLV1702 x2 + REF3125: OVP_in 459.9 V (1.00 k / 11.0 k), OVP_out 220.2 V (1.30 k / 9.09 k), UVLO ~340/320 V (1.00 k / 1.91 k + 21.5 k hysteresis), OTP 2.313 V (1.00 k / 12.4 k); SN74LVC1G74 latch with TPS3808G33 power-on lock-out; FAULT_N -> TZ1 (GPIO12), DRV_RST_EN, LED, DSP status; restart only by operator after all sources clear (OTP auto after cool-down optional; UVLO auto with soft start).",
+    "test_interfaces": "SELV test points on all control-board signals; MMCX V_GS probe per MOSFET at the device side of R_G (HV-referenced, isolated probe only); DC-link LIVE LED at the board edge.",
+    "dsp_resources": "ADCINA0 V_IN_SENSE, ADCINA1 V_OUT_SENSE, ADCINA2 I_L_SENSE, ADCINA3 V_T (filtered APWM), ADCINA4 12V_MON; eCAP1 TEMP_PWM; GPIO12/TZ1 FAULT_N; GPIO13/TZ2 I_OC_N; GPIO outputs FAULT_RESET, ARM, DRV_EN, K1_COIL; GPIO inputs DRV_FLT_N, DRV_RDY, OVP_IN_N, OVP_OUT_N, OTP_N, UVLO_N (final mapping by the interconnect agent)."
+  },
+  "calculations": [
+    {
+      "name": "Input current at design corners",
+      "expression": "I_in = P / (eta x V_in)",
+      "inputs": {
+        "P": "5000 W (5500 W at 110 %)",
+        "eta": "0.98",
+        "V_in": "360 / 400 / 440 V"
+      },
+      "result": "14.17 / 12.76 / 11.60 A; overload 15.59 / 14.03 / 12.76 A",
+      "knowledge_ref": "design basis"
+    },
+    {
+      "name": "Current sensor transfer and ADC codes",
+      "expression": "V_OUT = V_0 + S x I_L ; code = V_OUT / (3.0 V / 4096)",
+      "inputs": {
+        "V_0": "0.33 V",
+        "S": "0.050 V/A",
+        "I_L": "0 / 25 / 27.5 / 28.75 / 31.25 / 37.5 / 40 A"
+      },
+      "result": "0.330 / 1.580 / 1.705 / 1.768 / 1.893 / 2.205 / 2.330 V ; codes 450 / 2157 / 2327 / 2413 / 2583 / 3010 / 3181 ; FS 3.0 V = 53.4 A ; LSB 0.7324 mV = 14.65 mA",
+      "knowledge_ref": "SBOSAG0E Table 4-1; KR-SN-002"
+    },
+    {
+      "name": "OC threshold voltage and divider",
+      "expression": "V_OC = S x I_OC / 2.5 ; V_div = 2.5 V x (R2 || 120 k) / (R1 + R2 || 120 k)",
+      "inputs": {
+        "S": "0.050 V/A",
+        "I_OC": "37.5 A",
+        "R1": "2.32 kohm",
+        "R2": "1.00 kohm",
+        "R_VOC_pin": "120 kohm",
+        "V_ref": "2.5 V (REF3125)"
+      },
+      "result": "V_OC = 0.750 V ; divider 0.7487 V loaded -> I_OC = 37.4 A ; band +-2 % typ 36.7-38.2 A ; +-10 % max 33.7-41.2 A ; hysteresis 3.5 A",
+      "knowledge_ref": "SBOSAG0E eq. 21 and OC detection table; CB-SN-004 (adapted)"
+    },
+    {
+      "name": "Hardware trip chain response",
+      "expression": "t = t_OC,max + t_latch + t_RSTEN_deglitch,max + t_pd,driver,max + t_gate_fall",
+      "inputs": {
+        "t_OC": "250 ns",
+        "t_latch": "5.9 ns",
+        "t_deglitch": "60 ns",
+        "t_pd": "130 ns",
+        "t_gate_fall": "100 ns (assumed)"
+      },
+      "result": "546 ns",
+      "knowledge_ref": "KR-SN-005; KR-PR-001; SBOSAG0E; SLUSDH8D; SCES794G"
+    },
+    {
+      "name": "Current overshoot after trip and peak current",
+      "expression": "dI = (V_in,max / L_min) x t ; I_pk = I_OC,max + dI",
+      "inputs": {
+        "V_in,max": "440 V",
+        "L_min": "220 uH",
+        "t": "546 ns",
+        "I_OC": "38.25 A typ-max / 41.25 A worst"
+      },
+      "result": "di/dt 2.0 A/us ; dI 1.09 A ; I_pk 39.3 A typical, 42.3 A worst ; seed saturation requirement 1.3 x 31.25 = 40.6 A -> worst corner exceeds it",
+      "knowledge_ref": "design basis (L 220-300 uH)"
+    },
+    {
+      "name": "Output-short ramp time to trip",
+      "expression": "t = (I_OC - I_pk,nom) x L / V_in",
+      "inputs": {
+        "I_OC - I_pk,nom": "37.5 - 28.75 = 8.75 A",
+        "L / V_in": "220 uH / 440 V and 300 uH / 360 V"
+      },
+      "result": "4.4 us to 7.3 us (< one 20 us period)",
+      "knowledge_ref": "KR-SN-005"
+    },
+    {
+      "name": "Input voltage ladder scaling",
+      "expression": "k = R_b / (n R_t + R_b) ; V_ADC = 1.5 x k x V_bus",
+      "inputs": {
+        "n": "4",
+        "R_t": "750 kohm",
+        "R_b": "10.0 kohm",
+        "V_bus": "320 / 340 / 360 / 400 / 440 / 460 / 480 V"
+      },
+      "result": "k = 3.3223e-3 ; AMC input 1.063 / 1.130 / 1.196 / 1.329 / 1.462 / 1.528 / 1.595 V ; ADC 1.595 / 1.694 / 1.794 / 1.993 / 2.193 / 2.292 / 2.392 V ; 2 V linear = 602 V = 3.0 V ADC ; LSB 0.147 V",
+      "knowledge_ref": "CB-SN-001 divider equation (EC-015 method); KR-SN-002"
+    },
+    {
+      "name": "Input ladder per-resistor stress",
+      "expression": "V_R = V_bus x R_t / (n R_t + R_b) ; P_R = V_R^2 / R_t ; I_div = V_bus / (n R_t + R_b)",
+      "inputs": {
+        "V_bus": "440 / 480 V",
+        "R_t": "750 kohm",
+        "total": "3.01 Mohm"
+      },
+      "result": "109.6 V / 16.0 mW at 440 V ; 119.6 V / 19.1 mW at 480 V (< 200 V 1206 limiting voltage, < 250 mW) ; 146 / 159 uA",
+      "knowledge_ref": "CB-SN-001 per-resistor stress (EC-021 method)"
+    },
+    {
+      "name": "Output voltage ladder scaling and stress",
+      "expression": "k = R_b / (2 R_t + R_b) ; V_ADC = 1.5 k V_out ; V_R = V_out R_t / (2 R_t + R_b)",
+      "inputs": {
+        "R_t": "750 kohm",
+        "R_b": "10.0 kohm",
+        "V_out": "200 / 220 / 240 V"
+      },
+      "result": "k = 6.6225e-3 ; AMC input 1.325 / 1.457 / 1.589 V ; ADC 1.987 / 2.185 / 2.384 V ; FS 302 V ; LSB 73.7 mV ; per-resistor 109.3 V / 15.9 mW at 220 V, 119.2 V / 18.9 mW at 240 V",
+      "knowledge_ref": "CB-SN-001 (adapted)"
+    },
+    {
+      "name": "Sense-chain filter corners",
+      "expression": "f_c = 1 / (2 pi R C)",
+      "inputs": {
+        "ladder": "R_th 9.97 kohm, C 1 nF",
+        "OPA stage": "15 kohm, 330 pF",
+        "ADC RC": "1 kohm, 1 nF"
+      },
+      "result": "16.0 kHz ; 32.2 kHz ; 159 kHz",
+      "knowledge_ref": "SBAS786C section 9.2.2.1"
+    },
+    {
+      "name": "5V_ISO current and power budget",
+      "expression": "I = 2 x I_DD1 + I_NTCnet + I_q,LDO ; P_15V = 15 V x I",
+      "inputs": {
+        "I_DD1": "7.1 mA typ / 9.7 mA max",
+        "I_NTCnet": "0.74 mA",
+        "I_q": "2 mA typ / 3 mA assumed max"
+      },
+      "result": "16.9 mA typ / 23.1 mA max ; 0.25 W typ / 0.35 W max from the low-side gate rail",
+      "knowledge_ref": "CB-IS-002 bias power budget (EC-014 method); TIDA-010054 decision 7"
+    },
+    {
+      "name": "Series resistor before the LDO",
+      "expression": "R_pre <= (V_DD,min - V_LDO,in,min) / I_max ; P = I^2 R",
+      "inputs": {
+        "V_DD,min": "14.25 V (15 V - 5 %)",
+        "V_LDO,in,min": "5 + 1.2 + 0.8 = 7.0 V",
+        "I_max": "23.1 mA"
+      },
+      "result": "<= 313 ohm -> 270 ohm 0.5 W ; drop 6.25 V ; 145 mW in R_pre, 87 mW in the LDO ; 390 ohm if V_DD = 18 V",
+      "knowledge_ref": "TIDA-010054 decision 7 (series resistor method)"
+    },
+    {
+      "name": "NTC resistance",
+      "expression": "R_NTC(T) = R_25 exp(B (1/T - 1/298.15 K))",
+      "inputs": {
+        "R_25": "10 kohm",
+        "B": "3988 K",
+        "T": "25 / 50 / 70 / 85 / 95 / 100 / 110 degC"
+      },
+      "result": "10.0 k / 3.55 k / 1.73 k / 1.06 k / 786 / 680 / 514 ohm",
+      "knowledge_ref": "TDK M703 datasheet (B25/100); CB-PR-002"
+    },
+    {
+      "name": "AIN voltage with bias network",
+      "expression": "V_AIN = (I_AIN + V_th / R_th) x ((R_s + R_NTC) || R_th) ; V_th = 5 V x 15 k / 19.75 k ; R_th = 4.75 k || 15 k",
+      "inputs": {
+        "I_AIN": "200 uA",
+        "V_th": "3.797 V",
+        "R_th": "3.608 kohm",
+        "R_s": "1.00 kohm"
+      },
+      "result": "3.40 / 2.52 / 1.95 / 1.64 / 1.50 / 1.44 / 1.34 V at 25 / 50 / 70 / 85 / 95 / 100 / 110 degC ; open NTC 4.52 V ; shorted NTC 0.98 V",
+      "knowledge_ref": "CB-PR-002 V_AIN = I_AIN x R (extended with external Thevenin bias); SLUSDH8D"
+    },
+    {
+      "name": "APWM duty and filtered voltage",
+      "expression": "D = 0.88 - 0.2 x (V_AIN - 0.6 V) ; V_T = 3.3 V x D",
+      "inputs": {
+        "V_AIN": "as above"
+      },
+      "result": "D 31.9 / 49.6 / 61.1 / 67.1 / 70.1 / 71.3 / 73.3 % ; V_T 1.05 / 1.64 / 2.02 / 2.22 / 2.31 / 2.35 / 2.42 V ; OTP (95 degC) 2.312 V ; warning (85 degC) 2.215 V ; open 0.33 V ; short 2.65 V",
+      "knowledge_ref": "SLUSDH8D AIN-APWM table (0.6 V -> 88 %, 4.5 V -> 10 %)"
+    },
+    {
+      "name": "Temperature resolution",
+      "expression": "dV_T/dT (90-100 degC) ; K per eCAP count = (3.3 V / 375) / (dV_T/dT)",
+      "inputs": {
+        "dV_T": "2.352 - 2.267 V over 10 K",
+        "eCAP": "150 MHz / 400 kHz = 375 counts"
+      },
+      "result": "8.6 mV/K ; 1.03 K per count ; 0.085 K per ADC LSB",
+      "knowledge_ref": "design basis (F28335 eCAP)"
+    },
+    {
+      "name": "Fuse loading",
+      "expression": "load = I_in / I_fuse",
+      "inputs": {
+        "I_in": "14.17 A continuous, 15.59 A 10 s overload",
+        "I_fuse": "20 A"
+      },
+      "result": "71 % continuous, 78 % overload",
+      "knowledge_ref": "KLKD020 rating (search-snippet)"
+    },
+    {
+      "name": "Pre-charge energy, time, peak current, I2t",
+      "expression": "E = 0.5 C V^2 ; tau = R C ; t_99 = 4.6 tau ; I_pk = V / R ; I2t = C V^2 / (2 R)",
+      "inputs": {
+        "C": "60 uF (assumed)",
+        "V": "440 / 480 V",
+        "R": "120 ohm (90-150 ohm)"
+      },
+      "result": "E 5.81 / 6.91 J ; tau 7.2 ms (5.4-9.0) ; t_99 33 ms (25-41) ; I_pk 3.67 A at 440 V, 5.33 A worst at 480 V / 90 ohm ; I2t 0.08 A2s worst",
+      "knowledge_ref": "TDK PTC inrush-limiter datasheet"
+    },
+    {
+      "name": "PTC thermal check",
+      "expression": "dT = E / C_th ; N = K C V^2 / (2 C_th (T_ref - T_A,max))",
+      "inputs": {
+        "E": "6.91 J",
+        "C_th": "2.1 J/K",
+        "K": "1 (DC source)",
+        "T_ref": "130 degC",
+        "T_A,max": "60 degC (inside enclosure)"
+      },
+      "result": "dT 3.3 K per charge ; N = 0.047 -> 1 element (margin ~21x)",
+      "knowledge_ref": "TDK PTC datasheet 'calculation of the number of required PTC elements'"
+    },
+    {
+      "name": "Relay closing voltage difference",
+      "expression": "dV = I_bleed x R_PTC",
+      "inputs": {
+        "I_bleed": "~1-2 mA",
+        "R_PTC": "120 ohm"
+      },
+      "result": "0.12-0.24 V (zero-voltage closing)",
+      "knowledge_ref": "derived"
+    },
+    {
+      "name": "Input DC-link discharge",
+      "expression": "tau = R_par C ; t_60 = tau ln(V_0 / 60 V) ; P = V^2 / R_par",
+      "inputs": {
+        "R_par": "450 k || 440 k = 222 kohm",
+        "C": "60 uF (100 uF sensitivity)",
+        "V_0": "480 / 440 V"
+      },
+      "result": "tau 13.3 s ; 27.8 s from 480 V, 26.6 s from 440 V (46.3 s at 100 uF) ; 0.87 W at 440 V ; per resistor <= 160 V and 143 mW",
+      "knowledge_ref": "derived; coordinate with capacitor agent"
+    },
+    {
+      "name": "Output discharge",
+      "expression": "tau = R C ; t_60 = tau ln(V_0 / 60 V)",
+      "inputs": {
+        "R": "300 kohm",
+        "C": "40 uF (assumed)",
+        "V_0": "240 / 220 V"
+      },
+      "result": "tau 12 s ; 16.6 s / 15.6 s ; 0.16 W at 220 V",
+      "knowledge_ref": "derived"
+    },
+    {
+      "name": "Comparator thresholds from 2.5 V",
+      "expression": "V_th = 2.5 V x R_b / (R_t + R_b) ; V_bus = V_th / 4.9834e-3 ; V_out = V_th / 9.9338e-3",
+      "inputs": {
+        "OVP_in": "1.00 k / 11.0 k",
+        "OVP_out": "1.30 k / 9.09 k",
+        "UVLO": "1.00 k / 1.91 k, R_h 21.5 k",
+        "OTP": "1.00 k / 12.4 k"
+      },
+      "result": "2.2917 V = 459.9 V ; 2.1872 V = 220.2 V ; 1.641 V centre = 329 V with +-0.050 V = +-10 V hysteresis (~320 / 340 V) ; 2.313 V = 95 degC",
+      "knowledge_ref": "derived; REF3125 SBVS046E"
+    },
+    {
+      "name": "Sensor conductor and ADC clamp checks",
+      "expression": "P = I^2 R_IN ; I_clamp = (V_src - V_DDA - 0.7) / R_s",
+      "inputs": {
+        "I": "27.5 A",
+        "R_IN": "0.7 mohm",
+        "V_src": "3.3 V",
+        "R_s": "1 kohm"
+      },
+      "result": "0.53 W in the TMCS1133 conductor ; clamp current < 0.3 mA (< 2 mA continuous limit)",
+      "knowledge_ref": "SBOSAG0E R_IN; SPRS439Q absolute maximum note 3"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "DC-link input capacitance",
+      "value": "60 uF (sensitivity 30-100 uF)",
+      "basis": "Buck input ripple-charge estimate C = I_o D(1-D)/(f_s dV) ~ 31 uF for 1 % ripple plus film margin; capacitor agent owns the value"
+    },
+    {
+      "name": "Output capacitance",
+      "value": "40 uF",
+      "basis": "C_out >= dI/(8 f_s dV) = 9.4 uF for 2 Vpp plus ESR/transient margin; capacitor agent owns the value"
+    },
+    {
+      "name": "Low-side gate-driver VDD rail",
+      "value": "+15 V +-5 % (alternative +18 V)",
+      "basis": "CB-IS-002 / TIDA-010054 bias rails; gate-driver agent decides; R_pre given for both"
+    },
+    {
+      "name": "Heatsink OTP threshold and warning",
+      "value": "95 degC trip, 85 degC warning, 15 K hysteresis",
+      "basis": "T_j 150 degC limit minus an estimated 25-45 K junction-to-heatsink rise; thermal agent to confirm (KR-TH-003)"
+    },
+    {
+      "name": "Maximum measured output voltage",
+      "value": "240 V",
+      "basis": "OVP 220 V plus 9 % margin for transient and tolerance inside the AMC1311 linear range"
+    },
+    {
+      "name": "Gate fall time in the trip chain",
+      "value": "100 ns",
+      "basis": "Typical SiC TO-247-4 with low R_G; gate-driver agent to replace with its value"
+    },
+    {
+      "name": "Maximum internal ambient at the PTC",
+      "value": "60 degC",
+      "basis": "50 degC external ambient plus enclosure rise"
+    },
+    {
+      "name": "Discharge target",
+      "value": "<= 60 V within 60 s with warning LED",
+      "basis": "Lab converter with tool-access enclosure; shorter times would cost ~5 W of bleeder loss; human review of the applicable standard"
+    },
+    {
+      "name": "TLV760 quiescent current maximum",
+      "value": "3 mA",
+      "basis": "Typical 2 mA on the product page; maximum not found"
+    },
+    {
+      "name": "Relay/PTC sequencing thresholds",
+      "value": "close at V_bus > 340 V and dV/dt < 2 V per 10 ms; 500 ms timeout; open >= 10 ms after PWM stop",
+      "basis": "Derived from the 25-41 ms charging time and UVLO start"
+    },
+    {
+      "name": "Source current limit",
+      "value": "<= 20 A",
+      "basis": "Required so that a current-limited laboratory source does not defeat fuse coordination"
+    }
+  ],
+  "pcb_constraints": [
+    "TMCS1133: IN+/IN- conductor pads carry 27.5 A continuous (0.53 W): wide 70 um copper on both sides with via stitching, no thermal reliefs (PE-PCB-006); place in the inductor-to-output-capacitor path at least 10 mm from the inductor core and the switch node; keep other high-current traces from running parallel under the package.",
+    "TMCS1133 and AMC1311 barriers: package creepage/clearance 8 mm; at 480 V working voltage, PD2, CTI 175 (group IIIa) reinforced creepage is about 10 mm -> add a >= 1 mm wide slot under each isolator body or use CTI >= 400 laminate (KR-ISO-002, KR-ISO-004); the SELV area of the power board must keep the same distance from all HV copper; no copper on any layer across the barrier (KR-ISO-001).",
+    "HV ladders: 4 (input) and 2 (output) 1206 resistors in a straight line along the creepage path, >= 1.0 mm between bodies (120 V per element), ladder and AMC1311 HV pins >= 8 mm (or slot) from SELV copper, kept away from the switch node (PE-PCB-005); 1 nF C0G across the 10.0 k bottom resistor and 100 pF at IN placed at the pin; GND1 island returns to the low-side driver COM at one point.",
+    "AMC1311 OUTP/OUTN routed as differential pairs to the OPA2320 stage next to the ADC (control board); 100 nF decoupling at VDD1, VDD2 and TMCS1133 VS directly at the pins (PE-PCB-008).",
+    "5V_ISO island (TLV760, R_pre, decoupling) inside the low-side driver's isolated island; the NTC twisted pair and its 10 nF filter stay within that island (CB-PR-002).",
+    "NTC B57703M0103G040 lug under an M3 screw midway between the two TO-247-4 devices on the heatsink, with an insulating pad and insulated screw (test voltage of the probe is only ~150 V AC); leads twisted and strain-relieved.",
+    "Bleeder strings: 3 x 150 k and 2 x 220 k 1206 spaced >= 1.0 mm (<= 160 V per element), away from heat-sensitive parts (0.87 W total); DC-LINK LIVE LED at the board edge, visible with the cover on, with silkscreen discharge-time warning; output bleeder 2 x 150 k across the output capacitors.",
+    "Fuse in a 10 x 38 mm panel/DIN holder on the input lead before the board; PTC leaded disc mounted with >= 5 mm free space (reaches 130 degC on fault) directly across the relay contacts; Omron G9EA-1 chassis-mounted with >= 2.5 mm2 (14 AWG) wiring; coil wiring is SELV, contact wiring HV (2500 VAC coil-contact).",
+    "Fault latch, comparators, REF3125 and the wired-OR node on the control board close to the DSP; wired-OR node kept short with a single 4.7 k pull-up; 33 ohm series + 100 pF at TZ1/TZ2 inputs; FAULT_N to DRV_RST_EN routed as a single-ended trace with an RC at the driver input per the gate-driver agent.",
+    "Every ADC input through 1.0 kohm series + 1 nF at the pin (F28335 analog absolute maximum 3.0 V, internal clamp 2 mA); ADC traces away from PWM and TEMP_PWM (400 kHz).",
+    "SELV test points only in the SELV area; MMCX V_GS jacks at the device side of R_G on the driver island, referenced to the Kelvin source, labelled HV; no probe loops crossing the barrier.",
+    "Relay coil driver (low-side MOSFET, freewheel diode) on the SELV side with a 10 ms release delay after FAULT_N so the relay never opens under load; K1 status inferred from V_IN_SENSE (no auxiliary contact)."
+  ],
+  "open_issues": [
+    "Capacitor agent: DC-link capacitance assumed 60 uF (output 40 uF). Pre-charge time scales with C (25-41 ms at 60 uF), discharge time 27.8 s at 60 uF / 46 s at 100 uF; merge the bleeder strings proposed here with the capacitor agent's own bleeder assumption.",
+    "Magnetics agent: worst-case hardware trip corner 42.3 A (threshold +10 %, 1.1 A overshoot) exceeds the seed saturation margin of 40.6 A; either specify I_sat >= 45 A at operating temperature or lower I_OC to ~35 A (140 %).",
+    "Insulation coordination (KR-ISO-002, human review): 8 mm package creepage of TMCS1133/AMC1311 versus ~10 mm reinforced creepage at 480 V working voltage on CTI 175 laminate; options are a slot under each isolator (KR-ISO-004) or arguing a CTI >= 400 laminate seed change; clearance (5.5 mm reinforced for 4 kV impulse) is satisfied.",
+    "Fuse: KLKD020 melting I2t and time-current data not found (Littelfuse pages blocked) - obtain the datasheet; with a current-limited laboratory source a bolted fault may never clear the fuse, so the source limit must be <= 20 A and the OC/UVLO logic is the effective protection; selective coordination with the upstream bus protection to be checked.",
+    "Relay: G9EA-1 coil is ~5 W (0.42 A of the 2 A auxiliary budget); a PWM hold at ~60 % is suggested; the 1.2 W G9EJ-1-E is acceptable only if Omron confirms a carry current >= 16 A (datasheet access returned HTTP 403).",
+    "OTP threshold 95 degC heatsink is an assumption; thermal agent to confirm against the junction model (KR-TH-003); calibrate the NTC channel with a potentiometer (CB-PR-002); eCAP resolution is ~1 K per count, finer via the RC-filtered ADC path.",
+    "NTC insulation: the M703 probe's ~150 V AC test voltage requires an insulating pad/washer to a PE-bonded heatsink; the architecture agent must state the PGND-to-heatsink/PE potential (floating source case).",
+    "Gate-driver agent: budget 0.25 W typ / 0.35 W max for 5V_ISO on the low-side bias module; state the VDD value (R_pre 270 ohm for 15 V, 390 ohm for 18 V); provide FLT/RDY/RST-EN pins per section 1; DESAT total response versus device withstand time (KR-PR-001, KR-GD-004) is not covered by the Hall sensor.",
+    "UVLO comparator: the open-collector hysteresis network (1.00 k / 1.91 k + 21.5 k) gives ~320/340 V nominally but is asymmetric; verify by simulation or implement bus UVLO in firmware only.",
+    "Knowledge maintenance: CMP-TMCS1133 orderable_variants should be corrected from TMCS1133B1QDVGR to the A-suffixed numbers listed in SBOSAG0E; the TI product page quotes VIOWM 600 Vrms while the datasheet states 950 Vrms / 1343 VDC reinforced.",
+    "Procurement: TMCS1133C2AQDVGR has a 12-week manufacturer lead time at Digi-Key (as for B1AQDVGR); the TLV760 maximum quiescent current, the ladder resistor limiting voltage, the LED/MMCX/test-point part numbers and the MOV clamping voltage remain unverified.",
+    "Output OVP at 220 V leaves 10 V above the allowed +5 % transient excursion (210 V); review against load-dump behaviour before fixing the value.",
+    "12 V auxiliary input protection (CB-PR-001 eFuse, KR-PR-003) has no owner yet; recommended to the architecture/gate-driver agent.",
+    "Firmware/hardware contract items to document: TZ1 one-shot on FAULT_N, TZ2 one-shot on I_OC_N, ADC SOC at PWM mid-point, 110 % overload timer (10 s), pre-charge closing criterion and timeout, restart policy, open-sensor detection (TEMP duty < 15 %)."
+  ],
+  "verification_status": "Design calculations complete at all design-basis corners (360/400/440/460/480 V, 25/27.5 A, overload peaks, 50 degC). Key parameters verified from fetched datasheets for TMCS1133 (SBOSAG0E rev. May 2026), AMC1311 (SBAS786C), UCC21710-Q1 (SLUSDH8D), TLV1702, REF3125, SN74LVC1G74, TMS320F28335 ADC limits, TDK M703 NTC, TDK PTC inrush limiters, TDK SIOV S20K385 and Omron G9EA-1 (J186-E1-01); OPA2320 and TLV760 at manufacturer-page level; KLKD020.T and G9EJ-1-E at search-snippet level (KLKD I2t and G9EJ carry current not found); ladder resistors, LED, MMCX/test points, MOV clamping voltage and TLV760 Iq max unverified. Human review required for isolator creepage at 480 V on CTI 175 material, inductor saturation versus the worst-case trip corner, the OTP threshold, DESAT coordination, fuse I2t/clearing with a current-limited source, relay choice and NTC insulation. No repository file other than this result was created.",
+  "markdown": "# Sensing, protection and power-path auxiliaries (400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck)\n\n## 1. Scope, basis and gate-driver interface\n\nThis section covers inductor/output current sensing with a fast hardware overcurrent (OC) trip, isolated input and output voltage sensing, heatsink temperature supervision, the 400 V input power path (fuse, pre-charge, bypass relay, DC-link discharge, surge), UVLO/OVP thresholds, the fault-latch architecture, safe test interfaces and the signal list handed to the interconnect agent. Device-level short-circuit protection (DESAT) is owned by the gate-driver agent; the interface expected here is a UCC21710-class driver with open-drain FLT (latched, parallelable), open-drain RDY (VCC/VDD power-good) and a 3.3 V RST/EN input that disables the output and clears FLT when held low >= 1000 ns, with 130 ns maximum input-to-output propagation (SLUSDH8D; CB-GD-001; KR-PR-001). The DESAT trip level and blanking remain a human-review item (KR-GD-004).\n\nDesign-basis inputs used: Vin 360/400/440 V, UVLO 340/320 V, OVP 460 V, survival 480 V; Vout 200 V, output OVP ~220 V; Iout 25 A, 110 % overload 27.5 A, ripple 7.5 App (peaks 28.75 A nominal, 31.25 A at overload), L 220-300 uH; 12 V/2 A SELV auxiliary; 3 V / 12-bit ADC. Added assumptions are listed in section 9 and in `assumptions_added`.\n\n## 2. Current sensing and fast overcurrent trip (SKILL-005 steps 1-3, 6)\n\n### 2.1 Option comparison\n\n| Option | Barrier | Fast OC path | HV-side supply | Dissipation at 27.5 A | Verdict |\n|---|---|---|---|---|---|\n| Hall sensor TMCS1133 in the inductor-output (200 V DC) path | Reinforced, VIOWM 950 Vrms / 1343 VDC, 8 mm package creepage (SBOSAG0E) | Built-in comparator, 100 ns typ / 250 ns max, open-drain OC pin | None (powered from the SELV side) | 27.5^2 x 0.7 mohm = 0.53 W in the integrated conductor | Selected |\n| Shunt + AMC1302 isolated amplifier (CB-SN-003 amplifier variant) | Reinforced 1.5 kVrms | None built in; needs a SELV comparator after the amplifier | 5V_ISO needed, plus Kelvin pair and filter (KR-SN-004, PE-PCB-004) | 1.0 mohm shunt (37.5 mV at trip): 0.76 W, 3 W part | Rejected: slower, more parts, shunt loss |\n| Shunt + AMC1306/AMC1336 bitstream (CB-SN-002/-003 modulator variants) | Reinforced | - | - | - | Not usable: TMS320F28335 has no sigma-delta filter module, so KR-SN-003 (digital bitstream for long paths) is **not applicable** |\n| Non-isolated low-side shunt amplifier referenced to PGND (V1 INA240 pattern) | None | Comparator possible | - | - | Rejected: PGND is part of the hazardous 400 V stage; every crossing must be a rated isolator (KR-SN-001, SKILL-001 principle 1) |\n\n### 2.2 Device, orderable number and variant (discrepancy resolved)\n\nThe current datasheet SBOSAG0E (October 2023, revised May 2026, fetched) lists the orderables TMCS1133A1A..A5AQDVGR, TMCS1133B1A..B5A/B7A/B8AQDVGR and TMCS1133C1A..C4AQDVGR. The number TMCS1133B1QDVGR carried in the TIDA-010054 BOM (CMP-TMCS1133, CB-SN-004) is **not** a listed orderable; Digi-Key lists TMCS1133B1AQDVGR as orderable (not normally stocked, 12-week lead time). The \"A\"-suffixed numbers are therefore the valid ones and the knowledge record should be corrected. Reinforced working voltage per the datasheet is 950 Vrms / 1343 VDC (TI's product page states 600 Vrms, the TIDA guide 1100 VDC); our node is 200 V DC, so every stated value is adequate (KR-SN-001).\n\nSelected variant: **TMCS1133C2AQDVGR** - unidirectional family (zero-current output 0.33 V), 50 mV/A, operated from 3.3 V. The datasheet states a -5 A to 57 A linear range for the C2A at 3.3 V, which covers the no-load ripple valley (-3.75 A) and the whole trip region while the output can never exceed the 3.3 V supply (F28335 ADC absolute maximum 3.0 V with internal clamps, SPRS439Q). The bidirectional B1AQDVGR (1.65 V, 25 mV/A) would halve the resolution; the 5 V \"A\" variants would need an output divider.\n\n### 2.3 Scaling to the 0-3 V ADC (KR-SN-002)\n\nV_OUT = 0.33 V + 0.050 V/A x I_L; LSB = 3.0 V / 4096 = 0.7324 mV = 14.65 mA; full scale 3.0 V = 53.4 A.\n\n| I_L | 0 A | 25 A | 27.5 A (110 % warn) | 28.75 A (nominal peak) | 31.25 A (overload peak) | 37.5 A (150 % trip) | 40 A |\n|---|---|---|---|---|---|---|---|\n| V_OUT | 0.330 V | 1.580 V | 1.705 V | 1.768 V | 1.893 V | 2.205 V | 2.330 V |\n| ADC code | 450 | 2157 | 2327 | 2413 | 2583 | 3010 | 3181 |\n\nThe 110 % overload warning is a firmware threshold on the mid-period (average) sample: code 2327, 10 s timer, then controlled shutdown. Output filter 1.0 kohm + 1 nF (160 kHz) at the ADC pin; the ADC start-of-conversion is placed at the PWM counter mid-point so the 50 kHz ripple is sampled at its average.\n\n### 2.4 Hardware trip threshold (CB-SN-004 adapted; TIDA values not copied)\n\nDatasheet equation 21: V_OC = S x I_OC / 2.5. For I_OC = 37.5 A (150 %): V_OC = 0.050 x 37.5 / 2.5 = 0.750 V (allowed 0.3 V to VS). Divider from the REF3125 2.5 V reference: 2.32 kohm / 1.00 kohm (0.1 %); loaded by the 120 kohm pin impedance the voltage is 0.7487 V, i.e. I_OC = 37.4 A. Threshold error +-2 % typical / +-10 % maximum over -40..125 degC gives a trip band of 36.7-38.2 A typical, 33.7-41.2 A worst case; hysteresis 3.5 A (x2A option). The lower worst-case bound (33.7 A) stays 2.5 A above the 110 % overload peak (31.25 A).\n\n### 2.5 Trip chain and timing (KR-SN-005, KR-PR-001)\n\nOC_N (open-drain, 1.0 kohm pull-up to 3.3 V) -> wired-OR fault node -> SN74LVC1G74 asynchronous /CLR (5.9 ns max) -> FAULT_N -> (a) DRV_RST_EN low (UCC21710 deglitch 60 ns max + 130 ns max propagation) and (b) ePWM TZ1 one-shot. OC_N is additionally wired to TZ2 (one-shot) so the DSP trips without waiting for the latch. Total hardware response including an assumed 100 ns gate fall: 250 + 6 + 60 + 130 + 100 = 546 ns. With di/dt_max = Vin_max / L_min = 440 V / 220 uH = 2.0 A/us the current overshoot is 1.1 A: peak 39.3 A typical, 42.3 A at the +10 % threshold corner. The seed inductor saturation margin (>= 1.3 x 31.25 A = 40.6 A) does not cover the worst-case corner - see open issues. An output short ramps the current from 28.75 A to 37.5 A in 4.4 us (440 V, 220 uH) to 7.3 us (360 V, 300 uH), i.e. inside one 20 us switching period, which is why an ADC-based loop cannot be the protection (KR-SN-005). Shoot-through current bypasses the inductor and is invisible to this sensor; it is covered only by the gate-driver DESAT (interface in section 1).\n\n## 3. Input and output voltage sensing (CB-SN-001 adapted; SKILL-005 principle 6)\n\n### 3.1 Ladders (0.1 %, 1206 thin film, 200 V limiting element voltage)\n\nInput: 4 x 750 kohm + 10.0 kohm (3.01 Mohm), ratio 3.3223e-3. Output: 2 x 750 kohm + 10.0 kohm (1.51 Mohm), ratio 6.6225e-3. V_R = V x R_top / R_total, P = V_R^2 / R_top.\n\n| Node | Voltage | AMC1311 input | ADC (gain 1.5) | ADC code | Per-resistor V / P | Divider current |\n|---|---|---|---|---|---|---|\n| Vin | 320 V (UVLO off) | 1.063 V | 1.595 V | 2177 | 79.7 V / 8.5 mW | 106 uA |\n| Vin | 340 V (UVLO on) | 1.130 V | 1.694 V | 2313 | 84.7 V / 9.6 mW | 113 uA |\n| Vin | 360 V | 1.196 V | 1.794 V | 2449 | 89.7 V / 10.7 mW | 120 uA |\n| Vin | 400 V | 1.329 V | 1.993 V | 2721 | 99.7 V / 13.2 mW | 133 uA |\n| Vin | 440 V | 1.462 V | 2.193 V | 2993 | 109.6 V / 16.0 mW | 146 uA |\n| Vin | 460 V (OVP) | 1.528 V | 2.292 V | 3129 | 114.6 V / 17.5 mW | 153 uA |\n| Vin | 480 V (survival) | 1.595 V | 2.392 V | 3265 | 119.6 V / 19.1 mW | 159 uA |\n| Vout | 200 V | 1.325 V | 1.987 V | 2712 | 99.3 V / 13.2 mW | 132 uA |\n| Vout | 220 V (OVP) | 1.457 V | 2.185 V | 2983 | 109.3 V / 15.9 mW | 146 uA |\n| Vout | 240 V (max measured) | 1.589 V | 2.384 V | 3255 | 119.2 V / 18.9 mW | 159 uA |\n\nHeadroom (KR-SN-002): 480 V uses 80 % of the 2 V linear range (2 V = 602 V); 240 V uses 79 % (2 V = 302 V). Resolution: 0.147 V/LSB input, 73.7 mV/LSB output. The AMC1311B (SBAS786C, fetched) has a 2 V specified linear range, 2.516 V clipping, gain 1, +-0.2 % gain error (B grade), 1500 Vrms working voltage, IDD1 7.1 mA typ / 9.7 mA max. Input filtering per datasheet section 9.2.2.1: 1 nF C0G across the 10.0 kohm bottom resistor (16 kHz with the 9.97 kohm Thevenin source) plus 100 pF directly at IN (datasheet application figure).\n\n### 3.2 SELV-side conversion\n\nOPA2320 (20 MHz, 150 uV offset, rail-to-rail, 1.8-5.5 V; manufacturer page) as a difference amplifier with 10.0 kohm / 15.0 kohm 0.1 % (gain 1.5) referenced to AGND; 330 pF across the feedback resistors (32 kHz); 1.0 kohm series + 1 nF into ADCINA0/ADCINA1. Because the 2 V linear range maps exactly onto 3.0 V, the chain cannot overdrive the ADC until the AMC1311 itself clips (then the op-amp saturates at 3.3 V and the mandatory 1 kohm series resistor limits the F28335 internal clamp current to < 0.3 mA, well below the 2 mA continuous rating). TLV9004 (cached datasheet, 1 MHz, 0.4 mV) is an acceptable lower-cost alternative.\n\n### 3.3 HV-side 5 V supply (TIDA-010054 decision 7; CB-IS-002; SKILL-004 budget)\n\nTLV76050DBZR (4.2-30 V in, 5 V, 100 mA, 1.2 V max dropout, 2 mA Iq; manufacturer page) fed from the low-side gate-driver VDD rail through R_pre. Load: 2 x AMC1311 IDD1 (14.2 mA typ / 19.4 mA max) + NTC bias network 0.74 mA + LDO Iq 2-3 mA = **16.9 mA typical / 23.1 mA maximum**, i.e. 0.25 W typ / 0.35 W max drawn from the +15 V rail (assumed VDD = +15 V +-5 %). R_pre <= (14.25 - 7.0 V) / 23.1 mA = 313 ohm -> 270 ohm, 0.5 W (145 mW dissipated, 87 mW in the LDO). If the gate-driver agent selects +18 V, R_pre = 390 ohm. Both AMC1311 GND1 pins and both ladder bottoms return to the low-side driver COM (Kelvin source) at one point; the shared supply is permitted because both sensors are referenced to the same node (CB-IS-002 interface requirement).\n\n## 4. Heatsink temperature (CB-PR-002 adapted; KR-TH-003; SKILL-006 principle 5)\n\nSensor: TDK **B57703M0103G040** (10 kohm +-2 %, B25/100 = 3988 K +-1 %, R/T curve 8016, metal-tag encapsulation, PTFE AWG30 leads 500 mm; TDK M703 datasheet, fetched) screwed to the heatsink midway between the two TO-247-4 devices. Its test voltage is only ~150 V AC, so the tag is mounted on a rated insulating pad with an insulated screw: the leads are referenced to the low-side driver COM (~PGND) while the heatsink is chassis/PE (KR-TH-002).\n\nRead-out through the low-side UCC21710 AIN/APWM channel (reference on the stable low-side node, PRD-09301 section 3.4): I_AIN = 200 uA (196-209 uA), V_AIN range 0.6-4.5 V maps to duty 88 % -> 10 % (D = 0.88 - 0.2 x (V_AIN - 0.6)), 400 kHz, open-drain APWM. A bias network from 5V_ISO (4.75 kohm to 5 V, 15.0 kohm to COM; Thevenin 3.80 V / 3.61 kohm) plus a 1.00 kohm series resistor and 10 nF at AIN raises the sensitivity three-fold compared with the 200 uA source alone and keeps the open-sensor voltage at 4.52 V (inside the pin range): V_AIN = 1.2526 mA x ((1.00 kohm + R_NTC) || 3.61 kohm).\n\n| T_hs | 25 degC | 50 degC | 70 degC | 85 degC (warn) | 95 degC (OTP) | 100 degC | 110 degC | open NTC | shorted NTC |\n|---|---|---|---|---|---|---|---|---|---|\n| R_NTC | 10.0 k | 3.55 k | 1.73 k | 1.06 k | 786 | 680 | 514 | inf | 0 |\n| V_AIN | 3.40 V | 2.52 V | 1.95 V | 1.64 V | 1.50 V | 1.44 V | 1.34 V | 4.52 V | 0.98 V |\n| Duty | 31.9 % | 49.6 % | 61.1 % | 67.1 % | 70.1 % | 71.3 % | 73.3 % | 10 % | 80.4 % |\n| V_T = 3.3 V x D (RC filtered) | 1.05 V | 1.64 V | 2.02 V | 2.22 V | 2.31 V | 2.35 V | 2.42 V | 0.33 V | 2.65 V |\n\nSensitivity 8.6 mV/K of V_T around 95 degC: 1.0 K per eCAP count (150 MHz / 400 kHz = 375 counts) or 0.09 K per ADC LSB. Open sensor reads 10 % duty (flag \"sensor open\" below 15 %), a shorted sensor or a driver UVLO (APWM floats high) trips OTP - fail-safe. OTP comparator threshold 2.313 V (1.00 kohm / 12.4 kohm from 2.5 V) = 95 degC heatsink; warning at 85 degC in firmware; restart hysteresis 15 K. The 95 degC value is an assumption pending the thermal agent's junction model (KR-TH-003: NTC is heatsink, not junction temperature); calibrate with a potentiometer in place of the NTC (CB-PR-002).\n\n## 5. Input power path and protection\n\n### 5.1 Fuse\n\nI_in = P / (eta x Vin) = 5000 / (0.98 x 360) = 14.2 A at 360 V (12.8 A at 400 V); 110 % overload 15.6 A for 10 s. Selected **Littelfuse KLKD020.T** (10 x 38 mm midget, 20 A, 600 VAC/VDC, fast-acting; DC interrupting 10 kA per UL 248-19 and 50 kA per UL 248-14; search-snippet level): continuous loading 71 %, overload 78 %. Melting I2t was **not found** (Littelfuse pages blocked); coordination so far: pre-charge I2t = C V^2 / (2 R) = 60 uF x 480^2 / (2 x 90 ohm) = 0.08 A2s (negligible), 10 s at 78 % does not melt. The fuse protects wiring and the source side against a failed-short device; it cannot protect SiC devices (DESAT does). With a current-limited laboratory source the fuse may never clear, so the source current limit (<= 20 A) and the OC/UVLO logic are the effective protection in that case. Alternative: Eaton Bussmann PV-20A10F (1000 VDC gPV, unverified).\n\n### 5.2 Pre-charge: PTC inrush limiter instead of resistor + second relay\n\nInrush energy per charge E = 0.5 C V^2 = 5.8 J at 440 V, 6.9 J at 480 V (C_in = 60 uF assumed). Selected TDK **B59773C0120A070** PTC (Vmax 560 V, Vlink,max 800 V DC, R25 120 ohm +-25 %, Tref 130 degC, Cth 2.1 J/K; TDK inrush-limiter datasheet, fetched) permanently across the bypass relay contacts. Charging: tau = R C = 7.2 ms (5.4-9.0 ms), 99 % in 25-41 ms, peak 3.7 A at 440 V (5.3 A worst), temperature rise per charge 6.9 J / 2.1 J/K = 3.3 K, TDK parallel-count check N = C V^2 / (2 Cth (Tref - TA,max)) = 0.05 -> one element. TDK states the parts are not damaged when connected directly to Vmax, so a shorted DC link or a relay that fails to close leaves the PTC in its high-resistance state at a few watts: no second relay and no supervisory cut-off are required. Relay closing criterion (firmware): V_bus > 340 V and |dV_bus/dt| < 2 V per 10 ms -> contact voltage difference ~1 mA x 120 ohm = 0.12 V (zero-voltage closing); 500 ms timeout -> latched PRECHARGE_FAIL.\n\n### 5.3 Bypass relay\n\nSelected **Omron G9EA-1 DC12** (Omron Cat. No. J186-E1-01, fetched): rated load 60 A at 400 VDC, rated carry current 60 A, maximum switching voltage 400 V, electrical endurance 400 VDC / 60 A 3000 operations, 2500 VAC coil-to-contacts, coil 12 VDC 417 mA / 28.8 ohm (~5 W). The relay is sequenced so that it never makes or breaks load current (closes at ~0.1 V difference, opens only >= 10 ms after PWM stop when the input current is the ~2 mA bleeder current); its 400 VDC / 60 A rating still allows breaking the 14-16 A load in abnormal cases. The coil takes 0.42 A of the 2 A auxiliary budget; a PWM hold at ~60 % after 100 ms (2 W) is optional. Alternative Omron G9EJ-1-E DC12 (400 V / 15 A DC, 1.2 W coil) is acceptable only if Omron confirms a carry current >= 16 A (datasheet access blocked; not found).\n\n### 5.4 DC-link discharge and indicator\n\nInput: bleeder string 3 x 150 kohm 1206 (160 V and 143 mW per resistor at 480 V) in parallel with an indicator string 2 x 220 kohm + red low-current LED: 222 kohm total, tau = 13.3 s, 480 V -> 60 V in 27.8 s (46 s if the capacitor agent chooses 100 uF), 0.87 W at 440 V (0.017 % of rated power). The LED carries ~1 mA and extinguishes near 25-30 V; it is a warning, not proof of a safe voltage. Output: 2 x 150 kohm (300 kohm) across the output capacitors (40 uF assumed): 240 V -> 60 V in 16.6 s, 0.16 W. Bleeder values must be merged with the capacitor agent's assumption.\n\n### 5.5 Surge\n\nTDK SIOV **S20K385** (B72210S0381K101; 385 Vrms / 505 VDC, 8 kA 8/20 us, 1 W; TDK leaded SIOV datasheet, fetched) across the input downstream of the fuse. For a regulated laboratory source it is optional; it is included because the input cable and relay switching can ring. Its clamping voltage (~1.0 kV at 100 A per a distributor listing, unverified) is below the 1200 V SiC rating; 480 V / 100 ms is below its 505 VDC rating.\n\n### 5.6 UVLO / OVP comparators\n\nTLV1702 (dual open-collector comparator, 560 ns, 300 uV offset, 2.2-36 V; datasheet fetched) with REF3125 (2.5 V, 0.2 %, cached SBVS046E) and 0.1 % dividers on the SELV sense outputs: input OVP 1.00 kohm / 11.0 kohm = 2.2917 V = 459.9 V; output OVP 1.30 kohm / 9.09 kohm = 2.1872 V = 220.2 V; bus UVLO 1.00 kohm / 1.91 kohm = 1.641 V centre with a 21.5 kohm hysteresis resistor from the 3.3 V pulled-up output (+-0.05 V = +-10 V -> ~320 V off / ~340 V on; verify by simulation because the open-collector hysteresis is asymmetric); OTP 1.00 kohm / 12.4 kohm = 2.313 V. UVLO is a non-latched run-permit (PWM enable = ARM latch AND RDY AND NOT UVLO); the OVPs and OTP feed the fault latch.\n\n### 5.7 Fault architecture and restart policy (KR-PR-002; CGD1700HB2M-UNA decision 3)\n\nWired-OR active-low fault node (4.7 kohm to 3.3 V): I_OC_N (TMCS1133), DRV_FLT_N (both UCC21710, paralleled), OVP_IN_N, OVP_OUT_N, OTP_N (TLV1702), POR_N (TPS3808G33 supervisor - holds the fault during power-up and 3.3 V brown-out) and SW_FAULT_N (DSP open-drain GPIO). Latch: SN74LVC1G74 (D = 1, /PRE = 1, /CLR = fault node, CLK = FAULT_RESET from the DSP): Q = FAULT_N falls within 5.9 ns and stays low after the source releases until the DSP clocks a reset, which only succeeds when every source is inactive. FAULT_N drives TZ1 (GPIO12, one-shot), the driver RST/EN line (through an AND with the DSP DRV_EN output so firmware can also disable), a red fault LED and a DSP status input; I_OC_N also drives TZ2. Restart policy: OC, driver FLT/DESAT, OVP_in, OVP_out and PRECHARGE_FAIL are latched and cleared only by an operator command after the DSP has checked that all sources are inactive, followed by a soft start - no automatic retry; OTP may auto-restart once the heatsink has cooled 15 K below the threshold (configurable); bus UVLO is not latched and restarts with soft start 100 ms after V_bus > 340 V. Each fault source is also readable on a DSP GPIO for diagnostics. The 12 V auxiliary input should carry the eFuse protection of CB-PR-001 (TPS26400: OVP, UVLO, current limit; KR-PR-003) - owner: architecture/gate-driver agent.\n\n## 6. Safe test interfaces (SKILL-002 step 8; KR-PCB-005)\n\nSELV-only test points (Keystone 5015 class) on the control board: I_L_SENSE, V_IN_SENSE, V_OUT_SENSE, TEMP_PWM and its filtered V_T, FAULT_N, I_OC_N, DRV_FLT_N, DRV_RDY, PWM_H/L, 3.3 V, 5 V, AGND. V_GS probe points: one MMCX jack per MOSFET at the device side of R_G referenced to the Kelvin source on the driver island (the high-side point floats at the switch node - silkscreen \"HV - isolated/differential probe only\"; no SELV test point may be placed inside the HV area). DC-link \"LIVE\" LED (section 5.4) visible at the board edge, plus a silkscreen discharge-time note.\n\n## 7. Signal list: power stage -> controller (for the interconnect agent)\n\n| Name | Type | Range / levels | Bandwidth or timing | Source |\n|---|---|---|---|---|\n| I_L_SENSE | Isolated analog (barrier inside sensor) | 0.08-3.3 V, 50 mV/A, 0.33 V at 0 A | 1 MHz sensor, filtered 160 kHz | TMCS1133C2A VOUT |\n| I_OC_N | Isolated digital, open-drain active low | 3.3 V pull-up | 100-250 ns response | TMCS1133 OC |\n| VIN_SNS_P / VIN_SNS_N | Isolated analog differential pair | 0-2 V differential on 1.44 V common mode | ~220 kHz, filtered 16 kHz | AMC1311B (Vin) |\n| VOUT_SNS_P / VOUT_SNS_N | Isolated analog differential pair | 0-2 V differential on 1.44 V common mode | ~220 kHz, filtered 16 kHz | AMC1311B (Vout) |\n| TEMP_PWM | Isolated digital PWM, open-drain | 400 kHz, 10-88 % duty | AIN bandwidth ~10 kHz | UCC21710 APWM (low side) |\n| DRV_FLT_N, DRV_RDY, DRV_RST_EN, PWM_H, PWM_L | Driver primary-side logic | 3.3 V | per gate-driver agent | UCC21710 x2 |\n| K1_COIL | SELV 12 V coil drive (low-side MOSFET + freewheel diode) | 417 mA | - | relay coil |\n| FAULT_N, FAULT_RESET, ARM, DRV_EN, status GPIOs | SELV logic on the control board | 3.3 V | - | latch / DSP |\n\nIf the architecture agent places the sensor ICs on the power board, all signals above are SELV at the inter-board connector and the only barrier crossings are inside the rated components (TMCS1133, AMC1311, UCC21710, relay); the SELV area of the power board then needs the same creepage to the HV area as the component packages (section 8). If a separate driver board is chosen, TEMP_PWM and the driver logic signals move to that board's connector unchanged.\n\n## 8. PCB constraints\n\nSee `pcb_constraints`; the critical ones are: 8 mm package creepage of TMCS1133/AMC1311 versus ~10 mm reinforced creepage required at 480 V working voltage on CTI 175 (material group IIIa) laminate, pollution degree 2 (KR-ISO-002) - resolve with a slot under each isolator (KR-ISO-004) or a CTI >= 400 laminate; no copper across any barrier (KR-ISO-001); the TMCS1133 conductor pads carry 27.5 A continuously (PE-PCB-006); ladders laid out along the creepage path and away from the switch node (PE-PCB-005); decoupling at every sensor IC pin (PE-PCB-008).\n\n## 9. Status\n\n**Analytically checked:** current scaling and ADC codes; OC threshold, divider loading and tolerance band; trip-chain timing and current overshoot; both ladders (scaling, per-resistor voltage and power, headroom); OPA2320 gain and filters; 5V_ISO current/power budget and R_pre; NTC/APWM transfer, OTP/warning thresholds and fail-safe states; fuse loading; pre-charge time, peak current, energy, PTC temperature rise and I2t; bleeder times and dissipation; comparator divider values.\n\n**Verified against fetched datasheets:** TMCS1133 (SBOSAG0E rev. May 2026), AMC1311 (SBAS786C), UCC21710-Q1 (SLUSDH8D), TLV1702, REF3125 (SBVS046E), SN74LVC1G74 (SCES794G), TMS320F28335 (SPRS439Q), TDK M703 NTC, TDK PTC inrush limiters, TDK SIOV S20K385, Omron G9EA-1 (J186-E1-01). **Manufacturer-page level:** OPA2320, TLV760. **Search-snippet level:** KLKD020.T (I2t not found), G9EJ-1-E. **Unverified:** ladder resistor part number, LED, MMCX and test-point part numbers, MOV clamping voltage, TLV760 Iq maximum.\n\n**Needs human review:** creepage of 8 mm isolator packages at 480 V working voltage on CTI 175 material (KR-ISO-002); inductor saturation versus the 42.3 A worst-case trip corner; OTP threshold against the thermal model (KR-TH-003); DESAT trip/blanking and total short-circuit response (KR-GD-004, KR-PR-001, gate-driver agent); fuse I2t and clearing with a current-limited source; relay choice (5 W coil) versus G9EJ-1-E carry current; NTC insulation to a PE-bonded heatsink; UVLO comparator hysteresis network; merging of DC-link capacitance and bleeder assumptions with the capacitor agent.\n"
+}

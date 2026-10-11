@@ -1,0 +1,2538 @@
+[
+ {
+  "mpn": "C4MS025120K",
+  "manufacturer": "Wolfspeed",
+  "function": "SiC MOSFET, high-side and low-side switch of the synchronous buck leg",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "TO-247-4 (Kelvin source); Wolfspeed TO-247-4L outline, body 16.13 x 23.63 x 5.21 mm max, standing against the heat sink",
+  "ratings": {
+   "V_DS_V": 1200,
+   "V_DS_transient_V": "1300 (< 100 h)",
+   "R_DS_on_mohm": "28 typ at V_GS 15 V; 25 typ / 33 max at 18 V (no 15 V maximum published; 37 is a scaled estimate)",
+   "R_DS_on_150C_mohm": "48.5 typ interpolated (57.2 scaled from max)",
+   "I_D_A": "86 at T_C 25 C / 62 at T_C 100 C (V_GS 18 V)",
+   "I_DM_A": 274,
+   "Q_G_nC": "125 (Q_gs 35, Q_gd 30) at -4/+18 V",
+   "C_iss_C_oss_C_rss_pF": "3087 / 103 / 4.7 at 1000 V; C_o(tr) 238",
+   "E_on_E_off_uJ": "470 / 64 at 800 V, 39.2 A, 175 C, R_G 1 ohm, 25 nH (394 / 57 at 25 C)",
+   "E_rr_uJ": 256,
+   "V_SD_V": "5.1 / 4.6 at 25 / 175 C, 19.6 A",
+   "R_thJC_K_W": "0.41 typ (no maximum)",
+   "V_GS_abs_V": "-10 / +23",
+   "V_GS_recommended_V": "+15..+18 / -5..0",
+   "V_GS_th_min_V": "2.0 at 25 C (hot minimum unpublished)",
+   "T_J_max_C": 175,
+   "short_circuit_withstand": "not published"
+  },
+  "operating_stress": {
+   "V_DS_peak_V": "502-528 at 440 V (25-35 nH, 2.5 A/ns); 548 at the 460 V OVP; up to about 590 with 60 nH standing leads",
+   "I_rms_A": "20.4 (LS, 440 V / 27.5 A)",
+   "I_pk_A": "32.0 worst overload",
+   "P_pair_W": "46.7-52 at 400 V / 25 A / 150 C (k_RG 1.3-2.0, + about 1 W HS E_oss); 56.2 at 440 V / 27.5 A",
+   "P_HS_hottest_W": "30.4 typ / 34.1 max-R at 360 V / 27.5 A",
+   "T_J_HS_C": "about 109 (400 V / 25 A typ) / about 130 (360 V / 27.5 A, max-R, R_pad 1.4 K/W, CR-21) on the 0.30 K/W sink",
+   "gate_drive": "+15 / -4 V, R_G 10 / 3.3 ohm"
+  },
+  "margins": {
+   "voltage_utilisation": "42-46 % (49 % at 150 V overshoot) versus 80 / 90 / 70 % limits (engineering judgement, human review)",
+   "current": "3.0x on I_D(100 C), 8.7x on I_DM",
+   "thermal": "P_max 41.5 W per device at 150 C versus 34.1 W (1.22x); 150 C design limit under 175 C rating; 125 C preference not met at the 360 V / 27.5 A max-R corner",
+   "efficiency_share_pct": "0.83-1.13 of 5 kW"
+  },
+  "selection_reason": "1200 V Gen-4 device with soft body diode gives 42-46 % utilisation including a realistic overshoot allowance, lowest total loss of the stocked 1200 V candidates (46.7 W pair), Kelvin source, R_thJC 0.41 K/W; the 650 V class sits at 77-84 % and the 900 V class is obsolete.",
+  "alternatives": [
+   "C3M0021120K (fallback: same footprint and +15/-4 V rails, +8 W, abundant stock)",
+   "C4MS018120K (upgrade when stocked, -7 W; E_rr 720 uJ to clarify)",
+   "C3M0015065K (650 V, -19 W, only with a double-pulse gate V_pk <= 520 V and reviewer acceptance of 77-84 % utilisation)",
+   "2 x C4MS025120K per position (-15 W, four devices)",
+   "rejected: C3M0025065K, C3M0032120K, C3M0016120K, C3M0040120K, C4MS036120K, C4MS047120K, C3M0045065K, C3M0060065K, C3M0075120K, C3M0030090K (obsolete), C3M0065090J (NRND)"
+  ],
+  "verification_level": "fetched-datasheet (Rev. 2, Dec 2025); status manufacturer-page; stock search-snippet",
+  "datasheet_url": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+  "datasheet_revision": "Rev. 2, December 2025 (fetched); product page https://www.wolfspeed.com/products/power/sic-mosfets/1200v-c4ms-discrete-silicon-carbide-mosfets/c4ms025120k",
+  "knowledge_refs": [
+   "SKILL-001 (not applicable to device choice; principles 2, 6)",
+   "SKILL-006 (adapted)",
+   "KR-GD-001 (direct)",
+   "KR-GD-003 (adapted, clamp required)",
+   "KR-GD-005 (direct)",
+   "KR-GD-006 (adapted)",
+   "KR-GD-009 (direct)",
+   "KR-TH-001 (direct)",
+   "KR-TH-002 (direct)",
+   "KR-PR-001 (direct, hard constraint)",
+   "KR-PCB-003 (direct)",
+   "KR-PCB-004 (adapted)",
+   "KR-CAP-003 (adapted)",
+   "PE-PCB-003 (adapted)",
+   "REF-TI-TIDA-010054 (adapted)",
+   "REF-WS-PRD-04814 (adapted)",
+   "REF-WS-CGD1700HB2M-UNA (adapted)"
+  ],
+  "open_issues": [
+   "availability: Arrow stock only, 13-week lead elsewhere (Oct 2026 snippets)",
+   "no published short-circuit withstand time; destructive short-circuit test required",
+   "Gen-4 750 V industrial TO-247-4 family to be checked",
+   "k_RG, plateau, td and C_rss(400 V) are graph readings; double-pulse test at 400 V / 30 A verifies E_on, E_off, overshoot and dv/dt",
+   "utilisation limits 80/90/70 % are human-review judgement"
+  ],
+  "dnp": false,
+  "source": "design/research/mosfet.json + verify_power_semiconductor_*"
+ },
+ {
+  "mpn": "UCC21710QDWRQ1",
+  "manufacturer": "Texas Instruments",
+  "function": "Isolated SiC gate driver with DESAT/OC, soft turn-off, Miller clamp, RDY/FLT (one per switch)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "SOIC-16 DW 7.5 x 10.3 mm (KiCad Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm); 1.2 mm non-plated slot under the body",
+  "ratings": {
+   "isolation": "5.7 kVrms UL 1577; VIORM 2121 Vpk; VIOWM 1500 Vrms / 2121 VDC; VIOTM/VIOSM 8 kVpk; > 8 mm creepage/clearance",
+   "CMTI_V_per_ns": "> 150",
+   "peak_current_A": "+/-10 (R_OUTH 1.5/2.5/4.9 ohm, R_OUTL 0.1/0.3/0.7 ohm)",
+   "OC_DESAT": "V_OCTH 0.63/0.70/0.77 V; deglitch 95/120/180 ns; t_OCOFF 150/270/400 ns; soft turn-off 250/400/570 mA; 40 mA OC pull-down when OUT low",
+   "clamp": "internal 4 A, threshold VEE + 1.5/2.0/2.5 V",
+   "UVLO": "VDD on 10.5/12.0/12.8 V, off 9.9/10.7/11.8 V, 5 us deglitch; VCC 2.7/2.5 V",
+   "timing": "t_PD 60/90/130 ns, PWD 30 ns, skew 30 ns, input deglitch 28/40/60 ns",
+   "supply": "VCC 3.0-5.5 V; VDD-COM 13-33 V; I_VDDQ 4/5.9 mA; I_VCCQ 3/4 mA",
+   "reset": "RST/EN low >= 1000 ns, 28.5-113 k internal pull-down (55 k typ), fault mute 0.55-1 ms",
+   "AIN_APWM": "unused, AIN tied to COM"
+  },
+  "operating_stress": {
+   "working_voltage_V_DC": 460,
+   "dv_dt_V_per_ns": "110-122 turn-off envelope at 25-27.5 A (C_oss limited); 71-90 turn-on",
+   "gate_current_A": "1.26 source / 3.06 sink",
+   "quiescent_W": 0.112,
+   "inputs": "3.3 V PWM through 100 ohm + 100 pF + 10 k; IN+ = own PWM, IN- = complementary"
+  },
+  "margins": {
+   "working_voltage": "4.6x (2121 VDC / 460 V)",
+   "CMTI": "1.25x on the peak edge, about 3x on the average slope - double-pulse measurement mandatory",
+   "current": "about 8x / 3x on source / sink",
+   "impulse": "8 kVpk versus 6 kV reinforced basis"
+  },
+  "selection_reason": "Reinforced isolation with margin at 460 V, highest CMTI of the candidate set, split outputs for separate R_G,on/R_G,off, configurable DESAT with external blanking, 400 mA soft turn-off instead of two-level turn-off, internal clamp, RDY/FLT lines; parameters confirmed from SLUSDH8D.",
+  "alternatives": [
+   "UCC21732-Q1 (same class, two-level turn-off and external clamp FET; footprint-compatible fallback to check)",
+   "UCC5870-Q1 rejected (basic isolation, 100 V/ns, 36-pin SPI)",
+   "Si8285CD-IS rejected (125 V/ns, fixed 7 V DESAT, VIOWM 1000 Vrms)",
+   "NCP51561 rejected (no DESAT)",
+   "STGAP2SiCS rejected (15.5 V UVLO)",
+   "1ED3122MC12H rejected (data unverified)",
+   "UCC23514 rejected (no fast protection)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+  "datasheet_revision": "SLUSDH8D, January 2019 - revised June 2024; ti.com status Active",
+  "knowledge_refs": [
+   "SKILL-001 (direct)",
+   "SKILL-002 (adapted)",
+   "KR-GD-001 (direct)",
+   "KR-GD-002 (direct)",
+   "KR-GD-003 (adapted)",
+   "KR-GD-004 (human-review)",
+   "KR-GD-009 (direct)",
+   "KR-GD-011 (adapted)",
+   "KR-GD-012 (adapted)",
+   "KR-PR-001 (direct)",
+   "KR-PR-002 (direct)",
+   "KR-PCB-005 (direct)",
+   "KR-ISO-001 (direct)",
+   "KR-ISO-004 (adapted)",
+   "CB-GD-001 (adapted)",
+   "CB-PR-002 (adapted then rejected, CR-01)",
+   "CMP-UCC21710-Q1 (direct)",
+   "REF-WS-CGD1700HB2M-UNA (adapted)"
+  ],
+  "open_issues": [
+   "CMTI margin 1.25x against the computed turn-off edge - accept only after measurement; snubber pads or a reviewed gate-Kelvin C are the mitigations",
+   "DESAT values are human-review proposals (KR-GD-004) pending double-pulse and short-circuit tests",
+   "slot geometry under the DW body per the standards agent (land gap < 9 mm)"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json + verify_isolated_sic_gate_driver_*"
+ },
+ {
+  "mpn": "UCC14141QDWNRQ1",
+  "manufacturer": "Texas Instruments",
+  "function": "Isolated regulated bias module: HS gate (+15/-4 V), LS gate (+15/-4 V) and sensing island (+15 V / 5V_ISO)",
+  "board": "power",
+  "quantity": 3,
+  "package_or_footprint": "36-pin DWN wide SOIC 12.83 mm (custom footprint from the TI drawing; no KiCad library part); 1.2 mm slot under the body",
+  "ratings": {
+   "isolation": "VISO 5000 Vrms; VIORM 1414 Vpk; VIOWM 1414 VDC (1000 Vrms); VIOTM 7071 Vpk; VIMP 7692 Vpk; VIOSM 10 kVpk; > 8 mm; certifications 'planned' in SLUSF10B",
+   "C_IO_pF": "< 3.5 (not legible in the extraction; 5 pF bound used)",
+   "output_power_W": "1.5 for VIN 10.8-13.2 V at TA <= 85 C; 1.0 for 8-18 V; absolute maximum 2.5 at 25 C; SOA curve governs",
+   "input_V": "8-18 (UVLO 7.8/8.2/8.5 rising, 7.0/7.4/7.7 falling; OVLO 22)",
+   "input_current_mA": "40 no load; 200 at 1.0 W; 270 at 1.5 W",
+   "outputs": "VDD-VEE 15-25 V and COM-VEE 2.5 V..(VDD-VEE), +/-1.3 %, 2.5 V FB reference",
+   "f_sw_MHz": 16,
+   "PG": "active-low open drain",
+   "CMTI": "> 150 kV/us"
+  },
+  "operating_stress": {
+   "configuration": "gate modules VDD-VEE 19.0 V (107 k / 16.2 k 0.1 %), COM-VEE 4.0 V (9.76 k / 16.2 k); sensing module VDD-VEE 14.94 V (80.6 k / 16.2 k, added assumption) and COM-VEE 5.0 V (16.2 k / 16.2 k), VEE = PGND, COM = 5V_ISO",
+   "load_W": "HS 0.32, LS 0.32, sensing about 0.4 (two AMC1311 VDD1 about 20 mA)",
+   "input_current_A": "about 0.45 total at 12 V for three modules",
+   "i_CM_A": "0.42 per edge at 120 V/ns on the HS barrier (0.72 with 5 pF)",
+   "working_voltage_V_DC": 460
+  },
+  "margins": {
+   "working_voltage": "3.1x",
+   "power": "21-27 % of 1.5 W per module",
+   "impulse": "7.7 kVpk versus 6 kV",
+   "RLIM_sourcing_check": "sensing module sources about 20 mA from 15 V to 5 V: RLIM <= about 470 ohm, about 0.2 W in RLIM (added analytic check, human review)"
+  },
+  "selection_reason": "Regulated +15/-4 V without LDOs (KR-IS-005), lowest verified isolation capacitance of the module class, PG/UVLO interaction, BOM-configurable +18 V option; third module gives the sensing island its own 5 V in the COM regulator's sourcing direction after the shared-LS-supply pattern failed the RLIM sink check (CR-12).",
+  "alternatives": [
+   "RECOM R12P21503D rejected (-3 V, unregulated, < 10 pF, basic insulation per IEC 62368-1)",
+   "Murata MGJ2D121505SC rejected (-5 V, unregulated, 5.2 kVDC basic)",
+   "UCC25800-Q1 + Wuerth 750319177 LLC (fallback if the SOA check fails; 0.68 pF; unregulated)",
+   "TLV76050DBZR from the LS +15 V through 270 ohm (TIDA-010054 decision 7; documented alternative, fails the RLIM sink check)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+  "datasheet_revision": "SLUSF10B, February 2023 - revised June 2023; ti.com status Active",
+  "knowledge_refs": [
+   "SKILL-004 (direct)",
+   "KR-IS-001 (direct; Wolfspeed and TI factor-2 forms)",
+   "KR-IS-002 (direct)",
+   "KR-IS-003 (direct)",
+   "KR-IS-004 (human-review, CR-12)",
+   "KR-IS-005 (direct)",
+   "KR-GD-006 (adapted)",
+   "KR-SN-001 (human-review)",
+   "KR-ISO-004 (adapted)",
+   "CB-IS-002 (adapted)",
+   "CB-IS-001/003/004 (not applicable)",
+   "CMP-UCC14141-Q1 (direct)",
+   "REF-TI-TIDA-010054 decision 4 (adapted)"
+  ],
+  "open_issues": [
+   "RLIM values for all three modules per the datasheet procedure (TI 1 k / 600 ohm instance values not adopted)",
+   "SOA at VDD-VEE 19 V, VIN 10.8 V and board ambient to be read",
+   "VDE/UL certification status to confirm (planned in June 2023)",
+   "feasibility of the COM-VEE 5.0 V sourcing configuration",
+   "80.6 k top resistor of the sensing module is an added assumption (14.94 V)",
+   "C_IO value unverified (5 pF bound)"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json + verify_isolated_sic_gate_driver_*; CR-12"
+ },
+ {
+  "mpn": "US1M-13-F",
+  "manufacturer": "Diodes Incorporated",
+  "function": "DESAT blocking diode, cathode to drain (one per channel)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "SMA (DO-214AC)",
+  "ratings": {
+   "V_RRM_V": "1000 (row truncated in the extraction; by series ordering)",
+   "I_F_AV_A": 1.0,
+   "V_F_V": "1.7 max at 1 A; about 0.6 at the 5-9 mA bias (assumption)",
+   "t_rr_ns": "50/75",
+   "C_T_pF": "10 typ",
+   "I_R_uA": "5 / 100 at 25 / 100 C",
+   "T_J_C": 150
+  },
+  "operating_stress": {
+   "V_R_peak_V": "528 worst switch-node peak (590 with 60 nH)",
+   "I_bias_mA": "5.9-7.2 on-state, 2.1 off-state",
+   "dv_dt_displacement": "1.2 A for 3.6 ns at 120 V/ns (about 5 mV on the 680 pF blanking capacitor)"
+  },
+  "margins": {
+   "blocking": "1.9x at 528 V",
+   "current": "> 100x"
+  },
+  "selection_reason": "1000 V ultrafast SMA diode; a single diode suffices at a 460 V bus (CGD1700 needed two US3M at 1700 V); low capacitance keeps the blanking charge error at about 1.5 %.",
+  "alternatives": [
+   "US3M pair (1700 V pattern) unnecessary"
+  ],
+  "verification_level": "fetched-datasheet (by verifier; lifecycle unverified)",
+  "datasheet_url": "https://www.diodes.com/assets/Datasheets/ds16008.pdf",
+  "datasheet_revision": "DS16008 Rev. 11-2, December 2014",
+  "knowledge_refs": [
+   "CB-GD-001 (adapted)",
+   "KR-GD-004 (human-review)",
+   "REF-WS-CGD1700HB2M-UNA decision 2 (adapted)"
+  ],
+  "open_issues": [
+   "lifecycle status not stated in the 2014 document",
+   "V_F at the DESAT bias current assumed 0.6 V - to be read from the curve or measured"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "ERJ-P08F10R0V / ERJ-P08F6R80V / ERJ-P08F3R30V / ERJ-P08F2201V",
+  "manufacturer": "Panasonic",
+  "function": "Gate resistors (R_G,on 10 ohm bring-up, 6.8 ohm tuning target; R_G,off 3.3 ohm) and DESAT bias resistor R1 2.2 k, anti-surge thick film",
+  "board": "power",
+  "quantity": "2 x 10 ohm, 2 x 3.3 ohm, 2 x 2.2 k (6.8 ohm as tuning alternate)",
+  "package_or_footprint": "1206 (3216)",
+  "ratings": {
+   "power_W": 0.66,
+   "limiting_voltage_V": 500,
+   "overload_voltage_V": 1000,
+   "tolerance_pct": 1,
+   "temperature_C": "-55 to +155",
+   "tempco_ppm_K": 100
+  },
+  "operating_stress": {
+   "R_G_on": "0.039 W average, 16 W pulses of about 30 ns (1.26 A)",
+   "R_G_off": "0.032 W average, 31 W pulses of about 20 ns (3.06 A)",
+   "R1_DESAT": "about 0.08 W, node A at 10.45 V off-state"
+  },
+  "margins": {
+   "average_power": "> 10x",
+   "pulse": "anti-surge rating; 2512 pulse resistors (CGD1700) not needed at 1.3-3.1 A"
+  },
+  "selection_reason": "Split R_G,on/R_G,off per KR-GD-002 sized from the C4MS025120K dv/dt and E_on curves (SKILL-001 step 5): 10 ohm gives 71 V/ns turn-on and k_RG about 1.9, 6.8 ohm 90 V/ns and k 1.6; 3.3 ohm holds the C_oss-limited turn-off; values to be tuned by double-pulse test (sweep 4.7-15 / 2.2-6.8 ohm).",
+  "alternatives": [
+   "ERJ-P08F6R80V as the 6.8 ohm tuning value",
+   "other 1206 anti-surge families"
+  ],
+  "verification_level": "search-snippet (Panasonic page unreachable; distributor data consistent)",
+  "datasheet_url": "https://industry.panasonic.com/global/en/products/control/resistor",
+  "datasheet_revision": "not found",
+  "knowledge_refs": [
+   "KR-GD-002 (direct)",
+   "SKILL-001 step 5 (direct)",
+   "KR-GD-003 (adapted)",
+   "CB-GD-001 (adapted)"
+  ],
+  "open_issues": [
+   "k_RG 1.6-1.9 is a graph reading from the datasheet Fig. 25 (25 C, 800 V, 40 A) assumed to hold at 400 V / 21 A; +1.9 to +3.8 W into the efficiency budget",
+   "primary Panasonic datasheet to be fetched"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "DESAT divider and blanking: 4.99 k 1 % 0603, 1.00 k 1 % 0603, 680 pF 5 % C0G 50 V 0603 (e.g. Murata GRM1885C1H681JA01D)",
+  "manufacturer": "generic (Murata C0G example)",
+  "function": "DESAT sense divider R2/R3 and blanking capacitor at the OC pin",
+  "board": "power",
+  "quantity": "2 x 4.99 k, 2 x 1.00 k, 2 x 680 pF",
+  "package_or_footprint": "0603",
+  "ratings": {
+   "resistor": "0.1 W, 1 %",
+   "capacitor": "C0G 50 V 5 %"
+  },
+  "operating_stress": {
+   "node_A_V": "4.19 at trip (3.77-4.61); 10.45 off-state",
+   "OC_pin_V": "<= 5 (abs max 6); third-quadrant excursion about -0.06 V (internal pull-down active)",
+   "blanking_ns": "252/288/326 external (229 at 18 V) + 95-180 IC deglitch"
+  },
+  "margins": {
+   "trip": "V_DS,trip 3.6 V (3.2-4.0); trip current 52-85 A at 175 C; false-trip 1.67x typ / 1.35x max-R at the 31.6 A overload",
+   "response_us": "0.55 / 0.77 / 1.07 versus 1.5 budget"
+  },
+  "selection_reason": "Values re-derived with the CB-GD-001 formulas for the C4MS025120K output characteristics; TIDA (6.4 V / 1 us) and CGD1700 (6.7 V / 46 ns) instance values not reused.",
+  "alternatives": [
+   "Schottky clamp COM->OC (BAT42W-V) kept only as a DNP option"
+  ],
+  "verification_level": "unverified (generic catalogue parts)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "CB-GD-001 (adapted)",
+   "KR-GD-004 (human-review)",
+   "KR-PR-001 (direct)"
+  ],
+  "open_issues": [
+   "confirm by double-pulse (blanking versus 82 MHz turn-on ring, about 150 ns settling) and short-circuit test"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json + verify_isolated_sic_gate_driver__engineering"
+ },
+ {
+  "mpn": "BAT42W-V (or lower-V_F Schottky)",
+  "manufacturer": "Vishay",
+  "function": "OC-pin negative clamp COM->OC (reference-derived precaution)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "SOD-123",
+  "ratings": {
+   "V_R_V": 30,
+   "V_F": "<= 0.3 V at 0.7 mA required if ever populated (unverified)"
+  },
+  "operating_stress": {
+   "note": "the DC -0.67 V case does not occur dynamically (internal 40 mA pull-down during the dead time, 597 ns OC time constant)"
+  },
+  "margins": {
+   "not applicable": "DNP"
+  },
+  "selection_reason": "Pads kept from the CGD1700 DT5 pattern; analysis shows the clamp is not needed, so it is DNP.",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "https://www.vishay.com/docs/85660/bat42w.pdf",
+  "datasheet_revision": "not fetched",
+  "knowledge_refs": [
+   "CB-GD-001 (adapted)",
+   "REF-WS-CGD1700HB2M-UNA decision 2 (adapted)"
+  ],
+  "open_issues": [
+   "delete or document a real transient case before populating"
+  ],
+  "dnp": true,
+  "source": "design/research/gate_driver.json + verify_isolated_sic_gate_driver__engineering"
+ },
+ {
+  "mpn": "0 ohm 0603 jumper (CLMPI link), 10 k 1 % 0805 (gate-Kelvin discharge), DNP 1 ohm 0603 + 470 pF C0G 0603 (gate-Kelvin RC)",
+  "manufacturer": "generic",
+  "function": "Miller-clamp link to the gate, gate discharge resistor at the device side of R_G, review-only gate-Kelvin RC pads",
+  "board": "power",
+  "quantity": "2 x 0 ohm, 2 x 10 k, 2 DNP RC sets",
+  "package_or_footprint": "0603 / 0805",
+  "ratings": {
+   "link": "1 A, <= 15 mm path",
+   "R_GS": "10 k, 0.125 W",
+   "RC_DNP": "1 ohm + 470 pF C0G"
+  },
+  "operating_stress": {
+   "R_GS": "11 mW, about 3 ms-class discharge with C_iss 3.1 nF",
+   "clamp": "4 A internal clamp, engages below VEE + 2.0 V"
+  },
+  "margins": {
+   "clamp": "required: charge-based excursion 4.5-5.2 V from -4 V against V_GS(th) min 2.0 V"
+  },
+  "selection_reason": "KR-GD-007 gate-source resistor (10 k versus the 47 k alternative, 10 k chosen for faster discharge), KR-GD-003 clamp link with the same Kelvin pour as return, KR-GD-010 RC pads provided only because the TO-247-4 has a Kelvin pin.",
+  "alternatives": [
+   "47 k R_GS (CGD15SG00D2 instance)"
+  ],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-GD-003 (adapted)",
+   "KR-GD-007 (direct)",
+   "KR-GD-010 (human-review)",
+   "KR-PCB-003 (direct)"
+  ],
+  "open_issues": [
+   "gate-Kelvin RC may be populated only after double-pulse data (KR-GD-010)",
+   "off-state V_GS measurement (PRD-09301 section 6.1) mandatory"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "C3216X7R1E475K160AC",
+  "manufacturer": "TDK",
+  "function": "Driver rail decoupling (2 x VDD-COM, 1 x COM-VEE per driver) and bias-module output capacitors (2 x VDD-VEE, 1 x COM-VEE per module)",
+  "board": "power",
+  "quantity": 15,
+  "package_or_footprint": "1206 (3216), 1.6 mm",
+  "ratings": {
+   "C_uF": 4.7,
+   "V_V": 25,
+   "dielectric": "X7R",
+   "tolerance_pct": 10
+  },
+  "operating_stress": {
+   "bias_V": "19 (gate modules), 15 / 5 (sensing module)",
+   "pulse": "125 nC per switching edge",
+   "bias_loss": "35 % assumed at 15-19 V"
+  },
+  "margins": {
+   "droop_mV": "20 (VDD-COM, 2 x 4.7 uF), about 41 (COM-VEE)",
+   "requirement": "C_eff >= 1.25 uF for 100 mV droop"
+  },
+  "selection_reason": "Sized from Q_G (KR-PCB-002), placed between the driver output pins and the gate/Kelvin connection; the CGD1700 20 uF per rail was not copied.",
+  "alternatives": [
+   "other 4.7 uF 25 V X7R 1206"
+  ],
+  "verification_level": "search-snippet (TDK page HTTP 403; 16 V sibling NRND)",
+  "datasheet_url": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+  "datasheet_revision": "not found",
+  "knowledge_refs": [
+   "KR-PCB-002 (direct)",
+   "PE-PCB-008 (adapted)",
+   "REF-WS-CGD15SG00D2 decision 5 (method)"
+  ],
+  "open_issues": [
+   "DC-bias curve not extracted (35 % loss assumed)",
+   "datasheet capacitor-ratio rule for the COM midpoint to review with RLIM"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "744226S (WE-SL2)",
+  "manufacturer": "Wuerth Elektronik",
+  "function": "Common-mode choke at each bias-module 12 V input",
+  "board": "power",
+  "quantity": 3,
+  "package_or_footprint": "WE-SL2 SMT 9.2 x 6.0 x 5.0 mm",
+  "ratings": {
+   "L_uH": "10 +/-30 %",
+   "I_R_mA": 1600,
+   "R_DC_mohm": 80,
+   "V_R_V": 80,
+   "insulation_test_V": "500 VAC",
+   "Z_max_ohm": 920,
+   "qualification": "AEC-Q200 Grade 1",
+   "status": "Valid"
+  },
+  "operating_stress": {
+   "I_DC_A": "about 0.15 per module (0.19 at 1.0 W)",
+   "V_V": 13.2
+  },
+  "margins": {
+   "current": "about 10x",
+   "voltage": "6x"
+  },
+  "selection_reason": "KR-IS-002: CM choke at the bias-converter input, physically close, with the converter's input capacitors between choke and module.",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.we-online.com/components/products/datasheet/744226S.pdf",
+  "datasheet_revision": "009.003, 2023-04-12",
+  "knowledge_refs": [
+   "KR-IS-002 (direct)",
+   "SKILL-004 principle 3 (direct)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "10 uF 25 V X7R 1210 (e.g. TDK C3225X7R1E106K250AC)",
+  "manufacturer": "generic (TDK example)",
+  "function": "Bias-module input capacitors between the CM choke and the VIN pin (3 per module) plus 100 nF at VIN",
+  "board": "power",
+  "quantity": "9 x 10 uF + 3 x 100 nF",
+  "package_or_footprint": "1210 / 0603",
+  "ratings": {
+   "C_uF": 10,
+   "V_V": 25,
+   "dielectric": "X7R"
+  },
+  "operating_stress": {
+   "bias_V": "12 +/-10 %",
+   "effective_uF": ">= 20 at 13.2 V with three parts (two gave about 13 uF)"
+  },
+  "margins": {
+   "datasheet_condition": "C_IN = 20 uF met"
+  },
+  "selection_reason": "Three parts keep the datasheet C_IN of 20 uF effective under X7R DC bias (verifier correction, CR-19).",
+  "alternatives": [
+   "50 V-rated parts with two pieces"
+  ],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-IS-002 (direct)",
+   "CMP-UCC14141-Q1 (direct)"
+  ],
+  "open_issues": [
+   "confirm the DC-bias curve of the chosen part"
+  ],
+  "dnp": false,
+  "source": "verify_isolated_sic_gate_driver__engineering; CR-19"
+ },
+ {
+  "mpn": "0.1 % thin-film 0603 resistors (Vishay TNPW0603 class): 107 k, 16.2 k, 9.76 k, 80.6 k (127 k for the +18 V option); 330 pF C0G 0603",
+  "manufacturer": "generic (Vishay TNPW example)",
+  "function": "UCC14141 feedback dividers (FBVDD / FBVEE) and the 330 pF datasheet capacitors",
+  "board": "power",
+  "quantity": "2 x 107 k, 7 x 16.2 k, 2 x 9.76 k, 1 x 80.6 k, 6 x 330 pF (127 k x2 as BOM option)",
+  "package_or_footprint": "0603",
+  "ratings": {
+   "tolerance_pct": 0.1,
+   "tempco_ppm_K": 25,
+   "capacitor": "330 pF C0G 50 V"
+  },
+  "operating_stress": {
+   "reference_V": "2.5 (2.4675-2.5325)",
+   "divider_current_mA": 0.15
+  },
+  "margins": {
+   "set_points": "19.01 V / 4.006 V (gate modules); 14.94 V / 5.0 V (sensing module); 22.10 V with 127 k"
+  },
+  "selection_reason": "Dividers re-derived from the 2.5 V FB reference; 80.6 k is an added assumption (E96 nearest to the 81 k that 15.00 V would need).",
+  "alternatives": [],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "CB-IS-002 (adapted)",
+   "KR-GD-006 (adapted)",
+   "CMP-UCC14141-Q1 (direct)"
+  ],
+  "open_issues": [
+   "80.6 k / 14.94 V to be ratified or trimmed"
+  ],
+  "dnp": false,
+  "source": "design/research/gate_driver.json; CR-12"
+ },
+ {
+  "mpn": "R_LIM (value per SLUSF10B 'RLIM Resistor Selection' procedure)",
+  "manufacturer": "generic thick film",
+  "function": "UCC14141 COM-VEE current-limit resistor, one per module",
+  "board": "power",
+  "quantity": 3,
+  "package_or_footprint": "0805 / 1206",
+  "ratings": {
+   "power_W": "0.25 to be checked"
+  },
+  "operating_stress": {
+   "gate_modules": "COM-return about 5 mA (DESAT bias, R_GS, AIN) -> RLIM <= about 750 ohm",
+   "sensing_module": "sources about 20 mA from 15 V to 5 V -> RLIM <= about 470 ohm, about 0.2 W (added analytic check)"
+  },
+  "margins": {
+   "status": "human review"
+  },
+  "selection_reason": "Required by the module; TI's 1 k / 600 ohm instance values are not adopted; the datasheet procedure and the output-capacitor ratio rule decide.",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet (procedure); value human-review",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+  "datasheet_revision": "SLUSF10B",
+  "knowledge_refs": [
+   "KR-IS-004 (human-review)",
+   "CMP-UCC14141-Q1 (direct)"
+  ],
+  "open_issues": [
+   "RLIM pin abs max 0.125 A rms is qualified for 16 % run time; continuous sourcing/sinking must stay well below it"
+  ],
+  "dnp": false,
+  "source": "verify_isolated_sic_gate_driver__engineering; CR-12"
+ },
+ {
+  "mpn": "Driver interface passives: 100 ohm 0603 + 100 pF C0G + 10 k pull-down at each IN+/IN- pin; 1 k + 1 nF on RST/EN; 4.7 k pull-ups on FLT_N and RDY; 2-pin V_GS probe loops",
+  "manufacturer": "generic",
+  "function": "PWM / fault signal conditioning at the driver pins on the power-board SELV strip and probe points at the device side of R_G",
+  "board": "power",
+  "quantity": "4 x (100 ohm, 100 pF, 10 k); 2 x (1 k, 1 nF); 4 x 4.7 k; 2 probe loops",
+  "package_or_footprint": "0603 / 2-pin header",
+  "ratings": {
+   "V_V": "3.3 logic",
+   "RC_tau_ns": "13.3 with the 33 ohm source (t_50 9.2 ns, rise 29 ns)"
+  },
+  "operating_stress": {
+   "min_pulse": "driver deglitch 28 ns min; 200 ns minimum PWM pulse"
+  },
+  "margins": {
+   "fail_safe": "open connector -> outputs off via the UCC21710 internal pulls and the 10 k pull-downs"
+  },
+  "selection_reason": "KR-GD-008 exclusion adapted to the stacked mezzanine (buffered single-ended with RC at every receiving pin); CB-GD-003 RS-422 only for a cable > 150 mm; probe loops replace MMCX jacks (CR-11).",
+  "alternatives": [
+   "SN65C1167E RS-422 pair (cabled variant only)"
+  ],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-GD-008 (adapted)",
+   "KR-GD-009 (direct)",
+   "CB-GD-003 (adapted, fallback)",
+   "KR-PCB-005 (direct)",
+   "SKILL-002 step 8 (direct)"
+  ],
+  "open_issues": [
+   "measurement verification of KR-GD-008 (common-mode injection, open-connector test) belongs in the test plan"
+  ],
+  "dnp": false,
+  "source": "design/research/controller_aux_interconnect.json; CR-11"
+ },
+ {
+  "mpn": "AIPE-MAG-L1-SICBUCK-5KW-V2 (custom choke: 2 x Magnetics 0058192A2 stacked, 34 T AWG 10)",
+  "manufacturer": "custom winding (Magnetics Inc. cores)",
+  "function": "Output inductor L1",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "custom: 2 x PTH 3.2 mm finished hole, 6.0 mm pads all layers, pitch 25.4 mm; 4 x 4.3 mm NPTH on 60 x 60 mm with 8 mm copper-free annulus; keep-out circle 75 mm, height 48 mm",
+  "ratings": {
+   "L_uH": "319 at 0 A; 272 at 25 A nominal (235-294 with AL +/-8 % and the datasheet-minimum curve); 263 at 27.5 A; 248 at 31.6 A; 210 at 41 A (>= 175 worst); 160 at 46 A worst",
+   "I_sat_30pct_from_L0_A": "37.3 nominal / about 35 worst",
+   "DCR_mohm": "12.2 / 16.0 at 20 / 100 C (+ about 1 mohm leads)",
+   "mass_g": "632 bare / about 780 potted",
+   "envelope_mm": "wound OD 65-69, height 40-43; cup about 72 x 46",
+   "winding": "34 T AWG 10 heavy build 200 C (alt 2 x AWG 13 bifilar), about 26 + 8 turns, fill 38 %",
+   "insulation": "2 layers 0.1 mm polyester tape under the winding; fibreglass lead sleeves; potting UL94 V-0 cup",
+   "B_sat_T": 1.5
+  },
+  "operating_stress": {
+   "I_rms_A": "about 25.1 at 25 A (27.5 A for 10 s)",
+   "I_pk_A": "29.0 nominal (29.4 worst), 31.6 overload (32.0 worst), 1.3x margin 41, worst OC-trip corner about 42.6",
+   "ripple_App": "6.5 / 7.3 / 8.0 at 360 / 400 / 440 V (8.7 worst; 9.0 at 440 V / 27.5 A worst)",
+   "B_T": "B_dc 0.49 / 0.60 / 0.73 at 25 / 31.3 / 41 A; B_ac,pk 0.057-0.070; 0.80 at 41 A",
+   "loss_W": "14.9 / 16.4 / 17.7 at 25 A, 17.0 / 18.5 / 19.8 at 27.5 A (P_cu,dc 10.0 / 12.1, P_cu,ac 0.34-0.51, P_core 4.6 / 5.9 / 7.2 typ; 23-26 bounded worst core)",
+   "temperature": "surface rise 50-55 K typ / 62-69 K bounded in still air; hot spot 110-120 C -> forced air required (CR-14)",
+   "no_load_reverse_current_A": "-2.8 to -3.4",
+   "terminal_potentials": "SW (0-440 V pulsed) and VOUT (200 V) against PGND"
+  },
+  "margins": {
+   "saturation": "L(41 A)/L(25 A) 0.74-0.77 >= 0.70; B 0.80 T = 53 % of B_sat; vendor-style I_sat 37.3 A is below the 41-42 A seed demand - accepted under CR-05 with the 3-stack fallback",
+   "thermal": "P_max 28.7 W at 125 C versus 19.8 W (1.45x) typical; bounded worst 23-26 W",
+   "efficiency_share_pct": "0.33 at 400 V / 25 A"
+  },
+  "selection_reason": "No orderable standard inductor exists for 220-300 uH at 25-32 A (13 families searched); the High Flux 60u two-core stack meets the inductance band over tolerance, keeps 29 % ripple at 400 V, rolls off softly (no knee), and costs 16-18 W.",
+  "alternatives": [
+   "3 x 0058192A2 / 28 T fallback (L(25 A) 293 uH, I_sat about 45 A, +230 g, 41 K rise)",
+   "rejected: Coilcraft AGP4233-224ME, Hammond 195C30, Vishay IHXL-1500VZ-3A / IHDM-1008BC, WE-HCF 7443641000, Bourns 2316-RC, Bel HCTI-220-5.8, Pulse PE-51520NL, Triad C-60U, Schaffner RD, TDK-EPCOS B82615/B82726/B82622S, 2 x Kool Mu 0077192A7, 2 x XFlux 0078192A7, 1 x Kool Mu 26u 0077102A7, 2 x TDK E70/33/32 N87"
+  ],
+  "verification_level": "analytical; core data fetched-datasheet; material fits fetched-catalogue; no measurement",
+  "datasheet_url": "https://www.mag-inc.com/Media/Magnetics/Datasheets/0058192A2.pdf",
+  "datasheet_revision": "core datasheet rev 10/6/2021; Magnetics Powder Core Catalog 2024 pp. 63, 109, 129/130 (https://www.acalbfi.com/media/pdf/Magnetics-Powder-Core-Catalog-2024.pdf)",
+  "knowledge_refs": [
+   "KR-TH-001 (adapted by analogy, 125 C winding limit added)",
+   "SKILL-006 steps 1-3 (adapted)",
+   "SKILL-003 (adapted, ripple hand-off only)",
+   "KR-PCB-006 (direct, low confidence)",
+   "PE-PCB-005 (adapted)",
+   "PE-PCB-006 (direct)",
+   "KR-ISO-002 (human-review)",
+   "KR-TH-002 (not applicable)",
+   "KR-TH-003 (human-review)",
+   "KR-PE-001 (not applicable)",
+   "REF-TI-TIDA-010054 decisions 9-10 (adapted)",
+   "external: Magnetics 2024 catalogue methods (proposed new skill)"
+  ],
+  "open_issues": [
+   "winding house and quotation unknown; order 3 cores plus spares",
+   "core orderable code 0058192A2 versus catalogue selector C058192A2",
+   "potting cup part number; acoustic noise (High Flux magnetostriction) mitigated by potting",
+   "saturation definition to be ratified (CR-05)",
+   "forced-air acceptance test: ID-winding thermocouple <= 110 C after 1 h at 440 V / 25 A / 50 C",
+   "worst-case core loss (datasheet maximum 1.44x typical) and DC-bias effect to be measured",
+   "winding capacitance / SRF and displacement current under 110-120 V/ns to be estimated (EMI)",
+   "control loop must be stable for 230-350 uH",
+   "AIPE Magnetic Database schema not yet in the repository; record AIPE-MAG-L1-SICBUCK-5KW-V2 proposed in design/research/inductor.json selection.magnetic_record"
+  ],
+  "dnp": false,
+  "source": "design/research/inductor.json selection.magnetic_record + verify_output_inductor_*"
+ },
+ {
+  "mpn": "0058192A2 (catalogue selector: C058192A2)",
+  "manufacturer": "Magnetics Inc.",
+  "function": "High Flux 60u toroid core for L1 (two stacked; third for the fallback)",
+  "board": "power",
+  "quantity": "2 (3 with the 3-stack fallback) + spares",
+  "package_or_footprint": "toroid OD 58.04 / ID 25.58 / HT 16.13 mm coated",
+  "ratings": {
+   "AL_nH_T2": "138 +/-8 %",
+   "material": "High Flux 60u (FeNi), B_sat 1.5 T, Curie 500 C",
+   "Ae_mm2": 229,
+   "le_mm": 125,
+   "Ve_mm3": 28600,
+   "Wa_mm2": 514,
+   "mass_g": 218,
+   "core_loss_max": "900 mW/cm3 at 100 kHz / 100 mT",
+   "DC_bias_min": "80 % at 90 Oe, 50 % at 170 Oe",
+   "coating": "3000 VAC wire-to-wire, 200 C, khaki"
+  },
+  "operating_stress": {
+   "H_Oe": "85.5 / 107 / 139 at 25 / 31.3 / 40.7 A",
+   "P_v_mW_cm3": "73 / 94 / 114 typical fit at 360 / 400 / 440 V",
+   "temperature_C": "110-120 hot spot predicted in still air"
+  },
+  "margins": {
+   "B": "53 % of B_sat at 41 A",
+   "permeability_shift": "< 3 % over 0-125 C"
+  },
+  "selection_reason": "Highest B_sat of the powder families with acceptable 50 kHz loss; Kool Mu rolls off too far, XFlux loses 2.3x more core loss, ferrite saturates hard at the margin current.",
+  "alternatives": [
+   "0077192A7 Kool Mu 60u",
+   "0078192A7 XFlux 60u",
+   "0077102A7 Kool Mu 26u"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.mag-inc.com/Media/Magnetics/Datasheets/0058192A2.pdf",
+  "datasheet_revision": "Revision 10/6/2021",
+  "knowledge_refs": [
+   "external Magnetics catalogue methods (proposed new skill)",
+   "SKILL-006 (adapted)"
+  ],
+  "open_issues": [
+   "orderable code prefix to confirm with Magnetics; no distributor stock found"
+  ],
+  "dnp": false,
+  "source": "design/research/inductor.json"
+ },
+ {
+  "mpn": "Potting cup UL94 V-0 (PBT/PA) about OD 72 x 46 mm + thermally conductive epoxy",
+  "manufacturer": "to be selected (mechanical design)",
+  "function": "Inductor housing and mounting interface (4 x M4 to standoffs)",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "4 x 4.3 mm NPTH on 60 x 60 mm (cup dependent)",
+  "ratings": {
+   "flammability": "UL94 V-0",
+   "potting_class_C": ">= 130 required"
+  },
+  "operating_stress": {
+   "mass_carried_g": "about 780",
+   "temperature_C": "up to 110-120 at the winding"
+  },
+  "margins": {},
+  "selection_reason": "Keeps the 0.63-0.8 kg mass off the solder joints (V1 pattern for a 285 g part) and damps acoustic noise.",
+  "alternatives": [
+   "nylon M6 centre bolt + clamp plate + silicone pad (unpotted alternative)"
+  ],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-TH-002 (not applicable unless bolted to the sink)"
+  ],
+  "open_issues": [
+   "part number, standoff height and keep-out pattern to be fixed by the mechanical design"
+  ],
+  "dnp": false,
+  "source": "design/research/inductor.json"
+ },
+ {
+  "mpn": "B32776G8206K000",
+  "manufacturer": "TDK (EPCOS)",
+  "function": "Input DC-link film capacitor C_IN (two, one per side of the half bridge)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "custom 4-pad: (+/-18.75, +/-5.10) mm, drill 1.6 mm, pad 3.0 mm, courtyard 28 x 42 mm, height 37 mm (KiCad C_Rect_L41.5mm_W*_P37.50mm 2-pin footprints do not fit)",
+  "ratings": {
+   "C_uF": "20 +/-10 % (K)",
+   "V_R_70C_V": 800,
+   "V_op_85C_V": 700,
+   "I_rms_A": "14.5 at 70 C, 10 kHz, dT <= 20 K",
+   "ESR_mohm": 7.5,
+   "ESL_nH": 10,
+   "T_case_max_C": 105,
+   "dV_dt": "not obtained"
+  },
+  "operating_stress": {
+   "V_V": "440 / 460 / 480",
+   "I_rms_A": "6.92 per part (13.87 bank at 400 V / 27.5 A / 220 uH)",
+   "P_W": "0.36 + about 0.2 ring share",
+   "hotspot_C": "about 65-67 at 50 C ambient + 10-12 K local air",
+   "ripple_Vpp": "3.9 (1 %) at 27.5 A",
+   "stored_energy_J": "4.3 at 440 V"
+  },
+  "margins": {
+   "voltage": "0.55 / 0.575 / 0.60 of V_R; 0.63-0.69 of V_op,85",
+   "current": "0.48 of rating",
+   "thermal": "R_th 12.7 K/W, +4.6 K (+2.5-3 K ring)"
+  },
+  "selection_reason": "C >= dQ/dV with dQ 137.5 uC (KR-CAP-001 adapted) gives 17.2 uF for the 2 % target; two 20 uF 4-pin low-ESL parts share current, sit on both sides of the device row and give redundancy (KR-CAP-002 direct).",
+  "alternatives": [
+   "KEMET C4AQIBW5200A3JJ (same footprint, 17.4 A on a dT 30 K basis, 13 V/us, 262 A)",
+   "Vishay MKP1848C62080JP4 (12 A 4-pin, 35 V/us; terminal digit to confirm)",
+   "B32776G8306K000 30 uF growth option",
+   "single KEMET C4AQIBW5400A3OJ 40 uF rejected"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+  "datasheet_revision": "Film Capacitors - Capacitors for DC Link, Series B3277*D/E/G/J/T, June 2026",
+  "knowledge_refs": [
+   "SKILL-003 (adapted)",
+   "KR-CAP-001 (adapted)",
+   "KR-CAP-002 (direct)",
+   "KR-CAP-003 (adapted)",
+   "KR-PCB-006 (direct)",
+   "PE-PCB-006 (direct)",
+   "SKILL-006 step 3 (adapted, recommendation)",
+   "REF-TI-TIDA-010054 decision 2 (adapted)"
+  ],
+  "open_issues": [
+   "dV/dt and peak-current rating not obtained (precharge mandatory)",
+   "lifetime at the 0.55 ratio from the TDK curves",
+   "ESR flat-to-50 kHz verified for Vishay only (2x margin covers)",
+   "-1.33 %/C derating above 85 C not found in the extraction"
+  ],
+  "dnp": false,
+  "source": "design/research/capacitors.json + verify_dc_link_*"
+ },
+ {
+  "mpn": "CGA9P1X7T2J474M250KC (K250KC +/-10 % acceptable)",
+  "manufacturer": "TDK",
+  "function": "High-frequency commutation capacitor tier beside the half bridge",
+  "board": "power",
+  "quantity": 10,
+  "package_or_footprint": "2220 (5750 metric), 5.7 x 5.0 x 2.5 mm; row 1 within 5 mm, row 2 within 15 mm of the device pins, both sides",
+  "ratings": {
+   "C_uF": "0.47 +/-20 %",
+   "V_V": 630,
+   "dielectric": "X7T (+22/-33 %), -55..125 C",
+   "qualification": "AEC-Q200",
+   "soft_termination": "KE suffix per distributor data; KC unconfirmed"
+  },
+  "operating_stress": {
+   "V_V": "440 (0.70) / 480 (0.76; about 0.77 with the local ring)",
+   "I_rms_A": "0.75-1.4 ring current per piece at 670 kHz + 69 mA at 50 kHz",
+   "P_mW": "tens per piece",
+   "temperature": "hottest PCB zone, rated >= 125 C"
+  },
+  "margins": {
+   "C_eff_uF": "1.88 assumed (60 % bias loss) versus 1.5 required; adequate to about 20 % remaining by the exact I x Z0 model",
+   "dip_V": "6.2 (quarter-period model) / 4.0 (I x Z0) for 31.3 A at 30 nH"
+  },
+  "selection_reason": "KR-CAP-003 two-tier bank: ceramics carry the commutation edges and set the <= 20 nH loop; count derived from the film-interconnect resonance model, not TI's 14; part family shared with TIDA-010054 at a 0.70 ratio.",
+  "alternatives": [
+   "Knowles 2220Y1K00474KXTWS2 (1 kV, 0.44 ratio, FlexiCap; StackiCap height to verify)",
+   "KEMET C2220C474KCRACTU rejected (500 V, 0.88)"
+  ],
+  "verification_level": "search-snippet (TDK page HTTP 403)",
+  "datasheet_url": "https://static6.arrow.com/aropdfconversion/c71957a84d97d95bd2b4757994de297083c510d4/cga9p1x7t2j474m250ke.pdf",
+  "datasheet_revision": "not readable; sibling KE sheet 22 May 2025; knowledge record CMP-CGA9P1X7T2J474M250KC",
+  "knowledge_refs": [
+   "KR-CAP-003 (adapted)",
+   "KR-PCB-004 (direct)",
+   "PE-PCB-002 (direct)",
+   "PE-PCB-003 (direct)",
+   "SKILL-002 principle 1 (direct)",
+   "CMP-CGA9P1X7T2J474M250KC (adapted)"
+  ],
+  "open_issues": [
+   "DC-bias curve at 440 V unverified (count may rise or the 1 kV Knowles part substituted)",
+   "availability conflict (Avnet 0 / long lead versus other distributors)",
+   "lifecycle of the exact M250KC suffix unconfirmed",
+   "optional damping leg after loop extraction"
+  ],
+  "dnp": false,
+  "source": "design/research/capacitors.json + verify_dc_link_*"
+ },
+ {
+  "mpn": "B32776G4606K000",
+  "manufacturer": "TDK (EPCOS)",
+  "function": "Output film capacitor C_OUT (two)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "custom 4-pad: (+/-18.75, +/-10.15) mm, drill 1.6 mm, pad 3.0 mm, courtyard 30 x 45 mm, height 45 mm",
+  "ratings": {
+   "C_uF": "60 +/-10 %",
+   "V_R_70C_V": 450,
+   "V_op_85C_V": 450,
+   "I_rms_A": "23.5 at 70 C, 10 kHz, dT <= 20 K",
+   "ESR_mohm": 3.6,
+   "ESL_nH": 14,
+   "T_case_max_C": 105
+  },
+  "operating_stress": {
+   "V_V": "200 / 220; 440 under a high-side-short fault",
+   "I_rms_A": "1.43 per part (2.86 bank at 440 V / 220 uH)",
+   "P_mW": 7,
+   "ripple_Vpp": 0.25,
+   "step_V": "7.4 at f_c 2.5 kHz / 9.2 at 2 kHz for 12.5 A",
+   "load_dump_V": "+14.8 (214.8 V) for 25 A"
+  },
+  "margins": {
+   "voltage": "0.44 / 0.49; 0.98 in the fault (within V_op,85)",
+   "current": "0.06 of rating",
+   "transient": "7.4-9.2 V versus 10 V allowed; load dump below the 230 V OVP"
+  },
+  "selection_reason": "All-film bank sized by the 12.5 A load step at f_c 2.0-2.5 kHz (99.7 / 79.8 uF), not by ripple (12.5 uF); survives 440 V in the HS-short fault; electrolytic/hybrid rejected (lifetime modelling outside SKILL-003, venting).",
+  "alternatives": [
+   "Vishay MKP1848C66050JP* (57 mm tall)",
+   "3 x B32776G4406K000 (shares the C_IN footprint)",
+   "KEMET C4AQCBW5400A3LJ (650 V)",
+   "Nichicon LGW2E471MELB25 electrolytic rejected"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+  "datasheet_revision": "June 2026",
+  "knowledge_refs": [
+   "SKILL-003 (adapted)",
+   "KR-CAP-002 (direct)",
+   "KR-PCB-006 (direct)",
+   "PE-PCB-006 (direct)",
+   "SKILL-006 step 3 (adapted)"
+  ],
+  "open_issues": [
+   "voltage-loop crossover >= 2.0 kHz (2.5 kHz design) with inner current loop is a firmware-contract item",
+   "lifetime at the 0.44 ratio from the TDK curves"
+  ],
+  "dnp": false,
+  "source": "design/research/capacitors.json + verify_dc_link_*"
+ },
+ {
+  "mpn": "CRCW2512120KFKEG (x3 input, 360 k) / CRCW2512100KFKEG (x2 output, 200 k)",
+  "manufacturer": "Vishay Dale",
+  "function": "Passive DC-link discharge (bleeder) chains",
+  "board": "power",
+  "quantity": "3 + 2",
+  "package_or_footprint": "2512 (6332 metric), straight series chains along the capacitor edge",
+  "ratings": {
+   "P70_W": 1.0,
+   "U_max_V": "500 AC rms / DC",
+   "temperature_C": "-55 to +155 (film 155)",
+   "tolerance": "+/-1 %, +/-100 ppm/K"
+  },
+  "operating_stress": {
+   "input_per_element": "0.18 W, 147 V at 440 V (160 V at 480 V)",
+   "output_per_element": "0.10 W, 100-110 V; 0.48 W / 220 V under the 440 V HS-short fault",
+   "standby_W": 0.74,
+   "discharge_s": "about 30 to < 60 V (coupled banks, merged with the indicator strings)"
+  },
+  "margins": {
+   "power": "> 5x",
+   "voltage": "> 3x"
+  },
+  "selection_reason": "CR-03: < 60 V within 60 s with the IEC 60417-5036 label; the 5 s passive option (60 k / 32 k, about 4.5 W) is documented if the integrator demands it.",
+  "alternatives": [
+   "60 k / 32 k chains (5 s, about 4.5 W)",
+   "active discharge"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+  "datasheet_revision": "Document 20035, Revision 14-Apr-2026",
+  "knowledge_refs": [
+   "SKILL-003 (adapted)",
+   "KR-ISO-003 (direct)",
+   "standards: IEC 62477-1 4.4.9 / IEC 61800-5-1 4.3.11 (secondary-source clause numbers)"
+  ],
+  "open_issues": [
+   "60 s with label is a project choice pending the licensed standard text",
+   "output chain stress in the HS-short fault is brief - review"
+  ],
+  "dnp": false,
+  "source": "design/research/capacitors.json; CR-03"
+ },
+ {
+  "mpn": "Indicator strings: 3 x 150 k 1206 (input) and 2 x 100 k 1206 (output) + red LED LTST-C190KRKT class",
+  "manufacturer": "generic 1206 (Vishay CRCW1206 class) / Lite-On",
+  "function": "DC-LINK LIVE indicator per bank at the board edge",
+  "board": "power",
+  "quantity": "3 x 150 k, 2 x 100 k, 2 LEDs",
+  "package_or_footprint": "1206 / 0603 LED",
+  "ratings": {
+   "resistor": "0.25 W / 200 V typical 1206 (unverified)",
+   "LED": "low-current red, about 1 mA (unverified)"
+  },
+  "operating_stress": {
+   "input_per_element": "<= 160 V, 0.17 W at 480 V; about 1 mA LED current",
+   "output_per_element": "110 V / 0.12 W at 220 V; 220 V / 0.48 W during the HS-short fault (brief)"
+  },
+  "margins": {
+   "input": "within 1206 limits",
+   "output_fault": "exceeds 1206 ratings for the fault duration - review"
+  },
+  "selection_reason": "Standards agent requires a DC-LINK LIVE LED per bank; the sensing draft's 2 x 220 k string exceeded the 200 V / 0.25 W element limits and was replaced (CR-03).",
+  "alternatives": [
+   "2512 500 V elements if the fault stress is not accepted"
+  ],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "CR-03",
+   "standards_safety labels"
+  ],
+  "open_issues": [
+   "LED part number and 1206 limiting voltage to confirm"
+  ],
+  "dnp": false,
+  "source": "CR-03"
+ },
+ {
+  "mpn": "Damping leg (DNP): 1 uF 630 V DC film + 2 x 0.47 ohm 1 W 2512 in parallel",
+  "manufacturer": "to be selected",
+  "function": "Optional RC damping of the film-to-ceramic bus resonance (about 670 kHz)",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "film capacitor footprint to be defined + 2 x 2512",
+  "ratings": {
+   "capacitor": "1 uF 630 V DC film",
+   "resistor": "0.47 ohm, >= 2 W total (two 1 W 2512)"
+  },
+  "operating_stress": {
+   "ring_energy": "22.6 uJ per period at 30 nH -> about 1 W average if populated"
+  },
+  "margins": {},
+  "selection_reason": "Populated only if the extracted interconnect inductance shows more than 2 % bus ringing; resistor rating derived from the ring energy (verifier correction).",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-CAP-003 (adapted)",
+   "KR-PCB-004 (direct)"
+  ],
+  "open_issues": [
+   "decide after layout extraction / double-pulse"
+  ],
+  "dnp": true,
+  "source": "design/research/capacitors.json + verify_dc_link_*_engineering"
+ },
+ {
+  "mpn": "RC snubber pads (DNP): 2512 resistor + 1812 1 kV capacitor across the LS device (SW-PGND)",
+  "manufacturer": "to be selected",
+  "function": "Optional switch-node RC snubber",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "2512 + 1812",
+  "ratings": {
+   "capacitor": "1 kV 1812 class"
+  },
+  "operating_stress": {
+   "V_V": "440 pulsed, 528-590 peak"
+  },
+  "margins": {},
+  "selection_reason": "Pads only; populated if double-pulse tests show ringing beyond the design margin or dv/dt above the 120 V/ns CMTI envelope.",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-PCB-004 (adapted)",
+   "SKILL-001 (CMTI mitigation)"
+  ],
+  "open_issues": [
+   "decide after double-pulse"
+  ],
+  "dnp": true,
+  "source": "design/research/mosfet.json pcb_constraints"
+ },
+ {
+  "mpn": "B72220S0381K101 (SIOV S20K385)",
+  "manufacturer": "TDK (EPCOS)",
+  "function": "Optional input surge absorber VIN+ / PGND downstream of the fuse",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "20 mm leaded disc footprint",
+  "ratings": {
+   "V_rms_V": 385,
+   "V_DC_V": 505,
+   "i_max_8_20us_A": 8000,
+   "W_max_J": 150,
+   "P_max_W": 1.0,
+   "v_c_V": "1025 at 100 A"
+  },
+  "operating_stress": {
+   "V_V": "480 for 100 ms (survival), 440 continuous"
+  },
+  "margins": {
+   "DC": "505 / 480 = 1.05 - clamps only above the survival corner"
+  },
+  "selection_reason": "Footprint reserved (DNP) for an unspecified DC source; the B72210 code quoted in the first draft is the 10 mm S10K385 (2.5 kA, 40 J).",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/70/db/var/SIOV_Leaded_StandarD.pdf",
+  "datasheet_revision": "SIOV leaded standard series, March 2018",
+  "knowledge_refs": [
+   "standards_safety (surge)"
+  ],
+  "open_issues": [
+   "populate only once the source transient envelope is defined"
+  ],
+  "dnp": true,
+  "source": "CR-19"
+ },
+ {
+  "mpn": "TMCS1133C2AQDVGR",
+  "manufacturer": "Texas Instruments",
+  "function": "Isolated Hall current sensor in the inductor-output path with fast OC output",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "custom DVG-16 (10.3 x 10.3 mm): fused bar pads for IN+/IN- (27.5 A) and 8 SELV pins; 1.2 mm slot under the body",
+  "ratings": {
+   "sensitivity_mV_A": 50,
+   "zero_current_V": 0.33,
+   "linear_range_A": "-4.6 to +57.4 at 3.3 V",
+   "OC": "V_OC = S x I_OC / 2.5; 100 / 250 ns; +/-2 / +/-10 % error; hysteresis 3.5 A; V_OC pin 120 k",
+   "R_IN_mohm": 0.7,
+   "I_continuous_Arms": "80 at 25 C (44 at 125 C)",
+   "bandwidth_MHz": 1,
+   "isolation": "950 Vrms / 1343 VDC reinforced; VIOTM 7071 Vpk; VIOSM 10 kVpk; >= 8 mm (TI page still shows 600 Vrms)",
+   "supply_V": "3.0-5.5"
+  },
+  "operating_stress": {
+   "I_A": "27.5 continuous (0.53 W), 32.0 peak, -2.8 to -3.4 at no load",
+   "V_OC_V": "0.750 (37.5 A) from REF3125 via 2.32 k / 1.00 k",
+   "trip_chain_ns": 546,
+   "node_V": "200 DC (VOUT)"
+  },
+  "margins": {
+   "ADC": "full scale 53.4 A, 14.65 mA/LSB",
+   "OC": "32.0 A worst overload versus 33.7 A worst-case low trip bound (1.7 A); worst trip peak about 42.6 A with L 175 uH",
+   "isolation": "> 6x at 200 V"
+  },
+  "selection_reason": "SKILL-005 Hall element with built-in fast OC avoids a shunt in the HV path and provides the KR-SN-005 hardware trip; the C2A unidirectional variant doubles resolution over the TIDA B1 variant.",
+  "alternatives": [
+   "TMCS1133B1AQDVGR (25 mV/A, V_OC 0.375 V near the 0.3 V floor)",
+   "AMC1302 + 1 mohm shunt rejected (no OC output, 0.76 W)",
+   "INA240 low-side rejected (PGND hazardous)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+  "datasheet_revision": "SBOSAG0E, October 2023 - revised May 2026; ti.com Active",
+  "knowledge_refs": [
+   "SKILL-005 (direct)",
+   "KR-SN-001 (direct)",
+   "KR-SN-002 (direct)",
+   "KR-SN-005 (direct)",
+   "KR-PR-001 (direct, inductor path only)",
+   "KR-ISO-002 (human-review)",
+   "KR-ISO-004 (adapted)",
+   "CB-SN-004 (adapted)",
+   "CMP-TMCS1133 (direct, orderable corrected)",
+   "PE-PCB-005 (direct)",
+   "PE-PCB-006 (direct)"
+  ],
+  "open_issues": [
+   "12-week lead time (Digi-Key)",
+   "knowledge record CMP-TMCS1133 lists the non-orderable TMCS1133B1QDVGR",
+   "shoot-through is invisible to the sensor - DESAT only"
+  ],
+  "dnp": false,
+  "source": "design/research/sensing_protection.json + verify_sensing_*"
+ },
+ {
+  "mpn": "AMC1311BDWVR",
+  "manufacturer": "Texas Instruments",
+  "function": "Isolated voltage amplifiers for V_IN (480 V full scale 602 V) and V_OUT (240 V full scale 302 V)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "SOIC-8 DWV; 1.2 mm slot under the body",
+  "ratings": {
+   "input_V": "0-2 linear, 2.516 clipping, gain 1",
+   "accuracy": "+/-0.2 % gain, +/-1.5 mV offset (B)",
+   "VDD1_V": "3.0-5.5 (B grade)",
+   "IDD1_mA": "7.1 / 9.7",
+   "isolation": "7000 Vpk; 1500 Vrms / 2120 VDC working; CMTI 100 kV/us; >= 8.5 mm",
+   "output": "differential, 1.44 V common mode"
+  },
+  "operating_stress": {
+   "input_V": "1.595 at 480 V (V_IN); 1.589 at 240 V (V_OUT)",
+   "supply": "5V_ISO from the sensing module COM (about 20 mA for both)",
+   "working_voltage_V": "480 / 240"
+  },
+  "margins": {
+   "range": "80 % of the linear range at the survival corner (KR-SN-002)",
+   "isolation": "> 4x"
+  },
+  "selection_reason": "Isolated analogue amplifiers are the only option without an SDFM peripheral (KR-SN-003); B grade for accuracy and 3.0-5.5 V VDD1.",
+  "alternatives": [
+   "AMC1306 / AMC1336 bitstream (not decodable by the F28335)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+  "datasheet_revision": "SBAS786C, December 2017 - revised June 2022; Active",
+  "knowledge_refs": [
+   "SKILL-005 (direct)",
+   "KR-SN-001 (direct)",
+   "KR-SN-002 (direct)",
+   "KR-SN-003 (not applicable)",
+   "CB-SN-001 (adapted)",
+   "CMP-AMC1311 (direct)",
+   "KR-ISO-004 (adapted)"
+  ],
+  "open_issues": [
+   "knowledge record cache path stale"
+  ],
+  "dnp": false,
+  "source": "design/research/sensing_protection.json"
+ },
+ {
+  "mpn": "RT1206BRD07750KL (750 k 0.1 % x6) / RT1206BRD0710KL (10.0 k 0.1 % x2) + 1 nF C0G and 100 pF C0G per ladder",
+  "manufacturer": "Yageo (generic C0G)",
+  "function": "HV sense ladders: 4 x 750 k + 10.0 k (V_IN), 2 x 750 k + 10.0 k (V_OUT), with 1 nF across the bottom resistor and 100 pF at IN",
+  "board": "power",
+  "quantity": "6 + 2 resistors, 2 + 2 capacitors",
+  "package_or_footprint": "1206 (resistors) / 0603 C0G",
+  "ratings": {
+   "tolerance_pct": 0.1,
+   "power_W": 0.25,
+   "limiting_voltage": "RT 1206 series value unverified (200 V assumed)"
+  },
+  "operating_stress": {
+   "per_element": "119.6 V / 19 mW at 480 V (109.6 V / 16 mW at 440 V); 119.2 V / 19 mW at 240 V output",
+   "divider_current_uA": "146-159",
+   "filter_kHz": "16.0 (ladder), 32.2 (OPA stage), 159 (ADC RC)"
+  },
+  "margins": {
+   "voltage": "> 1.6x on a 200 V element rating",
+   "power": "> 10x"
+  },
+  "selection_reason": "CB-SN-001 ladder re-derived for 480 V / 240 V so that 2 V = 602 V / 302 V maps to 3.0 V at the ADC (KR-SN-002); straight-line placement along the creepage path.",
+  "alternatives": [],
+  "verification_level": "search-snippet (Digi-Key listing); limiting voltage unverified",
+  "datasheet_url": "not found (Yageo RT datasheet not fetched)",
+  "datasheet_revision": "not found",
+  "knowledge_refs": [
+   "CB-SN-001 (adapted)",
+   "KR-SN-002 (direct)",
+   "PE-PCB-005 (direct)"
+  ],
+  "open_issues": [
+   "confirm the RT 1206 limiting element voltage and the 750 k availability"
+  ],
+  "dnp": false,
+  "source": "design/research/sensing_protection.json"
+ },
+ {
+  "mpn": "OPA2320AIDGKR + 4 x 10.0 k / 4 x 15.0 k 0.1 % 0603 + 2 x 330 pF C0G",
+  "manufacturer": "Texas Instruments (generic passives)",
+  "function": "Difference amplifiers (gain 1.5, 32 kHz) converting the AMC1311 differential outputs to single-ended VIN_SENSE / VOUT_SENSE on the power-board SELV strip",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "VSSOP-8 DGK + 0603",
+  "ratings": {
+   "GBW_MHz": 20,
+   "slew_V_us": 10,
+   "V_os_uV": 150,
+   "supply_V": "1.8-5.5 rail-to-rail",
+   "I_q_mA": "1.45 per channel"
+  },
+  "operating_stress": {
+   "output_V": "2.392 at 480 V; 2.384 at 240 V; saturates at 3.3 V (no ADC clamp current)",
+   "supply": "3V3_PWRBOARD"
+  },
+  "margins": {
+   "bandwidth": "600x the 32 kHz corner"
+  },
+  "selection_reason": "CR-16 moves the conditioning to the power board so only ground-referenced single-ended nets cross the mezzanine; OPA2320 reused from the TIDA/V1 pattern with a recomputed gain.",
+  "alternatives": [
+   "TLV9004IPWR (1 MHz, lower cost)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/opa2320.pdf",
+  "datasheet_revision": "SBOS513F, August 2010 - revised December 2016; Active",
+  "knowledge_refs": [
+   "CB-SN-001 (adapted)",
+   "SKILL-005 principle 3 (adapted)",
+   "CR-16"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "CR-16; design/research/sensing_protection.json"
+ },
+ {
+  "mpn": "REF3125AIDBZR",
+  "manufacturer": "Texas Instruments",
+  "function": "2.5 V reference: TMCS1133 V_OC divider (power-board SELV strip) and comparator thresholds (control board)",
+  "board": "power",
+  "quantity": "2 (one per board; added assumption)",
+  "package_or_footprint": "SOT-23-3 DBZ",
+  "ratings": {
+   "V_V": 2.5,
+   "accuracy_pct": 0.2,
+   "tempco_ppm_K": 20,
+   "I_out_mA": "+/-10"
+  },
+  "operating_stress": {
+   "loads": "2.32 k / 1.00 k V_OC divider (0.75 mA); comparator dividers (1.00 k / 11.0 k, 953 / 10.0 k, 1.00 k / 1.91 k)"
+  },
+  "margins": {
+   "threshold_error": "+/-0.2 % + divider tolerance"
+  },
+  "selection_reason": "V1 pattern; two parts because CR-16 places the V_OC divider on the power board and the mezzanine allocates no 2.5 V pin (added assumption).",
+  "alternatives": [
+   "REF30E family (newer)",
+   "route 2.5 V over a spare mezzanine pin"
+  ],
+  "verification_level": "fetched-datasheet (cached SBVS046E)",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/ref3125.pdf",
+  "datasheet_revision": "SBVS046E, December 2003 - revised April 2026; Active",
+  "knowledge_refs": [
+   "CB-SN-004 (adapted)",
+   "V1 pattern"
+  ],
+  "open_issues": [
+   "second part is an added assumption - ratify or add a mezzanine pin"
+  ],
+  "dnp": false,
+  "source": "CR-16; design/research/sensing_protection.json"
+ },
+ {
+  "mpn": "REF3130AIDBZR",
+  "manufacturer": "Texas Instruments",
+  "function": "3.00 V reference for the heat-sink NTC pull-up (2.2 k) and the ratiometric OTP comparator divider",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "SOT-23-3 DBZ",
+  "ratings": {
+   "V_V": 3.0,
+   "accuracy_pct": "0.2 (family)",
+   "tempco_ppm_K": "20 (family)"
+  },
+  "operating_stress": {
+   "load": "2.2 k pull-up (<= 1.4 mA) + 32.4 k / 10.0 k OTP divider (71 uA)"
+  },
+  "margins": {
+   "ratiometric": "OTP threshold tracks the NTC supply"
+  },
+  "selection_reason": "3.00 V reference named by design_decisions.json (schema 4, CR-26) for the NTC pull-up and the ratiometric OTP divider 32.4 k / 10.0 k (0.708 V = 100 C, CR-25); the earlier 'REF3125 buffered' wording was withdrawn because a 2.5 V part cannot supply 3.00 V. Control BOM U15; VIN minimum 3.05 V below the 3.234 V 3V3 minimum.",
+  "alternatives": [
+   "buffered 3.0 V from the 3.3 V rail with a divider (ratiometric, less accurate)"
+  ],
+  "verification_level": "unverified (REF31 family datasheet fetched for REF3125; REF3130 variant not checked)",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/ref3125.pdf",
+  "datasheet_revision": "SBVS046E (REF31xx family)",
+  "knowledge_refs": [
+   "KR-TH-003 (human-review)",
+   "CR-01"
+  ],
+  "open_issues": [
+   "REF3130 variant parameters to confirm against the REF31xx datasheet (family values assumed)"
+  ],
+  "dnp": false,
+  "source": "orchestrator component list; design_decisions.json sensing.heatsink_temperature"
+ },
+ {
+  "mpn": "NTCALUG01A103F",
+  "manufacturer": "Vishay",
+  "function": "Heat-sink temperature sensor (ring-lug NTC) on the sink top face beside the HS device, wired to J_NTC",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "M3 ring lug; 38.1 +/- 3.8 mm PTFE AWG24 leads (-161 variant 160 mm if needed)",
+  "ratings": {
+   "R25_kohm": "10 +/-1 %",
+   "B25_85_K": "3984 +/-0.5 %",
+   "temperature_C": "-55 to +150",
+   "dissipation_mW_K": 13,
+   "time_constant_s": 5,
+   "insulation": "1500 VAC terminals-to-lug; 100 Mohm at 500 VDC",
+   "qualification": "AEC-Q200 grade 1"
+  },
+  "operating_stress": {
+   "readout_V": "2.46 / 1.09 / 0.88 / 0.71 / 0.57 at 25 / 80 / 90 / 100 / 110 C with 2.2 k to 3.00 V (15.5 mV/K at 100 C)",
+   "self_heating_K": "about 0.06",
+   "T_sink_C": "67-72 worst steady state",
+   "T_J_mapping": "T_J,HS about T_NTC + 50-66 K at full load (1.4 K/W pad; 66 K with max-R parts at the overload corner)"
+  },
+  "margins": {
+   "thresholds_C": "80 derate and overload inhibit / 90 firmware trip / 100 hardware comparator trip (CR-25; the earlier 90 / 100 / 110 ladder mapped the hardware trip to T_J 176-178 C) - KR-TH-003 review proposals; firmware T_J estimator recommended"
+  },
+  "selection_reason": "Insulated-lug NTC at PE potential read directly on the SELV side under the PELV grounding (CR-01, CR-08); replaces the TDK B57703M0103G040 whose lead length and test voltage were misquoted.",
+  "alternatives": [
+   "TDK B57703M0103G040 rejected (45 mm leads, 1000 VAC / 1 s)",
+   "NTCALUG01A103F-161 (160 mm leads)",
+   "UCC21710 AIN/APWM route (CB-PR-002) as fallback"
+  ],
+  "verification_level": "fetched-datasheet (by verifier)",
+  "datasheet_url": "https://www.vishay.com/docs/29092/ntcalug01a.pdf",
+  "datasheet_revision": "Document 29092, Revision 14-Jan-2026",
+  "knowledge_refs": [
+   "KR-TH-003 (human-review)",
+   "SKILL-006 principle 5 (adapted)",
+   "CB-PR-002 (adapted then rejected)",
+   "KR-TH-002 (direct)",
+   "PE-PCB-005 (direct)"
+  ],
+  "open_issues": [
+   "lead-length variant (distributor quotes 34.29 mm for the base code)",
+   "use the Vishay R/T table above 85 C; calibrate with a potentiometer",
+   "thresholds are proposals; spreading offset +4-6 K to measure"
+  ],
+  "dnp": false,
+  "source": "CR-01, CR-06, CR-08; design/research/thermal.json"
+ },
+ {
+  "mpn": "LM61CIM3",
+  "manufacturer": "Texas Instruments",
+  "function": "Control-board local temperature sensor (ADCINA3)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "SOT-23",
+  "ratings": {
+   "range_C": "-30 to +100 (family)",
+   "output": "analogue 6.25 mV/C + 600 mV offset"
+  },
+  "operating_stress": {
+   "supply_V": 3.3
+  },
+  "margins": {},
+  "selection_reason": "V1 pattern reused.",
+  "alternatives": [],
+  "verification_level": "unverified (V1 cache, not re-read)",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/lm61.pdf",
+  "datasheet_revision": "V1 cache 2026-10-09",
+  "knowledge_refs": [
+   "V1 pattern"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design_decisions.json sensing.control_board_local_temperature"
+ },
+ {
+  "mpn": "TLV1702AIDGKR + threshold dividers (1.00 k / 11.0 k; 953 ohm / 10.0 k; 1.00 k / 1.91 k + 21.5 k hysteresis; OTP 32.4 k / 10.0 k from the 3.00 V REF3130)",
+  "manufacturer": "Texas Instruments (0603 divider resistors: 1 % RC0603FR in the control BOM, 0.1 % optional)",
+  "function": "Hardware comparators: OVP_in 460 V, OVP_out 230 V, UVLO 340/320 V (run permit), OTP 100 C (CR-25)",
+  "board": "control",
+  "quantity": "2 packages (4 comparators)",
+  "package_or_footprint": "VSSOP-8 DGK + 0603",
+  "ratings": {
+   "t_pd_ns": "560 (100 mV overdrive)",
+   "V_os_uV": 300,
+   "supply_V": "2.2-36",
+   "output": "open collector to 36 V"
+  },
+  "operating_stress": {
+   "thresholds": "2.2917 V = 459.9 V; 2.1872 V on 953 / 10.0 k = 229.8 V; 1.641 V centre = 329 V with +/-10 V hysteresis; OTP 0.708 V = 100 C (32.4 k / 10.0 k, ratiometric to the 3.00 V REF3130; CR-25)"
+  },
+  "margins": {
+   "OVP_out": "25 A load dump 215-218 V stays below 230 V (CR-04)"
+  },
+  "selection_reason": "Fast open-collector comparators feeding the SN74LV21A groups; thresholds derived from REF3125 (OVP/UVLO) and ratiometric to the NTC supply (OTP).",
+  "alternatives": [
+   "LM2903BDR (V1)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tlv1702.pdf",
+  "datasheet_revision": "SBOS589D, December 2013 - revised June 2015; Active",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "KR-TH-003 (human-review)",
+   "CR-04",
+   "CR-17"
+  ],
+  "open_issues": [
+   "UVLO open-collector hysteresis network is asymmetric - verify by simulation or implement bus UVLO in firmware",
+   "OTP divider 32.4 k / 10.0 k is baseline (CR-25); the 1 % divider resistors of the control BOM (R65 / R66) add about +/-0.6-0.9 K - 0.1 % optional"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.comparators"
+ },
+ {
+  "mpn": "SN74LVC1G74DCTR",
+  "manufacturer": "Texas Instruments",
+  "function": "Fault/arm latch (D = 1, CLK = ARM, CLR_N = combined latched fault, Q = ARMED = FAULT_N)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "SSOP-8 DCT",
+  "ratings": {
+   "t_pd_ns": "5.9 max at 3.3 V",
+   "I_CC_uA": 10,
+   "V_CC_V": "1.65-5.5"
+  },
+  "operating_stress": {
+   "outputs": "TZ1 (GPIO12) and the PWM AND gates"
+  },
+  "margins": {},
+  "selection_reason": "KR-PR-002: faults clear the latch asynchronously, re-arm only by an explicit ARM edge; the DCKR suffix of the first draft does not exist (CR-19).",
+  "alternatives": [
+   "SN74LVC1G74DCUR (VSSOP-8)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf",
+  "datasheet_revision": "SCES794G, October 2009 - revised September 2021; Active",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "CR-17",
+   "CR-19"
+  ],
+  "open_issues": [
+   "CLR-to-Q maximum at 3.3 V to read from the switching table"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.fault_latch"
+ },
+ {
+  "mpn": "SN74LV21APWR",
+  "manufacturer": "Texas Instruments",
+  "function": "Dual 4-input AND fault combiner: 13 latched inputs (two stages) and the 4-input run-permit group",
+  "board": "control",
+  "quantity": 3,
+  "package_or_footprint": "TSSOP-14 PW",
+  "ratings": {
+   "t_pd_ns": "12 max at 3.3 V +/-0.3 V, 50 pF (6 at 5 V)",
+   "V_CC_V": "2-5.5",
+   "drive_mA": "+/-12"
+  },
+  "operating_stress": {
+   "inputs": "LATCHED: FLT_H_N, FLT_L_N, OC_N, OVP_IN_N, OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N -> CLR_N; RUN-PERMIT: UVLO_N, RDY_H, RDY_L, ARMED -> PWM enable"
+  },
+  "margins": {
+   "latency": "fault-to-gate <= 240 ns"
+  },
+  "selection_reason": "13 latched signals need four first-stage and one second-stage 4-input gates, the run-permit group one more: six gates = three dual packages (adopted by the schema 4 baseline, CR-26: 3 x SN74LV21A plus SN74LV04A inverters for the UVLO and PG polarities).",
+  "alternatives": [
+   "wired-OR open-collector node (sensing draft) dropped, CR-17"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf",
+  "datasheet_revision": "SCES340F (revision date not confirmed); Active",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "CB-GD-003 fault-combining pattern (adapted)",
+   "CR-17"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design_decisions.json protection.fault_combiner"
+ },
+ {
+  "mpn": "SN74LV04APWR",
+  "manufacturer": "Texas Instruments",
+  "function": "Hex inverter for polarity restoration in the fault combiner: UVLO comparator flag -> UVLO_N; UCC14141 PG (low = good) -> PG_BIAS_H/L/S_OK (high = good)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "TSSOP-14 PW",
+  "ratings": {
+   "V_CC_V": "2-5.5 (SN74LV family)",
+   "t_pd_ns": "not fetched in this run"
+  },
+  "operating_stress": {
+   "inputs": "4 of 6 inverters used (UVLO flag, PG_BIAS_H_N, PG_BIAS_L_N, PG_BIAS_S_N); 2 spare with inputs tied"
+  },
+  "margins": {
+   "latency": "one gate delay ahead of the SN74LV21A groups; the fault-to-gate budget of <= 240 ns is not affected at this level"
+  },
+  "selection_reason": "Named by the schema 4 baseline (CR-26) together with the 3 x SN74LV21A combiner: the AND combiner needs high = OK, while the UCC14141 PG pin is low when good and the UVLO comparator output is high in under-voltage.",
+  "alternatives": [
+   "SN74LVC1G04 single inverters"
+  ],
+  "verification_level": "unverified (SN74LV04A datasheet not fetched in this run)",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lv04a.pdf",
+  "datasheet_revision": "not checked",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "CR-26"
+  ],
+  "open_issues": [
+   "confirm the PG and UVLO polarity at bring-up with BIAS_EN low (firmware_interface.md)"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.fault_combiner (CR-26); components/bom_control.csv U11"
+ },
+ {
+  "mpn": "SN74LVC2G08DCTR",
+  "manufacturer": "Texas Instruments",
+  "function": "PWM gating: ePWM1A/1B AND ARMED AND RUN_PERMIT",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "SSOP-8 DCT",
+  "ratings": {
+   "t_pd_ns": "4.7 max at 3.3 V",
+   "drive_mA": "+/-24"
+  },
+  "operating_stress": {
+   "outputs": "33 ohm series to the mezzanine"
+  },
+  "margins": {},
+  "selection_reason": "Actively drives the PWM lines low when disarmed (a 3-state buffer would decay through the pull-down in about 2 us).",
+  "alternatives": [
+   "SN74LVC126APWR"
+  ],
+  "verification_level": "manufacturer-page",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+  "datasheet_revision": "Rev. N, December 2015; Active",
+  "knowledge_refs": [
+   "KR-GD-009 (direct)",
+   "KR-PR-002 (direct)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design_decisions.json protection.pwm_gating"
+ },
+ {
+  "mpn": "Logic pull resistors and TZ filters: 10 k pull-downs (PWM_H, PWM_L, ARM, RELAY_ON, BIAS_EN), pull-ups (DSP_TRIP_N, ESTOP_N), 33 ohm series x2, 33 ohm + 100 pF at TZ1/TZ2",
+  "manufacturer": "generic",
+  "function": "Defined states for GPIO0-11 (no reset pull-ups) and trip-zone filtering",
+  "board": "control",
+  "quantity": "about 12",
+  "package_or_footprint": "0603",
+  "ratings": {},
+  "operating_stress": {
+   "V_V": 3.3
+  },
+  "margins": {},
+  "selection_reason": "SPRS439Q: pull-ups on GPIO0-11 are not enabled at reset, so every DSP-driven control net needs a defined level (verifier correction).",
+  "alternatives": [],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-GD-009 (direct)",
+   "KR-PR-002 (direct)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "verify_controller_auxiliary_*_engineering"
+ },
+ {
+  "mpn": "TMS320F28335PGFA",
+  "manufacturer": "Texas Instruments",
+  "function": "Digital controller (ePWM1A/1B, TZ1-TZ4, ADC, eCAP, SCI-A, JTAG)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "LQFP-176 PGF (0.5 mm pitch on 35 um copper)",
+  "ratings": {
+   "clock_MHz": 150,
+   "I_DD_mA": "290 / 315 (1.9 V)",
+   "I_DDIO_mA": "30 / 50",
+   "I_DD3VFL_mA": "35 / 40",
+   "I_DDA18_mA": "30 / 35",
+   "ADC": "12-bit, 0-3 V conversion range; pins clamp a diode above VDDA2 with +/-2 mA",
+   "sequencing": "VDD before or with VDDIO; XRS low >= 8 us before VDD < 1.5 V"
+  },
+  "operating_stress": {
+   "PWM": "TBPRD 1500 up-down at 150 MHz (6.667 ns tick), dead band 45 ticks = 300 ns",
+   "pin_map": "components/tms320f28335_pgf_pins.csv (all 176 pins)"
+  },
+  "margins": {
+   "rails": "1.9 V 0.35 A, 3.3 V 0.18 A budgeted"
+  },
+  "selection_reason": "Mandated controller; V1 pin patterns reused with the V2 signal map (design_decisions.json controller.dsp_pin_map).",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tms320f28335.pdf",
+  "datasheet_revision": "SPRS439Q, June 2007 - revised August 2022; Active",
+  "knowledge_refs": [
+   "KR-GD-009 (direct)",
+   "KR-SN-003 (not applicable: no SDFM)",
+   "KR-SN-005 (direct)"
+  ],
+  "open_issues": [
+   "firmware contract: 300 ns dead band at bring-up, TZ one-shot, 15.6 A input-current limit below 360 V, relay coil PWM hold"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json controller"
+ },
+ {
+  "mpn": "ASV-30.000MHZ-EJ-T",
+  "manufacturer": "Abracon",
+  "function": "30 MHz 3.3 V oscillator on XCLKIN (X1 grounded, X2 open)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "ASV 7.0 x 5.0 mm",
+  "ratings": {
+   "V_V": 3.3,
+   "f_MHz": 30
+  },
+  "operating_stress": {
+   "load": "XCLKIN"
+  },
+  "margins": {},
+  "selection_reason": "V1 pattern reused.",
+  "alternatives": [],
+  "verification_level": "unverified (V1 cache, not re-read)",
+  "datasheet_url": "https://abracon.com/Oscillators/ASV.pdf",
+  "datasheet_revision": "V1 cache 2026-10-09",
+  "knowledge_refs": [
+   "V1 pattern"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design_decisions.json controller.dsp"
+ },
+ {
+  "mpn": "TPS26400PWPR + setting network (107 k / 4.42 k / 10.0 k 1 %, R_ILIM 6.04 k, C_dVdT 100 nF, R_IMON 14.7 k, 45.3 k / 10.0 k V12 monitor divider, 100 uF 25 V bulk)",
+  "manufacturer": "Texas Instruments (generic passives)",
+  "function": "12 V auxiliary input eFuse: reverse blocking, UVLO, OVP, circuit breaker, inrush ramp, current monitor",
+  "board": "control",
+  "quantity": "1 + passives",
+  "package_or_footprint": "HTSSOP-16 PWP (PowerPAD stitched to GND) + 0603 / bulk capacitor",
+  "ratings": {
+   "V_V": "4.2-42 operating, 45 abs max, reverse to -42",
+   "R_ON_mohm": "150 typ, 210 at 85 C",
+   "MODE": "open = circuit breaker, t_CB 4 ms, 540 ms auto-retry",
+   "I_CB": "12 / R_ILIM - 0.03 A",
+   "IMON_gain_uA_A": "72 / 78.28 / 85",
+   "thresholds_V": "1.19 rising / 1.1 falling (1.175-1.225)"
+  },
+  "operating_stress": {
+   "UVLO_V": "10.02 rising / 9.26 falling",
+   "OVP_V": "14.45 rising / 13.36 falling",
+   "I_CB_A": "about 1.96 with 6.04 k",
+   "ramp_ms": "8.9-12.2 at 12 V with 100 nF",
+   "IMON": "3.0 V at 2.4 A to ADCINB0",
+   "load_A": "1.76 worst during relay pull-in, 1.59 steady with coil PWM hold (10.8 V)"
+  },
+  "margins": {
+   "circuit_breaker": "1.11x during pull-in, 1.23x steady",
+   "downstream": "UVLO 10.0 V above the module UVLO 8.5 V; OVP 14.45 V below the module 18 V and TPS54302 28 V"
+  },
+  "selection_reason": "CB-PR-001 alternative A at the 12 V entry before any distribution (KR-PR-003); TI's 9 V / 15 V / 2.2 A instance values replaced by derived ones; MODE open sizing basis per CR-18, R_ILIM per CR-02.",
+  "alternatives": [
+   "P-FET + Zener (CB-PR-001 alternative B) rejected",
+   "external 2.5 A supply recommended; fan upstream of the eFuse as fallback"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps2640.pdf",
+  "datasheet_revision": "SLVSFQ6A, November 2020 - revised June 2021; Active",
+  "knowledge_refs": [
+   "KR-PR-003 (human-review)",
+   "CB-PR-001 (adapted)",
+   "CMP-TPS2640 (direct)",
+   "CR-02",
+   "CR-18"
+  ],
+  "open_issues": [
+   "margin 1.11x to the circuit-breaker threshold during relay pull-in",
+   "100 uF bulk part to be selected",
+   "MODE alternatives (402 k latch, short) not confirmed from the table"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json controller.aux_12V_protection"
+ },
+ {
+  "mpn": "SMBJ15CA",
+  "manufacturer": "Littelfuse",
+  "function": "Bidirectional TVS at the 12 V entry",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "DO-214AA (SMB)",
+  "ratings": {
+   "V_RWM_V": 15,
+   "V_BR_V": "16.7-18.5",
+   "V_C_V": "24.4 at 24.6 A",
+   "P_PP_W": "600 (10/1000 us)"
+  },
+  "operating_stress": {
+   "V_in_V": "13.2 maximum; OVP band 13.8-15.2"
+  },
+  "margins": {
+   "coordination": "V_BR,min 16.7 V > OVP max 15.2 V; V_C 24.4 V < 45 V abs max"
+  },
+  "selection_reason": "Bidirectional so a reversed input presents no diode load to the eFuse; coordinates with the OVP band.",
+  "alternatives": [
+   "SMBJ36CA (TI 24 V instance) not copied"
+  ],
+  "verification_level": "search-snippet (distributor data consistent)",
+  "datasheet_url": "https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj",
+  "datasheet_revision": "not found (HTTP 403)",
+  "knowledge_refs": [
+   "CB-PR-001 (adapted)",
+   "KR-PR-003 (human-review)"
+  ],
+  "open_issues": [
+   "fetch the Littelfuse datasheet"
+  ],
+  "dnp": false,
+  "source": "design/research/controller_aux_interconnect.json"
+ },
+ {
+  "mpn": "TPS54302DDCR + Coilcraft MSS1048-103MLC 10 uH + 22 uF x3 + 220 uF + 100 nF",
+  "manufacturer": "Texas Instruments / Coilcraft (generic capacitors)",
+  "function": "12 V -> 5 V buck for the control board",
+  "board": "control",
+  "quantity": "1 + passives",
+  "package_or_footprint": "SOT-23-THN DDC + 10 x 10 mm inductor",
+  "ratings": {
+   "V_in_V": "4.5-28",
+   "I_out_A": 3,
+   "f_sw_kHz": 400,
+   "EN_V": "1.23 typ / 1.28 max rising"
+  },
+  "operating_stress": {
+   "I_5V_A": 0.54,
+   "P_in_W": "3.17 at 85 % assumed efficiency",
+   "I_12V_A": "0.29 at 10.8 V"
+  },
+  "margins": {
+   "current": "5.5x"
+  },
+  "selection_reason": "V1 pattern; TI names TPS543021 / TPS62933 as newer alternatives.",
+  "alternatives": [
+   "TPS543021",
+   "TPS62933"
+  ],
+  "verification_level": "manufacturer-page",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps54302.pdf",
+  "datasheet_revision": "Rev. C, 30 March 2026; Active",
+  "knowledge_refs": [
+   "V1 pattern"
+  ],
+  "open_issues": [
+   "efficiency 85 % is an assumption"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json controller.supplies"
+ },
+ {
+  "mpn": "TPS767D301PWPR + 18.2 k / 30.1 k + 10 uF capacitors",
+  "manufacturer": "Texas Instruments",
+  "function": "Dual LDO: 1.9 V adjustable (core, first) and 3.3 V (I/O, enabled after core RESET1_N)",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "HTSSOP-28 PWP (PowerPAD vias)",
+  "ratings": {
+   "I_out_A": "1.0 per regulator",
+   "V_in_V": "2.7-10",
+   "dropout_mV": "350 at 1 A",
+   "reset": "dual open-drain, 200 ms",
+   "theta_JA_K_W": "28 (datasheet PWP; 40 bounding used)"
+  },
+  "operating_stress": {
+   "P_LDO_W": 1.39,
+   "T_J_C": "89-106 at 50 C ambient",
+   "set_point_V": "1.899 (V_FB 1.1834 V, unverified)"
+  },
+  "margins": {
+   "thermal": "<= 106 C versus 125 C"
+  },
+  "selection_reason": "V1 pattern with core-first sequencing; the EP variant is NRND and TI points to TLV752 - re-check at BOM release.",
+  "alternatives": [
+   "TLV752 (different pin-out)"
+  ],
+  "verification_level": "manufacturer-page",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps767d3.pdf",
+  "datasheet_revision": "Rev. H, August 2008; family Active",
+  "knowledge_refs": [
+   "V1 pattern"
+  ],
+  "open_issues": [
+   "commercial PWPR orderable status and V_FB to confirm"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json controller.supplies"
+ },
+ {
+  "mpn": "TPS3808G01DBVR + 101 k / 10 k",
+  "manufacturer": "Texas Instruments",
+  "function": "5 V supervisor (4.50 V threshold) holding XRS",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "SOT-23-6 DBV",
+  "ratings": {
+   "V_IT_V": 0.405,
+   "delay": "20 ms with CT open (1.25 ms - 10 s adjustable)",
+   "output": "open-drain active-low"
+  },
+  "operating_stress": {
+   "threshold_V": "4.50 (105 k would give 4.66 V, CR-18)",
+   "power_down_margin_ms": "1.1 versus 8 us required"
+  },
+  "margins": {},
+  "selection_reason": "V1 pattern with the divider corrected by the verifier.",
+  "alternatives": [
+   "TPS3808E drop-in"
+  ],
+  "verification_level": "fetched-datasheet / manufacturer-page",
+  "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+  "datasheet_revision": "SBVS050N, May 2004 - revised August 2026; Active",
+  "knowledge_refs": [
+   "KR-PR-002 (direct)",
+   "CR-18"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "CR-18"
+ },
+ {
+  "mpn": "DSP support passives: 100 nF 0603 per supply pin (about 20), 2.2 uF per rail group, 2 x 2.2 uF at ADCREFM/ADCREFP, 22 k ADCRESEXT, JTAG pull resistors, boot-strap resistors, 1 k + 1 nF at every ADC input",
+  "manufacturer": "generic",
+  "function": "Decoupling, ADC reference and configuration network of the TMS320F28335",
+  "board": "control",
+  "quantity": "about 40",
+  "package_or_footprint": "0603",
+  "ratings": {},
+  "operating_stress": {
+   "ADC_RC": "1 k + 1 nF: tau 1 us reservoir, 16 ADCCLK acquisition"
+  },
+  "margins": {},
+  "selection_reason": "V1 pattern (PE-PCB-008 per-pin decoupling); ADC front end 1 k + 1 nF harmonised with the sensing agent.",
+  "alternatives": [],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "PE-PCB-008 (direct)",
+   "SKILL-005 (adapted)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design_decisions.json sensing.adc_front_end"
+ },
+ {
+  "mpn": "100 nF 50 V X7R 0603 decoupling family (driver VCC/VDD/VEE, module VIN, AMC1311 VDD1/VDD2, TMCS1133 VS, OPA2320, REF3125, logic)",
+  "manufacturer": "generic",
+  "function": "Per-pin decoupling on the power board",
+  "board": "power",
+  "quantity": "about 25",
+  "package_or_footprint": "0603",
+  "ratings": {},
+  "operating_stress": {},
+  "margins": {},
+  "selection_reason": "PE-PCB-008: one capacitor next to every supply pin.",
+  "alternatives": [],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "PE-PCB-008 (adapted)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design/research/gate_driver.json per_channel_bom"
+ },
+ {
+  "mpn": "1 uF 16 V X7R 0603 (UCC21710 VCC)",
+  "manufacturer": "generic",
+  "function": "Driver VCC bulk decoupling (datasheet condition 1 uF)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "0603",
+  "ratings": {
+   "C_uF": 1,
+   "V_V": 16
+  },
+  "operating_stress": {
+   "V_V": 3.3
+  },
+  "margins": {},
+  "selection_reason": "Datasheet VCC condition.",
+  "alternatives": [],
+  "verification_level": "unverified (generic)",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-PCB-002 (direct)"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design/research/gate_driver.json"
+ },
+ {
+  "mpn": "AO3400A",
+  "manufacturer": "Alpha & Omega Semiconductor",
+  "function": "Relay-coil low-side switch (RELAY_ON, PWM hold)",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "SOT-23",
+  "ratings": {
+   "V_DS_V": 30,
+   "I_D_A": 5.7,
+   "R_DS_on_mohm": "26.5 max at 10 V; 48 max at 2.5 V",
+   "V_GS_th_V": "0.65 / 1.05 / 1.45"
+  },
+  "operating_stress": {
+   "I_coil_A": "0.417 pull-in at 12 V (0.458 at 13.2 V), about 50-60 % PWM hold",
+   "P_mW": "< 10"
+  },
+  "margins": {
+   "current": "13x"
+  },
+  "selection_reason": "Logic-level SOT-23 switch on the power-board SELV strip with 100 ohm gate series and 10 k pull-down.",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet (by verifier)",
+  "datasheet_url": "https://www.aosmd.com/res/datasheets/AO3400A.pdf",
+  "datasheet_revision": "Rev 3.1, July 2023",
+  "knowledge_refs": [
+   "CB-PR-001 context",
+   "CR-02"
+  ],
+  "open_issues": [
+   "PWM hold duty to validate against the relay must-release >= 8 % and must-operate <= 75 % figures"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.power_path.relay_coil_drive"
+ },
+ {
+  "mpn": "SS14 (1 A 40 V Schottky)",
+  "manufacturer": "generic (e.g. Vishay / onsemi)",
+  "function": "Relay-coil freewheel diode (>= 1 A)",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "SMA (DO-214AC)",
+  "ratings": {
+   "I_F_A": 1,
+   "V_R_V": 40
+  },
+  "operating_stress": {
+   "I_A": "0.417 coil current at release"
+  },
+  "margins": {
+   "current": "2.4x"
+  },
+  "selection_reason": "A 1N4148W-class diode (150-300 mA) was undersized for the 417 mA coil (CR-19).",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not fetched",
+  "datasheet_revision": "not fetched",
+  "knowledge_refs": [
+   "CR-19"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "CR-19"
+ },
+ {
+  "mpn": "Status LEDs (12V_OK, ARMED, RUN, FAULT) LTST-C190KRKT class + series resistors",
+  "manufacturer": "Lite-On (generic)",
+  "function": "Control-board indicators at 2 mA",
+  "board": "control",
+  "quantity": 4,
+  "package_or_footprint": "0603",
+  "ratings": {},
+  "operating_stress": {
+   "I_mA": 2
+  },
+  "margins": {},
+  "selection_reason": "V1 pattern.",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not fetched",
+  "datasheet_revision": "not fetched",
+  "knowledge_refs": [
+   "V1 pattern"
+  ],
+  "open_issues": [],
+  "dnp": false,
+  "source": "design/research/controller_aux_interconnect.json"
+ },
+ {
+  "mpn": "SSW-125-01-G-D",
+  "manufacturer": "Samtec",
+  "function": "2 x 25 mezzanine socket on the power-board SELV strip",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "2 x 25, 2.54 mm, through-hole, insulator 8.51 mm",
+  "ratings": {
+   "current_A_per_pin": "4.7 (SSW/TSM); 6.3 mated with TSW",
+   "voltage": "465 VAC / 655 VDC",
+   "temperature_C": "-55 to 125 (gold)"
+  },
+  "operating_stress": {
+   "12V_PROT": "3 pins at 0.26-0.6 A each",
+   "GND_CTRL_pins": 24,
+   "signals": "SELV only (KR-ISO-001)"
+  },
+  "margins": {
+   "current": "> 7x per pin"
+  },
+  "selection_reason": "Stacked mezzanine (architecture Option B) carries only logic-level and single-ended analogue nets; connector inductance stays outside the gate loop (KR-PCB-005).",
+  "alternatives": [
+   "Wuerth WR-PHD 6130xx21121 socket (50-pin orderable unconfirmed)"
+  ],
+  "verification_level": "fetched-datasheet (Samtec catalogue page read by the verifier); lifecycle unverified",
+  "datasheet_url": "https://suddendocs.samtec.com/catalog_english/ssw_th.pdf",
+  "datasheet_revision": "Samtec SSW catalogue page (date not captured)",
+  "knowledge_refs": [
+   "KR-GD-008 (adapted)",
+   "KR-PCB-005 (direct)",
+   "KR-ISO-001 (direct)",
+   "KR-ISO-003 (direct)",
+   "REF-TI-TIDA-010054 decision 10 (adapted)"
+  ],
+  "open_issues": [
+   "mated stack height 11.05 mm derived (SSW 8.51 + TSW 2.54 mm) - confirm seating depth and standoff length",
+   "keyed/shrouded variant if mis-mating risk is judged significant"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json interconnect"
+ },
+ {
+  "mpn": "TSW-125-07-G-D",
+  "manufacturer": "Samtec",
+  "function": "2 x 25 mezzanine header on the control board",
+  "board": "control",
+  "quantity": 1,
+  "package_or_footprint": "2 x 25, 2.54 mm, -07 lead style (5.84 mm post, 2.54 mm tail), insulator 2.54 mm",
+  "ratings": {
+   "voltage": "500 VAC / 707 VDC mated with SSW",
+   "current_A_per_pin": "6.3 mated with SSW"
+  },
+  "operating_stress": {
+   "same as the socket": true
+  },
+  "margins": {},
+  "selection_reason": "Mating header for SSW; post length fixes the 11 mm class stack.",
+  "alternatives": [
+   "Wuerth WR-PHD 61305021121 (orderable unconfirmed)"
+  ],
+  "verification_level": "fetched-datasheet (Samtec catalogue page); lifecycle unverified",
+  "datasheet_url": "https://suddendocs.samtec.com/catalog_english/tsw_th.pdf",
+  "datasheet_revision": "Samtec TSW catalogue page",
+  "knowledge_refs": [
+   "KR-GD-008 (adapted)",
+   "KR-ISO-001 (direct)"
+  ],
+  "open_issues": [
+   "stack height confirmation"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json interconnect"
+ },
+ {
+  "mpn": "74651195 (REDCUBE THR M5)",
+  "manufacturer": "Wuerth Elektronik",
+  "function": "HV terminals: VIN+, PGND_IN, VOUT+, PGND_OUT and the two relay-contact terminals (ring lugs under IPXXB covers)",
+  "board": "power",
+  "quantity": 6,
+  "package_or_footprint": "REDCUBE THR M5 press-fit/THR footprint per Wuerth drawing",
+  "ratings": {
+   "rating": "not re-read in V2 (datasheet cached in V1, 2026-10-09)"
+  },
+  "operating_stress": {
+   "I_A": "27.5 continuous, 32 peak",
+   "V_V": "440 (480 survival)",
+   "torque": "2.2 N m only with mechanical support (V1 note)"
+  },
+  "margins": {
+   "current": "to be confirmed from the Wuerth datasheet"
+  },
+  "selection_reason": "CR-10: same terminal family as V1 for ring-lug connection and IPXXB covering; HV functional spacing 3.0 mm outer / 1.0 mm inner, 5.0 mm to PE.",
+  "alternatives": [
+   "M5/M6 studs",
+   "2-pole screw terminal blocks"
+  ],
+  "verification_level": "unverified in V2 (V1 cache)",
+  "datasheet_url": "https://www.we-online.com/components/products/datasheet/74651195.pdf",
+  "datasheet_revision": "V1 cache 2026-10-09",
+  "knowledge_refs": [
+   "CR-10",
+   "KR-ISO-003 (direct)",
+   "PE-PCB-006 (direct)"
+  ],
+  "open_issues": [
+   "current and voltage rating to be confirmed",
+   "terminal type versus the <= 15 mm height rule in the fan intake/exhaust corridors"
+  ],
+  "dnp": false,
+  "source": "CR-10"
+ },
+ {
+  "mpn": "PE bonding set: M4 PE stud; PGND-to-PE configurable link footprint; 2 x CRCW25121M00FKEG (1 M, 500 V) reference resistors; 2 x Y2 10 nF footprints (DNP)",
+  "manufacturer": "generic / Vishay Dale",
+  "function": "Protective-earth bond of heat sink and baseplate, PGND reference network",
+  "board": "power",
+  "quantity": "1 stud, 1 link, 2 resistors, 2 DNP Y2",
+  "package_or_footprint": "M4 pad; 2512; Y2 leaded footprint",
+  "ratings": {
+   "resistor": "CRCW2512 series 1 ohm - 10 Mohm, 500 V, 1 W",
+   "bond": "<= 0.1 ohm, conductor >= supply cross-section"
+  },
+  "operating_stress": {
+   "V_V": "440 DC PGND-to-PE (floating-source case)",
+   "P_mW": "about 0.1 per resistor"
+  },
+  "margins": {},
+  "selection_reason": "Standards agent's earthing items (A-23 PELV deviation, PGND floating versus bonded, Y-capacitor option) placed as footprints until the source earthing is defined.",
+  "alternatives": [],
+  "verification_level": "fetched-datasheet (series); orderable code unverified",
+  "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+  "datasheet_revision": "Document 20035, Revision 14-Apr-2026",
+  "knowledge_refs": [
+   "KR-ISO-001 (direct)",
+   "KR-ISO-002 (human-review)",
+   "standards_safety pe"
+  ],
+  "open_issues": [
+   "SGND-to-PE single-point bond (A-23) and PGND earthing are human-review items",
+   "Y2 touch current 0.85-1.8 mA at 50 kHz excludes mains-frequency ripple"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.power_path.pe"
+ },
+ {
+  "mpn": "LAM 5 D K 100 12",
+  "manufacturer": "Fischer Elektronik",
+  "function": "Double-width LAM 5 heat sink with integrated 12 V fan for both TO-247-4 devices",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "about 100 x 100.5 x 50 mm body on the power board; reserve 175 x 110 mm incl. fan, intake and exhaust corridors; 2-4 M3 fixings; PE-bonded",
+  "ratings": {
+   "R_th_K_W": "0.30 at nominal fan flow (distributor)",
+   "airflow_m3_h": "14.3 (listing)",
+   "fan": "12 V integrated; current unknown (0.5 A budgeted)",
+   "mass_kg": "unknown (0.25-0.35 estimated)",
+   "R_th_natural": "unknown (1.7-3.5 estimated)"
+  },
+  "operating_stress": {
+   "P_total_W": "56.2 (440 V / 27.5 A, 150 C losses)",
+   "T_sink_C": "about 64 typical (400 V / 25 A); 67-72 worst",
+   "T_J_HS_C": "about 109 typical; about 130 at 360 V / 27.5 A max-R with R_pad 1.4 K/W (CR-21)",
+   "fan_voltage": "10.8-13.2 V (flow -10 % -> R_th +6 %)"
+  },
+  "margins": {
+   "KR_TH_001": "P_max 41.5 W per device at 150 C versus 34.1 W (1.22x)",
+   "fan_failure": "T_J > 175 C steady state -> OTP mandatory; 50-100 s from 68 to 100 C"
+  },
+  "selection_reason": "CR-06 / CR-13: the single-width LAM 5 K 100 12 (0.68 K/W) leaves T_J,HS at about 139-153 C at the 360 V / 27.5 A max-R corner (R_pad 1.0-1.4 K/W); the double-width unit meets the 150 C limit with margin 1.22, meets the 125 C preference with typical parts, and keeps the 28 mm device pitch.",
+  "alternatives": [
+   "LAM 5 K 100 12 (0.68 K/W) cost-down only if measured R_pad <= 1 K/W and OTP thresholds are raised",
+   "Ohmite CR201-50VE discontinued (Aug 2024)"
+  ],
+  "verification_level": "search-snippet (Fischer datasheet blocked; novapart listing)",
+  "datasheet_url": "https://www.fischerelektronik.de/web_fischer/en_GB/VA/LAM5DK10012/datasheet.xhtml",
+  "datasheet_revision": "not accessible (HTTP 403)",
+  "knowledge_refs": [
+   "KR-TH-001 (direct)",
+   "KR-TH-002 (direct)",
+   "SKILL-006 (adapted)",
+   "KR-ISO-002 (human-review)",
+   "REF-TI-TIDA-010054 decision 9 (adapted)",
+   "CR-06",
+   "CR-13",
+   "CR-14"
+  ],
+  "open_issues": [
+   "obtain the Fischer datasheet (R_th, airflow, fan current, mass, natural R_th) before BOM freeze",
+   "spreading allowance 0.1-0.2 K/W per device (+3-7 K) to measure",
+   "fan connector and TACH on the power-board SELV strip; fan position relative to the eFuse"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json thermal + architecture"
+ },
+ {
+  "mpn": "Sil-Pad TSP A2000, 0.254 mm, custom cut 28 x 32 mm, no hole",
+  "manufacturer": "Henkel Bergquist",
+  "function": "Insulating thermal interface between each TO-247-4 and the PE-bonded heat sink",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "28 x 32 mm per device (>= 5 mm overhang beyond the tab)",
+  "ratings": {
+   "thermal_conductivity_W_mK": 2.0,
+   "thermal_impedance_C_in2_W": "0.59 / 0.50 / 0.42 at 10 / 25 / 50 psi",
+   "breakdown_Vac": 6000,
+   "Dk": 7.0,
+   "temperature_C": "-60 to 180",
+   "UL": "94 V-0",
+   "carrier": "fiberglass silicone"
+  },
+  "operating_stress": {
+   "R_pad_K_W": "1.4 design (clip, about 25 psi on the 2.3 cm2 exposed tab metal, CR-21); 1.16 screw-mounted at 50 psi; the body-outline figure 0.96-1.1 was optimistic",
+   "C_pad_pF": "about 56-82 -> 2.8-4.1 A displacement pulses from the LS (SW) tab at 50 V/ns",
+   "working_voltage": "440 V DC (HS tab = VIN+), SW pulsed (LS tab)"
+  },
+  "margins": {
+   "dielectric": "6 kVac class against the 4 kV basic / 6 kV reinforced impulse view (type test on the assembled pad required)",
+   "thermal": "T_J,HS about 130 C at 360 V / 27.5 A max-R with 1.4 K/W (below the 150 C design limit, above the 125 C preference); P_max 41.5 W per device, margin 1.22"
+  },
+  "selection_reason": "CR-13: dielectric margin against the 4 kV impulse view decides for A2000; TSP 3500 (4 kVac, 1.20 K/W clip / 0.92 K/W screw on the exposed-tab area) remains the thermal alternative after an assembled-pad type test.",
+  "alternatives": [
+   "Sil-Pad TSP 3500 0.254 mm",
+   "ulTIMiFlux CD-02-05-247 (100 psi screw mount, 76 um)",
+   "Fischer AOS 247 Al2O3 (low capacitance)",
+   "Kapton MT+ (about 200 pF)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://datasheets.tdx.henkel.com/BERGQUIST-SIL-PAD-TSP-A2000-en_GL.pdf",
+  "datasheet_revision": "TDS November 2018",
+  "knowledge_refs": [
+   "KR-TH-002 (direct)",
+   "KR-TH-001 (direct)",
+   "KR-ISO-002 (human-review)",
+   "CR-13"
+  ],
+  "open_issues": [
+   "pad voltage rating versus impulse category is a preserved human-review conflict",
+   "measure the case-to-sink drop; effective tab area about 17 x 13.6 mm",
+   "displacement current into PE to be covered by the EMC design"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json thermal.interface_pad"
+ },
+ {
+  "mpn": "LAM 5 K retaining clips (Fischer) for TO-247",
+  "manufacturer": "Fischer Elektronik",
+  "function": "Device clamping to the heat sink (force >= 40 N required)",
+  "board": "power",
+  "quantity": 2,
+  "package_or_footprint": "clip per device; clip metal >= 3 mm from the leads",
+  "ratings": {
+   "force_N": "not published (>= 40 required)"
+  },
+  "operating_stress": {
+   "pressure_psi": "17-26 on 3.37 cm2 (25-38 on 2.3 cm2)"
+  },
+  "margins": {},
+  "selection_reason": "Clip mounting avoids a screw through the drain-potential hole; the Boyd 7721-7PPSG shoulder (0.81 mm) cannot insulate the 2.2-2.5 mm hole depth, so a screw alternative needs a proper TO-247 bushing.",
+  "alternatives": [
+   "screw + >= 2.5 mm shoulder TO-247 bushing"
+  ],
+  "verification_level": "unverified",
+  "datasheet_url": "not accessible",
+  "datasheet_revision": "not found",
+  "knowledge_refs": [
+   "KR-TH-002 (direct)"
+  ],
+  "open_issues": [
+   "verify clip force >= 40 N (60 N preferred)"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json thermal.hardware"
+ },
+ {
+  "mpn": "Mechanical hardware: 6 x M4 x 15 mm power-board standoffs, 4 x M3 control-board standoffs (about 11 mm stack), 4 x M4 inductor-cup standoffs, M3 thread-forming NTC screw, M4 PE stud hardware",
+  "manufacturer": "generic",
+  "function": "Open-frame assembly on a PE-bonded baseplate",
+  "board": "power",
+  "quantity": "sets",
+  "package_or_footprint": "per architecture",
+  "ratings": {},
+  "operating_stress": {
+   "height_mm": "<= 80 total",
+   "mass_kg": "about 1.9"
+  },
+  "margins": {},
+  "selection_reason": "Architecture Option B mechanical concept (A-24).",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-ISO-002 (human-review: PE keep-out around standoffs)"
+  ],
+  "open_issues": [
+   "standoff lengths follow the confirmed connector stack height"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json architecture.mechanical"
+ },
+ {
+  "mpn": "Control-board connectors: J_12V 2-pin 5.08 mm terminal block, J_NTC 2-pin, J_JTAG 2 x 7 2.54 mm (TI 14-pin), J_UART 1 x 3, J_BOOT 1 x 3, J_ESTOP 1 x 2, J_RESET 1 x 2",
+  "manufacturer": "to be selected",
+  "function": "External interfaces of the SELV control board",
+  "board": "control",
+  "quantity": "7",
+  "package_or_footprint": "placeholders",
+  "ratings": {},
+  "operating_stress": {
+   "J_12V": "2.5 A recommended supply"
+  },
+  "margins": {},
+  "selection_reason": "Placeholders; the connector family is an enclosure decision.",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-ISO-001 (direct: all SELV)"
+  ],
+  "open_issues": [
+   "select families"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json interconnect.control_board_connectors"
+ },
+ {
+  "mpn": "Power-board SELV-strip connectors: fan connector (12V_PROT, GND_CTRL, FAN_TACH) and relay-coil terminals (12V_PROT, K1_COIL_LOW); test points (Keystone 5015 class)",
+  "manufacturer": "to be selected",
+  "function": "Fan, relay coil and test interfaces on the power-board SELV strip",
+  "board": "power",
+  "quantity": "2 connectors + test points",
+  "package_or_footprint": "placeholders",
+  "ratings": {},
+  "operating_stress": {
+   "fan_A": "<= 0.5 budgeted",
+   "coil_A": 0.417
+  },
+  "margins": {},
+  "selection_reason": "Per the architecture partition; HV-referenced probe loops are separate.",
+  "alternatives": [],
+  "verification_level": "unverified",
+  "datasheet_url": "not applicable",
+  "datasheet_revision": "not applicable",
+  "knowledge_refs": [
+   "KR-ISO-001 (direct)"
+  ],
+  "open_issues": [
+   "fan datasheet current"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json interconnect.power_board_selv_strip_also_carries"
+ },
+ {
+  "mpn": "KLKD025.T (with 10 x 38 mm holder)",
+  "manufacturer": "Littelfuse",
+  "function": "Input fuse on the input lead",
+  "board": "off-board",
+  "quantity": 1,
+  "package_or_footprint": "10 x 38 mm midget holder (panel/DIN)",
+  "ratings": {
+   "I_A": 25,
+   "V_V": "600 AC / 600 DC",
+   "type": "fast-acting",
+   "interrupting": "50 kA at 600 VDC (product page)",
+   "I2t": "not found"
+  },
+  "operating_stress": {
+   "loading": "57 % at 360 V / 25 A; 70 % at the 320 V stop corner with 27.5 A (62 % with the 15.6 A firmware limit)",
+   "I2R_W": "about 0.9 cold at 14.2 A (estimate)"
+  },
+  "margins": {
+   "derating": "<= 75 % after 50-60 C ambient derating"
+  },
+  "selection_reason": "CR-15: the 20 A member reached 88 % at the 320 V corner before ambient derating; the 25 A member keeps continuous loading inside fast-acting-fuse practice.",
+  "alternatives": [
+   "Eaton Bussmann PV-20A10F (1000 VDC gPV, pre-arc I2t 34 A2s per distributor)"
+  ],
+  "verification_level": "search-snippet (Littelfuse pages blocked)",
+  "datasheet_url": "https://www.littelfuse.com/products/fuses-overcurrent-protection/fuses/ul-supplemental-midget-fuses/klkd",
+  "datasheet_revision": "KLKD datasheet rev 11/14/2022 (not readable)",
+  "knowledge_refs": [
+   "KR-PR-001 context",
+   "CR-15",
+   "CR-20"
+  ],
+  "open_issues": [
+   "melting I2t and time-current data to obtain",
+   "with a <= 20-25 A current-limited source the fuse never opens - source limit, OC/UVLO and the 4.3 J stored energy are the effective protection"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.power_path.fuse"
+ },
+ {
+  "mpn": "G9EA-1 DC12",
+  "manufacturer": "Omron",
+  "function": "DC-link precharge bypass relay (chassis mounted)",
+  "board": "off-board",
+  "quantity": 1,
+  "package_or_footprint": "73 x 36 x 67.2 mm, two M6 / 6.5 mm mounting holes, M5 contact screws",
+  "ratings": {
+   "rated_load": "60 A at 400 VDC",
+   "carry_A": 60,
+   "max_switching_voltage_V": 400,
+   "coil": "12 VDC, 417 mA, 28.8 ohm, about 5 W; must operate <= 75 %, release >= 8 %",
+   "dielectric": "2500 VAC coil-contacts",
+   "timing": "operate 50 ms max, release 30 ms max",
+   "endurance": "3000 ops at 400 VDC / 60 A"
+  },
+  "operating_stress": {
+   "I_A": "27.5 continuous (contact drop 0.1 V max, about 0.45 W at 0.6 mohm typ)",
+   "V_V": "440 continuous / 480 survival - above the 400 V switching limit",
+   "sequencing": "close at V_bus > 340 V and dV/dt < 2 V per 10 ms (500 ms timeout); open >= 10 ms after PWM stop and only with the source off"
+  },
+  "margins": {
+   "carry": "2.2x",
+   "switching": "none above 400 V - never opened under load"
+  },
+  "selection_reason": "Only relay found with a 400 VDC / 60 A contact rating and a fetched datasheet; the 5 W coil is the drawback (PWM hold required).",
+  "alternatives": [
+   "G9EJ-1-E-UVD DC12 (1.2 W coil) only if a >= 16 A carry current is confirmed",
+   "TE T9AS1D12-12 (277 VAC class, not suitable at 400 VDC)"
+  ],
+  "verification_level": "fetched-datasheet",
+  "datasheet_url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g9ea.pdf",
+  "datasheet_revision": "Cat. No. J186-E1-01",
+  "knowledge_refs": [
+   "KR-SN-001 (direct: 2500 VAC coil-contacts)",
+   "KR-PR-003 context",
+   "CR-02"
+  ],
+  "open_issues": [
+   "coil-to-contact insulation to be shown reinforced for 440 V DC or the coil placed behind protective separation (human review)",
+   "relay never commanded open under load above 400 V (firmware contract)",
+   "lifecycle not stated in the datasheet text"
+  ],
+  "dnp": false,
+  "source": "design_decisions.json protection.power_path.precharge"
+ },
+ {
+  "mpn": "Precharge PTC thermistor (TDK B59xxx, to be re-selected)",
+  "manufacturer": "TDK (EPCOS)",
+  "function": "Inrush limiter across the relay contacts",
+  "board": "power",
+  "quantity": 1,
+  "package_or_footprint": "leaded disc, >= 5 mm free space",
+  "ratings": {
+   "requirement": "R25 100-150 ohm, V_max >= 480 V DC, V_link >= 620 V DC, self-protecting on relay or capacitor short"
+  },
+  "operating_stress": {
+   "with_placeholder": "tau 5.8 ms (4.4-7.3), t99 27 ms (20-34), 4.7-5.6 J per charge, I_pk 3.7 A, dT about 2.7 K (C_th 2.1 J/K placeholder) at 48.7 uF effective"
+  },
+  "margins": {
+   "status": "placeholder"
+  },
+  "selection_reason": "CR-19: the B59773C0120A070 code quoted in the first draft does not carry the quoted parameters (TDK: 440 VAC / 620 VDC, about 500 ohm, 115 C, 0.6 J/K; tau 30 ms if used); the part must be re-selected from the current TDK datasheet.",
+  "alternatives": [
+   "B59773C0120A070 as published (about 500 ohm, 30 ms)"
+  ],
+  "verification_level": "unverified (placeholder)",
+  "datasheet_url": "https://www.tdk-electronics.tdk.com/inf/130/ptc_inrushcurrentlimiters.pdf",
+  "datasheet_revision": "TDK PTC inrush current limiters short form 2015 / Farnell-hosted sheet February 2018",
+  "knowledge_refs": [
+   "CR-19",
+   "KR-CAP-001 context"
+  ],
+  "open_issues": [
+   "re-select the ordering code and recompute tau, peak current, dT and N"
+  ],
+  "dnp": false,
+  "source": "CR-19"
+ }
+]

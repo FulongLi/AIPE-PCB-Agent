@@ -1,0 +1,1264 @@
+{
+  "decision_area": "Controller, auxiliary supplies, PWM/fault logic and interconnect (SiC buck 400 V -> 200 V, 5 kW, 50 kHz, TMS320F28335)",
+  "knowledge_queries": [
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"auxiliary 12 V input protection eFuse reverse polarity OVP UVLO TPS2640\" --json --limit 8",
+      "top_hits": [
+        "CMP-TPS2640",
+        "CB-PR-001",
+        "REF-TI-TIDA-010054",
+        "KR-PR-003",
+        "CB-GD-003",
+        "CMP-UCC23514",
+        "CB-IS-002",
+        "CMP-UCC14141-Q1"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"PWM buffer fault latch interlock gate driver IN+ IN- RS-422 differential link\" --json --limit 8",
+      "top_hits": [
+        "CB-GD-003",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-GD-008",
+        "CB-GD-001",
+        "SKILL-001",
+        "KR-PR-002",
+        "KR-GD-009",
+        "SKILL-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"control board power supply 5 V 3.3 V 1.9 V DSP sequencing reset supervisor\" --json --limit 8",
+      "top_hits": [
+        "CB-GD-003",
+        "CB-GD-001",
+        "KR-PR-002",
+        "CB-IS-002",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-PR-003",
+        "SKILL-004",
+        "CB-SN-004"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"board-to-board connector ribbon cable interconnect ground interleaving PWM noise immunity\" --json --limit 8",
+      "top_hits": [
+        "CB-GD-003",
+        "KR-GD-008",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-PCB-005",
+        "REF-WS-CGD15SG00D2",
+        "CMP-AMC1306M05",
+        "SKILL-001",
+        "KR-GD-009"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"fault handling FLT RDY trip zone latch soft start startup sequence precharge relay\" --json --limit 8",
+      "top_hits": [
+        "REF-WS-CGD1700HB2M-UNA",
+        "SKILL-001",
+        "CB-GD-001",
+        "CMP-UCC21710-Q1",
+        "CB-SN-004",
+        "CMP-TMCS1133",
+        "KR-PR-002",
+        "KR-GD-011"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"isolated signal domains SELV control ground separation sensing interface DSP\" --json --limit 8",
+      "top_hits": [
+        "KR-SN-003",
+        "CB-GD-003",
+        "CB-SN-004",
+        "SKILL-005",
+        "CB-PR-002",
+        "CB-SN-003",
+        "CB-SN-001",
+        "CB-IS-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"dead time complementary PWM shoot-through protection controller\" --json --limit 8",
+      "top_hits": [
+        "KR-GD-009",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-SN-005",
+        "CB-GD-001",
+        "CB-PR-002",
+        "CMP-UCC21710-Q1",
+        "KR-PR-001",
+        "CMP-UCC25800-Q1"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"isolated bias supply UCC14141 input power 12 V budget efficiency\" --json --limit 8",
+      "top_hits": [
+        "CMP-UCC14141-Q1",
+        "CB-IS-002",
+        "SKILL-004",
+        "CB-PR-001",
+        "KR-IS-001",
+        "SKILL-005",
+        "KR-PR-003",
+        "REF-TI-TIDA-010054"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"control PCB layout analog signals away from switching noise\" --json --limit 8",
+      "top_hits": [
+        "SKILL-002",
+        "KR-SN-004",
+        "KR-GD-005",
+        "SKILL-003",
+        "KR-GD-008",
+        "CB-GD-001",
+        "REF-TI-TIDA-010054",
+        "SKILL-001"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get <ID> --json  (run for CB-PR-001, CMP-TPS2640, KR-PR-003, KR-GD-008, KR-GD-009, KR-PR-002, CB-GD-003, CMP-UCC14141-Q1, CB-IS-002, KR-IS-001, KR-SN-003, KR-PCB-005, CMP-UCC21710-Q1, KR-PR-001, KR-SN-005, KR-GD-011, CB-SN-004, CB-PR-002, CMP-TMCS1133, KR-SN-001, KR-ISO-001, KR-ISO-003, KR-TH-002)",
+      "top_hits": [
+        "full records read; related items listed in each record"
+      ]
+    },
+    {
+      "command": "read knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md, knowledge/skills/power_electronics/SKILL-004-isolated-gate-bias-supply.md, knowledge/skills/sensing/SKILL-005-current-voltage-sensing.md, knowledge/rules/engineering_rules.json (all 43 titles), knowledge/references/ti/tida-010054/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md",
+      "top_hits": [
+        "SKILL-001 principles 1, 7, 9",
+        "SKILL-004 principles 1, 7",
+        "SKILL-005 principles 3, 5, 7",
+        "REF-TI-TIDA-010054 decisions 4, 6, 8, 10",
+        "REF-WS-CGD1700HB2M-UNA decisions 3, 4",
+        "PE-PCB-005/007/008"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (isolate every position) fixes the SELV/HV partition; principle 9 and procedure step 8 define the controller interface (interlock wiring, fault/RDY combination and latching, reset timing, signalling standard and filters). Instance values in 'Known limitations' were not copied."
+    },
+    {
+      "id": "KR-GD-008",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "The exclusion for short on-board links is invoked for the stacked mezzanine (<= 15 mm + short traces): buffered single-ended PWM with RC filtering at every receiving pin. RS-422 (CB-GD-003) is documented as the mandatory fallback if a cable > ~15 cm is ever introduced.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-GD-009",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "UCC21710 IN+/IN- cross wiring gives the hardware interlock (both high -> both outputs low, SLUSDH8D Table 7-1); dead time is generated only in the ePWM dead-band module (30-60 ticks).",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-PR-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "SN74LVC1G74 latch cleared asynchronously by the AND-combined fault bus (FLT, RDY, OC, OVP, UVLO, OTP, 12 V eFuse, reset, E-stop, software) and re-armed only by an explicit ARM edge; RDY low during bias UVLO keeps the latch cleared."
+    },
+    {
+      "id": "KR-PR-003",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "Implemented with TPS26400 + SMBJ15CA; thresholds derived for 12 V +/-10 % and the UCC14141-Q1 ratings (UVLO 10.0 V, OVP 14.45 V, ILIM 1.5 A). The rule's verification method is human review of thresholds against downstream ratings, so the ladder values and tolerance bands are surfaced for review rather than closed."
+    },
+    {
+      "id": "CB-PR-001",
+      "type": "circuit_block",
+      "applicability": "adapted",
+      "how_applied": "Alternative A (eFuse) chosen over alternative B (P-FET + Zener) because the budget needs UVLO/current limit/inrush control for three downstream converters; TI instance values (OVP 15 V, UVLO 9 V, 2.2 A, 36 V TVS) replaced by derived values; 'protection at the connector before distribution' kept as a PCB constraint.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "CMP-TPS2640",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "TPS26400PWPR selected; datasheet SLVSFQ6A parameters (thresholds 1.19/1.1 V, R_ILIM table, dVdT Eq.1/2, IMON gain, FLT/MODE behaviour) used for all settings."
+    },
+    {
+      "id": "KR-IS-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Bias power per module computed with the larger TI factor-2 form (recorded EC-014 conflict) plus driver quiescent and the shared sensing LDO; compared with the UCC14141-Q1 1.0 W / 1.5 W ratings at the actual input range."
+    },
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Procedure step 2 (input-voltage-dependent rating of UCC14141-Q1) and principle 7 (protect the auxiliary input) drive the 12 V budget and eFuse thresholds; module selection itself belongs to the bias-supply agent."
+    },
+    {
+      "id": "CB-IS-002",
+      "type": "circuit_block",
+      "applicability": "adapted",
+      "how_applied": "Used for the input-power model and the optional shared 5 V sensing LDO on the low-side module (0.21 W added to the low-side budget); ENA/PG interface wired to the DSP (BIAS_EN, PG_BIAS_x_N).",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "CMP-UCC14141-Q1",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "SLUSF10B typ input currents (40 mA no load, 200 mA at 1.0 W, 12 V) converted to P_in = 0.48 W + 1.92 x P_out; PG polarity (active-low open-drain) and ENA limit (5.5 V) used for the interface."
+    },
+    {
+      "id": "CMP-UCC21710-Q1",
+      "type": "component",
+      "applicability": "direct",
+      "how_applied": "Interface parameters from SLUSDH8D: input thresholds, internal pull resistors, RST/EN 50 k pull-down and > 1000 ns reset, open-drain FLT/RDY, deglitch 28-60 ns, tPD 60-130 ns, 30 ns skew, APWM 400 kHz / 10-88 %."
+    },
+    {
+      "id": "CB-GD-003",
+      "type": "circuit_block",
+      "applicability": "not-applicable",
+      "how_applied": "Differential RS-422 interface not used because the link is a mezzanine without cable (KR-GD-008 exclusion); its fault-combining (AND gates) and RC-filter-at-pin patterns were reused; recorded as the fallback for cabled variants.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "KR-SN-003",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "Delta-sigma bitstreams are not possible (F28335 has no SDFM) and the sensing points are close to the ADC over the mezzanine, so analogue isolated-amplifier/Hall outputs are carried on guarded pins at the far end of the connector; rule is human-review by definition, so trace lengths are listed for review."
+    },
+    {
+      "id": "KR-SN-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "TMCS1133 OC flag enters both the hardware latch and TZ2 directly; ADC-based limits are software back-ups only."
+    },
+    {
+      "id": "CB-SN-004",
+      "type": "circuit_block",
+      "applicability": "adapted",
+      "how_applied": "Defines the OC_N and ISENSE interface (3.3 V supply from the control domain, analogue output + fault flag); trip levels are set by the sensing agent, TI's 45/70 A not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "CB-PR-002",
+      "type": "circuit_block",
+      "applicability": "adapted",
+      "how_applied": "TEMP_PWM from each driver's APWM is captured by eCAP1/eCAP2 and, RC-filtered, by ADC and by the hardware OTP comparator; NTC mapping left to the gate-driver/thermal agent."
+    },
+    {
+      "id": "KR-TH-003",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "OTP based on NTC/APWM is cooling supervision, not junction protection; flagged for review."
+    },
+    {
+      "id": "KR-PR-001",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "The control-side latch is the second barrier: its <= 240 ns path only blocks subsequent pulses; the primary short-circuit protection is the driver DESAT (gate-driver agent)."
+    },
+    {
+      "id": "KR-GD-011",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "No two-level turn-off in the control path; driver soft turn-off is relied on, the latch only inhibits re-triggering."
+    },
+    {
+      "id": "KR-PCB-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Drivers stay on the power board next to their switches; only logic-level PWM crosses the mezzanine, so connector inductance is outside the gate loop."
+    },
+    {
+      "id": "KR-ISO-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "All interconnect nets are SELV (control domain); no connector pin or trace crosses an isolation barrier; islands of each driver stay on the power board."
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "Creepage from the SELV connector/control area to 400 V copper on the power board must be checked by the isolation review for pollution degree 2, CTI >= 175 V."
+    },
+    {
+      "id": "KR-ISO-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "All connector nets belong to the control/primary spacing class and are routed tightly together."
+    },
+    {
+      "id": "KR-SN-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Confirms that only rated isolators (drivers, bias modules, isolated amplifiers, Hall sensor, relay) bridge the barrier; the controller interconnect itself carries no barrier-crossing net."
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 8 (eFuse protection) and decision 10 (control card connector and low-voltage circuitry along the board edge away from the power stage) reused as patterns; decision 4 instance values not copied."
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 3 (combined latched fault, RESET >= 1000 ns, RC on reset) and decision 4 (interlock cross-wiring; RS-422 only for cabled links) reused; 120 ohm/56 pF filter instance not copied, 100 ohm/100 pF derived."
+    },
+    {
+      "id": "REF-WS-PRD-04814",
+      "type": "reference",
+      "applicability": "not-applicable",
+      "how_applied": "Bias-topology comparison belongs to the bias-supply agent; only the auxiliary-input protection recommendation (via KR-PR-003) touches this area."
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 3 (analogue to a nearby ADC) and principle 5 (fast hardware OC path) define the ISENSE/OC_N interface; scaling is the sensing agent's."
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Hand-off: RC filters and pull-downs placed at the driver input pins on the power board; single-ended segment kept short."
+    },
+    {
+      "id": "PE-PCB-005/PE-PCB-007/PE-PCB-008",
+      "type": "project-rule",
+      "applicability": "direct",
+      "how_applied": "Analogue pins away from PWM pins with ground guards; control logic separated from power structures; per-pin decoupling for eFuse, buck, LDO, DSP and logic."
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "TPS26400PWPR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "operating_voltage": "4.2-42 V (45 V abs max)",
+        "reverse_blocking": "down to -42 V",
+        "R_ON": "150 mohm typ, 210 mohm max at 85 degC",
+        "I_LIM": "0.1-2.23 A; R_ILIM 8 k -> 1.425/1.5/1.575 A",
+        "UVLO_OVP_pin_thresholds": "1.19 V rising / 1.1 V falling (1.225 V max)",
+        "IMON_gain": "78.28 uA/A (72-85), +/-8.5 %",
+        "dVdT": "I 4.7 uA, gain 24.6; t = 8e3 x V_IN x C_dVdT",
+        "FLT": "open drain, low on UVLO/OVP/overload/reverse",
+        "MODE": "open = circuit breaker auto-retry; 402 k = latch; short = current-limit auto-retry",
+        "TSD": "157 degC",
+        "package": "HTSSOP-16 PWP"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps2640.pdf",
+      "datasheet_revision": "SLVSFQ6A, Nov 2020 rev. Jun 2021",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Selected auxiliary eFuse (CB-PR-001 alternative A, CMP-TPS2640)."
+    },
+    {
+      "part_number": "SMBJ15CA",
+      "manufacturer": "Littelfuse",
+      "key_parameters": {
+        "V_RWM": "15 V",
+        "V_BR": "16.7-18.5 V",
+        "V_C_max": "24.4 V at I_PP 24.6 A",
+        "P_PP": "600 W 10/1000 us",
+        "type": "bidirectional, DO-214AA"
+      },
+      "datasheet_url": "https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj (product page returned HTTP 403; values from distributor parametric pages for SMBJ15A/CA)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Selected input TVS; bidirectional so reverse polarity presents no diode load to the eFuse."
+    },
+    {
+      "part_number": "UCC14141QDWNRQ1",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "P_out": "1.5 W at 10.8-13.2 V; 1.0 W at 8-18 V",
+        "I_VIN_no_load": "40 mA typ",
+        "I_VIN_full_load": "200 mA typ at 40 mA x 25 V, 12 V in; 270 mA at 60 mA x 25 V",
+        "UVLOP_rising": "7.8/8.2/8.5 V",
+        "PG": "active-low open-drain (low = good)",
+        "ENA": "5.5 V recommended max",
+        "soft_start_timeout": "28.4 ms",
+        "package": "SSOP-36 DWN"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+      "datasheet_revision": "SLUSF10B, Feb 2023 rev. Jun 2023",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Bias module owned by the bias-supply agent; parameters used here for the 12 V budget, UVLO/OVP coordination and the BIAS_EN/PG interface."
+    },
+    {
+      "part_number": "TPS54302DDCR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "V_IN": "4.5-28 V",
+        "I_OUT": "3 A",
+        "f_sw": "400 kHz",
+        "package": "SOT-23-THN DDC"
+      },
+      "datasheet_url": "https://www.ti.com/product/TPS54302",
+      "datasheet_revision": "Rev. C, Mar 30 2026",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected 12 V -> 5 V buck (V1 pattern); TI names TPS543021 / TPS62933 as newer alternatives."
+    },
+    {
+      "part_number": "TPS767D301PWPR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "TPS767D3 family ACTIVE on ti.com (EP variant NRND); commercial PWPR orderable status not individually confirmed",
+        "I_OUT": "1.0 A per regulator",
+        "V_IN": "2.7-10 V",
+        "dropout": "350 mV typ at 1 A",
+        "RESET": "dual open-drain, 200 ms delay",
+        "package": "HTSSOP-28 PWP"
+      },
+      "datasheet_url": "https://www.ti.com/product/TPS767D301",
+      "datasheet_revision": "Rev. H, Aug 2008",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected dual LDO (1.9 V adjustable + 3.3 V) as in V1; TLV752 named by TI as a different-pin-out alternative."
+    },
+    {
+      "part_number": "TPS3808G01DBVR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "threshold": "adjustable, SENSE 0.4 V class",
+        "RESET": "active-low open-drain",
+        "delay": "CT open 20 ms; 1.25 ms-10 s adjustable",
+        "package": "SOT-23-6 DBV"
+      },
+      "datasheet_url": "https://www.ti.com/product/TPS3808",
+      "datasheet_revision": "Rev. N, Aug 27 2026",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected 5 V supervisor (V1 pattern); TPS3808E is the newer drop-in."
+    },
+    {
+      "part_number": "SN74LVC2G08DCTR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "V_CC": "1.65-5.5 V",
+        "drive": "+/-24 mA",
+        "t_pd_max_3V3": "4.7 ns",
+        "package": "SSOP-8 DCT"
+      },
+      "datasheet_url": "https://www.ti.com/product/SN74LVC2G08",
+      "datasheet_revision": "Rev. N, Dec 31 2015",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected PWM gating (PWM & ARMED) - actively drives low when disarmed."
+    },
+    {
+      "part_number": "SN74LVC126APWR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "V_CC": "1.65-3.6 V",
+        "drive": "+/-24 mA",
+        "t_pd_max_3V3": "4.7 ns",
+        "OE": "active high, 3-state",
+        "package": "TSSOP-14 PW"
+      },
+      "datasheet_url": "https://www.ti.com/product/SN74LVC126A",
+      "datasheet_revision": "Rev. U, Jul 29 2024",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Considered (TI pattern), not selected for PWM gating: a disabled 3-state line decays only through its pull-down (~2 us); acceptable alternative if pull-downs are lowered."
+    },
+    {
+      "part_number": "SN74LVC1G74DCTR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "V_CC": "1.65-5.5 V",
+        "drive": "+/-24 mA",
+        "t_pd_max_3V3": "5.9 ns",
+        "PRE_CLR": "asynchronous active-low",
+        "package": "SSOP-8 DCT"
+      },
+      "datasheet_url": "https://www.ti.com/product/SN74LVC1G74",
+      "datasheet_revision": "Rev. G, Sep 14 2021",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected fault/arm latch."
+    },
+    {
+      "part_number": "SN74LV21APWR (x2)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "lifecycle": "ACTIVE",
+        "function": "dual 4-input AND",
+        "V_CC": "2-5.5 V",
+        "drive": "+/-12 mA",
+        "t_pd_max": "6 ns at 5 V (3.3 V value not found)",
+        "package": "TSSOP-14 PW"
+      },
+      "datasheet_url": "https://www.ti.com/product/SN74LV21A",
+      "datasheet_revision": "Rev. F, Jul 14 2023",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Selected 12-input fault combiner (two stages)."
+    },
+    {
+      "part_number": "UCC21710QDWRQ1",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "V_INH_V_INL_3V3": "1.85-2.31 V / 0.99-1.52 V",
+        "input_pull_resistors": "28.5-113 kohm",
+        "RST_EN": "50 kohm internal pull-down; low > 1000 ns resets FLT (deglitch 400-800 ns)",
+        "FLT_RDY": "open drain",
+        "T_INFIL": "28/40/60 ns",
+        "t_PD": "60/90/130 ns, skew 30 ns max",
+        "I_VCCQ": "4 mA max",
+        "I_VDDQ": "5.9 mA max",
+        "VDD_UVLO_on": "10.5/12.0/12.8 V",
+        "APWM": "380-420 kHz, duty 10 % at 0.6 V to 88 % at 4.5 V",
+        "interlock": "IN+ and IN- both high -> OUT low (Table 7-1)"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+      "datasheet_revision": "SLUSDH8D, Jan 2019 rev. Jun 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Gate driver owned by the gate-driver agent; interface parameters used for filters, interlock, reset and timing."
+    },
+    {
+      "part_number": "TMS320F28335PGFA",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "IDD_1V9": "290 mA typ / 315 mA max at 150 MHz (flash, all peripherals)",
+        "IDDIO": "30/50 mA",
+        "IDD3VFL": "35/40 mA",
+        "IDDA18": "30/35 mA",
+        "IDDA33": "1.5/2 mA",
+        "sequencing": "VDD before or with VDDIO (0.7 V crossing); XRS low >= 8 us before VDD < 1.5 V at power-down; XRS low >= 1 ms after VDD >= 1.5 V at power-up",
+        "XCLKIN": "3.3 V external oscillator on XCLKIN with X1 grounded",
+        "ADC": "0-3 V, 12 bit",
+        "mux": "GPIO0/1 EPWM1A/B; GPIO12-17 TZ1-6; GPIO24-27 ECAP1-4"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tms320f28335.pdf",
+      "datasheet_revision": "SPRS439Q, Jun 2007 rev. Aug 2022",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Mandated controller; V1 pin map reused with an ADC pairing change."
+    },
+    {
+      "part_number": "TSW-125-07-G-D + SSW-125-01-G-D",
+      "manufacturer": "Samtec",
+      "key_parameters": {
+        "SSW_current": "4.7 A per pin (TTI/RS listings)",
+        "SSW_voltage": "465 VAC / 655 VDC",
+        "SSW_temperature": "-55 to 125 degC (gold)",
+        "TSW_current": "distributor listings 4.3-7.6 A depending on pin count",
+        "TSW_-07_post_height": "5.84 mm",
+        "mating": "TSW mates with SSW/SSQ/ESQ"
+      },
+      "datasheet_url": "https://www.samtec.com/products/ssw ; https://www.samtec.com/products/tsw (HTTP 429 during this run)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Selected mezzanine pair (option a); stack height and keying to be confirmed with Samtec data."
+    },
+    {
+      "part_number": "61305021121 (2x25 WR-PHD header) + WR-PHD socket",
+      "manufacturer": "Wurth Elektronik",
+      "key_parameters": {
+        "current": "3 A per pin",
+        "working_voltage": "250 V AC",
+        "dielectric": "500 V AC/min",
+        "plating": "gold",
+        "temperature": "-40 to 105 degC",
+        "flammability": "UL94-V0",
+        "orderable_50_pin": "inferred from series naming 6130xx21121, not confirmed"
+      },
+      "datasheet_url": "https://www.we-online.com/katalog/datasheet/6130xx21121.pdf",
+      "datasheet_revision": "series datasheet (date not extracted)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Alternative mezzanine header family (series parameters verified)."
+    },
+    {
+      "part_number": "SN65C1167EPWR",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "function": "dual RS-422 driver/receiver (per CB-GD-003)"
+      },
+      "datasheet_url": "https://www.ti.com/product/SN65C1167E",
+      "datasheet_revision": "not fetched",
+      "parameter_verification": "unverified",
+      "assessment": "Option (c) transceiver; not selected for the mezzanine link, retained for a cabled variant."
+    },
+    {
+      "part_number": "T9AS1D12-12",
+      "manufacturer": "TE Connectivity",
+      "key_parameters": {
+        "coil": "12 VDC, 144 ohm, 83 mA (~1.0 W)",
+        "must_operate": "9 VDC",
+        "contacts": "30 A, 277 VAC max (AgCdO)",
+        "operate_release": "15 ms"
+      },
+      "datasheet_url": "https://www.te.com (datasheet not retrieved; distributor parametric data)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Budget anchor for the precharge-relay coil only; 400 V DC bypass suitability is the power-stage agent's decision."
+    },
+    {
+      "part_number": "AO3400A",
+      "manufacturer": "Alpha & Omega Semiconductor",
+      "key_parameters": {
+        "V_DS": "30 V",
+        "I_D": "5.7 A",
+        "V_GS_th": "<= 1.5 V",
+        "R_DS_on": "26.5 mohm at 10 V (2.5 V value not found)",
+        "package": "SOT-23"
+      },
+      "datasheet_url": "https://www.digikey.com/en/products/detail/alpha-omega-semiconductor-inc/AO3400A/1855772",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Selected relay-coil low-side switch (logic-level)."
+    },
+    {
+      "part_number": "ASV-30.000MHZ-EJ-T, LM61CIM3, REF3125AIDBZR, TLV9004IDR, LM2903BDR, MSS1048-103MLC, 1N4148W",
+      "manufacturer": "Abracon / TI / TI / TI / TI / Coilcraft / Diodes Inc.",
+      "key_parameters": {
+        "source": "V1 BOM (examples/buck-48v-24v-1kw/components/references.json) reused unchanged"
+      },
+      "datasheet_url": "see V1 references.json",
+      "datasheet_revision": "not re-fetched in this run",
+      "parameter_verification": "unverified",
+      "assessment": "Supporting parts carried over from the verified V1 control section."
+    }
+  ],
+  "selection": {
+    "aux_input_protection": {
+      "topology": "12 V connector -> SMBJ15CA -> TPS26400PWPR (reverse blocking, UVLO, OVP, ILIM, dVdT, IMON, FLT) -> 100 uF bulk -> bias modules, 5 V buck, relay coil",
+      "ladder": "R1 107 k (IN-UVLO), R2 4.42 k (UVLO-OVP), R3 10.0 k (OVP-RTN)",
+      "UVLO": "10.0 V rising (9.6-10.5 V wc), 9.3 V falling",
+      "OVP": "14.45 V rising (13.8-15.2 V wc), 13.4 V falling",
+      "R_ILIM": "8.06 k -> 1.425-1.575 A",
+      "C_dVdT": "100 nF -> 9.6 ms ramp at 12 V",
+      "MODE": "open (circuit breaker, auto-retry)",
+      "R_IMON": "14.7 k -> 3.0 V at 2.4 A to ADCINB0",
+      "budget": "0.77 A at 10.8 V (8.3 W), 0.71 A at 12 V, 0.66 A at 13.2 V; supply 2 A",
+      "software_floor": "BIAS_EN only when V12V_MON >= 10.8 V"
+    },
+    "control_supplies": {
+      "chain": "12 V -> TPS54302 (5 V, 10 uH, 2x22 uF + 220 uF) -> TPS767D301 (1.9 V adj 18.2k/30.1k; 3.3 V fixed enabled after core RESET1_N) ; TPS3808G01 5 V supervisor (105k/10k) + LDO open-drain resets -> XRS",
+      "loads": "I_5V 0.54 A (1.9 V 0.35 A, 3.3 V 0.18 A); P_LDO 1.39 W; T_J <= 106 degC at 50 degC",
+      "clock_boot_debug": "30 MHz oscillator on XCLKIN, X1 grounded; GPIO84-87 boot straps; 14-pin JTAG; 3.3 V SCI-A header (V1)"
+    },
+    "pwm_fault_logic": {
+      "pwm_path": "ePWM1A/1B -> SN74LVC2G08 (PWM & ARMED) -> 33 ohm -> connector -> 100 ohm + 100 pF + 10 k pull-down at each UCC21710 IN pin",
+      "interlock": "UCC21710 IN+/IN- cross wiring (PWM_H -> HS IN+ & LS IN-; PWM_L -> LS IN+ & HS IN-)",
+      "latch": "SN74LVC1G74: D=1, CLK=ARM (GPIO2), CLR_N=FAULT_COMB_N, Q=ARMED=FAULT_N -> TZ1 + gate enables",
+      "combiner": "2 x SN74LV21A, inputs FLT_H_N, FLT_L_N, RDY_H, RDY_L, OC_N, OVP_N, UVLO_N, OTP_N, FLT_12V_N, XRS_N, ESTOP_N, DSP_TRIP_N",
+      "driver_reset": "RESET_N = GPIO4 -> UCC21710 RST/EN (x2), low > 1000 ns to clear FLT; internal 50 k pull-down",
+      "relay_drive": "RELAY_ON GPIO3 -> 100 ohm -> AO3400A low side, 10 k gate pull-down, 1N4148W flyback across coil, coil 75-92 mA",
+      "leds": "12V_OK, ARMED (hardware), RUN, FAULT at 2 mA"
+    },
+    "interconnect": {
+      "decision": "option (a) stacked mezzanine 2x25 2.54 mm header + socket, four standoffs, no cable; (b) ribbon fallback; (c) RS-422 only if cable > ~15 cm",
+      "parts": "Samtec TSW-125-07-G-D + SSW-125-01-G-D (or Wurth WR-PHD 61305021121 + socket)",
+      "pin_assignment": {
+        "1": "+12V_PROT",
+        "2": "+12V_PROT",
+        "3": "+12V_PROT",
+        "4": "GND_CTRL",
+        "5": "GND_CTRL",
+        "6": "GND_CTRL",
+        "7": "RELAY_ON",
+        "8": "GND_CTRL",
+        "9": "BIAS_EN",
+        "10": "GND_CTRL",
+        "11": "RESET_N (UCC21710 RST/EN x2)",
+        "12": "GND_CTRL",
+        "13": "GND_CTRL",
+        "14": "PWM_H",
+        "15": "GND_CTRL",
+        "16": "GND_CTRL",
+        "17": "PWM_L",
+        "18": "GND_CTRL",
+        "19": "GND_CTRL",
+        "20": "FLT_H_N",
+        "21": "FLT_L_N",
+        "22": "GND_CTRL",
+        "23": "RDY_H",
+        "24": "RDY_L",
+        "25": "GND_CTRL",
+        "26": "GND_CTRL",
+        "27": "OC_N",
+        "28": "GND_CTRL",
+        "29": "TEMP_PWM_H",
+        "30": "TEMP_PWM_L",
+        "31": "GND_CTRL",
+        "32": "PG_BIAS_H_N",
+        "33": "PG_BIAS_L_N",
+        "34": "GND_CTRL",
+        "35": "FAULT_N (latched, LED/diag)",
+        "36": "SPARE_D1 (GPIO26)",
+        "37": "SPARE_D2 (GPIO27)",
+        "38": "GND_CTRL",
+        "39": "+3V3_PWRBOARD",
+        "40": "+3V3_PWRBOARD",
+        "41": "GND_CTRL (analog return)",
+        "42": "GND_CTRL (analog return)",
+        "43": "ISENSE",
+        "44": "GND_CTRL (analog return)",
+        "45": "ISENSE_REF",
+        "46": "GND_CTRL (analog return)",
+        "47": "VIN_SENSE",
+        "48": "GND_CTRL (analog return)",
+        "49": "VOUT_SENSE",
+        "50": "GND_CTRL (analog return)"
+      },
+      "partition_integrated": "same nets, buffers and RC filters; control section along the edge away from the power stage",
+      "partition_separated": "control board: eFuse/12 V entry, DSP, rails, latch, comparators, ADC front-ends, debug, LEDs; power board: drivers, bias modules, input RC/pull-downs, relay FET+coil, Hall sensor, isolated amplifiers"
+    },
+    "dsp_pin_map": [
+      {
+        "signal": "PWM_H",
+        "pin": 5,
+        "function": "GPIO0/EPWM1A"
+      },
+      {
+        "signal": "PWM_L",
+        "pin": 6,
+        "function": "GPIO1/EPWM1B"
+      },
+      {
+        "signal": "ARM",
+        "pin": 7,
+        "function": "GPIO2 out"
+      },
+      {
+        "signal": "RELAY_ON",
+        "pin": 10,
+        "function": "GPIO3 out"
+      },
+      {
+        "signal": "RESET_N (driver RST/EN)",
+        "pin": 11,
+        "function": "GPIO4 out"
+      },
+      {
+        "signal": "BIAS_EN",
+        "pin": 12,
+        "function": "GPIO5 out"
+      },
+      {
+        "signal": "DSP_TRIP_N",
+        "pin": 13,
+        "function": "GPIO6 out"
+      },
+      {
+        "signal": "FLT_H_N",
+        "pin": 16,
+        "function": "GPIO7 in"
+      },
+      {
+        "signal": "FLT_L_N",
+        "pin": 17,
+        "function": "GPIO8 in"
+      },
+      {
+        "signal": "RDY_H",
+        "pin": 18,
+        "function": "GPIO9 in"
+      },
+      {
+        "signal": "RDY_L",
+        "pin": 19,
+        "function": "GPIO10 in"
+      },
+      {
+        "signal": "OVP_N",
+        "pin": 20,
+        "function": "GPIO11 in"
+      },
+      {
+        "signal": "FAULT_N (= ARMED)",
+        "pin": 21,
+        "function": "GPIO12/TZ1 async"
+      },
+      {
+        "signal": "OC_N",
+        "pin": 24,
+        "function": "GPIO13/TZ2"
+      },
+      {
+        "signal": "UVLO_N",
+        "pin": 25,
+        "function": "GPIO14 (TZ3)"
+      },
+      {
+        "signal": "OTP_N",
+        "pin": 26,
+        "function": "GPIO15 (TZ4)"
+      },
+      {
+        "signal": "FLT_12V_N",
+        "pin": 27,
+        "function": "GPIO16 in"
+      },
+      {
+        "signal": "PG_BIAS_H_N",
+        "pin": 28,
+        "function": "GPIO17 in"
+      },
+      {
+        "signal": "PG_BIAS_L_N",
+        "pin": 62,
+        "function": "GPIO18 in"
+      },
+      {
+        "signal": "ESTOP_N",
+        "pin": 63,
+        "function": "GPIO19 in"
+      },
+      {
+        "signal": "LED_RUN",
+        "pin": 65,
+        "function": "GPIO21 out"
+      },
+      {
+        "signal": "LED_FAULT",
+        "pin": 66,
+        "function": "GPIO22 out"
+      },
+      {
+        "signal": "TEMP_PWM_H",
+        "pin": 68,
+        "function": "GPIO24/ECAP1"
+      },
+      {
+        "signal": "TEMP_PWM_L",
+        "pin": 69,
+        "function": "GPIO25/ECAP2"
+      },
+      {
+        "signal": "SPARE_D1",
+        "pin": 72,
+        "function": "GPIO26"
+      },
+      {
+        "signal": "SPARE_D2",
+        "pin": 73,
+        "function": "GPIO27"
+      },
+      {
+        "signal": "UART_RX",
+        "pin": 141,
+        "function": "GPIO28/SCIRXDA"
+      },
+      {
+        "signal": "UART_TX",
+        "pin": 2,
+        "function": "GPIO29/SCITXDA"
+      },
+      {
+        "signal": "VIN_SENSE",
+        "pin": 42,
+        "function": "ADCINA0"
+      },
+      {
+        "signal": "I12V_MON",
+        "pin": 46,
+        "function": "ADCINB0"
+      },
+      {
+        "signal": "ISENSE",
+        "pin": 41,
+        "function": "ADCINA1"
+      },
+      {
+        "signal": "VOUT_SENSE",
+        "pin": 47,
+        "function": "ADCINB1 (simultaneous with A1)"
+      },
+      {
+        "signal": "TEMP_H_ANA",
+        "pin": 40,
+        "function": "ADCINA2"
+      },
+      {
+        "signal": "TEMP_L_ANA",
+        "pin": 48,
+        "function": "ADCINB2"
+      },
+      {
+        "signal": "TEMP_CTRL (LM61)",
+        "pin": 39,
+        "function": "ADCINA3"
+      },
+      {
+        "signal": "V12V_MON",
+        "pin": 49,
+        "function": "ADCINB3"
+      },
+      {
+        "signal": "ISENSE_REF",
+        "pin": 38,
+        "function": "ADCINA4"
+      },
+      {
+        "signal": "XRS_N",
+        "pin": 80,
+        "function": "XRS open-drain"
+      },
+      {
+        "signal": "CLK30",
+        "pin": 105,
+        "function": "XCLKIN (X1 pin 104 grounded, X2 pin 102 open)"
+      },
+      {
+        "signal": "BOOT84..87",
+        "pin": "169/172/173/174",
+        "function": "GPIO84-87 straps"
+      },
+      {
+        "signal": "JTAG",
+        "pin": "76/77/78/79/85/86/87",
+        "function": "TDI/TDO/TRST/TMS/EMU0/EMU1/TCK"
+      },
+      {
+        "signal": "ADCREFM/ADCREFP/ADCRESEXT",
+        "pin": "55/56/57",
+        "function": "2.2 uF bypass each, 22 k bias (V1)"
+      }
+    ],
+    "firmware_contract": {
+      "pwm": "ePWM1 up-down, TBCLK 150 MHz, TBPRD 1500, AHC dead band DBRED=DBFED 30-60 ticks (45 initial), min pulse 200 ns, duty 0.40-0.60 plus soft start",
+      "trip": "TZ1 (FAULT_N) + TZ2 (OC_N) one-shot, force both low, async qualification; flag cleared only in the recovery sequence",
+      "adc": "SOC at CTR=ZERO; map per dsp_pin_map; software limits before hardware trips",
+      "startup": "12 V ramp -> rails -> XRS release -> safe GPIO states -> self-test (V12V_MON >= 10.8 V, no pre-bias) -> BIAS_EN -> RDY_H/RDY_L high & PG low (<= 50 ms) -> RESET_N pulse then high -> precharge settle (VIN_SENSE >= 320 V, < 2 V/10 ms) -> RELAY_ON -> 100 ms -> VIN 340-460 V -> ARM edge -> clear TZ -> soft start -> voltage loop",
+      "fault_recovery": "ISR logs all sources, drops ARM; relay opened only if VIN_SENSE shows source removed or OVP; recovery: sources clear, >= 1 s, RESET_N pulse, new ARM; DESAT/OC one retry then operator reset; OTP after hysteresis"
+    }
+  },
+  "calculations": [
+    {
+      "name": "bias_power_per_module",
+      "expression": "P = 2*Q_G*f_sw*(V_DD-V_EE) + I_VDDQ,max*(V_DD-V_EE) + P_shared_LDO",
+      "inputs": {
+        "Q_G": "250 nC (bounding envelope, assumption)",
+        "f_sw": "50 kHz",
+        "V_DD": "+15 V",
+        "V_EE": "-4 V",
+        "I_VDDQ_max": "5.9 mA (SLUSDH8D)",
+        "P_shared_LDO": "15 V x 14 mA = 0.21 W (low side only)"
+      },
+      "result": "P_gate(Wolfspeed form)=0.237 W; TI factor-2 form=0.475 W; P_LS=0.80 W, P_HS=0.59 W; both < 1.0 W (8-18 V rating) and < 1.5 W (10.8-13.2 V rating) -> margin LS 1.25x against the 1.0 W rating",
+      "knowledge_ref": "KR-IS-001; SKILL-004 principle 1; CB-IS-002 design_calculations; conflict EC-014 resolved by using the larger TI form"
+    },
+    {
+      "name": "bias_input_power",
+      "expression": "P_in = P_in,noload + k*P_out, k=(P_in,full-P_in,noload)/P_out,full from SLUSF10B typ IVIN (40 mA no load, 200 mA at 40 mA x 25 V, VIN 12 V)",
+      "inputs": {
+        "P_in_noload": "0.48 W",
+        "k": "1.92 W/W (incremental efficiency 52 %)",
+        "P_LS": "0.80 W",
+        "P_HS": "0.59 W",
+        "margin": "20 %"
+      },
+      "result": "P_in,LS=2.01 W, P_in,HS=1.61 W, sum=3.62 W; with 20 % margin 4.34 W -> I_12V = 0.402 A at 10.8 V, 0.329 A at 13.2 V",
+      "knowledge_ref": "CMP-UCC14141-Q1 datasheet SLUSF10B electrical characteristics"
+    },
+    {
+      "name": "control_5V_rail",
+      "expression": "I_5V = I_LDO1(1.9 V: IDD_max+IDDA18_max) + I_LDO2(3.3 V: IDDIO+IDD3VFL+IDDA33+logic+osc+LEDs+driver VCC x2+AMC1311 x2 VDD2+TMCS1133+misc) + I_5V,direct; P_in = 5 V*I_5V/eta",
+      "inputs": {
+        "IDD_max": "315 mA",
+        "IDDA18_max": "35 mA",
+        "IDDIO_max": "50 mA",
+        "IDD3VFL_max": "40 mA",
+        "IDDA33_max": "2 mA",
+        "logic": "5 mA",
+        "oscillator": "30 mA (assumption)",
+        "LEDs": "4 x 2 mA",
+        "UCC21710_VCC": "2 x 5 mA",
+        "AMC1311_VDD2": "2 x 7 mA",
+        "TMCS1133": "10 mA (assumption)",
+        "misc_3V3": "10 mA",
+        "direct_5V": "10 mA (comparators/op-amps)",
+        "eta_TPS54302": "0.85 (assumption)"
+      },
+      "result": "I_1.9V=0.350 A, I_3.3V=0.179 A, I_5V=0.539 A, P_5V=2.70 W, P_in=3.17 W -> I_12V = 0.294 A at 10.8 V, 0.240 A at 13.2 V",
+      "knowledge_ref": "SPRS439Q Table 7.5.1 (TMS320F28335 at 150 MHz, flash, all peripherals)"
+    },
+    {
+      "name": "ldo_dissipation",
+      "expression": "P_LDO = (5.0-1.9)*I_1.9V + (5.0-3.3)*I_3.3V; T_J = T_A + P*theta_JA",
+      "inputs": {
+        "I_1_9V": "0.350 A",
+        "I_3_3V": "0.179 A",
+        "T_A": "50 degC",
+        "theta_JA": "40 K/W bounding (assumption; PWP pad soldered to plane)"
+      },
+      "result": "P_LDO=1.39 W -> T_J <= 106 degC (< 125 degC)"
+    },
+    {
+      "name": "relay_coil",
+      "expression": "I_coil = V_12/R_coil",
+      "inputs": {
+        "R_coil": "144 ohm (TE T9AS1D12-12 class, search-snippet)",
+        "V_12": "10.8 / 12 / 13.2 V"
+      },
+      "result": "I_coil = 75 / 83 / 92 mA; P_coil(13.2 V) = 1.21 W; must-operate 9 V < 10.8 V OK"
+    },
+    {
+      "name": "aux_12V_budget",
+      "expression": "I_12V = (P_in,bias + P_in,5V)/V_12 + I_coil (fans external, LEDs included in the 3.3 V rail)",
+      "inputs": {
+        "P_in_bias": "4.34 W",
+        "P_in_5V": "3.17 W",
+        "I_coil": "per relay_coil"
+      },
+      "result": "I_12V = 0.77 A at 10.8 V (8.3 W), 0.71 A at 12 V, 0.66 A at 13.2 V; external supply 2 A -> margin 2.6x"
+    },
+    {
+      "name": "efuse_current_limit",
+      "expression": "R_ILIM from SLVSFQ6A table: 8 k -> I_OL 1.425/1.5/1.575 A; 12 k -> 0.95/1.0/1.05 A",
+      "inputs": {
+        "I_12V_max": "0.77 A",
+        "R_ILIM": "8.06 kohm (E96)"
+      },
+      "result": "I_OL(min)=1.425 A -> margin over worst-case load 1.85x; 12 k rejected (0.95 A min is too close to the start-up load); P_RON = I^2*R_ON = 125 mW at R_ON 210 mohm (85 degC)",
+      "knowledge_ref": "CMP-TPS2640; CB-PR-001 (TI instance 2.2 A not copied)"
+    },
+    {
+      "name": "efuse_inrush",
+      "expression": "t_dVdT = 8e3*V_IN*C_dVdT (SLVSFQ6A Eq.2); I_C = C_downstream*V_IN/t_dVdT; internal default ramp 23.9 V/1.6 ms would give I_C = C*14.9 kV/s",
+      "inputs": {
+        "C_downstream": "194 uF (2x20 uF module CIN + 2x22 uF buck CIN + 100 uF bulk + 10 uF)",
+        "C_dVdT": "100 nF"
+      },
+      "result": "t_dVdT = 9.6 ms at 12 V (10.6 ms at 13.2 V); slew 1.25 V/ms; I_C = 0.24 A; default ramp would give 2.9 A (> I_OL); with the 5 V buck already loading during the ramp I_C + P_in5/5 V = 0.88 A < 1.425 A",
+      "knowledge_ref": "CMP-TPS2640 datasheet Eq.1/Eq.2"
+    },
+    {
+      "name": "efuse_uvlo_ovp_ladder",
+      "expression": "V_UVLO,r = V(UVLOR)*(R1+R2+R3)/(R2+R3); V_UVLO,f = V(UVLOF)*(R1+R2+R3)/(R2+R3); V_OVP,r = V(OVPR)*(R1+R2+R3)/R3; V_OVP,f = V(OVPF)*(R1+R2+R3)/R3; worst case with +/-3 % threshold and 1 % resistors",
+      "inputs": {
+        "R1": "107 kohm (IN to UVLO)",
+        "R2": "4.42 kohm (UVLO to OVP)",
+        "R3": "10.0 kohm (OVP to RTN)",
+        "V_UVLOR": "1.19 V typ (1.225 V max)",
+        "V_UVLOF": "1.1 V typ",
+        "V_OVPR": "1.19 V typ",
+        "V_OVPF": "1.1 V typ",
+        "I_ladder": "99 uA at 12 V"
+      },
+      "result": "UVLO rising 10.02 V (wc 9.55-10.50 V), falling 9.26 V; OVP rising 14.45 V (wc 13.76-15.16 V), falling 13.36 V; no trip inside 10.8-13.2 V; OVP max 15.2 V < 18 V UCC14141 operating max and < 28 V TPS54302",
+      "knowledge_ref": "KR-PR-003 (human-review: thresholds vs downstream ratings); CB-PR-001 interface_requirements"
+    },
+    {
+      "name": "tvs_coordination",
+      "expression": "V_RWM >= V_in,max; V_BR,min > V_OVP,max; V_C,max < V_absmax(TPS2640)",
+      "inputs": {
+        "V_in_max": "13.2 V",
+        "V_OVP_max": "15.2 V",
+        "SMBJ15CA": "V_RWM 15 V, V_BR 16.7-18.5 V, V_C 24.4 V at 24.6 A, 600 W 10/1000 us (distributor data)",
+        "TPS2640_absmax": "45 V"
+      },
+      "result": "15 V >= 13.2 V OK; 16.7 V > 15.2 V OK (TVS never conducts in the OVP band); 24.4 V < 45 V OK; bidirectional (CA) so a reversed input is blocked by the eFuse (-42 V) without a forward-diode load",
+      "knowledge_ref": "CB-PR-001 (TI used bidirectional SMCJ36CA/SMBJ36CA on 24 V; re-derived for 12 V)"
+    },
+    {
+      "name": "efuse_imon_scaling",
+      "expression": "V_IMON = I_OUT*GAIN(IMON)*R_IMON; full scale 3.0 V at GAIN max",
+      "inputs": {
+        "GAIN_IMON": "72/78.28/85 uA/A",
+        "R_IMON": "14.7 kohm",
+        "I_fullscale": "2.4 A"
+      },
+      "result": "V_IMON(2.4 A, 85 uA/A) = 3.00 V <= 3.0 V ADC; V_IMON(0.77 A, typ gain) = 0.89 V; 12-bit resolution 0.6 mA/LSB"
+    },
+    {
+      "name": "v12_monitor_divider",
+      "expression": "V_ADC = V_12*R_b/(R_t+R_b)",
+      "inputs": {
+        "R_t": "45.3 kohm",
+        "R_b": "10.0 kohm"
+      },
+      "result": "ratio 0.1808; 13.2 V -> 2.39 V; 3.0 V full scale at 16.6 V"
+    },
+    {
+      "name": "powerdown_reset_margin",
+      "expression": "t = C_5V*(V_reset - (1.9 V + V_dropout))/I_5V must be >= 8 us (SPRS439 7.9.2 item 2)",
+      "inputs": {
+        "C_5V": "264 uF (220 uF bulk + 2x22 uF)",
+        "V_reset": "4.5 V (TPS3808 SENSE divider 105k/10k, V1)",
+        "V_dropout": "0.35 V",
+        "I_5V": "0.54 A"
+      },
+      "result": "t = 1.10 ms >> 8 us OK (core capacitors add further margin)"
+    },
+    {
+      "name": "epwm_timebase",
+      "expression": "TBPRD = f_TBCLK/(2*f_sw) for up-down count; dead-band ticks = t_db*f_TBCLK",
+      "inputs": {
+        "f_TBCLK": "150 MHz",
+        "f_sw": "50 kHz",
+        "t_db": "200-400 ns (gate-driver agent), 300 ns initial"
+      },
+      "result": "TBPRD = 1500; 1 tick = 6.667 ns; DBRED=DBFED = 30-60 ticks (45 ticks = 300 ns); duty resolution 0.067 %"
+    },
+    {
+      "name": "dead_time_erosion",
+      "expression": "t_db,eff = t_db,set - (driver part-to-part skew + RC/buffer mismatch)",
+      "inputs": {
+        "skew_UCC21710": "30 ns max (SLUSDH8D)",
+        "RC_buffer_mismatch": "5 ns (assumption)"
+      },
+      "result": "erosion <= 35 ns -> t_db,eff >= 265 ns at a 300 ns setting, >= 165 ns at 200 ns; recommend DSP setting = required gate dead time + 40 ns"
+    },
+    {
+      "name": "driver_input_rc",
+      "expression": "tau = (R_series+R_source)*C; t_50% = 0.69*tau; must be << T_INFIL(min 28 ns) and << dead time",
+      "inputs": {
+        "R_series": "100 ohm at the UCC21710 pin",
+        "R_source": "33 ohm at SN74LVC2G08 output",
+        "C": "100 pF to driver GND",
+        "pull_down": "10 kohm at each IN pin (parallel to internal 28.5-113 kohm)"
+      },
+      "result": "tau = 13.3 ns; t_50% = 9.2 ns; 10-90 % rise 29 ns; Wolfspeed instance 120 ohm/56 pF = 6.7 ns (same order, not copied)",
+      "knowledge_ref": "KR-GD-008 (RC at every receiving pin); CB-GD-003 limitations (check vs min pulse width)"
+    },
+    {
+      "name": "fault_to_gate_latency",
+      "expression": "t = 2*t_pd(LV21A) + t_pd(1G74 CLR->Q) + t_pd(2G08) + 0.69*tau + T_INFIL + t_PDHL(UCC21710)",
+      "inputs": {
+        "t_pd_LV21A": "15 ns each (assumption; 6 ns max at 5 V, 3.3 V value not found)",
+        "t_pd_1G74": "5.9 ns max",
+        "t_pd_2G08": "4.7 ns max",
+        "RC": "9 ns",
+        "T_INFIL": "60 ns max",
+        "t_PDHL": "130 ns max"
+      },
+      "result": "t <= 240 ns after the fault source asserts (plus source delay, e.g. TMCS1133 100 ns); DESAT faults are handled first inside the driver (t_OCOFF <= 400 ns, soft turn-off) and FLT follows 300-750 ns later",
+      "knowledge_ref": "KR-PR-001; KR-SN-005; KR-PR-002"
+    },
+    {
+      "name": "temp_pwm_decode",
+      "expression": "D = 0.10 + (0.88-0.10)/(4.5-0.6)*(V_AIN-0.6); V_AIN = I_AIN*R_NTC; eCAP resolution = t_tick/T_APWM",
+      "inputs": {
+        "APWM": "380-420 kHz, D 10 % at 0.6 V, 50 % at 2.5 V, 88 % at 4.5 V (SLUSDH8D)",
+        "I_AIN": "196-209 uA",
+        "t_tick": "6.667 ns"
+      },
+      "result": "slope 0.200 /V; eCAP duty resolution 0.27 % -> 13 mV of V_AIN -> 67 ohm of R_NTC; analog alternative RC 10 kohm/100 nF (tau 1 ms) -> ripple 0.8 % of 3.3 V",
+      "knowledge_ref": "CB-PR-002"
+    },
+    {
+      "name": "connector_current",
+      "expression": "I_pin = I_12V,max / N_12V_pins vs rating",
+      "inputs": {
+        "I_12V_max": "0.77 A",
+        "N_12V_pins": "3",
+        "rating_WR_PHD": "3 A per pin (fetched datasheet)",
+        "rating_SSW": "4.7 A per pin (distributor data)"
+      },
+      "result": "I_pin = 0.26 A -> margin 12x (WR-PHD) / 18x (SSW); drop at 20 mohm/contact 5.1 mV"
+    },
+    {
+      "name": "adc_front_end",
+      "expression": "tau = R*C; acquisition window >= 6*tau_sh where tau_sh = R*C_sh",
+      "inputs": {
+        "R": "100 ohm",
+        "C": "1 nF",
+        "C_sh": "pF class (SPRS439 value not extracted)",
+        "ADCCLK": "25 MHz"
+      },
+      "result": "tau = 100 ns reservoir; S/H charges from the 1 nF reservoir, droop ~0.2 %; acquisition window 16 ADCCLK = 640 ns ample; SOC from ePWM at CTR=ZERO (away from PWM edges)"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "Q_G bounding value for bias budget",
+      "value": "250 nC at +15/-4 V",
+      "basis": "Envelope above the Wolfspeed TO-247-4 C3M devices the gate-driver agent is likely to select (e.g. C3M0021120K class); to be replaced by the selected device's datasheet value."
+    },
+    {
+      "name": "Gate rails",
+      "value": "+15 V / -4 V (19 V swing)",
+      "basis": "KR-GD-005 and the TI/Wolfspeed Gen-3 guidance; final rails set by the gate-driver/bias agents."
+    },
+    {
+      "name": "Shared sensing LDO on low-side bias module",
+      "value": "0.21 W (15 V x 14 mA)",
+      "basis": "CB-IS-002 pattern with two AMC1311 high-side supplies <= 7 mA each; included only if the sensing agent adopts it."
+    },
+    {
+      "name": "UCC14141-Q1 input power model",
+      "value": "P_in = 0.48 W + 1.92 x P_out, +20 % margin",
+      "basis": "SLUSF10B typ I_VIN 40 mA (no load) and 200 mA (1.0 W) at 12 V; incremental efficiency 52 %."
+    },
+    {
+      "name": "TPS54302 efficiency",
+      "value": "85 %",
+      "basis": "Conservative value for 12 V -> 5 V at ~0.5 A; datasheet curve not extracted."
+    },
+    {
+      "name": "Control-board 3.3 V miscellaneous loads",
+      "value": "oscillator 30 mA, TMCS1133 10 mA, driver VCC 2 x 5 mA, AMC1311 VDD2 2 x 7 mA, logic 5 mA, LEDs 8 mA, misc 10 mA",
+      "basis": "Typical values for these part classes; only the F28335 currents are datasheet maxima."
+    },
+    {
+      "name": "Precharge relay coil",
+      "value": "144 ohm, 83 mA at 12 V (<= 92 mA at 13.2 V); budget 100 mA",
+      "basis": "TE T9AS1D12-12 distributor data; the actual relay is the power-stage agent's choice."
+    },
+    {
+      "name": "TPS2640 threshold tolerance",
+      "value": "+/-3 %",
+      "basis": "Datasheet feature text '+/-3 % monitor accuracy'; the min column of V(UVLOR) was not legible in the extracted text."
+    },
+    {
+      "name": "Downstream capacitance on the protected 12 V rail",
+      "value": "194 uF",
+      "basis": "2 x 20 uF module CIN + 2 x 22 uF buck CIN + 100 uF bulk + 10 uF; to be updated with the final BOM."
+    },
+    {
+      "name": "SN74LV21A propagation delay at 3.3 V",
+      "value": "<= 15 ns per stage",
+      "basis": "Only the 5 V value (6 ns max) was found; 3.3 V operation is slower."
+    },
+    {
+      "name": "TPS767D301 theta_JA",
+      "value": "40 K/W bounding",
+      "basis": "PWP PowerPAD soldered to a plane; datasheet value not extracted."
+    },
+    {
+      "name": "RC/buffer mismatch between PWM_H and PWM_L paths",
+      "value": "5 ns",
+      "basis": "1 % resistors, 10 % capacitors, same gate package."
+    },
+    {
+      "name": "12 V input connector",
+      "value": "2-pin 5.08 mm terminal block (placeholder)",
+      "basis": "External connector family is an architecture/enclosure decision."
+    },
+    {
+      "name": "ADC acquisition window",
+      "value": "16 ADCCLK at 25 MHz (640 ns)",
+      "basis": "V1 front-end 100 ohm / 1 nF retained."
+    }
+  ],
+  "pcb_constraints": [
+    "TVS and TPS26400 placed at the 12 V entry connector before any distribution; PowerPAD stitched to the RTN/GND plane with multiple vias (CB-PR-001; PE-PCB-008).",
+    "Protected 12 V distributed as a plane/wide trace to the two bias-module inputs, the 5 V buck and the relay coil; 100 uF bulk next to the eFuse output.",
+    "TPS54302: 22 uF + 100 nF at VIN pins, inductor and output capacitors in a tight loop; keep its switch node away from ADC traces and the connector analogue pins.",
+    "TPS767D301: 10 uF at each input/output, PowerPAD vias; per-pin 100 nF on every DSP VDD/VDDIO/VDDA pin plus 2.2 uF per rail group; ADC reference capacitors at pins 55/56 (V1 pattern, PE-PCB-008).",
+    "Fault combiner, latch and PWM AND gates within 20 mm of the DSP PWM/TZ pins; TZ1/TZ2 traces short with no vias where possible; GPIO12/13 configured asynchronous.",
+    "33 ohm series resistors at the SN74LVC2G08 outputs; 100 ohm + 100 pF + 10 k pull-down at each UCC21710 IN+/IN-/RST-EN pin on the power board (KR-GD-008, SKILL-002 hand-off); single-ended segment after the connector as short as the driver placement allows (KR-PCB-005).",
+    "Mezzanine connector: PWM_H (pin 14) and PWM_L (pin 17) surrounded by ground on all four neighbours; analogue group (pins 41-50) at the opposite end behind the 3.3 V pair; 25 ground pins; four standoffs, gold contacts, pin-1 marking (PE-PCB-005/007).",
+    "PWM and fault traces routed over an unbroken GND plane on both boards; no analogue trace parallel to a PWM trace for more than 10 mm; ADC front-end RC (100 ohm / 1 nF) at the DSP pins.",
+    "Control section and connector located along the board edge opposite the power stage; SELV copper kept at the creepage/clearance required to 400 V nets for pollution degree 2 and CTI >= 175 V (REF-TI-TIDA-010054 decision 10; KR-ISO-002 review).",
+    "Relay driver MOSFET and flyback diode adjacent to the coil on the power board; RELAY_ON trace with its 10 k pull-down at the gate.",
+    "Single GND net for analogue and digital on the control board with placement-controlled returns (V1 pattern); no split planes under ADC or PWM tracks."
+  ],
+  "open_issues": [
+    "Architecture agent: integrated vs separated boards and where the 12 V enters; the eFuse must follow the 12 V entry. The pin assignment applies to the separated outcome; the integrated board keeps the same nets.",
+    "Gate-driver agent: final device Q_G, gate rails, minimum dead time and NTC/AIN network; this section assumed Q_G <= 250 nC, +15/-4 V, 200-400 ns and recommends programming dead time + 40 ns.",
+    "Sensing agent: VIN_SENSE/VOUT_SENSE/ISENSE scaling for 0-3 V, TMCS1133 variant and OC_N polarity/drive type (assumed active-low 3.3 V), OVP/UVLO comparator thresholds (460 V / 340-320 V) and whether the low-side bias module feeds the isolated-amplifier LDO.",
+    "Power-stage agent: precharge relay type and whether a general-purpose 30 A relay may bypass the resistor at 400 V DC and open under fault current; coil budgeted at 100 mA.",
+    "TPS26400 UVLO/OVP ladder (10.0 V / 14.45 V) and ILIM 1.5 A to be confirmed in human review against the UCC14141-Q1 (1.5 W at 10.8-13.2 V, 1.0 W at 8-18 V) and TPS54302 ratings (KR-PR-003 verification method).",
+    "SN74LV21A tpd at 3.3 V, UCC14141-Q1 ENA threshold, TPS54302 EN threshold (optional 9 V start) and the TPS3808 CT value are not verified; the fault-latency figure uses a 15 ns per-stage assumption.",
+    "Samtec TSW per-pin current and TSW/SSW stack height (standoff length), and the existence of the Wurth 50-pin orderable 61305021121, must be confirmed; consider a keyed/shrouded variant if mis-mating risk is judged significant.",
+    "TPS767D301PWPR commercial lifecycle: family ACTIVE on ti.com but the EP variant is NRND and TI points to TLV752; re-check at BOM release.",
+    "SMBJ15CA, T9AS1D12-12 and AO3400A parameters come from distributor data only; fetch manufacturer datasheets before release.",
+    "Hardware OTP threshold and hysteresis depend on the NTC mapping (CB-PR-002); KR-TH-003 reminds that this is cooling supervision, not junction protection.",
+    "Firmware (out of scope) must implement the start-up and fault-recovery sequences exactly as specified; no auto-retry into a DESAT/OC fault beyond one attempt."
+  ],
+  "verification_status": "Analytically checked: bias output/input power budget, 12 V budget at 10.8/12/13.2 V, eFuse ILIM/inrush/UVLO/OVP/TVS/IMON, 5 V rail and LDO thermal, power-down reset margin, ePWM time base and dead-band ticks, dead-time erosion, input RC, fault latency, APWM decode, connector current. Parameter sources: TPS2640, UCC14141-Q1, UCC21710-Q1, TMS320F28335 and Wurth WR-PHD from fetched datasheets; TPS54302, TPS767D301, TPS3808, SN74LVC2G08, SN74LVC126A, SN74LVC1G74, SN74LV21A from ti.com product pages; TVS, relay, AO3400A and Samtec ratings from distributor/search data; V1 supporting parts not re-fetched. Unverified and human-review items are listed in open_issues and at the end of the markdown. No simulation or hardware test underlies this section.",
+  "markdown": "# Controller, auxiliary supplies, PWM/fault logic and interconnect\n\n## 1. Scope and knowledge basis\n\nThis section covers the SELV control domain of the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck: the 12 V auxiliary entry, the control-board rails for the TMS320F28335, the PWM/fault logic between the DSP and the two UCC21710-Q1 isolated gate drivers, the power-board interconnect and the hardware/firmware contract. The verified V1 (48 V / 1 kW) control section is reused where the physics is unchanged (DSP supplies, reset, clock, JTAG, UART, fault-latch pattern). Knowledge applied: SKILL-001 principle 9 and KR-GD-008/KR-GD-009 (signalling, interlock), KR-PR-002 (latched combined fault), KR-PR-003 and CB-PR-001 (auxiliary protection), KR-IS-001 / SKILL-004 / CB-IS-002 (bias power budget), KR-SN-003/005 (signal format, fast OC path), CB-PR-002 (thermistor over APWM), KR-PCB-005 and the project rules PE-PCB-005/007/008. Reference instance values (TI 9 V/15 V/2.2 A eFuse settings, Wolfspeed 120 ohm/56 pF filters, 2 ohm gate resistors, 45/70 A Hall trips) were not copied; every value below is derived for this converter.\n\n## 2. Auxiliary 12 V input: protection and budget\n\n**Topology (CB-PR-001 alternative A, adapted).** 12 V enters through a 2-pin connector -> bidirectional TVS SMBJ15CA -> TPS26400PWPR eFuse (reverse-polarity blocking to -42 V, UVLO, OVP, current limit, dVdT inrush ramp, IMON, open-drain FLT) -> 100 uF bulk -> distribution to the two UCC14141-Q1 bias modules, the TPS54302 5 V buck and the precharge-relay coil. The protection sits at the connector before any distribution (CB-PR-001 PCB constraint), whichever board the 12 V enters.\n\n**Budget at the 10.8 / 12 / 13.2 V corners (fans external):**\n\n| Load | Basis | P_in (W) | I at 10.8 V | I at 13.2 V |\n|---|---|---|---|---|\n| 2 x UCC14141-Q1 bias (+15/-4 V) | P_out,LS = 0.80 W, P_out,HS = 0.59 W (KR-IS-001, TI factor-2 form, Q_G bound 250 nC, driver I_VDDQ 5.9 mA, low-side shared sensing LDO 0.21 W); input model from SLUSF10B typ: P_in = 0.48 W + 1.92 x P_out; +20 % margin | 4.34 | 0.40 A | 0.33 A |\n| Control board 5 V rail | I_5V = 0.54 A (F28335 maxima from SPRS439Q: IDD 315 mA, IDDIO 50 mA, IDD3VFL 40 mA, IDDA18 35 mA; logic, oscillator, 4 LEDs, driver VCC, isolator and Hall-sensor supplies) / eta 0.85 | 3.17 | 0.29 A | 0.24 A |\n| Precharge relay coil | 144 ohm class coil (TE T9AS1D12-12, 83 mA at 12 V) | 0.8-1.2 | 0.075 A | 0.092 A |\n| **Total** | | **8.3 W at 10.8 V** | **0.77 A** | **0.66 A** |\n\nThe external 2 A supply has 2.6x margin. The bias modules stay below the 1.0 W rating that applies over 8-18 V, so a dip below 10.8 V degrades nothing; the 1.5 W (10.8-13.2 V) rating gives 1.9x margin on the low-side module (KR-IS-001).\n\n**eFuse settings (derived, not TI's 9 V / 15 V / 2.2 A).** Ladder 107 k / 4.42 k / 10.0 k (IN -> UVLO -> OVP -> RTN, 99 uA): UVLO rising 10.0 V (worst case 9.6-10.5 V), falling 9.3 V; OVP rising 14.45 V (13.8-15.2 V), falling 13.4 V. No trip occurs inside 10.8-13.2 V; the OVP ceiling is below the UCC14141-Q1 18 V and TPS54302 28 V limits, and the firmware adds a 10.8 V soft floor via the 12 V monitor before enabling the bias modules. R_ILIM = 8.06 k gives I_OL = 1.425-1.575 A (1.85x over the 0.77 A worst case; 12 k rejected as too close to start-up loading). C_dVdT = 100 nF gives t_ramp = 9.6 ms at 12 V (Eq.2, t = 8e3 x V_IN x C), limiting the 194 uF downstream charging current to 0.24 A; the default 23.9 V/1.6 ms ramp would demand 2.9 A and trip. MODE = open (circuit-breaker with auto-retry) so a transient overload re-tries without operator action; FLT (open drain, low on UVLO/OVP/overload/reverse) feeds the fault combiner as FLT_12V_N. IMON with R_IMON = 14.7 k gives 3.0 V at 2.4 A (ADC full scale) and 0.6 mA/LSB. TVS coordination: V_RWM 15 V >= 13.2 V, V_BR,min 16.7 V > OVP max 15.2 V (never conducts in the OVP band), V_C 24.4 V < 45 V eFuse absolute maximum; the bidirectional CA type presents no forward-diode load under reversed polarity, so the eFuse alone blocks it (KR-PR-003 satisfied; threshold review is a human-review item per the rule's verification method).\n\n## 3. Control-board supplies and sequencing (V1 pattern, justified)\n\n12 V -> TPS54302DDCR (ACTIVE, 4.5-28 V, 3 A, 400 kHz; 10 uH MSS1048-103MLC, 2 x 22 uF + 220 uF bulk) -> 5 V -> TPS767D301PWPR dual LDO (family ACTIVE on ti.com; 1 A per channel): channel 1 adjustable 1.9 V core (18.2 k / 30.1 k, V_FB 1.1834 V -> 1.899 V), channel 2 fixed 3.3 V I/O enabled by the core RESET1_N through the V1 transistor so the core rises first (SPRS439Q 7.9.2 asks VDD to reach 0.7 V before or with VDDIO). LDO dissipation 1.39 W -> T_J <= 106 degC at 50 degC ambient with a 40 K/W bounding theta_JA. TPS3808G01 (ACTIVE) monitors 5 V (105 k / 10 k, 4.5 V) and holds XRS low together with the LDO open-drain resets; power-down margin from 4.5 V to LDO dropout is 1.1 ms >> the 8 us XRS lead required before VDD falls to 1.5 V. 30 MHz 3.3 V oscillator on XCLKIN with X1 grounded, boot straps, JTAG and SCI-A header are unchanged from V1. Changes versus V1: none in topology; TI lists TPS543021/TPS62933 and TLV752 as newer alternatives (different pin-out for TLV752) and the TPS767D301-EP is NRND, so the lifecycle of the commercial PWPR must be re-checked at BOM release.\n\n## 4. PWM path, interlock and fault latch\n\n**PWM path.** ePWM1A/1B (GPIO0/1) complementary with DSP dead band -> SN74LVC2G08 AND gates (PWM & ARMED) -> 33 ohm source resistors -> connector -> at each UCC21710 input: 100 ohm series + 100 pF to driver GND + 10 k pull-down (tau 13 ns, t_50% 9 ns, far below the 28-60 ns input deglitch and the 200-400 ns dead time; KR-GD-008 \"RC at every receiving pin\"). Deviation from the suggested SN74LVC126A: a three-state buffer discharges a disabled line only through its pull-down (10 k x ~200 pF -> about 2 us), whereas the AND gate drives low within 5 ns of ARMED falling; TI's buffer is otherwise equivalent and remains an alternative. Hardware interlock per KR-GD-009 is the UCC21710 IN+/IN- cross wiring (PWM_H -> HS IN+ and LS IN-; PWM_L -> LS IN+ and HS IN-): both inputs high forces both outputs low (SLUSDH8D Table 7-1). The interlock does not create dead time; the DSP does (300 ns initial, 45 TBCLK ticks).\n\n**Fault latch (KR-PR-002).** All fault sources are active-low 3.3 V signals combined by two SN74LV21A dual 4-input ANDs (12 inputs, two stages, about 30 ns): FLT_H_N, FLT_L_N, RDY_H, RDY_L (UCC21710 open-drain, 4.7 k pull-ups), OC_N (TMCS1133 fast flag, KR-SN-005), OVP_N and UVLO_N (comparators on VIN_SENSE, 460 V / 340-320 V thresholds set by the sensing agent), OTP_N (comparator on the filtered TEMP_PWM analogue), FLT_12V_N (eFuse), XRS_N, ESTOP_N (header) and DSP_TRIP_N (software kill). The combined FAULT_COMB_N drives CLR_N of an SN74LVC1G74 (D = 1, CLK = ARM from GPIO2): any fault clears Q = ARMED asynchronously; ARMED returns high only on a new ARM rising edge after every source has released. ARMED (= FAULT_N) gates the PWM AND gates and drives TZ1 (GPIO12, one-shot). Worst-case fault-to-gate-off latency through the logic, line and driver is <= 240 ns plus the source delay; DESAT faults are first acted on inside the driver (soft turn-off, t_OCOFF <= 400 ns, KR-GD-011) and the latch then blocks the following pulses. RESET_N (UCC21710 RST/EN, internal 50 k pull-down -> drivers disabled when the DSP is in reset) is driven by GPIO4 and must be low > 1000 ns to clear a driver fault. BIAS_EN (GPIO5, pull-down) enables both UCC14141-Q1 modules; their active-low open-drain PG pins are read as PG_BIAS_x_N for diagnostics only, because RDY already covers the VDD UVLO. Precharge relay: RELAY_ON (GPIO3, 10 k pull-down) -> 100 ohm -> AO3400A low-side MOSFET beside the coil with a 1N4148W-class flyback diode; coil current 75-92 mA. LEDs: 12V_OK (eFuse FLT high), ARMED (hardware, from Q), RUN and FAULT (GPIO), each 2 mA.\n\n## 5. Interconnect\n\n| Option | Assessment |\n|---|---|\n| (a) Stacked mezzanine 2x25, 2.54 mm, header + socket, four standoffs, no cable | Selected. Link length <= 15 mm plus short traces falls inside the KR-GD-008 exclusion for buffered single-ended PWM with RC filtering (PRD-09301 section 4.1; TI uses SN74LVC126A buffers on a 300 x 180 mm board). 25 of 50 pins are ground, every PWM pin has ground on all four neighbours; 12 V on three pins at 0.26 A/pin against 3 A (Wurth) or 4.7 A (Samtec) ratings; gold plating; keying by pin-1 marking plus standoff pattern; retention by the standoffs, not the contacts. |\n| (b) Shrouded IDC + ribbon <= 15 cm | Acceptable fallback (ground-interleaved 1.27 mm ribbon, same buffers/filters) if the architecture needs a cable, but a cable in a 400 V / 50 kHz environment is exactly where KR-GD-008 prefers differential signalling; adds latching reliability and crosstalk questions. |\n| (c) RS-422 (SN65C1167E) for PWM and fault, as in CGD1700HB2M-UNA | Not selected: KR-GD-008 excludes short on-board links; it would add transceivers, 120 ohm terminations, 5 V supply and skew for no benefit at this distance. It is the mandated solution if the control board ever moves to a cable > ~15 cm or a separate enclosure (CB-GD-003, with fail-safe P/N swap). |\n\n**Pin assignment (odd pins row A, even pins row B; pin n is adjacent to n+/-1 and n+/-2):** 1-3 +12V_PROT; 4-6 GND; 7 RELAY_ON; 8 GND; 9 BIAS_EN; 10 GND; 11 RESET_N; 12-13 GND; **14 PWM_H**; 15-16 GND; **17 PWM_L**; 18-19 GND; 20 FLT_H_N; 21 FLT_L_N; 22 GND; 23 RDY_H; 24 RDY_L; 25-26 GND; 27 OC_N; 28 GND; 29 TEMP_PWM_H; 30 TEMP_PWM_L; 31 GND; 32 PG_BIAS_H_N; 33 PG_BIAS_L_N; 34 GND; 35 FAULT_N (latched, LED/diagnostic); 36-37 SPARE_D (GPIO26/27); 38 GND; 39-40 +3V3_PWRBOARD (driver VCC, isolator and Hall-sensor supplies); 41-42 GND (analogue return); 43 ISENSE; 44 GND; 45 ISENSE_REF; 46 GND; 47 VIN_SENSE; 48 GND; 49 VOUT_SENSE; 50 GND. The analogue group sits 24 pins (about 30 mm) from the PWM pins behind the quiet 3.3 V pair (PE-PCB-005/007). Parts: Samtec TSW-125-07-G-D + SSW-125-01-G-D or Wurth WR-PHD 61305021121 + socket (series rating verified; 50-pin orderable to be confirmed).\n\n**Partition.** Integrated board: the connector disappears but the same net list, buffers and RC filters are kept, with the control section along the edge opposite the power stage (REF-TI-TIDA-010054 decision 10). Separated boards: control board = eFuse and 12 V entry, DSP, rails, fault latch, comparators, ADC front-ends, JTAG/UART, LEDs; power board = UCC21710 drivers and UCC14141 modules (each inside its isolated island, KR-ISO-001), the RC input filters and pull-downs, the relay driver FET and coil, the TMCS1133 and the isolated amplifiers. If the architecture puts the 12 V entry on the power board, the eFuse moves with it and the protected 12 V comes up through the connector instead.\n\n## 6. TMS320F28335PGFA pin assignment (pins from components/tms320f28335_pgf_pins.csv)\n\n| Signal | GPIO / function | Pin |\n|---|---|---|\n| PWM_H / PWM_L | GPIO0 EPWM1A / GPIO1 EPWM1B | 5 / 6 |\n| ARM (latch clock) | GPIO2 out | 7 |\n| RELAY_ON | GPIO3 out | 10 |\n| RESET_N (driver RST/EN) | GPIO4 out | 11 |\n| BIAS_EN | GPIO5 out | 12 |\n| DSP_TRIP_N | GPIO6 out (open-drain style) | 13 |\n| FLT_H_N / FLT_L_N | GPIO7 / GPIO8 in | 16 / 17 |\n| RDY_H / RDY_L | GPIO9 / GPIO10 in | 18 / 19 |\n| OVP_N | GPIO11 in | 20 |\n| FAULT_N (= ARMED) | GPIO12 TZ1, async | 21 |\n| OC_N | GPIO13 TZ2 (direct fast path) | 24 |\n| UVLO_N / OTP_N | GPIO14 (TZ3) / GPIO15 (TZ4) | 25 / 26 |\n| FLT_12V_N | GPIO16 in | 27 |\n| PG_BIAS_H_N / PG_BIAS_L_N | GPIO17 / GPIO18 in | 28 / 62 |\n| ESTOP_N | GPIO19 in | 63 |\n| LED_RUN / LED_FAULT | GPIO21 / GPIO22 out | 65 / 66 |\n| TEMP_PWM_H / TEMP_PWM_L | GPIO24 ECAP1 / GPIO25 ECAP2 | 68 / 69 |\n| SPARE_D | GPIO26 / GPIO27 | 72 / 73 |\n| UART RX / TX | GPIO28 SCIRXDA / GPIO29 SCITXDA | 141 / 2 |\n| VIN_SENSE / I12V_MON | ADCINA0 / ADCINB0 | 42 / 46 |\n| ISENSE / VOUT_SENSE (simultaneous pair) | ADCINA1 / ADCINB1 | 41 / 47 |\n| TEMP_H_ANA / TEMP_L_ANA | ADCINA2 / ADCINB2 | 40 / 48 |\n| TEMP_CTRL (LM61) / V12V_MON | ADCINA3 / ADCINB3 | 39 / 49 |\n| ISENSE_REF | ADCINA4 | 38 |\n| Reset, clock, boot, JTAG | XRS 80; XCLKIN 105; GPIO84-87 169/172/173/174; TDI 76, TDO 77, TRST 78, TMS 79, EMU0 85, EMU1 86, TCK 87 | |\n\nChange from V1: ISENSE and VOUT_SENSE now occupy an A/B pair so the ADC samples them simultaneously for the control loop; all ADC inputs keep the 100 ohm / 1 nF front-end and 0-3 V full scale.\n\n## 7. Hardware / firmware contract\n\n- PWM: ePWM1 up-down count, TBCLK 150 MHz, TBPRD 1500 (50 kHz, 0.067 % duty step), active-high complementary dead band DBRED = DBFED = 30-60 ticks (200-400 ns) with 45 ticks initially; effective dead time at the gates is up to 35 ns shorter (UCC21710 30 ns skew + RC mismatch), so program the gate-driver agent's minimum plus 40 ns. Minimum pulse 200 ns (driver deglitch 28-60 ns). Duty window 0.40-0.60 plus soft-start ramp from 0.\n- ADC: SOC from ePWM1 at CTR = ZERO; channels per Section 6; calibrate offset/gain; software limits (27.5 A for 10 s, 460 V, temperature) act before the hardware trips.\n- Trip zones: TZ1 (FAULT_N) and TZ2 (OC_N) one-shot, both outputs forced low, asynchronous input qualification; TZ3/TZ4 optional. TZ one-shot flag is cleared only after the recovery sequence.\n- Start-up: 12 V ramp (9.6 ms) -> rails -> XRS release -> GPIO safe states (PWM, ARM, RELAY_ON, BIAS_EN low; RESET_N low) -> self-test (V12V_MON >= 10.8 V, I12V_MON, sensor plausibility, FLT_12V_N high, output below 5 V = no pre-bias) -> BIAS_EN high -> wait RDY_H/RDY_L high and PG_BIAS low (<= 50 ms; module soft-start time-out 28.4 ms) -> RESET_N high (pulse low >= 2 us first) -> precharge: when VIN_SENSE >= 320 V and settled (< 2 V change over 10 ms) RELAY_ON high, wait 100 ms, verify VIN_SENSE in 340-460 V -> ARM rising edge -> clear TZ flag -> soft start under current limit -> voltage loop.\n- Fault handling: TZ ISR records all source GPIOs, drops ARM, opens the relay only when VIN_SENSE indicates the source is gone or on OVP; recovery requires sources cleared, >= 1 s wait, RESET_N pulse, new ARM edge; DESAT/OC: one retry, then latch for operator reset; OTP: retry only after hysteresis.\n\n## 8. Status\n\n**Analytically checked:** bias output and input power budget; 12 V budget at three input corners; eFuse current limit, inrush ramp, UVLO/OVP ladder with tolerances, TVS coordination, IMON scaling; 5 V rail current and LDO dissipation; power-down reset margin; PWM time-base and dead-band ticks; dead-time erosion; input RC time constant; fault-to-gate latency; APWM decode resolution; connector current margin.\n\n**Unverified:** SN74LV21A propagation delay at 3.3 V; UCC14141-Q1 ENA logic threshold; TPS54302 EN threshold for a 9 V start; TPS3808 CT value for the chosen delay; Samtec TSW per-pin rating and TSW/SSW stack height; Wurth 50-pin orderable number; TVS values (distributor data only); relay coil data (distributor data); AO3400A R_DS(on) at 3.3 V gate drive; commercial TPS767D301PWPR lifecycle (family page ACTIVE, EP variant NRND); oscillator current; V1 BOM parts reused without re-fetching.\n\n**Human review:** eFuse thresholds versus downstream ratings (KR-PR-003 verification method); the final Q_G, gate rails and dead time from the gate-driver agent; VIN_SENSE/VOUT_SENSE/ISENSE scaling and OVP/UVLO comparator thresholds from the sensing agent; NTC-to-APWM mapping and OTP threshold (KR-TH-003: not junction temperature); precharge relay suitability for 400 V DC bypass duty and whether it may open under load; the architecture decision on partition and 12 V entry point; connector keying and stack height; creepage from the SELV connector area to 400 V copper on the power board (KR-ISO-002).\n"
+}

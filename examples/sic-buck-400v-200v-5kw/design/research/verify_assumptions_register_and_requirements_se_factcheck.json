@@ -1,0 +1,404 @@
+{
+  "lens": "SOURCE FACT-CHECK",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "Isola 370HR: Tg 180 degC (DSC), Td 340 degC, CTI class 3 (175-249 V) UL 746A/ASTM D3638, UL E41625 (PCL-FR-370HR), UL94 V-0, IPC-4101 /98 /99 /101 /126, laminate data sheet Rev E 6/24",
+      "status": "verified",
+      "evidence": "https://www.isola-group.com/products/all-printed-circuit-materials/370hr/ states exactly these values (plus dielectric breakdown >50 kV); the page makes no material-group statement.",
+      "correction": "Material group IIIa (175 <= CTI < 400) is a correct inference, but CTI class 3 guarantees only >= 175 V, i.e. the seed minimum with no margin; 'meets with margin' holds for Tg only."
+    },
+    {
+      "item": "Wolfspeed C3M0032120K headline: active, 1200 V, 32 mohm, 63 A, T_J 175 degC, TO-247-4, datasheet last updated 09/2024",
+      "status": "verified",
+      "evidence": "https://www.wolfspeed.com/products/power/sic-mosfets/1200v-silicon-carbide-mosfets/c3m0032120k/ : Active, 1200 V, 32 mohm, 63 A, 175 degC, TO-247-4, 'Last updated 09/2024'. Datasheet PDF header 'Rev. 6, September 2024'.",
+      "correction": "Datasheet Rev. 6 gives I_D = 69 A at T_C = 25 degC (53 A at 100 degC); the product-page 63 A is stale (Rev 5, Feb 2024 'Updated ID, IDM, Pd and Rthj-c')."
+    },
+    {
+      "item": "C3M0032120K R_DS(on) max 43 mohm at 25 degC (search snippet)",
+      "status": "verified",
+      "evidence": "Datasheet p.2: 23 min / 32 typ / 43 max mohm at V_GS 15 V, I_D 40 A; 57.6 mohm typ at T_J 175 degC."
+    },
+    {
+      "item": "C3M0032120K Q_G 118 nC (search snippet)",
+      "status": "verified",
+      "evidence": "Datasheet p.2: Qg 118 nC (Qgs 40, Qgd 34) at V_DS 800 V, V_GS -4/15 V, I_D 40 A."
+    },
+    {
+      "item": "C3M0032120K E_on/E_off 367/123 uJ (external diode) and 955/107 uJ (body diode) at 800 V, 40 A, R_G 2.5 ohm, 175 degC (snippet)",
+      "status": "verified",
+      "evidence": "Datasheet p.2: EON 367 / EOFF 123 uJ (External Diode), EON 955 / EOFF 107 uJ (Body Diode FWD); V_DS 800 V, V_GS -4/15 V, I_D 40 A, R_G(ext) 2.5 ohm, L 65.7 uH, T_J 175 degC."
+    },
+    {
+      "item": "C3M0032120K R_thJC 'not found'; 0.42 K/W assumed",
+      "status": "contradicted",
+      "evidence": "Datasheet p.3: R-theta-JC 0.44 degC/W typ; R-theta-JA 40 degC/W. The value is in the PDF the agent linked.",
+      "correction": "Use 0.44 K/W: P_max(50 degC) = 100/(0.44+0.5+1.0) = 51.5 W (agent 52.1 W). Status should be 'datasheet-verified (sanity device only)'."
+    },
+    {
+      "item": "C3M0032120K hot R_DS(on) 'not found'; hot factor ~1.6 assumed",
+      "status": "contradicted",
+      "evidence": "Datasheet: 57.6 mohm typ at 175 degC vs 32 typ at 25 degC (factor 1.8 at 175 degC, ~1.67 interpolated to the 150 degC design limit).",
+      "correction": "'Not found' is wrong; the assumed 1.6 is close to the datasheet-derived ~1.67 (P_cond ~45 W vs 43 W). Conclusion unchanged."
+    },
+    {
+      "item": "C3M0032120K C_oss and gate limits consistent with KR-GD-001 / PRD-04814",
+      "status": "verified",
+      "evidence": "Datasheet: Coss 129 pF at 1000 V/100 kHz, Eoss 76 uJ; V_GS(max) -8/+19 V transient, V_GS op -4/15 V, Note 1 'Recommended turn-on gate voltage is 15V with +/-5% regulation tolerance, see PRD-04814'. KR-GD-001 limits +19/-8 V, +/-5 %."
+    },
+    {
+      "item": "A-17 body-diode drop 'about 4 V' for the dead-time loss",
+      "status": "verified",
+      "evidence": "Datasheet: V_SD 4.6 V max at V_GS -4 V, I_SD 20 A, 25 degC; 4.2 V at 175 degC.",
+      "correction": "Cold loss ~2.5 W instead of 2.2 W at 4.6 V; immaterial."
+    },
+    {
+      "item": "Delta AFB0812SH electrical: 12 V, 0.34 A, 4.08 W, 4500 rpm (Delta page), ball bearing, 80 x 80 x 25.4 mm",
+      "status": "verified",
+      "evidence": "https://www.delta-fan.com/AFB0812SH.html: 12 VDC, 0.34 A, 4.08 W, 4500 RPM, ball bearing, 80x80x25.4mm. Primary spec sheet https://www.delta-fan.com/Download/Spec/AFB0812SH.pdf (Specification for Approval, Sample Rev 00, 11 Feb 2004, read as rendered image): 12 VDC, 7.0-13.0 V operation, 0.34 A (max 0.51 A), 4.08 W (max 6.12 W), 4000 rpm (ref).",
+      "correction": "The spec sheet says 4000 rpm; the web page's 4500 rpm is the outlier. The fan's maximum rating 0.51 A / 6.12 W exceeds the 0.5 A cap in A-19/A-22, which uses the 0.34 A typical."
+    },
+    {
+      "item": "AFB0812SH airflow 46.6 CFM = 1.30 m3/min, static pressure 66.5 Pa (distributor listings only)",
+      "status": "verified",
+      "evidence": "Spec sheet p.1: max air flow 1.320 m3/min (min 1.220) = 46.62 CFM (min 43.08); max pressure 6.78 mmH2O (min 5.74) = 0.267 inchH2O (= 66.5 Pa); noise 40.0 dB-A (max 43.0). DigiKey/onlinecomponents/cytech listings match.",
+      "correction": "1.32 not 1.30 m3/min (free-stream velocity 3.4 m/s unchanged)."
+    },
+    {
+      "item": "TPS2640 named only as the CB-PR-001 pattern part; 'unverified, not fetched'",
+      "status": "verified",
+      "evidence": "https://www.ti.com/product/TPS2640: ACTIVE; 4.2-42 V operating, 45 V abs max; adjustable current limit 0.1-2.23 A; reverse polarity to -42 V; 150 mohm; HTSSOP-16 PWP / VQFN-24 RHF; datasheet Rev. A, 1 Jun 2021 (= SLVSFQ6A in CMP-TPS2640). No TI threshold (OVP 15 V / UVLO 9 V / 2.2 A) copied into the register.",
+      "correction": "parameter_verification can be raised to 'manufacturer-page'."
+    },
+    {
+      "item": "U-07 controller facts: TMS320F28335 150 MHz, 12-bit ADC, ePWM dead-band/trip zones, eCAP, no SDFM, 176-pin PGF",
+      "status": "verified",
+      "evidence": "https://www.ti.com/product/TMS320F28335: ACTIVE; up to 150 MHz; 12-bit 16-channel ADC; up to 18 PWM outputs, 6 HRPWM; 6 eCAP; sigma-delta filter count 0; LQFP PGF 176-pin; datasheet Rev. Q, 8 Aug 2022. Dead-band/trip-zone are ePWM submodules (TRM); trip-zone appears on the page via a linked app note."
+    },
+    {
+      "item": "KR-SN-003 not applicable because the F28335 has no SDFM",
+      "status": "verified",
+      "evidence": "KR-SN-003 applicability: 'Sensing points far from the controller; MCU with sigma-delta filter peripheral'. TI page: sigma-delta filter count 0."
+    },
+    {
+      "item": "Standards inputs: material group IIIa = CTI >= 175 V; pollution degree 2; altitude <= 2000 m base of IEC 60664-1 tables",
+      "status": "verified",
+      "evidence": "TI SLUP421 (https://www.ti.com/lit/pdf/SLUP421): IIIa 175 <= CTI < 400, IIIb 100 <= CTI < 175 or unspecified. Fuji Electric article: above 2000 m apply IEC 60664-1 correction factors. Power Electronic Tips FAQ: PD2 = non-conductive pollution that may become conductive by occasional condensation; lab/office environment.",
+      "correction": "A-26 'non-conductive pollution without condensation' is imprecise: IEC 60664-1 PD2 expressly allows occasional temporary conductivity caused by condensation. No clause numbers were cited by the agent, so none were verified against the standard text."
+    },
+    {
+      "item": "A-33 claim: pooled fabricators generally quote 0.2 mm track/space as the limit for 70 um outer copper; 70 um inner layers only as an option",
+      "status": "contradicted",
+      "evidence": "https://jlcpcb.com/capabilities/pcb-capabilities: 2 oz outer min 0.16/0.16 mm (2-layer) and 0.15/0.15 mm (multilayer); inner 0.5/1/2 oz; min drill 0.15 mm; non-plated slot min 1.0 mm; ENIG offered.",
+      "correction": "At least one major pooled fabricator has the 0.2 mm seed inside capability with margin and 2 oz inner as a standard option; the agent's statement is conservative, not harmful. Keep fabricator confirmation as the H item."
+    },
+    {
+      "item": "A-33 slots >= 1 mm (KR-ISO-004; CGD15SG00D2 1 mm non-plated slots)",
+      "status": "verified",
+      "evidence": "cgd15sg00d2/analysis.md decision 7: 'three 1 mm non-plated slots'; KR-ISO-004 evidence also records CGD1700-SPEC 0.030 in (0.76 mm) slots; JLCPCB non-plated slot minimum 1.0 mm agrees."
+    },
+    {
+      "item": "SKILL-006 known limitations: 40 degC single-reference model; TI warns room ambient only; TI fans add 0.29 A to the 12 V rail",
+      "status": "verified",
+      "evidence": "SKILL-006.json known_limitations 'Single reference thermal model at 40 degC'. SKILL-006-thermal-placement.md line 60 'TI warns the design is only intended for room ambient'; line 44 'TI fans raise 12 V current from 1.14 A to 1.43 A' (= 0.29 A)."
+    },
+    {
+      "item": "KR-TH-001 method with 2 x R_hs and TI inputs R_thJC 1.1, R_iso 0.1, R_hs 0.5 K/W, 40 degC -> 50 W (EC-019)",
+      "status": "verified",
+      "evidence": "evidence-checks.json EC-019: TJ_max 150, TA 40, Rth_HS 0.5, Rth_iso 0.1, Rth_JC 1.1, 'two FETs share one heat sink', computed 50.0 W, pass. TIDA analysis decision 9: 'TI does not explain the factor 2 on R_th,HS'. 1.1 K/W is the C3M0075120K value, correctly labelled as TI's."
+    },
+    {
+      "item": "KR-TH-002 direct (TO-247 on common heat sinks) and KR-TH-003 direct (NTC = cooling supervision)",
+      "status": "verified",
+      "evidence": "KR-TH-002 applicability 'TO-247 class packages on common heat sinks', human-review of pad rating/creepage/thermal resistance. KR-TH-003 statement as quoted by the agent."
+    },
+    {
+      "item": "SKILL-001 principles 1-3; V1 bootstrap driver is a SKILL-001 exclusion; module-to-discrete limitation",
+      "status": "verified",
+      "evidence": "SKILL-001.json principles 'Isolated driver for every switch position', 'Driver referenced to the Kelvin source', 'Gate levels within device absolute maxima, negative turn-off preferred in half bridges unless 0 V is justified'; not_applicable 'Non-isolated bootstrap low-voltage drivers (e.g. the 48 V Buck V1 benchmark)'; known_limitations 'Module guidance applied to discretes only where physics is identical'."
+    },
+    {
+      "item": "KR-GD-005 adapted: exclusion lists the buck as single-ended where 0 V may be used; synchronous buck treated as half bridge",
+      "status": "verified",
+      "evidence": "KR-GD-005 exclusions 'Single-ended topologies (buck, boost, flyback) where PRD-04814 states 0 V turn-off may be used'; conflict PRD-09301 '0 V after case-by-case evaluation'. prd-04814/analysis.md decision 1: '0 V turn-off is usable in single-ended topologies (buck, boost, flyback) but half bridges benefit from -2 V to -4 V'. Reading and hand-off correct."
+    },
+    {
+      "item": "KR-GD-008 exclusion for short on-board links (buffered single-ended + RC)",
+      "status": "verified",
+      "evidence": "KR-GD-008 exclusions 'Short on-board links, where buffered single-ended PWM with RC filtering is acceptable (PRD-09301 s4.1; TI uses SN74LVC126A buffers)'; CB-GD-003 alternative 'Short single-ended buffered PWM with RC filters on the same PCB'."
+    },
+    {
+      "item": "KR-GD-009: dead time from the controller, interlock as last barrier; both-inputs-high test (A-37)",
+      "status": "verified",
+      "evidence": "KR-GD-009 verification 'Apply both PWM inputs high: both outputs must stay low; verify dead time at the gates'."
+    },
+    {
+      "item": "KR-GD-004 human-review; 6.4 V/1 us and 6.7 V/46 ns not copied",
+      "status": "verified",
+      "evidence": "KR-GD-004 category human-review-requirement; conflicts list both values. No DESAT voltage/blanking value appears in any A-xx entry."
+    },
+    {
+      "item": "KR-PR-001 exclusion: evaluation fixtures with external protection (CGD15SG00D2 has no DESAT)",
+      "status": "verified",
+      "evidence": "KR-PR-001 exclusions text identical; cgd15sg00d2/analysis.md 'The board has no DESAT/overcurrent protection; it is an evaluation board'."
+    },
+    {
+      "item": "KR-PR-002 listed as 'direct', including the converter-level input UVLO ladder (A-02)",
+      "status": "verified",
+      "evidence": "KR-PR-002 statement 'Hold outputs off during supply UVLO, latch overcurrent faults until an explicit reset, report a combined fault'; applicability 'Gate-driver subsystems'.",
+      "correction": "Using the lock-out logic for the 400 V input UVLO is an adaptation beyond the stated applicability; classify as adapted."
+    },
+    {
+      "item": "KR-PR-003 / CB-PR-001 pattern; UCC14141-class modules rated at 10.8-13.2 V (TIDA decision 8)",
+      "status": "verified",
+      "evidence": "KR-PR-003 applicability 'Auxiliary 12 V inputs to driver boards and power stages'. CB-PR-001 interface_requirements 'UCC14141-Q1 1.5 W at 10.8-13.2 V'; tida-010054/analysis.md decision 8. TI thresholds not copied."
+    },
+    {
+      "item": "KR-IS-001 gate power 0.11 W per device",
+      "status": "verified",
+      "evidence": "KR-IS-001 P = Q_G * f_sw * (V_DD - V_EE) = 118e-9 * 50e3 * 19 = 0.112 W; EC-003 confirms the method.",
+      "correction": "KR-IS-001 'conflicts' records TI Eq.30 with a factor 2 (EC-014); not surfaced by the agent. TI expression gives 0.22 W - still negligible."
+    },
+    {
+      "item": "SKILL-003: exclusion of inductor-defined output filters; principle 4 'no derating rule stated'; lifetime modelling not covered; AEC-Q200",
+      "status": "verified",
+      "evidence": "SKILL-003.json not_applicable 'Inductor-ripple output filters of low-voltage converters', 'Capacitor lifetime modelling'; principle 'Voltage rating with margin (TI ratios observed, no derating rule stated)'; 'AEC-Q200 ceramics where relevant'.",
+      "correction": "The exclusion is qualified 'of low-voltage converters' (V2 output is 200 V); conclusion unaffected because C >= dQ/dV on a buck output (dQ = dI_L*T/8) is identical to the ripple equation used."
+    },
+    {
+      "item": "KR-CAP-001 adapted to the buck input DC-link; KR-CAP-002/003 direct; KR-CAP-004 and KR-PE-001 not applicable",
+      "status": "verified",
+      "evidence": "KR-CAP-001 'Converters with switched DC-link currents (DAB, PSFB, bridges)'; KR-CAP-002 'All DC links with high-frequency ripple'; KR-CAP-003 'Board-mounted discrete SiC bridges at hundreds of volts'; KR-CAP-004 'DAB or other bridges driving a transformer'; KR-PE-001 'DAB and related phase-shift converters'."
+    },
+    {
+      "item": "SKILL-004 bootstrap exclusion irrelevant; KR-IS-004 human review",
+      "status": "verified",
+      "evidence": "SKILL-004.json not_applicable 'Bootstrap supplies'; KR-IS-004 category human-review-requirement."
+    },
+    {
+      "item": "SKILL-005: calibration step 7 (Lab 2 calibrates voltage sensing); Lab 2 stepwise commissioning; accuracy budgets not computed",
+      "status": "verified",
+      "evidence": "SKILL-005-current-voltage-sensing.md line 41 'Plan calibration (TIDA-010054 Lab 2 calibrates voltage sensing)'; line 59 'Lab 2 procedure sets low trip limits and raises phase shift until trip'; known_limitations 'Accuracy budgets not computed'.",
+      "correction": "Register paraphrases Lab 2 as 'raising trip limits and voltage stepwise'; source says low trip limits with phase shift raised until trip."
+    },
+    {
+      "item": "A-36 divider headroom >= 1.1 x 480 V and >= 1.25 x 200 V '(KR-SN-002 headroom)'",
+      "status": "verified",
+      "evidence": "KR-SN-002: 'maximum operating signal plus the required protection/overvoltage headroom stays within the sensor's linear input range'; only TI instance usages given (1.57 V of 2 V etc.). No 1.1 or 1.25 factor in the rule.",
+      "correction": "Label the factors as agent-selected (S); cite KR-SN-002 for the method only."
+    },
+    {
+      "item": "SKILL-002 / KR-ISO-001/002/003 / KR-PCB-005 hand-offs",
+      "status": "verified",
+      "evidence": "KR-ISO-001 no copper across barriers on any layer; KR-ISO-002 working voltage, pollution degree, material (DESAT-diode nets carry bus voltage); KR-ISO-003 net classes; KR-PCB-005 V_GS probe point at the device. Altitude/OVC are IEC 60664-1 inputs not named in KR-ISO-002."
+    },
+    {
+      "item": "REF-TI-TIDA-010054 decisions 1, 8, 9, 10 as cited",
+      "status": "verified",
+      "evidence": "tida-010054/analysis.md: decision 1 '700-800 V <-> 250-500 V'; decision 8 'TPS26400 eFuse OVP 15 V, UVLO 9 V, 2.2 A'; decision 9 'four Ohmite CR201-50VE sinks, two FETs per sink, CD-02-05-247 pads, two 12 V fans ... assumes 40 degC'; decision 10 '300 x 180 mm, four copper layers'."
+    },
+    {
+      "item": "TIDA instance values 'not copied': 2 ohm, 6.4 V/1 us, 45/70 A, and '20 uF rail decoupling' (markdown) / '60 uF' (JSON)",
+      "status": "contradicted",
+      "evidence": "analysis.md 'What AIPE should not generalise' lists only 2 ohm gate resistors, 6.4 V/1 us DESAT, 45 A/70 A Hall trips and TI efficiency figures. Decision 2: 60 uF output / 30 uF input film and 0.47 uF MLCC columns; '20 uF' appears nowhere.",
+      "correction": "Remove or restate the capacitance item (60 uF output / 30 uF input, decision 2) consistently in markdown and JSON. Harmless - nothing was copied."
+    },
+    {
+      "item": "REF-WS-PRD-04814 decision 1 (+15 V, -3 to -4 V; +19/-8 V maxima; +/-5 %)",
+      "status": "verified",
+      "evidence": "prd-04814/analysis.md decision 1 text matches; applicability 'Wolfspeed Gen-3 C3M parts'."
+    },
+    {
+      "item": "REF-WS-CGD15SG00D2 decision 7 (Tg >= 170 degC, ENIG, 1 mm slots; 8 mm creepage not generalised)",
+      "status": "verified",
+      "evidence": "cgd15sg00d2/analysis.md decision 7 '4-layer, 62.4 mil, 1 oz, ENIG, Tg >= 170 degC ... three 1 mm non-plated slots, notches increasing transformer creepage to 8 mm'; 'What AIPE should not generalise: the 8 mm creepage and 800 Vpk isolation apply to this board only'."
+    },
+    {
+      "item": "REF-WS-CGD1700HB2M-UNA decision 4 (RS-422, P/N swap fail-safe, IN+/IN- interlock) and decision 2 values 1 ohm / 6.7 V / 46 ns not copied",
+      "status": "verified",
+      "evidence": "cgd1700hb2m-una/analysis.md decision 4 and decision 2 text; reference.json 'typical values at 25 degC with RG(EXT) = 1 ohm'."
+    },
+    {
+      "item": "Requirements separation: U-01..U-09 and S/D/H classes match requirements.yaml",
+      "status": "verified",
+      "evidence": "requirements.yaml: user-given synchronous_buck, non_isolated_common_negative_rail, 400 V, 200 V, 5000 W, 25 A, 50 kHz, Wolfspeed SiC MOSFET, TMS320F28335, KiCad, architecture ai_selected, fabrication/purchasing/energisation out of scope; 14 null unresolved_user_inputs map one-to-one to the S entries.",
+      "correction": "requirements.yaml 'preferred_layer_counts' (power 2-4, control 4, six only if justified) is a user-stated preference, so A-31/A-32 layer counts derive from U-08 rather than being pure seeds."
+    },
+    {
+      "item": "V1 comparison values (36-54 V, 100 kHz, 200 ns, 0-50 degC forced air + insulated heatsink, 300 x 220 mm six layers, mixed 70/35 um, 285 g inductor clamp, controlled ramp/no inrush limiter, no pre-bias, 20 A / 100 us step, UCC27211 bootstrap, comparators + latch, LM5164 aux from 48 V, 10 uH)",
+      "status": "verified",
+      "evidence": "examples/buck-48v-24v-1kw/design/assumptions.md lines 11-20; architecture.md lines 5, 8, 27-29; firmware_interface.md line 35; automation/kicad_tools/buck_model.py lines 110, 121."
+    },
+    {
+      "item": "V1 input current '21-28 A'",
+      "status": "unverified",
+      "evidence": "Not stated in V1 files; ideal 1000 W / (54..36 V) = 18.5-27.8 A; the band implies an unstated efficiency."
+    },
+    {
+      "item": "Open issue: 'datasheet PDFs are not parseable on this host: no pypdf/PyMuPDF/pdfminer and pdftoppm absent'",
+      "status": "contradicted",
+      "evidence": "python -c 'import pymupdf' succeeds on the host interpreter (pymupdf 1.28.2, C:/Users/.../Python310/python.exe); it extracted the C3M0032120K datasheet (12 pages, 15.5k chars) and rendered the Delta spec sheet; /mingw64/bin/pdftotext exists in Git Bash. pypdf, pdfminer and pdftoppm are indeed absent.",
+      "correction": "Remove the claim; the dependent 'R_thJC and hot R_DS(on) not found' items are resolved (0.44 K/W; 57.6 mohm typ at 175 degC)."
+    },
+    {
+      "item": "Open issue: query.py UnicodeEncodeError on the cp1252 console",
+      "status": "unverified",
+      "evidence": "Not reproduced - verifier used PYTHONIOENCODING=utf-8 throughout; plausible for non-ASCII record names."
+    },
+    {
+      "item": "A-08: '0.73 mV per LSB, about 0.05 V per LSB after scaling'",
+      "status": "contradicted",
+      "evidence": "0.73 mV/LSB correct; 0.05 V/LSB implies a 205 V full scale, violating the agent's own A-36 (>= 250 V output full scale -> 0.061 V/LSB; 528 V input -> 0.129 V/LSB).",
+      "correction": "State ~0.061 V/LSB (output) and ~0.129 V/LSB (input); +/-1 % (2 V) remains ~33 LSB, conclusion stands."
+    },
+    {
+      "item": "A-06 / inrush calculation: 't_charge 1.07-4.8 ms at 5 A (400 V)'",
+      "status": "contradicted",
+      "evidence": "C*V/I at 400 V: 20/40/60 uF give 1.6/3.2/4.8 ms at 5 A and 0.53/1.07/1.6 ms at 15 A; 1.07 ms is a 15 A value. Energies 1.6-6.9 J correct.",
+      "correction": "5 A: 1.6-4.8 ms; 15 A: 0.53-1.6 ms; markdown A-06 '1.1-4.8 ms at 5-15 A' should read '0.5-4.8 ms'."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Duty cycle at 360/400/440 V",
+      "agent_value": "0.556 / 0.500 / 0.455",
+      "verifier_value": "0.556 / 0.500 / 0.455",
+      "agrees": true
+    },
+    {
+      "name": "Input current ideal and at 98 % (25 A, 27.5 A)",
+      "agent_value": "13.89/12.50/11.36, 15.28/13.75/12.50; 14.17/12.76/11.60, 15.59/14.03/12.76 A",
+      "verifier_value": "identical to two decimals",
+      "agrees": true
+    },
+    {
+      "name": "Inductor ripple dI_L (L = 267 uH)",
+      "agent_value": "6.66 / 7.49 / 8.17 A (26.6 / 30.0 / 32.7 %)",
+      "verifier_value": "6.66 / 7.49 / 8.17 A; L_ideal 266.7 uH",
+      "agrees": true
+    },
+    {
+      "name": "Worst-case peak and saturation requirement",
+      "agent_value": "31.59 A at 440 V / 27.5 A; I_sat >= 41.1 -> 42 A; 220 uH: 32.46 A / 42.2 A",
+      "verifier_value": "31.59 A; 41.07 A; 220 uH: dI 9.92 A, 32.46 A, 42.2 A",
+      "agrees": true
+    },
+    {
+      "name": "Inductor, switch and input-capacitor RMS currents",
+      "agent_value": "I_L,rms 25.07-25.11 / 27.57-27.60; I_HS 18.7/17.7/16.9 and 20.6/19.5/18.6; I_LS 16.7/17.7/18.6 and 18.4/19.5/20.4; I_Cin 12.42/12.50/12.45 and 13.66/13.75/13.69 A",
+      "verifier_value": "same within 0.1 A (I_HS at 360 V / 27.5 A = 20.5 A)",
+      "agrees": true
+    },
+    {
+      "name": "Output capacitance for 2 Vpp ripple, ESR, 47 uF ripple, capacitor RMS",
+      "agent_value": "10.2 uF; 0.245 ohm; 0.44 Vpp; 2.4 A",
+      "verifier_value": "10.21 uF; 0.245 ohm; 0.43 Vpp; 2.36 A",
+      "agrees": true
+    },
+    {
+      "name": "Transient capacitance and inductor slew charge",
+      "agent_value": "199 / 99.5 / 39.8 uF for 1/2/5 kHz; dQ 87-130 uC step-up, 104 uC step-down",
+      "verifier_value": "198.9 / 99.5 / 39.8 uF; 130.4 uC (360 V), 86.9 uC (440 V), 104.3 uC step-down",
+      "agrees": true
+    },
+    {
+      "name": "Efficiency loss budgets",
+      "agent_value": "154.6 / 102.0 / 76.1 W; 128 W at 97.5 %",
+      "verifier_value": "154.6 / 102.0 / 76.1 W; 128.2 W",
+      "agrees": true
+    },
+    {
+      "name": "Sanity-check P_cond and P_sw (C3M0032120K)",
+      "agent_value": "27 W cold, ~43 W hot (factor 1.6 assumed); P_sw ~16.6 W",
+      "verifier_value": "26.9 W; datasheet-derived hot factor ~1.67 at 150 degC -> ~45 W; P_sw 16.59 W",
+      "agrees": true,
+      "note": "Linear V and I scaling of 800 V / 40 A energies is a rough first-order estimate, labelled as such."
+    },
+    {
+      "name": "Thermal path limit P_max",
+      "agent_value": "57.3 -> 52.1 W (R_thJC 0.42); 50.0 -> 45.5 W (R_thJC 1.1)",
+      "verifier_value": "57.3 / 52.1 and 50.0 / 45.5 W reproduced; with datasheet 0.44 K/W: 56.7 / 51.5 W",
+      "agrees": true
+    },
+    {
+      "name": "UVLO / OVP / survival margins and device-class ratios",
+      "agent_value": "11.1 %, 4.5 %, 4.3 %; 74 / 53 / 40 %",
+      "verifier_value": "11.1 %, 4.55 %, 4.35 %; 73.8 / 53.3 / 40.0 %",
+      "agrees": true
+    },
+    {
+      "name": "Inrush energy and charge time",
+      "agent_value": "1.6-6.9 J; 1.07-4.8 ms at 5 A; 0.53-1.6 ms at 15 A",
+      "verifier_value": "1.6-6.9 J; 1.6-4.8 ms at 5 A; 0.53-1.6 ms at 15 A",
+      "agrees": false,
+      "note": "1.07 ms is the 15 A / 40 uF corner."
+    },
+    {
+      "name": "Dead-time fraction and body-diode loss",
+      "agent_value": "1 / 2 / 3 %; 1.1 / 2.2 / 3.3 W",
+      "verifier_value": "1 / 2 / 3 %; 1.1 / 2.2 / 3.3 W (4 V); 1.3 / 2.5 / 3.8 W with datasheet V_SD 4.6 V max",
+      "agrees": true
+    },
+    {
+      "name": "Gate-drive power per device",
+      "agent_value": "0.11 W",
+      "verifier_value": "0.112 W; 0.22 W with TI's factor-2 expression",
+      "agrees": true
+    },
+    {
+      "name": "Auxiliary 12 V budget",
+      "agent_value": "20.9 W -> 1.74 A at 12 V, 1.93 A at 10.8 V",
+      "verifier_value": "20.88 W -> 1.74 / 1.93 A; with the fan's 6.12 W max: ~1.95 A at 10.8 V",
+      "agrees": true
+    },
+    {
+      "name": "Fan free-stream velocity",
+      "agent_value": "3.4 m/s",
+      "verifier_value": "3.39 m/s (3.44 m/s with the spec-sheet 1.32 m3/min)",
+      "agrees": true
+    },
+    {
+      "name": "ADC LSB",
+      "agent_value": "0.73 mV/LSB; ~0.05 V/LSB after scaling",
+      "verifier_value": "0.732 mV/LSB; 0.061 V/LSB at the 250 V full scale required by A-36 (0.129 V/LSB at 528 V)",
+      "agrees": false,
+      "note": "0.05 V/LSB implies a 205 V full scale inconsistent with A-36."
+    },
+    {
+      "name": "Inductor slew at 400 V and D_eff",
+      "agent_value": "0.75 A/us; 0.567 / 0.510 / 0.464",
+      "verifier_value": "0.749 A/us; 0.567 / 0.510 / 0.464",
+      "agrees": true
+    },
+    {
+      "name": "A-31 copper width estimate",
+      "agent_value": "roughly 15-20 mm per 70 um layer for 20-30 K at 25-31.6 A",
+      "verifier_value": "IPC-2221 external formula ~12 mm at 70 um, 31.6 A, 20 K; agent's figure is conservative and deferred to the layout agent",
+      "agrees": true,
+      "note": "Plausible; not precisely reproducible without IPC-2152 charts."
+    }
+  ],
+  "knowledge_misuse": [
+    "Minor attribution: A-36 presents the 1.1x (input) and 1.25x (output) divider headroom factors as '(KR-SN-002 headroom)'; KR-SN-002 prescribes no factor, so these are agent-selected and should be labelled S.",
+    "Minor citation error: '20 uF rail decoupling' (markdown) / '60 uF' (JSON) is listed among TIDA-010054 instance values 'not to copy', but the reference's do-not-generalise list names only 2 ohm, 6.4 V/1 us, 45 A/70 A and TI efficiency figures, and the two documents disagree. Harmless because nothing was copied.",
+    "Classification: KR-PR-002 (gate-driver subsystem UVLO lock-out / latched fault) is listed as 'direct' while also used for the converter-level 400 V input UVLO ladder (A-02); that use is an adaptation.",
+    "Omission: the KR-IS-001 conflict (TI Eq.30 factor 2, EC-014) is not surfaced in the gate-power budget; negligible impact (0.11 vs 0.22 W per device).",
+    "Paraphrase drift: 'TIDA-010054 Lab 2 practice of raising trip limits and voltage stepwise' - SKILL-005.md says Lab 2 sets low trip limits and raises phase shift until trip.",
+    "No reference-design instance value (gate resistance, DESAT trip/blanking, Hall trip levels, eFuse thresholds, DC-link capacitance, 8 mm creepage) was copied as a design value - confirmed by inspection of every A-xx entry and the pcb_constraints list."
+  ],
+  "required_changes": [
+    "Delete the 'datasheet PDFs are not parseable on this host' statement: PyMuPDF (pymupdf 1.28.2) imports from the host Python and extracts both PDFs; record from the C3M0032120K datasheet Rev. 6 (Sept 2024) R_thJC = 0.44 K/W typ, R_DS(on) 23/32/43 mohm at 25 degC and 57.6 mohm typ at 175 degC, I_D 69 A (T_C 25 degC) / 53 A (T_C 100 degC), V_SD 4.6 V max; update the sanity-check P_max to 51.5 W at 50 degC and move R_thJC / hot R_DS(on) from 'not found' to 'datasheet-verified (sanity device only)'.",
+    "A-19 / A-22: cite the Delta AFB0812SH specification sheet (Sample Rev 00, 11 Feb 2004): 4000 rpm ref, 1.32 m3/min, 6.78 mmH2O (66.5 Pa), 0.34 A typ / 0.51 A max, 4.08 W typ / 6.12 W max; either raise the fan cap to the 0.51 A maximum rating (aux total ~1.95 A at 10.8 V) or state that the 0.5 A cap is a typical-current budget checked against the fan's maximum; note the web page's 4500 rpm is the outlier.",
+    "Section 1 and knowledge_used[REF-TI-TIDA-010054]: remove '20 uF rail decoupling' / '60 uF' from the instance-value list or restate as '60 uF output / 30 uF input film DC-link (decision 2)', consistently in markdown and JSON.",
+    "A-30 / candidate 370HR: state that CTI class 3 (175-249 V) meets the >= 175 V seed only at its lower bound (material group IIIa, no CTI margin); the margin statement applies to Tg (180 vs 150 degC).",
+    "A-26: reword pollution degree 2 per IEC 60664-1 ('only non-conductive pollution occurs, except that occasionally a temporary conductivity caused by condensation is to be expected'); keep 5-85 % RH non-condensing as a separate agent assumption.",
+    "A-08: correct 'about 0.05 V per LSB after scaling' to ~0.061 V/LSB for the output chain (250 V full scale per A-36) and ~0.129 V/LSB for the input chain (528 V).",
+    "A-06 and the inrush calculation: correct charge-time ranges to 1.6-4.8 ms at 5 A and 0.53-1.6 ms at 15 A (20-60 uF, 400 V).",
+    "A-36: label the 1.1x / 1.25x headroom factors as agent-selected (S) and cite KR-SN-002 for the method only.",
+    "A-31 / A-32: cite requirements.yaml 'preferred_layer_counts' (user preference under U-08) as the origin of the 2-4 / 4-layer counts instead of classing them as pure seeds.",
+    "A-33: soften 'pooled fabricators generally quote 0.2 mm as the limit for 70 um outer copper' - JLCPCB quotes 0.15-0.16 mm at 2 oz outer, offers 2 oz inner layers and a 1.0 mm minimum non-plated slot; keep 'confirm with the chosen fabricator' as the H item.",
+    "knowledge_used: reclassify KR-PR-002 as 'adapted' for the converter-level UVLO ladder; add the KR-IS-001 factor-2 conflict note; correct the Lab 2 paraphrase.",
+    "Candidates: raise TPS2640 parameter_verification from 'unverified' to 'manufacturer-page' (TI page: ACTIVE, 4.2-42 V, 0.1-2.23 A adjustable limit, reverse polarity to -42 V, 150 mohm, datasheet Rev A Jun 2021) and note that the TMS320F28335 page confirms the U-07 facts (ACTIVE, 12-bit 16-ch ADC, 6 eCAP, sigma-delta filter count 0, LQFP PGF 176)."
+  ],
+  "summary": "The register's requirements separation, seed review, operating-point arithmetic and knowledge-base applicability readings hold up: requirements.yaml maps one-to-one onto the U and S classes, all 47 cited knowledge records (skills, rules, reference decisions, evidence checks) were found and read correctly, no reference instance value was copied as a design value, and every recomputed quantity agrees except two internal slips (scaled ADC LSB, inrush charge-time range). Primary sources confirm the Isola 370HR data, the Wolfspeed C3M0032120K snippet values (43 mohm max, 118 nC, 367/123 and 955/107 uJ at 800 V/40 A/2.5 ohm/175 degC), the Delta fan ratings and the TI TPS2640 / TMS320F28335 facts. Main corrections: the tooling claim is false (PyMuPDF is available on the host, so R_thJC = 0.44 K/W and hot R_DS(on) = 57.6 mohm were verifiable and confirm the agent's assumptions within ~1-5 %), the fan's maximum rating is 0.51 A versus the 0.5 A cap and its spec sheet says 4000 rpm (the web page's 4500 rpm is the outlier), the C3M0032120K datasheet gives I_D 69 A versus the product page's 63 A, the TIDA '20 uF / 60 uF' instance value is mis-cited, the CTI margin is overstated (class 3 = 175 V lower bound), the PD2 definition is imprecise, the 1.1x / 1.25x headroom factors are the agent's rather than KR-SN-002's, and pooled-fabricator capability at 70 um is better than stated. None of these changes a design value. Result file: D:/Cursor Workspace/AIPE-PCB-Agent/examples/sic-buck-400v-200v-5kw/design/research/verify_assumptions_register_and_requirements_se_factcheck.json"
+}

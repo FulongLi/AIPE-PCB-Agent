@@ -1,0 +1,285 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "C4MS025120K datasheet values (Rev. 2, Dec 2025) used by the agent: V_DS 1200 V, transient 1300 V (<100 h), V_GS(max) -10/+23 V, V_GS(op) +15..+18 / -5..0 V, R_DS(on) 25 typ / 33 max mohm at 18 V, 47 mohm typ at 175 degC (tempco 1.88), 28 mohm typ at 15 V, I_D 86 A (25 degC) / 62 A (100 degC), I_DM 274 A, Q_g 125 nC (Q_gs 35, Q_gd 30), C_iss/C_oss/C_rss 3087/103/4.7 pF at 1000 V (ratio 630), E_oss 63 uJ, E_on 470 uJ / E_off 64 uJ at 800 V, 39.2 A, 175 degC, R_G(ext) 1 ohm, L_sigma 25 nH, body-diode FWD, t_r 4 ns, t_f 11 ns, R_G(int) 2.6 ohm, V_SD 5.1/4.6 V at 19.6 A, I_S 59 A, Q_rr 742 nC, I_RRM 94 A at 15.8 A/ns, E_rr 256 uJ (175 degC), R_thJC 0.41 K/W, T_J max 175 degC, V_GS(th) 2.0/2.6/3.9 V",
+      "status": "verified",
+      "evidence": "Datasheet PDF fetched from the agent's URL and text-extracted (scratchpad c4ms025120k.txt, lines 60-352); every value above matches the printed table."
+    },
+    {
+      "item": "R_DS(on) maximum at V_GS = 15 V stated as 37.0 mohm",
+      "status": "contradicted",
+      "evidence": "The datasheet gives a maximum (33 mohm) only at V_GS = 18 V; at 15 V only the typical 28 mohm is printed. 37.0 = 28 x 33/25 is the agent's derivation.",
+      "correction": "Label 37.0 mohm as derived (typ x 33/25), not a datasheet value."
+    },
+    {
+      "item": "No short-circuit withstand time in the C4MS025120K datasheet",
+      "status": "verified",
+      "evidence": "Text search of the extracted datasheet for 'short' / 'withstand' finds no such row; the datasheet only carries the IPC-9592B gate-derating note (+25 V permissible)."
+    },
+    {
+      "item": "C3M0021120K fallback datasheet values (Rev. 4, Jun 2025): V_GS(max) -8/+19 V, V_GS op -4/15 V, I_D 100/74 A, R_DS(on) 21/28.8 mohm, 38 mohm at 175 degC (1.81), C 4818/180/12 pF, E_on 1.58 mJ / E_off 0.34 mJ (body-diode FWD, 800 V, 50 A, 2.5 ohm, 175 degC), Q_g 162 nC, R_thJC 0.32 K/W, V_SD 4.6/4.2 V at 25 A, Q_rr 928 nC, T_J 175 degC, R_G(int) 3.3 ohm",
+      "status": "verified",
+      "evidence": "Datasheet PDF fetched and text-extracted (scratchpad c3m0021120k.txt, lines 60-359)."
+    },
+    {
+      "item": "C3M0030090K (TIDA-010054 500 V-side device) is obsolete with replacements C3M0032120K and C4MS036120K",
+      "status": "verified",
+      "evidence": "wolfspeed.com product page fetched: status Obsolete, recommended replacements C3M0032120K and C4MS036120K; 900 V / 30 mohm / 63 A / TO-247-4 / T_J 150 degC."
+    },
+    {
+      "item": "Datasheet values of the other 13 candidates (C4MS018/036/047120K, C3M0015/0025/0045/0060065K, C3M0016/0032/0040/0075120K, C3M0065090J)",
+      "status": "unverified",
+      "evidence": "Not fetched within the tool budget. The agent's E_on figure for C3M0021120K (1580 uJ) and all selected-device values were confirmed, which lends plausibility to the family data, but these parts remain unverified."
+    },
+    {
+      "item": "Distributor stock, prices and lead times (Arrow 2640 / DigiKey 0 / 13 weeks etc.)",
+      "status": "unverified",
+      "evidence": "Search-snippet level in the agent's own words; not re-checked."
+    },
+    {
+      "item": "Claim that Wolfspeed lists no Gen-4 650 V or 750 V TO-247-4 family",
+      "status": "unverified",
+      "evidence": "Not checked. If a Gen-4 750 V family exists it would be the natural class for a 440-480 V bus (528/750 = 70 % with the worst-case overshoot) and would dominate both the 1200 V selection and the 650 V alternative."
+    },
+    {
+      "item": "SKILL-001 lists 'Choosing the power semiconductor itself (AIPE Transistor Database scope)' as not applicable; principle 2 (Kelvin source) and step 5 (R_G from dv/dt and switching-energy curves, tune by double-pulse) used only as criteria",
+      "status": "verified",
+      "evidence": "knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md lines 20-24, 29, 40, 44."
+    },
+    {
+      "item": "SKILL-006 principles 1 and 3 and the TI instance values (50 W / 69 W at 40 degC, 0.5 K/W sink, 0.1 K/W pads) were recomputed, not copied",
+      "status": "verified",
+      "evidence": "SKILL-006 lines 25-27 carry the TI values; the agent used 50 degC, the 150 degC design limit, 0.41 K/W, a 0.5 K/W pad and its own losses."
+    },
+    {
+      "item": "Attribution of the 0.67 / 0.56 utilisation ratios and the device classes to 'REF-TI-TIDA-010054 decision 1'",
+      "status": "contradicted",
+      "evidence": "knowledge/references/ti/tida-010054/analysis.md Decision 1 is 'Dual-active-bridge topology with SPS and EPS modulation'; neither device name nor the ratios appear anywhere in the analysis file (grep). The device names come from SKILL-006 principle 1 / EC-019-020; the ratios are AIPE-derived and TI states no derating rule.",
+      "correction": "Cite the ratios as derived from the TIDA device choices (SKILL-006 principle 1, EC-019/EC-020) and treat them as weak evidence for the utilisation limits."
+    },
+    {
+      "item": "TIDA-010054 decision 9 (two TO-247 per insulated forced-air sink, CD-02-05-247 pads, CR201-50VE) adopted as the thermal model",
+      "status": "verified",
+      "evidence": "analysis.md lines 108-114."
+    },
+    {
+      "item": "KR-GD-001 applied within applicability (any SiC gate drive): +15.75 / -4.2 V checked against -10/+23 V (C4MS, read from datasheet) and -8/+19 V (C3M fallback); the +19/-8 V knowledge example not assumed for Gen-4",
+      "status": "verified",
+      "evidence": "KR-GD-001 record (numerical limit flagged 'applies only to Wolfspeed 3rd-generation devices'); both datasheet limits confirmed above."
+    },
+    {
+      "item": "KR-TH-001 method (P_max = (T_J,lim - T_A)/(2 R_th,HS + R_pad + R_thJC)) applied with design-specific inputs",
+      "status": "verified",
+      "evidence": "Record text and SKILL-006 principle 1; arithmetic reproduced (78.1 / 104.2 / 103.1 degC, 52.4 W)."
+    },
+    {
+      "item": "Thermal inputs (R_th,HS 0.5 K/W, pad 0.5 K/W) consistent with the thermal agent's selection",
+      "status": "contradicted",
+      "evidence": "research/thermal.json: selected sink LAM 5 100 12 at 0.68 K/W forced, Sil-Pad TSP 3500 at 0.63-0.82 K/W, P_max 38.9 W (150 degC) / 29.2 W (125 degC). With these values T_J,HS = 50 + 0.68 x 56.2 + (0.82 + 0.41) x 28.7 = 123.5 degC, not 104 degC, and P_max is 38.9 W, not 52.4 W.",
+      "correction": "Update the thermal check with the thermal agent's hardware; present 52.4 W only as the seed-based estimate."
+    },
+    {
+      "item": "Dead time 250 ns per edge consistent with the assumptions agent",
+      "status": "contradicted",
+      "evidence": "research/assumptions.json A-17: dead time 200 ns initial (about 2.2 W body-diode loss at 27.5 A). The MOSFET area uses 250 ns (2.9-3.2 W).",
+      "correction": "Align to 200 ns (P_dt = 2.3 W at 25 A, 2.5 W at 27.5 A) or document the 250 ns choice as the conservative envelope."
+    },
+    {
+      "item": "KR-TH-002, KR-PR-001, KR-GD-004 surfaced as human-review requirements rather than decided; TIDA instance values 6.4 V / 1 us, 2 ohm R_G, 0.1 K/W pad, 40 degC not copied",
+      "status": "verified",
+      "evidence": "Rule texts (KR-GD-004 is a human-review-requirement, KR-PR-001 'no universal value'); the result lists them under human review and names different, design-derived values."
+    },
+    {
+      "item": "KR-GD-003 parasitic turn-on margin: 1.3 V excursion, 'large margin', clamp 'recommended'",
+      "status": "contradicted",
+      "evidence": "The arithmetic (4.7 pF x 50 V/ns x 5.6 ohm = 1.3 V) is right but uses the small-signal C_rss at V_DS = 1000 V. A charge-based estimate with the datasheet Q_gd (30 nC for 0-800 V, about 20-27 nC for 0-400 V), C_gs about 3.08 nF (RC = 17 ns) and an 8-13 ns transition gives a 4.5-5.2 V excursion, i.e. V_GS about +0.5 to +1.2 V against V_GS(th) min 2.0 V at 25 degC and about 2.0 V typical (lower minimum) at 175 degC. The gate-driver area's '0.6-1.0 V, inherently immune' uses the same optimistic method.",
+      "correction": "Recompute with Q_gd; make the Miller clamp a requirement pending the PRD-09301 section 6.1 measurement; the C3M0021120K fallback (Q_gd 50 nC, C_rss 12 pF) has less margin still."
+    },
+    {
+      "item": "Statement that E_oss need not be added because the measured E_on contains the C_oss energy of both devices",
+      "status": "contradicted",
+      "evidence": "A terminal-measured E_on includes the charging of the complementary device's C_oss (that current flows through the DUT) but not the DUT's own stored E_oss, which is dissipated internally. Missing term about E_oss(400 V) x fs = roughly 15-25 uJ x 50 kHz = 0.8-1.2 W per high-side device.",
+      "correction": "Add about 1 W to the high-side loss and correct the physics statement."
+    },
+    {
+      "item": "Maximum-R_DS(on) variant: text says multiply conduction by 1.21",
+      "status": "contradicted",
+      "evidence": "The table (20.2 W vs 15.3 W, 56.5 W total) uses 1.32 = 33/25 = 37/28.",
+      "correction": "Change 1.21 to 1.32."
+    },
+    {
+      "item": "Switching-energy R_G factor k_RG = 1.3 for R_G,on 10-15 ohm versus the 1 ohm test",
+      "status": "unverified",
+      "evidence": "Total gate resistance rises from 3.6 ohm (test) to 12.6-17.6 ohm; Wolfspeed E_on-vs-R_G curves typically show E_on growing by about 1.5-2.5x over such a range, and the datasheet carries E vs R_G figures (Fig. 29/31) that were not used. Sensitivity recomputed: k = 2.0 gives HS switching 15.1 W and 52.0 W total (1.04 %); k = 2.5 gives 55.8 W (1.12 %)."
+    },
+    {
+      "item": "Low-side reverse-recovery method for C3M parts stated as 0.25 x Q_rr x V_in",
+      "status": "verified",
+      "evidence": "The agent's LS numbers (C3M0015065K 9.5 W, C3M0021120K 15.7 W, C3M0032120K 20.7 W) reproduce only when Q_rr is also scaled by I_on/I_test (e.g. 928 nC x 21.25/50 -> 1.97 W). That scaling is physically weak (SiC Q_rr is mostly capacitive) and is not stated in the method text.",
+      "correction": "State the current scaling and treat the C3M LS recovery figures as lower bounds."
+    },
+    {
+      "item": "Design-basis consistency: TO-247-4 Kelvin, one device per position, 150 degC design limit, shared insulated sink, >= 2 m/s air, 50 degC ambient, 98 % target flagged, 460/480 V corners used, L = 267 uH and peaks 28.75/31.3 A",
+      "status": "verified",
+      "evidence": "All reproduced from the design basis; inductor.json gives L(31.5 A) 248 uH and 29 % ripple at 400 V, consistent with the 220-300 uH window."
+    },
+    {
+      "item": "KR-GD-006 applied to two generations of one supplier (condition says multi-sourced suppliers)",
+      "status": "verified",
+      "evidence": "Rationale text covers 'different manufacturers and generations'; acceptable low-priority extension."
+    },
+    {
+      "item": "KR-PCB-004 used as the basis of the 25/35 nH loop assumption",
+      "status": "verified",
+      "evidence": "KR-PCB-004 is an optimisation objective (loop priority) and carries no inductance value; the agent labels 25/35 nH as its own assumption, which is acceptable as long as it is not presented as knowledge-derived."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Duty and ripple (360/400/440 V, L = 267 uH)",
+      "agent_value": "D 0.556/0.500/0.455; dI 6.66/7.49/8.17 A",
+      "verifier_value": "D 0.556/0.500/0.455; dI 6.66/7.49/8.17 A (9.92 A at 220 uH, 440 V)",
+      "agrees": true
+    },
+    {
+      "name": "RMS currents HS/LS at 25 A and 27.5 A",
+      "agent_value": "HS 18.7/17.7/16.9 and 20.6/19.5/18.6 A; LS 16.7/17.7/18.6 and 18.4/19.5/20.4 A",
+      "verifier_value": "HS 18.69/17.74/16.93 and 20.55/19.51/18.61 A; LS 16.72/17.74/18.55 and 18.38/19.51/20.38 A",
+      "agrees": true,
+      "note": "sqrt(D(Io^2 + dI^2/12)) is the correct trapezoid RMS for a buck."
+    },
+    {
+      "name": "Switching currents",
+      "agent_value": "I_on 21.25 / I_off 28.75 A (400 V/25 A); 23.4 / 31.6 A (440 V/27.5 A)",
+      "verifier_value": "21.25 / 28.75 A; 23.41 / 31.59 A",
+      "agrees": true
+    },
+    {
+      "name": "R_DS(on) at 150 degC (linear 25-175 degC, tempco 1.88)",
+      "agent_value": "48.5 mohm typ at 15 V; 43.3 at 18 V; 57.2 from max",
+      "verifier_value": "48.53 / 43.33 / 57.2 (from 33 at 18 V) or 64.1 (from the derived 37 at 15 V) mohm; R(100 degC) 40.3 mohm",
+      "agrees": true,
+      "note": "Linear interpolation of a convex R(T) curve is slightly conservative; the tempco measured at 18 V is also conservative for 15 V drive."
+    },
+    {
+      "name": "Conduction loss per device 400 V/25 A and LS 440 V/27.5 A",
+      "agent_value": "15.3 W; 20.2 W",
+      "verifier_value": "15.26 W; 20.15 W",
+      "agrees": true
+    },
+    {
+      "name": "HS switching loss 400 V/25 A (E_on, E_off scaled, k_RG 1.3)",
+      "agent_value": "E_on 165.6 uJ, E_off 30.5 uJ, 9.8 W (7.5 W at k = 1); 11.9 W at 440 V/27.5 A",
+      "verifier_value": "165.6 uJ, 30.5 uJ, 9.81 W (7.54 W at k = 1); 11.9 W at 440 V/27.5 A",
+      "agrees": true,
+      "note": "Arithmetic agrees; k_RG = 1.3 is likely optimistic (k = 2.0 -> 15.1 W). Linear E(I) scaling from 39.2 A down to 21 A also understates the constant (capacitive/recovery) part of E_on."
+    },
+    {
+      "name": "LS reverse-recovery loss",
+      "agent_value": "E_rr 69 uJ -> 3.5 W; 4.2 W at 440 V/27.5 A",
+      "verifier_value": "69.4 uJ -> 3.47 W; 4.20 W",
+      "agrees": true,
+      "note": "Datasheet E_rr is measured at 15.8 A/ns; at the design di/dt the value is uncertain by about a factor of two either way."
+    },
+    {
+      "name": "Dead-time body-diode loss (250 ns, V_SD 4.6 V)",
+      "agent_value": "2.9 W at 25 A, 3.2 W at 27.5 A",
+      "verifier_value": "2.875 W, 3.16 W (2.3 / 2.5 W at the assumptions agent's 200 ns)",
+      "agrees": true,
+      "note": "V_SD is the 19.6 A datasheet point; at 29-32 A it is higher, so the figure is a slight underestimate."
+    },
+    {
+      "name": "Gate bias power per channel",
+      "agent_value": "0.119 W",
+      "verifier_value": "0.119 W (125 nC x 19 V x 50 kHz)",
+      "agrees": true
+    },
+    {
+      "name": "Total loss table, selected device (six corners, TJ100, maxR)",
+      "agent_value": "45.5 / 53.5 / 46.7 / 54.9 / 47.9 / 56.2 W; 41.5 W; 56.5 W",
+      "verifier_value": "45.5 / 53.5 / 46.7 / 54.9 / 47.9 / 56.2 W; 41.5 W; 56.5 W",
+      "agrees": true,
+      "note": "Max-R factor actually used is 1.32, not the 1.21 quoted in the text. Missing DUT E_oss term about +1 W on the HS."
+    },
+    {
+      "name": "Thermal path (seed inputs 0.5 / 0.5 / 0.41 K/W)",
+      "agent_value": "T_sink 78.1, T_J,HS 104.2, T_J,LS 103.2 degC, P_max 52.4 W",
+      "verifier_value": "78.1 / 104.2 / 103.1 degC, 52.4 W with the seed inputs; with the thermal agent's hardware (0.68 K/W sink, 0.82 K/W pad): T_sink 88.2, T_J,HS 123.5 degC, P_max 38.9 W; stacked worst case (max R, k_RG 2.0, 440 V/27.5 A: 74.5 W total, HS 40.5 W) reaches about 150 degC steady state",
+      "agrees": false,
+      "note": "Arithmetic correct, inputs inconsistent with the thermal area; still passes KR-TH-001 at the 150 degC limit for the stated steady-state corner, and the 10 s overload is less severe than steady state."
+    },
+    {
+      "name": "Overshoot and utilisation",
+      "agent_value": "V_os 62/88 V; 1200 V: 42/44 % at 440 V, 46 % at 460 V, 40 % at 480 V static; 650 V: 77/81 %, 84 %, 74 %; 900 V: 56/59 %",
+      "verifier_value": "62.5/87.5 V; 41.9/44.0 %, 45.6 %, 40.0 %; 77.3/81.2 %, 84.2 %, 73.8 %; 55.8/58.6 %; 60 nH at 5 A/ns -> 740 V = 61.7 %",
+      "agrees": true
+    },
+    {
+      "name": "Datasheet di/dt at test R_G",
+      "agent_value": "3.6 A/ns (C4MS025120K), 4.6 A/ns (C3M0015065K)",
+      "verifier_value": "39.2/11 = 3.56 A/ns; 55.8/12 = 4.65 A/ns",
+      "agrees": true
+    },
+    {
+      "name": "Parasitic turn-on margin",
+      "agent_value": "1.3 V excursion (-4 -> -2.7 V), well below V_GS(th) min 2.0 V",
+      "verifier_value": "1.32 V by the same formula, but a Q_gd-based estimate gives 4.5-5.2 V (-4 -> +0.5..+1.2 V) against 2.0 V (25 degC) and a lower hot minimum; C3M fallback 3.4 V by the agent's formula and worse by charge",
+      "agrees": false,
+      "note": "Method uses the 1000 V small-signal C_rss; the Miller charge that matters is Q_gd(0-400 V)."
+    },
+    {
+      "name": "Current-rating margin",
+      "agent_value": "3.0x RMS, 8.7x pulse",
+      "verifier_value": "62/20.4 = 3.04; 274/31.6 = 8.67",
+      "agrees": true
+    },
+    {
+      "name": "One vs two devices per position",
+      "agent_value": "1x 46.7 W vs 2x 31.4 W (HS 17.4 / LS 14.0)",
+      "verifier_value": "31.4 W (HS 17.4 / LS 14.0) with switching energies held constant",
+      "agrees": true,
+      "note": "With doubled C_oss and Q_rr, E_on and E_rr would rise rather than stay equal, so 31.4 W is a lower bound; conclusion (single device) unchanged."
+    },
+    {
+      "name": "Candidate totals at 400 V/25 A/150 degC",
+      "agent_value": "C3M0015065K 27.8, C4MS018120K 39.8, C3M0021120K 54.9, C3M0032120K 56.5 W",
+      "verifier_value": "27.7, 39.8, 55.0, 56.5 W when Q_rr is scaled by I_on/I_test as the agent did (29.1 / 57.6 / 57.6 W without that scaling)",
+      "agrees": true
+    },
+    {
+      "name": "TIDA utilisation ratios and their mapping to 440 V",
+      "agent_value": "0.67 and 0.56 -> 657 V and 786 V",
+      "verifier_value": "800/1200 = 0.667, 500/900 = 0.556 -> 657 V, 786 V",
+      "agrees": true
+    },
+    {
+      "name": "Peak gate current and DESAT reference level",
+      "agent_value": "1.5 A source at 10 ohm, 3.4 A sink at 3 ohm; about 2.9 V at 60 A",
+      "verifier_value": "19/12.6 = 1.51 A; 19/5.6 = 3.39 A; 60 A x 48.5 mohm = 2.91 V",
+      "agrees": true
+    }
+  ],
+  "knowledge_misuse": [
+    "Utilisation ratios 0.67/0.56 are attributed to 'REF-TI-TIDA-010054 decision 1'; Decision 1 in the analysis is the DAB topology and the file names neither the devices nor the ratios. They are AIPE-derived from the device choices recorded in SKILL-006 principle 1 (EC-019/EC-020); TI states no derating rule, so they are weak evidence for the 80/90/70 % limits (which the agent correctly labels as judgement for human review).",
+    "KR-GD-003: the parasitic-turn-on immunity figure (1.3 V) is computed with the small-signal C_rss at 1000 V, which understates the Miller charge by roughly a factor of four; the clamp is presented as 'recommended' with a 'large margin' although a charge-based estimate leaves about 1 V or less. The rule's exclusion (clamp not strictly needed with low R_G and low-inductance routing) is not shown to apply.",
+    "KR-PCB-004 is a layout optimisation objective and carries no inductance value; the 25/35 nH figures are the agent's own assumption (correctly labelled) and must not be read as knowledge-derived.",
+    "KR-GD-006 is applied across generations of a single supplier whereas its condition names multi-sourced suppliers; the rationale covers generations, so this is an acceptable low-priority extension, noted only.",
+    "No reference instance values were copied (6.4 V / 1 us DESAT, 2 ohm R_G, 0.1 K/W pad, 40 degC ambient, 50/69 W limits were all replaced by design-specific values); human-review rules KR-TH-002, KR-PR-001, KR-GD-004 were surfaced, not decided."
+  ],
+  "required_changes": [
+    "Replace the k_RG = 1.3 switching-energy factor with values read from the C4MS025120K E_on/E_off versus R_G figures (Fig. 29/31) at the chosen R_G,on/off, or present the high-side switching loss as a 9.8-15 W range (k 1.3-2.0) and the MOSFET total as 46.7-52 W (0.93-1.04 %) until the double-pulse test; propagate the range to the efficiency budget.",
+    "Add the high-side device's own output-capacitance loss E_oss(400 V) x fs (about 1 W) and correct the statement that the measured E_on contains the C_oss energy of both devices.",
+    "Redo the parasitic turn-on check with a charge-based method (Q_gd(0-400 V) about 20-27 nC, C_gs about 3.08 nF, 5.6 ohm off path, 8-13 ns transition -> 4.5-5.2 V excursion, V_GS about +0.5 to +1.2 V) using the hot V_GS(th) minimum; state the Miller clamp as a requirement pending the PRD-09301 section 6.1 measurement and repeat for the C3M0021120K fallback (Q_gd 50 nC, C_rss 12 pF).",
+    "Update the thermal check with the thermal agent's selected hardware (R_th,HS 0.68 K/W forced, pad 0.63-0.82 K/W): T_J,HS about 124 degC and P_max 38.9 W at 440 V/27.5 A; state that the stacked worst case (max R_DS(on), k_RG 2.0) reaches about 150 degC in steady state and is mitigated only by the 10 s overload duration; drop or relabel the 52.4 W figure.",
+    "Reconcile the dead time with the assumptions agent (A-17: 200 ns initial): restate P_dt as 2.3 W (25 A) / 2.5 W (27.5 A) or document why the 250 ns envelope is kept.",
+    "Label the 37.0 mohm 'maximum at 15 V' as derived (28 x 33/25); correct the max-R text factor from 1.21 to 1.32.",
+    "State in the method that Q_rr of the C3M candidates was scaled by I_on/I_test, and note that SiC body-diode Q_rr is mostly capacitive so those LS recovery figures (and the C4MS E_rr scaled from a 15.8 A/ns test) are lower bounds with about a factor-two uncertainty.",
+    "Correct the citation of the utilisation ratios (derived from the TIDA device choices via SKILL-006 principle 1 / EC-019-020, not a TI 'decision 1' statement) and keep the 80/90/70 % limits explicitly as human-review judgement.",
+    "Use V_SD at 29-32 A (datasheet Fig. 8-10) rather than the 19.6 A point for the dead-time loss, and the 175 degC V_GS(th) for the Miller margin.",
+    "Verify whether Wolfspeed offers a Gen-4 750 V TO-247-4 family; if so, evaluate it as the natural class for the 440-480 V corners before finalising the 1200 V selection.",
+    "In the paralleling comparison, note that E_on and E_rr rise with doubled C_oss/Q_rr (31.4 W is a lower bound); the single-device conclusion stands."
+  ],
+  "summary": "The selection of the Wolfspeed C4MS025120K (1200 V Gen-4, TO-247-4, one per position) is defensible and every stated calculation reproduces from the stated inputs: operating points, RMS and switching currents, R_DS(on)(150 degC) 48.5 mohm, conduction 15.3 W, HS switching 9.8 W, LS recovery 3.5 W, dead-time 2.9 W, totals 45.5-56.2 W over the six corners, 46.7 W = 0.93 % at 400 V/25 A, utilisation 42/44 % (650 V class 77-84 %), and the thermal arithmetic (104 degC, 52.4 W). The selected device's and the C3M0021120K fallback's datasheet values were verified from the fetched PDFs and the C3M0030090K obsolescence from the product page; the other 13 candidates and all stock/price data remain unverified. Corrections are needed in method and cross-area consistency rather than in the decision: the k_RG = 1.3 factor is optimistic (datasheet E-vs-R_G curves exist; k = 2.0 gives 52 W / 1.04 %), the DUT E_oss term (about 1 W) is wrongly argued away, the parasitic turn-on margin is overstated by using the 1000 V C_rss (a Q_gd-based estimate leaves about 1 V, so the Miller clamp should be mandatory pending measurement), the thermal inputs (0.5/0.5 K/W) are more optimistic than the thermal agent's selected sink and pad (0.68 / 0.63-0.82 K/W -> T_J about 124 degC, P_max 38.9 W; stacked worst case about 150 degC), the dead time (250 ns) conflicts with the assumptions agent's 200 ns, the 37.0 mohm 15 V maximum is derived not printed, the text factor 1.21 should read 1.32, and the utilisation-ratio citation to TIDA 'decision 1' is inaccurate. Human-review items (utilisation limits, KR-PR-001 timing, KR-GD-004 DESAT, KR-TH-002 pad rating, efficiency allocation, procurement) were correctly surfaced and no reference instance values were copied."
+}

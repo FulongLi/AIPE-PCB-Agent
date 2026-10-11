@@ -1,0 +1,380 @@
+{
+  "label": "AI-GENERATED BEHAVIOURAL SIMULATION - V2 - HUMAN REVIEW REQUIRED",
+  "name": "cl_400V_singleloop_modulePI",
+  "description": "Reference run with the module single voltage-loop PI (kp 2e-4 duty/V, ki 1.5 duty/(V s), crossover about 97 Hz): 20 ms soft start, 12.5 -> 25 A step at 28 ms. Shows why the cascaded controller is needed. Closed loop, comparator PWM on a 25 ns solver grid (PWM resolution 0.5 V at the output). The campaign driver (results/run_campaign.py) replaces the module single-loop PI by the cascaded average-current-mode controller of models/campaign_manifest.json; the pi block here is the module fallback and is used only by the run whose manifest controller is 'module'. Sources: design/design_decisions.json (schema 3, 2026-10-10) with design/research/{mosfet,capacitors,inductor,gate_driver}.json after their verify_*.json corrections; task-provided values are labelled in simulation_report.md",
+  "ngspice": {
+    "version": "ngspice-46",
+    "library": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\ngspice.dll",
+    "points": 1795214,
+    "runtime_s": 24.80468600000131,
+    "warnings": []
+  },
+  "parameters": {
+    "name": "cl_400V_singleloop_modulePI",
+    "vin": 400.0,
+    "vout_ref": 200.0,
+    "fs": 50000.0,
+    "closed_loop": true,
+    "duty": 0.5,
+    "dead_time": 2.5e-07,
+    "L": 0.000272,
+    "L_dcr": 0.016,
+    "Cout": 0.000108,
+    "Cout_esr": 0.004,
+    "Cin": 3.6e-05,
+    "Cin_esr": 0.0019,
+    "L_in": 1e-05,
+    "R_in": 0.05,
+    "Rds_on_hs": 0.0485,
+    "Rds_on_ls": 0.0485,
+    "body_diode_vf": 4.6,
+    "body_diode_rs": 0.044,
+    "body_diode_i_ref": 25.0,
+    "load_R": 16.0,
+    "load_P": null,
+    "load_step": {
+      "t": 0.028,
+      "R_parallel": 16.0,
+      "t_rise": 1e-06,
+      "t_off": null,
+      "v_fold": 10.0
+    },
+    "soft_start_ms": 20.0,
+    "t_end": 0.044,
+    "t_step": 2.5e-08,
+    "metric_cycles": 10,
+    "pwm": "comparator",
+    "gate_edge": 1e-08,
+    "pi": {
+      "kp": 0.0002,
+      "ki": 1.5,
+      "d_min": 0.0,
+      "d_max": 0.85,
+      "fb_filter_hz": 20000.0,
+      "feedforward": true
+    },
+    "parasitics": null,
+    "spice_options": {
+      "method": "gear",
+      "reltol": 0.001,
+      "abstol": 1e-06,
+      "vntol": 0.0001
+    },
+    "output": {
+      "csv_dt": 2e-06,
+      "zoom_cycles": 3,
+      "svg": true
+    },
+    "recovery_band": 0.01,
+    "period": 2e-05,
+    "i_out_nominal": 25.0,
+    "soft_start": 0.02
+  },
+  "metrics": {
+    "window": {
+      "t0": 0.043800000000000006,
+      "t1": 0.044000000000000004,
+      "cycles": 10
+    },
+    "duty": 0.5050073673247907,
+    "vout_mean": 200.72578724520545,
+    "vout_pkpk": 0.41135082059764727,
+    "vout_min": 200.46388108371667,
+    "vout_max": 200.87523190431432,
+    "vin_bus_mean": 399.37922325953014,
+    "vin_bus_pkpk": 3.6800034327734465,
+    "il_mean": 25.18544012620141,
+    "il_pkpk": 7.965083769138818,
+    "il_peak": 29.136870622033186,
+    "il_min": 21.171786852894368,
+    "il_rms": 25.275279705724227,
+    "i_hs_rms": 17.970038644799256,
+    "i_hs_mean": 12.719925783393567,
+    "i_hs_peak": 29.137266668753,
+    "i_ls_rms": 17.77407142659153,
+    "i_ls_mean": 12.465514342804768,
+    "i_ls_channel_rms": 17.308088427516072,
+    "i_diode_mean": 0.6380621373774213,
+    "i_cin_rms": 12.987600032150445,
+    "i_cin_mean": -0.008534093789927465,
+    "i_cout_rms": 2.1307800485204873,
+    "i_load_mean": 25.089939369544073,
+    "i_in_mean": 12.711391689673496,
+    "i_in_rms": 12.71585909341888,
+    "vsw_max": 400.04029086575713,
+    "vsw_min": -4.795237264573738,
+    "p_out": 5036.198980832341,
+    "p_in": 5084.556675869399,
+    "p_loss_total": 48.357695037058875,
+    "efficiency": 0.9904892996342124,
+    "p_cond_hs": 15.661731011435567,
+    "p_cond_ls": 14.529141363213714,
+    "p_diode_deadtime": 2.9550577463366134,
+    "p_diode_deadtime_estimate": 2.8963256145131617,
+    "p_l_dcr": 10.22143622724152,
+    "p_cout_esr": 0.01816089446069188,
+    "p_cin_esr": 0.32048773373071704,
+    "p_r_in": 8.084653624184181,
+    "i_cin_rms_formula": 12.693532879405096,
+    "p_loss_modelled_sum": 51.790668600603,
+    "steady_state": {
+      "vout_cycle_avg_pkpk_V": 1.5440221278369393,
+      "pwm_lsb_V": 0.4999999999999999,
+      "limit_cycle_suspected": true,
+      "energy_balance_pct": -0.06816596358900717
+    },
+    "startup": {
+      "vout_peak": 201.81083349669683,
+      "target": 200.0,
+      "overshoot_V": 1.81083349669683,
+      "overshoot_pct": 0.905416748348415,
+      "il_peak": 17.26772627663744,
+      "soft_start_s": 0.02
+    },
+    "load_step": {
+      "t_step": 0.028,
+      "i_load_before": 12.409769371556115,
+      "i_load_after": 25.095280876437258,
+      "vout_before_avg": 198.548256350697,
+      "vout_final_avg": 200.72578724520545,
+      "excursion_avg_V": -16.934934531695063,
+      "excursion_avg_pct": -8.467467265847532,
+      "t_excursion": 0.02823,
+      "vout_raw_min_after": 183.70403153161976,
+      "vout_raw_max_after": 214.20697044851323,
+      "il_peak_after": 38.52009148009321,
+      "recovery_band_V": 2.0,
+      "recovered": true,
+      "recovery_time_s": 0.0065424
+    }
+  },
+  "numpy_model": {
+    "method": "exact matrix-exponential periodic steady state (4 intervals per cycle)",
+    "duty": 0.50504009496108,
+    "load_R": 8.0,
+    "ccm": true,
+    "vout_mean": 199.9999999954215,
+    "vout_pkpk": 0.17116949524725555,
+    "il_mean": 24.99999999943446,
+    "il_pkpk": 7.345811618740861,
+    "il_peak": 28.672866921728204,
+    "il_min": 21.327055302987343,
+    "il_rms": 25.089714394550583,
+    "i_hs_rms": 17.83142665998522,
+    "i_ls_rms": 17.65032554004846,
+    "i_ls_channel_rms": 17.19269969654164,
+    "i_diode_mean": 0.6249963688438365,
+    "i_cin_rms": 12.590648858534527,
+    "i_cout_rms": 2.118777466585741,
+    "i_in_mean": 12.626770689749408,
+    "p_cond_hs": 15.421049171425933,
+    "p_cond_ls": 14.336062758489959,
+    "p_diode_deadtime": 2.8890703187792806,
+    "p_l_dcr": 10.0719002944019,
+    "p_cout_esr": 0.01795687181164596,
+    "p_cin_esr": 0.3011964334899419,
+    "formula_il_pkpk": 7.278822132925294,
+    "x0": [
+      21.327055302987343,
+      200.00076537137076
+    ]
+  },
+  "comparison": [
+    {
+      "metric": "vout_mean",
+      "spice": 200.72578724520545,
+      "numpy": 199.9999999954215,
+      "deviation_pct": 0.362893624900289
+    },
+    {
+      "metric": "vout_pkpk",
+      "spice": 0.41135082059764727,
+      "numpy": 0.17116949524725555,
+      "deviation_pct": 140.31783233539835
+    },
+    {
+      "metric": "il_mean",
+      "spice": 25.18544012620141,
+      "numpy": 24.99999999943446,
+      "deviation_pct": 0.7417605070845749
+    },
+    {
+      "metric": "il_pkpk",
+      "spice": 7.965083769138818,
+      "numpy": 7.345811618740861,
+      "deviation_pct": 8.430275407799073
+    },
+    {
+      "metric": "il_peak",
+      "spice": 29.136870622033186,
+      "numpy": 28.672866921728204,
+      "deviation_pct": 1.6182675474051096
+    },
+    {
+      "metric": "il_min",
+      "spice": 21.171786852894368,
+      "numpy": 21.327055302987343,
+      "deviation_pct": -0.7280351079280356
+    },
+    {
+      "metric": "il_rms",
+      "spice": 25.275279705724227,
+      "numpy": 25.089714394550583,
+      "deviation_pct": 0.7396071085366679
+    },
+    {
+      "metric": "i_hs_rms",
+      "spice": 17.970038644799256,
+      "numpy": 17.83142665998522,
+      "deviation_pct": 0.7773465772376531
+    },
+    {
+      "metric": "i_ls_rms",
+      "spice": 17.77407142659153,
+      "numpy": 17.65032554004846,
+      "deviation_pct": 0.7010969076025885
+    },
+    {
+      "metric": "i_cin_rms",
+      "spice": 12.987600032150445,
+      "numpy": 12.590648858534527,
+      "deviation_pct": 3.152745963102972
+    },
+    {
+      "metric": "i_cout_rms",
+      "spice": 2.1307800485204873,
+      "numpy": 2.118777466585741,
+      "deviation_pct": 0.566486198953577
+    },
+    {
+      "metric": "i_in_mean",
+      "spice": 12.711391689673496,
+      "numpy": 12.626770689749408,
+      "deviation_pct": 0.6701713526229173
+    },
+    {
+      "metric": "p_cond_hs",
+      "spice": 15.661731011435567,
+      "numpy": 15.421049171425933,
+      "deviation_pct": 1.5607358314867414
+    },
+    {
+      "metric": "p_cond_ls",
+      "spice": 14.529141363213714,
+      "numpy": 14.336062758489959,
+      "deviation_pct": 1.3468035678723038
+    },
+    {
+      "metric": "p_diode_deadtime",
+      "spice": 2.9550577463366134,
+      "numpy": 2.8890703187792806,
+      "deviation_pct": 2.284036741106896
+    }
+  ],
+  "notes": [
+    "Switches are ideal Ron/Roff elements: no switching, gate or Coss losses in the main run.",
+    "Body diodes: exponential model (N=2) fitted to body_diode_vf at body_diode_i_ref; body_diode_rs 44 mohm keeps the fitted saturation current above the ngspice floor (about 1e-28 A) so that 4.6 V at 25 A is reproduced.",
+    "Metrics are taken over the last metric_cycles periods; the load event must have recovered by then."
+  ],
+  "campaign": {
+    "controller": "module",
+    "events": [
+      {
+        "type": "load_step_on",
+        "t_event_s": 0.028,
+        "i_load_before_A": 12.409769371556115,
+        "i_load_after_A": 25.1064754201835,
+        "excursion_cycle_avg_V": -16.20914728648961,
+        "excursion_pct_of_vref": -8.104573643244805,
+        "t_excursion_after_event_s": 0.00023000000000000104,
+        "vout_raw_min_V": 183.70403153161976,
+        "vout_raw_max_V": 214.20697044851323,
+        "il_max_A": 38.52009148009321,
+        "il_min_A": 9.061160392824734,
+        "recovery_band_V": 2.0,
+        "recovered_within_window": true,
+        "recovery_time_s": 0.005020400000000005,
+        "window_s": 0.008000000000000004,
+        "limit_basis": "12.5 A load step: <= 10 V excursion, <= 5 ms recovery to the 1 % band",
+        "checks": {
+          "excursion_within_10V": false,
+          "recovery_within_5ms": false,
+          "vout_raw_below_ovp_230V": true,
+          "il_below_oc_trip_37p5A": false
+        }
+      }
+    ],
+    "steady_checks": {
+      "vout_ripple_below_2Vpp": true,
+      "vin_bus_ripple_below_2pct": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "il_peak_below_isat_worst_35A": true,
+      "cin_rms_per_part_below_14p5A": true,
+      "cout_rms_per_part_below_23p5A": true
+    },
+    "textbook": {
+      "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+      "dIL_App": 7.279303421694255,
+      "il_peak_A": 28.729591080391202,
+      "il_rms_A": 25.17778278084646,
+      "i_hs_rms_A": 17.892306919695045,
+      "i_ls_rms_A": 17.7140085483473,
+      "i_cin_rms_A": 12.632910805605139,
+      "i_cout_rms_A": 2.1013538950140713,
+      "p_cond_hs_W": 15.52653037506551,
+      "p_cond_ls_W": 15.218625794269682,
+      "p_cond_total_W": 30.745156169335193,
+      "p_deadtime_W": 2.885343027497568,
+      "p_dcr_W": 10.142731932151815,
+      "vout_ripple_Vpp": 0.19761960770747738,
+      "vin_ripple_Vpp": 3.538950525320875,
+      "i_in_mean_A_ideal": 12.67060422735207
+    },
+    "controller_gains": {
+      "kp": 0.0002,
+      "ki": 1.5,
+      "note": "module single-loop PI"
+    },
+    "startup": {
+      "soft_start_s": 0.02,
+      "vout_peak_V": 201.81083349669683,
+      "overshoot_V": 1.81083349669683,
+      "overshoot_pct": 0.905416748348415,
+      "il_peak_A": 17.26772627663744,
+      "t_99pct_s": 0.01980952861600023,
+      "vout_cycle_avg_pkpk_last_50T_V": 2.9453164119645976,
+      "checks": {
+        "vout_peak_below_ovp_230V": true,
+        "il_peak_below_oc_trip_37p5A": true,
+        "overshoot_within_1pct_static_band": true
+      }
+    },
+    "textbook_deviation_pct": {
+      "il_pkpk": 9.42096115132055,
+      "il_peak": 1.417630834014773,
+      "il_rms": 0.38723395831318336,
+      "i_hs_rms": 0.4344421625064332,
+      "i_cin_rms": 2.8076603405442584,
+      "i_cout_rms": 1.4003425875211242,
+      "p_cond_hs": 0.8707717249384892,
+      "p_diode_deadtime": 2.41616744264575,
+      "p_l_dcr": 0.7759674180110988,
+      "vout_pkpk": 108.15283734726435,
+      "vin_bus_pkpk": 3.9857270239679963
+    }
+  },
+  "files": {
+    "deck": "cl_400V_singleloop_modulePI.cir",
+    "parameters": "parameters.json",
+    "waveforms_csv": "waveforms.csv",
+    "zoom_csv": "waveforms_zoom.csv",
+    "svg_vout": "vout.svg",
+    "svg_il": "il.svg",
+    "svg_zoom_vout": "zoom_vout.svg",
+    "svg_zoom_currents": "zoom_currents.svg",
+    "svg_zoom_capacitors": "zoom_capacitor_currents.svg",
+    "svg_zoom_vsw": "zoom_vsw.svg",
+    "svg_load_step": "load_step.svg",
+    "summary": "summary.json"
+  }
+}

@@ -1,0 +1,695 @@
+{
+  "decision_area": "Applicable standards, insulation coordination, PCB spacing and safety basis (functional / basic / reinforced insulation, KiCad net-class rules, DC-link discharge, earthing, test-interface safety, protective-coordination expectation, PCB manufacturing and copper-current constraints)",
+  "knowledge_queries": [
+    {
+      "command": "python -m automation.knowledge.query \"insulation coordination clearance creepage 400 V DC link basic reinforced isolation\" --json --limit 8",
+      "top_hits": [
+        "KR-SN-001",
+        "REF-WS-CGD15SG00D2",
+        "CMP-TMCS1133",
+        "KR-ISO-002",
+        "KR-ISO-004",
+        "SKILL-002",
+        "CMP-750319177",
+        "CMP-UCC21710-Q1"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"PCB spacing slot cutout creepage net class KiCad high voltage\" --json --limit 8",
+      "top_hits": [
+        "KR-ISO-002",
+        "SKILL-002",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-ISO-003",
+        "KR-ISO-004",
+        "SKILL-004",
+        "SKILL-005",
+        "SKILL-001"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"DC link discharge bleeder time safety label hazardous voltage\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003",
+        "SKILL-001",
+        "CB-GD-001",
+        "KR-CAP-001",
+        "KR-GD-004",
+        "KR-GD-009",
+        "KR-GD-007",
+        "CMP-B32716H1156K000"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"protection coordination fuse I2t short circuit withstand SiC DESAT speed\" --json --limit 8",
+      "top_hits": [
+        "KR-PR-001",
+        "KR-SN-005",
+        "SKILL-001",
+        "KR-GD-004",
+        "REF-WS-CGD1700HB2M-UNA",
+        "KR-GD-011",
+        "REF-TI-TIDA-010054",
+        "SKILL-005"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"heatsink grounding insulating pad chassis protective earth Y capacitor common mode\" --json --limit 8",
+      "top_hits": [
+        "KR-TH-002",
+        "SKILL-006",
+        "KR-IS-002",
+        "REF-TI-TIDA-010054",
+        "SKILL-004",
+        "CB-IS-003",
+        "SKILL-003",
+        "CB-IS-001"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"copper width current carrying via array barrel resistance IPC-2152 70 um\" --json --limit 8",
+      "top_hits": [
+        "KR-PCB-006",
+        "KR-CAP-002",
+        "SKILL-005",
+        "KR-ISO-004",
+        "KR-SN-004",
+        "SKILL-006",
+        "KR-ISO-001",
+        "REF-WS-CGD1700HB2M-UNA"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query --get <ID> --json for KR-ISO-001, KR-ISO-002, KR-ISO-003, KR-ISO-004, KR-SN-001, KR-PR-001, KR-TH-002, KR-PCB-006 (full records); read knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md, knowledge/references/wolfspeed/cgd15sg00d2/analysis.md, knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md, docs/pcb-design-rules.md; grepped SKILL-001/005/006 and REF-TI-TIDA-010054 / REF-WS-PRD-04814 analyses for isolation and earthing statements; read CMP-UCC21710-Q1, CMP-UCC23514, CMP-AMC1311, CMP-AMC1302-Q1, CMP-AMC1336, CMP-TMCS1133, CMP-R12P21503D, CMP-MGJ2D122005SC, CMP-750319177 isolation fields",
+      "top_hits": [
+        "KR-ISO-001",
+        "KR-ISO-002",
+        "KR-ISO-003",
+        "KR-ISO-004",
+        "KR-SN-001",
+        "KR-PR-001",
+        "KR-TH-002",
+        "KR-PCB-006"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "KR-ISO-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Copper-free ISO_BARRIER rule area on every layer between the HV classes and CTRL_SELV and between DRV_HS and DRV_LS; only reinforced-rated components bridge it."
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Distances derived here from the standard for 440 V DC working voltage, PD2, material group IIIa; DESAT midpoint nets treated as full-bus nets in their own classes."
+    },
+    {
+      "id": "KR-ISO-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Ten KiCad net classes grouped by reference potential (CTRL_SELV, HV_VIN, HV_SW, HV_PGND, HV_VOUT, DRV_HS, DRV_LS, DESAT_HS, DESAT_LS, PE) with class-pair clearance rules."
+    },
+    {
+      "id": "KR-ISO-004",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "1.0 mm non-plated slots under every barrier-crossing component whose land gap is below 9.0 mm; path arithmetic gap + 2 x board thickness shown."
+    },
+    {
+      "id": "KR-SN-001",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "Insulation-coordination review of each barrier part at 440 V DC reinforced: UCC21710-Q1, AMC1311, TMCS1133 pass on datasheet evidence; bias modules and relay coil-to-contact ratings surfaced as human-review items, not decided."
+    },
+    {
+      "id": "KR-PR-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Protective-coordination expectation: DESAT/OC response < device SCWT; fuse shown analytically unable to protect the device (I^2t orders of magnitude apart) and assigned to wiring/board protection."
+    },
+    {
+      "id": "KR-SN-005",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Hardware overcurrent path to the ePWM trip zone required; ADC-based protection not accepted as the primary path."
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Rated insulating pads (>= 4 kV AC breakdown) on the shared PE-bonded heatsink; 5.0 mm / 3.0 mm from heatsink to HV copper and pins."
+    },
+    {
+      "id": "KR-PCB-006",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "Rule gives the pattern (paralleled pours, stitched vias); the sizing method (IPC-2221 formula, via barrel area and resistance, vias per ampere) is added here with numbers for this converter."
+    },
+    {
+      "id": "KR-GD-007",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Gate discharge resistors required so unpowered drivers cannot float gates during the start-up / shutdown sequence."
+    },
+    {
+      "id": "KR-GD-009",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Hardware driver interlock listed as the last barrier in the interlock chain; dead time from the controller."
+    },
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Principle 1 (isolation concept) and procedure step 2 (working voltage and insulation class at the node determine the driver rating) used to classify the barrier as reinforced at 440 V DC."
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Principles 5-7 and procedure steps 1 and 5 (net classes, barrier keep-outs, slots) implemented; the skill explicitly leaves numeric distances to the standard, which this document supplies."
+    },
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "PCB constraint that the bias transformer/module straddles the barrier with slots is carried into the slot rule; the module rating itself is left to the bias-supply agent with a KR-SN-001 flag."
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Rate-every-barrier-part step and divider-ladder creepage note used for the isolated amplifier / Hall sensor and HV divider placement."
+    },
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "Shared-sink insulation and creepage from a grounded sink to HV pins turned into the 5.0 mm heatsink rule and the PE-bonding requirement."
+    },
+    {
+      "id": "SKILL-003",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Not used for sizing; only the stored energy and discharge of whatever DC-link capacitance the capacitor agent selects is treated here, parametrically for 50-200 uF."
+    },
+    {
+      "id": "REF-WS-CGD15SG00D2",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 7 used only as a cross-check (8 mm creepage for 800 Vpk basic, three 1 mm slots, Tg >= 170 C); the 8 mm figure is not copied, the derived 9.0-10.0 mm reinforced rule is shown to be consistent with it."
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 6 class structure (PRIMARY, LOW-SIDE, HIGH-SIDE, DESAT-MIDPOINT, DRAIN) mirrored as KiCad classes; its 0.76 mm slot width noted; its distances were never extracted and are not reused."
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 9 (insulating pads on shared sinks) and decision 10 (bus copper repeated on three layers) used as patterns; TI's part choices and 800 V ratings not carried over."
+    },
+    {
+      "id": "REF-WS-PRD-04814",
+      "type": "reference",
+      "applicability": "not-applicable",
+      "how_applied": "Concerns gate-bias supply architecture and isolation capacitance, which belong to the bias-supply agent; no spacing or safety content."
+    },
+    {
+      "id": "PE-PCB-006",
+      "type": "project_rule",
+      "applicability": "direct",
+      "how_applied": "Copper and via sizing rationale (widths, via plating assumption, loss) provided as the required evidence."
+    },
+    {
+      "id": "PE-PCB-007",
+      "type": "project_rule",
+      "applicability": "direct",
+      "how_applied": "Control/power separation realised as the SELV domain behind the ISO_BARRIER keep-out."
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "KLKD020.T (also .H holder variant)",
+      "manufacturer": "Littelfuse",
+      "key_parameters": {
+        "rated_current_A": 20,
+        "rated_voltage": "600 V AC / 600 V DC",
+        "interrupting_rating": "100 kA AC; 10 kA DC (UL 248-19) / 50 kA DC (UL 248-14) - two figures on manufacturer pages, to be reconciled",
+        "characteristic": "fast-acting, 10 x 38 mm midget",
+        "melting_I2t": "not found (datasheet PDF could not be read)",
+        "standards": "UL 248-14, UL 248-19, CSA, IEC 60269-6 (2-25 A)"
+      },
+      "datasheet_url": "https://www.mouser.com/datasheet/2/240/KLKD_Datasheet-3311512.pdf (fetch timed out twice); product page https://www.littelfuse.com/products/fuses-overcurrent-protection/fuses/ul-supplemental-midget-fuses/klkd/klkd020 (HTTP 403 to fetch)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Selected input fuse: 14.2 A at 360 V / 5 kW, 15.6 A at 110 % overload, 20 A x 0.8 = 16 A continuous application; DC interrupting rating covers any laboratory or DC-bus prospective current; protects wiring/board/capacitors only, not the SiC device (KR-PR-001)."
+    },
+    {
+      "part_number": "PR02000202003JA100 (PR02 series, 200 kOhm 5 %, 2 W; value to be set from the final capacitance)",
+      "manufacturer": "Vishay",
+      "key_parameters": {
+        "power_W": 2,
+        "voltage_rating_V": "500 (distributor listing; limiting-element voltage in the datasheet not read)",
+        "construction": "metal film, axial 0411",
+        "resistance_range": "0.33 Ohm - 1 MOhm",
+        "AEC_Q200": "listed by distributors"
+      },
+      "datasheet_url": "Vishay PR01/PR02/PR03 datasheet (mirror seen at sy-dep-epc-lpc.web.cern.ch; vishay.com document not fetched)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Bleeder / indicator chain element, two in series per bank so each sees <= 240 V (480 V transient) and dissipates <= 0.7 W total for 100 uF / 60 s; exact value R <= t/(C ln(V0/60)) once C is fixed."
+    },
+    {
+      "part_number": "B32021A3103M289 (B32021 series Y2, 10 nF; smaller values in the same series acceptable)",
+      "manufacturer": "TDK (EPCOS)",
+      "key_parameters": {
+        "capacitance_nF": 10,
+        "rated_voltage_AC": "300 V AC, class Y2",
+        "rated_voltage_DC": "1500 V DC (distributor listings; not confirmed in the TDK datasheet)",
+        "dielectric": "MKP polypropylene, self-healing",
+        "max_temperature_C": 110,
+        "lead_spacing_mm": 10
+      },
+      "datasheet_url": "https://www.tdk-electronics.tdk.com/en/529456/products/product-catalog/film-capacitors/emi-suppression-capacitors (catalog page via search; product page returned HTTP 403)",
+      "datasheet_revision": "series datasheet dated June 2020 (per search result)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Optional Y2 capacitor VIN+/PGND to PE for CM return (basic insulation to PE); 1.8 mA unweighted ripple current at 2 Vpp / 50 kHz; DNP by default until the EMI design confirms it."
+    },
+    {
+      "part_number": "Sil-Pad 2000 (TO-247 die-cut code to be confirmed with Henkel)",
+      "manufacturer": "Henkel (Bergquist)",
+      "key_parameters": {
+        "dielectric_breakdown": "4000 V AC (ASTM D149) per datasheet snippet",
+        "thermal_impedance": "0.38 C-in2/W at 50 psi",
+        "thermal_conductivity_W_mK": 3.5,
+        "material": "boron-nitride filled silicone elastomer"
+      },
+      "datasheet_url": "not found (Henkel product page redirected then returned HTTP 404; values from search snippets of the Bergquist datasheet)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "search-snippet",
+      "assessment": "Insulating pad candidate for both TO-247-4 devices on the shared PE-bonded heatsink (KR-TH-002); breakdown >= 4 kV AC exceeds the 4 kV basic impulse requirement with no margin, so the thicker grade or a 6 kV-class alternative is a human-review choice together with the thermal budget."
+    },
+    {
+      "part_number": "UCC21710-Q1 (reference check of the gate-driver barrier)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "isolation_rating": "5.7 kVrms",
+        "working_voltage": "1.5 kVrms",
+        "package_creepage_clearance_mm": "> 8",
+        "CMTI": "150 V/ns min"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+      "datasheet_revision": "SLUSDH8D (June 2024)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Meets reinforced 440 V DC working voltage with large margin; its 8 mm package creepage is below the 9.0 mm PCB rule, so a slot under the body is required."
+    },
+    {
+      "part_number": "AMC1311 (reference check of the isolated voltage-sense barrier)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "reinforced_isolation": "7000 Vpk (DIN EN IEC 60747-17)",
+        "working_voltage": "1500 Vrms",
+        "CMTI": "100 kV/us min (B grade)"
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+      "datasheet_revision": "SBAS786C (June 2022)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Meets reinforced 440 V DC working voltage; slot under the body for the PCB path."
+    },
+    {
+      "part_number": "TMCS1133 (reference check of the Hall-sensor barrier)",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "reinforced_working_voltage": "950 Vrms / 1343 V DC",
+        "creepage_clearance_mm": ">= 8",
+        "overcurrent_response_ns": 100
+      },
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+      "datasheet_revision": "SBOSAG0E (May 2026)",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Meets reinforced 440 V DC working voltage; orderable suffix discrepancy noted in the knowledge record must be resolved by the sensing agent."
+    },
+    {
+      "part_number": "R12P21503D (reference check of the bias-module barrier)",
+      "manufacturer": "RECOM",
+      "key_parameters": {
+        "isolation_test_voltage": "6.4 kVDC (series datasheet)",
+        "reinforced_working_voltage": "not found",
+        "isolation_capacitance_pF": "1.5-10 (series)"
+      },
+      "datasheet_url": "https://recom-power.com/pdf/Econoline/RxxP2xx.pdf (variant not listed in the series datasheet per knowledge record)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "unverified",
+      "assessment": "Human review (KR-SN-001): the module bridges SELV and the HV islands and must carry a reinforced rating for >= 440 V DC working voltage with pin creepage >= the PCB rule or a slot; the bias-supply agent must confirm or select an alternative."
+    }
+  ],
+  "selection": {
+    "standards_basis": "IEC 62477-1 (general) with IEC 61800-5-1:2007 text as the verified numeric source (Tables 3, 7, 9, 10), IEC 60664-1 Annex F as origin of the tables, UL 840 harmonised cross-reference, IPC-2221B Table 6-1 for functional spacing, IPC-2221/IPC-2152 for current capacity, IEC 62368-1 cross-reference only",
+    "environment": "OVC II, PD2, <= 2000 m, FR4 CTI 175-399 (group IIIa), Tg >= 150 C, ENIG, 70 um copper power board",
+    "decisive_voltage_classes": "HV power stage, SW, driver islands, DESAT, 200 V output = DVC C; 12 V aux, DSP, JTAG, UART, fan = DVC A with protective separation",
+    "impulse_withstand_design_basis_V": {
+      "functional_basic": 4000,
+      "reinforced": 6000
+    },
+    "working_voltage_design_basis": {
+      "HV_to_SELV_and_HV_to_PE_Vdc": 440,
+      "temporary_overvoltage_Vpk": 480,
+      "SW_recurring_peak_Vpk": 530,
+      "SW_rms_V": "268-297",
+      "VOUT_Vdc": "200 (220 max)"
+    },
+    "required_distances_mm": {
+      "reinforced_HV_SELV": {
+        "clearance": 5.5,
+        "creepage_PWB_column": "5.0 raised to 5.5",
+        "creepage_other_insulators_IIIa": "8.8 interpolated / 10.0 at 500 V row"
+      },
+      "basic_HV_PE": {
+        "clearance": 3.0,
+        "creepage_PWB_column": "2.5 raised to 3.0",
+        "creepage_other_insulators_IIIa": "4.4 interpolated / 5.0 at 500 V row"
+      },
+      "functional_HV_HV": {
+        "clearance": "3.0 (impulse case) / 0.2 (working-voltage-only case)",
+        "creepage_PWB_column": "2.5 raised to 3.0",
+        "creepage_other_insulators_IIIa": "4.4 / 5.0"
+      },
+      "IPC_2221B_functional_at_480_530_Vpk": {
+        "B1_internal": "0.25-0.33",
+        "B2_external_uncoated": "2.5-2.65",
+        "B4_external_coated": "0.8-0.89"
+      }
+    },
+    "kicad_drc_values_mm": {
+      "HV_or_DRV_or_DESAT_to_CTRL_SELV_all_layers": 9.0,
+      "ISO_BARRIER_keepout_width": 10.0,
+      "HV_to_PE_heatsink": 5.0,
+      "HV_functional_outer": 3.0,
+      "HV_functional_inner": 1.0,
+      "same_reference_island": 0.3,
+      "CTRL_SELV": "0.15-0.2",
+      "HV_to_board_edge": "1.0 (5.0 at earthed edge)",
+      "slot_width_nonplated": 1.0
+    },
+    "discharge": "61800-5-1 4.3.11: < 60 V or < 50 uC within 5 s, else 6.5.2 label IEC 60417-5036 + time; chosen: passive bleeders for <= 60 s on input and output banks + label '60 s' + LED indicator per bank; optional active discharge for 5 s; screw/ring-lug terminals under IPXXB covers",
+    "earthing": "Class I: heatsink and chassis to PE stud (IEC 60417-5019), SGND bonded to PE at one point (PELV), PGND not hard-bonded (configurable link + 2 x 1 MOhm reference), optional Y2 <= 10 nF per rail to PE",
+    "protective_coordination": "DESAT/OC (us) < device SCWT; ePWM trip zone < 1 switching period; firmware ms; Littelfuse KLKD020 20 A 600 V DC fuse for wiring/board protection only",
+    "copper_and_vias": "IPC-2221 at 20 K rise, 70 um: 25 A -> 8.4 mm external / 21.7 mm internal; 12.5 A -> 3.2 / 8.4 mm; design pours >= 10 mm on outer layers and parallel inner pours <= 12.5 A each; 0.5 mm vias 0.67 mOhm, 1.8 A each, 21 vias per 25 A transfer"
+  },
+  "calculations": [
+    {
+      "name": "Input current at operating corners",
+      "expression": "I_in = P_out / (V_in * eta)",
+      "inputs": {
+        "P_out_W": [
+          5000,
+          5500
+        ],
+        "V_in_V": [
+          360,
+          400,
+          440
+        ],
+        "eta": 0.98
+      },
+      "result": "14.17 A (360 V, 5 kW); 15.59 A (360 V, 110 %); 12.76 A (400 V); 11.60 A (440 V)",
+      "knowledge_ref": "KR-PR-001 context"
+    },
+    {
+      "name": "Fuse application margin",
+      "expression": "I_fuse * 0.8 >= I_in,overload ; I_fuse / I_in,nom",
+      "inputs": {
+        "I_fuse_A": 20,
+        "I_in_nom_A": 14.17,
+        "I_in_overload_A": 15.59
+      },
+      "result": "16.0 A >= 15.6 A (marginal, 10 s overload only); ratio 1.41 at 360 V",
+      "knowledge_ref": "assumption A8"
+    },
+    {
+      "name": "Switch-node r.m.s. working voltage",
+      "expression": "V_rms(SW-PGND) = V_in * sqrt(D), D = 200/V_in",
+      "inputs": {
+        "V_in_V": [
+          360,
+          400,
+          440
+        ]
+      },
+      "result": "268 / 283 / 297 Vrms; SW-VOUT 179 / 200 / 219 Vrms; designed as 440 V DC class",
+      "knowledge_ref": "61800-5-1 4.3.6.2.1 NOTE 1"
+    },
+    {
+      "name": "Reinforced clearance alternatives",
+      "expression": "max(clearance(6 kV), clearance(1.6 x TOV), clearance(2 x V_peak))",
+      "inputs": {
+        "clearance_6kV_mm": 5.5,
+        "TOV_Vpk": 480,
+        "V_peak_V": 530
+      },
+      "result": "1.6 x 480 = 768 V -> 0.2 mm; 2 x 530 = 1060 V -> <= 1.6 mm; governing 5.5 mm (6.4 mm if TOV 2550 V crest were applied)",
+      "knowledge_ref": "61800-5-1 Table 9, 4.3.6.4.1"
+    },
+    {
+      "name": "Creepage interpolation at 440 V",
+      "expression": "c(440) = c(400) + (440-400)/(500-400) * (c(500)-c(400))",
+      "inputs": {
+        "PWB_PD2_400_500_mm": [
+          2.0,
+          2.5
+        ],
+        "other_IIIa_400_500_mm": [
+          4.0,
+          5.0
+        ]
+      },
+      "result": "PWB 2.2 mm basic / 4.4 mm reinforced; other insulators IIIa 4.4 mm basic / 8.8 mm reinforced",
+      "knowledge_ref": "61800-5-1 Table 10 NOTE (interpolation permitted); KR-ISO-002"
+    },
+    {
+      "name": "Slot creepage extension under isolators",
+      "expression": "path = land_gap + 2 * t_board",
+      "inputs": {
+        "land_gap_mm": [
+          7.6,
+          8.0
+        ],
+        "t_board_mm": 1.6
+      },
+      "result": "10.8 / 11.2 mm >= 9.0 mm rule",
+      "knowledge_ref": "KR-ISO-004"
+    },
+    {
+      "name": "IPC-2221B spacing above 500 V",
+      "expression": "B1 = 0.25 + 0.0025 (V-500); B2 = 2.5 + 0.005 (V-500); B4 = 0.8 + 0.00305 (V-500)",
+      "inputs": {
+        "V_pk": [
+          480,
+          530,
+          600
+        ]
+      },
+      "result": "480 V: 0.25 / 2.5 / 0.8 mm; 530 V: 0.33 / 2.65 / 0.89 mm; 600 V: 0.50 / 3.0 / 1.1 mm",
+      "knowledge_ref": "IPC-2221B Table 6-1 (secondary)"
+    },
+    {
+      "name": "Bleeder resistance and dissipation",
+      "expression": "R <= t / (C ln(V0/60)); P = V_op^2 / R; E = 0.5 C V0^2",
+      "inputs": {
+        "C_uF": [
+          50,
+          100,
+          200
+        ],
+        "V0_V": 480,
+        "t_s": [
+          5,
+          60
+        ],
+        "V_op_V": 440
+      },
+      "result": "5 s: 48 / 24 / 12 kOhm with 4.0 / 8.1 / 16 W; 60 s: 577 / 288 / 144 kOhm with 0.34 / 0.67 / 1.34 W; stored 5.8 / 11.5 / 23 J",
+      "knowledge_ref": "61800-5-1 4.3.11, 6.5.2"
+    },
+    {
+      "name": "Output bank bleeder",
+      "expression": "R <= t / (C ln(V0/60))",
+      "inputs": {
+        "C_uF": 200,
+        "V0_V": 220,
+        "t_s": 60
+      },
+      "result": "<= 231 kOhm, 0.17 W at 200 V, 4.8 J stored",
+      "knowledge_ref": "61800-5-1 4.3.11"
+    },
+    {
+      "name": "IPC-2221 conductor width at 20 K rise, 70 um",
+      "expression": "A = (I / (k dT^0.44))^(1/0.725) [mil^2]; w = A / t",
+      "inputs": {
+        "I_A": [
+          12.5,
+          25,
+          27.5
+        ],
+        "dT_K": 20,
+        "k_ext": 0.048,
+        "k_int": 0.024,
+        "t_um": 70
+      },
+      "result": "12.5 A: 0.225 mm^2 -> 3.2 mm ext, 0.585 mm^2 -> 8.4 mm int; 25 A: 0.585 mm^2 -> 8.4 mm ext, 1.52 mm^2 -> 21.7 mm int; 27.5 A: 9.5 mm ext (steady-state rise 24 K)",
+      "knowledge_ref": "KR-PCB-006; PE-PCB-006"
+    },
+    {
+      "name": "Via barrel area, resistance and current",
+      "expression": "A = pi (d_f + t_pl) t_pl; R = rho L / A; I = k dT^0.44 A_mil2^0.725",
+      "inputs": {
+        "d_f_mm": [
+          0.5,
+          0.3
+        ],
+        "t_pl_um": 25,
+        "L_mm": 1.6,
+        "rho_ohm_m": 1.72e-08,
+        "dT_K": 20
+      },
+      "result": "0.5 mm: 0.0412 mm^2 (64 mil^2), 0.667 mOhm, 1.83 A (k=0.024) / 3.65 A (k=0.048); 0.3 mm: 0.0255 mm^2, 1.08 mOhm, 1.29 A; 25 A needs 14 vias, 21 with 1.5x margin (0.032 mOhm, 0.02 W)",
+      "knowledge_ref": "KR-PCB-006; PE-PCB-006"
+    },
+    {
+      "name": "Y-capacitor ripple (touch) current",
+      "expression": "I_rms = 2 pi f C V_rms, V_rms = V_pp / (2 sqrt(3))",
+      "inputs": {
+        "C_nF": [
+          4.7,
+          10
+        ],
+        "f_Hz": 50000,
+        "V_pp_V": 2.0
+      },
+      "result": "0.85 mA / 1.81 mA unweighted (below 3.5 mA [U])",
+      "knowledge_ref": "SKILL-004 CM path context"
+    },
+    {
+      "name": "Device short-circuit I^2t versus fuse",
+      "expression": "I^2t_dev = I_sc^2 * t_sc",
+      "inputs": {
+        "I_sc_A": [
+          200,
+          300
+        ],
+        "t_sc_us": [
+          2,
+          3
+        ]
+      },
+      "result": "0.08-0.27 A^2s, orders of magnitude below a 20 A fuse melting I^2t (value not found) -> fuse cannot protect the device",
+      "knowledge_ref": "KR-PR-001"
+    },
+    {
+      "name": "VIN+ to VOUT+ working voltage",
+      "expression": "V_in - V_out",
+      "inputs": {
+        "V_in_V": [
+          360,
+          400,
+          440,
+          480
+        ],
+        "V_out_V": 200
+      },
+      "result": "160 / 200 / 240 V DC, 280 V transient",
+      "knowledge_ref": "KR-ISO-003"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "A1 switch-node recurring peak overshoot",
+      "value": "<= 20 % of V_in,max -> 530 Vpk",
+      "basis": "Typical hard-switched SiC overshoot with a low-inductance commutation loop; used only for the clearance recurring-peak check, to be confirmed by the power-stage agent / simulation"
+    },
+    {
+      "name": "A2 maximum output voltage",
+      "value": "220 V DC",
+      "basis": "Output OVP assumed <= 10 % above nominal, mirroring the input OVP philosophy; affects only the 200 V class creepage row"
+    },
+    {
+      "name": "A3 impulse withstand design basis",
+      "value": "4000 V functional/basic, 6000 V reinforced",
+      "basis": "Covers OVC II at the 600 V system row (laboratory source as system voltage, 61800-5-1 NOTE 4) and OVC III at the 300 V row (DC bus rectified from 230/400 V mains); 2500 V would apply only if the source is proven to be an OVC II 300 V system"
+    },
+    {
+      "name": "A4 potential of PGND relative to PE",
+      "value": "any HV node to PE <= 440 V DC continuous, 480 V transient",
+      "basis": "Source earthing unknown; the converter does not hard-bond PGND to PE; a midpoint- or negative-earthed source stays within this envelope"
+    },
+    {
+      "name": "A5 board stack and plating",
+      "value": "1.6 mm board, 25 um via plating, rho_Cu 1.72e-8 ohm m, IPC-2221 k = 0.048 / 0.024",
+      "basis": "IPC-6012 class 2 practice and the IPC-2221 formula constants (secondary sources)"
+    },
+    {
+      "name": "A6 DC-link capacitance range for discharge sizing",
+      "value": "50-200 uF per bank",
+      "basis": "Placeholder range until the capacitor agent fixes C (KR-CAP-001); bleeder values are given as functions of C"
+    },
+    {
+      "name": "A7 inrush limitation",
+      "value": "precharge resistor + relay or laboratory-supply current limit",
+      "basis": "DC-link charging from a stiff bus would otherwise exceed fuse and connector ratings; architecture agent decides the implementation"
+    },
+    {
+      "name": "A8 fuse continuous application factor",
+      "value": "0.8 x rated current",
+      "basis": "Common UL/NEC fuse application practice (secondary, not verified against the fuse standard)"
+    },
+    {
+      "name": "A9 operator and enclosure",
+      "value": "instructed persons in a laboratory; DVC C parts behind IPXXB covers",
+      "basis": "61800-5-1 4.3.3 requirement for live parts of DVC C; prototype, not a product"
+    },
+    {
+      "name": "A10 touch-current limit",
+      "value": "3.5 mA",
+      "basis": "Customary class I limit; clause in 61800-5-1 / 62477-1 not verified in this run"
+    }
+  ],
+  "pcb_constraints": [
+    "ISO_BARRIER rule area on all copper layers, >= 10 mm wide, between all HV/DRV/DESAT classes and CTRL_SELV; no copper, via or pour crosses it (KR-ISO-001)",
+    "Custom DRC: HV_*/DRV_*/DESAT_* to CTRL_SELV >= 9.0 mm on every layer (standard minimum 5.5 mm clearance / 5.5-10 mm creepage; strict column adopted)",
+    "Custom DRC: HV_*/DRV_*/DESAT_* to PE (heatsink, chassis, PE stud, mounting holes) >= 5.0 mm, absolute minimum 3.0 mm",
+    "Custom DRC: HV functional class pairs (HV_VIN, HV_SW, HV_PGND, HV_VOUT, DRV_HS, DRV_LS, DESAT_HS, DESAT_LS across references) >= 3.0 mm on F.Cu/B.Cu, >= 1.0 mm on inner layers; 5.0 mm preferred where free",
+    "Same-reference pairs (DRV_HS-HV_SW, DRV_LS-HV_PGND, intra-island) >= 0.3 mm; CTRL_SELV 0.15-0.2 mm",
+    "Non-plated slots 1.0 mm wide under every barrier-crossing component whose land gap is < 9.0 mm, extending >= 1 mm beyond the pad rows; verify surface path around slot ends >= 9.0 mm (KR-ISO-004)",
+    "DESAT diode bodies and midpoint nets keep the full HV functional distance (3.0 mm outer) to all other groups; drain runs short (KR-ISO-002)",
+    "HV copper to board edge >= 1.0 mm; >= 5.0 mm where an earthed enclosure wall can touch the edge",
+    "Solder mask is not credited as insulation; conformal coating not assumed (PD2 kept)",
+    "Power pours: VIN+, PGND, SW, VOUT+ >= 10 mm wide on outer 70 um layers (IPC-2221: 8.4 mm for 25 A at 20 K); inner parallel pours sized so each carries <= 12.5 A (>= 8.4 mm) (KR-PCB-006, PE-PCB-006)",
+    "Via arrays for layer transfer: 0.5 mm finished holes, >= 1 via per 1.5 A, i.e. >= 21 vias for 25 A, placed in staggered arrays at >= 1.0 mm pitch",
+    "Fabrication minimums at 70 um: track/space 0.20 mm (0.25 mm recommended), mask dam >= 0.15 mm, drill >= 0.3 mm, annular ring >= 0.20 mm, plated slot >= 0.5-0.6 mm, non-plated slot >= 0.8-1.0 mm, plating 25 um nominal (confirm with fabricator)",
+    "Test points: HV test points as recessed safety sockets or probe loops >= 9.0 mm from SELV copper; all hand-probing test points on the SELV side only",
+    "Discharge indicator LED and bleeder chain per capacitor bank; label positions for IEC 60417-5036 + time, ISO 7010 W012, PE symbol, hot-surface symbol reserved on silkscreen / enclosure",
+    "PE stud (M4, serrated washer) with heatsink and chassis bonding; SGND-to-PE single-point bond; PGND-to-PE configurable link footprint plus 2 x 1 MOhm 500 V-rated reference and optional Y2 footprints"
+  ],
+  "open_issues": [
+    "Board area: the strict 9.0-10.0 mm reinforced barrier (versus the standard-minimum 5.5 mm using the PWB column) costs roughly 10 mm x barrier length on every board that carries the barrier; architecture agent to confirm the partition (integrated board versus power + driver + control) and budget it",
+    "Impulse basis: 4 kV adopted because the source is unspecified; if the DC source is proven to be an OVC II 300 V system, 2.5 kV (1.5 mm basic / 3.0 mm reinforced clearance) would apply, with no change to the creepage-governed rules",
+    "If a reviewer treats the converter as mains-connected, 1.6 x TOV (2550 V crest) gives 6.4 mm reinforced clearance; still inside the 9.0 mm rule but to be recorded",
+    "Bias-module (RECOM R12P2 / Murata MGJ2) reinforced working-voltage rating at 440 V DC and pin creepage not verified (KR-SN-001 human review); relay coil-to-contact insulation rating likewise",
+    "Discharge strategy depends on the capacitor agent's C: passive 60 s + label versus active 5 s; decide once C_in and C_out are fixed; also decide whether the controller is allowed to discharge through the power stage",
+    "PGND-to-PE reference strategy and Y-capacitor use interact with the EMI design and with the source earthing; decide with the architecture/EMI agents",
+    "IPXXB finger-safe terminals and enclosure concept not yet defined (required for DVC C live parts)",
+    "Insulating pad: Sil-Pad 2000 breakdown (4 kV AC) equals the basic impulse level; choose thickness/grade with the thermal agent, confirm the TO-247 die-cut part number",
+    "IPC-2152 chart values were not obtained; IPC-2221 formula used (conservative); if the layout agent needs narrower internal pours, obtain IPC-2152 data or a thermal simulation",
+    "Littelfuse KLKD datasheet could not be read (two time-outs): melting I^2t not found; DC interrupting rating shows 10 kA (UL 248-19) vs 50 kA (UL 248-14) on manufacturer pages - reconcile",
+    "IEC 62477-1 clause numbers and wording, UL 840 and IEC 62368-1 values, the 3.5 mA touch-current limit and IPC-2221B Table 6-1 values are secondary-source or unverified; a licensed copy review is required before any safety claim",
+    "The 2023 edition of IEC 61800-5-1 renumbers the clauses (capacitor discharge 4.4.9); this document cites the 2007 edition text that was verified"
+  ],
+  "verification_status": "Standards values verified against the text of EN 61800-5-1:2007 (Tables 3, 7, 9, 10; 4.3.6.2-4.3.6.5, 4.3.6.7, 4.3.11, 6.5.2), which reproduces IEC 60664-1 Annex F; IEC 62477-1 clause numbering, IPC-2221B Table 6-1, IPC-2152, UL 840, IEC 62368-1 and the touch-current limit are secondary-source or unverified; component parameters verified as marked per candidate (TI isolators fetched-datasheet via knowledge records; fuse, resistor, Y-capacitor and pad at search-snippet level; bias module unverified). All derived spacings are analytically checked but not DRC-run or tested; human review required before release.",
+  "markdown": "# Standards, insulation coordination, PCB spacing and safety basis (400 V -> 200 V, 5 kW SiC synchronous buck)\n\nVerification tags used below: [V] = read from the text of EN 61800-5-1:2007 (Tables 3, 7, 9, 10; 4.3.6.2-4.3.6.5, 4.3.6.7, 4.3.11, 6.5.2), which reproduces the IEC 60664-1 Annex F tables (61800-5-1 Table 9 NOTE 3 states the derivation from IEC 60664-1 Table A.1); [S] = secondary source (manufacturer product page via search, distributor listing, application note); [U] = not verified. No value below is copied from a reference-design instance.\n\n## 1. Scope, environment and classification\n\nNon-isolated DC/DC power electronic converter system, 400 V DC in (360-440 V, 480 V/100 ms survival), 200 V DC / 25 A out, fed from a regulated DC bus or a current-limited laboratory supply; engineering prototype for a laboratory / industrial-cabinet environment: overvoltage category II, pollution degree 2, altitude <= 2000 m, FR4 with CTI 175-399 = material group IIIa (group definitions 61800-5-1 4.3.6.5.2 [V]: I >= 600, II 400-599, IIIa 175-399, IIIb 100-174).\n\nGoverning documents: IEC 62477-1 (PECS general safety; the working-voltage based method is identical to 61800-5-1, clause numbers [U]); IEC 61800-5-1:2007 used as the text-verified source of the numeric tables; IEC 60664-1 as the insulation-coordination basis; UL 840 as the harmonised North-American equivalent (cross-reference only, [U]); IPC-2221B Table 6-1 for functional conductor spacing [S]; IPC-2221/IPC-2152 for current capacity; IEC 62368-1 only as cross-reference (its 2 s discharge rule for pluggable equipment is not adopted, [S]).\n\nDecisive voltage classes (61800-5-1 Table 3 [V]): DVC A <= 25 Vac rms / 35.4 Vpk / 60 V DC; DVC B <= 50 / 71 / 120 V DC; DVC C <= 1000 / 4500 / 1500 V DC. The 400 V bus, the 200 V output, the switch node, both gate-driver islands and the DESAT nets are DVC C; the 12 V auxiliary, DSP, JTAG, UART, user I/O and fan are DVC A. Accessible DVC A circuits need protective separation (double or reinforced insulation) from DVC C circuits (61800-5-1 4.3.3 / 4.3.4.2 [V]; SKILL-001 principle 1; KR-SN-001). Live parts of DVC C must sit behind an enclosure or barrier of at least IPXXB (4.3.3 [V]).\n\n## 2. Insulation classes present and working voltages\n\nCreepage is dimensioned with the r.m.s./DC working voltage, clearance and solid insulation with the recurring peak (4.3.6.2.1 NOTE 1 [V]); the 480 V / 100 ms event is a temporary overvoltage, not a working voltage.\n\n| Pair | Class | Working voltage (creepage basis) | Recurring peak (clearance basis) |\n|---|---|---|---|\n| VIN+ - PGND | functional | 440 V DC | 440 V (bus ringing), 480 V TOV |\n| SW - PGND and SW - VIN+ | functional | Vin*sqrt(D) = 268-297 Vrms; designed as 440 V DC | 440 V + <= 20 % overshoot = 530 V (assumption A1) |\n| VOUT+ - PGND | functional | 200 V DC, 220 V max (A2) | 220 V |\n| VIN+ - VOUT+ | functional | 160-240 V DC, 280 V TOV | 280 V |\n| SW - VOUT+ | functional | 179-219 Vrms | 240 V (280 V TOV) |\n| Nets inside one driver island (gate, Kelvin source, VDD2/VSS2, DESAT node) vs its reference (SW or PGND) | functional | <= 25 V | <= 25 V |\n| HS island vs VIN+ (HS drain); LS island vs SW (LS drain) | functional | 440 V DC in the off state | 530 V |\n| DESAT midpoint nets vs every class except their own drain | functional | full bus, 440 V DC (KR-ISO-002) | 530 V |\n| HS island vs LS island | functional | 440 V DC | 530 V |\n| Any HV net vs PE / heatsink / chassis / mounting hardware | basic (class I) | 440 V DC (A4) | 530 V |\n| Any HV net vs SELV control domain: isolated gate drivers, isolated amplifiers, Hall sensor, bias modules, digital isolators, relay coil-to-contact | reinforced (protective separation) | 440 V DC | 530 V |\n\n## 3. Impulse withstand, clearance and creepage requirements\n\nImpulse voltage (61800-5-1 Table 7 = IEC 60664-1 Table F.1 [V], interpolation not permitted): 300 V system -> OVC II 2500 V / OVC III 4000 V; 600 V system -> OVC II 4000 V / OVC III 6000 V. A 400 V DC bus rectified from 230/400 V TN mains is a 300 V system (4.3.6.2.1 NOTE 3 [V]); a transformer-isolated laboratory source at 400 V DC counts itself as a system voltage (NOTE 4 [V]) and falls in the 600 V row. The source is unspecified, so the design impulse is 4000 V for functional/basic insulation (covers OVC II at 600 V and OVC III at 300 V) and 6000 V for reinforced insulation (next higher step, 4.3.6.4.1 [V]).\n\nClearance (Table 9 = 60664-1 Table F.2, PD2, inhomogeneous field [V]): 2500 V -> 1.5 mm; 4000 V -> 3.0 mm; 6000 V -> 5.5 mm; 8000 V -> 8.0 mm; recurring-peak columns: 530 V -> 0.20 mm, 960 V -> 0.5 mm, 1600 V -> 1.5 mm, 2600 V -> 3.0 mm. Reinforced insulation also takes 1.6 x TOV and 2 x working peak (4.3.6.4.1 [V]): with TOV = 480 V and 2 x 530 V = 1060 V these give <= 1.6 mm, so 5.5 mm governs. If a reviewer treats the source as mains-connected (TOV 2550 V crest for the 600 V row, Table 7 [V]), 1.6 x TOV = 4080 V would interpolate to 6.4 mm: covered by the design rule below but flagged for review.\n\nCreepage (Table 10 = 60664-1 Table F.4, interpolation permitted [V]; reinforced = 2 x basic; creepage never below the clearance, 4.3.6.5.1 [V]). PWB columns apply to printed boards and parts on them with comparable tolerance control, all material groups except IIIb (footnotes a, c [V]):\n\n| Working voltage | PWB column, PD2 | Other insulators, PD2, IIIa |\n|---|---|---|\n| 200 V | 0.63 mm | 2.0 mm |\n| 250 V | 1.0 mm | 2.5 mm |\n| 320 V | 1.6 mm | 3.2 mm |\n| 400 V | 2.0 mm | 4.0 mm |\n| 440 V (interpolated) | 2.2 mm | 4.4 mm |\n| 500 V | 2.5 mm | 5.0 mm |\n| 630 V | 3.2 mm | 6.3 mm |\n\nDerived requirements and the AIPE design rule (conservative: the \"other insulators\" IIIa column at 440 V interpolated, rounded up, never below clearance):\n\n| Class | Clearance required | Creepage required (PWB / other insulators) | AIPE DRC value |\n|---|---|---|---|\n| Reinforced HV - SELV | 5.5 mm (6 kV) | 5.0 -> 5.5 mm / 8.8-10.0 mm | 9.0 mm minimum copper gap on every layer, 10.0 mm target; slot wherever a land pattern gives < 9.0 mm |\n| Basic HV - PE, heatsink, chassis | 3.0 mm (4 kV) | 2.5 -> 3.0 mm / 4.4-5.0 mm | 5.0 mm copper to earthed metal, PE pads and mounting holes; 3.0 mm absolute minimum |\n| Functional HV - HV, 440 V class | 3.0 mm (4 kV; 4.3.6.3 transient-affected case [V]); 0.2 mm if designed to working voltage only | 2.5 -> 3.0 mm / 4.4-5.0 mm | 3.0 mm on outer layers (5.0 mm preferred), 1.0 mm on inner layers (solid insulation); component pin fields governed by the component |\n| Functional 200-280 V class (VOUT+ pairs) | 3.0 mm if transient-affected | 1.0-1.6 mm / 2.5-3.2 mm | treated as the HV functional class: 3.0 mm outer, 1.0 mm inner |\n| Functional <= 25 V inside a driver island | - | 0.04 mm | 0.3 mm |\n| SELV control domain | - | - | 0.15-0.20 mm (fabrication minimum) |\n\nIPC-2221B Table 6-1 [S] (functional spacing, peak voltage): 301-500 V: B1 internal 0.25 mm, B2 external uncoated 2.5 mm, B4 external permanent-polymer coated 0.8 mm; above 500 V add 0.0025 (B1) / 0.005 (B2) / 0.00305 (B4) mm per volt, giving 0.33 / 2.65 / 0.89 mm at 530 Vpk; 171-250 V: 0.2 / 1.25 / 0.4 mm. The IEC-derived 3.0 mm rule exceeds B2; solder mask is not credited as a B4 coating. Cross-check with the reference boards: CGD15SG00D2 uses 8 mm creepage for an 800 Vpk (566 Vrms) basic rating, where Table 10 (630 V row, IIIa) requires 6.3 mm, i.e. about 27 % margin (REF-WS-CGD15SG00D2 decision 7); the present 9.0-10.0 mm reinforced rule for 440 V DC sits consistently above that basic figure. The six spacing classes of CGD1700HB2M-UNA are mirrored in Section 4 (REF-WS-CGD1700HB2M-UNA decision 6; KR-ISO-003); its distances were never extracted and are not reused.\n\n## 4. KiCad net classes, custom rules, slots\n\n| Net class | Members | Reference |\n|---|---|---|\n| CTRL_SELV | DSP, 3V3/5V/12V, JTAG, UART, fan, relay coil, primary sides of all isolators and bias modules | SGND, bonded to PE |\n| HV_VIN | VIN+, fuse and relay HV side, DC-link positive | PGND |\n| HV_SW | SW, inductor input, HS power source, LS drain | PGND |\n| HV_PGND | PGND, LS power source, DC-link and output negative | PGND |\n| HV_VOUT | VOUT+, output capacitors positive | PGND |\n| DRV_HS | HS gate, HS Kelvin source, HS VDD2/VSS2/COM, HS driver and bias secondaries | SW |\n| DRV_LS | LS gate, LS Kelvin source, LS rails, LS driver and bias secondaries | PGND |\n| DESAT_HS, DESAT_LS | nodes between the DESAT diodes and the driver | floating, full bus |\n| PE | PE stud, heatsink, chassis, Y-capacitor PE side | earth |\n\nRules (KiCad clearance = copper gap; implement as custom rules conditioned on A.NetClass / B.NetClass, plus rule areas):\n1. Any HV_*, DRV_*, DESAT_* vs CTRL_SELV: 9.0 mm on all layers; a 10 mm wide ISO_BARRIER keep-out (all copper layers) along the whole barrier; no copper crosses it (KR-ISO-001; SKILL-002 principle 5).\n2. Any HV_*, DRV_*, DESAT_* vs PE: 5.0 mm (basic, strict column).\n3. HV_VIN / HV_SW / HV_PGND / HV_VOUT all pairs; DRV_HS vs HV_VIN, HV_PGND, HV_VOUT, DRV_LS; DRV_LS vs HV_VIN, HV_SW, HV_VOUT; DESAT_HS/DESAT_LS vs every class except their own drain net: 3.0 mm on F.Cu/B.Cu, 1.0 mm on inner layers (KR-ISO-002, KR-ISO-003).\n4. Same-reference pairs (DRV_HS vs HV_SW, DRV_LS vs HV_PGND, intra-class): 0.3 mm; CTRL_SELV intra-class 0.15-0.2 mm.\n5. HV copper to board edge >= 1.0 mm, >= 5.0 mm where an earthed enclosure wall can touch the edge; HV copper to any mounting hole of the earthed heatsink >= 5.0 mm (SKILL-006 PCB constraints).\n6. Slots (KR-ISO-004; SKILL-002 principle 7): under every barrier-crossing part whose primary-secondary land gap is below 9.0 mm (wide-body SOIC isolators have 7.6-8.0 mm land gaps against an 8 mm package rating; bias modules and transformers likewise): non-plated slot 1.0 mm wide (CGD15SG00D2 used three 1 mm slots, CGD1700HB2M-UNA 0.76 mm), extending >= 1 mm beyond the pad rows; surface path = gap + 2 x 1.6 mm board = 10.8-11.2 mm; check the path around the slot ends >= 9.0 mm. A slot between DRV_HS and DRV_LS is needed only if 3.0 mm cannot be held around the TO-247-4 pin field.\n7. Component exception: inside the land pattern of a certified component (TO-247-4 at 2.54 mm pitch, DESAT diodes, isolator ICs) the component's own creepage governs; the rule applies to tracks and zones outside the land pattern. The DESAT diode bodies keep the full 3.0/5.0 mm distance to other groups (REF-WS-CGD1700HB2M-UNA decision 6).\n\n## 5. DC-link discharge and labelling\n\n61800-5-1:2007 4.3.11 [V]: capacitors shall be discharged to less than 60 V, or to a residual charge below 50 uC, within 5 s after removal of power; if not achievable, 6.5.2 [V] requires the warning symbol IEC 60417-5036 and an indication of the discharge time on the enclosure or near the capacitors, with the time stated in the manuals; connectors removable without a tool that expose conductors require 1 s or IPXXB protection. IEC 62477-1 carries the equivalent requirement (clause 4.4.9 in the current editions, wording [U]). Both the input bank (up to 480 V) and the output bank (200 V at no load) need discharge paths.\n\nR_bleed <= t / (C * ln(V0 / 60 V)); P = V_op^2 / R:\n\n| C | 5 s from 480 V | 60 s from 480 V | P at 440 V (60 s case) | stored energy at 480 V |\n|---|---|---|---|---|\n| 50 uF | <= 48 kOhm, 4.0 W | <= 577 kOhm | 0.34 W | 5.8 J |\n| 100 uF | <= 24 kOhm, 8.1 W | <= 288 kOhm | 0.67 W | 11.5 J |\n| 200 uF | <= 12 kOhm, 16 W | <= 144 kOhm | 1.34 W | 23 J |\n\nOutput bank: 200 uF from 220 V in 60 s -> <= 231 kOhm, 0.17 W. A passive 5 s bleed costs 4-16 W, so the recommended prototype scheme is passive bleeders for <= 60 s plus the 60417-5036 label with \"60 s\" and one LED discharge indicator per bank, with an optional active discharge (relay-switched resistor or converter-controlled dump) if 5 s is wanted. Bleeders are two series resistors each seeing <= 240 V (Vishay PR02, 2 W, 500 V element rating [S]). Terminals are screw or ring-lug types under IPXXB covers so the 1 s rule does not apply. Labels: IEC 60417-5036 + discharge time, ISO 7010 W012, PE symbol IEC 60417-5019 at the stud, hot-surface IEC 60417-5041 at the heatsink, rating plate (400 V DC in, 200 V DC / 25 A out, 5 kW, 50 kHz, DVC C, \"480 V DC max\", \"AI-generated engineering prototype - human review required\").\n\n## 6. Accessible interfaces, earthing, Y-capacitors\n\nJTAG, UART, user I/O, 12 V auxiliary and fan are DVC A with protective separation from all DVC C circuits; the control ground is bonded to PE at one point (PELV), which makes PC-connected debuggers safe and removes the \"earthed DVC A outside an equipotential zone\" case of 4.3.4.2 [V]. The external 12 V supply must itself be a safety-isolated SELV/PELV source (reinforced from mains, limited power); its connector is SELV-only and must not be routable to any HV net. Every barrier crosser is reinforced-rated for >= 440 V DC working voltage (KR-SN-001): UCC21710-Q1 (5.7 kVrms, 1.5 kVrms working, > 8 mm) and AMC1311 (7 kVpk, 1500 Vrms working) satisfy it with datasheet evidence; TMCS1133 (950 Vrms / 1343 V DC reinforced working, >= 8 mm) satisfies it; the per-channel bias modules (RECOM R12P2 series: 6.4 kVDC isolation, reinforced working-voltage rating not found) and the input relay coil-to-contact insulation are human-review items. Heatsink and chassis are PE-bonded class I parts; both TO-247-4 devices sit on rated insulating pads (KR-TH-002; TIDA-010054 decision 9 pattern) with breakdown >= 4 kV AC, and the heatsink body keeps 5.0 mm / 3.0 mm (creepage / clearance) from all HV copper and pins. PGND is not hard-bonded to PE because the source earthing is unknown; a configurable link, a high-impedance reference (2 x 1 MOhm, 500 V-rated) and optional Y2 capacitors (<= 10 nF per rail, 300 Vac Y2 with DC rating >= 1 kV [S]) are provided. With DC supply the Y-capacitor current is only switching ripple: 10 nF with 2 Vpp at 50 kHz gives 1.8 mA unweighted, below the customary 3.5 mA touch-current limit [U]; the capacitors bridge HV to PE (basic), so Y2 is sufficient and Y1 is not needed.\n\n## 7. Safe start-up / shutdown, test interface, protective coordination\n\nSequence: 12 V aux on -> DSP boot with PWM pins forced low -> driver UVLO/RDY good -> input relay or precharge closes (inrush into the DC link from a stiff bus must be limited by precharge or by the laboratory supply's current limit, A7) -> bus within UVLO window (340 V start / 320 V stop) -> soft-start duty ramp -> run. Shutdown: PWM off, relay open, discharge, LED indicators dark before any contact. Interlocks: gate-driver FAULT/RDY wired to the ePWM trip zone, OVP 460 V and overcurrent comparators to the trip zone, over-temperature and fan-tach to the trip zone or a slow shutdown, an SELV emergency-stop/enable input, hardware driver interlock as last barrier (KR-GD-009), gate-source discharge resistors so an unpowered driver cannot float the gate (KR-GD-007). Test interface: HV probing only with isolated differential probes rated >= 1000 V CAT II; HV test points as recessed 4 mm safety sockets or probe loops >= 9.0 mm from any SELV copper; V_GS points at the device side of R_G (SKILL-002 procedure 8) are for isolated probes only; oscilloscope grounds only on the SELV side. Protective coordination (KR-PR-001, KR-SN-005): the DESAT/overcurrent path (blanking + detection + soft turn-off) must be shorter than the selected device's short-circuit withstand time, typically a few microseconds for 1200 V SiC (device-specific, from the datasheet); the DSP trip zone acts within a switching period; firmware limits act over milliseconds; the input fuse acts last. A fuse cannot protect the MOSFET: a 200 A / 2 us event is 0.08 A^2s, orders of magnitude below any 20 A fuse melting I^2t (KLKD020 value not found); the fuse protects wiring, board copper and capacitors. Input fuse: I_in = 5000 / (360 x 0.98) = 14.2 A, 15.6 A at 110 % overload; Littelfuse KLKD020 (20 A, 600 Vac/dc, fast-acting, 100 kA AC and 10 kA DC per UL 248-19 or 50 kA DC per UL 248-14 [S]) gives 20 x 0.8 = 16 A continuous application (0.8 factor A8) and a DC interrupting rating above any laboratory or DC-bus prospective current.\n\n## 8. PCB manufacturing constraints and copper sizing\n\nStandard pooled 70 um (2 oz) fabrication (capabilities [S], confirm with the fabricator): minimum track/space 0.20 mm on 2 oz outer layers, 0.25 mm recommended for yield; solder-mask dam >= 0.15 mm at 2 oz (0.10 mm is a typical absolute minimum), mask expansion 0.05 mm; minimum drill 0.3 mm (seed), annular ring >= 0.20 mm at 2 oz; plated slots >= 0.5-0.6 mm wide, non-plated routed slots >= 0.8-1.0 mm; via plating 25 um nominal (IPC-6012 class 2 average >= 20 um); 1.6 mm board (2.0 mm acceptable for a 4-layer 2 oz stack); copper-to-edge >= 0.5 mm (HV: see Section 4).\n\nCurrent capacity, IPC-2221 formula I = k * dT^0.44 * A^0.725 (A in mil^2, k = 0.048 external / 0.024 internal [S]), dT = 20 K, 70 um copper: 25 A -> 0.585 mm^2 = 8.4 mm external, 1.52 mm^2 = 21.7 mm internal; 12.5 A -> 0.225 mm^2 = 3.2 mm external, 0.585 mm^2 = 8.4 mm internal; 27.5 A (10 s overload) -> 9.5 mm external, with a steady-state rise of (27.5/25)^2 x 20 = 24 K that the 10 s event does not reach. IPC-2152 chart values were not obtained [U]; IPC-2152 shows the IPC-2221 internal derating to be overly pessimistic, so the IPC-2221 widths are a conservative basis. Design: VIN+, PGND, SW and VOUT+ carried as >= 10 mm wide pours on the outer layers and repeated on inner layers so that each inner pour carries <= 12.5 A (>= 8.4 mm), paralleled with via arrays (KR-PCB-006; PE-PCB-006; TIDA-010054 decision 10 pattern). Via method: 0.5 mm finished hole with 25 um plating -> barrel area pi x (0.5 + 0.025) x 0.025 = 0.0412 mm^2 (64 mil^2, equivalent to a 0.59 mm wide 70 um trace), R = 1.72e-8 x 1.6e-3 / 4.12e-8 = 0.67 mOhm per via, 1.8 A per via with the internal constant (3.7 A external); 25 A -> 14 vias, 21 with a 1.5x margin (e.g. 3 x 7 at 1.0 mm pitch, 0.032 mOhm, 0.02 W); 0.3 mm vias carry 1.3 A each. DRC proxy: >= 1 via per 1.5 A of layer-transfer current.\n\n## 9. Verification summary\n\nAnalytically checked: working-voltage table (Section 2); impulse/clearance/creepage derivation against the verified 61800-5-1 text; IPC-2221 widths; via resistance and current; bleeder resistance, power and stored energy; fuse current margins; Y-capacitor ripple current; interpolation of Table 10 at 440 V.\nSecondary-source or unverified: IPC-2221B Table 6-1 values; IPC-2152 chart values (not obtained); IEC 62477-1 clause numbers and wording; UL 840 and IEC 62368-1 cross-references; 3.5 mA touch-current limit; fabricator capability figures; KLKD020 datasheet (I^2t not found), PR02 element voltage, TDK B32021 DC rating, Sil-Pad 2000 breakdown (search-snippet level).\nHuman review required: choice between the strict 9.0-10.0 mm and the standard-minimum 5.5 mm reinforced gap (board area); impulse basis 4 kV versus 2.5 kV depending on the real source; the 1.6 x TOV case (6.4 mm) if the source is deemed mains-connected; bias-module and relay reinforced ratings at 440 V DC (KR-SN-001); discharge strategy (passive 60 s + label versus active 5 s) once the capacitor agent fixes C; PGND-to-PE reference and Y-capacitor use; IPXXB terminal protection and enclosure; insulating-pad part number and breakdown at the chosen thickness (KR-TH-002); all DRC values before release.\n"
+}

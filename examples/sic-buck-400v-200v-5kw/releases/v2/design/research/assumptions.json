@@ -1,0 +1,974 @@
+{
+  "decision_area": "Assumptions register and requirements separation (design/assumptions.md body) for the 400 V -> 200 V, 5 kW, 50 kHz SiC synchronous buck (V2)",
+  "knowledge_queries": [
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"ambient temperature assumption cooling airflow derating thermal design\" --json --limit 8",
+      "top_hits": [
+        "SKILL-006",
+        "KR-TH-003",
+        "REF-TI-TIDA-010054",
+        "KR-TH-001",
+        "SKILL-003",
+        "KR-GD-004",
+        "KR-TH-002",
+        "CMP-B32716H1156K000"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"input voltage range DC bus overvoltage transient surge UVLO\" --json --limit 8",
+      "top_hits": [
+        "CMP-TPS2640",
+        "CMP-AMC1311",
+        "KR-PR-003",
+        "KR-SN-002",
+        "CB-PR-001",
+        "CB-SN-001",
+        "CMP-AMC1336",
+        "CB-SN-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"output voltage ripple capacitor load transient\" --json --limit 8  (first attempt with a longer phrasing crashed with a cp1252 console UnicodeEncodeError in query.py; rerun with PYTHONIOENCODING=utf-8)",
+      "top_hits": [
+        "SKILL-003",
+        "REF-TI-TIDA-010054",
+        "CMP-B32716H8306K000",
+        "CB-IS-004",
+        "REF-WS-CGD15SG00D2",
+        "CMP-UCC25800-Q1",
+        "KR-CAP-001",
+        "CMP-UCC14141-Q1"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"inductor ripple current saturation margin peak current\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003",
+        "CMP-B32716H1156K000",
+        "KR-CAP-004",
+        "KR-GD-005",
+        "KR-CAP-002",
+        "KR-CAP-001",
+        "KR-GD-011",
+        "REF-WS-CGD15SG00D2"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"efficiency target junction temperature heatsink forced air\" --json --limit 8",
+      "top_hits": [
+        "SKILL-006",
+        "REF-TI-TIDA-010054",
+        "KR-TH-003",
+        "KR-TH-001",
+        "SKILL-004",
+        "KR-ISO-004",
+        "KR-TH-002",
+        "SKILL-003"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"PCB manufacturing copper thickness clearance creepage track width\" --json --limit 8",
+      "top_hits": [
+        "SKILL-002",
+        "KR-ISO-002",
+        "KR-ISO-004",
+        "REF-WS-CGD1700HB2M-UNA",
+        "REF-TI-TIDA-010054",
+        "SKILL-003",
+        "SKILL-006",
+        "REF-WS-CGD15SG00D2"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"SELV isolation control domain isolated signal crossing\" --json --limit 8",
+      "top_hits": [
+        "KR-ISO-001",
+        "CB-GD-001",
+        "CB-SN-004",
+        "KR-SN-001",
+        "CB-IS-002",
+        "CB-SN-001",
+        "CB-PR-002",
+        "CB-GD-003"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"test commissioning low voltage bring-up protection fault\" --json --limit 8",
+      "top_hits": [
+        "SKILL-005",
+        "KR-PR-002",
+        "CMP-UCC21710-Q1",
+        "SKILL-001",
+        "KR-SN-002",
+        "CMP-750319177",
+        "REF-WS-CGD1700HB2M-UNA",
+        "CB-GD-001"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"DC-link capacitor voltage derating lifetime hot spot\" --json --limit 8  (PYTHONIOENCODING=utf-8)",
+      "top_hits": [
+        "SKILL-003",
+        "CMP-B32716H1156K000",
+        "REF-TI-TIDA-010054",
+        "KR-CAP-001",
+        "CMP-GCM31CR71C106KA64L",
+        "CMP-B32716H8306K000",
+        "CMP-CGA9P1X7T2J474M250KC",
+        "KR-CAP-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"gate driver design SiC discrete TO-247 Kelvin source\" --json --limit 8",
+      "top_hits": [
+        "SKILL-001",
+        "KR-GD-010",
+        "CMP-R12P21503D",
+        "REF-WS-PRD-04814",
+        "KR-PCB-001",
+        "KR-PCB-003",
+        "CB-GD-002",
+        "SKILL-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query \"ambient temperature room ambient only warning thermal design reference\" --json --limit 8",
+      "top_hits": [
+        "SKILL-006",
+        "KR-TH-001",
+        "REF-TI-TIDA-010054",
+        "KR-TH-003",
+        "SKILL-001",
+        "KR-GD-004",
+        "SKILL-004",
+        "SKILL-003"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get SKILL-006 --json",
+      "top_hits": [
+        "related: CB-PR-002",
+        "KR-TH-001",
+        "KR-TH-002",
+        "KR-TH-003",
+        "KR-PCB-005",
+        "SKILL-002"
+      ]
+    },
+    {
+      "command": "cd \"D:/Cursor Workspace/AIPE-PCB-Agent\" && python -m automation.knowledge.query --get KR-TH-001 --json ; --get KR-CAP-003 --json ; --get KR-PCB-006 --json ; --get CB-PR-001 --json ; --get KR-SN-005 --json",
+      "top_hits": [
+        "KR-TH-001 -> SKILL-006",
+        "KR-CAP-003 -> PE-PCB-002, PE-PCB-003, SKILL-002, SKILL-003",
+        "KR-PCB-006 -> PE-PCB-006",
+        "CB-PR-001 -> CMP-TPS2640, KR-PR-003, SKILL-004",
+        "KR-SN-005 -> CB-SN-004, CB-GD-001, KR-PR-001"
+      ]
+    },
+    {
+      "command": "Read: knowledge/skills/*/SKILL-001..006 .md, knowledge/references/{ti/tida-010054,wolfspeed/cgd15sg00d2,wolfspeed/cgd1700hb2m-una,wolfspeed/prd-04814}/analysis.md, knowledge/rules/engineering_rules.json (43 rules), knowledge/verification/evidence-checks.json (EC-003, EC-012, EC-014, EC-019, EC-020), docs/pcb-design-rules.md (PE-PCB-001..008), examples/buck-48v-24v-1kw/design/{assumptions,architecture,thermal_estimate,firmware_interface}.md, examples/sic-buck-400v-200v-5kw/input/requirements.yaml",
+      "top_hits": [
+        "SKILL-006 known limitations (40 degC model, room-ambient warning)",
+        "REF-TI-TIDA-010054 decisions 1, 8, 9, 10",
+        "REF-WS-CGD15SG00D2 decision 7",
+        "REF-WS-CGD1700HB2M-UNA decision 4",
+        "REF-WS-PRD-04814 decision 1"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "applicability": "adapted",
+      "reference_design": "REF-TI-TIDA-010054",
+      "how_applied": "Thermal-budget method P_max = (T_J,max - T_A)/(R_thJC + R_iso + 2 R_hs) reused with ambient raised from TI's 40 degC to 50 degC and a parametric pad resistance (0.1-0.5 K/W); TI's warning that TIDA-010054 is intended for room ambient only drives the explicit 50 degC verification point (A-18) and the chamber/extrapolation item in the test approach (A-37). Fan airflow/aux-rail consideration drives A-19/A-22."
+    },
+    {
+      "id": "KR-TH-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "P_max sensitivity 57.3 W -> 52.1 W per device when T_A goes from 40 to 50 degC (R_thJC 0.42, R_iso 0.5, R_hs 0.5 K/W, parametric); basis for accepting the 50 degC ambient seed with a 9 % budget penalty."
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Both TO-247-4 devices on one shared heat sink with a rated insulating pad (A-16); pad resistance carried in the thermal budget; pad voltage rating is a human-review item."
+    },
+    {
+      "id": "KR-TH-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Firmware scope A-34: NTC/heat-sink temperature is cooling supervision, not junction protection; fan-failure detection flagged (A-19)."
+    },
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "direct",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "how_applied": "Principle 1 (isolate every position) and principle 2 (Kelvin-source reference) define the SELV isolation concept A-21 and the one-TO-247-4-per-position arrangement A-16; principle 3 / KR-GD-001 make the selected device datasheet, not PRD-04814 numbers, govern gate levels (A-17)."
+    },
+    {
+      "id": "KR-GD-005",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "A synchronous buck is a half bridge with complementary switching, so the negative turn-off recommendation applies even though PRD-04814 lists the buck among single-ended topologies where 0 V may be used; decision handed to the gate-driver agent (A-17)."
+    },
+    {
+      "id": "KR-GD-009",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Dead time is generated by the F28335 dead-band module (initial 200 ns, 2 % of period, about 2.2 W body-diode loss at 27.5 A); the interlock is only a last barrier; both-inputs-high test is in A-37."
+    },
+    {
+      "id": "KR-GD-004",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "DESAT trip must stay above the corrected 31.6 A overload peak over temperature; reference values (6.4 V/1 us, 6.7 V/46 ns) are not copied; derivation and measurement are surfaced for the gate-driver agent and reviewer (A-10, A-15)."
+    },
+    {
+      "id": "KR-GD-008",
+      "type": "rule",
+      "applicability": "adapted",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA",
+      "how_applied": "Applicability depends on the board partition: differential PWM/fault (CB-GD-003) if drivers and controller are on separate boards, buffered single-ended with RC filters on one board (rule exclusion). Register A-21 is written to be compatible with both outcomes."
+    },
+    {
+      "id": "SKILL-003",
+      "type": "skill",
+      "applicability": "adapted",
+      "reference_design": "REF-TI-TIDA-010054",
+      "how_applied": "The skill excludes inductor-defined output filters, so the output ripple requirement A-09 uses C >= dI_L/(8 fs dV) and ESR <= dV/dI_L instead of the dQ method; the dQ method (KR-CAP-001) is noted as applicable to the pulsed buck input current for the capacitor agent; principle 4 (TI states no derating rule) is cited for A-04."
+    },
+    {
+      "id": "KR-CAP-001",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "Applies to the input DC-link (pulsed current, I_Cin,rms 12.4-13.75 A); not used for the output filter."
+    },
+    {
+      "id": "KR-CAP-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Output capacitor RMS current dI_L/sqrt(12) = 2.4 A and input capacitor RMS 12.4-13.75 A must be within rating at 50 kHz and the hot-spot temperature assumed in A-29."
+    },
+    {
+      "id": "KR-CAP-003",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Two-tier film plus local HV ceramics recorded as the layout assumption behind the EMC scope (A-28) and the PE-PCB-002/003 constraints."
+    },
+    {
+      "id": "KR-CAP-004",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "No transformer; no DC-blocking capacitor."
+    },
+    {
+      "id": "KR-PE-001",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "Phase-shift/DAB soft-switching boundary does not exist in a hard-switched buck."
+    },
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "applicability": "adapted",
+      "reference_design": "REF-WS-PRD-04814",
+      "how_applied": "Gate-power budget (KR-IS-001) evaluated for 118 nC, 19 V, 50 kHz = 0.11 W per device; module quiescent power dominates the 12 V budget (A-22). KR-IS-003/KR-IS-002 define the EMI-aware scope A-28. KR-IS-004 (bias sharing) is a human-review item for the gate-driver agent."
+    },
+    {
+      "id": "KR-IS-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Q_G * fs * (V_DD - V_EE) computed; shows gate power is negligible in the auxiliary budget."
+    },
+    {
+      "id": "KR-PR-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Protection scope A-35: hardware short-circuit protection per switch is required because this is a complete prototype, not an evaluation fixture (rule exclusion does not apply)."
+    },
+    {
+      "id": "KR-PR-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Latched combined fault with UVLO lock-out required (A-35); converter-level UVLO ladder A-02 uses the same lock-out logic."
+    },
+    {
+      "id": "KR-PR-003",
+      "type": "rule",
+      "applicability": "direct",
+      "reference_design": "REF-TI-TIDA-010054",
+      "how_applied": "Auxiliary 12 V input must be protected (reverse polarity, OVP, UVLO consistent with bias-converter input range) - A-22; CB-PR-001 pattern cited, part choice left to the auxiliary agent (CMP-TPS2640 unverified here)."
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "applicability": "adapted",
+      "reference_design": "REF-TI-TIDA-010054",
+      "how_applied": "KR-SN-001 and KR-SN-002 applied directly (isolation rating, divider headroom >= 1.1 x 480 V input, >= 1.25 x 200 V output); KR-SN-003 not applicable because the F28335 has no SDFM; KR-SN-005 fast hardware OC path required; Lab 2 stepwise commissioning practice shapes A-37."
+    },
+    {
+      "id": "KR-SN-003",
+      "type": "rule",
+      "applicability": "not-applicable",
+      "how_applied": "Delta-sigma bitstream sensing needs an SDFM peripheral; the TMS320F28335 has none, so analog isolated amplifiers / Hall sensors to the ADC are assumed."
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "applicability": "direct",
+      "how_applied": "PCB constraints hand-off: isolation keep-outs on all layers (KR-ISO-001), net classes (KR-ISO-003), slots >= 1 mm (KR-ISO-004), V_GS probe points (KR-PCB-005) recorded in A-33/A-37 and pcb_constraints."
+    },
+    {
+      "id": "KR-ISO-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Environmental inputs for the standards agent fixed: CTI >= 175 V (group IIIa, Isola 370HR class 3 verified), pollution degree 2, altitude <= 2000 m, OVC II (A-25..A-27, A-30)."
+    },
+    {
+      "id": "KR-PCB-006",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "70 um copper on every power-board layer with paralleled pours and via arrays (A-31); PE-PCB-006 evidence requirement noted."
+    },
+    {
+      "id": "PE-PCB-001..008",
+      "type": "project_rule",
+      "applicability": "direct",
+      "how_applied": "EMI-aware layout scope A-28 and the control/power separation assumptions reference the project rules; acceptance evidence remains human review per docs/pcb-design-rules.md."
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 1: 700-800 V operating window compared with the +/-10 % seed; decision 8: 12 V aux protection pattern; decision 9: 40 degC thermal model and room-ambient warning; decision 10: 300 x 180 mm at 10 kW as a size benchmark for the mechanical envelope. Instance values (2 ohm, 6.4 V/1 us, 45/70 A, 60 uF) explicitly not copied."
+    },
+    {
+      "id": "REF-WS-PRD-04814",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 1 gate-level guidance (+15 V, -3 to -4 V, maxima +19/-8 V) cited as method; the selected device datasheet governs (KR-GD-001); its single-ended 0 V note is overridden by the half-bridge nature of the synchronous buck (KR-GD-005)."
+    },
+    {
+      "id": "REF-WS-CGD15SG00D2",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 7 observed PCB practice (Tg >= 170 degC, ENIG, 1 mm non-plated slots) supports the laminate and slot assumptions A-30/A-33; its 8 mm creepage is not generalised."
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 4 differential signalling with fail-safe polarity and interlock becomes a conditional requirement if the architecture agent separates driver and control boards (A-21); decision 2 DESAT values not copied."
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "370HR",
+      "manufacturer": "Isola Group",
+      "key_parameters": {
+        "Tg_DSC_degC": 180,
+        "Td_TGA_5pct_degC": 340,
+        "CTI": "class 3 (175-249 V), UL 746A / ASTM D3638",
+        "material_group": "IIIa",
+        "UL94": "V-0",
+        "UL_file": "E41625 (grade PCL-FR-370HR)",
+        "IPC_4101": "/98 /99 /101 /126",
+        "role": "reference laminate grade for A-30 (fabricator equivalent with same CTI class acceptable)"
+      },
+      "datasheet_url": "https://www.isola-group.com/wp-content/uploads/data-sheets/370hr.pdf",
+      "datasheet_revision": "Laminate data sheet Rev E (6/24) per manufacturer product page https://isola-group.com/products/all-printed-circuit-materials/370hr; PDF itself not parseable on this host",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Meets the seed (Tg >= 150 degC, CTI >= 175 V, group IIIa) with margin; widely stocked by pooled fabricators. Recommended as the reference grade; any FR4 with CTI class 3 or better and Tg >= 150 degC is acceptable."
+    },
+    {
+      "part_number": "AFB0812SH",
+      "manufacturer": "Delta Electronics",
+      "key_parameters": {
+        "rated_voltage_V": 12,
+        "rated_current_A": 0.34,
+        "input_power_W": 4.08,
+        "speed_rpm": "4500 (Delta page) / 4000 (distributor listings) - discrepancy",
+        "airflow": "46.6 CFM = 1.30 m3/min (distributor listings)",
+        "static_pressure_Pa": "66.5 (distributor listings)",
+        "size_mm": "80 x 80 x 25.4",
+        "bearing": "ball",
+        "free_stream_velocity_m_s": "3.4 (1.30 m3/min over 80 x 80 mm)"
+      },
+      "datasheet_url": "https://www.delta-fan.com/Download/Spec/AFB0812SH.pdf",
+      "datasheet_revision": "not found (PDF not readable by the fetcher)",
+      "parameter_verification": "search-snippet",
+      "assessment": "Representative fan class for the >= 2 m/s seed: 0.34 A fits the <= 0.5 A fan budget inside the 2 A auxiliary limit; 2 m/s through a finned heat sink is achievable only with modest back-pressure, so the thermal agent must check static pressure at the real heat-sink impedance or use two fans. Not a selection."
+    },
+    {
+      "part_number": "C3M0032120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_V": 1200,
+        "R_DSon_nominal_mohm_25C": 32,
+        "R_DSon_max_mohm_25C": "43 at 40 A / 15 V (distributor snippet)",
+        "R_DSon_150C": "not found",
+        "I_D_A": 63,
+        "T_J_max_degC": 175,
+        "Q_G_nC": "118 at 15 V (distributor snippet)",
+        "E_on_E_off_uJ": "367 / 123 with external diode, 955 / 107 with body diode, at 800 V, 40 A, R_G 2.5 ohm, 175 degC (snippet)",
+        "R_thJC_K_W": "not found",
+        "package": "TO-247-4 (Kelvin source)",
+        "status": "active, orderable"
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0032120K_data_sheet.pdf",
+      "datasheet_revision": "last updated 09/2024 per product page; PDF not parseable on this host",
+      "parameter_verification": "manufacturer-page",
+      "assessment": "Used only as a sanity-check device for the efficiency and thermal seeds (conduction 27 W cold / about 43 W hot for both devices, switching about 15-17 W scaled from 800 V / 40 A, giving 98.1-98.3 % plausibility). Device selection and parameter verification belong to the semiconductor agent; R_thJC must be verified before the thermal budget is finalised."
+    },
+    {
+      "part_number": "TPS2640",
+      "manufacturer": "Texas Instruments",
+      "key_parameters": {
+        "role": "auxiliary 12 V input protection pattern (eFuse: reverse polarity, OVP, UVLO, current limit) behind KR-PR-003 / CB-PR-001",
+        "knowledge_record": "CMP-TPS2640"
+      },
+      "datasheet_url": "not found (not fetched in this task)",
+      "datasheet_revision": "not found",
+      "parameter_verification": "unverified",
+      "assessment": "Named only because the knowledge base holds it as the CB-PR-001 component record; threshold choice and verification are the auxiliary-supply agent's task."
+    }
+  ],
+  "selection": {
+    "register_classes": [
+      "USER REQUIREMENT (U)",
+      "AGENT-SELECTED ASSUMPTION (S, S* = corrected seed)",
+      "AGENT-DERIVED VALUE (D)",
+      "HUMAN REVIEW (H)"
+    ],
+    "user_requirements": {
+      "topology": "non-isolated synchronous buck, common PGND",
+      "Vin_nom_V": 400,
+      "Vout_V": 200,
+      "Pout_W": 5000,
+      "Iout_A": 25,
+      "fs_Hz": 50000,
+      "semiconductor": "Wolfspeed SiC MOSFET",
+      "controller": "TMS320F28335",
+      "cad": "KiCad",
+      "out_of_scope": "fabrication, purchasing, energisation, firmware implementation"
+    },
+    "accepted_seeds": {
+      "Vin_range_V": "360-440",
+      "UVLO_V": "start 340 / stop 320",
+      "OVP_V": 460,
+      "survival": "480 V / 100 ms inhibited",
+      "Vout_tolerance": "+/-1 %",
+      "Vout_ripple": "<= 2.0 Vpp (non-binding in practice)",
+      "overload": "27.5 A / 10 s",
+      "load_step": "12.5 A, <= +/-10 V, <= 5 ms",
+      "ripple_target": "30 % at 400 V (26.6-32.7 % over range)",
+      "L_uH": "267 ideal, 220-300 acceptable",
+      "ambient": "0-50 degC, verify at 50 degC",
+      "T_J_limit_degC": 150,
+      "cooling": ">= 2 m/s forced air, shared insulated heat sink",
+      "aux": "12 V +/-10 %, <= 2 A SELV",
+      "isolation": "SELV control domain, rated isolators on every crossing",
+      "pcb": "FR4 Tg >= 150, CTI >= 175 (IIIa), ENIG; power 2-4 L 70 um; control 4 L 35 um; 0.2/0.15 mm; 0.3 mm drill"
+    },
+    "corrections_to_seeds": {
+      "A-15 overload peak": "31.6 A at Vin = 440 V / 27.5 A (seed 31.3 A at 400 V); I_sat >= 41.1 A -> >= 42 A at operating temperature with the actual inductance",
+      "A-20 efficiency": ">= 98 % kept as target; 97.5 % minimum acceptance added (102 W vs 128 W loss budget)",
+      "A-19 fan": "fan current capped at 0.5 A so the auxiliary budget stays <= 1.93 A at 10.8 V",
+      "A-33 features": "0.25 mm track/space preferred on 70 um layers; 0.2 mm only with fabricator confirmation"
+    },
+    "added_assumptions": "A-05 source 16-30 A current limit and ramp; A-06 no inrush limiter baseline, precharge optional; A-07 unidirectional power; A-12 load type; A-17 dead time 200 ns initial; A-23 PE/grounding; A-24 open-frame envelope <= 300 x 250 x 80 mm; A-25 altitude <= 2000 m; A-26 PD2, 5-85 % RH; A-27 OVC II; A-28 EMC scope; A-29 lifetime; A-34..A-40 firmware/protection/sensing/test/scope rules",
+    "operating_points": [
+      {
+        "Vin_V": 360,
+        "D": 0.556,
+        "Iin_ideal_A": [
+          13.89,
+          15.28
+        ],
+        "Iin_98pct_A": [
+          14.17,
+          15.59
+        ],
+        "dI_L_A": 6.66,
+        "I_pk_A": [
+          28.33,
+          30.83
+        ]
+      },
+      {
+        "Vin_V": 400,
+        "D": 0.5,
+        "Iin_ideal_A": [
+          12.5,
+          13.75
+        ],
+        "Iin_98pct_A": [
+          12.76,
+          14.03
+        ],
+        "dI_L_A": 7.49,
+        "I_pk_A": [
+          28.75,
+          31.25
+        ]
+      },
+      {
+        "Vin_V": 440,
+        "D": 0.455,
+        "Iin_ideal_A": [
+          11.36,
+          12.5
+        ],
+        "Iin_98pct_A": [
+          11.6,
+          12.76
+        ],
+        "dI_L_A": 8.17,
+        "I_pk_A": [
+          29.09,
+          31.59
+        ]
+      }
+    ],
+    "operating_points_note": "pairs are [Io = 25 A, Io = 27.5 A]; L = 267 uH, fs = 50 kHz"
+  },
+  "calculations": [
+    {
+      "name": "Duty cycle",
+      "expression": "D = Vout / Vin",
+      "inputs": {
+        "Vout_V": 200,
+        "Vin_V": [
+          360,
+          400,
+          440
+        ]
+      },
+      "result": "0.556 / 0.500 / 0.455",
+      "knowledge_ref": "ideal CCM buck"
+    },
+    {
+      "name": "Input current",
+      "expression": "Iin = Pout / (eta * Vin)",
+      "inputs": {
+        "Pout_W": [
+          5000,
+          5500
+        ],
+        "eta": [
+          1.0,
+          0.98
+        ],
+        "Vin_V": [
+          360,
+          400,
+          440
+        ]
+      },
+      "result": "eta = 1: 13.89 / 12.50 / 11.36 A (25 A) and 15.28 / 13.75 / 12.50 A (27.5 A); eta = 0.98: 14.17 / 12.76 / 11.60 A and 15.59 / 14.03 / 12.76 A",
+      "knowledge_ref": "A-05 source limit"
+    },
+    {
+      "name": "Inductor ripple",
+      "expression": "dI_L = Vout * (1 - D) / (L * fs)",
+      "inputs": {
+        "Vout_V": 200,
+        "D": [
+          0.556,
+          0.5,
+          0.455
+        ],
+        "L_H": 0.000267,
+        "fs_Hz": 50000
+      },
+      "result": "6.66 / 7.49 / 8.17 A = 26.6 / 30.0 / 32.7 % of 25 A",
+      "knowledge_ref": "A-13, A-14"
+    },
+    {
+      "name": "Peak inductor current",
+      "expression": "I_pk = Io + dI_L / 2",
+      "inputs": {
+        "Io_A": [
+          25,
+          27.5
+        ],
+        "dI_L_A": [
+          6.66,
+          7.49,
+          8.17
+        ]
+      },
+      "result": "25 A: 28.33 / 28.75 / 29.09 A; 27.5 A: 30.83 / 31.25 / 31.59 A (worst 31.59 A at 440 V)",
+      "knowledge_ref": "A-15 (seed corrected)"
+    },
+    {
+      "name": "Saturation requirement",
+      "expression": "I_sat >= 1.3 * I_pk,worst",
+      "inputs": {
+        "I_pk_worst_A": 31.59
+      },
+      "result": ">= 41.1 A (>= 42 A rounded; 42.2 A if L = 220 uH gives 32.46 A peak)",
+      "knowledge_ref": "A-15"
+    },
+    {
+      "name": "Inductor and switch RMS currents",
+      "expression": "I_L,rms = sqrt(Io^2 + dI^2/12); I_HS,rms = sqrt(D) * I_L,rms; I_LS,rms = sqrt(1 - D) * I_L,rms",
+      "inputs": {
+        "Io_A": [
+          25,
+          27.5
+        ],
+        "dI_A": [
+          6.66,
+          7.49,
+          8.17
+        ],
+        "D": [
+          0.556,
+          0.5,
+          0.455
+        ]
+      },
+      "result": "I_L,rms 25.07-25.11 A (25 A), 27.57-27.60 A (27.5 A); I_HS,rms 18.7 / 17.7 / 16.9 A and 20.6 / 19.5 / 18.6 A; I_LS,rms 16.7 / 17.7 / 18.6 A and 18.4 / 19.5 / 20.4 A",
+      "knowledge_ref": "SKILL-006 principle 3 (loss estimates first)"
+    },
+    {
+      "name": "Input capacitor RMS current",
+      "expression": "I_Cin,rms = Io * sqrt(D * (1 - D))",
+      "inputs": {
+        "Io_A": [
+          25,
+          27.5
+        ],
+        "D": [
+          0.556,
+          0.5,
+          0.455
+        ]
+      },
+      "result": "12.42 / 12.50 / 12.45 A (25 A); 13.66 / 13.75 / 13.69 A (27.5 A)",
+      "knowledge_ref": "KR-CAP-002 (direct), KR-CAP-001 (adapted)"
+    },
+    {
+      "name": "Output capacitance for ripple",
+      "expression": "C >= dI_L / (8 * fs * dV); ESR <= dV / dI_L",
+      "inputs": {
+        "dI_L_A": 8.17,
+        "fs_Hz": 50000,
+        "dV_Vpp": 2.0
+      },
+      "result": "C >= 10.2 uF; ESR <= 0.245 ohm; with 47 uF the capacitive ripple is 0.44 Vpp (0.22 %)",
+      "knowledge_ref": "A-09 (SKILL-003 scope exclusion -> buck ripple equation)"
+    },
+    {
+      "name": "Output capacitance for load transient",
+      "expression": "C >= dI_step / (2 * pi * f_c * dV_max); dQ_slew = 0.5 * dI_step * L * dI_step / (Vin - Vout)",
+      "inputs": {
+        "dI_step_A": 12.5,
+        "dV_max_V": 10,
+        "f_c_Hz": [
+          1000,
+          2000,
+          5000
+        ],
+        "L_H": 0.000267,
+        "Vin_V": [
+          360,
+          440
+        ],
+        "Vout_V": 200
+      },
+      "result": "C >= 199 / 99.5 / 39.8 uF for f_c = 1 / 2 / 5 kHz; inductor slew deficit 87-130 uC (step-up) and 104 uC (step-down) -> <= 1.3 V at 100 uF, so the controller bandwidth dominates",
+      "knowledge_ref": "A-11"
+    },
+    {
+      "name": "Efficiency loss budget",
+      "expression": "P_loss = Pout * (1/eta - 1)",
+      "inputs": {
+        "Pout_W": 5000,
+        "eta": [
+          0.97,
+          0.98,
+          0.985
+        ]
+      },
+      "result": "154.6 / 102.0 / 76.1 W",
+      "knowledge_ref": "A-20"
+    },
+    {
+      "name": "Efficiency plausibility (sanity-check device, snippet-level data)",
+      "expression": "P_cond = 2 * I_rms^2 * R_DS(on); P_sw = (E_on + E_off) * (Vds/800) * (Id/40) * fs",
+      "inputs": {
+        "I_rms_A": 17.7,
+        "R_DSon_ohm": "0.043 (25 degC max, snippet); hot factor ~1.6 assumed, unverified",
+        "E_on_E_off_uJ": "955 + 107 (body-diode case, 800 V / 40 A, snippet)",
+        "Vds_V": 400,
+        "Id_A": 25,
+        "fs_Hz": 50000
+      },
+      "result": "P_cond 27 W cold / ~43 W hot; P_sw ~16.6 W; inductor 20-25 W; other ~5 W; total 85-95 W -> 98.1-98.3 %: target plausible with no margin, hence the 97.5 % floor",
+      "knowledge_ref": "A-20; SKILL-006 principle 3"
+    },
+    {
+      "name": "Thermal path limit",
+      "expression": "P_max = (T_J,lim - T_A) / (R_thJC + R_iso + 2 * R_hs)",
+      "inputs": {
+        "T_J_lim_degC": 150,
+        "T_A_degC": [
+          40,
+          50
+        ],
+        "R_thJC_K_W": "0.42 (assumed, not verified) and 1.1 (TI EC-019 value)",
+        "R_iso_K_W": [
+          0.1,
+          0.5
+        ],
+        "R_hs_K_W": 0.5
+      },
+      "result": "R_thJC 0.42, R_iso 0.5: 57.3 W at 40 degC -> 52.1 W at 50 degC (-9 %); R_thJC 1.1, R_iso 0.1: 50.0 W (TI EC-019) -> 45.5 W",
+      "knowledge_ref": "KR-TH-001; SKILL-006 principle 1; EC-019/EC-020"
+    },
+    {
+      "name": "UVLO / OVP / survival margins",
+      "expression": "margin = (V_ref - V_threshold) / V_ref",
+      "inputs": {
+        "Vin_min_V": 360,
+        "UVLO_stop_V": 320,
+        "UVLO_start_V": 340,
+        "Vin_max_V": 440,
+        "OVP_V": 460,
+        "survival_V": 480
+      },
+      "result": "UVLO stop 40 V (11.1 %) below Vin,min; start 20 V below Vin,min; OVP 4.5 % above Vin,max; survival 4.3 % above OVP; 480 V = 74 / 53 / 40 % of 650 / 900 / 1200 V",
+      "knowledge_ref": "A-02..A-04; KR-SN-002"
+    },
+    {
+      "name": "Input capacitor inrush",
+      "expression": "E = 0.5 * C_in * V^2; t_charge = C_in * V / I_lim",
+      "inputs": {
+        "C_in_F": [
+          2e-05,
+          4e-05,
+          6e-05
+        ],
+        "V_V": [
+          400,
+          480
+        ],
+        "I_lim_A": [
+          5,
+          15
+        ]
+      },
+      "result": "1.6-6.9 J; 1.07-4.8 ms at 5 A (400 V) and 0.53-1.6 ms at 15 A",
+      "knowledge_ref": "A-05, A-06"
+    },
+    {
+      "name": "Dead-time fraction and diode loss",
+      "expression": "frac = 2 * t_d * fs; P_diode = frac * Io * V_SD",
+      "inputs": {
+        "t_d_s": [
+          1e-07,
+          2e-07,
+          3e-07
+        ],
+        "fs_Hz": 50000,
+        "Io_A": 27.5,
+        "V_SD_V": 4
+      },
+      "result": "1 / 2 / 3 % of the period; 1.1 / 2.2 / 3.3 W",
+      "knowledge_ref": "A-17; KR-GD-009"
+    },
+    {
+      "name": "Gate-drive power",
+      "expression": "P_G = Q_G * fs * (V_DD - V_EE)",
+      "inputs": {
+        "Q_G_C": 1.18e-07,
+        "fs_Hz": 50000,
+        "dV_V": 19
+      },
+      "result": "0.11 W per device - negligible in the 12 V budget",
+      "knowledge_ref": "KR-IS-001; EC-003 method"
+    },
+    {
+      "name": "Auxiliary 12 V budget",
+      "expression": "sum of loads * 1.2 / V_aux",
+      "inputs": {
+        "bias_modules_W": 5.4,
+        "driver_primary_W": 0.5,
+        "isolated_sensing_W": 1.0,
+        "DSP_board_W": 3.0,
+        "fan_W": 6.0,
+        "relay_indicators_W": 1.5,
+        "margin": 0.2,
+        "V_aux_V": [
+          12,
+          10.8
+        ]
+      },
+      "result": "20.9 W -> 1.74 A at 12 V, 1.93 A at 10.8 V (within the 2 A seed only with the fan capped at 0.5 A)",
+      "knowledge_ref": "A-22; KR-PR-003; SKILL-006 fan/aux consideration"
+    },
+    {
+      "name": "Fan free-stream velocity",
+      "expression": "v = Q / A",
+      "inputs": {
+        "Q_m3_s": 0.0217,
+        "A_m2": 0.0064
+      },
+      "result": "3.4 m/s free stream; roughly 2 m/s expected after heat-sink back-pressure (static pressure 66.5 Pa, snippet)",
+      "knowledge_ref": "A-19"
+    },
+    {
+      "name": "Effective duty with losses",
+      "expression": "D_eff ~ D / eta",
+      "inputs": {
+        "D": [
+          0.556,
+          0.5,
+          0.455
+        ],
+        "eta": 0.98
+      },
+      "result": "0.567 / 0.510 / 0.464",
+      "knowledge_ref": "A-34 duty ceiling 0.85 leaves margin"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "Source current limit and ramp (A-05)",
+      "value": "16-30 A limit, controlled ramp, no hot-plug onto a stiff live bus",
+      "basis": "Iin,max 15.6 A at 360 V / 27.5 A; fault-energy cap"
+    },
+    {
+      "name": "Inrush / precharge stance (A-06)",
+      "value": "No inrush limiter baseline; precharge resistor + 12 V relay as an architecture option",
+      "basis": "1.6-4.8 J stored in 20-60 uF; V1 precedent of controlled supply ramp"
+    },
+    {
+      "name": "Load type (A-12)",
+      "value": "Resistor bank or electronic load CC/CR 0-27.5 A; CP mode only > 20 % load after stability review; no battery/regenerative load",
+      "basis": "Negative incremental resistance; unidirectional power flow A-07; no pre-biased start (V1 precedent)"
+    },
+    {
+      "name": "Initial dead time (A-17)",
+      "value": "200 ns (100-300 ns range), confirmed by double-pulse test",
+      "basis": "2 % of period, ~2.2 W diode loss at 27.5 A; KR-GD-009"
+    },
+    {
+      "name": "Grounding / PE (A-23)",
+      "value": "PGND floating w.r.t. PE on board; heat sink/fan/standoffs bonded to an M4 PE stud; optional SELV-PE bond and Y-cap footprints",
+      "basis": "Laboratory supplies earth either terminal; KR-TH-002 insulated drains on the sink; human review"
+    },
+    {
+      "name": "Mechanical envelope (A-24)",
+      "value": "Open frame on M4 standoffs >= 15 mm; <= 300 x 250 mm footprint, <= 80 mm height incl. heat sink; no enclosure",
+      "basis": "TIDA-010054 300 x 180 mm at 10 kW; V1 300 x 220 mm; compactness objective should beat it"
+    },
+    {
+      "name": "Altitude (A-25)",
+      "value": "<= 2000 m",
+      "basis": "IEC 60664-1 base clearance tables"
+    },
+    {
+      "name": "Humidity / pollution degree (A-26)",
+      "value": "5-85 % RH non-condensing, pollution degree 2",
+      "basis": "Indoor laboratory/industrial environment; KR-ISO-002 input"
+    },
+    {
+      "name": "Overvoltage category (A-27)",
+      "value": "OVC II (DC-supplied, not mains-connected)",
+      "basis": "Source is a regulated DC bus or laboratory supply; standards agent confirms"
+    },
+    {
+      "name": "EMC scope (A-28)",
+      "value": "No formal EMC target; EMI-aware layout; optional CM-choke/Y-cap footprints; no input/output filter",
+      "basis": "Prototype benchmark; KR-PCB-004, KR-IS-002/003, PE-PCB-001..003"
+    },
+    {
+      "name": "Lifetime / reliability (A-29)",
+      "value": "1000 h bench life; film hot-spot <= 85 degC; electrolytic >= 5000 h @ 105 degC with <= 70 degC hot-spot; no vibration or power-cycling qualification",
+      "basis": "Knowledge base holds no lifetime data (SKILL-003/SKILL-006 limitations)"
+    },
+    {
+      "name": "Reference laminate grade (A-30)",
+      "value": "Isola 370HR class (Tg 180 degC, CTI class 3) or fabricator equivalent",
+      "basis": "Manufacturer page verified; REF-WS-CGD15SG00D2 decision 7 (Tg >= 170 degC, ENIG)"
+    },
+    {
+      "name": "Minimum slot width and preferred feature size (A-33)",
+      "value": "Slots >= 1 mm; 0.25 mm track/space preferred on 70 um layers",
+      "basis": "KR-ISO-004; CGD15SG00D2 1 mm slots; pooled-fab etch margin"
+    },
+    {
+      "name": "Firmware scope and duty ceiling (A-34)",
+      "value": "Contract only; initial duty ceiling 0.85; soft start; NTC for cooling supervision only",
+      "basis": "V1 firmware_interface.md boundary; KR-TH-003; D_eff <= 0.567"
+    },
+    {
+      "name": "Protection scope (A-35)",
+      "value": "DESAT-class per switch, latched combined fault, input OVP/UVLO, output OVP, OTP; not safety-rated",
+      "basis": "KR-PR-001/002, KR-SN-005"
+    },
+    {
+      "name": "Sensing accuracy and headroom (A-36)",
+      "value": "V +/-1 %, I +/-2 %; divider full scale >= 1.1 x 480 V (input), >= 1.25 x 200 V (output)",
+      "basis": "KR-SN-002; SKILL-005 limitation on accuracy budgets"
+    },
+    {
+      "name": "Test / commissioning approach (A-37)",
+      "value": "Nine incremental steps from 12 V aux only to 400 V full load, overload and transients; 50 degC soak only with a chamber",
+      "basis": "TIDA-010054 Lab 2 practice; SKILL-006 room-ambient warning"
+    },
+    {
+      "name": "Efficiency acceptance floor (A-20)",
+      "value": "97.5 % minimum, 98 % target",
+      "basis": "First-order loss estimate 85-95 W vs 102 W budget"
+    },
+    {
+      "name": "Fan current cap (A-19)",
+      "value": "<= 0.5 A",
+      "basis": "Auxiliary budget 1.93 A at 10.8 V"
+    },
+    {
+      "name": "Explicit out-of-scope list (A-38) and simulation/knowledge-reuse rules (A-39, A-40)",
+      "value": "Fabrication, purchasing, energisation, firmware, EMC test, certification, enclosure, lifetime qualification, liquid cooling, bidirectional and paralleled operation excluded; instance values never copied",
+      "basis": "U-09; reference analyses 'what AIPE should not generalise'"
+    }
+  ],
+  "pcb_constraints": [
+    "Laminate FR4 with Tg >= 150 degC and CTI >= 175 V (material group IIIa, e.g. Isola 370HR class 3), ENIG finish (A-30; KR-ISO-002).",
+    "Power board 2-4 layers, 70 um finished copper on every layer; DC bus and switch currents on pours repeated across layers with via arrays sized by a current-density / temperature-rise check (A-31; KR-PCB-006, PE-PCB-006).",
+    "Control board 4 layers, 35 um, continuous ground plane under the F28335 and ADC paths (A-32; PE-PCB-007/008).",
+    "Minimum track/space 0.2 mm on the power board (0.25 mm preferred on 70 um layers), 0.15 mm on the control board, minimum drill 0.3 mm, pooled-fabrication capabilities only (A-33).",
+    "Isolation keep-outs on every copper layer between the SELV control domain, each gate-driver island and the HV power stage; only rated barrier parts bridge them (A-21; KR-ISO-001); net classes per potential group with class-pair clearance rules (KR-ISO-003); slots >= 1 mm where creepage limits (KR-ISO-004).",
+    "Creepage/clearance values come from the standards agent for 400 V / 200 V working voltage, pollution degree 2, altitude <= 2000 m, OVC II, material group IIIa (A-25..A-27).",
+    "Reserve heat-sink, fan and inductor envelopes before routing: open-frame board <= 300 x 250 mm, <= 80 mm height, M4 standoffs and an M4 PE stud bonded to the heat sink (A-23, A-24; SKILL-006 PCB constraints).",
+    "Commutation loop first, gate loop second; HV ceramics at the half-bridge pins, film bulk close with wide multilayer connections (KR-PCB-004, KR-CAP-003, PE-PCB-001/002/003).",
+    "Optional, unpopulated footprints: Y capacitors PGND-PE, common-mode choke at bias-supply inputs, precharge relay (A-06, A-23, A-28; KR-IS-002).",
+    "V_GS probe points at the device side of R_G and drain-sense attachment points for the commissioning sequence (A-37; KR-PCB-005).",
+    "Vin/Vout divider ladders routed along the creepage path with keep-out from LV nets; current-sense pairs Kelvin-routed (A-36; KR-ISO-002, KR-SN-004, PE-PCB-004)."
+  ],
+  "open_issues": [
+    "H: Protective-earth strategy (A-23): PGND floating versus bonded, heat-sink PE stud, optional SELV-PE bond - a safety decision for the standards agent and the user.",
+    "H: 50 degC thermal verification (A-18/A-37) needs a climate chamber; otherwise only room-ambient measurement plus extrapolation is possible, exactly the limitation TI records for TIDA-010054.",
+    "H: Constant-power or battery-like loads are excluded (A-12); confirm the intended laboratory load before control design.",
+    "H: Precharge path versus source ramp (A-05/A-06): the architecture agent must decide whether to fit the relay/resistor option; the input fuse rating depends on the chosen source current limit.",
+    "H: Accept the 97.5 % efficiency acceptance floor under the 98 % target (A-20); the first-order loss estimate leaves no margin.",
+    "H: OVC II and pollution degree 2 (A-26/A-27) are inputs to insulation coordination; the standards agent must confirm or raise them.",
+    "H: Fan-failure detection (tachometer or heat-sink NTC trip) is not in the seeds; recommend adding it (A-19; KR-TH-003).",
+    "Unverified: no Wolfspeed R_thJC or hot R_DS(on) could be read (datasheet PDFs are not parseable on this host: no pypdf/PyMuPDF/pdfminer and pdftoppm absent); the semiconductor and thermal agents must verify before the P_max budget is final. Installing a PDF text library through the approved environment workflow would remove this limitation for all agents.",
+    "Unverified: fan airflow/static pressure from distributor listings only; Delta page shows 4500 rpm versus 4000 rpm in listings.",
+    "Unverified: pooled-fabricator capability for 70 um inner layers with 0.2 mm track/space (A-31/A-33); obtain a capability sheet before DRC rules are frozen.",
+    "Argument for seed change: the 5 ms transient recovery (A-11) could be tightened to 2 ms if the controller agent reaches f_c >= 2 kHz with 100 uF; the 2 Vpp ripple seed is non-binding because the transient requirement already needs 40-100 uF.",
+    "Argument for seed change: the saturation requirement should be stated as >= 42 A at the 440 V corner (A-15), not derived from the 400 V peak.",
+    "Tooling: automation/knowledge/query.py raises UnicodeEncodeError on the Windows cp1252 console when results contain non-ASCII names (e.g. Wuerth); PYTHONIOENCODING=utf-8 is a workaround. No repository file was changed.",
+    "User confirmation of every S and S* entry is required before any fabrication decision; the register is a proposal, not a specification."
+  ],
+  "verification_status": "analytically-checked: operating-point table at 6 corners, ripple/transient capacitance, UVLO/OVP/survival margins, inrush, dead-time loss, auxiliary budget, thermal P_max sensitivity (40 vs 50 degC), saturation requirement, efficiency budget, fan velocity. manufacturer-page verified: Isola 370HR (Tg/Td/CTI class/UL), Wolfspeed C3M0032120K headline ratings (sanity check only), Delta AFB0812SH electrical ratings. search-snippet: C3M0032120K Q_G, R_DS(on) max, switching energies; fan airflow/pressure. not found: R_thJC, hot R_DS(on). human-review: PE strategy, 50 degC test method, load type, precharge, efficiency floor, OVC/PD inputs, fan-failure detection, user confirmation of all S entries.",
+  "markdown": "# Design assumptions register - 400 V to 200 V, 5 kW, 50 kHz SiC synchronous buck (V2)\n\nAI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED. This register was produced by the assumptions agent from the task text (task09102026.txt), the orchestrator design-basis seeds and the AIPE Engineering Knowledge System. Insulation coordination (insulation class, clearance, creepage, test voltages) is supplied by the standards agent in its own section; this register only states the environmental inputs that section needs (A-25 to A-27).\n\n## 1. Requirements versus assumptions - \"Do not silently invent specifications\"\n\nThe user fixed nine quantities (Section 2). Every other number in this document is an engineering choice made so that the design can proceed. None of it is a user requirement, none of it has been confirmed by the user, and a reviewer may change any of it without invalidating the user requirements. Four classes are used throughout the V2 example:\n\n- USER REQUIREMENT (U): given in the task; not negotiable by any agent.\n- AGENT-SELECTED ASSUMPTION (S): a value the task leaves open, proposed by the orchestrator as a seed and reviewed here. S* marks a seed this register corrects; the corrected value is the design value.\n- AGENT-DERIVED VALUE (D): follows arithmetically from U and S values and changes automatically when its inputs change.\n- HUMAN REVIEW (H): an item this agent must not decide; it is surfaced with a proposal and must be closed by a person.\n\nRule applied by every downstream agent: a quantity that is absent from the task and from this register is unspecified; no calculation, schematic note or BOM comment may treat it as a requirement. Reference-design instance values (TIDA-010054 2 ohm gate resistors, 6.4 V / 1 us DESAT, 45 A / 70 A Hall trips, 20 uF rail decoupling; CGD1700HB2M-UNA 1 ohm / 6.7 V / 46 ns) are not design values for this converter and are cited only as method examples (REF-TI-TIDA-010054 \"what AIPE should not generalise\"; SKILL-001 known limitations).\n\n## 2. User requirements (class U)\n\n| ID | Quantity | Value | Drives |\n|---|---|---|---|\n| U-01 | Topology | Non-isolated synchronous buck, common negative rail (PGND) for input and output | Half-bridge power stage, isolation concept (A-21), KR-GD-005 applicability |\n| U-02 | Nominal input voltage | 400 V DC | Device class, DC-link rating, UVLO/OVP seeds |\n| U-03 | Output voltage | 200 V DC (hazardous; treated like the input for insulation) | Insulation (standards agent), sensing scaling (KR-SN-002) |\n| U-04 | Output power / current | 5000 W / 25 A continuous | Every current rating |\n| U-05 | Switching frequency | 50 kHz | L, C, switching loss, dead-time fraction |\n| U-06 | Power semiconductor | Wolfspeed SiC MOSFET (650/900/1200 V classes to be evaluated, real part number) | Gate rails (KR-GD-001), thermal budget |\n| U-07 | Controller | TI TMS320F28335 (12-bit ADC 0-3 V, ePWM dead-band + trip zones, no SDFM) | Sensing format (KR-SN-003 not applicable), firmware contract |\n| U-08 | CAD / architecture | KiCad; integrated or separated boards selected by the agent | Board partition (architecture agent) |\n| U-09 | Scope exclusions | No fabrication, purchasing, energisation or firmware implementation | A-38 to A-40 |\n\n## 3. Operating-point table (class D)\n\nEquations (ideal CCM buck, plain text): D = Vout / Vin; Iin,ideal = Pout / Vin; Iin,98 = Pout / (0.98 * Vin); dI_L = Vout * (1 - D) / (L * fs) with L = 267 uH (seed) and fs = 50 kHz; I_pk = Io + dI_L / 2; I_L,rms = sqrt(Io^2 + dI_L^2 / 12); I_Cin,rms = Io * sqrt(D * (1 - D)) (ripple neglected). D_eff with losses in series is about D / 0.98 (0.567 / 0.510 / 0.464).\n\n| Vin (V) | Io (A) | Pout (W) | D | Iin,ideal (A) | Iin at 98 % (A) | dI_L (A) | dI_L / Io | I_pk (A) | I_L,rms (A) | I_Cin,rms (A) |\n|---|---|---|---|---|---|---|---|---|---|---|\n| 360 | 25.0 | 5000 | 0.556 | 13.89 | 14.17 | 6.66 | 26.6 % | 28.33 | 25.07 | 12.42 |\n| 360 | 27.5 | 5500 | 0.556 | 15.28 | 15.59 | 6.66 | 24.2 % | 30.83 | 27.57 | 13.66 |\n| 400 | 25.0 | 5000 | 0.500 | 12.50 | 12.76 | 7.49 | 30.0 % | 28.75 | 25.09 | 12.50 |\n| 400 | 27.5 | 5500 | 0.500 | 13.75 | 14.03 | 7.49 | 27.2 % | 31.25 | 27.58 | 13.75 |\n| 440 | 25.0 | 5000 | 0.455 | 11.36 | 11.60 | 8.17 | 32.7 % | 29.09 | 25.11 | 12.45 |\n| 440 | 27.5 | 5500 | 0.455 | 12.50 | 12.76 | 8.17 | 29.7 % | 31.59 | 27.60 | 13.69 |\n\nSwitch RMS currents for the loss agents (same inputs): high side I_HS,rms = sqrt(D * (Io^2 + dI^2 / 12)) = 18.7 / 17.7 / 16.9 A at 25 A and 20.6 / 19.5 / 18.6 A at 27.5 A; low side 16.7 / 17.7 / 18.6 A and 18.4 / 19.5 / 20.4 A (360 / 400 / 440 V). The worst-case corner for peak and ripple current is Vin = 440 V; the worst case for input current and high-side conduction is Vin = 360 V.\n\n## 4. Assumptions register\n\nColumns: value; class; basis / justification with knowledge IDs; which decisions the entry drives; risk if wrong.\n\n### 4.1 Input side\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-01 | Continuous input range | 360-440 V (400 V +/-10 %) | S | Regulated DC bus / laboratory supply tolerance; +/-10 % is common DC-bus practice. TIDA-010054 covers 700-800 V on its 800 V port (REF-TI-TIDA-010054 decision 1), about -12 %, so a +/-10 % window is in line with the reference. Operating-point table, Section 3 | D range 0.455-0.556, device voltage class, inductor ripple spread 26.6-32.7 % | A narrower real range leaves cost on the table; a wider range breaks the ripple and OVP coordination |\n| A-02 | Converter UVLO | start 340 V / stop 320 V (20 V hysteresis) | S | 40 V (11 %) below Vin,min keeps brown-out trips off during 360 V operation; hysteresis exceeds the expected bus sag under a 15 A input step. Method: KR-PR-002 (UVLO lock-out) applied at converter level | Vin sensing scaling (KR-SN-002), firmware arm/inhibit logic | Too high: nuisance trips at 360 V; too low: operation above the design current corner (Iin rises as Vin falls) |\n| A-03 | Input OVP trip | 460 V (4.5 % above Vin,max) | S | Gap between 440 V operation and 480 V survival; protection must act before the survival limit. Method: KR-SN-002 headroom in the Vin sensing chain | Vin divider full scale (>= 480 V plus margin), TZ trip mapping | Trip inside the operating range or above the survival level |\n| A-04 | Non-operating survival | 480 V for 100 ms, converter inhibited | S | Bounds DC-link capacitor and MOSFET stress during a bus transient; 480 V = 40 % of a 1200 V device, 53 % of 900 V, 74 % of 650 V before switching overshoot (Section 5) | Device-class evaluation (semiconductor agent), DC-link voltage rating (SKILL-003 principle 4: TI states no derating rule; AIPE must justify its own) | Component failure during a bus transient if the real bus overshoots more |\n| A-05 | Source characteristics | Regulated DC bus or laboratory supply with current limit 16-30 A, controlled ramp; no hot-plug onto a live stiff bus without the precharge option of A-06 | S | Iin,max = 15.6 A (360 V, 27.5 A), so a limit >= 16 A is needed for the overload corner; 30 A caps fault energy. Source impedance is unknown (H only if a non-laboratory source is used) | Input fuse rating (protection agent), input-capacitor inrush, test plan A-37 | A stiff 400 V bus with hot-plug produces uncontrolled inrush (A-06) and fault current |\n| A-06 | Inrush / precharge | No inrush limiter is required while A-05 holds; a precharge path (resistor plus relay, 12 V coil on the auxiliary budget) is an architecture option, not a baseline requirement | S | E = 0.5 * C_in * V^2 = 1.6-4.8 J for 20-60 uF at 400 V; charge time 1.1-4.8 ms at a 5-15 A source limit. Same stance as V1 (controlled supply ramp) | Architecture agent (relay footprint), auxiliary budget A-22 | Capacitor surge current and connector arcing if the source is not current limited |\n| A-07 | Power-flow direction | Source to load only; no reverse energy accepted at the input; the synchronous rectifier may carry negative inductor current only within the ripple band | S | A regulated bus or laboratory supply cannot sink current; reverse power raises Vin toward A-03/A-04. Load constraint A-12 | Firmware duty/current limits, OVP, load definition | Input overvoltage trip or supply damage with a regenerative load |\n\n### 4.2 Output and load\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-08 | Static set-point tolerance | +/-1 % (198-202 V) | S | Achievable with 0.1 % divider resistors, the 12-bit ADC (3 V / 4096 = 0.73 mV per LSB, about 0.05 V per LSB after scaling) and calibration (SKILL-005 procedure step 7; TIDA-010054 Lab 2 calibrates voltage sensing) | Reference, divider tolerance, calibration procedure | A tighter need (0.1 %) would require a precision reference and a temperature-stable divider |\n| A-09 | Output ripple | <= 1 % pk-pk (2.0 Vpp) at 25 A, all Vin | S | Loose but sufficient for a DC load. Required capacitive part: C >= dI_L / (8 * fs * dV) = 8.17 / (8 * 50e3 * 2.0) = 10.2 uF at 440 V; ESR <= dV / dI_L = 0.245 ohm. SKILL-003 excludes inductor-defined output filters, so the buck ripple equation is used instead of the dQ method; KR-CAP-002 (RMS current at frequency and temperature) still applies directly to the output capacitor (I_C,rms = dI_L / sqrt(12) = 2.4 A) | Output-capacitor minimum (capacitor agent); in practice A-11 dominates and the realised ripple will be about 0.2-0.4 % | None electrically; only cost if a reviewer wants < 0.5 % |\n| A-10 | Overload | 110 % (27.5 A, 5.5 kW) for 10 s, then limit or trip; not continuous | S | Common inverter/charger practice; drives the thermal and saturation corners in Section 3 | Inductor peak (A-15), device RMS currents, firmware current limit, DESAT trip margin (KR-GD-004: the trip must stay above the 31.6 A peak over temperature) | Undersized saturation margin or nuisance overcurrent trips |\n| A-11 | Load transient | 12.5 A step (25 % <-> 75 % load), excursion <= +/-5 % (10 V), recovery <= 5 ms | S | Excursion dV ~ dI / (2 * pi * f_c * C): C >= 199 / 99.5 / 39.8 uF for f_c = 1 / 2 / 5 kHz; the inductor slew limit contributes only dQ <= 130 uC (1.3 V at 100 uF). 5 ms recovery is loose (1-2 ms typical) and is kept for a first prototype with a conservative loop (f_c <= fs / 20) | Output capacitance (40-100 uF class at 250 V or more), controller bandwidth target in the firmware contract | A faster or larger step than specified saturates the inductor current limit or overshoots |\n| A-12 | Load type | Resistor bank or electronic load in constant-current / constant-resistance mode, 0-27.5 A; constant-power mode only above 20 % load and after a control-stability review (H); no battery, motor or regenerative load | S | The negative incremental resistance of a constant-power load reduces phase margin; a battery would violate A-07 and could pre-bias the output at start-up (not supported, as in V1) | Control design, start-up sequence, A-07 | Instability or reverse power if a battery-like load is connected |\n\n### 4.3 Power stage\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-13 | Inductor ripple target | 30 % of Io at 400 V (7.5 App); 26.6-32.7 % over A-01 | S | Industry range 20-40 %; 30 % balances core loss, RMS current and transient slew (0.75 A/us at 400 V) | L_ideal = 267 uH (A-14) | Larger ripple raises MOSFET/capacitor RMS and core loss; smaller ripple needs a bigger core |\n| A-14 | Inductance | L_ideal = Vout * (1 - D) / (dI * fs) = 200 * 0.5 / (7.5 * 50e3) = 267 uH; acceptable 220-300 uH at operating current and temperature | D | From U-03, U-05, A-13 | Magnetics agent | Roll-off with current changes dI_L; a 220 uH part gives 9.9 A ripple and 32.5 A peak at 440 V / 27.5 A |\n| A-15 | Peak and saturation current | Nominal peak 28.75 A (400 V); worst-case overload peak 31.6 A at 440 V / 27.5 A (seed said ~31.3 A at 400 V); I_sat >= 1.3 * 31.6 = 41.1 A at operating temperature, i.e. >= 42 A with the actual inductance value | S* / D | Seed corrected to the 440 V corner from the Section 3 table; the 30 % margin covers controller current-limit overshoot and tolerance | Inductor selection, DESAT trip current (KR-GD-004), firmware peak limit | Saturation during the overload or transient corner |\n| A-16 | Device arrangement | One TO-247-4 (Kelvin source) Wolfspeed device per position; paralleling only if justified; both devices on one shared heat sink with rated insulating pads | S | SKILL-001 principle 2 and KR-PCB-003 (Kelvin source), KR-TH-002 (insulated shared sink, applies directly: the high-side drain is at Vin, the low-side drain at the switch node). Thermal check with KR-TH-001 at 50 degC in A-18 | Semiconductor, thermal and gate-driver agents | Paralleling without justification adds gate-loop and current-sharing issues (SKILL-001 limitation on module-level guidance) |\n| A-17 | Dead time and gate levels (hand-off) | Controller dead time initial 200 ns (range 100-300 ns), confirmed by double-pulse test; negative turn-off bias per KR-GD-005 unless the gate-driver agent justifies 0 V | D / H | 2 * 200 ns = 2 % of the period; body-diode conduction about 2.2 W at 27.5 A (about 4 V forward drop), acceptable. KR-GD-009: dead time comes from the controller, interlock is only a last barrier. Values are not copied from references (REF-WS-PRD-04814 decision 1 gives Wolfspeed's level guidance; the datasheet of the selected device governs, KR-GD-001) | Gate-driver agent, firmware contract | Too short: shoot-through; too long: diode loss and duty loss |\n\n### 4.4 Environment, cooling and efficiency\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-18 | Ambient temperature | 0-50 degC operating; thermal design verified at 50 degC; MOSFET T_J design limit 150 degC (device maximum 175 degC) | S | TIDA-010054's thermal model assumes 40 degC and TI warns the design is intended for room ambient only (SKILL-006 known limitations; REF-TI-TIDA-010054 decision 9). 50 degC is more conservative: P_max = (T_J,lim - T_A) / (R_thJC + R_iso + 2 * R_hs) (KR-TH-001, TI two-per-sink model) falls from 57.3 W to 52.1 W per device (R_thJC 0.42, R_iso 0.5, R_hs 0.5 K/W, parametric; no device R_thJC is verified yet), a 9 % loss of budget that the thermal agent must carry. V1 also used 0-50 degC | Heat-sink and fan selection, capacitor hot-spot, inductor temperature rise | Room-ambient-only verification (as TI warns) would leave 50 degC operation unproven; see A-37 and the H items |\n| A-19 | Cooling | Forced air from an external 12 V fan, >= 2 m/s over a shared extruded heat sink; fan current <= 0.5 A (budget A-22) | S | Delta AFB0812SH class fan (12 V, 0.34 A, 4.08 W on the Delta page; 1.30 m3/min / 46.6 CFM, 66.5 Pa from distributor listings): free-stream velocity 0.0217 m3/s / 0.0064 m2 = 3.4 m/s, so about 2 m/s remains after heat-sink back-pressure - achievable but not generous; a second fan or a higher static-pressure fan is the fallback. SKILL-006 component considerations (fan airflow and auxiliary-rail budget; TI's fans add 0.29 A to the 12 V rail) | Thermal agent (R_hs at the actual airflow), auxiliary budget | Lower airflow raises R_hs and T_J; fan failure is undetected unless a tachometer or NTC trip (KR-TH-003) is added (H) |\n| A-20 | Efficiency | Target >= 98 % at 400 V / 25 A (loss budget 102 W); minimum acceptance 97.5 % (128 W) | S* | Plausibility with a 1200 V / 32 mohm class TO-247-4 device (sanity check only, not a selection): conduction 2 * 17.7^2 * 0.043 = 27 W at the 25 degC R_DS(on),max, roughly 43 W hot; switching from the datasheet 800 V / 40 A energies scaled to 400 V / 25 A gives about 15-17 W; inductor about 20-25 W; capacitors and copper about 5 W: total about 85-95 W, i.e. 98.1-98.3 % with no margin. The seed is kept as the target and a 97.5 % acceptance floor is added so that a verified 97.6 % design is not rejected | Device choice, gate resistors (KR-GD-002), inductor DCR and core | A missed target without a floor would force redesign loops for a non-user requirement |\n| A-21 | Isolation concept | SELV control domain (DSP, JTAG, UART, user I/O) galvanically isolated from the 400 V / 200 V power stage; every crossing uses a rated isolator (gate drivers, isolated amplifiers, isolated bias supplies, isolated current sensor, relay) | S | SKILL-001 principle 1 (isolate every position) applies directly; KR-SN-001 applies directly to every barrier part; KR-ISO-001 (no copper across a barrier on any layer) applies directly. The partition (one board vs two vs three) is the architecture agent's decision; this register is compatible with all three: with separate boards KR-GD-008 and CB-GD-003 (differential PWM/fault, REF-WS-CGD1700HB2M-UNA decision 4) apply directly; on one board buffered single-ended links with RC filters are acceptable (KR-GD-008 exclusion) | Architecture, standards (class and distances), sensing (SKILL-005); KR-SN-003 is not applicable because the F28335 has no SDFM, so analog isolated amplifiers or Hall sensors feed the ADC instead | A non-isolated control ground at 400 V is an operator hazard and defeats JTAG/UART safety |\n| A-22 | Auxiliary input | External regulated 12 V DC +/-10 % (10.8-13.2 V), <= 2 A, SELV, protected per KR-PR-003 (reverse polarity, OVP, UVLO consistent with the bias-converter input range; CB-PR-001 pattern) | S | Budget estimate: two 2 W isolated bias modules about 5.4 W input, driver primary side 0.5 W, isolated sensing supplies 1 W, DSP board 3 W, fan 6 W (0.5 A), relay and indicators 1.5 W, plus 20 % margin = 20.9 W = 1.74 A at 12 V, 1.93 A at 10.8 V. KR-IS-001 (gate power Q_G * fs * dV, about 0.1 W per device at 118 nC, 19 V, 50 kHz) is negligible against module quiescent power | Aux protection device limit, bias-module ratings (UCC14141-type modules are rated only at 10.8-13.2 V, TIDA-010054 decision 8), fan choice | A fan above 0.5 A or a third bias module exceeds 2 A at 10.8 V |\n\n### 4.5 Grounding, mechanical, environment classes, EMC, reliability\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-23 | Grounding / PE | PGND (common HV negative) is not bonded to PE on the board; the source defines the HV reference. Heat sink, fan frame, standoffs and any metal plate are bonded to a dedicated PE stud (M4). The SELV control ground has an optional PE bond footprint (0 ohm / 1 Mohm parallel 1 nF) at the connector. Optional Y-capacitor footprints PGND-PE for EMI, unpopulated | S / H | Laboratory supplies allow either terminal to be earthed; the heat sink carries insulated drains (KR-TH-002), so PE bonding makes an insulation failure trip the source instead of energising the sink. The final PE strategy is a safety decision (H, standards agent) | Insulation between HV copper and heat sink / PE (standards agent), connector choice, EMI return paths | A floating heat sink can become live on pad failure; an unintended PGND-PE bond with an earthed supply terminal shorts the source |\n| A-24 | Enclosure / mechanical | None specified; open-frame prototype on M4 standoffs (>= 15 mm), heat sink plus fan assembly, no enclosure; proposed envelope <= 300 x 250 mm footprint and <= 80 mm height including heat sink; a transparent cover for tests is laboratory practice (H) | S / H | The task gives no mechanical envelope; TIDA-010054 is 300 x 180 mm at 10 kW with four heat sinks (REF-TI-TIDA-010054 decision 10) and V1 was 300 x 220 mm, so a 5 kW board plus heat sink inside 300 x 250 mm is a realistic placement target that the compactness objective should beat | Board outline, heat-sink / inductor keep-outs (SKILL-006 PCB constraints), connector positions | Reserving no envelope lets the layout grow; reserving too little blocks airflow or creepage |\n| A-25 | Altitude | <= 2000 m | S | Base altitude of the IEC 60664-1 clearance tables (no altitude correction); laboratory use | Standards-agent clearances | Higher altitude requires larger clearances |\n| A-26 | Humidity and pollution | 5-85 % RH non-condensing, indoor; pollution degree 2 | S | Laboratory / industrial indoor environment; pollution degree 2 is the IEC 60664-1 assumption for non-conductive pollution without condensation | Creepage (KR-ISO-002); conformal coating not required | Condensation or conductive dust needs pollution degree 3 distances or coating |\n| A-27 | Overvoltage category | OVC II for a DC-supplied converter | S | The source is a regulated DC bus or laboratory supply, not mains-connected; the standards agent confirms (H) | Impulse withstand and clearance (standards agent) | A mains-fed bus without a front end would need OVC III assumptions |\n| A-28 | EMC scope | No formal EMC compliance target (no CISPR 11/32 test); EMI-aware layout only: commutation and gate loops minimised (KR-PCB-004, PE-PCB-001/002/003), isolation-capacitance budget for bias supplies (KR-IS-003), optional CM-choke footprints (KR-IS-002), no input/output EMI filter designed | S | Prototype benchmark; a conducted-emissions filter needs the real source impedance | Capacitor and layout agents | A later product would need a filter and test; layout decisions now determine the achievable result |\n| A-29 | Lifetime / reliability | Prototype: 1000 h cumulative bench operation; film-capacitor hot-spot <= 85 degC; any electrolytic >= 5000 h at 105 degC rating with hot-spot <= 70 degC; no vibration/shock qualification; no power-cycling or transient thermal analysis (SKILL-006 and SKILL-003 known limitations) | S | The knowledge base holds no lifetime data (SKILL-003: capacitor lifetime modelling not covered); AEC-Q200 ceramics preferred where available (SKILL-003 component considerations) | Capacitor derating, mounting of heavy parts (V1: a 285 g inductor needed a clamp) | A mission profile beyond bench life needs a reliability analysis not performed here |\n\n### 4.6 PCB manufacturing constraints\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-30 | Laminate | FR4, Tg >= 150 degC, CTI >= 175 V (material group IIIa), ENIG finish; reference grade Isola 370HR (Tg 180 degC DSC, Td 340 degC, CTI class 3 = 175-249 V per UL 746A / ASTM D3638, UL 94 V-0, UL file E41625, IPC-4101 /98 /99 /101 /126; laminate data sheet Rev E, 6/24, manufacturer page) or a fabricator equivalent with the same CTI class | S | CTI / material group enters the creepage tables (KR-ISO-002); CGD15SG00D2 uses Tg >= 170 degC with ENIG (REF-WS-CGD15SG00D2 decision 7); ENIG keeps fine-pitch and HV pad surfaces flat | Standards-agent creepage, fabricator selection | Material group IIIb (CTI 100-175) would lengthen creepage; a low-Tg laminate risks delamination under the heat sink |\n| A-31 | Power board stack | 2-4 layers, 70 um finished copper on every layer; parallel pours stitched with via arrays (KR-PCB-006, PE-PCB-006) | S | 25-31.6 A at 70 um needs roughly 15-20 mm pour width per layer for a 20-30 K rise (IPC-2152 class estimate, to be computed by the layout agent); paralleling layers halves it | Layer-count decision (architecture agent), via arrays | Pooled fabricators offer 70 um inner layers only as an option; confirm availability and cost before layout |\n| A-32 | Control board stack | 4 layers, 35 um | S | V1 pattern; the F28335 PGF (176-pin, 0.5 mm pitch) and ADC return paths need a continuous ground plane (PE-PCB-007/008) | Control-board routing | 2 layers would compromise ADC noise and decoupling |\n| A-33 | Minimum features | Track/space 0.2 mm on the power board (0.25 mm preferred on 70 um layers), 0.15 mm on the control board, minimum drill 0.3 mm, standard pooled-fabrication capability; slots >= 1 mm where creepage is extended (KR-ISO-004; CGD15SG00D2 uses 1 mm non-plated slots) | S | Pooled fabricators generally quote 0.2 mm as the limit for 70 um outer copper; 0.25 mm gives etch margin | DRC rule set, net-class clearances (KR-ISO-003) | Features below the fabricator capability cause yield loss or rejection |\n\n### 4.7 Firmware, test and scope\n\n| ID | Quantity | Value | Class | Basis / justification | Drives | Risk if wrong |\n|---|---|---|---|---|---|---|\n| A-34 | Firmware scope | Hardware/firmware contract only (pin map, scalings, trip polarities, dead time, duty ceiling 0.85 initial, soft start, fault handling); no closed-loop controller implemented or validated; NTC / heat-sink temperature is used for cooling supervision, not junction protection (KR-TH-003) | S | Same boundary as V1 firmware_interface.md; KR-PR-002 latched combined fault and KR-SN-005 hardware trip paths must not depend on firmware | Controller agent | Energising with untested firmware is excluded by U-09 |\n| A-35 | Protection scope | Hardware protection is required for the prototype: DESAT or equivalent per switch (KR-PR-001, KR-SN-005), latched combined fault with UVLO lock-out (KR-PR-002), input OVP/UVLO (A-02/A-03), output OVP, over-temperature; none is a safety-rated function | S | Reference designs provide protection externally only in evaluation fixtures (KR-PR-001 exclusion); this converter is a complete prototype, so protection is internal | Gate-driver and sensing agents | A missing fast path leaves SiC devices unprotected (microsecond withstand) |\n| A-36 | Sensing accuracy | Vin, Vout +/-1 % after calibration; inductor / output current +/-2 % with a fast OC path; all isolated per A-21; divider full scale >= 1.1 * 480 V on the input and >= 1.25 * 200 V on the output (KR-SN-002 headroom) | S / D | SKILL-005 principle 2; accuracy budgets were not computed in the knowledge base (SKILL-005 limitation) and must be done by the sensing agent | Sensing agent | Clipping hides faults; poor accuracy misses A-08 |\n| A-37 | Test / commissioning approach | Incremental, low voltage first: (1) 12 V auxiliary only - rails, UVLO, fault latch; (2) gate drive without HV - waveforms, dead time, interlock (both inputs high -> both outputs off, KR-GD-009); (3) double-pulse at 100 / 200 / 400 V at reduced current (KR-GD-002 tuning); (4) closed loop at 50 V input, resistive load; (5) 200 V; (6) 400 V in load steps to 25 A from a current-limited source; (7) overload 27.5 A / 10 s; (8) 12.5 A transients; (9) thermal soak at 50 degC only if a chamber is available, otherwise room-ambient measurement with extrapolation of measured temperature rises (H) | S | Mirrors the TIDA-010054 Lab 2 practice of raising trip limits and voltage stepwise (SKILL-005 verification); the room-ambient limitation echoes TI's warning (SKILL-006) | Test points, probe connectors (KR-PCB-005 V_GS probe point), firmware contract | Skipping the low-voltage steps risks the power stage on first energisation |\n| A-38 | Out of scope | Fabrication, purchasing, energisation, firmware implementation, EMC testing, safety certification, enclosure design, lifetime qualification, liquid cooling, bidirectional operation, paralleled converters | U / S | U-09 plus the seeds above | Deliverable list | Scope creep |\n| A-39 | Simulation scope | Analytical calculations are mandatory; circuit simulation where tooling allows; where it cannot run, the limitation is recorded rather than replaced by assumptions | S | Task section 10 | Verification agents | Unverified switching behaviour presented as verified |\n| A-40 | Knowledge-reuse rule | Reference-design instance values are never copied; methods are reused and re-evaluated at this converter's corners | S | REF-TI-TIDA-010054 and the Wolfspeed analyses, \"what AIPE should not generalise\" | Every agent | Mis-sized protection or gate drive from a 10 kW DAB or a 1700 V module driver |\n\n## 5. Seed review - accepted and corrected values\n\n| Seed | Verdict | Reasoning |\n|---|---|---|\n| Input 360-440 V, UVLO 340/320 V, OVP 460 V, survival 480 V / 100 ms | Accepted | Consistent ladder 320 < 340 < 360 ... 440 < 460 < 480 V with 4.3-11 % steps; coordinated with A-05 |\n| Output +/-1 %, ripple <= 2.0 Vpp | Accepted | Ripple is non-binding in practice: the transient requirement A-11 needs 40-100 uF while ripple needs 10.2 uF; the realised ripple will be about 0.2-0.4 % |\n| Overload 110 % / 10 s, 12.5 A step, +/-5 %, 5 ms | Accepted | 5 ms recovery is loose compared with 1-2 ms practice; retained for a first prototype with f_c <= fs / 20 |\n| Ripple 30 %, L = 267 uH, peaks 28.75 A / ~31.3 A, saturation margin >= 30 % | Corrected (A-15) | The worst peak is at Vin = 440 V: 31.6 A at 27.5 A, so I_sat >= 41.1 A (>= 42 A with the actual inductance), not 1.3 * 31.3 = 40.7 A. The ripple spread 26.6-32.7 % over A-01 is recorded |\n| 0-50 degC ambient, >= 2 m/s forced air, T_J limit 150 degC, shared insulated heat sink | Accepted with caution (A-18 / A-19) | More conservative than TIDA-010054's 40 degC model; the budget loss is 9 %; one 80 mm fan reaches about 2 m/s only with modest back-pressure, so fan static pressure or a second fan is a thermal-agent decision; 50 degC verification needs a chamber (H) |\n| Efficiency >= 98 % | Corrected (A-20) | Kept as target; a 97.5 % acceptance floor is added because the first-order loss estimate (85-95 W) leaves no margin against a 102 W budget |\n| Auxiliary 12 V +/-10 %, <= 2 A | Accepted with constraint (A-22) | 1.74 A estimated at 12 V, 1.93 A at 10.8 V with a 0.5 A fan; fan current is capped at 0.5 A |\n| SELV isolated control domain | Accepted (A-21) | Direct application of SKILL-001 principle 1, KR-SN-001, KR-ISO-001 |\n| PCB material and stack seeds | Accepted with notes (A-30 to A-33) | An Isola 370HR-class laminate meets CTI >= 175 V (class 3) and Tg >= 150 degC; 70 um inner layers and 0.2 mm features are at the edge of pooled capability and need fabricator confirmation |\n| One TO-247-4 per position | Accepted (A-16) | The thermal budget at 50 degC (about 52 W per device with the parametric model) exceeds the roughly 30 W per device expected; the semiconductor agent must confirm with the real R_thJC |\n\n## 6. How these assumptions differ from V1 (48 V / 1 kW) and why\n\n| Topic | V1 | V2 | Why |\n|---|---|---|---|\n| Input range | 36-54 V (+/-25 %, battery-like bus) | 360-440 V (+/-10 %) with a UVLO / OVP / survival ladder | A 400 V regulated bus is not a battery; a +/-25 % window would force 300-500 V device and capacitor stress for no stated reason |\n| Hazard and isolation | Shared control/power ground, non-isolated bootstrap driver (SKILL-001 scope exclusion) | Isolated SELV control domain; isolated drivers, bias supplies and sensors | 400 V and 200 V are hazardous; every barrier part is rated for the working voltage (KR-SN-001) |\n| Switching frequency | 100 kHz (agent choice) | 50 kHz (user requirement) | User requirement; it also lowers the switching loss of the hard-switched SiC leg |\n| Current levels | 41.7 A output, 21-28 A input | 25 A output, 11.4-15.6 A input | Power quadrupled but voltages are 8 times higher; copper per ampere is less demanding, insulation far more |\n| Ripple and L | 10 uH, ripple set by 100 kHz | 267 uH, 30 % ripple | Scales with Vout (1 - D) / (dI fs) |\n| Load transient | 20 A / 100 us illustrative, no dynamic specification | 12.5 A step, +/-5 %, 5 ms as a design specification | The task asks for transient operating conditions to be assumed explicitly |\n| Ambient / cooling | 0-50 degC, forced air, external insulated heat sink | Same, with an explicit 50 degC verification point, >= 2 m/s and a fan current budget | Thermal design must influence placement (task section 13); TIDA-010054's 40 degC model and room-ambient warning were reviewed |\n| Efficiency | None stated | >= 98 % target, 97.5 % floor | The task asks for an efficiency target |\n| Board | 300 x 220 mm, six layers, mixed 70/35 um | Power board 2-4 layers 70 um, control board 4 layers 35 um, partition chosen by the architecture agent | Task preference for lower layer counts and compactness; isolation drives the partition |\n| Protection | Comparators plus latch, not a hard-short interrupter | DESAT-class hardware protection per switch, latched combined fault | SiC short-circuit withstand is microseconds (KR-PR-001) |\n| Auxiliary | Derived from the 48 V input on board | External 12 V SELV supply, <= 2 A | A 400 V to 12 V converter on board would add an isolated supply outside the benchmark scope |\n\n## 7. Knowledge applicability summary\n\nDirect: SKILL-001 principle 1 (A-21); SKILL-006 principle 1 and KR-TH-001 (A-18); KR-TH-002 (A-16); KR-TH-003 (A-34); KR-SN-001 and KR-ISO-001 (A-21); KR-ISO-002/003/004 (A-26, A-30, A-33); KR-PR-001/002/003 (A-35, A-22); KR-SN-002 (A-03, A-36); KR-SN-005 (A-35); KR-GD-009 (A-17, A-37); KR-PCB-006 and PE-PCB-006 (A-31); KR-CAP-002 (A-09 output-capacitor RMS); KR-IS-001 (A-22); CB-PR-001 (A-22 pattern). Adapted: SKILL-003 (the dQ method applies to the buck input capacitor, whose current is pulsed, not to the output filter; the ripple equation is used instead); KR-CAP-001/003 (input side, capacitor agent); KR-GD-005 (a synchronous buck is a half bridge with complementary switching, so the half-bridge recommendation applies although PRD-04814 lists the buck as single-ended; decision with the gate-driver agent); KR-GD-008 (depends on the partition); the SKILL-006 thermal model (ambient changed from 40 to 50 degC, pad resistance parametric). Not applicable: KR-SN-003 (the F28335 has no SDFM); KR-CAP-004 and KR-PE-001 (no transformer, no phase-shift converter); the SKILL-004 bootstrap exclusion is irrelevant (isolated bias chosen). Human review: KR-GD-004 trip derivation; KR-IS-004 bias sharing; KR-TH-002 pad rating; PE strategy (A-23); 50 degC verification (A-37).\n\n## 8. Verification status\n\nAnalytically checked: operating-point table (D, Iin, dI_L, I_pk, RMS currents) at six corners; ripple capacitance and ESR limits; transient capacitance versus bandwidth and inductor slew; UVLO / OVP / survival margins and device-class ratios; inrush energy and charge time; dead-time fraction and diode loss; auxiliary power budget; thermal P_max sensitivity 40 vs 50 degC; saturation requirement at the 440 V corner; efficiency loss budget; fan free-stream velocity.\n\nVerified against manufacturer pages: Isola 370HR Tg / Td / CTI class / UL file (A-30); Wolfspeed C3M0032120K V_DS, nominal R_DS(on), I_D, T_J,max, package and active status (sanity-check device only); Delta AFB0812SH voltage, current, power, bearing.\n\nUnverified (snippet level or not found): R_thJC and hot R_DS(on) of any Wolfspeed device (the datasheet PDF could not be parsed on this host); Q_G 118 nC and the 800 V / 40 A switching energies (distributor snippets); fan airflow and static pressure (distributor data only, and the Delta page shows 4500 rpm against 4000 rpm in listings); fabricator capability for 70 um inner layers at 0.2 mm; realised control bandwidth; actual source impedance.\n\nHuman review required: PE and heat-sink bonding strategy (A-23); 50 degC thermal verification method and chamber availability (A-18, A-37); constant-power load permission (A-12); precharge option versus source ramp (A-05 / A-06); acceptance of the 97.5 % efficiency floor (A-20); OVC II and pollution degree 2 as the insulation inputs (A-26, A-27, standards agent); fan failure detection (A-19); confirmation by the user of every S and S* entry before fabrication is ever considered.\n"
+}

@@ -1,0 +1,1277 @@
+{
+  "decision_area": "Power semiconductor selection (Wolfspeed SiC MOSFET) for both half-bridge positions of the 400 V -> 200 V, 5 kW, 50 kHz synchronous buck",
+  "knowledge_queries": [
+    {
+      "command": "python -m automation.knowledge.query \"SiC MOSFET selection voltage margin derating 400 V bus\" --json --limit 8",
+      "top_hits": [
+        "SKILL-003",
+        "CMP-B32716H1156K000",
+        "CB-GD-001",
+        "SKILL-001",
+        "REF-WS-PRD-04814",
+        "CMP-GCM31CR71C106KA64L",
+        "KR-GD-001",
+        "CMP-UCC21710-Q1"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"gate voltage limits VGS absolute maximum SiC gate driver\" --json --limit 8",
+      "top_hits": [
+        "KR-GD-001",
+        "SKILL-001",
+        "CMP-UCC21710-Q1",
+        "KR-IS-004",
+        "KR-GD-002",
+        "CMP-TPS2640",
+        "KR-TH-001",
+        "REF-WS-PRD-04814"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"short circuit withstand time protection speed DESAT\" --json --limit 8",
+      "top_hits": [
+        "KR-PR-001",
+        "KR-SN-005",
+        "KR-GD-004",
+        "SKILL-001",
+        "REF-WS-CGD1700HB2M-UNA",
+        "REF-TI-TIDA-010054",
+        "SKILL-005",
+        "KR-GD-011"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"thermal path junction to heatsink MOSFET losses TO-247\" --json --limit 8",
+      "top_hits": [
+        "SKILL-006",
+        "KR-TH-001",
+        "REF-TI-TIDA-010054",
+        "KR-TH-002",
+        "KR-TH-003",
+        "CMP-CGA9P1X7T2J474M250KC",
+        "KR-GD-010",
+        "KR-PCB-004"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"transistor database scope MOSFET device choice C3M0075120K C3M0030090K\" --json --limit 8",
+      "top_hits": [
+        "SKILL-001 (Not applicable: AIPE Transistor Database scope)",
+        "SKILL-006",
+        "KR-GD-001",
+        "REF-WS-PRD-04814",
+        "KR-GD-006",
+        "CB-GD-001",
+        "CMP-UCC21710-Q1",
+        "SKILL-005"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"commutation loop inductance overshoot di/dt parallel MOSFET sharing\" --json --limit 8",
+      "top_hits": [
+        "KR-PCB-004",
+        "SKILL-003",
+        "REF-WS-CGD15SG00D2",
+        "REF-WS-PRD-04814",
+        "KR-CAP-003",
+        "SKILL-002",
+        "KR-GD-002",
+        "SKILL-001"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query \"dead time body diode conduction reverse recovery Kelvin source gate resistor dv/dt\" --json --limit 8",
+      "top_hits": [
+        "SKILL-001",
+        "CB-GD-001",
+        "REF-WS-CGD15SG00D2",
+        "KR-GD-009",
+        "KR-GD-007",
+        "REF-TI-TIDA-010054",
+        "CMP-UCC25800-Q1",
+        "CB-GD-002"
+      ]
+    },
+    {
+      "command": "python -m automation.knowledge.query --get KR-GD-001 --json ; --get KR-TH-001 ; --get KR-PR-001 ; --get KR-TH-002 ; --get KR-PCB-004",
+      "top_hits": [
+        "KR-GD-001 (full record, +19/-8 V example limited to Gen-3)",
+        "KR-TH-001 (P_max formula, EC-019/020)",
+        "KR-PR-001 (no universal withstand value)",
+        "KR-TH-002 (insulated interface, human review)",
+        "KR-PCB-004 (power loop first)"
+      ]
+    },
+    {
+      "command": "read knowledge/skills/gate_drivers/SKILL-001-sic-gate-driver-design.md ; knowledge/skills/thermal/SKILL-006-thermal-placement.md ; knowledge/references/ti/tida-010054/analysis.md (decisions 1, 9) ; docs/pcb-design-rules.md (PE-PCB-001..008)",
+      "top_hits": [
+        "SKILL-001",
+        "SKILL-006",
+        "REF-TI-TIDA-010054",
+        "PE-PCB-002",
+        "PE-PCB-003"
+      ]
+    }
+  ],
+  "knowledge_used": [
+    {
+      "id": "SKILL-001",
+      "type": "skill",
+      "applicability": "not-applicable",
+      "how_applied": "Device selection is explicitly out of scope ('AIPE Transistor Database scope'); principles 2 (Kelvin source) and 6 (C_iss/C_rss ratio) and step 5 (R_G from dv/dt curves, tune by double-pulse test) were used as selection criteria and hand-off items only.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-WS-PRD-04814"
+    },
+    {
+      "id": "KR-GD-001",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Selection filter and hand-off: +15 V / -4 V +/-5 % rails checked against C4MS025120K (-10/+23 V) and the C3M0021120K fallback (-8/+19 V); the knowledge-base example limits (+19/-8 V) were not assumed for Gen-4 but read from its datasheet.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "id": "KR-TH-001",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "P_max = (T_J,max - T_A)/R_th,total recomputed with this design's 150 degC limit, 50 degC ambient, R_thJC 0.41 K/W, an assumed 0.5 K/W pad and the two-device shared-sink model; TI's 40 degC ambient and 0.1 K/W pad were not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-TH-002",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Both TO-247-4 drains sit on one shared sink with rated insulating pads; pad resistance included in the budget; pad voltage rating and creepage flagged for human review.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-PR-001",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "No datasheet short-circuit withstand time exists for the candidates; Wolfspeed PRD-08296 and forum evidence indicate a few microseconds at 400 V; a <= 1.5 us total protection response and a short-circuit test are surfaced as requirements, not decided here.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA, REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-PCB-004",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "Turned into the L_loop = 25/35 nH assumption for the overshoot estimate and into the PCB constraint that the commutation loop is laid out before the gate loop.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    },
+    {
+      "id": "PE-PCB-003",
+      "type": "project-rule",
+      "applicability": "adapted",
+      "how_applied": "Commutation-loop minimisation is the condition under which the 25 nH typical loop assumption holds; human-review overlay requested.",
+      "reference_design": "project rules"
+    },
+    {
+      "id": "KR-CAP-003",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "HV ceramics beside the bridge leg are assumed when estimating L_loop; handed to the capacitor agent.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-GD-003",
+      "type": "rule",
+      "applicability": "adapted",
+      "how_applied": "Parasitic turn-on margin computed from C_rss*dv/dt*(R_G,off+R_G,int) for the selected device (1.3 V above -4 V against V_GS(th) min 2.0 V); Miller clamp still recommended.",
+      "reference_design": "REF-WS-CGD15SG00D2"
+    },
+    {
+      "id": "KR-GD-004",
+      "type": "rule",
+      "applicability": "human-review",
+      "how_applied": "DESAT trip/blanking must be derived from the C4MS025120K output characteristics; the TIDA 6.4 V / 1 us instance values are explicitly not reused.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "KR-GD-006",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Gate rails designed at +15 V / -4 V so that the C3M0021120K fallback is a drop-in; +18 V (C4MS only) kept as a BOM population option.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "id": "KR-GD-009",
+      "type": "rule",
+      "applicability": "direct",
+      "how_applied": "Dead time (250 ns per edge assumed) remains a controller function; its body-diode cost (2.9-3.2 W) is quantified for the firmware contract.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "SKILL-006",
+      "type": "skill",
+      "applicability": "adapted",
+      "how_applied": "Principle 1 (steady-state budget along the real path) and principle 3 (loss estimates first) applied with this design's hard-switched loss split; TI's 50/69 W instance limits were recomputed, not copied.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "REF-TI-TIDA-010054",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 1 device classes (C3M0075120K at 800 V = 0.67, C3M0030090K at 500 V = 0.56) used as utilisation evidence; shown not to transfer directly because the DAB is soft-switched, the 900 V class is obsolete and this buck has a 460 V OVP corner. Decision 9 (two TO-247-4 per insulated sink, forced air) adopted as the thermal model.",
+      "reference_design": "REF-TI-TIDA-010054"
+    },
+    {
+      "id": "REF-WS-PRD-04814",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "Decision 1 gate levels (+15 V, -3 to -4 V, +/-5 %) adopted as the common rail set; noted as Gen-3 guidance while the Gen-4 datasheet (PRD-09634 reference) allows +15 to +18 V / -5 to 0 V.",
+      "reference_design": "REF-WS-PRD-04814"
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "applicability": "adapted",
+      "how_applied": "PRD-09301 section 5.1 (ADC protection too slow) and the DESAT 300 ns example from PRD-08296 support the <= 1.5 us protection budget; module-specific items not transferred.",
+      "reference_design": "REF-WS-CGD1700HB2M-UNA"
+    }
+  ],
+  "candidates": [
+    {
+      "part_number": "C4MS025120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "28 / 37.0 (at V_GS = 15 V; 18 V values 25/33, 36/47, 47/61, 18/23.4 per part)",
+        "R_DS_on_150C_est_mohm": 48.5,
+        "R_hot_over_R25_datasheet": "1.88 at 175 degC",
+        "I_D_25C_A": 86,
+        "I_D_100C_A": 62,
+        "Q_G_nC": 125,
+        "C_iss_C_oss_C_rss_pF": "3087/103/4.7",
+        "E_on_E_off_body_diode_FWD_uJ": "470/64 at 800 V, 39.2 A",
+        "Q_rr_nC": 742,
+        "E_rr_uJ": 256,
+        "V_SD_hot_V": 4.6,
+        "R_thJC_K_per_W": 0.41,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-5..0/+15..+18",
+        "V_GS_abs_max_V": "-10/+23",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 2, Dec 2025",
+        "availability_soft": "Arrow 2640 (2190 US), DigiKey 0 (13-week lead), Richardson 0; price not captured",
+        "loss_400V_25A_150C_W": {
+          "HS": 25.1,
+          "LS": 21.6,
+          "total": 46.7,
+          "efficiency_impact_pct": 0.93
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 2, Dec 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "SELECTED. 42-46 % voltage utilisation incl. overshoot, 1300 V transient rating, Gen-4 soft body diode, C_iss/C_rss = 630, 46.7 W total at the 150 degC design limit (0.93 %), 41.5 W expected. Availability: Arrow stock only, 13-week lead elsewhere; fallback C3M0021120K."
+    },
+    {
+      "part_number": "C4MS018120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "21 / 27.3 (at V_GS = 15 V; 18 V values 25/33, 36/47, 47/61, 18/23.4 per part)",
+        "R_DS_on_150C_est_mohm": 36.4,
+        "R_hot_over_R25_datasheet": "1.88 at 175 degC",
+        "I_D_25C_A": 121,
+        "I_D_100C_A": 86,
+        "Q_G_nC": 172,
+        "C_iss_C_oss_C_rss_pF": "4105/148/6.5",
+        "E_on_E_off_body_diode_FWD_uJ": "343/130 at 800 V, 52.7 A",
+        "Q_rr_nC": 1099,
+        "E_rr_uJ": 720,
+        "V_SD_hot_V": 4.5,
+        "R_thJC_K_per_W": 0.3,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-5..0/+15..+18",
+        "V_GS_abs_max_V": "-10/+23",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active (New)",
+        "datasheet_revision": "Rev. 1, Jun 2026",
+        "availability_soft": "DigiKey: not stocked (listing says no longer available); K1 variant 0 pcs; thin",
+        "loss_400V_25A_150C_W": {
+          "HS": 18.3,
+          "LS": 21.5,
+          "total": 39.8,
+          "efficiency_impact_pct": 0.8
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2026/07/Wolfspeed_C4MS018120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 1, Jun 2026",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Runner-up (39.8 W). Rejected as primary: Rev. 1 datasheet (Jun 2026), no distributor stock found, E_rr 720 uJ inconsistent with siblings, higher Q_G. Preferred upgrade when stock exists."
+    },
+    {
+      "part_number": "C3M0015065K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 650,
+        "R_DS_on_25C_typ_max_mohm": "15 / 21",
+        "R_DS_on_150C_est_mohm": 19.2,
+        "R_hot_over_R25_datasheet": "1.33 at 175 degC",
+        "I_D_25C_A": 120,
+        "I_D_100C_A": 96,
+        "Q_G_nC": 188,
+        "C_iss_C_oss_C_rss_pF": "5011/289/31",
+        "E_on_E_off_body_diode_FWD_uJ": "252/180 at 400 V, 55.8 A",
+        "Q_rr_nC": 432,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.2,
+        "R_thJC_K_per_W": 0.35,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 9, Sep 2024",
+        "availability_soft": "DigiKey 598, Mouser 385, Richardson 209, Arrow 1351 (search snippets); ~USD 22.6 (Arrow, 1 pc)",
+        "loss_400V_25A_150C_W": {
+          "HS": 18.3,
+          "LS": 9.5,
+          "total": 27.8,
+          "efficiency_impact_pct": 0.56
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0015065K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 9, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Best efficiency (27.8 W, 0.56 %) and good stock, but 650 V class sits at 77-84 % utilisation under the 440/460 V corners; kept as documented alternative with a mandatory double-pulse overshoot gate (V_pk <= 520 V at 440 V)."
+    },
+    {
+      "part_number": "C3M0025065K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 650,
+        "R_DS_on_25C_typ_max_mohm": "25 / 34",
+        "R_DS_on_150C_est_mohm": 31.7,
+        "R_hot_over_R25_datasheet": "1.32 at 175 degC",
+        "I_D_25C_A": 97,
+        "I_D_100C_A": 70,
+        "Q_G_nC": 112,
+        "C_iss_C_oss_C_rss_pF": "2980/178/12",
+        "E_on_E_off_body_diode_FWD_uJ": "121/53 at 400 V, 33.5 A",
+        "Q_rr_nC": 293,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.5,
+        "R_thJC_K_per_W": 0.46,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 03, Sep 2024",
+        "availability_soft": "Listed at DigiKey and Arrow (counts not captured)",
+        "loss_400V_25A_150C_W": {
+          "HS": 17.9,
+          "LS": 13.7,
+          "total": 31.6,
+          "efficiency_impact_pct": 0.63
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0025065K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 03, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Second-best efficiency (31.6 W); same 650 V margin problem as C3M0015065K; higher R_DS(on) with little switching benefit at 50 kHz."
+    },
+    {
+      "part_number": "C3M0021120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "21 / 28.8",
+        "R_DS_on_150C_est_mohm": 35.2,
+        "R_hot_over_R25_datasheet": "1.81 at 175 degC",
+        "I_D_25C_A": 100,
+        "I_D_100C_A": 74,
+        "Q_G_nC": 162,
+        "C_iss_C_oss_C_rss_pF": "4818/180/12",
+        "E_on_E_off_body_diode_FWD_uJ": "1580/340 at 800 V, 50 A",
+        "Q_rr_nC": 928,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.2,
+        "R_thJC_K_per_W": 0.32,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 4, Jun 2025",
+        "availability_soft": "DigiKey 2215, Arrow 2659, Mouser 71 (+450 on order), Farnell 27; price not captured",
+        "loss_400V_25A_150C_W": {
+          "HS": 39.3,
+          "LS": 15.7,
+          "total": 54.9,
+          "efficiency_impact_pct": 1.1
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0021120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 4, Jun 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "1200 V Gen-3 FALLBACK: same footprint and gate rails as the selection, abundant stock; 54.9 W (1.10 %) because body-diode E_on = 1580 uJ at 800 V/50 A scales to 28 W of high-side switching loss."
+    },
+    {
+      "part_number": "C3M0032120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "32 / 43",
+        "R_DS_on_150C_est_mohm": 53.3,
+        "R_hot_over_R25_datasheet": "1.80 at 175 degC",
+        "I_D_25C_A": 69,
+        "I_D_100C_A": 53,
+        "Q_G_nC": 118,
+        "C_iss_C_oss_C_rss_pF": "3357/129/8",
+        "E_on_E_off_body_diode_FWD_uJ": "955/107 at 800 V, 40 A",
+        "Q_rr_nC": 478,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.2,
+        "R_thJC_K_per_W": 0.44,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 6, Sep 2024",
+        "availability_soft": "Mouser 894, DigiKey 212, Richardson 16570, Farnell 523, Arrow ~48k; ~USD 14 (Richardson, 1 pc)",
+        "loss_400V_25A_150C_W": {
+          "HS": 35.8,
+          "LS": 20.7,
+          "total": 56.5,
+          "efficiency_impact_pct": 1.13
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0032120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 6, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "1200 V Gen-3, excellent stock and price (~USD 14) but 56.5 W (1.13 %): high-side switching 19 W from body-diode E_on. Second fallback."
+    },
+    {
+      "part_number": "C3M0016120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "16 / 22",
+        "R_DS_on_150C_est_mohm": 26.8,
+        "R_hot_over_R25_datasheet": "1.81 at 175 degC",
+        "I_D_25C_A": 115,
+        "I_D_100C_A": 90,
+        "Q_G_nC": 223,
+        "C_iss_C_oss_C_rss_pF": "6922/231/13",
+        "E_on_E_off_body_diode_FWD_uJ": "2552/788 at 800 V, 80 A",
+        "Q_rr_nC": 1365,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.4,
+        "R_thJC_K_per_W": 0.23,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 5, Nov 2025",
+        "availability_soft": "DigiKey 413, Arrow 1664, Mouser(AU) 748; ~USD 26 (DigiKey)",
+        "loss_400V_25A_150C_W": {
+          "HS": 39.7,
+          "LS": 13.1,
+          "total": 52.8,
+          "efficiency_impact_pct": 1.06
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0016120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 5, Nov 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "1200 V Gen-3 largest die; conduction lowest (8.4 W) but E_on(body diode) 2552 uJ gives 31 W switching; 52.8 W total, Q_G 223 nC. Not competitive at 50 kHz hard switching."
+    },
+    {
+      "part_number": "C3M0040120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "40 / 53.5",
+        "R_DS_on_150C_est_mohm": 63.3,
+        "R_hot_over_R25_datasheet": "1.70 at 175 degC",
+        "I_D_25C_A": 66,
+        "I_D_100C_A": 48,
+        "Q_G_nC": 99,
+        "C_iss_C_oss_C_rss_pF": "2900/103/5",
+        "E_on_E_off_body_diode_FWD_uJ": "611/99 at 800 V, 33.3 A",
+        "Q_rr_nC": 691,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.9,
+        "R_thJC_K_per_W": 0.46,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 03, Sep 2024",
+        "availability_soft": "not searched",
+        "loss_400V_25A_150C_W": {
+          "HS": 35.4,
+          "LS": 25.2,
+          "total": 60.6,
+          "efficiency_impact_pct": 1.21
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2023/08/Wolfspeed_C3M0040120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 03, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "1200 V Gen-3; 60.6 W (conduction 20 W + E_on(body diode) 15.5 W). Worse than Gen-4 at this operating point."
+    },
+    {
+      "part_number": "C4MS036120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "42 / 54.8 (at V_GS = 15 V; 18 V values 25/33, 36/47, 47/61, 18/23.4 per part)",
+        "R_DS_on_150C_est_mohm": 72.8,
+        "R_hot_over_R25_datasheet": "1.88 at 175 degC",
+        "I_D_25C_A": 60,
+        "I_D_100C_A": 44,
+        "Q_G_nC": 88,
+        "C_iss_C_oss_C_rss_pF": "2164/72/3.2",
+        "E_on_E_off_body_diode_FWD_uJ": "393/26 at 800 V, 27.6 A",
+        "Q_rr_nC": 335,
+        "E_rr_uJ": 35,
+        "V_SD_hot_V": 4.6,
+        "R_thJC_K_per_W": 0.55,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-5..0/+15..+18",
+        "V_GS_abs_max_V": "-10/+23",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 2, Dec 2025",
+        "availability_soft": "No stock listing found; DigiKey related-item price ~USD 11.5",
+        "loss_400V_25A_150C_W": {
+          "HS": 33.6,
+          "LS": 26.5,
+          "total": 60.1,
+          "efficiency_impact_pct": 1.2
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS036120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 2, Dec 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Gen-4 36 mohm; 60.1 W single, 37.2 W as 2x parallel; no stock listing found. Parallel option only."
+    },
+    {
+      "part_number": "C4MS047120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "53 / 68.8 (at V_GS = 15 V; 18 V values 25/33, 36/47, 47/61, 18/23.4 per part)",
+        "R_DS_on_150C_est_mohm": 91.9,
+        "R_hot_over_R25_datasheet": "1.88 at 175 degC",
+        "I_D_25C_A": 50,
+        "I_D_100C_A": 37,
+        "Q_G_nC": 68,
+        "C_iss_C_oss_C_rss_pF": "1640/57/3",
+        "E_on_E_off_body_diode_FWD_uJ": "242/30 at 800 V, 21 A",
+        "Q_rr_nC": 449,
+        "E_rr_uJ": 140,
+        "V_SD_hot_V": 4.6,
+        "R_thJC_K_per_W": 0.62,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-5..0/+15..+18",
+        "V_GS_abs_max_V": "-10/+23",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 2, Dec 2025",
+        "availability_soft": "DigiKey listing exists (count not captured)",
+        "loss_400V_25A_150C_W": {
+          "HS": 38.2,
+          "LS": 35.3,
+          "total": 73.6,
+          "efficiency_impact_pct": 1.47
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS047120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 2, Dec 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "Gen-4 47 mohm; 73.6 W; too resistive for 25 A."
+    },
+    {
+      "part_number": "C3M0045065K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 650,
+        "R_DS_on_25C_typ_max_mohm": "45 / 60",
+        "R_DS_on_150C_est_mohm": 58.3,
+        "R_hot_over_R25_datasheet": "1.36 at 175 degC",
+        "I_D_25C_A": 49,
+        "I_D_100C_A": 35,
+        "Q_G_nC": 63,
+        "C_iss_C_oss_C_rss_pF": "1621/101/8",
+        "E_on_E_off_body_diode_FWD_uJ": "57/14 at 400 V, 17.6 A",
+        "Q_rr_nC": 171,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.5,
+        "R_thJC_K_per_W": 0.85,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 04, Sep 2024",
+        "availability_soft": "not searched",
+        "loss_400V_25A_150C_W": {
+          "HS": 24.3,
+          "LS": 22.2,
+          "total": 46.5,
+          "efficiency_impact_pct": 0.93
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0045065K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 04, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "650 V, too resistive (46.5 W); margin problem; not competitive."
+    },
+    {
+      "part_number": "C3M0060065K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 650,
+        "R_DS_on_25C_typ_max_mohm": "60 / 79",
+        "R_DS_on_150C_est_mohm": 77.0,
+        "R_hot_over_R25_datasheet": "1.34 at 175 degC",
+        "I_D_25C_A": 37,
+        "I_D_100C_A": "not found",
+        "Q_G_nC": 46,
+        "C_iss_C_oss_C_rss_pF": "1020/80/9",
+        "E_on_E_off_body_diode_FWD_uJ": "70/5 at 400 V, 13.2 A",
+        "Q_rr_nC": 110,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.5,
+        "R_thJC_K_per_W": 0.99,
+        "T_J_max_degC": 175,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active",
+        "datasheet_revision": "Rev. 5, Oct 2024",
+        "availability_soft": "Listed at Richardson (count not captured)",
+        "loss_400V_25A_150C_W": {
+          "HS": 32.3,
+          "LS": 27.9,
+          "total": 60.2,
+          "efficiency_impact_pct": 1.2
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0060065K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 5, Oct 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "650 V, too resistive (60.2 W); margin problem; 175 degC R_DS(on) not captured."
+    },
+    {
+      "part_number": "C3M0075120K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 1200,
+        "R_DS_on_25C_typ_max_mohm": "75 / 90",
+        "R_DS_on_150C_est_mohm": 100.0,
+        "R_hot_over_R25_datasheet": "1.33 at 150 degC",
+        "I_D_25C_A": 32,
+        "I_D_100C_A": 21,
+        "Q_G_nC": 53,
+        "C_iss_C_oss_C_rss_pF": "1390/58/2",
+        "E_on_E_off_body_diode_FWD_uJ": "270/77 at 800 V, 20 A",
+        "Q_rr_nC": 254,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.0,
+        "R_thJC_K_per_W": 1.1,
+        "T_J_max_degC": 150,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "Active (Tjmax 150 C; -A variant 175 C)",
+        "datasheet_revision": "Rev. 07, Sep 2024",
+        "availability_soft": "not searched (TIDA-010054 device)",
+        "loss_400V_25A_150C_W": {
+          "HS": 44.4,
+          "LS": 35.3,
+          "total": 79.7,
+          "efficiency_impact_pct": 1.59
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2023/08/Wolfspeed_C3M0075120K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 07, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "TIDA-010054 800 V-side device; 100 mohm at 150 degC and T_J,max 150 degC: 79.7 W. Far too resistive for 25 A."
+    },
+    {
+      "part_number": "C3M0030090K",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 900,
+        "R_DS_on_25C_typ_max_mohm": "30 / 39",
+        "R_DS_on_150C_est_mohm": 41.0,
+        "R_hot_over_R25_datasheet": "1.37 at 150 degC",
+        "I_D_25C_A": 63,
+        "I_D_100C_A": 48,
+        "Q_G_nC": 74,
+        "C_iss_C_oss_C_rss_pF": "1503/144/5",
+        "E_on_E_off_body_diode_FWD_uJ": "133/111 at 600 V, 35 A",
+        "Q_rr_nC": 536,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.0,
+        "R_thJC_K_per_W": 0.48,
+        "T_J_max_degC": 150,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-247-4 with Kelvin source",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "OBSOLETE (Wolfspeed page: replacements C3M0032120K, C4MS036120K)",
+        "datasheet_revision": "Rev. 07, Sep 2024",
+        "availability_soft": "Last-time-buy / obsolete",
+        "loss_400V_25A_150C_W": {
+          "HS": 20.4,
+          "LS": 17.0,
+          "total": 37.4,
+          "efficiency_impact_pct": 0.75
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0030090K_data_sheet.pdf",
+      "datasheet_revision": "Rev. 07, Sep 2024",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "TIDA-010054 500 V-side device; ideal 56-59 % utilisation and 37.4 W, but OBSOLETE at Wolfspeed (replacements C3M0032120K / C4MS036120K). Not selectable."
+    },
+    {
+      "part_number": "C3M0065090J",
+      "manufacturer": "Wolfspeed",
+      "key_parameters": {
+        "V_DS_rating_V": 900,
+        "R_DS_on_25C_typ_max_mohm": "65 / 78",
+        "R_DS_on_150C_est_mohm": 90.0,
+        "R_hot_over_R25_datasheet": "1.38 at 150 degC",
+        "I_D_25C_A": 35,
+        "I_D_100C_A": 22,
+        "Q_G_nC": 30,
+        "C_iss_C_oss_C_rss_pF": "760/66/5",
+        "E_on_E_off_body_diode_FWD_uJ": "42/6 at 400 V, 20 A",
+        "Q_rr_nC": 215,
+        "E_rr_uJ": "not published (C3M)",
+        "V_SD_hot_V": 4.0,
+        "R_thJC_K_per_W": 1.1,
+        "T_J_max_degC": 150,
+        "V_GS_op_V": "-4/+15",
+        "V_GS_abs_max_V": "-8/+19",
+        "package": "TO-263-7 (J)",
+        "short_circuit_withstand": "not specified in datasheet",
+        "status": "NRND (900 V family page); TO-263-7, no TO-247-4 variant",
+        "datasheet_revision": "Rev. 08, Sep 2025",
+        "availability_soft": "NRND",
+        "loss_400V_25A_150C_W": {
+          "HS": 31.8,
+          "LS": 32.0,
+          "total": 63.8,
+          "efficiency_impact_pct": 1.28
+        }
+      },
+      "datasheet_url": "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0065090J_data_sheet.pdf",
+      "datasheet_revision": "Rev. 08, Sep 2025",
+      "parameter_verification": "fetched-datasheet",
+      "assessment": "900 V NRND, TO-263-7 only (no Kelvin TO-247-4), 90 mohm hot: 63.8 W. Not selectable."
+    }
+  ],
+  "selection": {
+    "part_number": "C4MS025120K",
+    "manufacturer": "Wolfspeed",
+    "quantity": "2 (one per half-bridge position, high side and low side)",
+    "voltage_class_V": 1200,
+    "package": "TO-247-4 with Kelvin source",
+    "datasheet": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf (Rev. 2, December 2025, fetched)",
+    "key_values": {
+      "R_DS_on_25C_typ_mohm": "28 at V_GS = 15 V (25 at 18 V; max 33 at 18 V)",
+      "R_DS_on_150C_est_mohm": 48.5,
+      "I_D_A": "86 at T_C 25 degC, 62 at T_C 100 degC, 274 pulsed",
+      "Q_G_nC": 125,
+      "C_iss_C_oss_C_rss_pF": "3087/103/4.7 (ratio 630)",
+      "E_on_E_off_uJ_test": "470/64 at 800 V, 39.2 A, 175 degC, R_G 1 ohm",
+      "E_rr_uJ_test": 256,
+      "V_SD_V": "5.1 (25 degC) / 4.6 (175 degC) at 19.6 A",
+      "R_thJC_K_per_W": 0.41,
+      "V_GS_op_V": "+15..+18 / -5..0",
+      "V_GS_abs_max_V": "-10/+23",
+      "V_DS_transient_V": "1300 (< 100 h)",
+      "T_J_max_degC": 175
+    },
+    "voltage_margin": {
+      "V_pk_440V_typ_wc_V": "502 / 528",
+      "utilisation_440V_pct": "42 / 44",
+      "utilisation_460V_OVP_wc_pct": 46,
+      "utilisation_480V_static_pct": 40,
+      "limits_adopted_pct": "80 repetitive / 90 trip / 70 DC (engineering judgement)"
+    },
+    "fallbacks": {
+      "primary_fallback": "C3M0021120K (same footprint, +15/-4 V rails, abundant stock, +8 W)",
+      "upgrade": "C4MS018120K when stocked (-7 W)",
+      "efficiency_alternative": "C3M0015065K (650 V, -19 W) only with a double-pulse gate V_pk <= 520 V at 440 V and reviewer acceptance of 77-84 % utilisation",
+      "parallel_option": "2 x C4MS025120K per position (-15 W, 4 devices)"
+    },
+    "gate_drive_requirements": {
+      "rails_V": "+15 / -4, +/-5 % (compatible with C4MS and C3M fallback); +18 V as C4MS-only BOM option",
+      "Q_G_nC": "125 (at -4/+18 V, 800 V); use as budget",
+      "bias_power_per_channel_W": 0.12,
+      "R_G_int_ohm": 2.6,
+      "R_G_on_start_ohm": "10-15",
+      "R_G_off_start_ohm": "2-5",
+      "dv_dt_expected_V_per_ns": "30-60 turn-on, 20-40 turn-off; CMTI >= 100 V/ns",
+      "peak_gate_current_A": "1.5 source / 3.4 sink; driver >= 4 A sink",
+      "miller_margin_V": "1.3 V excursion above -4 V vs V_GS(th) min 2.0 V; active clamp recommended",
+      "desat": "derive from C4MS025120K output curves (about 2.9 V at 60 A, 150 degC); total protection response <= 1.5 us",
+      "dead_time_ns": 250
+    },
+    "per_device_loss_table_W_TJ150": {
+      "360V/25.0A": {
+        "HS_cond_W": 17.0,
+        "HS_sw_W": 9.0,
+        "HS_total_W": 25.9,
+        "LS_cond_W": 13.6,
+        "LS_rr_W": 3.2,
+        "LS_deadtime_W": 2.9,
+        "LS_total_W": 19.6,
+        "total_W": 45.5,
+        "efficiency_impact_pct": 0.91
+      },
+      "360V/27.5A": {
+        "HS_cond_W": 20.5,
+        "HS_sw_W": 9.9,
+        "HS_total_W": 30.4,
+        "LS_cond_W": 16.4,
+        "LS_rr_W": 3.6,
+        "LS_deadtime_W": 3.2,
+        "LS_total_W": 23.1,
+        "total_W": 53.5,
+        "efficiency_impact_pct": 1.07
+      },
+      "400V/25.0A": {
+        "HS_cond_W": 15.3,
+        "HS_sw_W": 9.8,
+        "HS_total_W": 25.1,
+        "LS_cond_W": 15.3,
+        "LS_rr_W": 3.5,
+        "LS_deadtime_W": 2.9,
+        "LS_total_W": 21.6,
+        "total_W": 46.7,
+        "efficiency_impact_pct": 0.93
+      },
+      "400V/27.5A": {
+        "HS_cond_W": 18.5,
+        "HS_sw_W": 10.9,
+        "HS_total_W": 29.4,
+        "LS_cond_W": 18.5,
+        "LS_rr_W": 3.9,
+        "LS_deadtime_W": 3.2,
+        "LS_total_W": 25.5,
+        "total_W": 54.9,
+        "efficiency_impact_pct": 1.1
+      },
+      "440V/25.0A": {
+        "HS_cond_W": 13.9,
+        "HS_sw_W": 10.7,
+        "HS_total_W": 24.6,
+        "LS_cond_W": 16.7,
+        "LS_rr_W": 3.8,
+        "LS_deadtime_W": 2.9,
+        "LS_total_W": 23.3,
+        "total_W": 47.9,
+        "efficiency_impact_pct": 0.96
+      },
+      "440V/27.5A": {
+        "HS_cond_W": 16.8,
+        "HS_sw_W": 11.9,
+        "HS_total_W": 28.7,
+        "LS_cond_W": 20.2,
+        "LS_rr_W": 4.2,
+        "LS_deadtime_W": 3.2,
+        "LS_total_W": 27.5,
+        "total_W": 56.2,
+        "efficiency_impact_pct": 1.12
+      },
+      "400V/25A_TJ100_typ": {
+        "HS_cond_W": 12.7,
+        "HS_sw_W": 9.8,
+        "HS_total_W": 22.5,
+        "LS_cond_W": 12.7,
+        "LS_rr_W": 3.5,
+        "LS_deadtime_W": 2.9,
+        "LS_total_W": 19.0,
+        "total_W": 41.5,
+        "efficiency_impact_pct": 0.83
+      },
+      "400V/25A_TJ150_maxR": {
+        "HS_cond_W": 20.2,
+        "HS_sw_W": 9.8,
+        "HS_total_W": 30.0,
+        "LS_cond_W": 20.2,
+        "LS_rr_W": 3.5,
+        "LS_deadtime_W": 2.9,
+        "LS_total_W": 26.5,
+        "total_W": 56.5,
+        "efficiency_impact_pct": 1.13
+      }
+    },
+    "thermal_check": {
+      "worst_corner": "440V/27.5A",
+      "P_total_W": 56.2,
+      "T_sink_degC": 78.1,
+      "T_J_HS_degC": 104.2,
+      "T_J_LS_degC": 103.2,
+      "P_max_per_device_W": 52.4
+    },
+    "ranked_comparison_total_W_400V_25A_150C": [
+      [
+        "C3M0015065K",
+        27.8
+      ],
+      [
+        "C3M0025065K",
+        31.6
+      ],
+      [
+        "C3M0030090K (obsolete)",
+        37.4
+      ],
+      [
+        "C4MS018120K",
+        39.8
+      ],
+      [
+        "C3M0045065K",
+        46.5
+      ],
+      [
+        "C4MS025120K",
+        46.7
+      ],
+      [
+        "C3M0016120K",
+        52.8
+      ],
+      [
+        "C3M0021120K",
+        54.9
+      ],
+      [
+        "C3M0032120K",
+        56.5
+      ],
+      [
+        "C4MS036120K",
+        60.1
+      ],
+      [
+        "C3M0060065K",
+        60.2
+      ],
+      [
+        "C3M0040120K",
+        60.6
+      ],
+      [
+        "C3M0065090J (NRND)",
+        63.8
+      ],
+      [
+        "C4MS047120K",
+        73.6
+      ],
+      [
+        "C3M0075120K",
+        79.7
+      ]
+    ]
+  },
+  "calculations": [
+    {
+      "name": "Duty and inductor ripple at the three input corners",
+      "expression": "D = Vout/Vin ; dI = Vout*(1-D)/(L*fs)",
+      "inputs": {
+        "Vout_V": 200,
+        "Vin_V": [
+          360,
+          400,
+          440
+        ],
+        "L_H": 0.000267,
+        "fs_Hz": 50000.0
+      },
+      "result": "D = 0.556 / 0.500 / 0.455 ; dI = 6.66 / 7.49 / 8.17 A",
+      "knowledge_ref": "design basis [SEED]"
+    },
+    {
+      "name": "High-side and low-side RMS currents",
+      "expression": "I_rms,HS = sqrt(D*(Io^2 + dI^2/12)) ; I_rms,LS = sqrt((1-D)*(Io^2 + dI^2/12))",
+      "inputs": {
+        "Io_A": [
+          25,
+          27.5
+        ],
+        "corners": "360/400/440 V"
+      },
+      "result": "HS 18.7/17.7/16.9 A at 25 A, 20.6/19.5/18.6 A at 27.5 A ; LS 16.7/17.7/18.6 A at 25 A, 18.4/19.5/20.4 A at 27.5 A",
+      "knowledge_ref": "task formula"
+    },
+    {
+      "name": "Switching currents",
+      "expression": "I_on = Io - dI/2 ; I_off = Io + dI/2",
+      "inputs": {
+        "Io_A": 25,
+        "dI_A": 7.49
+      },
+      "result": "I_on = 21.25 A, I_off = 28.75 A at 400 V/25 A; 23.4 / 31.6 A at 440 V/27.5 A",
+      "knowledge_ref": "design basis"
+    },
+    {
+      "name": "R_DS(on) at 150 degC, C4MS025120K",
+      "expression": "R(150) = R25 * [1 + (k175 - 1)*(150-25)/(175-25)]",
+      "inputs": {
+        "R25_mohm_at_15V": 28,
+        "k175": 1.88
+      },
+      "result": "48.5 mohm typ (43.3 mohm at V_GS = 18 V; 57.2 mohm scaled from max)",
+      "knowledge_ref": "datasheet Rev. 2 tempco note 5"
+    },
+    {
+      "name": "Conduction loss per device, C4MS025120K, 400 V/25 A",
+      "expression": "P_cond = I_rms^2 * R(150)",
+      "inputs": {
+        "I_rms_A": 17.74,
+        "R_ohm": 0.0485
+      },
+      "result": "15.3 W (HS and LS); 20.2 W LS at 440 V/27.5 A",
+      "knowledge_ref": "SKILL-006 principle 3"
+    },
+    {
+      "name": "High-side switching loss, C4MS025120K",
+      "expression": "E = E_ds*(Vin/V_test)*(I/I_test)*k_RG ; P_sw = (E_on + E_off)*fs",
+      "inputs": {
+        "E_on_uJ": 470,
+        "E_off_uJ": 64,
+        "V_test_V": 800,
+        "I_test_A": 39.2,
+        "Vin_V": 400,
+        "I_on_A": 21.25,
+        "I_off_A": 28.75,
+        "k_RG": 1.3
+      },
+      "result": "E_on = 165.6 uJ, E_off = 30.5 uJ -> 9.8 W (7.5 W with k_RG = 1); 11.9 W at 440 V/27.5 A. Scaling uncertainty about +/-30 %.",
+      "knowledge_ref": "SKILL-006 principle 3 (loss estimates first); datasheet body-diode FWD values"
+    },
+    {
+      "name": "Low-side reverse-recovery loss, C4MS025120K",
+      "expression": "P_rr = E_rr,ds*(Vin/V_test)*(I_on/I_test)*fs",
+      "inputs": {
+        "E_rr_uJ_175C": 256,
+        "Vin_V": 400,
+        "V_test_V": 800,
+        "I_on_A": 21.25,
+        "I_test_A": 39.2
+      },
+      "result": "E_rr = 69 uJ -> 3.5 W (4.2 W at 440 V/27.5 A)",
+      "knowledge_ref": "datasheet Rev. 2 reverse diode table"
+    },
+    {
+      "name": "Dead-time body-diode loss (LS)",
+      "expression": "P_dt = t_dt*fs*V_SD*(I_on + I_off)",
+      "inputs": {
+        "t_dt_s": 2.5e-07,
+        "fs_Hz": 50000.0,
+        "V_SD_V": 4.6,
+        "I_on_plus_I_off_A": 50
+      },
+      "result": "2.9 W at 25 A, 3.2 W at 27.5 A",
+      "knowledge_ref": "KR-GD-009 (dead time from controller)"
+    },
+    {
+      "name": "Gate bias power per channel",
+      "expression": "P_g = Q_G*(V_on - V_off)*fs",
+      "inputs": {
+        "Q_G_C": 1.25e-07,
+        "dV_V": 19,
+        "fs_Hz": 50000.0
+      },
+      "result": "0.119 W per channel (0.24 W per device pair)",
+      "knowledge_ref": "KR-IS-001 (SKILL-001 step 3)"
+    },
+    {
+      "name": "Total MOSFET loss and efficiency impact, selected device",
+      "expression": "sum of HS and LS losses / 5000 W",
+      "inputs": {
+        "corner": "400 V / 25 A, T_J 150 degC typ R"
+      },
+      "result": "46.7 W = 0.93 % (56.5 W with max R; 41.5 W = 0.83 % at expected T_J 100 degC); 56.2 W = 1.12 % at 440 V/27.5 A",
+      "knowledge_ref": "efficiency target 98 % [SEED]"
+    },
+    {
+      "name": "Thermal path check (KR-TH-001)",
+      "expression": "T_sink = T_A + R_th,HS*(P_HS + P_LS) ; T_J = T_sink + (R_th,pad + R_thJC)*P_dev ; P_max = (T_J,lim - T_A)/(2*R_th,HS + R_th,pad + R_thJC)",
+      "inputs": {
+        "T_A_degC": 50,
+        "R_th_HS_K_per_W": 0.5,
+        "R_th_pad_K_per_W": 0.5,
+        "R_thJC_K_per_W": 0.41,
+        "P_HS_W": 28.7,
+        "P_LS_W": 27.5
+      },
+      "result": "T_sink 78.1 degC, T_J,HS 104.2 degC, T_J,LS 103.2 degC (limit 150); P_max 52.4 W per device vs 29.4 W worst",
+      "knowledge_ref": "KR-TH-001, SKILL-006 principle 1, EC-019/EC-020 pattern"
+    },
+    {
+      "name": "Switching overshoot and utilisation",
+      "expression": "V_os = L_loop*di/dt ; V_pk = Vin + V_os ; U = V_pk/V_DS,max",
+      "inputs": {
+        "L_loop_H": [
+          2.5e-08,
+          3.5e-08
+        ],
+        "di_dt_A_per_s": 2500000000.0,
+        "Vin_V": [
+          440,
+          460,
+          480
+        ]
+      },
+      "result": "V_os 62/88 V; 1200 V: 42/44 % at 440 V, 46 % at 460 V, 40 % static at 480 V ; 650 V: 77/81 %, 84 %, 74 % ; 900 V: 56/59 %",
+      "knowledge_ref": "KR-PCB-004, PE-PCB-003, REF-TI-TIDA-010054 decision 1 (ratios 0.67/0.56)"
+    },
+    {
+      "name": "Datasheet di/dt at test R_G (for the R_G,off requirement)",
+      "expression": "di/dt = I_test/t_f",
+      "inputs": {
+        "C4MS025120K": "39.2 A / 11 ns",
+        "C3M0015065K": "55.8 A / 12 ns"
+      },
+      "result": "3.6 A/ns and 4.6 A/ns at 1-2.5 ohm; design R_G,off must hold about 2.5 A/ns",
+      "knowledge_ref": "SKILL-001 step 5"
+    },
+    {
+      "name": "Parasitic turn-on margin (KR-GD-003)",
+      "expression": "dV_GS = C_rss*dv/dt*(R_G,off + R_G,int)",
+      "inputs": {
+        "C_rss_F": 4.7e-12,
+        "dv_dt_V_per_s": 50000000000.0,
+        "R_ohm": 5.6
+      },
+      "result": "1.3 V excursion from -4 V -> -2.7 V, below V_GS(th) min 2.0 V",
+      "knowledge_ref": "SKILL-001 principle 6, KR-GD-003"
+    },
+    {
+      "name": "Current-rating margin",
+      "expression": "I_D(100 degC) / I_rms,max ; I_DM / I_pk",
+      "inputs": {
+        "I_D_100C_A": 62,
+        "I_rms_max_A": 20.4,
+        "I_DM_A": 274,
+        "I_pk_A": 31.6
+      },
+      "result": "3.0x RMS margin, 8.7x pulse margin",
+      "knowledge_ref": "datasheet key parameters"
+    },
+    {
+      "name": "One vs two devices in parallel per position",
+      "expression": "conduction/n ; E_on, E_rr unchanged in total (doubled C_oss, Q_rr) ; E_off/n per device ; Q_G*n",
+      "inputs": {
+        "device": "C4MS025120K",
+        "corner": "400 V/25 A, 150 degC"
+      },
+      "result": "1x 46.7 W vs 2x 31.4 W; gate charge 250 nC; C3M0015065K 27.8 vs 21.7 W; single device selected",
+      "knowledge_ref": "design basis seed (one device unless justified)"
+    }
+  ],
+  "assumptions_added": [
+    {
+      "name": "Commutation loop inductance",
+      "value": "25 nH typical, 35 nH worst case",
+      "basis": "TO-247-4 half bridge with HV ceramics beside the legs (KR-PCB-004, KR-CAP-003, PE-PCB-002/003); package leads about 5-8 nH each; to be extracted from the layout"
+    },
+    {
+      "name": "Design di/dt at turn-off and diode snap-off",
+      "value": "2.5 A/ns",
+      "basis": "Set by R_G,off; datasheet test conditions give 3.6-4.6 A/ns at 1-2.5 ohm; to be verified by double-pulse test"
+    },
+    {
+      "name": "Utilisation limits",
+      "value": "<= 80 % repetitive peak, <= 90 % at OVP trip, <= 70 % DC bus",
+      "basis": "Wolfspeed data-sheet primer 80-90 % (search snippet), TIDA-010054 static ratios 0.67/0.56, GE APEC 2015 25 % derating for 1.2 kV SiC (search snippet); engineering judgement requiring human review"
+    },
+    {
+      "name": "Switching-energy scaling law",
+      "value": "E proportional to V_DS and to I_D, times 1.3 for larger R_G,ext",
+      "basis": "Common first-order scaling of datasheet E_on/E_off; uncertainty about +/-30 %; the 1.3 factor represents R_G,on 10-15 ohm versus 1-2.5 ohm test"
+    },
+    {
+      "name": "R_DS(on) temperature interpolation",
+      "value": "linear between datasheet 25 degC and 175 degC (or 150 degC) typical values",
+      "basis": "Datasheet normalized curves not digitised; linear interpolation is slightly conservative for C3M; C4MS family tempco 1.88 used"
+    },
+    {
+      "name": "C4MS gate drive level for R_DS(on)",
+      "value": "V_GS = 15 V (R25 = 28 mohm)",
+      "basis": "Rails shared with the C3M fallback (KR-GD-006); 18 V would give 25 mohm"
+    },
+    {
+      "name": "Dead time",
+      "value": "250 ns per edge",
+      "basis": "Task default; controller ePWM dead-band; cost quantified (2.9-3.2 W)"
+    },
+    {
+      "name": "Low-side reverse-recovery share for C3M parts",
+      "value": "25 % of Q_rr*Vin dissipated in the diode",
+      "basis": "C3M datasheets give only Q_rr; the remainder is contained in the high-side body-diode E_on; C4MS uses the published E_rr instead"
+    },
+    {
+      "name": "Interface pad thermal resistance",
+      "value": "0.5 K/W per TO-247-4",
+      "basis": "Typical insulating pad at proper pressure; TI's 0.1 K/W for CD-02-05-247 not adopted without a datasheet"
+    },
+    {
+      "name": "Heat-sink resistance",
+      "value": "0.5 K/W at >= 2 m/s, shared by both devices",
+      "basis": "Design-basis cooling seed and TIDA-010054 Ohmite CR201-50VE class; thermal agent to confirm"
+    },
+    {
+      "name": "Expected junction temperature for the efficiency estimate",
+      "value": "about 100 degC",
+      "basis": "Thermal check result (104 degC at the worst corner with 150 degC losses); the 150 degC table remains the design-limit case"
+    },
+    {
+      "name": "E_oss not added separately",
+      "value": "0 W additional",
+      "basis": "Measured E_on with body-diode freewheeling already contains the C_oss energy of both devices; E_oss (63 uJ at 800 V) reported for light-load reference only"
+    }
+  ],
+  "pcb_constraints": [
+    "Commutation loop (input HV ceramics -> HS drain -> switch node -> LS source -> PGND) laid out first and kept <= 25 nH target: adjacent-layer return, ceramics in a column beside the TO-247-4 legs (KR-PCB-004, KR-CAP-003, PE-PCB-002, PE-PCB-003; human-review overlay).",
+    "TO-247-4 footprint with the Kelvin-source pin routed only to the gate-driver return; never tie Kelvin source to the power source on the PCB (KR-PCB-003, SKILL-001 principle 2).",
+    "Gate and Kelvin-source traces on adjacent layers as a tight pair from the driver to the pins; driver and its decoupling within a few millimetres of the device leads, on the opposite side if the devices stand on the sink (KR-PCB-001, KR-PCB-002, KR-PCB-005, PE-PCB-001).",
+    "Both devices mounted on one shared heat sink with rated insulating pads; keep-out for pad edge creepage and mounting hardware; drain tabs at 400 V and switch-node potential (KR-TH-002, KR-ISO-002).",
+    "Provide pads for an RC snubber across the low-side device (switch node to PGND) and optionally across the input leg, populated only if double-pulse tests show ringing beyond the design margin.",
+    "Switch-node copper area limited to what current (29-32 A peak, 20.4 A RMS) and thermal spreading require, to limit dv/dt-coupled common-mode current (PE-PCB-005, PE-PCB-006, 70 um copper).",
+    "Power-board clearance/creepage for 460 V OVP working voltage and the 440 V switch node per KR-ISO-001/002 and the architecture agent's partition decision; the device choice does not depend on the partition."
+  ],
+  "open_issues": [
+    "Efficiency budget: the selected 1200 V device consumes 0.83-0.93 % of the 2 % loss allowance (98 % target). If the inductor/capacitor/auxiliary budget cannot close, the documented alternatives are (a) 2 x C4MS025120K per position (-15 W), (b) C4MS018120K when stocked (-7 W), (c) 650 V C3M0015065K (-19 W) which requires reviewer acceptance of 77-84 % utilisation and a double-pulse gate V_pk <= 520 V at 440 V.",
+    "Availability: C4MS025120K shows Arrow stock only (2640) with zero at DigiKey/Richardson and a 13-week lead (search snippets, October 2026). Procurement must confirm; C3M0021120K is the pin- and gate-rail-compatible fallback (+8 W).",
+    "Short-circuit withstand time is not specified by Wolfspeed for any candidate; KR-PR-001 requires a hardware protection response <= 1.5 us (proposed) and a short-circuit test on the real device.",
+    "The 900 V class cited by the knowledge base (C3M0030090K in SKILL-006 and the TIDA-010054 analysis) is obsolete; the knowledge records need an availability note and the component database should add the C4MS family.",
+    "Design-basis suggestion: lowering the OVP trip from 460 V to about 450 V and specifying the maximum continuous input as 440 V with no switching above the trip would make the 650 V alternative defensible; with the 1200 V selection this is not needed.",
+    "Gate rails: if the architecture confirms C4MS devices only, +18 V turn-on reduces conduction loss by about 11 %; this conflicts with the C3M fallback's +19 V limit, so it must stay a BOM option (KR-GD-006).",
+    "The C4MS018120K E_rr value (720 uJ) is inconsistent with its siblings (35-256 uJ); clarify with Wolfspeed before considering it as the upgrade path.",
+    "I_D(25 degC) for C3M0032120K differs between datasheet text (69 A) and product page (63 A); not decision-relevant but recorded.",
+    "All loss figures depend on the stated scaling assumptions (+/-30 %); a double-pulse test at 400 V / 30 A with the chosen R_G values is the verification step for E_on, E_off, overshoot and dv/dt."
+  ],
+  "verification_status": "Analytically checked: operating points, conduction/switching/recovery/dead-time/gate losses for 15 candidates at 400 V/25 A and six corners for the selected device and runners-up, thermal path per KR-TH-001, voltage utilisation per the stated overshoot model, paralleling comparison. All component parameters are fetched-datasheet level (Wolfspeed PDFs, revisions recorded); product status is manufacturer-page level; stock and prices are search-snippet level. Unverified: L_loop/di-dt assumptions, R_G loss factor, E(V,I) scaling, 150 degC interpolation, pad resistance, Q_G at +15 V. Human review: utilisation limits and class decision, KR-PR-001 protection timing, KR-GD-004 DESAT, KR-TH-002 pad rating, efficiency budget allocation, procurement of C4MS025120K.",
+  "markdown": "# Power semiconductor selection: Wolfspeed SiC MOSFET for the 400 V to 200 V, 5 kW, 50 kHz synchronous buck\n\n## 1. Scope and how the knowledge base was applied\n\nChoosing the power semiconductor is explicitly outside SKILL-001 (\"Choosing the power semiconductor itself (AIPE Transistor Database scope)\", SKILL-001 Not-applicable list), so no skill procedure exists for this decision. The selection below is derived from Wolfspeed datasheets (fetched PDFs, revisions listed per part) and the shared design basis; the knowledge base is applied as follows. KR-GD-001 (gate voltage within absolute maxima, hard constraint): applied directly as a selection filter and as a hand-off to the gate-driver agent. KR-TH-001 (device loss below the thermal-path limit, hard constraint): applied directly with the TIDA-010054 shared-sink model (SKILL-006 principle 1, EC-019/EC-020 pattern) but with this converter's losses, 50 degC ambient and an interface-pad assumption. KR-TH-002: applied directly (two TO-247-4 on one insulated sink is a design-basis seed). KR-PR-001 (protection faster than short-circuit withstand): surfaced as a human-review requirement because no Wolfspeed datasheet examined here states a short-circuit withstand time. KR-PCB-004 and PE-PCB-003 (commutation loop first): adapted into the loop-inductance assumption behind the overshoot estimate. REF-TI-TIDA-010054 decisions 1 and 9 (1200 V devices on an 800 V bus, 900 V devices on a 500 V bus, two TO-247 per insulated sink): adaptation evidence only (section 4). REF-WS-PRD-04814 decision 1 (+15 V / -3 to -4 V rails, +/-5 %): adapted; it is Gen-3 guidance and the Gen-4 C4MS family widens the window. SKILL-001 principles 2 and 6 (Kelvin source, C_iss/C_rss ratio) are used as selection criteria. No reference instance value (2 ohm gate resistors, 6.4 V / 1 us DESAT, 20 uF rail decoupling) is copied.\n\n## 2. Catalog status verified on wolfspeed.com (October 2026)\n\n- 900 V class: C3M0030090K, the TIDA-010054 500 V-side device, is marked OBSOLETE (replacements named by Wolfspeed: C3M0032120K and C4MS036120K); C3M0065090D/J are NRND. No 900 V TO-247-4 device remains, so the 900 V class is unavailable for a new design. This also means the knowledge records that cite C3M0030090K (SKILL-006, TIDA-010054 analysis) need an availability note.\n- 650 V C3M (TO-247-4, T_J,max 175 degC): C3M0015065K, C3M0025065K, C3M0045065K, C3M0060065K active. C3M0030065K from the starting list does not exist.\n- 1200 V C3M (TO-247-4): C3M0016120K, C3M0021120K, C3M0032120K, C3M0040120K active (175 degC); C3M0075120K active but T_J,max 150 degC.\n- 1200 V Gen-4 C4MS (TO-247-4, new family): C4MS009/012/018/025/036/047/065/080120K all active; 1300 V transient rating (< 100 h lifetime), V_GS absolute -10/+23 V, drive +15 to +18 V / -5 to 0 V, T_J,max 175 degC. No Gen-4 650 V or 750 V family is listed.\n\n## 3. Operating points (design basis, L = 267 uH)\n\nD = Vout/Vin; dI = Vout*(1-D)/(L*fs); I_on = Io - dI/2 (high-side turn-on at the inductor valley); I_off = Io + dI/2 (high-side turn-off at the peak); I_rms,HS^2 = D*(Io^2 + dI^2/12); I_rms,LS^2 = (1-D)*(Io^2 + dI^2/12).\n\n| Corner | D | dI (A) | I_on (A) | I_off (A) | I_rms,HS (A) | I_rms,LS (A) |\n|---|---|---|---|---|---|---|\n| 360 V / 25 A | 0.556 | 6.66 | 21.7 | 28.3 | 18.7 | 16.7 |\n| 400 V / 25 A | 0.500 | 7.49 | 21.3 | 28.8 | 17.7 | 17.7 |\n| 440 V / 25 A | 0.455 | 8.17 | 20.9 | 29.1 | 16.9 | 18.6 |\n| 360 V / 27.5 A | 0.556 | 6.66 | 24.2 | 30.8 | 20.6 | 18.4 |\n| 400 V / 27.5 A | 0.500 | 7.49 | 23.8 | 31.3 | 19.5 | 19.5 |\n| 440 V / 27.5 A | 0.455 | 8.17 | 23.4 | 31.6 | 18.6 | 20.4 |\n\nWith L = 220 uH (low end of the accepted range) dI rises to 9.9 A at 440 V; the RMS values change by less than 1 %.\n\n## 4. Voltage class, overshoot and utilisation limits\n\nOvershoot model: V_pk = Vin + L_loop*di/dt plus ringing. Added assumptions: L_loop = 25 nH typical / 35 nH worst case for a TO-247-4 half bridge with HV ceramics beside the legs (KR-PCB-004, KR-CAP-003, PE-PCB-002/003; the two packages alone contribute roughly 10-15 nH); di/dt limited to 2.5 A/ns by R_G,off (datasheet test conditions at 1-2.5 ohm give 3.6-4.6 A/ns, so the design must slow turn-off). V_os = 25e-9 H * 2.5e9 A/s = 62 V typical, 35e-9 * 2.5e9 = 88 V worst case. The body-diode snap-off of the low-side device at high-side turn-on produces a spike of the same order on the low-side device (I_RRM about 20-30 A at the design di/dt, scaled from the datasheet I_RRM at its di_F/dt).\n\nUtilisation limits adopted for this design: repetitive peak (including overshoot) <= 80 % of V_DS,max at 440 V; non-repetitive peak at the 460 V OVP trip <= 90 %; steady DC bus <= 70 % of V_DS,max for cosmic-ray / FIT reasons. Basis: Wolfspeed data-sheet primer \"80 to 90 % of rated maximum\" (search snippet), TIDA-010054 static ratios 800/1200 = 0.67 and 500/900 = 0.56 (REF-TI-TIDA-010054 decision 1), GE APEC 2015 \"25 % derating for 1.2 kV SiC\" (search snippet). These limits are an engineering judgement, not a Wolfspeed specification.\n\n| Class | V_pk at 440 V (typ / worst) | utilisation | V_pk at 460 V OVP (worst) | 480 V static (100 ms) | verdict |\n|---|---|---|---|---|---|\n| 650 V | 502 / 528 V | 77 / 81 % | 548 V = 84 % | 74 % | passes only with the typical loop; fails the 80 % limit at the worst-case loop and is above 80 % at the OVP corner |\n| 900 V | 502 / 528 V | 56 / 59 % | 61 % | 53 % | ideal ratio, but the class is obsolete/NRND |\n| 1200 V | 502 / 528 V | 42 / 44 % | 46 % | 40 % | passes with margin for any plausible layout (even 60 nH at 5 A/ns gives 740 V = 62 %) |\n\nWhy the TIDA-010054 ratios do not transfer directly: TI's 0.67 static ratio mapped to 440 V gives 657 V (a 650 V class), its 0.56 ratio gives 786 V (a 900 V class). TI's DAB is soft-switched (turn-off overshoot only, no hard reverse recovery), whereas this buck hard-switches the high side into the low-side body diode every cycle, has a 460 V OVP corner and a first-spin layout whose L_loop is unverified; and the 900 V class no longer exists. The reference ratios therefore bracket the decision but the overshoot analysis decides it: the 1200 V class is selected; the 650 V C3M0015065K is kept as the documented higher-efficiency alternative with a hard test gate (measured V_pk <= 520 V at 440 V input).\n\n## 5. Candidate comparison at 400 V / 25 A / 50 kHz, T_J = 150 degC (typical R_DS(on))\n\nLoss model (per device): P_cond = I_rms^2 * R_DS(on)(150 degC), with R(150) = R25 * [1 + (R_hot/R25 - 1)*(150-25)/(T_hot-25)] interpolated between the datasheet 25 degC and 175 degC (or 150 degC) typical values (C4MS: family tempco 1.88 at 175 degC; C4MS R25 taken at V_GS = 15 V). High-side switching P_sw = (E_on + E_off)*fs with E = E_ds * (Vin/V_test) * (I/I_test) * 1.3, using the body-diode-freewheeling (hottest) datasheet values, linear scaling in voltage and current, and a 1.3 factor for R_G,ext above the datasheet test value; uncertainty of this scaling is about +/-30 %. Low-side turn-on is ZVS-like (its body diode conducts during the dead time) and its turn-off commutates into its own body diode, so E_on,LS = E_off,LS = 0. Low-side reverse-recovery loss: E_rr,ds scaled (C4MS, which lists E_rr) or 0.25*Q_rr*Vin (C3M, assumption: a quarter of the swept charge is dissipated while the diode supports voltage; the remainder is already inside the high-side E_on(body diode)). Dead-time body-diode loss (LS): P_dt = t_dt*fs*V_SD,hot*(I_on + I_off) with t_dt = 250 ns per edge. E_oss is not added separately because the measured E_on already contains the C_oss energy of both devices. Gate power P_g = Q_G*19 V*fs.\n\n| Part | Class | R_DS(on) 25 degC typ/max (mohm) | R(150) est (mohm) | I_D 25/100 degC (A) | Q_G (nC) | C_iss/C_oss/C_rss (pF) | E_on/E_off body-diode FWD at test (uJ) | Q_rr or E_rr | R_thJC (K/W) | HS / LS / total (W) | Efficiency impact | Availability (soft) |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| C3M0015065K | 650 | 15/21 | 19.2 | 120/96 | 188 | 5011/289/31 | 252/180 at 400 V, 55.8 A, 175 degC | Q_rr 432-510 nC | 0.35 | 18.3 / 9.5 / 27.8 | 0.56 % | good (4 distributors) |\n| C3M0025065K | 650 | 25/34 | 31.7 | 97/70 | 112 | 2980/178/12 | 121/53 at 400 V, 33.5 A | Q_rr 293-453 nC | 0.46 | 17.9 / 13.7 / 31.6 | 0.63 % | listed |\n| C3M0045065K | 650 | 45/60 | 58.3 | 49/35 | 63 | 1621/101/8 | 57/14 at 400 V, 17.6 A | Q_rr 171-247 nC | 0.85 | 24.3 / 22.2 / 46.5 | 0.93 % | not checked |\n| C3M0060065K | 650 | 60/79 | 77 (family tempco) | 37/not found | 46 | 1020/80/9 | 70/5 at 400 V, 13.2 A | Q_rr 110-151 nC | 0.99 | 32.3 / 27.9 / 60.2 | 1.20 % | listed |\n| C3M0030090K | 900 | 30/39 | 41 (datasheet 150 degC) | 63/48 | 74 | 1503/144/5 | 133/111 at 600 V, 35 A, 150 degC | Q_rr 536 nC | 0.48 | 20.4 / 17.0 / 37.4 | 0.75 % | OBSOLETE |\n| C3M0065090J | 900 | 65/78 | 90 | 35/22 | 30 | 760/66/5 | 42/6 at 400 V, 20 A, 150 degC | Q_rr 215 nC | 1.1 | 31.8 / 32.0 / 63.8 | 1.28 % | NRND, no TO-247-4 |\n| C3M0075120K | 1200 | 75/90 | 100 | 32/21 | 53 | 1390/58/2 | 270/77 at 800 V, 20 A, 150 degC | Q_rr 254 nC | 1.1 | 44.4 / 35.3 / 79.7 | 1.59 % | TIDA device; not checked |\n| C3M0040120K | 1200 | 40/53.5 | 63.3 | 66/48 | 99 | 2900/103/5 | 611/99 at 800 V, 33.3 A | Q_rr 691-850 nC | 0.46 | 35.4 / 25.2 / 60.6 | 1.21 % | not checked |\n| C3M0032120K | 1200 | 32/43 | 53.3 | 69 (ds) or 63 (page)/53 | 118 | 3357/129/8 | 955/107 at 800 V, 40 A | Q_rr 478 nC | 0.44 | 35.8 / 20.7 / 56.5 | 1.13 % | excellent, ~USD 14 |\n| C3M0021120K | 1200 | 21/28.8 | 35.2 | 100/74 | 162 | 4818/180/12 | 1580/340 at 800 V, 50 A | Q_rr 928 nC | 0.32 | 39.3 / 15.7 / 54.9 | 1.10 % | good (DigiKey 2215, Arrow 2659) |\n| C3M0016120K | 1200 | 16/22 | 26.8 | 115/90 | 223 | 6922/231/13 | 2552/788 at 800 V, 80 A | Q_rr 1365-1665 nC | 0.23 | 39.7 / 13.1 / 52.8 | 1.06 % | good, ~USD 26 |\n| C4MS018120K | 1200 | 18/23.4 (18 V); 21 (15 V) | 36.4 | 121/86 | 172 | 4105/148/6.5 | 343/130 at 800 V, 52.7 A, 2 ohm, 14 nH | E_rr 720 uJ | 0.30 | 18.3 / 21.5 / 39.8 | 0.80 % | thin (new, Rev. 1 Jun 2026) |\n| C4MS025120K | 1200 | 25/33 (18 V); 28 (15 V) | 48.5 | 86/62 | 125 | 3087/103/4.7 | 470/64 at 800 V, 39.2 A, 1 ohm, 25 nH | E_rr 256 uJ | 0.41 | 25.1 / 21.6 / 46.7 | 0.93 % | Arrow 2640; DigiKey 0, 13 wk |\n| C4MS036120K | 1200 | 36/47 (18 V); 42 (15 V) | 72.8 | 60/44 | 88 | 2164/72/3.2 | 393/26 at 800 V, 27.6 A | E_rr 35 uJ | 0.55 | 33.6 / 26.5 / 60.1 | 1.20 % | no stock listing found |\n| C4MS047120K | 1200 | 47/61 (18 V); 53 (15 V) | 91.9 | 50/37 | 68 | 1640/57/3 | 242/30 at 800 V, 21 A | E_rr 140 uJ | 0.62 | 38.2 / 35.3 / 73.6 | 1.47 % | listed |\n\nObservations. The 1200 V Gen-3 parts pay a large hard-switching penalty at 400 V because their body-diode E_on (reverse recovery of the complementary device) is 3-6 times that of the 650 V parts at similar current. The Gen-4 C4MS parts cut that penalty by roughly half and have a C_iss/C_rss ratio of 630 (versus 160-400 for C3M), 1300 V transient capability and wide gate limits, at the cost of a steeper R_DS(on) tempco (1.88). Ranking by total loss: C3M0015065K 27.8 W, C3M0025065K 31.6 W, (C3M0030090K 37.4 W, obsolete), C4MS018120K 39.8 W, C4MS025120K 46.7 W, C3M0016120K 52.8 W, C3M0021120K 54.9 W, C3M0032120K 56.5 W; all others above 60 W.\n\n## 6. Selection: Wolfspeed C4MS025120K (1200 V, 25 mohm, TO-247-4, Kelvin source), one device per position\n\nJustification. Voltage margin: 42-44 % utilisation at 440 V including overshoot, 46 % at the 460 V OVP corner, 40 % at the 480 V survival corner, plus a 1300 V (< 100 h) transient rating; the margin absorbs any first-spin layout. Transient overshoot: the Gen-4 soft body diode (datasheet feature) and the margin above make R_G tuning a loss/EMI question rather than a survival question. Current rating: I_D = 62 A at T_C = 100 degC and 274 A pulsed against 20.4 A RMS and 31.6 A peak at the 440 V / 110 % corner; body-diode continuous 59 A. R_DS(on): 28 mohm typ at 15 V (25 mohm at 18 V), 48.5 mohm estimated at 150 degC; conduction 15.3 W per device at 400 V / 25 A. Switching energy: E_on + E_off scaled to 400 V / 21-29 A is about 151 uJ before the R_G factor, giving 9.8 W; low-side E_rr about 3.5 W. Gate charge 125 nC (at -4/+18 V, 800 V) and gate power 0.12 W per channel. Parasitic capacitances C_oss 103 pF (E_oss 63 uJ at 800 V), C_rss 4.7 pF, ratio 630 (SKILL-001 principle 6): parasitic turn-on margin is large. Package: TO-247-4 with Kelvin source (SKILL-001 principle 2, KR-PCB-003). Thermal: R_thJC 0.41 K/W; worst corner (440 V / 27.5 A) gives T_J about 104 degC (section 6.2). Availability: Arrow stock (2640, 2190 in the US) but zero at DigiKey and Richardson with a 13-week lead time, so a fallback is defined: C3M0021120K (same footprint, same +15 V / -4 V gate rails, abundant stock) accepting +8 W, or C4MS018120K (-7 W) when its stock materialises. Why not C4MS018120K as primary: datasheet Rev. 1 (June 2026), no distributor stock found, higher Q_G and its E_rr (720 uJ) is inconsistent with its siblings. Why not C3M0015065K as primary: see section 4; it remains the documented alternative if the 98 % efficiency budget cannot be closed, subject to a double-pulse overshoot gate.\n\n### 6.1 Per-device losses of the selected C4MS025120K for the thermal agent (T_J = 150 degC, typical R, R_G factor 1.3, V_GS = +15 V)\n\n| Corner | HS cond (W) | HS sw (W) | HS total (W) | LS cond (W) | LS E_rr (W) | LS dead-time diode (W) | LS total (W) | Both (W) | Share of 5 kW |\n|---|---|---|---|---|---|---|---|---|---|\n| 360 V / 25 A | 17.0 | 9.0 | 25.9 | 13.6 | 3.2 | 2.9 | 19.6 | 45.5 | 0.91 % |\n| 400 V / 25 A | 15.3 | 9.8 | 25.1 | 15.3 | 3.5 | 2.9 | 21.6 | 46.7 | 0.93 % |\n| 440 V / 25 A | 13.9 | 10.7 | 24.6 | 16.7 | 3.8 | 2.9 | 23.3 | 47.9 | 0.96 % |\n| 360 V / 27.5 A | 20.5 | 9.9 | 30.4 | 16.4 | 3.6 | 3.2 | 23.1 | 53.5 | 1.07 % |\n| 400 V / 27.5 A | 18.5 | 10.9 | 29.4 | 18.5 | 3.9 | 3.2 | 25.5 | 54.9 | 1.10 % |\n| 440 V / 27.5 A | 16.8 | 11.9 | 28.7 | 20.2 | 4.2 | 3.2 | 27.5 | 56.2 | 1.12 % |\n\nMaximum-R_DS(on) variant (33/25 scaling): multiply conduction terms by 1.21 (56.5 W total at 400 V / 25 A). Expected-case estimate for the efficiency budget (T_J about 100 degC, typical R): 41.5 W = 0.83 % at 400 V / 25 A. Driving at +18 V (C4MS only, BOM option per KR-GD-006) lowers conduction by about 11 % (-3.4 W total).\n\n### 6.2 Thermal check (KR-TH-001, KR-TH-002, SKILL-006 principle 1)\n\nShared heat sink 0.5 K/W at >= 2 m/s (seed), insulating pad 0.5 K/W per device (added assumption; TI's 0.1 K/W pad value is not adopted without a datasheet), R_thJC 0.41 K/W, T_A = 50 degC. Worst corner 440 V / 27.5 A: T_sink = 50 + 0.5*56.2 = 78.1 degC; T_J,HS = 78.1 + (0.5 + 0.41)*28.7 = 104.2 degC; T_J,LS = 103.2 degC; margin 46 K to the 150 degC design limit, 71 K to the device maximum. TIDA-model limit per device P_max = (150 - 50)/(2*0.5 + 0.5 + 0.41) = 52.4 W against 29.4 W worst high-side loss. The loss table is conservative (150 degC resistance), so the real junction will be lower; the thermal agent should iterate once with the actual sink.\n\n### 6.3 One device versus two in parallel per position (400 V / 25 A, 150 degC)\n\nC4MS025120K: 1 x 46.7 W (HS 25.1 / LS 21.6) versus 2 x 31.4 W (HS 17.4 / LS 14.0): conduction halves, E_off splits, but E_on and E_rr do not fall (doubled C_oss and Q_rr), gate charge doubles (250 nC, 0.24 W per position), four insulated TO-247-4 on the sink, and dynamic sharing depends on V_GS(th) spread (2.0-3.9 V) and symmetric Kelvin gate loops with individual R_G. The 15 W (0.3 %) gain does not justify the risk and cost at this power level (seed: one device per position), so a single device is selected; paralleling is the documented second option if the efficiency budget fails. For C3M0015065K the gain would be only 6 W (27.8 to 21.7 W).\n\n## 7. Gate-drive requirements imposed by the selection (hand-off to the gate-driver agent)\n\n- Rails: +15 V turn-on / -4 V turn-off, +/-5 % (KR-GD-001 check: +15.75 V and -4.2 V against C4MS limits -10/+23 V and against the C3M0021120K fallback limits -8/+19 V). C4MS alone permits +18 V (KR-GD-006 BOM option).\n- Q_G = 125 nC (-4/+18 V, 800 V, 39.2 A; the +15 V / 400 V value is lower but not published): bias power 125e-9*19*50e3 = 0.12 W per channel (KR-IS-001 budget input). R_G,int = 2.6 ohm.\n- Recommended external gate resistance: datasheet test 1 ohm gives t_r = 4 ns (about 200 V/ns), far too fast for CMTI and EMI. Start with R_G,on = 10-15 ohm (expected 30-60 V/ns, crude (R_ext+R_int) scaling) and R_G,off = 2-5 ohm (di/dt <= 2.5 A/ns at 29-32 A); tune by double-pulse test (SKILL-001 step 5, KR-GD-002 split outputs).\n- dv/dt expectation 30-60 V/ns at turn-on: isolated driver CMTI >= 100 V/ns and isolator working voltage for a 440 V switch node (KR-SN-001). Miller immunity: C_rss*dv/dt*(R_G,off+R_G,int) = 4.7 pF * 50 V/ns * 5.6 ohm = 1.3 V above -4 V, well below V_GS(th) min 2.0 V; an active Miller clamp remains recommended (KR-GD-003).\n- Peak gate current 19 V / (R_G + 2.6 ohm): 1.5 A source at 10 ohm, 3.4 A sink at 3 ohm; choose a driver with >= 4 A sink.\n- Body diode: V_SD = 5.1 V (25 degC) / 4.6 V (175 degC) at 19.6 A with V_GS = -4 V; the 250 ns dead time per edge costs 2.9-3.2 W; shorter dead time is a firmware/controller option (KR-GD-009 interlock still required).\n- DESAT (KR-GD-004, human review): derive the trip from the C4MS025120K output characteristics (R_DS(on) 48.5 mohm at 150 degC gives about 2.9 V at 60 A); do not reuse 6.4 V / 1 us.\n\n## 8. Short-circuit withstand and protection speed (KR-PR-001)\n\nNo C3M or C4MS datasheet examined states a short-circuit withstand time. Wolfspeed evidence: PRD-08296 Rev. 1 (fetched) shows withstand time falling with bus voltage, 2.9 us at 800 V / 175 degC for a 1200 V module, with DESAT turn-off in about 300 ns; a Wolfspeed forum answer (search snippet) gives 9 us at 400 V and 1.8 us at 800 V for C3M0032120K at 25 degC and 15 nH. For the C4MS025120K at a 400 V bus a withstand time of several microseconds is plausible but unverified. Requirement passed to the gate-driver agent: total hardware response (blanking + detection + soft turn-off) <= 1.5 us, to be confirmed by a short-circuit test on the actual device (KR-PR-001, KR-GD-011, KR-SN-005).\n\n## 9. Verification status\n\nAnalytically checked: operating-point currents; conduction losses with datasheet R_DS(on) and the stated temperature interpolation; switching, reverse-recovery, dead-time and gate losses with the stated scaling law; thermal path per KR-TH-001; voltage utilisation per the stated overshoot model; paralleling comparison. All datasheet parameters are from fetched Wolfspeed PDFs with revisions recorded.\n\nUnverified: L_loop (25/35 nH) and di/dt (2.5 A/ns) assumptions; the 1.3 R_G loss factor; linear E(V, I) scaling (+/-30 %); the 25 % diode share of C3M recovery energy; R_DS(on) at 150 degC by interpolation (the datasheet curve is not digitised); Q_G at +15 V / 400 V; the 0.5 K/W pad; distributor stock and prices (search snippets, dated October 2026); C4MS018120K E_rr consistency; the C3M0032120K I_D discrepancy (69 A datasheet, 63 A product page).\n\nHuman review required: the utilisation limits (80/90/70 %) and the resulting class decision; KR-PR-001 short-circuit protection timing and test; DESAT trip and blanking (KR-GD-004); insulating pad rating and creepage on the shared sink (KR-TH-002); the 98 % efficiency budget with 0.83-0.93 % allocated to the MOSFETs (fallbacks: 650 V C3M0015065K with an overshoot test gate, or two C4MS025120K per position); procurement confirmation of C4MS025120K stock and the C3M0021120K fallback; knowledge-base update for the obsolete C3M0030090K.\n"
+}

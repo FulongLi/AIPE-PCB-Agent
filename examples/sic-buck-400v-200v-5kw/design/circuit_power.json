@@ -1,0 +1,7501 @@
+[
+  {
+    "ref": "J1",
+    "value": "VIN_RAW (+IN)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "VIN_RAW"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; DC input + from the fuse holder (off-board KLKD025.T)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J2",
+    "value": "PGND (-IN)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; DC input return",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J3",
+    "value": "VOUT (+OUT)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "VOUT"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; DC output +",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J4",
+    "value": "PGND (-OUT)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; DC output return",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J5",
+    "value": "RLY_A (VIN_RAW)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "VIN_RAW"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; bypass relay contact terminal A (Omron G9EA-1 DC12, chassis mounted)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J6",
+    "value": "RLY_B (VIN)",
+    "footprint": "TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR",
+    "nets": {
+      "1": "VIN"
+    },
+    "page": "01_power_stage",
+    "kind": "J",
+    "mpn": "74651195",
+    "maker": "Wurth Elektronik",
+    "source": "https://www.we-online.de/katalog/datasheet/74651195.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; bypass relay contact terminal B; PTC RT1 bridges A-B on board",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "RT1",
+    "value": "PTC precharge (re-select)",
+    "footprint": "AIPE:PTC_Disc_D20_P10_Envelope",
+    "nets": {
+      "1": "VIN_RAW",
+      "2": "VIN"
+    },
+    "page": "01_power_stage",
+    "kind": "RT",
+    "mpn": "TDK B59xxx PTC to be re-selected",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/en/ptc-thermistors",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Precharge PTC across the relay contacts: R25 100-150 ohm, Vmax >= 480 V DC, Vlink >= 620 V DC (CR-19, human review); envelope footprint",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "RV1",
+    "value": "S20K385 MOV",
+    "footprint": "Varistor:RV_Disc_D21.5mm_W5.4mm_P10mm",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "RV",
+    "mpn": "B72220S0381K101",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/inf/70/db/var/SIOV_Leaded_StandarD.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Optional input MOV (8 kA, 150 J, 1 W), DNP; disc thickness vs footprint W5.4 to confirm",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "Q1",
+    "value": "C4MS025120K",
+    "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+    "nets": {
+      "1": "VIN",
+      "2": "SW",
+      "3": "KS_H",
+      "4": "G_H"
+    },
+    "page": "01_power_stage",
+    "kind": "Q",
+    "mpn": "C4MS025120K",
+    "maker": "Wolfspeed",
+    "source": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+    "pins": {
+      "1": {
+        "name": "D",
+        "type": "passive"
+      },
+      "2": {
+        "name": "S",
+        "type": "passive"
+      },
+      "3": {
+        "name": "KS",
+        "type": "passive"
+      },
+      "4": {
+        "name": "G",
+        "type": "input"
+      }
+    },
+    "note": "1200 V / 25 mohm SiC MOSFET TO-247-4 Kelvin source, high-side; tab = VIN (DC); pad order 1 D, 2 S, 3 KS, 4 G per PRD 05966 front view (ASSUMPTION - verify pad-1 side); insulated to the PE-bonded heatsink with Sil-Pad TSP A2000 (CR-13)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "Q2",
+    "value": "C4MS025120K",
+    "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+    "nets": {
+      "1": "SW",
+      "2": "PGND",
+      "3": "KS_L",
+      "4": "G_L"
+    },
+    "page": "01_power_stage",
+    "kind": "Q",
+    "mpn": "C4MS025120K",
+    "maker": "Wolfspeed",
+    "source": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+    "pins": {
+      "1": {
+        "name": "D",
+        "type": "passive"
+      },
+      "2": {
+        "name": "S",
+        "type": "passive"
+      },
+      "3": {
+        "name": "KS",
+        "type": "passive"
+      },
+      "4": {
+        "name": "G",
+        "type": "input"
+      }
+    },
+    "note": "1200 V / 25 mohm SiC MOSFET TO-247-4 Kelvin source, low-side; tab = SW (switching); pad order 1 D, 2 S, 3 KS, 4 G per PRD 05966 front view (ASSUMPTION - verify pad-1 side); insulated to the PE-bonded heatsink with Sil-Pad TSP A2000 (CR-13)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C1",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 1/10, row 1 (<= 5 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C2",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 2/10, row 1 (<= 5 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C3",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 3/10, row 1 (<= 5 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C4",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 4/10, row 1 (<= 5 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C5",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 5/10, row 1 (<= 5 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C6",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 6/10, row 2 (<= 15 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C7",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 7/10, row 2 (<= 15 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C8",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 8/10, row 2 (<= 15 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C9",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 9/10, row 2 (<= 15 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C10",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "C_HF 10/10, row 2 (<= 15 mm) beside the TO-247-4 legs; DC-bias curve unverified (open item)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C11",
+    "value": "20uF/800V film",
+    "footprint": "AIPE:C_Film_41.5x28x37_P37.5x10.2",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "B32776G8206K000",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DC-link input film C_IN1 (14.5 A rms rating, 6.92 A each worst); alternates KEMET C4AQIBW5200A3JJ / Vishay MKP1848C62080JP4",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C12",
+    "value": "20uF/800V film",
+    "footprint": "AIPE:C_Film_41.5x28x37_P37.5x10.2",
+    "nets": {
+      "1": "VIN",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "B32776G8206K000",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DC-link input film C_IN2 (14.5 A rms rating, 6.92 A each worst); alternates KEMET C4AQIBW5200A3JJ / Vishay MKP1848C62080JP4",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "L1",
+    "value": "272uH/25A toroid",
+    "footprint": "AIPE:L_Toroid_HF58x2_D69_H48_P25.4",
+    "nets": {
+      "1": "SW",
+      "2": "VOUT_L"
+    },
+    "page": "01_power_stage",
+    "kind": "L",
+    "mpn": "AIPE custom choke: 2 x Magnetics 0058192A2 stacked, 34 T AWG10",
+    "maker": "custom winding (house to be selected)",
+    "source": "design/research/inductor.json selection.magnetic_record",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "L1: 319 uH at 0 A, 272 uH at 25 A, 210 uH at 41 A (nominal); DCR 12.2 mohm; in the fan stream (CR-14); mass carried by the cup standoffs",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U10",
+    "value": "TMCS1133C2AQDVGR",
+    "footprint": "AIPE:TMCS1133_DVG0010A_HV_Slot",
+    "nets": {
+      "1": "VOUT_L",
+      "2": "VOUT",
+      "3": "GND_CTRL",
+      "4": "GND_CTRL",
+      "5": null,
+      "6": "ISENSE",
+      "7": "OC_N",
+      "8": "VOC_SET",
+      "9": "3V3",
+      "10": "3V3"
+    },
+    "page": "01_power_stage",
+    "kind": "IC",
+    "mpn": "TMCS1133C2AQDVGR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf",
+    "pins": {
+      "1": {
+        "name": "IN+",
+        "type": "passive"
+      },
+      "2": {
+        "name": "IN-",
+        "type": "passive"
+      },
+      "3": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "4": {
+        "name": "ALERT",
+        "type": "passive"
+      },
+      "5": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "6": {
+        "name": "VOUT",
+        "type": "output"
+      },
+      "7": {
+        "name": "OC",
+        "type": "open_collector"
+      },
+      "8": {
+        "name": "VOC",
+        "type": "input"
+      },
+      "9": {
+        "name": "VS",
+        "type": "power_in"
+      },
+      "10": {
+        "name": "VS",
+        "type": "passive"
+      }
+    },
+    "note": "Isolated Hall current sensor in the inductor output path (IN+ bar = VOUT_L, IN- bar = VOUT), 50 mV/A, 0.33 V at 0 A, VS 3.3 V; OC threshold 37.5 A via VOC_SET 0.750 V; pinout SBOSAG0E (fetched-datasheet); ALERT unused -> GND per datasheet (A-P10)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C13",
+    "value": "60uF/450V film",
+    "footprint": "AIPE:C_Film_41.5x30x45_P37.5x20.3",
+    "nets": {
+      "1": "VOUT",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "B32776G4606K000",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output film C_OUT1 (1.43 A rms each); 440 V high-side-short fault survivable",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C14",
+    "value": "60uF/450V film",
+    "footprint": "AIPE:C_Film_41.5x30x45_P37.5x20.3",
+    "nets": {
+      "1": "VOUT",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "B32776G4606K000",
+    "maker": "TDK (EPCOS)",
+    "source": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output film C_OUT2 (1.43 A rms each); 440 V high-side-short fault survivable",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R1",
+    "value": "120k",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "BLD_IN_1"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW2512120KFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input bleeder chain 3 x 120 k (360 k, 0.54 W at 440 V, 160 V per element at 480 V)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R2",
+    "value": "120k",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "BLD_IN_1",
+      "2": "BLD_IN_2"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW2512120KFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input bleeder chain 3 x 120 k (360 k, 0.54 W at 440 V, 160 V per element at 480 V)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R3",
+    "value": "120k",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "BLD_IN_2",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW2512120KFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input bleeder chain 3 x 120 k (360 k, 0.54 W at 440 V, 160 V per element at 480 V)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R4",
+    "value": "150k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "IND_IN_1"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "RC1206FR-07150KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC1206",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input DC-LINK LIVE indicator string 3 x 150 k 1206 (<= 160 V, 0.17 W per element)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R5",
+    "value": "150k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "IND_IN_1",
+      "2": "IND_IN_2"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "RC1206FR-07150KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC1206",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input DC-LINK LIVE indicator string 3 x 150 k 1206 (<= 160 V, 0.17 W per element)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R6",
+    "value": "150k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "IND_IN_2",
+      "2": "IND_IN_3"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "RC1206FR-07150KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC1206",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Input DC-LINK LIVE indicator string 3 x 150 k 1206 (<= 160 V, 0.17 W per element)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D1",
+    "value": "LED red",
+    "footprint": "LED_SMD:LED_0805_2012Metric",
+    "nets": {
+      "1": "PGND",
+      "2": "IND_IN_3"
+    },
+    "page": "01_power_stage",
+    "kind": "D",
+    "mpn": "LTST-C170KRKT",
+    "maker": "Lite-On",
+    "source": "https://optoelectronics.liteon.com/",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "Input DC-LINK LIVE LED (warning only, not proof of safe voltage); part unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R7",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "VOUT",
+      "2": "BLD_OUT_1"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW2512100KFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output bleeder chain 2 x 100 k (200 k, 0.20 W; 0.97 W / 220 V per element in the 440 V fault)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R8",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "BLD_OUT_1",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW2512100KFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output bleeder chain 2 x 100 k (200 k, 0.20 W; 0.97 W / 220 V per element in the 440 V fault)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R9",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VOUT",
+      "2": "IND_OUT_1"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "RC1206FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC1206",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output LIVE indicator string 2 x 100 k 1206",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R10",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "IND_OUT_1",
+      "2": "IND_OUT_2"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "RC1206FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC1206",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Output LIVE indicator string 2 x 100 k 1206",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D2",
+    "value": "LED red",
+    "footprint": "LED_SMD:LED_0805_2012Metric",
+    "nets": {
+      "1": "PGND",
+      "2": "IND_OUT_2"
+    },
+    "page": "01_power_stage",
+    "kind": "D",
+    "mpn": "LTST-C170KRKT",
+    "maker": "Lite-On",
+    "source": "https://optoelectronics.liteon.com/",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "Output LIVE LED; part unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R11",
+    "value": "10",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "SW",
+      "2": "SNUB_MID"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW251210RFKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P7: RC snubber pads SW-PGND, DNP until double-pulse results (value placeholder)",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C15",
+    "value": "1n/1kV",
+    "footprint": "Capacitor_SMD:C_1812_4532Metric",
+    "nets": {
+      "1": "SNUB_MID",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "C4532C0G3A102J130KA",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C4532C0G3A102J130KA",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P7: snubber capacitor 1 kV 1812 pads, DNP (value placeholder)",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C16",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "DAMP_MID"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Damping leg (DNP): 2 x 0.47 uF 630 V in parallel across the HF tier (baseline damping_leg_dnp)",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R12",
+    "value": "0.47",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "DAMP_MID",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "ERJ-1TRQFR47U",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Damping leg (DNP): 2 x 0.47 ohm 1 W 2512 in parallel (>= 2 W for ~1 W ring energy); part number unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C17",
+    "value": "0.47u/630V",
+    "footprint": "Capacitor_SMD:C_2220_5750Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "DAMP_MID"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "CGA9P1X7T2J474M250KC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Damping leg (DNP): 2 x 0.47 uF 630 V in parallel across the HF tier (baseline damping_leg_dnp)",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R13",
+    "value": "0.47",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "DAMP_MID",
+      "2": "PGND"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "ERJ-1TRQFR47U",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Damping leg (DNP): 2 x 0.47 ohm 1 W 2512 in parallel (>= 2 W for ~1 W ring energy); part number unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "H1",
+    "value": "PE M4 stud",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4_Pad",
+    "nets": {
+      "1": "PE"
+    },
+    "page": "01_power_stage",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "M4 PE stud pad bonded to heatsink and baseplate (bond <= 0.1 ohm); IEC 60417-5019 label",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R14",
+    "value": "0",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "PGND",
+      "2": "PE"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW25120000Z0EG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "PGND-to-PE configurable link, DNP until the source earthing is defined (A-23 review)",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R15",
+    "value": "1M",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "PGND",
+      "2": "PE_REF_MID"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW25121M00FKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P11: PGND-PE reference 2 x 1 M in series (<= 240 V per 500 V element)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R16",
+    "value": "1M",
+    "footprint": "Resistor_SMD:R_2512_6332Metric",
+    "nets": {
+      "1": "PE_REF_MID",
+      "2": "PE"
+    },
+    "page": "01_power_stage",
+    "kind": "R",
+    "mpn": "CRCW25121M00FKEG",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P11: PGND-PE reference, second element",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C18",
+    "value": "10n/300VAC",
+    "footprint": "Capacitor_THT:C_Disc_D12.5mm_W5.0mm_P10.00mm",
+    "nets": {
+      "1": "VIN",
+      "2": "PE"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "VY2103M35Y5US6TV0",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28534/vy2series.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Y2 footprint VIN-PE, DNP (touch-current review); Y2 10 nF 300 VAC disc; ordering suffix unverified; footprint D12.5/P10 approximates the disc",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C19",
+    "value": "10n/300VAC",
+    "footprint": "Capacitor_THT:C_Disc_D12.5mm_W5.0mm_P10.00mm",
+    "nets": {
+      "1": "PGND",
+      "2": "PE"
+    },
+    "page": "01_power_stage",
+    "kind": "C",
+    "mpn": "VY2103M35Y5US6TV0",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28534/vy2series.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Y2 footprint PGND-PE, DNP (touch-current review); Y2 10 nF 300 VAC disc; ordering suffix unverified; footprint D12.5/P10 approximates the disc",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R17",
+    "value": "100",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "PWM_H",
+      "2": "PWM_H_F"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-07100RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "PWM_H series element of the 100 ohm / 100 pF / 10 k receiving network (KR-GD-008 adapted)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C20",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "PWM_H_F",
+      "2": "GND_CTRL"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "100 pF at the driver input pin (tau 10 ns)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R18",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "PWM_H_F",
+      "2": "GND_CTRL"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "10 k pull-down: driver input defined low when the mezzanine is open",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U1",
+    "value": "UCC21710QDWRQ1",
+    "footprint": "AIPE:UCC21710_DW0016A_Slot",
+    "nets": {
+      "1": "KS_H",
+      "2": "DESAT_H_OC",
+      "3": "KS_H",
+      "4": "HS_OUTH",
+      "5": "VDD_H",
+      "6": "HS_OUTL",
+      "7": "HS_CLMP",
+      "8": "VEE_H",
+      "9": "GND_CTRL",
+      "10": "PWM_H_F",
+      "11": "PWM_L_F",
+      "12": "RDY_H",
+      "13": "FLT_H_N",
+      "14": "RESET_N_F",
+      "15": "3V3",
+      "16": null
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "IC",
+    "mpn": "UCC21710QDWRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "AIN",
+        "type": "input"
+      },
+      "2": {
+        "name": "OC",
+        "type": "input"
+      },
+      "3": {
+        "name": "COM",
+        "type": "power_in"
+      },
+      "4": {
+        "name": "OUTH",
+        "type": "output"
+      },
+      "5": {
+        "name": "VDD",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "OUTL",
+        "type": "output"
+      },
+      "7": {
+        "name": "CLMPI",
+        "type": "passive"
+      },
+      "8": {
+        "name": "VEE",
+        "type": "power_in"
+      },
+      "9": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "10": {
+        "name": "IN+",
+        "type": "input"
+      },
+      "11": {
+        "name": "IN-",
+        "type": "input"
+      },
+      "12": {
+        "name": "RDY",
+        "type": "open_collector"
+      },
+      "13": {
+        "name": "FLT",
+        "type": "open_collector"
+      },
+      "14": {
+        "name": "RST/EN",
+        "type": "input"
+      },
+      "15": {
+        "name": "VCC",
+        "type": "power_in"
+      },
+      "16": {
+        "name": "APWM",
+        "type": "output"
+      }
+    },
+    "note": "HS isolated SiC driver, pinout SLUSDH8D (fetched-datasheet); IN+ = PWM_H_F, IN- = PWM_L_F interlock (KR-GD-009); AIN tied to COM (CR-01); APWM unused; AIPE footprint with the KiCad SOIC-16W land pattern and the 1.2 x 16.6 mm isolation slot",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R19",
+    "value": "10",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "HS_OUTH",
+      "2": "G_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "ERJ-P08F10R0V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_ON 10 ohm bring-up (tuning target 6.8 ohm = ERJ-P08F6R80V), baseline rg_on_ohm; ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R20",
+    "value": "3.3",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "HS_OUTL",
+      "2": "G_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "ERJ-P08F3R30V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_OFF 3.3 ohm, baseline rg_off_ohm; ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R21",
+    "value": "0",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "HS_CLMP",
+      "2": "G_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603JR-070RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Miller clamp link CLMPI -> gate, 0 ohm 0603, path <= 15 mm (KR-GD-003, REQUIRED)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R22",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "nets": {
+      "1": "G_H",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0805FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_GS gate-to-Kelvin discharge at the device side of R_G (KR-GD-007)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R23",
+    "value": "1",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "G_H",
+      "2": "HS_GK"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-071RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DNP gate-Kelvin RC (KR-GD-010 review): 1 ohm 0603 pads",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C21",
+    "value": "470p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "HS_GK",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM1885C1H471JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H471JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DNP gate-Kelvin RC (KR-GD-010 review): 470 pF C0G pads",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "TP1",
+    "value": "VGS_H",
+    "footprint": "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm",
+    "nets": {
+      "1": "G_H",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "G",
+        "type": "passive"
+      },
+      "2": {
+        "name": "KS",
+        "type": "passive"
+      }
+    },
+    "note": "V_GS probe loop at the device side of R_G (CR-11); floats at the switch node - HV referenced, isolated probe only",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C22",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C23",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C24",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM high-frequency decoupling at the pins",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C25",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "KS_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "COM-VEE decoupling (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C26",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "KS_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "COM-VEE high-frequency decoupling at the pins",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C27",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VCC decoupling 1 uF (datasheet condition) at pin 15",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C28",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VCC high-frequency decoupling at pin 15",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R24",
+    "value": "2.2k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "DESAT_H_A"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "ERJ-P08F2201V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R1 2.2 k: VDD -> node A (bias 6-9 mA); ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D3",
+    "value": "US1M 1000V",
+    "footprint": "Diode_SMD:D_SMA",
+    "nets": {
+      "1": "VIN",
+      "2": "DESAT_H_A"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "D",
+    "mpn": "US1M-13-F",
+    "maker": "Diodes Incorporated",
+    "source": "https://www.diodes.com/part/view/US1M/",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT diode, cathode on the drain net VIN, anode at node A; lifecycle unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R25",
+    "value": "4.99k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_H_A",
+      "2": "DESAT_H_OC"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-074K99L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R2 4.99 k: node A -> OC",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R26",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_H_OC",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R3 1.00 k: OC -> COM (trip V_DS 3.6 V with R1/R2/R3)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C29",
+    "value": "680p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_H_OC",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM1885C1H681JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H681JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT blanking 680 pF C0G at OC/COM (288 ns external blanking)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D4",
+    "value": "BAT42W Schottky",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "DESAT_H_OC",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "D",
+    "mpn": "BAT42W-V",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/85660/bat42w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "DNP reference-derived clamp COM -> OC (anode at COM); the -0.67 V DC case does not occur dynamically; unverified part",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R27",
+    "value": "4.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "RDY_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-074K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RDY open-drain pull-up (research record gate_driver.per_channel_bom R_PU)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R28",
+    "value": "4.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "FLT_H_N"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-074K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FLT open-drain pull-up (latched fault, active low)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "L2",
+    "value": "744226S",
+    "footprint": "Inductor_SMD:L_CommonMode_Wuerth_WE-SL2",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL",
+      "3": "GNDP_H",
+      "4": "12V_BIAS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "L",
+    "mpn": "744226S",
+    "maker": "Wuerth Elektronik",
+    "source": "https://www.we-online.com/components/products/datasheet/744226S.pdf",
+    "pins": {
+      "1": {
+        "name": "W1A",
+        "type": "passive"
+      },
+      "2": {
+        "name": "W2A",
+        "type": "passive"
+      },
+      "3": {
+        "name": "W2B",
+        "type": "passive"
+      },
+      "4": {
+        "name": "W1B",
+        "type": "passive"
+      }
+    },
+    "note": "WE-SL2 CM choke 10 uH / 1.6 A at the H bias input (KR-IS-002); windings 1-4 (12 V) and 2-3 (return); A-P3: module ground GNDP after the choke",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C30",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_H",
+      "2": "GNDP_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C31",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_H",
+      "2": "GNDP_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C32",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_H",
+      "2": "GNDP_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C33",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "12V_BIAS_H",
+      "2": "GNDP_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VIN high-frequency bypass at pins 7/8 (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U2",
+    "value": "UCC14141QDWNRQ1",
+    "footprint": "AIPE:UCC14141_DWN0036A_Slot",
+    "nets": {
+      "1": "GNDP_H",
+      "2": "GNDP_H",
+      "5": "GNDP_H",
+      "8": "GNDP_H",
+      "9": "GNDP_H",
+      "10": "GNDP_H",
+      "11": "GNDP_H",
+      "12": "GNDP_H",
+      "13": "GNDP_H",
+      "14": "GNDP_H",
+      "15": "GNDP_H",
+      "16": "GNDP_H",
+      "17": "GNDP_H",
+      "18": "GNDP_H",
+      "3": "PG_BIAS_H_N",
+      "4": "BIAS_EN_F",
+      "6": "12V_BIAS_H",
+      "7": "12V_BIAS_H",
+      "28": "VDD_H",
+      "29": "VDD_H",
+      "32": "HS_RLIM",
+      "33": "HS_FB_VEE",
+      "34": "HS_FB_VDD",
+      "35": "VEE_H",
+      "19": "VEE_H",
+      "20": "VEE_H",
+      "21": "VEE_H",
+      "22": "VEE_H",
+      "23": "VEE_H",
+      "24": "VEE_H",
+      "25": "VEE_H",
+      "26": "VEE_H",
+      "27": "VEE_H",
+      "30": "VEE_H",
+      "31": "VEE_H",
+      "36": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "IC",
+    "mpn": "UCC14141QDWNRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "2": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "3": {
+        "name": "PG",
+        "type": "open_collector"
+      },
+      "4": {
+        "name": "ENA",
+        "type": "input"
+      },
+      "5": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "6": {
+        "name": "VIN",
+        "type": "passive"
+      },
+      "7": {
+        "name": "VIN",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "GNDP",
+        "type": "power_in"
+      },
+      "9": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "10": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "11": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "12": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "13": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "14": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "15": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "16": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "17": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "18": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "19": {
+        "name": "VEE",
+        "type": "power_out"
+      },
+      "20": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "21": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "22": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "23": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "24": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "25": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "26": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "27": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "28": {
+        "name": "VDD",
+        "type": "power_out"
+      },
+      "29": {
+        "name": "VDD",
+        "type": "passive"
+      },
+      "30": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "31": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "32": {
+        "name": "RLIM",
+        "type": "output"
+      },
+      "33": {
+        "name": "FBVEE",
+        "type": "input"
+      },
+      "34": {
+        "name": "FBVDD",
+        "type": "input"
+      },
+      "35": {
+        "name": "VEEA",
+        "type": "passive"
+      },
+      "36": {
+        "name": "VEE",
+        "type": "passive"
+      }
+    },
+    "note": "HS gate bias VDD-VEE 19.0 V (107 k / 16.2 k), COM-VEE 4.0 V (9.76 k / 16.2 k) -> +15 V / -4 V at the gate (baseline bias_supply.gate_channels); +18 V option = FBVDD top 127 k (BOM option, C4MS only); reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R29",
+    "value": "107k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "HS_FB_VDD"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "TNPW0603107KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R30",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "HS_FB_VDD",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C34",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "HS_FB_VDD",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVDD bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R31",
+    "value": "9.76k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "KS_H",
+      "2": "HS_FB_VEE"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "TNPW06039K76BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R32",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "HS_FB_VEE",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C35",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "HS_FB_VEE",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVEE bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R33",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "nets": {
+      "1": "HS_RLIM",
+      "2": "KS_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0805FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C36",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C37",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C38",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VDD_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C39",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "KS_H",
+      "2": "VEE_H"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 COM-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R34",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "PG_BIAS_H_N"
+    },
+    "page": "02_gate_driver_hs",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P5: pull-up for the open-drain PG output (active-low power good)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R35",
+    "value": "100",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "PWM_L",
+      "2": "PWM_L_F"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-07100RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "PWM_L series element of the 100 ohm / 100 pF / 10 k receiving network (KR-GD-008 adapted)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C40",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "PWM_L_F",
+      "2": "GND_CTRL"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "100 pF at the driver input pin (tau 10 ns)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R36",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "PWM_L_F",
+      "2": "GND_CTRL"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "10 k pull-down: driver input defined low when the mezzanine is open",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U3",
+    "value": "UCC21710QDWRQ1",
+    "footprint": "AIPE:UCC21710_DW0016A_Slot",
+    "nets": {
+      "1": "KS_L",
+      "2": "DESAT_L_OC",
+      "3": "KS_L",
+      "4": "LS_OUTH",
+      "5": "VDD_L",
+      "6": "LS_OUTL",
+      "7": "LS_CLMP",
+      "8": "VEE_L",
+      "9": "GND_CTRL",
+      "10": "PWM_L_F",
+      "11": "PWM_H_F",
+      "12": "RDY_L",
+      "13": "FLT_L_N",
+      "14": "RESET_N_F",
+      "15": "3V3",
+      "16": null
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "IC",
+    "mpn": "UCC21710QDWRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "AIN",
+        "type": "input"
+      },
+      "2": {
+        "name": "OC",
+        "type": "input"
+      },
+      "3": {
+        "name": "COM",
+        "type": "power_in"
+      },
+      "4": {
+        "name": "OUTH",
+        "type": "output"
+      },
+      "5": {
+        "name": "VDD",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "OUTL",
+        "type": "output"
+      },
+      "7": {
+        "name": "CLMPI",
+        "type": "passive"
+      },
+      "8": {
+        "name": "VEE",
+        "type": "power_in"
+      },
+      "9": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "10": {
+        "name": "IN+",
+        "type": "input"
+      },
+      "11": {
+        "name": "IN-",
+        "type": "input"
+      },
+      "12": {
+        "name": "RDY",
+        "type": "open_collector"
+      },
+      "13": {
+        "name": "FLT",
+        "type": "open_collector"
+      },
+      "14": {
+        "name": "RST/EN",
+        "type": "input"
+      },
+      "15": {
+        "name": "VCC",
+        "type": "power_in"
+      },
+      "16": {
+        "name": "APWM",
+        "type": "output"
+      }
+    },
+    "note": "LS isolated SiC driver, pinout SLUSDH8D (fetched-datasheet); IN+ = PWM_L_F, IN- = PWM_H_F interlock (KR-GD-009); AIN tied to COM (CR-01); APWM unused; AIPE footprint with the KiCad SOIC-16W land pattern and the 1.2 x 16.6 mm isolation slot",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R37",
+    "value": "10",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "LS_OUTH",
+      "2": "G_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "ERJ-P08F10R0V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_ON 10 ohm bring-up (tuning target 6.8 ohm = ERJ-P08F6R80V), baseline rg_on_ohm; ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R38",
+    "value": "3.3",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "LS_OUTL",
+      "2": "G_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "ERJ-P08F3R30V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_OFF 3.3 ohm, baseline rg_off_ohm; ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R39",
+    "value": "0",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LS_CLMP",
+      "2": "G_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603JR-070RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Miller clamp link CLMPI -> gate, 0 ohm 0603, path <= 15 mm (KR-GD-003, REQUIRED)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R40",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "nets": {
+      "1": "G_L",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0805FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "R_GS gate-to-Kelvin discharge at the device side of R_G (KR-GD-007)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R41",
+    "value": "1",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "G_L",
+      "2": "LS_GK"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-071RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DNP gate-Kelvin RC (KR-GD-010 review): 1 ohm 0603 pads",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "C41",
+    "value": "470p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "LS_GK",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM1885C1H471JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H471JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DNP gate-Kelvin RC (KR-GD-010 review): 470 pF C0G pads",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "TP2",
+    "value": "VGS_L",
+    "footprint": "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm",
+    "nets": {
+      "1": "G_L",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "G",
+        "type": "passive"
+      },
+      "2": {
+        "name": "KS",
+        "type": "passive"
+      }
+    },
+    "note": "V_GS probe loop at the device side of R_G (CR-11); HV referenced, isolated probe only",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C42",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C43",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C44",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VDD-COM high-frequency decoupling at the pins",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C45",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "KS_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "COM-VEE decoupling (KR-PCB-002)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C46",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "KS_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "COM-VEE high-frequency decoupling at the pins",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C47",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VCC decoupling 1 uF (datasheet condition) at pin 15",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C48",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VCC high-frequency decoupling at pin 15",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R42",
+    "value": "2.2k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "DESAT_L_A"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "ERJ-P08F2201V",
+    "maker": "Panasonic",
+    "source": "https://industry.panasonic.com/global/en/products/control/resistor",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R1 2.2 k: VDD -> node A (bias 6-9 mA); ERJ-P08 anti-surge 1206, 0.66 W / 500 V (search-snippet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D5",
+    "value": "US1M 1000V",
+    "footprint": "Diode_SMD:D_SMA",
+    "nets": {
+      "1": "SW",
+      "2": "DESAT_L_A"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "D",
+    "mpn": "US1M-13-F",
+    "maker": "Diodes Incorporated",
+    "source": "https://www.diodes.com/part/view/US1M/",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT diode, cathode on the drain net SW, anode at node A; lifecycle unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R43",
+    "value": "4.99k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_L_A",
+      "2": "DESAT_L_OC"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-074K99L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R2 4.99 k: node A -> OC",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R44",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_L_OC",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT R3 1.00 k: OC -> COM (trip V_DS 3.6 V with R1/R2/R3)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C49",
+    "value": "680p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "DESAT_L_OC",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM1885C1H681JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H681JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "DESAT blanking 680 pF C0G at OC/COM (288 ns external blanking)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D6",
+    "value": "BAT42W Schottky",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "DESAT_L_OC",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "D",
+    "mpn": "BAT42W-V",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/85660/bat42w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "DNP reference-derived clamp COM -> OC (anode at COM); the -0.67 V DC case does not occur dynamically; unverified part",
+    "xy": null,
+    "board": "power",
+    "dnp": true
+  },
+  {
+    "ref": "R45",
+    "value": "4.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "RDY_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-074K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RDY open-drain pull-up (research record gate_driver.per_channel_bom R_PU)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R46",
+    "value": "4.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "FLT_L_N"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-074K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FLT open-drain pull-up (latched fault, active low)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "L3",
+    "value": "744226S",
+    "footprint": "Inductor_SMD:L_CommonMode_Wuerth_WE-SL2",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL",
+      "3": "GNDP_L",
+      "4": "12V_BIAS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "L",
+    "mpn": "744226S",
+    "maker": "Wuerth Elektronik",
+    "source": "https://www.we-online.com/components/products/datasheet/744226S.pdf",
+    "pins": {
+      "1": {
+        "name": "W1A",
+        "type": "passive"
+      },
+      "2": {
+        "name": "W2A",
+        "type": "passive"
+      },
+      "3": {
+        "name": "W2B",
+        "type": "passive"
+      },
+      "4": {
+        "name": "W1B",
+        "type": "passive"
+      }
+    },
+    "note": "WE-SL2 CM choke 10 uH / 1.6 A at the L bias input (KR-IS-002); windings 1-4 (12 V) and 2-3 (return); A-P3: module ground GNDP after the choke",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C50",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_L",
+      "2": "GNDP_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C51",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_L",
+      "2": "GNDP_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C52",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_L",
+      "2": "GNDP_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C53",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "12V_BIAS_L",
+      "2": "GNDP_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VIN high-frequency bypass at pins 7/8 (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U4",
+    "value": "UCC14141QDWNRQ1",
+    "footprint": "AIPE:UCC14141_DWN0036A_Slot",
+    "nets": {
+      "1": "GNDP_L",
+      "2": "GNDP_L",
+      "5": "GNDP_L",
+      "8": "GNDP_L",
+      "9": "GNDP_L",
+      "10": "GNDP_L",
+      "11": "GNDP_L",
+      "12": "GNDP_L",
+      "13": "GNDP_L",
+      "14": "GNDP_L",
+      "15": "GNDP_L",
+      "16": "GNDP_L",
+      "17": "GNDP_L",
+      "18": "GNDP_L",
+      "3": "PG_BIAS_L_N",
+      "4": "BIAS_EN_F",
+      "6": "12V_BIAS_L",
+      "7": "12V_BIAS_L",
+      "28": "VDD_L",
+      "29": "VDD_L",
+      "32": "LS_RLIM",
+      "33": "LS_FB_VEE",
+      "34": "LS_FB_VDD",
+      "35": "VEE_L",
+      "19": "VEE_L",
+      "20": "VEE_L",
+      "21": "VEE_L",
+      "22": "VEE_L",
+      "23": "VEE_L",
+      "24": "VEE_L",
+      "25": "VEE_L",
+      "26": "VEE_L",
+      "27": "VEE_L",
+      "30": "VEE_L",
+      "31": "VEE_L",
+      "36": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "IC",
+    "mpn": "UCC14141QDWNRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "2": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "3": {
+        "name": "PG",
+        "type": "open_collector"
+      },
+      "4": {
+        "name": "ENA",
+        "type": "input"
+      },
+      "5": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "6": {
+        "name": "VIN",
+        "type": "passive"
+      },
+      "7": {
+        "name": "VIN",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "GNDP",
+        "type": "power_in"
+      },
+      "9": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "10": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "11": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "12": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "13": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "14": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "15": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "16": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "17": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "18": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "19": {
+        "name": "VEE",
+        "type": "power_out"
+      },
+      "20": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "21": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "22": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "23": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "24": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "25": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "26": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "27": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "28": {
+        "name": "VDD",
+        "type": "power_out"
+      },
+      "29": {
+        "name": "VDD",
+        "type": "passive"
+      },
+      "30": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "31": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "32": {
+        "name": "RLIM",
+        "type": "output"
+      },
+      "33": {
+        "name": "FBVEE",
+        "type": "input"
+      },
+      "34": {
+        "name": "FBVDD",
+        "type": "input"
+      },
+      "35": {
+        "name": "VEEA",
+        "type": "passive"
+      },
+      "36": {
+        "name": "VEE",
+        "type": "passive"
+      }
+    },
+    "note": "LS gate bias VDD-VEE 19.0 V (107 k / 16.2 k), COM-VEE 4.0 V (9.76 k / 16.2 k) -> +15 V / -4 V at the gate (baseline bias_supply.gate_channels); +18 V option = FBVDD top 127 k (BOM option, C4MS only); reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R47",
+    "value": "107k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "LS_FB_VDD"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "TNPW0603107KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R48",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LS_FB_VDD",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C54",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "LS_FB_VDD",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVDD bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R49",
+    "value": "9.76k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "KS_L",
+      "2": "LS_FB_VEE"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "TNPW06039K76BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R50",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LS_FB_VEE",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C55",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "LS_FB_VEE",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVEE bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R51",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "nets": {
+      "1": "LS_RLIM",
+      "2": "KS_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0805FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C56",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C57",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C58",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VDD_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C59",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "KS_L",
+      "2": "VEE_L"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 COM-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R52",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "PG_BIAS_L_N"
+    },
+    "page": "03_gate_driver_ls",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P5: pull-up for the open-drain PG output (active-low power good)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "L4",
+    "value": "744226S",
+    "footprint": "Inductor_SMD:L_CommonMode_Wuerth_WE-SL2",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL",
+      "3": "GNDP_S",
+      "4": "12V_BIAS_S"
+    },
+    "page": "04_sensing_island",
+    "kind": "L",
+    "mpn": "744226S",
+    "maker": "Wuerth Elektronik",
+    "source": "https://www.we-online.com/components/products/datasheet/744226S.pdf",
+    "pins": {
+      "1": {
+        "name": "W1A",
+        "type": "passive"
+      },
+      "2": {
+        "name": "W2A",
+        "type": "passive"
+      },
+      "3": {
+        "name": "W2B",
+        "type": "passive"
+      },
+      "4": {
+        "name": "W1B",
+        "type": "passive"
+      }
+    },
+    "note": "WE-SL2 CM choke 10 uH / 1.6 A at the S bias input (KR-IS-002); windings 1-4 (12 V) and 2-3 (return); A-P3: module ground GNDP after the choke",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C60",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_S",
+      "2": "GNDP_S"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C61",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_S",
+      "2": "GNDP_S"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C62",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_BIAS_S",
+      "2": "GNDP_S"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C63",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "12V_BIAS_S",
+      "2": "GNDP_S"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VIN high-frequency bypass at pins 7/8 (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U5",
+    "value": "UCC14141QDWNRQ1",
+    "footprint": "AIPE:UCC14141_DWN0036A_Slot",
+    "nets": {
+      "1": "GNDP_S",
+      "2": "GNDP_S",
+      "5": "GNDP_S",
+      "8": "GNDP_S",
+      "9": "GNDP_S",
+      "10": "GNDP_S",
+      "11": "GNDP_S",
+      "12": "GNDP_S",
+      "13": "GNDP_S",
+      "14": "GNDP_S",
+      "15": "GNDP_S",
+      "16": "GNDP_S",
+      "17": "GNDP_S",
+      "18": "GNDP_S",
+      "3": "PG_BIAS_S_N",
+      "4": "BIAS_EN_F",
+      "6": "12V_BIAS_S",
+      "7": "12V_BIAS_S",
+      "28": "ISO_15V",
+      "29": "ISO_15V",
+      "32": "ISO_RLIM",
+      "33": "ISO_FB_VEE",
+      "34": "ISO_FB_VDD",
+      "35": "PGND",
+      "19": "PGND",
+      "20": "PGND",
+      "21": "PGND",
+      "22": "PGND",
+      "23": "PGND",
+      "24": "PGND",
+      "25": "PGND",
+      "26": "PGND",
+      "27": "PGND",
+      "30": "PGND",
+      "31": "PGND",
+      "36": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "IC",
+    "mpn": "UCC14141QDWNRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "2": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "3": {
+        "name": "PG",
+        "type": "open_collector"
+      },
+      "4": {
+        "name": "ENA",
+        "type": "input"
+      },
+      "5": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "6": {
+        "name": "VIN",
+        "type": "passive"
+      },
+      "7": {
+        "name": "VIN",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "GNDP",
+        "type": "power_in"
+      },
+      "9": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "10": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "11": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "12": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "13": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "14": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "15": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "16": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "17": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "18": {
+        "name": "GNDP",
+        "type": "passive"
+      },
+      "19": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "20": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "21": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "22": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "23": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "24": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "25": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "26": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "27": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "28": {
+        "name": "VDD",
+        "type": "power_out"
+      },
+      "29": {
+        "name": "VDD",
+        "type": "passive"
+      },
+      "30": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "31": {
+        "name": "VEE",
+        "type": "passive"
+      },
+      "32": {
+        "name": "RLIM",
+        "type": "output"
+      },
+      "33": {
+        "name": "FBVEE",
+        "type": "input"
+      },
+      "34": {
+        "name": "FBVDD",
+        "type": "input"
+      },
+      "35": {
+        "name": "VEEA",
+        "type": "passive"
+      },
+      "36": {
+        "name": "VEE",
+        "type": "passive"
+      }
+    },
+    "note": "Sensing-island bias (CR-12): VDD-VEE 15 V (A-P2: 80.6 k / 16.2 k = 14.94 V, capacitor load only), COM-VEE 5.0 V (16.2 k / 16.2 k) = 5V_ISO; VEE = PGND; reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R53",
+    "value": "80.6k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ISO_15V",
+      "2": "ISO_FB_VDD"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060380K6BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R54",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ISO_FB_VDD",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C64",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ISO_FB_VDD",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVDD bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R55",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "ISO_FB_VEE"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R56",
+    "value": "16.2k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ISO_FB_VEE",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060316K2BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C65",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ISO_FB_VEE",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF C0G across the FBVEE bottom resistor (SLUSF10B)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R57",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "nets": {
+      "1": "ISO_RLIM",
+      "2": "5V_ISO"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "RC0805FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C66",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "ISO_15V",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C67",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "ISO_15V",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C68",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ISO_15V",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C69",
+    "value": "4.7u/25V",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "C3216X7R1E475K160AC",
+    "maker": "TDK",
+    "source": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3216X7R1E475K160AC",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "UCC14141 COM-VEE output capacitor (baseline bias_supply.output_caps)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R58",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "PG_BIAS_S_N"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P5: pull-up for the open-drain PG output (active-low power good)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R59",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VIN",
+      "2": "VIN_DIV_T1"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN ladder element 1/4 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R60",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VIN_DIV_T1",
+      "2": "VIN_DIV_T2"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN ladder element 2/4 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R61",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VIN_DIV_T2",
+      "2": "VIN_DIV_T3"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN ladder element 3/4 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R62",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VIN_DIV_T3",
+      "2": "VIN_DIV"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN ladder element 4/4 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R63",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VIN_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN ladder bottom 10.0 k (full scale 602 V = 2 V); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C70",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VIN_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "1 nF C0G across the ladder bottom (16 kHz)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C71",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VIN_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "100 pF directly at the AMC1311 IN pin",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U6",
+    "value": "AMC1311BDWVR",
+    "footprint": "AIPE:AMC1311_DWV0008A_Slot",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "VIN_DIV",
+      "3": "PGND",
+      "4": "PGND",
+      "5": "GND_CTRL",
+      "6": "VIN_OUTN",
+      "7": "VIN_OUTP",
+      "8": "3V3"
+    },
+    "page": "04_sensing_island",
+    "kind": "IC",
+    "mpn": "AMC1311BDWVR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+    "pins": {
+      "1": {
+        "name": "VDD1",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "IN",
+        "type": "input"
+      },
+      "3": {
+        "name": "SHTDN",
+        "type": "input"
+      },
+      "4": {
+        "name": "GND1",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "GND2",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "OUTN",
+        "type": "output"
+      },
+      "7": {
+        "name": "OUTP",
+        "type": "output"
+      },
+      "8": {
+        "name": "VDD2",
+        "type": "power_in"
+      }
+    },
+    "note": "Reinforced isolated VIN sense amplifier (2 V input range, gain 1); SHTDN tied to GND1 (active high); pinout SBAS786C (fetched-datasheet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C72",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "U6 VDD1 decoupling (PE-PCB-008)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C73",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "U6 VDD2 decoupling (PE-PCB-008)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R64",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VOUT",
+      "2": "VOUT_DIV_T1"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT ladder element 1/2 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R65",
+    "value": "750k",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
+    "nets": {
+      "1": "VOUT_DIV_T1",
+      "2": "VOUT_DIV"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW1206750KBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT ladder element 2/2 (750 k 1206 0.1 %, <= 120 V / 19 mW each); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R66",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT ladder bottom 10.0 k (full scale 302 V = 2 V); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C74",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "1 nF C0G across the ladder bottom (16 kHz)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C75",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_DIV",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "100 pF directly at the AMC1311 IN pin",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U7",
+    "value": "AMC1311BDWVR",
+    "footprint": "AIPE:AMC1311_DWV0008A_Slot",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "VOUT_DIV",
+      "3": "PGND",
+      "4": "PGND",
+      "5": "GND_CTRL",
+      "6": "VOUT_OUTN",
+      "7": "VOUT_OUTP",
+      "8": "3V3"
+    },
+    "page": "04_sensing_island",
+    "kind": "IC",
+    "mpn": "AMC1311BDWVR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/amc1311.pdf",
+    "pins": {
+      "1": {
+        "name": "VDD1",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "IN",
+        "type": "input"
+      },
+      "3": {
+        "name": "SHTDN",
+        "type": "input"
+      },
+      "4": {
+        "name": "GND1",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "GND2",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "OUTN",
+        "type": "output"
+      },
+      "7": {
+        "name": "OUTP",
+        "type": "output"
+      },
+      "8": {
+        "name": "VDD2",
+        "type": "power_in"
+      }
+    },
+    "note": "Reinforced isolated VOUT sense amplifier (2 V input range, gain 1); SHTDN tied to GND1 (active high); pinout SBAS786C (fetched-datasheet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C76",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V_ISO",
+      "2": "PGND"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "U7 VDD1 decoupling (PE-PCB-008)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C77",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_sensing_island",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "U7 VDD2 decoupling (PE-PCB-008)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J7",
+    "value": "Mezzanine 2x25 socket",
+    "footprint": "Connector_PinSocket_2.54mm:PinSocket_2x25_P2.54mm_Vertical",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "12V_PROT",
+      "3": "12V_PROT",
+      "4": "GND_CTRL",
+      "5": "GND_CTRL",
+      "6": "GND_CTRL",
+      "7": "RELAY_ON",
+      "8": "GND_CTRL",
+      "9": "BIAS_EN",
+      "10": "GND_CTRL",
+      "11": "RESET_N",
+      "12": "GND_CTRL",
+      "13": "GND_CTRL",
+      "14": "PWM_H",
+      "15": "GND_CTRL",
+      "16": "GND_CTRL",
+      "17": "PWM_L",
+      "18": "GND_CTRL",
+      "19": "GND_CTRL",
+      "20": "FLT_H_N",
+      "21": "FLT_L_N",
+      "22": "GND_CTRL",
+      "23": "RDY_H",
+      "24": "RDY_L",
+      "25": "GND_CTRL",
+      "26": "GND_CTRL",
+      "27": "OC_N",
+      "28": "GND_CTRL",
+      "29": "FAN_TACH",
+      "30": "PG_BIAS_S_N",
+      "31": "GND_CTRL",
+      "32": "PG_BIAS_H_N",
+      "33": "PG_BIAS_L_N",
+      "34": "GND_CTRL",
+      "35": "FAULT_N",
+      "36": "SPARE_D1",
+      "37": "SPARE_D2",
+      "38": "GND_CTRL",
+      "39": "3V3",
+      "40": "3V3",
+      "41": "GND_CTRL",
+      "42": "GND_CTRL",
+      "43": "ISENSE",
+      "44": "GND_CTRL",
+      "45": "ISENSE_REF",
+      "46": "GND_CTRL",
+      "47": "VIN_SENSE",
+      "48": "GND_CTRL",
+      "49": "VOUT_SENSE",
+      "50": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "J",
+    "mpn": "SSW-125-01-G-D",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/ssw",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      },
+      "4": {
+        "name": "4",
+        "type": "passive"
+      },
+      "5": {
+        "name": "5",
+        "type": "passive"
+      },
+      "6": {
+        "name": "6",
+        "type": "passive"
+      },
+      "7": {
+        "name": "7",
+        "type": "passive"
+      },
+      "8": {
+        "name": "8",
+        "type": "passive"
+      },
+      "9": {
+        "name": "9",
+        "type": "passive"
+      },
+      "10": {
+        "name": "10",
+        "type": "passive"
+      },
+      "11": {
+        "name": "11",
+        "type": "passive"
+      },
+      "12": {
+        "name": "12",
+        "type": "passive"
+      },
+      "13": {
+        "name": "13",
+        "type": "passive"
+      },
+      "14": {
+        "name": "14",
+        "type": "passive"
+      },
+      "15": {
+        "name": "15",
+        "type": "passive"
+      },
+      "16": {
+        "name": "16",
+        "type": "passive"
+      },
+      "17": {
+        "name": "17",
+        "type": "passive"
+      },
+      "18": {
+        "name": "18",
+        "type": "passive"
+      },
+      "19": {
+        "name": "19",
+        "type": "passive"
+      },
+      "20": {
+        "name": "20",
+        "type": "passive"
+      },
+      "21": {
+        "name": "21",
+        "type": "passive"
+      },
+      "22": {
+        "name": "22",
+        "type": "passive"
+      },
+      "23": {
+        "name": "23",
+        "type": "passive"
+      },
+      "24": {
+        "name": "24",
+        "type": "passive"
+      },
+      "25": {
+        "name": "25",
+        "type": "passive"
+      },
+      "26": {
+        "name": "26",
+        "type": "passive"
+      },
+      "27": {
+        "name": "27",
+        "type": "passive"
+      },
+      "28": {
+        "name": "28",
+        "type": "passive"
+      },
+      "29": {
+        "name": "29",
+        "type": "passive"
+      },
+      "30": {
+        "name": "30",
+        "type": "passive"
+      },
+      "31": {
+        "name": "31",
+        "type": "passive"
+      },
+      "32": {
+        "name": "32",
+        "type": "passive"
+      },
+      "33": {
+        "name": "33",
+        "type": "passive"
+      },
+      "34": {
+        "name": "34",
+        "type": "passive"
+      },
+      "35": {
+        "name": "35",
+        "type": "passive"
+      },
+      "36": {
+        "name": "36",
+        "type": "passive"
+      },
+      "37": {
+        "name": "37",
+        "type": "passive"
+      },
+      "38": {
+        "name": "38",
+        "type": "passive"
+      },
+      "39": {
+        "name": "39",
+        "type": "passive"
+      },
+      "40": {
+        "name": "40",
+        "type": "passive"
+      },
+      "41": {
+        "name": "41",
+        "type": "passive"
+      },
+      "42": {
+        "name": "42",
+        "type": "passive"
+      },
+      "43": {
+        "name": "43",
+        "type": "passive"
+      },
+      "44": {
+        "name": "44",
+        "type": "passive"
+      },
+      "45": {
+        "name": "45",
+        "type": "passive"
+      },
+      "46": {
+        "name": "46",
+        "type": "passive"
+      },
+      "47": {
+        "name": "47",
+        "type": "passive"
+      },
+      "48": {
+        "name": "48",
+        "type": "passive"
+      },
+      "49": {
+        "name": "49",
+        "type": "passive"
+      },
+      "50": {
+        "name": "50",
+        "type": "passive"
+      }
+    },
+    "note": "Stacked mezzanine to the control board (TSW-125-07-G-D header there); nets per design_decisions.json interconnect.pin_assignment; 24 ground pins; stack height ~11 mm (unverified)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R67",
+    "value": "100",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RESET_N",
+      "2": "RESET_N_F"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-07100RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: receiving network for driver RST/EN x2 (100 ohm / 100 pF / 10 k pull-down, baseline interconnect.signalling)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C78",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "RESET_N_F",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: 100 pF at the receiving pins (driver RST/EN x2)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R68",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RESET_N_F",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: 10 k pull-down - driver RST/EN x2 held off when the mezzanine is open",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R69",
+    "value": "100",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "BIAS_EN",
+      "2": "BIAS_EN_F"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-07100RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: receiving network for UCC14141 ENA x3 (100 ohm / 100 pF / 10 k pull-down, baseline interconnect.signalling)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C79",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "BIAS_EN_F",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: 100 pF at the receiving pins (UCC14141 ENA x3)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R70",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "BIAS_EN_F",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P6: 10 k pull-down - UCC14141 ENA x3 held off when the mezzanine is open",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U8",
+    "value": "OPA2320AIDGKR",
+    "footprint": "Package_SO:VSSOP-8_3x3mm_P0.65mm",
+    "nets": {
+      "1": "VIN_SENSE",
+      "2": "VIN_AMP_N",
+      "3": "VIN_AMP_P",
+      "4": "GND_CTRL",
+      "5": "VOUT_AMP_P",
+      "6": "VOUT_AMP_N",
+      "7": "VOUT_SENSE",
+      "8": "3V3"
+    },
+    "page": "05_selv_strip",
+    "kind": "IC",
+    "mpn": "OPA2320AIDGKR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/opa2320.pdf",
+    "pins": {
+      "1": {
+        "name": "OUTA",
+        "type": "output"
+      },
+      "2": {
+        "name": "-INA",
+        "type": "input"
+      },
+      "3": {
+        "name": "+INA",
+        "type": "input"
+      },
+      "4": {
+        "name": "V-",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "+INB",
+        "type": "input"
+      },
+      "6": {
+        "name": "-INB",
+        "type": "input"
+      },
+      "7": {
+        "name": "OUTB",
+        "type": "output"
+      },
+      "8": {
+        "name": "V+",
+        "type": "power_in"
+      }
+    },
+    "note": "Difference amplifiers A = VIN, B = VOUT, gain 1.5 (10.0 k / 15.0 k 0.1 %), 32 kHz; pinout SBOS513F (fetched-datasheet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C80",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "OPA2320 supply decoupling",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R71",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VIN_OUTP",
+      "2": "VIN_AMP_P"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN difference amplifier input resistor (+); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R72",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VIN_AMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN difference amplifier shunt resistor (+), gain 1.5; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C81",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VIN_AMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P8: 330 pF on the (+) leg for CMRR balance (VIN)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R73",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VIN_OUTN",
+      "2": "VIN_AMP_N"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN difference amplifier input resistor (-); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R74",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VIN_AMP_N",
+      "2": "VIN_SENSE"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VIN difference amplifier feedback resistor, gain 1.5; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C82",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VIN_AMP_N",
+      "2": "VIN_SENSE"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF across the feedback resistor (32 kHz) (VIN)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R75",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_OUTP",
+      "2": "VOUT_AMP_P"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT difference amplifier input resistor (+); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R76",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_AMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT difference amplifier shunt resistor (+), gain 1.5; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C83",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_AMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P8: 330 pF on the (+) leg for CMRR balance (VOUT)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R77",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_OUTN",
+      "2": "VOUT_AMP_N"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT difference amplifier input resistor (-); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R78",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_AMP_N",
+      "2": "VOUT_SENSE"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "VOUT difference amplifier feedback resistor, gain 1.5; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C84",
+    "value": "330p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "VOUT_AMP_N",
+      "2": "VOUT_SENSE"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM1885C1H331JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H331JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "330 pF across the feedback resistor (32 kHz) (VOUT)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "U9",
+    "value": "REF3125AIDBZR",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "nets": {
+      "1": "3V3",
+      "2": "REF2V5_PB",
+      "3": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "IC",
+    "mpn": "REF3125AIDBZR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/gpn/REF31",
+    "pins": {
+      "1": {
+        "name": "IN",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "OUT",
+        "type": "power_out"
+      },
+      "3": {
+        "name": "GND",
+        "type": "power_in"
+      }
+    },
+    "note": "2.5 V reference for the TMCS1133 OC threshold (power-board SELV strip, CR-16); pinout SBVS046E (fetched-datasheet)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C85",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "REF3125 supply bypass (>= 0.47 uF per SBVS046E)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C86",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "REF2V5_PB",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "REF3125 output capacitor (stable with any load capacitance)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R79",
+    "value": "2.32k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "REF2V5_PB",
+      "2": "VOC_SET"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW06032K32BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "V_OC divider top: VOC = 2.5 V x 1.00 k / 3.32 k = 0.753 V -> I_OC 37.5 A (0.7487 V with the 120 k pin load); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R80",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "VOC_SET",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW06031K00BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "V_OC divider bottom 1.00 k (< 10 k per SBOSAG0E Figure 9-5); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R81",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "OC_N"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "OC_N open-drain pull-up 10 k (task baseline); OC_N -> TZ2 and the fault latch on the control board",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C87",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P10: TMCS1133 VS decoupling 100 nF at pins 9/10",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C88",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P10: TMCS1133 VS bulk 1 uF",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R82",
+    "value": "9.09k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "ISENSE_REF"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW06039K09BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P1: ISENSE_REF = 3V3 x 1.00 k / 10.09 k = 0.327 V ratiometric zero-current reference (TMCS1133 has no VREF pin); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R83",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ISENSE_REF",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "TNPW06031K00BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P1: ISENSE_REF divider bottom; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C89",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ISENSE_REF",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "A-P1: ISENSE_REF filter",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J8",
+    "value": "FAN 12V/GND/TACH",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL",
+      "3": "FAN_TACH"
+    },
+    "page": "05_selv_strip",
+    "kind": "J",
+    "mpn": "TSW-003-07-G-S",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/tsw",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      }
+    },
+    "note": "FAN 12V/GND/TACH",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R84",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "FAN_TACH"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "FAN_TACH open-collector pull-up (LAM 5 D K fan tacho, stall derating within 2 s)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "J9",
+    "value": "Relay coil K1",
+    "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "K1_LOW"
+    },
+    "page": "05_selv_strip",
+    "kind": "J",
+    "mpn": "1715721",
+    "maker": "Phoenix Contact",
+    "source": "https://www.phoenixcontact.com/",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Relay coil terminals (Omron G9EA-1 DC12 coil 417 mA, chassis mounted); firmware PWM hold 50-60 % REQUIRED; order code unverified",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "Q3",
+    "value": "AO3400A",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "nets": {
+      "1": "RLY_G",
+      "2": "GND_CTRL",
+      "3": "K1_LOW"
+    },
+    "page": "05_selv_strip",
+    "kind": "Q",
+    "mpn": "AO3400A",
+    "maker": "Alpha and Omega Semiconductor",
+    "source": "https://www.aosmd.com/res/datasheets/AO3400A.pdf",
+    "pins": {
+      "1": {
+        "name": "G",
+        "type": "input"
+      },
+      "2": {
+        "name": "S",
+        "type": "passive"
+      },
+      "3": {
+        "name": "D",
+        "type": "passive"
+      }
+    },
+    "note": "Relay coil low-side switch (30 V, 5.7 A, 48 mohm max at 2.5 V); pinout AOS Rev 3.1 (fetched-datasheet): 1 G, 2 S, 3 D",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R85",
+    "value": "100",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RELAY_ON",
+      "2": "RLY_G"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-07100RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "RELAY_ON gate series resistor",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "R86",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RLY_G",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Gate pull-down: relay off when the mezzanine is open",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "D7",
+    "value": "SS14 Schottky",
+    "footprint": "Diode_SMD:D_SMA",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "K1_LOW"
+    },
+    "page": "05_selv_strip",
+    "kind": "D",
+    "mpn": "SS14",
+    "maker": "onsemi / Vishay / Diodes Inc (multi-source)",
+    "source": "https://www.onsemi.com/products/discrete-power-modules/schottky-diodes-schottky-rectifiers/ss14",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "Coil freewheel diode >= 1 A (CR-19): anode K1_LOW, cathode 12V_PROT; datasheet not fetched",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C90",
+    "value": "100u/25V",
+    "footprint": "Capacitor_SMD:CP_Elec_8x10.5",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "EEE-FK1E101P",
+    "maker": "Panasonic",
+    "source": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-smd/models/EEEFK1E101P",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "12V_PROT bulk 100 uF (baseline aux_12V_protection.bulk_uF)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "C91",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_PROT",
+      "2": "GND_CTRL"
+    },
+    "page": "05_selv_strip",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "12V_PROT bulk 10 uF ceramic",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "HS1",
+    "value": "LAM 5 D K 100 12",
+    "footprint": "AIPE:HS_LAM5DK_100x100_H50",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "HS",
+    "mpn": "LAM 5 D K 100 12",
+    "maker": "Fischer Elektronik",
+    "source": "https://www.fischerelektronik.de/",
+    "pins": {},
+    "note": "Fan heatsink envelope 100.5 x 100 x 50 mm, 0.30 K/W distributor figure (unverified), PE-bonded; both TO-247-4 clipped to one face at 28 mm pitch; corner holes are placeholders; reserve 175 x 110 mm incl. air corridors",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H2",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 1/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H3",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 2/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H4",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 3/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H5",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 4/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H6",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 5/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H7",
+    "value": "M4 standoff",
+    "footprint": "MountingHole:MountingHole_4.3mm_M4",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Power-board mounting hole 6/6, M4 x 15 mm standoff on the PE-bonded baseplate",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H8",
+    "value": "M3 standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Control-board standoff hole 1/4 (stack ~11 mm) on the SELV strip",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H9",
+    "value": "M3 standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Control-board standoff hole 2/4 (stack ~11 mm) on the SELV strip",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H10",
+    "value": "M3 standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Control-board standoff hole 3/4 (stack ~11 mm) on the SELV strip",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "H11",
+    "value": "M3 standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "06_mechanical",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Control-board standoff hole 4/4 (stack ~11 mm) on the SELV strip",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP3",
+    "value": "3V3",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "3V3"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP4",
+    "value": "GND_CTRL",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "GND_CTRL"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP5",
+    "value": "GND_CTRL",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "GND_CTRL"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP6",
+    "value": "PWM_H_F",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "PWM_H_F"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP7",
+    "value": "PWM_L_F",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "PWM_L_F"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP8",
+    "value": "FAULT_N",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "FAULT_N"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP9",
+    "value": "ISENSE",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "ISENSE"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP10",
+    "value": "VIN_SENSE",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "VIN_SENSE"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP11",
+    "value": "VOUT_SENSE",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "VOUT_SENSE"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "SELV test pad, bare PCB (no purchased part)",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP12",
+    "value": "SPARE_D1",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "SPARE_D1"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "A-P9: spare mezzanine line terminated on a test pad",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  },
+  {
+    "ref": "TP13",
+    "value": "SPARE_D2",
+    "footprint": "TestPoint:TestPoint_Pad_D2.0mm",
+    "nets": {
+      "1": "SPARE_D2"
+    },
+    "page": "06_mechanical",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "A-P9: spare mezzanine line terminated on a test pad",
+    "xy": null,
+    "board": "power",
+    "dnp": false
+  }
+]

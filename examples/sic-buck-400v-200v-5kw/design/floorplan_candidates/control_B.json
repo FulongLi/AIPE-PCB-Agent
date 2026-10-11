@@ -1,0 +1,1055 @@
+{
+  "schema_version": 1,
+  "id": "B",
+  "title": "Control board floorplan B - DSP rotated 90 deg, PWM/fault/ADC-A side facing the mezzanine header (review-corrected)",
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "description": "TMS320F28335 (U5) rotated 90 deg so that pins 1-44 (GPIO0-17 PWM/fault lines and ADCINA0-A7) face the 2 x 25 mezzanine header J8 along the bottom edge; the former bottom side (ADCINB, GPIO18-27, JTAG) faces the right-hand analogue section, XCLKIN faces the oscillator above the DSP and the boot/UART pins face the left strip. Review corrections (verification/layout_review_findings.json): J8 on B.Cu so the header mates downward into the power-board socket (LR-03); the DSP moved 2 mm up and the fault/PWM logic region moved below y = 57 mm so the 43 south-side escapes have a 10 mm routing band (LR-02); the eight 1 nF ADC filters and the ADCREF capacitors in a dedicated strip beside the ADC pins (LR-04); the 5 V buck input ceramics C4/C5 at the TPS54302 pins, 5V_SW/5V_BST as pre-routed F.Cu tracks with C6 at the pins (LR-05); 2 x 4 via arrays in the two exposed pads (LR-06); 12V_IN as a 1.0 mm F.Cu bus and a three-via group at the eFuse output (LR-07); J4/J5 at the left edge next to J2 (LR-09); 3V3 bypass ring at 18.0 mm (LR-13); Y1 beside XCLKIN (LR-16). Supplies (eFuse, 5 V buck, dual LDO) in the top-left corner, 12V_PROT running down the left column to mezzanine pins 1-3, LDO 1V9 output in a corridor island feeding the DSP core island on In2.Cu, JTAG at the top-right edge (F.Cu, accessible with the board stacked), status LEDs and E-stop at the right edge, NTC at the lower right.",
+  "board_mm": [
+    120.0,
+    80.0
+  ],
+  "dsp": {
+    "ref": "U5",
+    "xy": [
+      68.0,
+      31.0
+    ],
+    "angle": 90
+  },
+  "fixed": {
+    "H1": [
+      4.0,
+      4.0,
+      0
+    ],
+    "H2": [
+      116.0,
+      4.0,
+      0
+    ],
+    "H3": [
+      4.0,
+      76.0,
+      0
+    ],
+    "H4": [
+      116.0,
+      76.0,
+      0
+    ],
+    "J1": [
+      12.0,
+      8.3,
+      0
+    ],
+    "D1": [
+      23.5,
+      7.5,
+      270
+    ],
+    "C1": [
+      27.5,
+      6.0,
+      270
+    ],
+    "R1": [
+      31.0,
+      2.5,
+      0
+    ],
+    "R6": [
+      34.5,
+      2.5,
+      0
+    ],
+    "U1": [
+      34.0,
+      7.5,
+      0
+    ],
+    "U2": [
+      16.0,
+      21.0,
+      180
+    ],
+    "C5": [
+      19.9,
+      19.6,
+      0
+    ],
+    "C4": [
+      21.2,
+      23.4,
+      0
+    ],
+    "C6": [
+      15.6375,
+      24.5,
+      0
+    ],
+    "L1": [
+      30.5,
+      21.0,
+      0
+    ],
+    "U3": [
+      47.0,
+      18.0,
+      0
+    ],
+    "Y1": [
+      72.5,
+      7.4,
+      180
+    ],
+    "J3": [
+      93.0,
+      7.0,
+      90
+    ],
+    "J5": [
+      4.5,
+      25.0,
+      0
+    ],
+    "J4": [
+      4.5,
+      35.0,
+      0
+    ],
+    "J2": [
+      4.5,
+      44.0,
+      0
+    ],
+    "J6": [
+      113.0,
+      20.0,
+      0
+    ],
+    "J7": [
+      113.0,
+      58.0,
+      0
+    ],
+    "J8": [
+      28.0,
+      74.0,
+      270,
+      "B"
+    ],
+    "D3": [
+      8.0,
+      64.0,
+      0
+    ],
+    "D4": [
+      113.5,
+      28.0,
+      0
+    ],
+    "D5": [
+      113.5,
+      32.0,
+      0
+    ],
+    "D6": [
+      113.5,
+      36.0,
+      0
+    ]
+  },
+  "dsp_bypass": {
+    "1V9": {
+      "side": "B",
+      "radius_mm": 8.0
+    },
+    "3V3": {
+      "side": "F",
+      "radius_mm": 18.0
+    },
+    "min_lateral_pitch_mm": 2.5
+  },
+  "regions": {
+    "supply12": [
+      [
+        3.0,
+        13.0,
+        21.0,
+        22.5
+      ],
+      [
+        8.0,
+        22.5,
+        21.0,
+        42.5
+      ],
+      [
+        21.0,
+        2.0,
+        43.0,
+        12.0
+      ]
+    ],
+    "supply5": [
+      [
+        21.0,
+        13.0,
+        43.5,
+        42.5
+      ]
+    ],
+    "supply_ctl": [
+      [
+        9.5,
+        43.0,
+        43.5,
+        59.0
+      ]
+    ],
+    "corridor1v9": [
+      [
+        46.0,
+        3.0,
+        61.0,
+        12.5
+      ],
+      [
+        47.5,
+        12.5,
+        61.0,
+        15.6
+      ]
+    ],
+    "boot": [
+      [
+        44.0,
+        25.0,
+        51.5,
+        46.0
+      ]
+    ],
+    "clock": [
+      [
+        58.0,
+        2.5,
+        81.5,
+        14.5
+      ]
+    ],
+    "debug": [
+      [
+        92.0,
+        9.5,
+        110.0,
+        13.8
+      ]
+    ],
+    "io_right": [
+      [
+        92.0,
+        14.5,
+        116.0,
+        29.5
+      ]
+    ],
+    "adc_filters": [
+      [
+        84.5,
+        32.0,
+        91.5,
+        53.5
+      ],
+      [
+        73.5,
+        49.5,
+        84.5,
+        52.5
+      ]
+    ],
+    "logic": [
+      [
+        50.0,
+        57.0,
+        86.5,
+        70.0
+      ]
+    ],
+    "analog": [
+      [
+        92.0,
+        30.0,
+        116.0,
+        70.8
+      ],
+      [
+        87.0,
+        54.0,
+        92.0,
+        70.8
+      ]
+    ],
+    "leds_left": [
+      [
+        3.0,
+        59.5,
+        24.0,
+        69.5
+      ]
+    ],
+    "pwm": [
+      [
+        33.0,
+        57.0,
+        45.0,
+        70.0
+      ]
+    ]
+  },
+  "assign": {
+    "by_page": {
+      "01_aux_12v": "supply12",
+      "02_supplies": "supply5",
+      "04_dsp_decoupling": "logic",
+      "05_clock_debug": "clock",
+      "06_pwm_fault_logic": "logic",
+      "07_adc_frontend": "analog",
+      "08_interconnect": "io_right"
+    },
+    "by_ref": {
+      "U4": "supply_ctl",
+      "R19": "supply_ctl",
+      "C15": "supply_ctl",
+      "C16": "supply_ctl",
+      "R24": "supply_ctl",
+      "Q1": "supply_ctl",
+      "D2": "supply_ctl",
+      "R23": "supply_ctl",
+      "R21": "supply_ctl",
+      "C12": "supply_ctl",
+      "R14": "corridor1v9",
+      "R20": "corridor1v9",
+      "C11": "clock",
+      "C43": "corridor1v9",
+      "C44": "corridor1v9",
+      "C45": "io_right",
+      "C46": "io_right",
+      "C47": "adc_filters",
+      "C48": "adc_filters",
+      "R25": "adc_filters",
+      "R27": "boot",
+      "R28": "boot",
+      "R29": "boot",
+      "R30": "boot",
+      "R31": "debug",
+      "R32": "debug",
+      "R33": "debug",
+      "R34": "debug",
+      "R35": "debug",
+      "R36": "debug",
+      "R37": "boot",
+      "U12": "analog",
+      "C50": "analog",
+      "C51": "analog",
+      "R53": "analog",
+      "R54": "analog",
+      "C52": "analog",
+      "R55": "analog",
+      "R56": "analog",
+      "C53": "analog",
+      "R57": "analog",
+      "R58": "analog",
+      "R59": "analog",
+      "C54": "analog",
+      "U13": "analog",
+      "U14": "analog",
+      "R60": "analog",
+      "R61": "analog",
+      "R62": "analog",
+      "R63": "analog",
+      "C55": "pwm",
+      "C56": "analog",
+      "R75": "io_right",
+      "R76": "leds_left",
+      "R77": "io_right",
+      "R78": "io_right",
+      "R79": "io_right",
+      "R18": "supply_ctl",
+      "C68": "adc_filters",
+      "C69": "adc_filters",
+      "C70": "adc_filters",
+      "C71": "adc_filters",
+      "C72": "adc_filters",
+      "C61": "analog",
+      "C62": "analog",
+      "U6": "pwm",
+      "R38": "pwm",
+      "R39": "pwm",
+      "R40": "pwm",
+      "R41": "pwm",
+      "R42": "pwm",
+      "R43": "supply_ctl",
+      "R44": "supply_ctl",
+      "R45": "supply_ctl",
+      "R46": "supply_ctl",
+      "R47": "supply_ctl",
+      "R48": "supply_ctl",
+      "R49": "supply_ctl",
+      "R50": "supply_ctl",
+      "R51": "supply_ctl",
+      "R52": "supply_ctl",
+      "C73": "adc_filters",
+      "C74": "adc_filters",
+      "C75": "adc_filters"
+    },
+    "by_net_prefix": {
+      "TP": {
+        "3V3": "io_right",
+        "1V9": "corridor1v9",
+        "5V": "supply5",
+        "12V_PROT": "supply12",
+        "GND_CTRL": [
+          "io_right",
+          "io_right"
+        ],
+        "PWM_H": "pwm",
+        "PWM_L": "pwm",
+        "FAULT_N": "logic",
+        "ARM": "leds_left",
+        "FAULT_LATCH_N": "leds_left",
+        "GATE_EN": "leds_left",
+        "XRS_N": "supply_ctl",
+        "VIN_SENSE": "analog",
+        "VOUT_SENSE": "analog",
+        "ISENSE": "analog"
+      }
+    }
+  },
+  "islands": {
+    "12V_PROT": [
+      [
+        3.0,
+        2.0
+      ],
+      [
+        44.0,
+        2.0
+      ],
+      [
+        44.0,
+        12.0
+      ],
+      [
+        21.0,
+        12.0
+      ],
+      [
+        21.0,
+        40.0
+      ],
+      [
+        8.5,
+        40.0
+      ],
+      [
+        8.5,
+        59.5
+      ],
+      [
+        33.0,
+        59.5
+      ],
+      [
+        33.0,
+        78.0
+      ],
+      [
+        3.0,
+        78.0
+      ],
+      [
+        3.0,
+        42.0
+      ],
+      [
+        8.0,
+        42.0
+      ],
+      [
+        8.0,
+        22.5
+      ],
+      [
+        3.0,
+        22.5
+      ]
+    ],
+    "5V": [
+      [
+        21.0,
+        13.0
+      ],
+      [
+        43.5,
+        13.0
+      ],
+      [
+        43.5,
+        42.5
+      ],
+      [
+        21.0,
+        42.5
+      ]
+    ],
+    "1V9": [
+      [
+        46.0,
+        3.0
+      ],
+      [
+        61.0,
+        3.0
+      ],
+      [
+        61.0,
+        15.6
+      ],
+      [
+        57.0,
+        15.6
+      ],
+      [
+        57.0,
+        18.0
+      ],
+      [
+        81.0,
+        18.0
+      ],
+      [
+        81.0,
+        44.0
+      ],
+      [
+        55.0,
+        44.0
+      ],
+      [
+        55.0,
+        18.5
+      ],
+      [
+        53.5,
+        18.5
+      ],
+      [
+        53.5,
+        15.6
+      ],
+      [
+        46.0,
+        15.6
+      ]
+    ],
+    "3V3": "background"
+  },
+  "island_priority": {
+    "3V3": 1,
+    "12V_PROT": 2,
+    "5V": 2,
+    "1V9": 2
+  },
+  "ground_probe_points": [
+    [
+      68.0,
+      31.0
+    ],
+    [
+      64.0,
+      64.0
+    ],
+    [
+      100.0,
+      54.0
+    ],
+    [
+      40.0,
+      24.0
+    ]
+  ],
+  "silkscreen": [
+    {
+      "text": "AIPE SiC BUCK CONTROL - V2",
+      "xy": [
+        62.0,
+        1.6
+      ],
+      "size": 1.0
+    },
+    {
+      "text": "AI-GENERATED PROTOTYPE",
+      "xy": [
+        101.5,
+        70.3
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "HUMAN REVIEW REQUIRED",
+      "xy": [
+        101.5,
+        72.1
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "12V IN",
+      "xy": [
+        12.0,
+        14.9
+      ],
+      "size": 0.9
+    },
+    {
+      "text": "JTAG (KEY PIN 6)",
+      "xy": [
+        100.5,
+        1.5
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "UART 3V3",
+      "xy": [
+        10.5,
+        25.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "BOOT",
+      "xy": [
+        9.0,
+        35.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "RESET",
+      "xy": [
+        9.0,
+        44.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "E-STOP",
+      "xy": [
+        113.0,
+        16.8
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "NTC",
+      "xy": [
+        113.0,
+        54.8
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "12V OK",
+      "xy": [
+        8.0,
+        61.6
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "ARMED",
+      "xy": [
+        108.0,
+        28.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "RUN",
+      "xy": [
+        108.0,
+        32.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "FAULT",
+      "xy": [
+        108.0,
+        36.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "J8 PIN 1 >",
+      "xy": [
+        20.5,
+        73.0
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "MEZZANINE (B.Cu)",
+      "xy": [
+        17.0,
+        75.5
+      ],
+      "size": 0.8
+    }
+  ],
+  "comparison_notes": [
+    "Candidate B puts the dense left package side (43 connected pins: GPIO0-17, ADCINA0-A4, VSS/VDD) toward the mezzanine so that the PWM, trip and analogue nets are short and the inner-escape vias of that side exit on B.Cu through the staggered outer via rows.",
+    "The analogue section sits to the right of the DSP next to the ADCINB pins and the analogue end of the header (pins 43-49); the PWM gating and fault logic sits between the DSP bottom edge and the header's digital pins (7-37).",
+    "Review-corrected revision: J8 on B.Cu (mates downward), DSP at y = 31 mm with the logic region below y = 57 mm, ADC filter strip beside the ADC pins, 5 V buck hot loop and 12V_IN bus pre-routed, exposed-pad via arrays, J4/J5 at the left edge, 3V3 ring 18.0 mm, Y1 at XCLKIN."
+  ],
+  "pre_routed": [
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 1.0,
+      "points": [
+        [
+          "@J1.1",
+          0,
+          0
+        ],
+        [
+          12.0,
+          4.25
+        ],
+        [
+          23.5,
+          4.25
+        ],
+        [
+          27.5,
+          4.25
+        ],
+        [
+          30.0,
+          4.25
+        ],
+        [
+          30.225,
+          4.25
+        ],
+        [
+          33.725,
+          4.25
+        ]
+      ],
+      "skip_pads": [
+        [
+          "J1",
+          "1"
+        ],
+        [
+          "D1",
+          "1"
+        ],
+        [
+          "C1",
+          "1"
+        ],
+        [
+          "U1",
+          "1"
+        ],
+        [
+          "U1",
+          "2"
+        ],
+        [
+          "R1",
+          "1"
+        ],
+        [
+          "R6",
+          "1"
+        ]
+      ]
+    },
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 0.8,
+      "points": [
+        [
+          23.5,
+          4.25
+        ],
+        [
+          "@D1.1",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 0.5,
+      "points": [
+        [
+          27.5,
+          4.25
+        ],
+        [
+          "@C1.1",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 1.0,
+      "points": [
+        [
+          30.0,
+          4.25
+        ],
+        [
+          30.0,
+          5.55
+        ],
+        [
+          "@U1.1",
+          0,
+          0.325
+        ]
+      ]
+    },
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 0.5,
+      "points": [
+        [
+          30.225,
+          4.25
+        ],
+        [
+          "@R1.1",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "net": "12V_IN",
+      "layer": "F.Cu",
+      "width": 0.5,
+      "points": [
+        [
+          33.725,
+          4.25
+        ],
+        [
+          "@R6.1",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "net": "12V_PROT",
+      "layer": "F.Cu",
+      "width": 1.0,
+      "points": [
+        [
+          "@U1.16",
+          0,
+          0.325
+        ],
+        [
+          "@U1.16",
+          3.3,
+          0.325
+        ]
+      ],
+      "vias": [
+        [
+          "@U1.16",
+          1.3,
+          0.325
+        ],
+        [
+          "@U1.16",
+          2.3,
+          0.325
+        ],
+        [
+          "@U1.16",
+          3.3,
+          0.325
+        ]
+      ],
+      "skip_pads": [
+        [
+          "U1",
+          "15"
+        ],
+        [
+          "U1",
+          "16"
+        ]
+      ]
+    },
+    {
+      "net": "5V_SW",
+      "layer": "F.Cu",
+      "width": 0.7,
+      "points": [
+        [
+          "@U2.2",
+          0,
+          0
+        ],
+        [
+          18.6,
+          21.0
+        ],
+        [
+          "@L1.1",
+          0,
+          0
+        ]
+      ],
+      "skip_pads": [
+        [
+          "U2",
+          "2"
+        ],
+        [
+          "L1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "net": "5V_SW",
+      "layer": "F.Cu",
+      "width": 0.5,
+      "points": [
+        [
+          18.6,
+          21.0
+        ],
+        [
+          18.6,
+          24.5
+        ],
+        [
+          "@C6.2",
+          0,
+          0
+        ]
+      ],
+      "skip_pads": [
+        [
+          "C6",
+          "2"
+        ]
+      ]
+    },
+    {
+      "net": "5V_BST",
+      "layer": "F.Cu",
+      "width": 0.3,
+      "points": [
+        [
+          "@U2.6",
+          0,
+          0
+        ],
+        [
+          "@C6.1",
+          0,
+          0
+        ]
+      ],
+      "skip_pads": [
+        [
+          "U2",
+          "6"
+        ],
+        [
+          "C6",
+          "1"
+        ]
+      ]
+    }
+  ],
+  "exposed_pad_vias": {
+    "U1": {
+      "pad": "17",
+      "count": [
+        2,
+        4
+      ]
+    },
+    "U3": {
+      "pad": "29",
+      "count": [
+        2,
+        4
+      ]
+    }
+  },
+  "signal_priority": [
+    "BIAS_EN",
+    "SPARE_D2",
+    "XRS_N",
+    "ISENSE_REF",
+    "ESTOP_N",
+    "FAN_TACH",
+    "BOOT86",
+    "SPARE_D1",
+    "ADC_TEMP_CTRL",
+    "ADC_I12V",
+    "ADC_TEMP_HS",
+    "RDY_H",
+    "OVP_N",
+    "TDI",
+    "FLT_H_N",
+    "FLT_L_N",
+    "RDY_L",
+    "OTP_N",
+    "PG_BIAS_S_N",
+    "RELAY_ON",
+    "OVP_IN_N",
+    "OVP_OUT_N",
+    "G1_N",
+    "PG_BIAS_H_OK",
+    "PG_BIAS_L_OK",
+    "PG_BIAS_S_OK",
+    "BOOT87",
+    "FLT_12V_N",
+    "RESET_N",
+    "DSP_TRIP_N"
+  ],
+  "review_findings_applied": [
+    "LR-02",
+    "LR-03",
+    "LR-04",
+    "LR-05",
+    "LR-06",
+    "LR-07",
+    "LR-09",
+    "LR-13",
+    "LR-16"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "purpose": "KiCad automation interface smoke test required by task09102026.txt section 3 before V2 engineering; generated with the existing automation/kicad_tools pipeline into a disposable scratch directory (not the committed smoke example).",
+  "date_utc": "2026-10-10",
+  "host": "Windows 11 Pro for Workstations 10.0.26300",
+  "kicad_cli_version": "10.0.7",
+  "kicad_python": "3.11.5 with pcbnew 10.0.7 and numpy",
+  "host_python": "3.10.11 with numpy 2.2.6, scipy 1.15.3, shapely 2.1.2, pandas, PyYAML",
+  "steps": [
+    "automation/kicad_tools/generate_smoke.py (KiCad python)",
+    "automation.kicad_tools.run_check erc",
+    "automation.kicad_tools.run_check drc (schematic parity, zone refill)",
+    "automation.kicad_tools.export_outputs (11 commands)"
+  ],
+  "checks": [
+    {
+      "kind": "drc",
+      "status": "passed",
+      "finding_count": 0,
+      "tool_exit_code": 0,
+      "source_sha256": "d339872e5aae846f61833c34277b8edfde9770df2e5723bacfa9aa7a71bb1905",
+      "command": [
+        "pcb",
+        "drc",
+        "--format",
+        "json",
+        "--severity-all",
+        "--exit-code-violations",
+        "--output",
+        "drc.json",
+        "--schematic-parity",
+        "--refill-zones",
+        "AIPE_Smoke.kicad_pcb"
+      ]
+    },
+    {
+      "kind": "erc",
+      "status": "passed",
+      "finding_count": 0,
+      "tool_exit_code": 0,
+      "source_sha256": "707162de846b3eb1f4b99cb70d67fa07cb4cab62cb13200744bd8b13628e2ce3",
+      "command": [
+        "sch",
+        "erc",
+        "--format",
+        "json",
+        "--severity-all",
+        "--exit-code-violations",
+        "--output",
+        "erc.json",
+        "AIPE_Smoke.kicad_sch"
+      ]
+    }
+  ],
+  "exports": {
+    "status": "passed",
+    "commands": 11,
+    "files": 32,
+    "all_exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "simulation_tool_probe": {
+    "ngspice_shared_library": "D:/EngineeringTools/KiCad/10.0/bin/ngspice.dll (ngspice-46 shared library bundled with KiCad 10.0.7)",
+    "access": "ctypes from host Python 3.10: ngSpice_Init / ngSpice_Circ / ngSpice_Command / ngGet_Vec_Info succeeded on an RC transient (247 points)",
+    "limitations": "no spinit found (XSPICE code models not loaded); no standalone ngspice.exe or LTspice installed; nothing was installed"
+  },
+  "ipc_api": "KiCad IPC API (kipy) not installed in the bundled Python; not required - pcbnew SWIG bindings and kicad-cli are used",
+  "plugins_mcp": "no KiCad plugins at the user plugin directory; no MCP servers used",
+  "git": {
+    "auth": "gh authenticated as MrCoconut616",
+    "upstream_permission": "READ on FulongLi/AIPE-PCB-Agent",
+    "fork_permission": "ADMIN on MrCoconut616/AIPE-PCB-Agent",
+    "consequence": "push to fork and open PR to upstream"
+  },
+  "result": "passed: ERC 0 findings, DRC 0 findings (violations, unconnected, parity), 11/11 exports exit 0"
+}

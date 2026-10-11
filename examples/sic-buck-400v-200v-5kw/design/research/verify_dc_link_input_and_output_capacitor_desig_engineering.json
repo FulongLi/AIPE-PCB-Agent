@@ -1,0 +1,316 @@
+{
+  "lens": "ENGINEERING RECOMPUTE AND APPLICABILITY",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "TDK B32776G8206K000 (C_IN): 20 uF, V_R,70 = 800 V / V_op,85 = 700 V, I_RMS,max 14.5 A (70 degC, 10 kHz, dT <= 20 K), ESR 7.5 mOhm, ESL 10 nH, 28 x 37 x 42 mm, 4-pin P1 = 10.2 mm",
+      "status": "verified",
+      "evidence": "TDK datasheet MKP_B32774_778.pdf (Date: June 2026) fetched and text-extracted: row 'B32776G8206+000 | 14.5 | 7.5 | 10.0', dims 28.0 x 37.0 x 42.0, P1 10.2; header 'VR,70 degC = 800 V DC, Vop,85 degC = 700 V DC'; footnote 2 'Max ripple current IRMS at 70 degC, 10 kHz for dT <= 20 degC'; tolerance codes J = +/-5 %, K = +/-10 %; 'Max. operating temperature: 105 degC (case)'."
+    },
+    {
+      "item": "TDK B32776G4606K000 (C_OUT): 60 uF, 450 V (V_R,70 = V_op,85 = 450 V), 23.5 A, 3.6 mOhm, 14 nH, 30 x 45 x 42 mm, P1 20.3 mm; growth/alternate rows B32776G8306 (19.5 A / 5.1 mOhm / 12 nH) and B32776G4406 (17.5 A / 5.3 mOhm / 11 nH, P1 10.2)",
+      "status": "verified",
+      "evidence": "Same TDK datasheet rows: 'B32776G4606+000 | 23.5 | 3.6 | 14.0' at 30.0 x 45.0 x 42.0 / 20.3; 'B32776G8306+000 | 19.5 | 5.1 | 12.0'; 'B32776G4406+000 | 17.5 | 5.3 | 11.0'; header 'VR,70 degC = 450 V DC, Vop,85 degC = 450 V DC'."
+    },
+    {
+      "item": "TDK statement '-1.33 %/degC derating above 85 degC'",
+      "status": "unverified",
+      "evidence": "Not found in the extracted datasheet text (searched '1.33', '%/K', 'derat'); not contradicted either. Not load-bearing because the computed hotspot (65-70 degC) stays below 85 degC."
+    },
+    {
+      "item": "TDK dV/dt and peak-current rating of B32776G8206 (hot-plug / pre-charge stress)",
+      "status": "unverified",
+      "evidence": "The agent lists dV/dt only for the KEMET (13 V/us, 262 A) and Vishay (35 V/us, 700 A) alternates and never for the selected TDK part; no dV/dt column appears in the extracted ordering-code table. The inrush case (architecture agent still undecided on the relay/pre-charge option; assumptions agent: 1.6-6.9 J inrush) is not evaluated anywhere in the capacitor result.",
+      "correction": "Obtain the TDK dV/dt / I_peak figures (general technical data section) and state the pre-charge requirement: with a stiff 400 V source and no pre-charge the peak current is bounded only by wiring; the KEMET alternate caps it at 13 V/us x 20 uF = 262 A per part."
+    },
+    {
+      "item": "KEMET C4AQIBW5200A3JJ: 20 uF, 800 V, 28 x 37 x 42 mm, S 37.5 / S1 10.2, 13 V/us, 262 A, ESL 10 nH, ESR 4.7 mOhm, I_rms 17.4 A, R_th 18 K/W; rating basis dT ~30 degC hotspot (100 degC, 'reduced life'); W = 4 pins; 100,000 h at V_NDC / 70 degC",
+      "status": "verified",
+      "evidence": "KEMET F3114_C4AQ 6/14/2024 (CERN mirror) text extracted: Table 1 row '20 | 800 | 28 | 37 | 42 | 37.5 | 10.2 | 13 | 262 | 10 | 4.7 | 17.4 | 18 | 36 | C4AQIBW5200A3JJ'; footnote '(*) Irms value that leads to a dT of ~30 degC in the hot spot ... THS = 100 degC. Attention: Hot spot at 100 degC reduced the life time!'; 'W = 4 pins'; '100,000 hours at VNDC at hot spot temperature THS = +70 degC'."
+    },
+    {
+      "item": "KEMET C4AQIBW5400A3OJ (40 uF 800 V: 35 x 50 x 42, 28.7 A, 2.5 mOhm, 14 nH, R_th 13) and C4AQCBW5400A3LJ (40 uF 650 V: 30 x 45 x 42, 24.9 A, 2.8 mOhm, 13 nH, R_th 15)",
+      "status": "verified",
+      "evidence": "Same KEMET table: '40 | 800 | 35 | 50 | 42 | 37.5 | 20.3 | 13 | 524 | 14 | 2.5 | 28.7 | 13 | 30 | C4AQIBW5400A3OJ' and '40 | 650 | 30 | 45 | 42 | 37.5 | 20.3 | 9 | 344 | 13 | 2.8 | 24.9 | 15 | 36 | C4AQCBW5400A3LJ'. KEMET V_OP85 = 700 V / V_OP105 = 550 V for the 800 V class was not located in the extracted text (unverified, not load-bearing)."
+    },
+    {
+      "item": "Vishay MKP1848C62080JP* (20 uF, U_NDC 800 V at 85 degC): 21.5 x 38.5 x 42 mm, P1 37.5 / P2 10.2, 35 V/us, 700 A, I_RMS 11 A (2 pins) / 12 A (4 pins), ESR 7 / 6 mOhm; rating basis 10 kHz, 85 degC, dt 15 K; ESR valid 10-70 kHz for P = 37.5 mm; U_OPDC 960 V at 70 degC / 560 V at 105 degC; '< 1 nH per mm of lead spacing'; > 100 000 h at U_NDC and 70 degC; pk-pk ripple <= 0.2 x U_NDC",
+      "status": "verified",
+      "evidence": "Vishay document 26015 rev 09-Aug-2023 text extracted: row '21.5 | 38.5 | 42.0 | 37.5 | 10.2 | 35 | 700 | 11 | 12 | 7 | 6 | 140 | 120 | MKP1848C62080JP*'; notes '(2) Maximum RMS current at 10 kHz, +85 degC, dt = +15 degC', '(3) ESR typical values ... at f = 10 kHz to 70 kHz for P = 37.5 mm'; 'UOPDC AT 70 degC = 960 V, UOPDC AT 105 degC = 560 V'. Note (1) 'Change the * symbol with special code for the terminals' confirms the agent's open point that the 4-pin ordering digit must be confirmed (the agent's 'JP4' is unverified)."
+    },
+    {
+      "item": "Vishay MKP1848C66050JP* (60 uF, U_NDC 500 V): 30 x 57 x 42 mm, P2 20.3, 20 V/us, 1200 A, 16 / 18 A, 3.5 / 3 mOhm; U_OPDC 600 V at 70 degC / 350 V at 105 degC",
+      "status": "verified",
+      "evidence": "Same Vishay document: row '30.0 | 57.0 | 42.0 | 37.5 | 20.3 | 20 | 1200 | 16 | 18 | 3.5 | 3 | 210 | 200 | MKP1848C66050JP*'; section header 'UOPDC AT 70 degC = 600 V, UOPDC AT 105 degC = 350 V'."
+    },
+    {
+      "item": "Vishay CRCW2512 e3 (bleeders): P70 = 1.0 W, limiting element voltage U_max 500 V AC_RMS/DC, film temperature 155 degC, -55 to +155 degC, F = +/-1 %, +/-100 ppm/K for the +/-1 % series, 1 Ohm to 10 MOhm E24/E96",
+      "status": "verified",
+      "evidence": "Vishay document 20035 rev 14-Apr-2026 text extracted: P70 column '... 0.5 W | 1.0 W | 0.75 W | 1.0 W' (2512 = 1.0 W), 'Umax. ACRMS/DC ... 400 V | 500 V' (2512 = 500 V), 'Permissible film temperature 155 degC', 'Operating temperature range -55 degC to +155 degC', 'F = +/- 1 %', 'CRCW2512 e3 ... +/- 100 ppm/K +/- 1 % 1 Ohm to 10 MOhm E24; E96'."
+    },
+    {
+      "item": "TDK CGA9P1X7T2J474M250KC (C_HF): 0.47 uF, 630 V, X7T, 2220; DC-bias capacitance at 440 V; dimensions; availability",
+      "status": "unverified",
+      "evidence": "Knowledge record CMP-CGA9P1X7T2J474M250KC holds only the TI BOM description (0.47 uF +/-20 %, 630 V, X7T) with datasheet 'not-located' (TDK HTTP 403 on 2026-10-09). The agent's 40 % remaining capacitance at 440 V (assumption A4) could not be checked from any source; marked unverified as the agent states. Verifier note: with the exact I*Z0 dip model (see recomputed), 10 pieces remain adequate down to about 20 % remaining capacitance, so the selection is robust to this uncertainty."
+    },
+    {
+      "item": "Knowles 2220Y1K00474KXTWS2 alternate and Nichicon LGW2E471MELB25 comparison part",
+      "status": "unverified",
+      "evidence": "Knowledge base holds only the KETWS2 termination variant from the TI BOM; the KXTWS2 (FlexiCap) data and the Nichicon listing values are search-snippet level, as the agent declares. Neither is selected."
+    },
+    {
+      "item": "SKILL-003 applicability and exclusions",
+      "status": "verified",
+      "evidence": "SKILL-003 record: applicable to 'voltage-source bridges with switched DC-link current, hundreds of volts, tens to hundreds of kHz' (met). Not applicable: line-frequency hold-up (not used), 'inductor-ripple output filters of low-voltage converters' (output here is 200 V; agent marked 'adapted'), 'capacitor lifetime modelling' (agent used the 10-K rule only for the rejected electrolytic comparison and flagged it). Procedure steps 1-4 and 6 followed; step 5 (KR-CAP-004) correctly excluded: no transformer."
+    },
+    {
+      "item": "KR-CAP-001 / KR-CAP-002 / KR-CAP-003 rule texts versus application",
+      "status": "verified",
+      "evidence": "KR-CAP-001 'C >= dQ_max/dV over all operating corners' applied at nine corners (dQ_max 137.5 uC recomputed). KR-CAP-002 'RMS ripple current at the switching frequency and worst-case temperature within the manufacturer rating' applied with rating-basis normalisation (TDK dT 20 K / KEMET dT 30 K / Vishay dT 15 K confirmed in the datasheets). KR-CAP-003 bulk film plus local HV ceramics applied; note the rule's purpose attribution is 'inferred' in the knowledge base (TI does not state why the MLCC columns exist)."
+    },
+    {
+      "item": "Reference instance values from REF-TI-TIDA-010054 not copied",
+      "status": "verified",
+      "evidence": "knowledge/references/ti/tida-010054/analysis.md Decision 2: TI fitted 2 x 30 uF 800 V (secondary), 2 x 15 uF 1.1 kV (primary), 14 + 14 MLCC, 5 V ripple target, dQ 12/50 uC. The agent's values (2 x 20 uF, 10 MLCC derived from a resonance model, 2 % ripple target, dQ 137.5 uC from the buck waveform) are derived, not copied; the MLCC part numbers coincide with TI's but at a documented 0.70 voltage ratio with derived quantity."
+    },
+    {
+      "item": "PE-PCB-002 / PE-PCB-003 / PE-PCB-006 status and evidence requirements",
+      "status": "verified",
+      "evidence": "docs/pcb-design-rules.md lists all three as 'human-review' with evidence 'pad-to-pad current path and capacitor placement', 'complete loop overlay including layer transitions and return', 'copper dimensions, via plating assumptions, current/loss and thermal rationale'. The agent surfaced the first two correctly; for PE-PCB-006 it gives copper dimensions and current density but no temperature-rise rationale (see knowledge_misuse)."
+    },
+    {
+      "item": "Provisional functional spacing Vin+ to PGND ('>= 2.5 mm creepage, >= 1.5 mm clearance, 3.0 mm recommended')",
+      "status": "contradicted",
+      "evidence": "standards_safety.json (standards agent): kicad_drc_values 'HV_functional_outer 3.0 mm, HV_functional_inner 1.0 mm'; basic clearance 3.0 mm at the adopted 4 kV impulse basis; creepage at 440 V PWB column 2.2 mm basic 'raised to 3.0'. The agent's 1.5 mm clearance minimum corresponds to a 2.5 kV impulse basis the standards agent did not adopt. The agent's 3.0 mm recommendation agrees; the stated minimums do not.",
+      "correction": "Replace the provisional minimums by the standards agent's values: 3.0 mm outer layers / 1.0 mm inner layers for HV functional spacing around capacitor pads and bleeder chains; keep KR-ISO-002 human review."
+    },
+    {
+      "item": "Discharge criterion versus the standards agent and sensing agent",
+      "status": "contradicted",
+      "evidence": "standards_safety.json: 'passive bleeders for <= 60 s on input and output banks + label 60 s + LED indicator per bank' (time criterion agrees). sensing_protection.json defines its own bleeder/indicator strings: 'Input: 3 x 150 k (bleeder) || 2 x 220 k + LED (indicator) = 222 k; output: 2 x 150 k' sized for 60 uF / 40 uF, and raises the open issue 'merge the bleeder strings proposed here with the capacitor agent's own bleeder assumption'. The capacitor result (3 x 120 k / 2 x 100 k) neither references these strings nor includes the LED indicator required by the standards agent. If both sets were fitted the discharge would take 16.6 s and standby dissipation about 1.7 W (recomputed).",
+      "correction": "Assign one owner for the bleeder/indicator chains, include the LED indicator string per bank, and recompute the discharge time and standby loss with the merged network and the final 40 uF / 120 uF values (the sensing agent's 60/40 uF assumption is stale)."
+    },
+    {
+      "item": "Clause citation 'IEC 61800-5-1 clause 4.3.11 / IEC 62477-1 clause 4.4.9'",
+      "status": "unverified",
+      "evidence": "standards_safety.json states that 4.4.9 is the renumbered clause of the 2023 edition of IEC 61800-5-1 and that IEC 62477-1 clause numbers are secondary-source/unverified pending a licensed copy review. The agent attributes 4.4.9 to IEC 62477-1 without that caveat.",
+      "correction": "Cite the discharge requirement through the standards agent's verified text (61800-5-1:2007 4.3.11 / 6.5.2 marking) and mark the 62477-1 clause number as unverified."
+    },
+    {
+      "item": "Edge rate and overshoot assumption A7 ('31.3 A in 30-50 ns, about 1 A/ns; about 20 V overshoot at 20 nH')",
+      "status": "contradicted",
+      "evidence": "mosfet.json: 'Design di/dt at turn-off and diode snap-off: 2.5 A/ns', 'Commutation loop inductance 25 nH typical, 35 nH worst case', 'Switching overshoot V_os 62/88 V'; gate_driver.json: fault turn-off 6.4 A/ns, turn-off dv/dt 110-122 V/ns. The agent's open issue ('if di/dt exceeds 2 A/ns the <= 20 nH target becomes mandatory') shows awareness but the numbers in the result are not aligned with the sibling areas.",
+      "correction": "Set A7 to the MOSFET agent's 2.5 A/ns and 25/35 nH (62/88 V overshoot); state that the <= 20 nH loop target is mandatory, consistent with architecture.json 'commutation_loop_nH <= 20-25 incl. packages'. The HF-tier dip model is unaffected (it depends on L_int and C_eff, not on the edge rate)."
+    },
+    {
+      "item": "Local air temperature assumption A6 (+10 K) versus the thermal agent",
+      "status": "verified",
+      "evidence": "thermal.json: film capacitors '>= 20 mm from sink, outside exhaust (+9 to +12 K air); hot-spot <= 85 degC design, 105 degC class limit'; exhaust rise '+12.4 K at 14.3 m3/h, +8.9 K at 20 m3/h'. A6 lies inside this band; with the 12.4 K worst case the TDK hotspot is 67 degC (plus 2-3 K ring heating, see recomputed), still far below the 85 degC point where V_op,85 = 700 V applies (480/700 = 0.69)."
+    },
+    {
+      "item": "Inductance range used (267 uH nominal, 220 uH low bound) versus the inductor agent",
+      "status": "verified",
+      "evidence": "inductor.json: L(25 A) = 272 uH (251-294 uH at AL +/-8 %), 248 uH at 31.5 A, 235 uH worst case with datasheet-minimum curve; ripple at 440 V with roll-off 8.5 A (9.3 A worst). The agent's 220 uH bound (dI 9.92 A at 440 V) bounds all of these."
+    },
+    {
+      "item": "Architecture agent adoption of the capacitor result",
+      "status": "verified",
+      "evidence": "architecture.json partition lists '10 x CGA9P1X7T2J474M HF tier at the device pins', '2 x B32776G8206K C_IN, 2 x B32776G4606K C_OUT', 'input bleeders 3 x CRCW2512120K + DC-LINK LIVE LED'; power board 4 layers, 70 um; height stack 'films 62 mm' within the 80 mm limit."
+    },
+    {
+      "item": "Voltage-loop crossover assumption A2 (2.5 kHz design, 2.0 kHz lower bound)",
+      "status": "unverified",
+      "evidence": "controller_aux_interconnect.json contains no crossover-frequency statement; assumptions.json only records 'conservative loop (f_c <= fs/20)' and 'C >= 199 / 99.5 / 39.8 uF for f_c = 1 / 2 / 5 kHz'. The 10 V excursion with 108 uF therefore requires f_c >= 2.0 kHz, which is not yet in the hardware/firmware contract.",
+      "correction": "Add 'outer voltage-loop crossover >= 2.0 kHz (2.5 kHz design) with inner current loop' to the firmware interface contract, or increase C_OUT."
+    },
+    {
+      "item": "Output OVP margin against a 25 A load dump",
+      "status": "verified",
+      "evidence": "sensing_protection.json sets OVP_out at 220.2 V and raises its own open issue on load-dump behaviour; the agent's 214.8-218.5 V excursion (recomputed 214.8 / 218.5 V) and its proposal (230 V trip with blanking or 180 uF) are consistent and correctly left open for the protection agent."
+    },
+    {
+      "item": "SKILL-006 step 3 'capacitors out of the heat-sink exhaust' marked for review",
+      "status": "verified",
+      "evidence": "SKILL-006 procedure: 'Place devices and keep capacitors/magnetics out of exhaust (review)'. The agent's wording 'without source evidence' is a paraphrase of this review marker; its treatment (apply, flag, carry a local-air allowance) is appropriate."
+    },
+    {
+      "item": "Footprint geometry for C_IN / C_OUT 4-pad patterns (pads at +/-18.75 / +/-5.10 mm and +/-18.75 / +/-10.15 mm)",
+      "status": "verified",
+      "evidence": "P 37.5 mm with P1 10.2 mm (20 uF class) and 20.3 mm (60 uF class) confirmed identically for TDK (P1), KEMET (S/S1) and Vishay (P1/P2) in the three datasheets; 37.5/2 = 18.75, 10.2/2 = 5.10, 20.3/2 = 10.15."
+    },
+    {
+      "item": "Output bleeder stress under the high-side-short fault (440 V on the output bank)",
+      "status": "unverified",
+      "evidence": "The agent evaluates the output film capacitors (440/450 = 0.98) but not the 2 x 100 kOhm chain under the same fault. Verifier: 440 V -> 0.97 W total, 0.48 W and 220 V per CRCW2512 (rated 1 W / 500 V), acceptable for the fault interval; should be stated."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Duty and inductor ripple at corners",
+      "agent_value": "D = 0.556/0.500/0.455; dI = 6.66/7.49/8.17 A (267 uH), 8.08/9.09/9.92 A (220 uH)",
+      "verifier_value": "D = 0.5556/0.5000/0.4545; dI = 6.66/7.49/8.17 A (267 uH), 8.08/9.09/9.92 A (220 uH)",
+      "agrees": true
+    },
+    {
+      "name": "Input capacitor RMS current (nine corners + 340 V UVLO corner)",
+      "agent_value": "12.50-12.64 A at 25 A; 13.74-13.87 A at 27.5 A; worst 13.87 A at 400 V / 27.5 A / 220 uH",
+      "verifier_value": "12.50-12.64 A (25 A); 13.74-13.87 A (27.5 A); worst 13.87 A; formula I_C,rms^2 = D(Io^2 + dI^2/12) - (D Io)^2 is the correct buck input-capacitor expression; 340 V corner 13.64 A (not worse)",
+      "agrees": true
+    },
+    {
+      "name": "Input ripple charge dQ",
+      "agent_value": "123.5/125.0/124.0 uC (25 A); 135.8/137.5/136.4 uC (27.5 A); exact because Io - dI/2 > D Io",
+      "verifier_value": "Identical; condition Io - dI/2 > D*Io holds at all corners (checked), so dQ = D(1-D) Io Ts is exact",
+      "agrees": true
+    },
+    {
+      "name": "Input capacitance requirement",
+      "agent_value": "C_in >= 17.2 uF (>= 19.1 uF nominal) for 8 Vpp; 34.4 / 38.2 uF for 1 %",
+      "verifier_value": "17.2 uF / 19.1 uF; 34.4 / 38.2 uF",
+      "agrees": true
+    },
+    {
+      "name": "Realised input ripple with 36 uF",
+      "agent_value": "3.82 V + ESR term 0.17 V (I_C,pp = 'Io + dI/2 + Iin' = 44.1 A) = 4.0 Vpp (1.0 %)",
+      "verifier_value": "3.82 V + 0.12 V = 3.94 Vpp (0.98 %); the capacitor pk-pk current is Io + dI/2 = 32.0 A (max Io + dI/2 - D Io, min -D Io), the agent's expression double-counts Iin. Conservative, negligible effect",
+      "agrees": true,
+      "note": "Correct the expression; conclusion unchanged."
+    },
+    {
+      "name": "Film self-heating and hotspot",
+      "agent_value": "TDK 0.36 W, R_th 12.7 K/W, dT 4.6 K, T_hs 65 degC; KEMET dT 4.1 K; Vishay dT 5.0 K; single 40 uF KEMET dT 6.2 K",
+      "verifier_value": "TDK 0.361 W, 12.7 K/W, 4.57 K, 64.6 degC (67.0 degC with the thermal agent's +12.4 K exhaust case); KEMET 4.07 K; Vishay 5.01 K; KEMET 40 uF 6.25 K. Note dT = dT_rated x (I/I_rated)^2 is independent of the ESR value as long as ESR(50 kHz) = ESR(10 kHz), which the Vishay footnote supports",
+      "agrees": true,
+      "note": "Excludes the film-to-ceramic ring loss (see separate entry)."
+    },
+    {
+      "name": "Input voltage derating ratios",
+      "agent_value": "0.55/0.575/0.60 of 800 V; 0.63/0.66/0.69 of 700 V; 575 V class 0.77/0.80/0.83",
+      "verifier_value": "0.550/0.575/0.600; 0.629/0.657/0.686; 0.765/0.800/0.835",
+      "agrees": true
+    },
+    {
+      "name": "HF ceramic tier dip (quarter-period charge model)",
+      "agent_value": "1.88 uF, 30 nH: f_r 670 kHz, T/4 373 ns, dQ 11.7 uC, dV 6.2 V (1.5 %), Z0 0.13 Ohm; 1.0 uF: 8.5 V (2.1 %)",
+      "verifier_value": "670 kHz, 373 ns, 11.7 uC, 6.2 V, Z0 0.126 Ohm; 1.0 uF/30 nH: 8.5 V. Exact step-response peak dip is I_pk x Z0 = 4.0 V (1.88 uF) and 5.4 V (1.0 uF), i.e. the agent's model is conservative by pi/2 as it states",
+      "agrees": true,
+      "note": "With the exact model the 1.5 uF requirement is soft: 10 pieces stay under a 2 % dip down to about 20 % remaining capacitance (0.94 uF -> 5.6 V)."
+    },
+    {
+      "name": "Ceramic effective capacitance and count",
+      "agent_value": "10 x 0.47 uF x 40 % = 1.88 uF",
+      "verifier_value": "1.88 uF given A4; A4 itself unverified",
+      "agrees": true
+    },
+    {
+      "name": "Ceramic 50 kHz share and switching-edge RMS",
+      "agent_value": "5 % share: 0.69 A total, 69 mA per piece; edge RMS 1.28 A total, 0.13 A per piece (50 ns edges)",
+      "verifier_value": "0.688 A / 69 mA; edge RMS 1.28 A at 50 ns (0.64 A at the MOSFET agent's 12.5 ns edge). These two terms are reproduced, but the dominant ceramic current is omitted: see next entry",
+      "agrees": false,
+      "note": "Per-piece current is understated because the film-to-ceramic ring is not counted."
+    },
+    {
+      "name": "Film-to-ceramic resonance ring current and loss (OMITTED by the agent)",
+      "agent_value": "Not computed; resonance only noted as 'lightly damped' with an optional 1 uF + 0.47 Ohm damping leg",
+      "verifier_value": "Each edge launches a ring at f_r with amplitude equal to the commutated current (31.3 A at turn-off, ~23 A valley current at turn-on). Energy per period 0.5 L_int (31.3^2 + 23^2) = 22.6 uJ at 30 nH -> 1.13 W dissipated in the loop resistance (0.75 W at 20 nH, 1.51 W at 40 nH), independent of Q. With R_loop 6-20 mOhm: Q = 6-21, tau = 3-10 us, ring RMS 7.5-13.7 A total = 0.75-1.4 A per MLCC (6-10x the agent's 0.13 A). Film share of the ring loss (3.75 mOhm of ~8-10 mOhm) ~0.4-0.5 W -> +0.2-0.25 W per film part, +2.5-3 K hotspot",
+      "agrees": false,
+      "note": "Thermally tolerable for the MLCCs (tens of mW each) but must be stated; the proposed 0.47 Ohm damping resistor would absorb most of this ~1 W and needs a >= 2 W rating, not a small SMD."
+    },
+    {
+      "name": "Commutation overshoot L x di/dt",
+      "agent_value": "15-30 V at 1 A/ns, 30-60 V at 2 A/ns -> target <= 20 nH",
+      "verifier_value": "Arithmetic correct (15/20/30 nH x 1-2 A/ns); at the MOSFET agent's 2.5 A/ns: 50 V (20 nH), 62 V (25 nH), 88 V (35 nH), matching mosfet.json V_os 62/88 V",
+      "agrees": true,
+      "note": "Input assumption (1 A/ns) inconsistent with the MOSFET/gate-driver areas; see required changes."
+    },
+    {
+      "name": "Output capacitor RMS current",
+      "agent_value": "2.16 A / 2.86 A; 1.43 A per part; 7 mW",
+      "verifier_value": "2.16 / 2.86 A; 1.43 A per part; 7.4 mW",
+      "agrees": true
+    },
+    {
+      "name": "Output capacitance for ripple",
+      "agent_value": "C >= 12.5 uF; realised 0.23 + 0.02 = 0.25 Vpp (0.12 %)",
+      "verifier_value": "12.5 uF; 0.230 + 0.018 = 0.247 Vpp",
+      "agrees": true
+    },
+    {
+      "name": "Output capacitance for the 12.5 A step",
+      "agent_value": "99.7 / 79.8 / 66.5 uF -> 110.8 / 88.6 / 73.8 uF nominal; 108 uF gives 9.2 V (2 kHz), 7.4 V (2.5 kHz)",
+      "verifier_value": "99.7 / 79.8 / 66.5 uF; 110.8 / 88.6 / 73.8 uF; 9.23 V / 7.39 V / 6.16 V (3 kHz). First-order model dV = dI/(2 pi f_c C) accepted; consistent with assumptions.json (199 / 99.5 / 39.8 uF at 1 / 2 / 5 kHz)",
+      "agrees": true
+    },
+    {
+      "name": "Load-dump excursion versus 220 V OVP",
+      "agent_value": "+18.5 V / +14.8 V -> 218.5 / 214.8 V",
+      "verifier_value": "+18.47 V (2 kHz) / +14.78 V (2.5 kHz); inductor-energy floor alone (0.5 L I_pk^2 into 108 uF) is +5 V",
+      "agrees": true
+    },
+    {
+      "name": "Inductor slew and LC corner",
+      "agent_value": "0.60 A/us; 21 us for 12.5 A; f0 = 889 Hz",
+      "verifier_value": "0.599 A/us; 20.9 us; 889 Hz",
+      "agrees": true
+    },
+    {
+      "name": "Output voltage derating ratios",
+      "agent_value": "0.44 / 0.49 / 0.98 (440 V fault)",
+      "verifier_value": "0.444 / 0.489 / 0.978; V_op,85 = 450 V confirmed in the TDK datasheet",
+      "agrees": true
+    },
+    {
+      "name": "Electrolytic 10-K lifetime estimate (comparison only)",
+      "agent_value": "96,000 / 68,000 / 48,000 h",
+      "verifier_value": "96,000 / 67,900 / 48,000 h; correctly excluded from selection per SKILL-003",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder discharge time (coupled banks)",
+      "agent_value": "35.7 s (360k/200k, 48.7 uF/132 uF, 460/200 V); 47.6 s (480k/240k); 31.0 s (300k/200k); input alone 35.7 s; output alone from 220 V 34.3 s",
+      "verifier_value": "Numerical two-bank simulation with ideal-diode coupling: 35.7 s; 47.6 s; 31.0 s; input alone tau = 17.5 s -> 35.6 s; output alone 34.3 s; from 480/220 V: 36.5 s. Coupling direction (output discharges into input through L and the HS body diode when Vout > Vin) is correct; the banks only couple below 60 V so the input chain governs",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder dissipation and element stress",
+      "agent_value": "input 0.54 W at 440 V (0.44 W at 400 V), 0.18 W and 147 V (160 V at 480 V) per resistor; output 0.20 W, 0.10 W and 100-110 V per resistor; standby 0.74 W",
+      "verifier_value": "0.538 W / 0.444 W; 0.179 W, 146.7 V / 160.0 V; output 0.200 W, 0.100 W, 100 / 110 V; standby 0.74 W; at 460 V OVP 153 V per resistor",
+      "agrees": true
+    },
+    {
+      "name": "Film-branch copper",
+      "agent_value": "1.4 mm2 per layer; 5.0 A/mm2 (7 A); 17.9 A/mm2 (25 A) -> two layers",
+      "verifier_value": "1.4 mm2; 5.0 / 17.9 A/mm2. Density rule-of-thumb only; the inductor agent's IPC-2221 result (25 A: 8.4 mm at 70 um external, 12.7 mm for 10 K) shows a 20 mm pour already meets 25 A with < 10 K rise on one layer, so two layers are conservative",
+      "agrees": true,
+      "note": "Replace the density argument by the IPC temperature-rise evidence that PE-PCB-006 requires."
+    },
+    {
+      "name": "Input bank stored energy / inrush (OMITTED by the agent)",
+      "agent_value": "not computed",
+      "verifier_value": "0.5 x 44 uF x 440^2 = 4.3 J; with a 5 A current-limited source dV/dt = 0.11 V/us (harmless); with a stiff bus and no pre-charge the peak current is wiring-limited and must be compared with the film I_peak / dV/dt rating (KEMET 262 A / 13 V/us per 20 uF part; TDK value not obtained)",
+      "agrees": false,
+      "note": "Depends on the architecture agent's undecided pre-charge option."
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-PCB-006 / PE-PCB-006 require copper 'sized by a current-density/temperature-rise analysis' with 'current/loss and thermal rationale'; the agent marks the rule 'direct' but provides only a 5 A/mm2 density figure and a wiring rule-of-thumb (17.9 A/mm2 -> two layers). The IPC-2221 temperature-rise evidence already produced by the inductor agent (25 A: 8.4 mm at 70 um, 12.7 mm for 10 K) should be cited instead.",
+    "KR-CAP-003 is applied as 'direct' although the knowledge base records the purpose of TI's MLCC columns as 'inferred' (TI does not state it); applicability should be marked 'adapted' with the inference noted, as SKILL-003 itself does.",
+    "Assumption A7 (about 1 A/ns, about 20 V overshoot at 20 nH) was set inside the capacitor area although the design basis assigns the edge rate to the MOSFET/gate-driver areas, whose results (2.5 A/ns design di/dt, 25/35 nH, 62/88 V overshoot, 6.4 A/ns fault turn-off) were available; the overshoot calculation therefore understates the sibling values by 3-4x.",
+    "IEC 62477-1 'clause 4.4.9' is cited as a basis without the standards agent's caveat that 62477-1 clause numbers are secondary-source/unverified and that 4.4.9 is the 2023-edition renumbering of 61800-5-1 4.3.11.",
+    "No copying of reference instance values was found; SKILL-003 exclusions (DC-blocking, lifetime modelling) and the human-review rules (KR-ISO-002, PE-PCB-002/003/006, SKILL-006 step 3, SKILL-005 interface) were surfaced rather than decided."
+  ],
+  "required_changes": [
+    "Add the film-to-ceramic resonance ring to the HF-tier and film analyses: energy 0.5 L_int (I_off^2 + I_on^2) per period = 22.6 uJ at 30 nH -> about 1.1 W dissipated in the loop resistance (0.75 W at 20 nH, 1.5 W at 40 nH); ring RMS 7.5-13.7 A total (0.75-1.4 A per MLCC for Q = 6-21) replacing the 0.13 A per-piece figure; add about 0.2-0.25 W per film part (+2.5-3 K) to the self-heating table; state the MLCC ESR at f_r and resulting MLCC heating (tens of mW each).",
+    "If the optional damping leg is kept, specify the resistor power rating from the ring energy (about 1 W average -> >= 2 W rated resistor or two 1 W 2512 in parallel) rather than an unrated '0.47 Ohm'; keep the open issue to confirm with the extracted L_int.",
+    "Align assumption A7 with the MOSFET and gate-driver results: design di/dt 2.5 A/ns, loop 25 nH typical / 35 nH worst, overshoot 62/88 V, fault turn-off up to 6.4 A/ns; make the <= 20 nH loop target mandatory (architecture target <= 20-25 nH) and recompute the ceramic peak voltage with the local-bus ring (about 484 V -> 0.77 of 630 V at the 480 V transient).",
+    "Replace the provisional functional spacing minimums (>= 1.5 mm clearance / >= 2.5 mm creepage) by the standards agent's DRC values: 3.0 mm on outer layers and 1.0 mm on inner layers for HV functional spacing (4 kV impulse basis); keep KR-ISO-002 human review.",
+    "Reconcile the bleeder/indicator design with sensing_protection.json and standards_safety.json: one owner for the chains, include the 'DC-LINK LIVE' LED indicator string per bank, and recompute discharge time and standby loss for the merged network at the final 40 uF / 120 uF (if both proposed sets are fitted: 16.6 s and about 1.7 W); notify the sensing agent that its 60 uF / 40 uF assumption (pre-charge 25-41 ms, discharge 27.8 s) is stale.",
+    "Add the inrush / hot-plug stress case: obtain the TDK B32776G8206 dV/dt and I_peak ratings, state the stored energy (4.3 J at 440 V) and make the pre-charge/current-limited-source requirement explicit for the architecture agent (KEMET alternate caps at 13 V/us, 262 A per part).",
+    "Correct the ESR ripple-term expression: I_C,pp = Io + dI/2 = 32.0 A (not 'Io + dI/2 + Iin' = 44.1 A); realised ripple 3.94 Vpp (0.98 %) instead of 4.0 Vpp.",
+    "Put the voltage-loop requirement in the hardware/firmware contract: outer-loop crossover >= 2.0 kHz (2.5 kHz design) with an inner current loop, since the 10 V excursion with 108 uF depends on it and the controller area states no crossover value.",
+    "Replace the copper current-density argument by the IPC-2221/2152 temperature-rise evidence PE-PCB-006 asks for (20 mm x 70 um carries 25 A with < 10 K rise on one layer; two stitched layers remain the recommendation for inductance and redundancy).",
+    "State the output bleeder stress under the high-side-short fault (440 V: 0.97 W total, 0.48 W and 220 V per CRCW2512, within 1 W / 500 V) alongside the output-capacitor fault check.",
+    "Mark the TDK '-1.33 %/degC above 85 degC' statement and the KEMET V_OP85/V_OP105 values as unverified (not found in the extracted datasheets) and cite the discharge clause through the standards agent's verified 61800-5-1:2007 text; note that with the exact I*Z0 dip model the 10-piece ceramic tier remains adequate down to about 20 % remaining capacitance, which relaxes the DC-bias open issue."
+  ],
+  "summary": "All 21 agent calculations were recomputed from the stated inputs at the 360/400/440 V, 25/27.5 A, 267/220 uH corners and agree within rounding: worst input RMS 13.87 A, dQ 137.5 uC, C_in >= 17.2 uF, 3.9 Vpp with 2 x 20 uF, TDK hotspot rise 4.6 K, output 2.86 A RMS, 108 uF giving 7.4/9.2 V for the 12.5 A step, coupled discharge 35.7 s, 0.74 W standby. The TDK B32776 (June 2026), KEMET C4AQ (6/2024), Vishay MKP1848C (09-Aug-2023) and Vishay CRCW (14-Apr-2026) datasheets were fetched and text-extracted; every quoted film-capacitor and resistor parameter, rating basis and footprint pitch is confirmed. The selection (2 x 20 uF/800 V, 10 x 0.47 uF/630 V, 2 x 60 uF/450 V, 360 k / 200 k bleeders) stands. Corrections: (1) the film-to-ceramic resonance ring is omitted - about 1.1 W per 30 nH of interconnect is dissipated every period and the MLCC current is 0.75-1.4 A per piece rather than 0.13 A, with a corresponding damping-resistor rating; (2) the edge-rate assumption (1 A/ns) contradicts the MOSFET/gate-driver areas (2.5 A/ns, 62/88 V); (3) the provisional 1.5 mm clearance is below the standards agent's 3.0 mm outer-layer rule; (4) duplicate bleeder definitions exist in the sensing area and the standards agent's LED indicator is missing; (5) inrush/hot-plug dV/dt stress and the TDK dV/dt rating are absent; (6) minor: wrong pk-pk capacitor-current expression (conservative), KR-PCB-006 temperature-rise evidence missing, clause attribution and the TDK over-85 degC derating statement unverified. MLCC DC-bias, availability and lifetime-at-ratio remain unverified as the agent declares; the exact I*Z0 model shows the ceramic count is robust to the bias uncertainty."
+}

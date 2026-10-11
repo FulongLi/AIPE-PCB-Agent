@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "record_id": "AIPE-MAG-L1-SICBUCK-5KW-V2",
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED; proposal for the future AIPE Magnetic Database (no schema exists in the repository yet)",
+  "application": "output inductor L1 of the 400 V -> 200 V / 25 A / 50 kHz SiC synchronous buck (examples/sic-buck-400v-200v-5kw)",
+  "source_record": "design/research/inductor.json selection.magnetic_record, verified by design/research/verify_output_inductor_design_and_selection_*.json; baseline design/design_decisions.json magnetics.inductor",
+  "magnetic_record": {
+    "record_id": "AIPE-MAG-L1-SICBUCK-5KW-V2",
+    "component_type": "dc_output_choke",
+    "project": "sic-buck-400v-200v-5kw",
+    "status": "designed_not_built",
+    "core": {
+      "manufacturer": "Magnetics Inc.",
+      "part_number": "0058192A2",
+      "shape": "toroid",
+      "material": "High Flux",
+      "permeability_initial": 60,
+      "quantity_stacked": 2,
+      "AL_nH": 138,
+      "AL_tolerance_pct": 8,
+      "Ae_mm2": 229,
+      "le_mm": 125,
+      "Ve_mm3": 28600,
+      "Wa_mm2": 514,
+      "OD_mm": 58.04,
+      "ID_mm": 25.58,
+      "HT_mm": 16.13,
+      "mass_g": 218,
+      "Bsat_T": 1.5,
+      "Curie_degC": 500,
+      "coating_breakdown_VAC": 3000,
+      "coating_Tmax_degC": 200,
+      "datasheet_url": "https://www.mag-inc.com/Media/Magnetics/Datasheets/0058192A2.pdf",
+      "datasheet_revision": "10/6/2021"
+    },
+    "material_models": {
+      "perm_vs_H": {
+        "form": "pct_mu = 1/(a + b*H^c), H in Oe",
+        "a": 0.01,
+        "b": 6.413e-08,
+        "c": 2.291,
+        "source": "Magnetics Powder Core Catalog 2024 p.63"
+      },
+      "core_loss": {
+        "form": "Pv_mW_cm3 = a*Bpk^b*f^c, B in T, f in kHz",
+        "a": 246.54,
+        "b": 2.218,
+        "c": 1.311,
+        "source": "Magnetics Powder Core Catalog 2024 p.109",
+        "waveform_factor_used": 1.1
+      },
+      "dc_magnetisation": {
+        "form": "B = ((a + bH + cH^2)/(1 + dH + eH^2))^x, T, Oe",
+        "a": 0.03828,
+        "b": 0.018,
+        "c": 0.0007012,
+        "d": 0.07063,
+        "e": 0.0004502,
+        "x": 1.63,
+        "source": "Magnetics Powder Core Catalog 2024 p.130"
+      }
+    },
+    "winding": {
+      "turns": 34,
+      "layers": "1 (outer), partial 2nd on ID",
+      "wire": "AWG 10 heavy build 200 degC",
+      "wire_bare_dia_mm": 2.588,
+      "wire_area_mm2": 5.261,
+      "wire_OD_mm": 2.72,
+      "alternative_wire": "2 x AWG 13 bifilar",
+      "fill_factor_pct": 38,
+      "MLT_mm": 110,
+      "wire_length_m": 3.73,
+      "copper_mass_g": 176,
+      "Rdc_20C_mohm": 12.2,
+      "Rdc_100C_mohm": 16.0,
+      "insulation": "2 layers 0.1 mm polyester tape under winding; potting or varnish"
+    },
+    "L_vs_I_uH": [
+      [
+        0,
+        319
+      ],
+      [
+        5,
+        318
+      ],
+      [
+        12.5,
+        308
+      ],
+      [
+        20,
+        289
+      ],
+      [
+        25,
+        272
+      ],
+      [
+        27.5,
+        263
+      ],
+      [
+        28.7,
+        258
+      ],
+      [
+        31.5,
+        248
+      ],
+      [
+        41,
+        210
+      ],
+      [
+        46,
+        190
+      ],
+      [
+        55,
+        160
+      ]
+    ],
+    "L_tolerance": {
+      "AL_pct": 8,
+      "fit_uncertainty_pct": 5,
+      "L_25A_min_uH": 235,
+      "L_25A_max_uH": 294,
+      "temperature_shift_pct_0_125C": 3
+    },
+    "operating_points": [
+      {
+        "Vin_V": 360,
+        "Iout_A": 25,
+        "dI_App": 6.5,
+        "Bpk_ac_T": 0.057,
+        "Pcore_W": 4.6,
+        "Pcu_W": 10.3,
+        "Ptot_W": 14.9
+      },
+      {
+        "Vin_V": 400,
+        "Iout_A": 25,
+        "dI_App": 7.3,
+        "Bpk_ac_T": 0.064,
+        "Pcore_W": 5.9,
+        "Pcu_W": 10.4,
+        "Ptot_W": 16.4
+      },
+      {
+        "Vin_V": 440,
+        "Iout_A": 25,
+        "dI_App": 8.0,
+        "Bpk_ac_T": 0.07,
+        "Pcore_W": 7.2,
+        "Pcu_W": 10.5,
+        "Ptot_W": 17.7
+      },
+      {
+        "Vin_V": 440,
+        "Iout_A": 27.5,
+        "dI_App": 8.0,
+        "Bpk_ac_T": 0.07,
+        "Pcore_W": 7.2,
+        "Pcu_W": 12.6,
+        "Ptot_W": 19.8
+      }
+    ],
+    "thermal": {
+      "surface_area_cm2": 161,
+      "dT_model": "(P_mW/A_cm2)^0.833",
+      "dT_nominal_K": 50,
+      "dT_overload_K": 55,
+      "hot_spot_limit_degC": 125,
+      "P_max_W": 28.8
+    },
+    "dimensions": {
+      "wound_OD_mm": 65,
+      "wound_HT_mm": 43,
+      "potted_cup_OD_mm": 72,
+      "potted_cup_HT_mm": 46,
+      "keepout_OD_mm": 75,
+      "keepout_HT_mm": 48
+    },
+    "mass_g": {
+      "bare": 632,
+      "potted": 780
+    },
+    "mounting": {
+      "type": "potting cup, 4 x M4 to standoffs",
+      "orientation": "axis vertical",
+      "terminal_type": "AWG 10 wire leads into PTH",
+      "hole_mm": 3.2,
+      "pad_mm": 6.0,
+      "pitch_mm": 25.4
+    },
+    "verification_level": "analytical; core data fetched-datasheet; fits fetched-catalogue; no measurement"
+  },
+  "baseline_summary": {
+    "type": "custom toroidal choke (no orderable standard part exists for 220-300 uH at 25-32 A; 13 families searched)",
+    "core": "2 x Magnetics 0058192A2 High Flux 60u, stacked (OD 58.0 mm, HT 16.1 mm each); catalogue selector lists the size as C058192A2 - orderable code to confirm",
+    "turns": 34,
+    "wire": "AWG 10 heavy build (alt 2 x AWG 13 bifilar); ~26 turns in the first inner-diameter layer, ~8 in the second",
+    "L_uH_nominal": {
+      "0A": 319,
+      "25A": 272,
+      "31p6A": 248,
+      "41A": 210
+    },
+    "L_uH_worst_minus8pct_AL_min_curve": {
+      "25A": 235,
+      "31p5A": 215,
+      "41A": 175,
+      "46A": 160
+    },
+    "isat_30pct_drop_from_L0_A": "37.3 nominal / ~35 worst",
+    "ripple_App": {
+      "400V": 7.3,
+      "440V_worst": 8.7,
+      "440V_27p5A_worst": 9.0
+    },
+    "dcr_mohm_20C_100C": [
+      12.2,
+      16.0
+    ],
+    "loss_W": {
+      "400V_25A_typ": 16.4,
+      "440V_27p5A_typ": 19.8,
+      "440V_27p5A_bounded_worst_core": "23-26 (datasheet-maximum core loss 1.44x fit + DC-bias allowance)"
+    },
+    "temperature": "average surface rise 50-55 K typical / 62-69 K bounded in still air; hot spot 110-120 C with the +10-15 K internal allowance -> forced air over the inductor is REQUIRED (placed in the fan stream) or the 3-stack fallback; acceptance thermocouple at the inner-diameter winding, <= 110 C",
+    "no_load_ccm_reverse_current_A": "-2.8 to -3.4",
+    "mass_g": 632,
+    "envelope": "wound OD ~65-69 mm, height 40-43 mm; potted in a UL94 V-0 cup ~72 x 46 mm; keep-out circle 75 mm, height 48 mm",
+    "mounting": "cup bolted to 4 x M4 standoffs on a 60 x 60 mm pattern; mass never carried by solder joints",
+    "pcb_footprint": "2 x PTH 3.2 mm finished hole, 6.0 mm pads on all layers, pitch 25.4 mm; 4 x 4.3 mm NPTH on 60 x 60 mm with 8 mm copper-free annulus; terminals >= 4 mm from other nets",
+    "emi_handoff": "winding end-to-end capacitance / SRF and displacement current under the 110-120 V/ns SW dv/dt to be estimated; SW-side turns and lead kept away from the TMCS1133 path",
+    "magnetic_record_source": "design/research/inductor.json selection.magnetic_record (AIPE Magnetic Database proposal)"
+  },
+  "pcb_footprint": "AIPE:L_Toroid_HF58x2_D69_H48_P25.4 (kicad/power_board/libraries/AIPE.pretty)",
+  "verification_level": "Analytically checked at Vin 360/400/440 V, Iout 25/27.5 A, 100 degC copper, AL +/-8 % and the 1.3x margin current; core geometry/AL/bias anchors from fetched Magnetics datasheets (rev 2021), permeability/loss/magnetisation fits from the fetched Magnetics 2024 catalogue; standard-part rejections verified at the levels marked per candidate (Coilcraft and Vishay fetched datasheets, Wuerth/Vishay IHDM"
+}

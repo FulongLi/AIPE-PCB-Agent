@@ -1,0 +1,922 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-10T20:10:45",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Control.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [PG_BIAS_L_N] (F.Cu), 长度: 6.1250 mm",
+                    "pos": {
+                        "x": 74.75,
+                        "y": 71.5
+                    },
+                    "uuid": "ae06f2e5-5e5e-42c2-b174-329f9d897e1a"
+                },
+                {
+                    "description": "走线 [PG_BIAS_L_N] (F.Cu), 长度: 0.0280 mm",
+                    "pos": {
+                        "x": 70.3625,
+                        "y": 65.849999
+                    },
+                    "uuid": "19c7488a-5eb6-450c-8ac3-99cd6f3f4cca"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [PG_BIAS_L_N] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 63.825
+                    },
+                    "uuid": "fb4ad885-d603-44f5-983b-d08e65432074"
+                },
+                {
+                    "description": "走线 [PG_BIAS_L_N] (B.Cu), 长度: 5.8750 mm",
+                    "pos": {
+                        "x": 91.375,
+                        "y": 70.375
+                    },
+                    "uuid": "1c363604-b2ab-474a-8afa-bae0e1bf7be8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 U8 的焊盘 13 [XRS_N]",
+                    "pos": {
+                        "x": 70.3625,
+                        "y": 58.7
+                    },
+                    "uuid": "584a24a9-05f2-4ebc-a0e9-6ebd5cacedf5"
+                },
+                {
+                    "description": "走线 [XRS_N] (B.Cu), 长度: 3.3750 mm",
+                    "pos": {
+                        "x": 82.0,
+                        "y": 24.0
+                    },
+                    "uuid": "a8660f32-0b12-41a0-b1ed-38fee6914e4d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [1V9] (F.Cu), 长度: 1.6250 mm",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 9.0
+                    },
+                    "uuid": "ff4baeba-5a35-4498-8216-7e3474c3794c"
+                },
+                {
+                    "description": "走线 [1V9] (F.Cu), 长度: 1.4250 mm",
+                    "pos": {
+                        "x": 72.75,
+                        "y": 18.325
+                    },
+                    "uuid": "f3cd6e33-80c9-4c6a-948a-95a0d2ef23bd"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [RDY_L] (F.Cu), 长度: 0.5000 mm",
+                    "pos": {
+                        "x": 78.625,
+                        "y": 67.5
+                    },
+                    "uuid": "354fd4a7-1c00-4d9a-a486-c009e889f92c"
+                },
+                {
+                    "description": "走线 [RDY_L] (F.Cu), 长度: 1.6250 mm",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 60.25
+                    },
+                    "uuid": "3cbccbcf-e77f-4e30-8767-54ea1cc1a17e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [ESTOP_N] (B.Cu), 长度: 11.3750 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 32.75
+                    },
+                    "uuid": "d4ac3cee-3179-47ba-8381-7b2fa1f433f1"
+                },
+                {
+                    "description": "走线 [ESTOP_N] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 77.95,
+                        "y": 58.1375
+                    },
+                    "uuid": "7b3ded46-0446-47d3-a7ad-4dabcadaea51"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 U1 的焊盘 15 [12V_PROT]",
+                    "pos": {
+                        "x": 36.775,
+                        "y": 5.875
+                    },
+                    "uuid": "9d5b535c-2b6e-4eec-9205-80528f71706b"
+                },
+                {
+                    "description": "F.Cu 上 U1 的焊盘 16 [12V_PROT]",
+                    "pos": {
+                        "x": 36.775,
+                        "y": 5.225
+                    },
+                    "uuid": "1c5b0af6-3440-49b3-9cfc-ca96047858e4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "过孔 [12V_PROT] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 38.075,
+                        "y": 5.55
+                    },
+                    "uuid": "eb4fb3b0-d494-4803-a67f-c51b54b48a64"
+                },
+                {
+                    "description": "F.Cu 上 U1 的焊盘 15 [12V_PROT]",
+                    "pos": {
+                        "x": 36.775,
+                        "y": 5.875
+                    },
+                    "uuid": "9d5b535c-2b6e-4eec-9205-80528f71706b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 88.675,
+                        "y": 65.6125
+                    },
+                    "uuid": "be05a872-edc9-4968-ba33-3157e5b63fae"
+                },
+                {
+                    "description": "J8 的PTH 焊盘 47 [VIN_SENSE]",
+                    "pos": {
+                        "x": 86.42,
+                        "y": 74.0
+                    },
+                    "uuid": "b1a1ad2b-9a33-4ed6-bdf1-077f36cf5ea2"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 88.675,
+                        "y": 65.6125
+                    },
+                    "uuid": "be05a872-edc9-4968-ba33-3157e5b63fae"
+                },
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 93.675,
+                        "y": 65.1125
+                    },
+                    "uuid": "b8c11cc0-173c-463f-9b3b-2d30be6ef0ad"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 93.675,
+                        "y": 36.5
+                    },
+                    "uuid": "5e22109c-c7ff-42f4-bb30-3fd48224befd"
+                },
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 93.675,
+                        "y": 65.1125
+                    },
+                    "uuid": "b8c11cc0-173c-463f-9b3b-2d30be6ef0ad"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 TP14 的焊盘 1 [VIN_SENSE]",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 18.5
+                    },
+                    "uuid": "8a2f0386-9025-4e2c-8cc5-b4c38c1ed3d0"
+                },
+                {
+                    "description": "走线 [VIN_SENSE] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 93.675,
+                        "y": 36.5
+                    },
+                    "uuid": "5e22109c-c7ff-42f4-bb30-3fd48224befd"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VOUT_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 89.325,
+                        "y": 61.3875
+                    },
+                    "uuid": "2b0479e4-d5eb-4efd-b49e-fa573394b092"
+                },
+                {
+                    "description": "J8 的PTH 焊盘 49 [VOUT_SENSE]",
+                    "pos": {
+                        "x": 88.96,
+                        "y": 74.0
+                    },
+                    "uuid": "16647a50-1821-4354-9ba4-b71b1edb4eea"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VOUT_SENSE] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 89.325,
+                        "y": 61.3875
+                    },
+                    "uuid": "2b0479e4-d5eb-4efd-b49e-fa573394b092"
+                },
+                {
+                    "description": "走线 [VOUT_SENSE] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 112.0,
+                        "y": 51.825
+                    },
+                    "uuid": "0e34ee72-1721-46cb-801e-ca61045f12a8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VOUT_SENSE] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 112.0,
+                        "y": 51.825
+                    },
+                    "uuid": "0e34ee72-1721-46cb-801e-ca61045f12a8"
+                },
+                {
+                    "description": "F.Cu 上 TP15 的焊盘 1 [VOUT_SENSE]",
+                    "pos": {
+                        "x": 108.5,
+                        "y": 25.0
+                    },
+                    "uuid": "4b85a6bf-8cd5-4593-a7ce-8ed46482f7e4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 7 [RELAY_ON]",
+                    "pos": {
+                        "x": 35.62,
+                        "y": 74.0
+                    },
+                    "uuid": "b7fc09ba-26be-48c6-b5d5-ba21d008fe1a"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 10 [RELAY_ON]",
+                    "pos": {
+                        "x": 61.75,
+                        "y": 43.675
+                    },
+                    "uuid": "360885aa-8828-4a2c-8c50-2f8e80eb56f5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [FLT_L_N] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 65.25,
+                        "y": 42.25
+                    },
+                    "uuid": "e2f165d1-5978-4e41-ba42-1a542cbc99db"
+                },
+                {
+                    "description": "走线 [FLT_L_N] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 64.6375,
+                        "y": 58.7
+                    },
+                    "uuid": "21ff605c-b443-42e6-aed0-e13100b1afb4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [FLT_L_N] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 81.175,
+                        "y": 58.5
+                    },
+                    "uuid": "74ea9f1a-4567-4f3f-9060-6a66fc4f0fc2"
+                },
+                {
+                    "description": "走线 [FLT_L_N] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 64.6375,
+                        "y": 58.7
+                    },
+                    "uuid": "21ff605c-b443-42e6-aed0-e13100b1afb4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [RDY_H] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 57.7,
+                        "y": 66.8625
+                    },
+                    "uuid": "ea64eb2b-8dce-4773-8fba-9c73ffbf299d"
+                },
+                {
+                    "description": "J8 的PTH 焊盘 23 [RDY_H]",
+                    "pos": {
+                        "x": 55.94,
+                        "y": 74.0
+                    },
+                    "uuid": "4e9165e7-773e-4deb-b8c4-1f4d0bf7ea6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [RDY_H] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 57.7,
+                        "y": 66.8625
+                    },
+                    "uuid": "ea64eb2b-8dce-4773-8fba-9c73ffbf299d"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 18 [RDY_H]",
+                    "pos": {
+                        "x": 65.75,
+                        "y": 43.675
+                    },
+                    "uuid": "e4d71b36-f39b-4212-b1ca-8e01d2f9d72d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [RDY_H] (F.Cu), 长度: 0.5000 mm",
+                    "pos": {
+                        "x": 74.125,
+                        "y": 67.5
+                    },
+                    "uuid": "16d88493-2670-4910-a75f-423d0faec05f"
+                },
+                {
+                    "description": "走线 [RDY_H] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 57.7,
+                        "y": 66.8625
+                    },
+                    "uuid": "ea64eb2b-8dce-4773-8fba-9c73ffbf299d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 C70 的焊盘 1 [ADC_TEMP_HS]",
+                    "pos": {
+                        "x": 85.725,
+                        "y": 39.5
+                    },
+                    "uuid": "4e3afedf-e1f0-4a50-b4b9-1fc75a0030e0"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 40 [ADC_TEMP_HS]",
+                    "pos": {
+                        "x": 76.75,
+                        "y": 43.675
+                    },
+                    "uuid": "88d84ce4-e6b0-4347-9ec3-130a38f479cd"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [ADC_TEMP_HS] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 109.5,
+                        "y": 39.675
+                    },
+                    "uuid": "555ebb34-2703-413c-94f8-e34ff7a0c40b"
+                },
+                {
+                    "description": "走线 [ADC_TEMP_HS] (F.Cu), 长度: 0.0250 mm",
+                    "pos": {
+                        "x": 85.725,
+                        "y": 39.5
+                    },
+                    "uuid": "30db547c-36af-475a-87f8-5a9354b347ce"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "J8 的PTH 焊盘 30 [PG_BIAS_S_N]",
+                    "pos": {
+                        "x": 63.56,
+                        "y": 76.54
+                    },
+                    "uuid": "2bad5580-2106-4d8c-9133-a449bd5716a7"
+                },
+                {
+                    "description": "走线 [PG_BIAS_S_N] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 64.6375,
+                        "y": 65.2
+                    },
+                    "uuid": "ff7ef260-2226-4765-b557-ae592c6feb8b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [PG_BIAS_S_N] (F.Cu), 长度: 0.0515 mm",
+                    "pos": {
+                        "x": 64.6375,
+                        "y": 65.2
+                    },
+                    "uuid": "ff7ef260-2226-4765-b557-ae592c6feb8b"
+                },
+                {
+                    "description": "走线 [PG_BIAS_S_N] (F.Cu), 长度: 0.0500 mm",
+                    "pos": {
+                        "x": 40.325,
+                        "y": 63.0
+                    },
+                    "uuid": "bd1f5af7-0ec5-4fc5-88dd-149dfb53ba8d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "F.Cu 上 U11 的焊盘 9 [PG_BIAS_S_N]",
+                    "pos": {
+                        "x": 64.6375,
+                        "y": 65.2
+                    },
+                    "uuid": "c756a0b2-9580-4874-9949-1c76613a7839"
+                },
+                {
+                    "description": "F.Cu 上 U5 的焊盘 64 [PG_BIAS_S_N]",
+                    "pos": {
+                        "x": 80.675,
+                        "y": 32.25
+                    },
+                    "uuid": "eb941524-4d9f-4639-bb03-a48dc049f87b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [ADC_TEMP_CTRL] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 76.25,
+                        "y": 42.25
+                    },
+                    "uuid": "f05a6b71-4fd1-40ba-b258-817d53cfbac5"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [EPWM1A] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 59.25,
+                        "y": 42.25
+                    },
+                    "uuid": "3d7ad625-d04d-4814-a0c2-b6ca26f68ec7"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [1V9] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 81.625,
+                        "y": 9.0
+                    },
+                    "uuid": "0d953622-ac29-4d5d-9d52-0ffc5f1a1be0"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [FAULT_N] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 67.25,
+                        "y": 42.25
+                    },
+                    "uuid": "b6d9f9ce-2e12-4c27-b1cd-2e6776b0950a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [FLT_12V_N] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 70.25,
+                        "y": 42.25
+                    },
+                    "uuid": "d43127ca-8de3-4352-9a5f-167c40f4ef3b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [ESTOP_N] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 32.75
+                    },
+                    "uuid": "09a923b4-e6d6-4e33-8edf-cf2b1c859621"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [12V_PROT] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 39.075,
+                        "y": 5.55
+                    },
+                    "uuid": "25422e89-fdd1-4807-b1e9-8ffd4c95501f"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [12V_PROT] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 40.075,
+                        "y": 5.55
+                    },
+                    "uuid": "a94f85e7-12b1-4fe1-82dc-f089efe03c3d"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [12V_PROT] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 38.075,
+                        "y": 5.55
+                    },
+                    "uuid": "eb4fb3b0-d494-4803-a67f-c51b54b48a64"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [TMS] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 24.75
+                    },
+                    "uuid": "f027e074-c448-48b3-ad61-64f97bf9a780"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [BOOT84] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 56.75,
+                        "y": 38.25
+                    },
+                    "uuid": "84bf5203-ac50-4bfd-9bc2-ef5051344b3d"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [FLT_L_N] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 65.25,
+                        "y": 42.25
+                    },
+                    "uuid": "e2f165d1-5978-4e41-ba42-1a542cbc99db"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [ADC_V12V] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 39.75
+                    },
+                    "uuid": "cab0e8db-c82b-458f-a736-9d11c135a7c9"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [ADCREFM] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 36.75
+                    },
+                    "uuid": "8c1f8292-7de9-44e1-823d-138fd88270d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [LED_RUN] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 31.75
+                    },
+                    "uuid": "55a773eb-0490-446a-b4ae-5048f2df7d1f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [SPARE_D1] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 28.25
+                    },
+                    "uuid": "28da171d-6a01-404f-8f08-b6b36d7e2282"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [TDO] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 25.75
+                    },
+                    "uuid": "47fc8cca-499e-4e9b-bcda-6fe7cbf890db"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [TCK] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 20.75
+                    },
+                    "uuid": "1b2b4078-de95-4f52-9b0f-fd9273aceab7"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "走线 [BOOT86] (B.Cu), 长度: 2.2500 mm",
+                    "pos": {
+                        "x": 56.75,
+                        "y": 40.25
+                    },
+                    "uuid": "e9b4e202-8c10-43bd-84dc-c77b9ad70019"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        }
+    ]
+}
