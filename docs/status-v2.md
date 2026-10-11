@@ -32,7 +32,7 @@ strip through a 2 x 25 mezzanine. Every row below names the file the number come
 | Reports | Complete | EX `design/*.md`, `review/knowledge_utilisation_report.md` (24 decisions audited), `review/v1_v2_comparison.md`, `review/architecture_comparison.md`, `review/floorplan_candidates_{power,control}.md`, `manufacturing/README.md`, [docs/reproduce-v2.md](reproduce-v2.md), [docs/knowledge-feedback-v2.md](knowledge-feedback-v2.md), [docs/v2-pull-request.md](v2-pull-request.md), this file; EX `review/design_report.md` (14 sections, written 2026-10-11 per its opening paragraph) and EX `verification/known_issues.md` (49 rows V2-01..V2-49; the file carries no date statement) |
 | Unit tests | 253 run, 0 failures, 2 skipped | `python -m unittest discover -s tests`, re-run 2026-10-11 after the floorplan-candidate amendment: "Ran 253 tests ... OK (skipped=2)" (run log kept in the orchestrator scratch directory, not committed); 16 test modules under `tests/` |
 | Frozen V2 | Complete | `python -m automation.scripts.freeze_v2` (verifier re-run first, passed) wrote `examples/sic-buck-400v-200v-5kw/releases/v2/` (868 files, `SHA256SUMS.json` with `source_commit` `f72052fb53aa70163fad21294c36379d3921aec0`, label "AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED", created 2026-10-11T07:10 UTC) and `releases/v2-review-package.zip` (32,070,559 bytes). The snapshot copies of `review/v1_v2_comparison.*` were taken before the freeze and therefore still count zero release manifests; the branch copies were refreshed afterwards |
-| GitHub push / PR | Pending | pending; fork `MrCoconut616/AIPE-PCB-Agent`, PR from `feat/sic-buck-5kw-v2` to `FulongLi/AIPE-PCB-Agent` `main`, title "AIPE-PCB-Agent V2 — Knowledge-Driven 5kW SiC Buck", not merged automatically; prepared body in [docs/v2-pull-request.md](v2-pull-request.md) |
+| GitHub push / PR | Complete (PR open, not merged) | Direct push to `FulongLi/AIPE-PCB-Agent` is not available (authenticated account has READ permission), so the task's fork route applies: branch `feat/sic-buck-5kw-v2` pushed to the fork `MrCoconut616/AIPE-PCB-Agent` (commit `2d2b2d7`, 2026-10-11) and pull request [FulongLi/AIPE-PCB-Agent#3](https://github.com/FulongLi/AIPE-PCB-Agent/pull/3) opened against `main` with the title "AIPE-PCB-Agent V2 — Knowledge-Driven 5kW SiC Buck" and the body of [docs/v2-pull-request.md](v2-pull-request.md). The PR is left open for human engineering review and is not merged by the agent |
 
 ## Control-board reproducibility check
 
@@ -113,10 +113,10 @@ about 130 C (V2-23), the single-ended mezzanine (V2-25) and the missing controll
 firmware (V2-26, V2-27). Section 8.2 of EX `review/knowledge_utilisation_report.md`
 lists the same open items by design decision.
 
-After the review the remaining orchestrator steps are the V2 freeze
-(`automation/scripts/freeze_v2.py`, which re-runs the verifier first) and the GitHub
-push of `feat/sic-buck-5kw-v2` from the fork with the prepared PR body. Neither step
-authorises fabrication, purchase or energisation.
+The V2 freeze (`automation/scripts/freeze_v2.py`, verifier re-run first) and the GitHub
+hand-off (fork push, pull request #3 against upstream `main`) are done; the agent stops here.
+Neither step authorises fabrication, purchase or energisation; merging is a human decision
+after the engineering review.
 
 ## Validation scope
 
