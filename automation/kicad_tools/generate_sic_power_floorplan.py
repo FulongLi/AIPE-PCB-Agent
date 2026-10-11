@@ -132,8 +132,9 @@ NOTES = [
     'item in DRC by construction.',
     'The ISO_BARRIER band is realised as rule-area segments between the barrier parts (no copper of any kind, no footprints); '
     'the barrier parts themselves bridge it over their 1.2 mm slots, which the layout checker measures (KR-ISO-004).',
-    'U1/U3 (UCC21710, official SOIC-16W footprint without a slot) receive a board-level 1.2 mm Edge.Cuts slot between the pad rows, '
-    'extending 3 mm beyond the outermost pads (around-the-end path 2*sqrt((g/2)^2+e^2) = 9.4 mm for g = 7.25 mm).',
+    'Barrier parts whose footprint has no NPTH slot would receive a board-level 1.2 mm Edge.Cuts slot between the pad rows, '
+    'extending 3 mm beyond the outermost pads (around-the-end path 2*sqrt((g/2)^2+e^2) = 9.4 mm for g = 7.25 mm); since the '
+    'slotted UCC21710_DW0016A_Slot footprint (2026-10-11) all eight barrier footprints carry their own slot and none is added.',
     'The 5 mm HV-copper keep-out around the PE-bonded heatsink courtyard puts the TO-247-4 lead row 7.5 mm from the sink face '
     '(baseline 3-5 mm); formed leads or a spacer are a mechanical review item.',
     'Heatsink corridors: intake and exhaust bands beside the sink (airflow along x) may hold parts <= 15 mm tall; the inductor '
@@ -148,9 +149,9 @@ OPEN_ISSUES = [
     'DRU / net classes: the unconnected pins of U1/U3 (APWM, pad 16) and U10 (NC, pad 5) carry "unconnected-..." nets in the Default class; '
     'the 9 mm HV-to-SELV rule includes Default but the pin-field exceptions name only CTRL_SELV, so 12 clearance findings (7.25-8.64 mm) sit '
     'inside those land patterns on every build. Fix belongs to the project owner (.kicad_pro pattern or .kicad_dru exception), not the layout.',
-    'Library: the AMC1311 DWV slot (10.4 mm) extends 2.995 mm beyond the pad rows, 5 um short of the 3.0 mm baseline (path 10.9 mm >= 9.0 mm); '
-    'the official SOIC-16W silkscreen of U1/U3 crosses their board-level slots (4 silk_edge_clearance warnings; trimming the board copy would '
-    'raise lib_footprint_mismatch instead).',
+    'Library (resolved 2026-10-11 at the source): the AMC1311 DWV slot was lengthened to 10.8 mm (>= 3 mm beyond the pad rows) and U1/U3 '
+    'moved to the slotted AIPE UCC21710 footprint whose silkscreen is limited to the pin-1 mark; the earlier 4 silk_edge_clearance warnings '
+    'no longer occur. Candidate B: C6/C8 moved 1.5 mm north for the larger two-sided courtyard (amendment note in power_B.json).',
     'Mechanical: TO-247-4 lead row 7.5 mm from the sink face (5 mm HV-copper keep-out from the courtyard), baseline 3-5 mm - formed leads or a '
     'spacer; the LS source pin (second pin) cannot have a same-net HF capacitor pad within 5 mm (nearest 8.0 mm), the HS drain pin has 4.66 mm.',
     'Mezzanine: J7 pin 1 at (176, 163) with pins toward -x assumes the control board mounted rotated 180 deg about z (J8 at (28, 76) rotated '

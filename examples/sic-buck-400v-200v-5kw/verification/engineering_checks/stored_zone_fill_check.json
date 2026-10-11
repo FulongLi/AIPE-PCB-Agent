@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "title": "Stored zone fills versus rule-aware refill (diagnostic, not a verification record)",
+  "generated_utc": "2026-10-11T02:21:28.871744+00:00",
+  "method": [
+    "kicad-cli pcb drc --format json --severity-all (WITHOUT --refill-zones) on a scratch copy of each board directory: checks the zone fills stored in the .kicad_pcb, i.e. the copper that 'kicad-cli pcb export gerbers/pdf' plots when --check-zones is not given (automation/kicad_tools/export_outputs.py does not pass it) and that render/step show.",
+    "kicad-cli pcb export gerbers --check-zones (F.Cu,In1.Cu,In2.Cu,B.Cu) into scratch, compared line by line (CreationDate header excluded) with the exported manufacturing gerbers.",
+    "The verification DRC manifests under verification/drc/ are run through run_check with --refill-zones: they judge the in-memory refilled copper, not the stored fills."
+  ],
+  "scratch_note": "The single lib_footprint_issues warning seen on the scratch copies (TerminalBlock_Phoenix) does not appear when the boards are checked in place; it is a copied-path artefact and is excluded below.",
+  "boards": {
+    "power": {
+      "board": "kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb",
+      "board_sha256": "ae0f05d86ac6a104ff3653fba79b4d074b5a4a920979dd4e84c90576b7324e6d",
+      "stored_fill_drc": {
+        "violations_excluding_lib_warning": 499,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "per_rule": {
+          "HV functional clearance (inner layers)": 324,
+          "HV functional clearance (outer layers)": 154,
+          "HV side to PE": 16,
+          "pin field R14 HV_PGND-PE (hv)": 1,
+          "pin field R6 HV_VIN-PGND_LV (hv)": 1,
+          "pin field R5 HV_VIN-HV_VIN (hv)": 2,
+          "pin field R4 HV_VIN-HV_VIN (hv)": 1
+        },
+        "per_net_pair_top": [
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VOUT",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 63,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VIN",
+            "layers": "B.Cu,F.Cu",
+            "count": 46,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VIN",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 34,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VIN",
+            "layers": "F.Cu",
+            "count": 24,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VIN",
+            "layers": "In2.Cu",
+            "count": 24,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VIN",
+            "layers": "B.Cu,F.Cu,In2.Cu",
+            "count": 21,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VIN_RAW",
+            "layers": "In1.Cu",
+            "count": 18,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "VIN vs VIN_RAW",
+            "layers": "In2.Cu",
+            "count": 18,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VIN",
+            "layers": "In1.Cu",
+            "count": 17,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs SW",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 16,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VIN",
+            "layers": "B.Cu",
+            "count": 16,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VOUT_L",
+            "layers": "B.Cu,F.Cu",
+            "count": 15,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VOUT",
+            "layers": "B.Cu,F.Cu,In2.Cu",
+            "count": 13,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VOUT",
+            "layers": "In1.Cu",
+            "count": 13,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VIN_RAW",
+            "layers": "B.Cu",
+            "count": 12,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "KS_H vs PGND",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 11,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "PGND vs VOUT",
+            "layers": "B.Cu",
+            "count": 10,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "DAMP_MID vs VIN",
+            "layers": "F.Cu",
+            "count": 9,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VDD_H",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 9,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "PGND vs VEE_H",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 9,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV side to PE",
+            "nets": "PE vs PGND",
+            "layers": "B.Cu",
+            "count": 7,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "5V_ISO vs VIN",
+            "layers": "B.Cu,F.Cu,In2.Cu",
+            "count": 5,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (outer layers)",
+            "nets": "VIN vs VIN_RAW",
+            "layers": "F.Cu",
+            "count": 4,
+            "min_actual_mm": 1.965
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "DESAT_H_OC vs PGND",
+            "layers": "B.Cu,F.Cu,In1.Cu",
+            "count": 3,
+            "min_actual_mm": 0.3005
+          },
+          {
+            "rule": "HV functional clearance (inner layers)",
+            "nets": "5V_ISO vs VOUT",
+            "layers": "B.Cu,F.Cu,In2.Cu",
+            "count": 3,
+            "min_actual_mm": 0.3005
+          }
+        ]
+      },
+      "gerber_stored_vs_refilled": {
+        "F.Cu": {
+          "exported_lines": 9401,
+          "refilled_lines": 9430,
+          "differing_lines": 4851
+        },
+        "In1.Cu": {
+          "exported_lines": 23031,
+          "refilled_lines": 19218,
+          "differing_lines": 17933
+        },
+        "In2.Cu": {
+          "exported_lines": 19733,
+          "refilled_lines": 17329,
+          "differing_lines": 12232
+        },
+        "B.Cu": {
+          "exported_lines": 11682,
+          "refilled_lines": 9854,
+          "differing_lines": 8086
+        }
+      },
+      "conclusion": "stored fills violate the project rules; exported gerbers/PDF/renders/STEP carry those fills; the board file must be refilled with the rules applied and saved, then DRC, metrics and exports repeated"
+    },
+    "control": {
+      "board": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb",
+      "board_sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+      "stored_fill_drc": {
+        "violations_excluding_lib_warning": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "per_rule": {},
+        "per_net_pair_top": []
+      },
+      "gerber_stored_vs_refilled": {
+        "F.Cu": {
+          "exported_lines": 9963,
+          "refilled_lines": 9963,
+          "differing_lines": 2
+        },
+        "In1.Cu": {
+          "exported_lines": 34399,
+          "refilled_lines": 34399,
+          "differing_lines": 2
+        },
+        "In2.Cu": {
+          "exported_lines": 45464,
+          "refilled_lines": 45464,
+          "differing_lines": 2
+        },
+        "B.Cu": {
+          "exported_lines": 7191,
+          "refilled_lines": 7191,
+          "differing_lines": 2
+        }
+      },
+      "conclusion": "stored fills equal the rule-aware refill (header-only gerber differences); exports represent the DRC-checked copper"
+    }
+  }
+}

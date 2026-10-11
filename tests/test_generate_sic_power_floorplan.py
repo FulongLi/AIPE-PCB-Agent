@@ -264,7 +264,8 @@ class PcbnewPlacementTests(unittest.TestCase):
         self.assertEqual(summary['candidate'], 'B')
         self.assertGreaterEqual(summary['zones'], len(g.load_candidate(g.candidate_path('B'))['zones']))
         self.assertEqual(summary['barrier_parts'], 8)
-        self.assertEqual(summary['slots_added'], 2)
+        # U1/U3 use the slotted AIPE UCC21710 footprint since 2026-10-11, so every barrier part brings its own NPTH slot
+        self.assertEqual(summary['slots_added'], 0)
         self.assertTrue(all(summary['hv_toward_hv_area']))
         self.assertEqual(summary['band_violations'], [])
 

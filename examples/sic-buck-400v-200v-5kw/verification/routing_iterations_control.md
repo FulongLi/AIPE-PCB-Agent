@@ -1,0 +1,78 @@
+**AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED**
+
+# Control board routing iterations (AIPE_SiC_Buck_Control, candidate B)
+
+Board: `kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb` (120 x 80 mm, 4 x 35 um; F.Cu/B.Cu signals, In1.Cu solid
+GND_CTRL, In2.Cu rail islands 12V_PROT / 5V / 1V9 over a 3V3 background). Generator
+`automation/kicad_tools/generate_sic_control_board.py` with `automation/kicad_tools/grid_router.py`; every row names the
+kicad-cli DRC manifest (`--schematic-parity --severity-all`) that is the only verification evidence - router counts are
+geometric proposals. Nothing was waived: no rule, net class, `.kicad_pro`, `.kicad_dru`, library, schematic or model was changed.
+
+| # | When (UTC) | Change | Router unresolved | DRC manifest (`verification/drc/`) | Violations | Unconnected | Parity |
+|---|---|---|---|---|---|---|---|
+| 1 | 2026-10-10 14:15 | Correction run: logic region below y = 57 mm, outward F.Cu escape stubs, candidate `signal_priority`, routing-order trials and rip-up negotiation (previous agent) | 1 (BIAS_EN) | `20261010T141539Z-drc-a497f454` | 0 | 1 | 0 |
+| 2 | 2026-10-10 14:47 | Re-check of the same board state (previous agent) | 1 (BIAS_EN) | `20261010T144718Z-drc-6798d486` | 0 | 1 | 0 |
+| 3 | 2026-10-10 17:33 | In2.Cu signal pass: BIAS_EN excluded from the F.Cu/B.Cu stages (no F.Cu lane stub) and routed as one 0.2 mm track on In2.Cu through the 3V3 background (escape via (62.75, 46.5) -> Z at y = 52.5 -> J8 pin 9, 55.4 mm; islands + 0.5 mm are keepouts, vias/plated pads 0.3 mm obstacles), island fills rebuilt; the freed lane let the rip-up negotiation close the rest (56 rounds, 1 -> 0). 5903 tracks, 785 vias, 20 zones | 0 | `20261010T173359Z-drc-d790e947` | 0 | 0 | 0 |
+| 4 | 2026-10-10 17:54 | Review LR-15 sliver trim in stage 2: after the corridor zones are filled, every In2.Cu rail fill outline < 0.05 mm2 widens the adjacent same-net corridor edge by 0.125 mm and the zones are refilled (rounds 9 -> 6 -> 0 slivers; ten nudges on the three 3V3 notch corridors at (61.25, 42.25), (79.25, 41.75), (69.75, 19.75), none skipped). F.Cu/B.Cu geometry identical to run 3 (same net lengths, 56 rip-up rounds); every rail zone fills as a single outline. 5903 tracks, 785 vias, 20 zones | 0 | `20261010T175431Z-drc-83944c7f` | 0 | 0 | 0 |
+| 5 | 2026-10-10 22:44 | Fresh-eyes round (new agent): re-check of the iteration-4 board state before any change - same board hash, same KiCad 10.0.7, unit suites test_grid_router / test_v2_pipeline_smoke / test_generate_sic_control_board 44/44 with the shared router module as modified by the power-board agent at 05:31 local (API additions only) | 0 | `20261010T224421Z-drc-7cc06185` | 0 | 0 | 0 |
+| 6 | 2026-10-10 23:04 | Fresh-eyes round: end-to-end regeneration (`--candidate B`, generator/placement/plan unchanged) with the shared `grid_router.py` as modified by the power-board agent at 05:31 local. The result is NOT the iteration-4 board: 5701 tracks, 793 vias, signal-order trial `span_asc` 8 unresolved (iteration 4: 10), rip-up negotiation stops after 19 rounds at 2 (iteration 4: 56 rounds, penalty ladder 40/16/100, 1 -> 0); the In2.Cu fallback refuses both leftovers (no via at the F.Cu escape-stub ports). DRC: 2 unconnected - RDY_H U5.18 (65.750, 43.675) to the RDY_H F.Cu track end (57.750, 66.875); PG_BIAS_L_N U5.62 (80.675, 33.250) to the PG_BIAS_L_N F.Cu track end (81.375, 63.375). Regression board kept only in scratch; the iteration-4 board, placement, plan, progress and metrics were restored to the repository paths (best state) | 2 | `20261010T230400Z-drc-a401f5ad` | 0 | 2 | 0 |
+| 7 | 2026-10-10 23:31 | Generator only (grid_router.py untouched): `LadderRouter` restores the 1x / 0.4x / 2.5x rip-up penalty ladder around the shared negotiate() (installed as gr.Router during run_plan), and the In2.Cu fallback re-creates a pruned DSP escape via at a fallback port (`inner_via_fits`). Router: 0 unresolved (ladder 25 rounds, the 0.4x / 2.5x steps did not gain here; fallbacks RDY_H 64.3 mm and PG_BIAS_L_N 102.5 mm on In2.Cu, 2 vias re-created), 5984 tracks, 795 vias, 21 zones, 16 corridors. DRC: 1 unconnected - 3V3 U5.45 pad (80.675, 41.750) to the 3V3 F.Cu track at (84.500, 41.875): the PG_BIAS_L_N In2.Cu track ran along the 1V9 island's east edge (x 81.6-82.0, y 41.0-44.75) and isolated the strip of 3V3 background in which the corridor notch of U5.45's inward escape via (79.25, 41.75) reaches the background (corridor fill 3.06 + 1.00 mm2, 3V3 background in 4 outlines instead of 1). Diagnosis confirmed with pcbnew connectivity (GetUnconnectedCount = 1). Regression board kept in scratch; iteration-4 state restored to the repository paths | 0 | `20261010T233115Z-drc-2e44897b` | 0 | 1 | 0 |
+| 8 | 2026-10-11 00:02 | Generator: In2.Cu tracks keep INNER_EDGE_BAND 3.0 mm from the rail-island polygons except along each port's straight exit channel (`band_keepouts`, `port_channel`, `rect_minus`), Z/U routes leave a port along its channel direction, KiCad connectivity count recorded. The shared `grid_router.py` had changed again before this run (new negotiation result 'routed directly'); F.Cu/B.Cu stage: 31 ladder rounds, 1 unresolved (PG_BIAS_L_N) after the OVP_OUT_N leftover was closed on In2.Cu (20.0 mm). DRC: 2 unconnected - BIAS_EN J8.9 (38.160, 74.000) to U5.12 (62.750, 43.675): the exit channel started exactly at the port and Grid.box marks its bounds inclusively, so the port cell stayed inside a band piece and both the Z and the direct In2.Cu search failed; PG_BIAS_L_N U5.62 (80.675, 33.250) to its F.Cu track end (81.375, 64.625): this time the recorded far port (71.75, 65.875) was a B.Cu track end without a via, which the fallback required. Fixes (generator only): channels start half a width behind the port; a fallback port without a via takes the nearest via / plated pad of its own copper group (`net_components`, coincidence connectivity). Pre-check on a scratch copy of this board: BIAS_EN 55.1 mm and PG_BIAS_L_N 39.3 mm route on In2.Cu, KiCad unconnected count 2 -> 0. Iteration-4 state restored to the repository paths meanwhile | 1 | `20261011T000151Z-drc-24e8731d` | 0 | 2 | 0 |
+| 9 | 2026-10-11 00:27 | Generator fixes of iteration 8 applied (channels start half a width behind the port; a fallback port without a via takes the nearest via / plated pad of its own copper group). Full regeneration with the shared grid_router.py as found (SHA-256 b78a49cc...): F.Cu/B.Cu stage span_asc 8 unresolved, ladder negotiation 31 rounds (10 kept, multiples 1x / 0.4x / 2.5x all used) -> 2, In2.Cu pass closes PG_BIAS_L_N (U-route east of the 1V9 island through its exit channel, 44.75 mm, escape via re-created) and OVP_OUT_N (20.0 mm, logic region) besides BIAS_EN (55.1 mm); 5995 tracks, 798 vias, 20 zones, 15 corridors, 0 corridor issues, sliver trim 6 -> 5 -> 0, KiCad connectivity count 0. Tests 51/51 | 0 | `20261011T002742Z-drc-0d33d344` | 0 | 0 | 0 |
+
+## Final state (iteration 9)
+
+- Board `kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb`, SHA-256 `dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288`; the DRC manifest
+  `verification/drc/20261011T002742Z-drc-0d33d344/run.json` (kicad-cli 10.0.7, `--schematic-parity --severity-all`, status passed, 0 violations,
+  0 unconnected, 0 parity) names the same hash; `tests/test_generate_sic_control_board.py::EvidenceTests` re-checks the binding.
+- Produced by `python -m automation.kicad_tools.generate_sic_control_board --candidate B` with the shared router module as left by the power-board
+  agent (grid_router.py as found at run time, SHA-256 `b78a49cc48f2c82656a382e94078d9cb442a54ad4d3e68f7237161798c48c7b3`, used unchanged): 5995 tracks, 798 vias, 20 zones, router unresolved
+  0, signal order `span_asc`, rip-up negotiation 31 rounds (10 kept) with the penalty ladder
+  [40.0, 16.0, 100.0] (generator `LadderRouter`), In2.Cu pass routed: BIAS_EN (net, 55.125 mm), PG_BIAS_L_N (fallback, 44.75 mm), OVP_OUT_N (fallback, 20.0 mm); In2.Cu pass failed: none; vias re-created by the pass:
+  1; corridor zones 15, corridor issues 0, sliver-trim rounds [6, 5, 0]
+  (remaining 0), rail items without island/corridor 0,
+  rail zones with more than one fill outline: 1.
+- Generator changes of this round (automation/kicad_tools/generate_sic_control_board.py only; grid_router.py, .kicad_pro, .kicad_dru, schematics,
+  libraries untouched): `negotiate_with_ladder` / `LadderRouter` restore the 1x / 0.4x / 2.5x penalty ladder that the shared negotiate() lost on
+  2026-10-11 (installed as gr.Router only while gr.run_plan runs); the In2.Cu fallback re-creates a pruned DSP escape via at a fallback port
+  when `inner_via_fits` (via rules of the inner router plus INNER_CLEARANCE to other-net In2.Cu tracks) allows it; every In2.Cu signal track keeps
+  INNER_EDGE_BAND = 3.0 mm from the rail-island polygons except along its own port's straight exit channel (`band_keepouts`, `port_channel`,
+  `rect_minus`), and a Z/U route leaves a port along its channel direction (`inner_route_waypoints(axis, direction)`), so no In2.Cu track can
+  isolate the background strip in which an island's corridor notches connect (iteration 7 failure); a channel starts half a width behind its
+  port (Grid.box marks bounds inclusively - iteration 8 failure) and a fallback port without a via takes the nearest via / plated pad of its own
+  copper group (`net_components` / `group_components`, coincidence connectivity). KiCad's connectivity count on the finished copper is recorded
+  as `connectivity_unconnected`, the shared module's hash as `shared_router_sha256`. Tests: LadderNegotiationTests (3), IslandBandTests (4).
+- The DRC report's `ignored_checks` (missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch,
+  footprint_type_mismatch) are KiCad 10.0.7 defaults - the same set appears for an empty project-less board; the project file carries no
+  `rule_severities` entry and no `drc_exclusions`.
+- Routing exception: three slow enable / status signals run as 0.2 mm tracks on In2.Cu through the 3V3 background (routing plan
+  `stage1b_inner_layer_pass`): BIAS_EN (U5.12 -> J8.9, 55.1 mm, `INNER_SIGNAL_NETS`), PG_BIAS_L_N (U5.62 escape via -> a via of its logic-region
+  copper group at (88.125, 63.375), 44.75 mm, fallback) and OVP_OUT_N ((72.375, 61.25) -> (59.625, 59.75), 20.0 mm, fallback); every In2.Cu
+  track keeps 3.0 mm from the rail islands except through its port's exit channel, all island and corridor fills are whole (3V3 background:
+  one 5200.2 mm2 outline plus one 0.1 mm2 connected fragment), KiCad connectivity 0. B.Cu signals crossing the 0.7 mm fill gap of an In2.Cu signal track see the
+  unbroken In1.Cu GND_CTRL plane 1.26 mm away instead of the 3V3 pour 0.2 mm away - acceptable for the 50 kHz / JTAG / status signals of this board
+  (iteration 4: twelve such nets, among them EPWM1A, EPWM1B, PWM_L).
+- Human-review items that are not DRC findings: PE-PCB-008 DSP bypass proxy 5.381 mm at U5 pins 93/107 (3V3 ring at 18.0 mm radius; the
+  outward fanout via rows reach 17.0 mm radial on every side, so a smaller ring or a radial capacitor orientation gives at best about 5.3 mm -
+  review LR-13 stays a placement item); every pad connects solid to the In1.Cu GND_CTRL plane and the In2.Cu rail zones (ZONE_CONNECTION_FULL,
+  generator default) including the through-hole connector pins J1-J8 (hand-soldering / rework note); `manufacturing/control_board/` exports were
+  generated from board hash `68c3558f...` and do not describe this board; J8 pins 39/40 carry the control-board net 3V3 where the baseline
+  pin table says +3V3_PWRBOARD (cross-board net naming, schematic-level).
+- Layout metrics `verification/engineering_checks/layout_metrics_control.{json,md}` regenerated for this board hash.
+
+## Round r20 - review LR-32 attempt (2026-10-11, correction agent): NOT kept
+
+- Change tried: candidate B `signal_pinned = [DSP_TRIP_N, FAULT_N, OC_N]` (the grid router routes these protection lines first in every
+  order trial; `generate_sic_control_board.routing_plan` passes a candidate's `signal_pinned` list through - the key stays supported, the
+  candidate no longer sets it).
+- Result (board sha256 `903a127fb0cf9d47...`, kept only in the agent scratchpad `c2/control_lr32_attempt/`): 5493 tracks, 796 vias, 6 order trials
+  (best `span_asc`, 9 open), 27 rip-up rounds, **1 connection open on DSP_TRIP_N** (pin-13 escape to the fault logic; A* exhausted
+  661,550 nodes, the last rip-up round reverted 3 > 2); kicad-cli DRC `verification/drc/20261011T051014Z-drc-b9164471/run.json`:
+  0 violations, **1 unconnected**, 0 parity - not zero. Net lengths in that state: DSP_TRIP_N 96 mm (incomplete), FAULT_N 140 mm,
+  OC_N 144 mm (r19: 237 / 325 / 205 mm) - the direct runs are possible in principle, but the pinned trip line could not be closed.
+- Disposition: reverted to the r19 control board (sha256 `dead06ed18d85154...`, placement / plan / progress / metrics files restored
+  byte for byte from the snapshot); a fresh `run_check` DRC of the restored board is recorded below so that the newest control manifest
+  is a passing one. LR-32 stays open (see `optimisation_finding_status_pass2.json`).
+- Re-check of the restored board: `verification/drc/20261011T051246Z-drc-f801ed3c/run.json` - kicad-cli DRC with `--schematic-parity --severity-all
+  --refill-zones`: 0 violations, 0 unconnected, 0 parity on sha256 `dead06ed18d85154...` (the stored fills of this board equal the
+  rule-aware refill, see `engineering_checks/stored_zone_fill_check_control.json`).

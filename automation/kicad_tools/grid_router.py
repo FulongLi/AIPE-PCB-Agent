@@ -39,7 +39,8 @@ ESCAPE_SHIFTS = (0, 0.5, -0.5, 1.0, -1.0, 1.5, -1.5, 2, -2)
 PLAN_KEYS = {'board', 'layers', 'grid', 'trace', 'clearance', 'via', 'hole_clearance', 'directions',
              'net_rules', 'keepouts', 'pre_routed', 'critical', 'critical_layers', 'power', 'fanout',
              'signal_order', 'signal_layers', 'exclude_nets', 'front_fallback', 'ground', 'prune_vias',
-             'fill', 'save', 'strict', 'max_nodes'}
+             'fill', 'save', 'strict', 'max_nodes', 'signal_order_trials', 'ripup_rounds', 'ripup_penalty', 'signal_first', 'signal_groups',
+             'signal_pinned'}
 
 
 def grid_shape(width_mm, height_mm, grid=0.25):
@@ -71,6 +72,14 @@ def dilate(mask, radius_cells):
             out[max(0, dy):ny + min(0, dy), max(0, dx):nx + min(0, dx)] |= \
                 mask[max(0, -dy):ny + min(0, -dy), max(0, -dx):nx + min(0, -dx)]
     return out
+
+
+def point_segment_distance(px, py, ax, ay, bx, by):
+    """Distance from (px, py) to the segment a-b (same units)."""
+    dx, dy = bx - ax, by - ay
+    den = dx * dx + dy * dy
+    t = 0.0 if den == 0 else max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / den))
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
 
 
 def compress_path(path):
@@ -130,6 +139,8 @@ class Grid:
         self.margin = max(0, int(margin_cells))
         self.directions = list(directions) if directions is not None else default_directions(self.nl)
         self.occ = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)
+        self.zocc = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)  # zone keep-outs: block tracks, never via barrels
+        self.alt = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)  # newer owner of a -2 cell (two nets' clearance halos overlap)
         self.vocc = np.zeros((self.ny, self.nx), dtype=np.int16)
         self.holes = np.zeros((self.ny, self.nx), dtype=np.int16)
         self.transitions = np.zeros((self.ny, self.nx), dtype=np.int16)
@@ -152,23 +163,37 @@ class Grid:
         return m <= x <= self.nx - 1 - m and m <= y <= self.ny - 1 - m
 
     @staticmethod
-    def merge(view, mask, code):
-        """Mark masked cells with ``code``; cells already owned by another code become -1."""
-        view[mask & (view != 0) & (view != code)] = -1
+    def merge(view, mask, code, alt=None):
+        """Mark masked cells with ``code``.
+
+        A cell already owned by another code becomes -1 (blocked for everyone). With an ``alt`` view (the ``alt`` array of
+        an occupancy layer) a conflict between two nets becomes -2 instead, a *soft* block that the rip-up search may cross,
+        and ``alt`` records the newer owner (the item marked last, normally a track or via) as the net to rip; a hard
+        code (-1: margin, keep-out, unconnected pad) always wins.
+        """
+        conflict = mask & (view != 0) & (view != code)
+        if alt is None:
+            view[conflict] = -1
+        elif code > 0:
+            soft = conflict & (view > 0)
+            alt[soft] = code; view[soft] = -2
+            alt[conflict & (view == -2)] = code
+        else:
+            view[conflict] = -1; alt[conflict] = -1
         view[mask & (view == 0)] = code
 
-    def box(self, array, bb, inflate, code):
-        """Mark the axis-aligned mm box ``bb`` = (x0, y0, x1, y1) inflated by ``inflate`` mm."""
+    def box(self, array, bb, inflate, code, alt=None):
+        """Mark the axis-aligned mm box ``bb`` = (x0, y0, x1, y1) inflated by ``inflate`` mm (``alt``: see ``merge``)."""
         g = self.grid
         x0 = max(0, math.ceil((bb[0] - inflate - self.ox) / g)); x1 = min(self.nx - 1, math.floor((bb[2] + inflate - self.ox) / g))
         y0 = max(0, math.ceil((bb[1] - inflate - self.oy) / g)); y1 = min(self.ny - 1, math.floor((bb[3] + inflate - self.oy) / g))
         if x0 > x1 or y0 > y1:
             return
         view = array[y0:y1 + 1, x0:x1 + 1]
-        self.merge(view, np.ones(view.shape, dtype=bool), code)
+        self.merge(view, np.ones(view.shape, dtype=bool), code, None if alt is None else alt[y0:y1 + 1, x0:x1 + 1])
 
-    def segment(self, array, a, b, radius, code):
-        """Mark every cell within ``radius`` mm of the mm segment a-b (a == b marks a disc)."""
+    def segment(self, array, a, b, radius, code, alt=None):
+        """Mark every cell within ``radius`` mm of the mm segment a-b (a == b marks a disc; ``alt``: see ``merge``)."""
         g = self.grid
         x0 = max(0, math.ceil((min(a[0], b[0]) - radius - self.ox) / g)); x1 = min(self.nx - 1, math.floor((max(a[0], b[0]) + radius - self.ox) / g))
         y0 = max(0, math.ceil((min(a[1], b[1]) - radius - self.oy) / g)); y1 = min(self.ny - 1, math.floor((max(a[1], b[1]) + radius - self.oy) / g))
@@ -179,14 +204,14 @@ class Grid:
         den = dx * dx + dy * dy
         t = np.clip(((xx - a[0]) * dx + (yy - a[1]) * dy) / (den or 1), 0, 1)
         mask = (xx - a[0] - t * dx) ** 2 + (yy - a[1] - t * dy) ** 2 < radius ** 2 - 1e-9
-        self.merge(array[y0:y1 + 1, x0:x1 + 1], mask, code)
+        self.merge(array[y0:y1 + 1, x0:x1 + 1], mask, code, None if alt is None else alt[y0:y1 + 1, x0:x1 + 1])
 
     def via_ok(self, x, y, code):
         """Plain via check: inside, no nearby drill and the via cell free or owned by ``code``."""
         return self.inside(x, y) and self.holes[y, x] == 0 and int(self.vocc[y, x]) in (0, code)
 
     def astar(self, start, end, code, layers, max_nodes=700000, margin=None, extra=0.0, via_extra=0.0,
-              transition=None, via_cost=8):
+              transition=None, via_cost=8, allowed=None, via_allowed=None):
         """4-neighbour A* over (x, y, layer) cells for net ``code``.
 
         ``start``/``end`` are (x, y, layer); a ``None`` layer means any layer in
@@ -194,11 +219,15 @@ class Grid:
         preferred direction, else 1.15; a layer change costs ``via_cost`` and needs
         ``transition(x, y)`` or a free via cell. ``extra``/``via_extra`` (cells) dilate
         other-net occupancy for nets wider or with more clearance than the defaults.
-        ``margin`` limits the search window around the endpoints. Returns the node
+        ``margin`` limits the search window around the endpoints. ``allowed`` (optional)
+        is a per-layer list of bool arrays (ny, nx) - the routing region of the net: cells
+        outside are never entered (a ``None`` entry leaves that layer unrestricted);
+        ``via_allowed`` (bool array) restricts the cells where a layer change may happen.
+        Zone keep-outs (``zocc``) block tracks like foreign copper. Returns the node
         list or None when no path exists within ``max_nodes`` expansions.
         """
         nx, ny = self.nx, self.ny
-        occ, vocc, holes = self.occ, self.vocc, self.holes
+        occ, vocc, holes, zocc = self.occ, self.vocc, self.holes, self.zocc
         sx, sy, sl = start; ex, ey, el = end
         layers = tuple(layers)
         if sl is None and not layers:
@@ -210,17 +239,118 @@ class Grid:
         else:
             xmin, xmax, ymin, ymax = m, nx - 1 - m, m, ny - 1 - m
         transition = transition or (lambda x, y: int(self.transitions[y, x]) == code)
+        region = list(allowed) if allowed is not None else None
         if extra > 0 or via_extra > 0:
             needed = set(layers) | {l for l in (sl, el) if l is not None}
-            blocked = {l: dilate((occ[l] != 0) & (occ[l] != code), extra) for l in needed}
+            blocked = {l: dilate(((occ[l] != 0) & (occ[l] != code)) | ((zocc[l] != 0) & (zocc[l] != code)), extra) for l in needed}
             vblocked = dilate((vocc != 0) & (vocc != code), via_extra) | (holes != 0)
+            if region is not None:
+                for l in blocked:
+                    if l < len(region) and region[l] is not None:
+                        blocked[l] |= ~region[l]
             def free(l, x, y): return l in blocked and not blocked[l][y, x]
             def via_ok(x, y): return transition(x, y) or not vblocked[y, x]
         else:
-            def free(l, x, y): return int(occ[l, y, x]) in (0, code)
+            if region is not None:
+                def free(l, x, y):
+                    if int(occ[l, y, x]) not in (0, code) or int(zocc[l, y, x]) not in (0, code):
+                        return False
+                    return l >= len(region) or region[l] is None or bool(region[l][y, x])
+            else:
+                def free(l, x, y): return int(occ[l, y, x]) in (0, code) and int(zocc[l, y, x]) in (0, code)
             def via_ok(x, y): return transition(x, y) or (holes[y, x] == 0 and int(vocc[y, x]) in (0, code))
+        if via_allowed is not None:
+            base_via_ok = via_ok
+            def via_ok(x, y): return bool(via_allowed[y, x]) and base_via_ok(x, y)  # noqa: F811
         directions = self.directions
         inf = math.inf
+
+        def h(x, y, l): return abs(ex - x) + abs(ey - y) + (0 if el is None or l == el else 5)
+        def enc(x, y, l): return (l * ny + y) * nx + x
+        def dec(k): return (k % nx, (k // nx) % ny, k // (nx * ny))
+        heap, costs, parent = [], {}, {}
+        for l in (layers if sl is None else (sl,)):
+            k = enc(sx, sy, l); costs[k] = 0; heapq.heappush(heap, (h(sx, sy, l), 0, k))
+        expanded = 0
+        self.last_expanded = 0
+        while heap:
+            _, cost, k = heapq.heappop(heap)
+            if cost != costs.get(k):
+                continue
+            x, y, l = dec(k)
+            if x == ex and y == ey and (el is None or l == el):
+                path = [(x, y, l)]
+                while k in parent:
+                    k = parent[k]; path.append(dec(k))
+                path.reverse()
+                self.last_expanded = expanded
+                return path
+            expanded += 1
+            if expanded > max_nodes:
+                self.last_expanded = expanded
+                return None
+            pref = directions[l] if l < len(directions) else None
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                xx, yy = x + dx, y + dy
+                if not (xmin <= xx <= xmax and ymin <= yy <= ymax):
+                    continue
+                if not free(l, xx, yy) and not (xx == ex and yy == ey and int(occ[l, yy, xx]) in (0, code)):
+                    continue  # the goal cell itself (the net's own port) is enterable even inside a dilated foreign halo
+                step = 1.0 if pref is None or (pref == 'h' and dy == 0) or (pref == 'v' and dx == 0) else 1.15
+                nc = cost + step; nk = enc(xx, yy, l)
+                if nc < costs.get(nk, inf):
+                    costs[nk] = nc; parent[nk] = k; heapq.heappush(heap, (nc + h(xx, yy, l), nc, nk))
+            if len(layers) > 1 and via_ok(x, y):
+                for ll in layers:
+                    if ll == l or not (free(ll, x, y) or (x == ex and y == ey and (el is None or ll == el) and int(occ[ll, y, x]) in (0, code))):
+                        continue
+                    nk = enc(x, y, ll); nc = cost + via_cost
+                    if nc < costs.get(nk, inf):
+                        costs[nk] = nc; parent[nk] = k; heapq.heappush(heap, (nc + h(x, y, ll), nc, nk))
+        self.last_expanded = expanded  # heap exhausted: the reachable space is closed, no path exists
+        return None
+
+
+    def astar_soft(self, start, end, code, layers, penalty=40.0, max_nodes=700000, via_cost=8, rippable=None, allowed=None, via_allowed=None):
+        """A* like ``astar`` but cells owned by another net (code > 0) are passable at ``penalty`` extra cost, and so
+        are -2 cells (two nets' clearance halos overlap) when the newer owner recorded in ``alt`` can be ripped; -1 cells
+        (pads of unconnected pins, keep-outs, margins) stay blocked, and so do cells of nets not in ``rippable`` (codes)
+        when that set is given. Returns the node list or None. Used to find which nets to rip up for
+        a connection the hard search cannot route. ``allowed`` / ``via_allowed`` as in ``astar``."""
+        nx, ny = self.nx, self.ny
+        occ, vocc, holes, zocc, alt = self.occ, self.vocc, self.holes, self.zocc, self.alt
+        sx, sy, sl = start; ex, ey, el = end
+        layers = tuple(layers)
+        m = self.margin
+        xmin, xmax, ymin, ymax = m, nx - 1 - m, m, ny - 1 - m
+        inf = math.inf
+        region = list(allowed) if allowed is not None else None
+
+        def cell_cost(l, x, y):
+            if region is not None and l < len(region) and region[l] is not None and not region[l][y, x]:
+                return None
+            if int(zocc[l, y, x]) not in (0, code):
+                return None
+            v = int(occ[l, y, x])
+            if v == 0 or v == code:
+                return 0.0
+            if v == -2:
+                v = int(alt[l, y, x])  # soft conflict: passable when its newer owner can be ripped
+                if v == code:
+                    return 0.0
+            if v < 0 or (rippable is not None and v not in rippable):
+                return None
+            return penalty
+
+        def via_cost_at(x, y):
+            if holes[y, x] != 0 or (via_allowed is not None and not via_allowed[y, x]):
+                return None
+            v = int(vocc[y, x])
+            if v == 0 or v == code:
+                return 0.0
+            if v < 0 or (rippable is not None and v not in rippable):
+                return None
+            return penalty
 
         def h(x, y, l): return abs(ex - x) + abs(ey - y) + (0 if el is None or l == el else 5)
         def enc(x, y, l): return (l * ny + y) * nx + x
@@ -243,20 +373,30 @@ class Grid:
             expanded += 1
             if expanded > max_nodes:
                 return None
-            pref = directions[l] if l < len(directions) else None
             for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 xx, yy = x + dx, y + dy
-                if not (xmin <= xx <= xmax and ymin <= yy <= ymax) or not free(l, xx, yy):
+                if not (xmin <= xx <= xmax and ymin <= yy <= ymax):
                     continue
-                step = 1.0 if pref is None or (pref == 'h' and dy == 0) or (pref == 'v' and dx == 0) else 1.15
-                nc = cost + step; nk = enc(xx, yy, l)
+                extra = cell_cost(l, xx, yy)
+                if extra is None:
+                    if xx == ex and yy == ey and int(occ[l, yy, xx]) in (0, code):
+                        extra = 0.0  # the goal cell (own port) is enterable
+                    else:
+                        continue
+                nc = cost + 1.0 + extra; nk = enc(xx, yy, l)
                 if nc < costs.get(nk, inf):
                     costs[nk] = nc; parent[nk] = k; heapq.heappush(heap, (nc + h(xx, yy, l), nc, nk))
-            if len(layers) > 1 and via_ok(x, y):
+            if len(layers) > 1:
+                vextra = via_cost_at(x, y)
+                if vextra is None:
+                    continue
                 for ll in layers:
-                    if ll == l or not free(ll, x, y):
+                    if ll == l:
                         continue
-                    nk = enc(x, y, ll); nc = cost + via_cost
+                    extra = cell_cost(ll, x, y)
+                    if extra is None:
+                        continue
+                    nk = enc(x, y, ll); nc = cost + via_cost + vextra + extra
                     if nc < costs.get(nk, inf):
                         costs[nk] = nc; parent[nk] = k; heapq.heappush(heap, (nc + h(x, y, ll), nc, nk))
         return None
@@ -268,8 +408,9 @@ class Router:
     ``layers`` lists the pcbnew copper layer ids (or names) used for routing, in
     order: index 0 is the component/front layer, the last index the back layer.
     Track methods take these *indices*; ``zone`` and keepouts take layer names or
-    pcbnew ids. ``net_rules`` maps a net name to ``dict(width=, clearance=)``
-    overrides (also accepts ``critical``/``power`` flags). ``keepouts`` are
+    pcbnew ids. ``net_rules`` maps a net name to ``dict(width=, clearance=, fanout_width=)``
+    overrides (also accepts ``critical``/``power`` flags; ``fanout_width`` is the pad-escape
+    width of a wide net whose pads sit in a fine-pitch row). ``keepouts`` are
     ``(layer_index_or_None, x0, y0, x1, y1, net_code_or_-1[, block_vias])`` mm boxes;
     a net name may replace the code. ``critical`` nets stay on the front layer and
     never fall back; ``power`` nets never fall back to the front layer and keep
@@ -302,6 +443,12 @@ class Router:
         self.code = {name: net.GetNetCode() for name, net in self.nets.items()}
         self.ports = defaultdict(list); self.pad_records = []; self.stats = defaultdict(int)
         self.length = defaultdict(float); self.unresolved = []; self.vias = {}; self.through = []
+        self.created = None  # list of board items created while a snapshot is active (see snapshot/restore)
+        self._keepouts = []  # keepout calls, replayed by rebuild_occupancy
+        self._lanes = []  # reserved exit corridors (a, b, net, layer, width), replayed by rebuild_occupancy
+        self._lane_memory = {}  # net -> every lane ever reserved for it: a ripped net gets its corridors back for the re-route
+        self.net_items = defaultdict(list)  # signal-stage board items per net (rip-up candidates) while recording_net is set
+        self.recording_net = None
         self._register_pads()
         for keepout in keepouts or ():
             self.keepout(*keepout)
@@ -341,14 +488,24 @@ class Router:
         """Track width for ``net`` (net rule or default trace width)."""
         return float(self.net_rules.get(net, {}).get('width', self.trace))
 
+    def fanout_width_for(self, net):
+        """Width of the pad escape (fanout) tracks of ``net``: the ``fanout_width`` rule, else the net width.
+
+        A wide power net whose pads sit in a fine-pitch row (0.65 mm HTSSOP, 0.95 mm SOT-23) cannot leave the
+        pad at its full width without touching the neighbouring pads; the escape then uses the narrower
+        fanout width up to the via and the routed tracks keep the net width.
+        """
+        return float(self.net_rules.get(net, {}).get('fanout_width', self.width_for(net)))
+
     def clearance_for(self, net):
         """Clearance used when marking copper of ``net`` (never below the default)."""
         return max(float(self.net_rules.get(net, {}).get('clearance', self.clearance)), self.clearance)
 
-    def extra_for(self, net):
-        """(track, via) extra radius in mm that ``net`` needs beyond the default marking."""
+    def extra_for(self, net, width=None):
+        """(track, via) extra radius in mm that ``net`` needs beyond the default marking (``width`` overrides the net width)."""
         more = self.clearance_for(net) - self.clearance
-        return max(0.0, (self.width_for(net) - self.trace) / 2) + more, more
+        width = self.width_for(net) if width is None else float(width)
+        return max(0.0, (width - self.trace) / 2) + more, more
 
     def is_critical(self, net):
         """True when ``net`` must stay on the component layer."""
@@ -390,12 +547,18 @@ class Router:
                 if thru:
                     self.through.append((pad, net))
                     drill = pcb.ToMM(pad.GetDrillSize())
+                    try:
+                        angle = pad.GetOrientation().AsDegrees()  # KiCad 7+: EDA_ANGLE
+                    except AttributeError:
+                        angle = pad.GetOrientationDegrees()
+                    if abs((angle % 180.0) - 90.0) < 1.0:  # a rotated slot: its drill size is given in the pad's own frame
+                        drill = (drill[1], drill[0])
                     g.box(g.holes, [pos[0] - drill[0] / 2, pos[1] - drill[1] / 2, pos[0] + drill[0] / 2, pos[1] + drill[1] / 2],
                           self.hole_clearance + self.via_drill / 2 + 2 * EPS, -1)
                     if pad.GetAttribute() == pcb.PAD_ATTRIB_PTH:
                         g.segment(g.transitions, pos, pos, min(pcb.ToMM(pad.GetSize())) / 2 - 0.15, code)
                 for layer in (range(self.nl) if thru else on):
-                    g.box(g.occ[layer], box, clearance + self.trace / 2, code)
+                    g.box(g.occ[layer], box, clearance + self.trace / 2, code, alt=g.alt[layer])
                 g.box(g.vocc, box, clearance + self.via_d / 2, code)
                 self.pad_records.append(dict(fp=fp, pad=pad, ref=fp.GetReference(), number=pad.GetNumber(), net=net, code=code,
                                              xy=pos, box=box, thru=thru, layers=on, side=0 if (thru or 0 in on) else on[-1]))
@@ -415,36 +578,80 @@ class Router:
                 a, b = tuple(pcb.ToMM(item.GetStart())), tuple(pcb.ToMM(item.GetEnd()))
                 self._mark_track(a, b, net, self.layers.index(item.GetLayer()), pcb.ToMM(item.GetWidth()))
 
-    def keepout(self, layer, x0, y0, x1, y1, net=-1, block_vias=False):
+    def keepout(self, layer, x0, y0, x1, y1, net=-1, block_vias=False, zone=False):
         """Reserve a mm box on one routing layer index (or every layer when None) for ``net``.
 
         ``net`` is a net code, a net name or -1 (blocked for everyone). With
-        ``block_vias`` the box also rejects via centres.
+        ``block_vias`` the box also rejects via centres. A ``zone`` keep-out (a copper pour
+        of another net on that layer) blocks tracks but lets through-via barrels of other
+        nets pass (the zone filler clips the pour around them), so it is recorded in the
+        grid's ``zocc`` array, which the via placement never consults.
         """
         code = self.net_code(net) if isinstance(net, str) else (-1 if net is None else int(net))
         if isinstance(layer, str):
             layer = self.layer_index(layer)
+        self._keepouts.append((layer, x0, y0, x1, y1, code, block_vias, zone))
+        target = self.grid.zocc if zone else self.grid.occ
         for index in (range(self.nl) if layer is None else (int(layer),)):
-            self.grid.box(self.grid.occ[index], [x0, y0, x1, y1], 0, code)
+            self.grid.box(target[index], [x0, y0, x1, y1], 0, code, alt=None if zone else self.grid.alt[index])
         if block_vias:
             self.grid.box(self.grid.vocc, [x0, y0, x1, y1], 0, code)
+
+    # ----- routing regions (per-net allowed areas) ---------------------------------------------
+    def region_masks(self, net):
+        """(per-layer allowed masks or None, via mask or None) for ``net`` from ``net_rules[net]['region']``.
+
+        A region is a list of mm rects (all routing layers) or a dict ``{layer name: [rects], 'vias': [rects]}``;
+        a layer missing from the dict is closed for that net. Without an explicit ``vias`` entry a via may sit only
+        where the first and the last routing layer (the outer layers, which carry the via annuli that DRC measures)
+        are both allowed. Masks are cached per distinct region specification.
+        """
+        spec = self.net_rules.get(net, {}).get('region')
+        if spec is None:
+            return None, None
+        key = repr(spec)
+        cache = getattr(self, '_region_cache', None)
+        if cache is None:
+            cache = self._region_cache = {}
+        if key in cache:
+            return cache[key]
+        g = self.grid
+
+        def mask_of(rects):
+            m = np.zeros((g.ny, g.nx), dtype=bool)
+            for x0, y0, x1, y1 in rects:
+                cx0 = max(0, math.ceil((min(x0, x1) - g.ox) / g.grid - 1e-9)); cx1 = min(g.nx - 1, math.floor((max(x0, x1) - g.ox) / g.grid + 1e-9))
+                cy0 = max(0, math.ceil((min(y0, y1) - g.oy) / g.grid - 1e-9)); cy1 = min(g.ny - 1, math.floor((max(y0, y1) - g.oy) / g.grid + 1e-9))
+                if cx0 <= cx1 and cy0 <= cy1:
+                    m[cy0:cy1 + 1, cx0:cx1 + 1] = True
+            return m
+
+        if isinstance(spec, dict):
+            layers = [mask_of(spec.get(name, ())) for name in self.names]
+            vias = mask_of(spec['vias']) if 'vias' in spec else (layers[0] & layers[-1])
+        else:
+            shared = mask_of(spec)
+            layers = [shared for _ in self.names]
+            vias = shared
+        cache[key] = (layers, vias)
+        return cache[key]
 
     # ----- copper creation -------------------------------------------------------------------
     def _mark_track(self, a, b, net, layer, width):
         g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
-        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + EPS, code)
+        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
         g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + EPS, code)
         self.length[net] += math.dist(a, b)
 
     def _mark_via(self, xy, net, diameter, drill):
         g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
         for layer in range(self.nl):
-            g.segment(g.occ[layer], xy, xy, diameter / 2 + clearance + self.trace / 2 + EPS, code)
+            g.segment(g.occ[layer], xy, xy, diameter / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
         g.segment(g.vocc, xy, xy, diameter / 2 + clearance + self.via_d / 2 + EPS, code)
         g.segment(g.holes, xy, xy, drill / 2 + self.hole_clearance + self.via_drill / 2 + 2 * EPS, -1)
         self.vias[self._key(xy)] = net
 
-    def track(self, a, b, net, layer_index, width=None):
+    def track(self, a, b, net, layer_index, width=None, mark_width=None):
         """Add a straight track (mm endpoints) on a routing layer index; returns the PCB_TRACK or None.
 
         The width defaults to the net rule. Occupancy is inflated by the net's
@@ -457,8 +664,12 @@ class Router:
         item = pcb.PCB_TRACK(self.board)
         item.SetStart(self.point(*a)); item.SetEnd(self.point(*b)); item.SetWidth(pcb.FromMM(width))
         item.SetLayer(self.layers[layer_index]); item.SetNet(self.nets[net]); self.board.Add(item)
-        self._mark_track(a, b, net, layer_index, width)
+        self._mark_track(a, b, net, layer_index, width if mark_width is None else max(float(mark_width), width))  # mark_width: wider occupancy for off-grid copper
         self.stats['tracks'] += 1
+        if self.created is not None:
+            self.created.append(item)
+        if self.recording_net is not None:
+            self.net_items[self.recording_net].append(item)
         return item
 
     def via(self, xy, net, diameter=None, drill=None):
@@ -478,6 +689,10 @@ class Router:
         self.board.Add(item)
         self._mark_via(tuple(xy), net, diameter, drill)
         self.stats['vias'] += 1
+        if self.created is not None:
+            self.created.append(item)
+        if self.recording_net is not None:
+            self.net_items[self.recording_net].append(item)
         return item
 
     def existing_transition(self, xy, net):
@@ -507,6 +722,9 @@ class Router:
         code = self.code[net]
         if g.holes[y, x] != 0:
             return False
+        via_mask = self.region_masks(net)[1]
+        if via_mask is not None and not via_mask[y, x]:
+            return False
         r = int(math.ceil(self.extra_for(net)[1] / g.grid - 1e-9))
         for dy in range(-r, r + 1):
             for dx in range(-r, r + 1):
@@ -517,26 +735,28 @@ class Router:
                     return False
         return True
 
-    def astar(self, start, end, net, layers=None, max_nodes=None, margin=None):
+    def astar(self, start, end, net, layers=None, max_nodes=None, margin=None, width=None):
         """Grid A* for ``net`` between (x, y, layer_index) cells; see ``Grid.astar``.
 
         ``layers`` are routing indices allowed for layer changes (default:
         ``default_layers``); ``max_nodes`` defaults to the router's budget; the
-        net's width/clearance rule sets the dilation.
+        net's width/clearance rule sets the dilation (``width`` overrides the width).
         """
         layers = self.default_layers(net) if layers is None else tuple(layers)
         max_nodes = self.max_nodes if max_nodes is None else int(max_nodes)
-        extra, via_extra = self.extra_for(net)
+        extra, via_extra = self.extra_for(net, width)
         g = self.grid
+        allowed, via_allowed = self.region_masks(net)
         return g.astar(start, end, self.net_code(net), layers, max_nodes=max_nodes, margin=margin,
                        extra=extra / g.grid, via_extra=via_extra / g.grid,
-                       transition=lambda x, y: self.existing_transition(self.to_mm(x, y), net))
+                       transition=lambda x, y: self.existing_transition(self.to_mm(x, y), net),
+                       allowed=allowed, via_allowed=via_allowed)
 
-    def emit(self, path, net):
-        """Realise an A* path as tracks (net rule width) and through vias."""
+    def emit(self, path, net, width=None):
+        """Realise an A* path as tracks (net rule width, or ``width``) and through vias."""
         segments, vias = compress_path(path)
         for x0, y0, x1, y1, layer in segments:
-            self.track(self.to_mm(x0, y0), self.to_mm(x1, y1), net, layer)
+            self.track(self.to_mm(x0, y0), self.to_mm(x1, y1), net, layer, width)
         for x, y in vias:
             self.via(self.to_mm(x, y), net)
 
@@ -546,7 +766,8 @@ class Router:
         """Fanout order: ICs first, then natural reference order and pad number."""
         return (0 if record['ref'].startswith('U') else 1, natural_ref_key(record['ref']), pad_sort_key(record['number']))
 
-    def fanout(self, order_key=None, skip=None, inpad_vias=(), inward=None, escape_layer=None):
+    def fanout(self, order_key=None, skip=None, inpad_vias=(), inward=None, escape_layer=None, exact=None, direct=None,
+               exact_via=None, direct_lane=0.0, exact_lane=None):
         """Escape every connected pad to a routing port; returns ``[ref, pad, net]`` failures.
 
         Through-hole pads register a port with layer None (reachable on every
@@ -556,33 +777,128 @@ class Router:
         ``(ref, pad)`` pairs in ``inpad_vias`` get the via in the pad centre
         (thermal pads). ``skip(record)`` excludes pads, ``inward(record)`` prefers an
         escape towards the footprint centre (dense packages), ``order_key(record)``
-        sets the pad order.
+        sets the pad order. ``exact(record)`` may return a length in mm (or a
+        ``(length, (ux, uy)[, offset[, layer]])`` tuple with an explicit stub direction,
+        a lateral offset of the stub inside the pad and - for plated through pads, which
+        otherwise register a layer-free port - the layer of the stub and its port): the pad then
+        gets an exact straight stub along its axis (pad centre to that length beyond
+        the pad end, no via) and its port is the stub end on the pad's own layer -
+        the escape for 0.65 mm pitch rows whose neighbours cannot host vias; such pads
+        are escaped before the via escapes so that the vias keep clear of the stubs.
+        ``direct(record)`` registers an SMD pad as a port on its own layer without any
+        escape copper (the router adds vias where it needs them); exact stubs win over it.
+        ``exact_via(record)`` puts a through via at the end of the pad's exact stub (when the
+        via fits) and registers a layer-free port there, so a stub row whose pitch allows vias
+        gets ports on every routing layer. ``direct_lane`` (mm) reserves, for every direct port,
+        the exit corridor along the pad's outward axis for the net (no copper; the cells a track
+        would occupy are marked so that foreign tracks cannot hug the pad and seal its port).
+        ``exact_lane(record)`` (mm, optional) reserves the same kind of corridor beyond an exact
+        stub's end, in the stub's direction on the stub's layer, so a row of stub (or stub-via)
+        ports cannot be sealed by one foreign track running along the stub-end line.
         """
         skip = skip or (lambda record: False); inward = inward or (lambda record: False)
+        exact = exact or (lambda record: None); direct = direct or (lambda record: False)
+        exact_via = exact_via or (lambda record: False); direct_lane = float(direct_lane or 0.0)
+        exact_lane = exact_lane or (lambda record: 0.0)
         inpad = {tuple(p) for p in inpad_vias}
         failures = []
         g = self.grid
-        for r in sorted(self.pad_records, key=order_key or self.default_order_key):
+        base_key = order_key or self.default_order_key
+        for r in sorted(self.pad_records, key=lambda rec: (0 if exact(rec) else 1, base_key(rec))):
             net, ref, number = r['net'], r['ref'], r['number']
             if not net or net.startswith('unconnected-') or r['code'] <= 0 or skip(r):
                 continue
             x, y = r['xy']; sx, sy = self.to_grid(x, y); side = r['side']
-            if r['thru']:
+            thru_spec = exact(r) if r['thru'] else None
+            if r['thru'] and not (isinstance(thru_spec, (tuple, list)) and len(thru_spec) > 3):
                 self.ports[net].append((sx, sy, None, ref, number)); continue
+            if r['thru']:  # (length, (ux, uy), offset, layer): straight stub out of a through pad on that layer, port at its end
+                length, (ux, uy), lateral = float(thru_spec[0]), (int(thru_spec[1][0]), int(thru_spec[1][1])), float(thru_spec[2])
+                layer = thru_spec[3]
+                side = self.layer_index(layer) if isinstance(layer, str) else int(layer)
+                x0, y0 = x, y
+                x, y = x + (lateral if uy else 0.0), y + (lateral if ux else 0.0)
+                extent = (r['box'][2] - r['box'][0]) / 2 if ux else (r['box'][3] - r['box'][1]) / 2
+                escape_width = self.fanout_width_for(net)
+                placed = False
+                for more in (0.0, 0.5, 1.0, 1.5):
+                    end = (x + ux * (extent + length + more), y + uy * (extent + length + more))
+                    ex, ey = self.to_grid(*end)
+                    if not g.inside(ex, ey) or int(g.occ[side, ey, ex]) not in (0, r['code']):
+                        continue
+                    if more and not self._stub_clear(side, (x + ux * (extent + length), y + uy * (extent + length)), end, r['code']):
+                        continue  # the longer stub would cross foreign copper beyond the nominal end
+                    if abs(lateral) > 1e-9:
+                        self.track((x0, y0), (x, y), net, side, escape_width, escape_width + 0.05)  # jog from the pad centre into the gap
+                    self.track((x, y), end, net, side, escape_width, escape_width + 0.05)
+                    self.track(end, self.to_mm(ex, ey), net, side, escape_width, escape_width + 0.05)
+                    self.ports[net].append((ex, ey, self._stub_port_layer(r, ex, ey, side, exact_via), ref, number)); placed = True
+                    lane = float(exact_lane(r) or 0.0)
+                    if lane > 0:
+                        px, py = self.to_mm(ex, ey)
+                        self._reserve_lane((px, py), (px + ux * lane, py + uy * lane), net, side)
+                    break
+                if not placed:
+                    failures.append([ref, number, net])
+                    self.unresolved.append(dict(stage='fanout', ref=ref, pad=number, net=net))
+                continue
             if self.is_critical(net) or self.nl == 1:
                 self.ports[net].append((sx, sy, side, ref, number)); continue
-            port_layer = escape_layer if escape_layer is not None else (1 if side == 0 else self.nl - 2)
-            if (ref, number) in inpad:
-                xy = self.to_mm(sx, sy); self.via(xy, net); self.track((x, y), xy, net, side)
-                self.ports[net].append((sx, sy, port_layer, ref, number)); continue
             cx, cy = self.pcb.ToMM(r['fp'].GetPosition())
             dx, dy = x - cx, y - cy
             if abs(dx) >= abs(dy):
                 ux, uy = (1 if dx >= 0 else -1), 0
             else:
                 ux, uy = 0, (1 if dy >= 0 else -1)
-            extent = (r['box'][2] - r['box'][0]) / 2 if ux else (r['box'][3] - r['box'][1]) / 2
+            if direct(r) and not exact(r):
+                # port at the pad's outer end (long pads: the copper the router adds starts beyond the pad centre, so a track
+                # leaving a barrier package stays as far from the opposite row as the pad itself)
+                extent = (r['box'][2] - r['box'][0]) / 2 if ux else (r['box'][3] - r['box'][1]) / 2
+                px, py = self.to_grid(x + ux * max(0.0, extent - 0.35), y + uy * max(0.0, extent - 0.35))
+                if g.inside(px, py) and int(g.occ[side, py, px]) == r['code']:
+                    sx, sy = px, py
+                if direct_lane > 0:
+                    self._reserve_lane((x, y), (x + ux * (extent + direct_lane), y + uy * (extent + direct_lane)), net, side)
+                self.ports[net].append((sx, sy, side, ref, number)); continue
+            port_layer = escape_layer if escape_layer is not None else (1 if side == 0 else self.nl - 2)
+            escape_width = self.fanout_width_for(net)
+            if (ref, number) in inpad:
+                xy = self.to_mm(sx, sy); self.via(xy, net); self.track((x, y), xy, net, side, escape_width)
+                self.ports[net].append((sx, sy, port_layer, ref, number)); continue
             primary = -1 if inward(r) else 1
+            stub_length = exact(r)
+            lateral = 0.0
+            if isinstance(stub_length, (tuple, list)):  # (length, (ux, uy)[, offset]): explicit stub direction and lateral offset
+                lateral = float(stub_length[2]) if len(stub_length) > 2 else 0.0
+                stub_length, (ux, uy) = float(stub_length[0]), (int(stub_length[1][0]), int(stub_length[1][1]))
+                primary = 1
+                x, y = x + (lateral if uy else 0.0), y + (lateral if ux else 0.0)  # the stub runs beside the pad centreline
+            extent = (r['box'][2] - r['box'][0]) / 2 if ux else (r['box'][3] - r['box'][1]) / 2
+            if stub_length:
+                placed = False
+                for more in (0.0, 0.5, 1.0, 1.5):
+                    reach = extent + float(stub_length) + more
+                    end = (x + primary * ux * reach, y + primary * uy * reach)
+                    ex, ey = self.to_grid(*end)
+                    if not g.inside(ex, ey) or int(g.occ[side, ey, ex]) not in (0, r['code']):
+                        continue
+                    nominal = (x + primary * ux * (extent + float(stub_length)), y + primary * uy * (extent + float(stub_length)))
+                    if more and not self._stub_clear(side, nominal, end, r['code']):
+                        continue  # the longer stub would cross foreign copper (a via or track beyond the row)
+                    # the stub starts in the outer half of the pad (its end cap must not reach past the pad centre towards the
+                    # neighbouring row: isolation rules measure track copper, not pad copper); its occupancy is marked at the
+                    # true (off-grid) position, so a neighbouring stub 0.65 mm away leaves the cells ahead of this one free
+                    start = (x + primary * ux * extent * 0.45, y + primary * uy * extent * 0.45)
+                    self.track(start, end, net, side, escape_width, escape_width + 0.05)
+                    self.track(end, self.to_mm(ex, ey), net, side, escape_width, escape_width + 0.05)  # <= half a cell to the grid port
+                    self.ports[net].append((ex, ey, self._stub_port_layer(r, ex, ey, side, exact_via), ref, number)); placed = True
+                    lane = float(exact_lane(r) or 0.0)
+                    if lane > 0:
+                        px, py = self.to_mm(ex, ey)
+                        self._reserve_lane((px, py), (px + primary * ux * lane, py + primary * uy * lane), net, side)
+                    break
+                if placed:
+                    continue
             candidates = []
             for sign in (primary, -primary):
                 for distance in self.escape_distances:
@@ -596,10 +912,10 @@ class Router:
                         candidates.append((distance + abs(shift) * 1.4 + (10 if sign != primary else 0), ex, ey))
             routed = False
             for _, ex, ey in sorted(set(candidates)):
-                path = self.astar((sx, sy, side), (ex, ey, side), net, layers=(side,), max_nodes=1500, margin=10)
+                path = self.astar((sx, sy, side), (ex, ey, side), net, layers=(side,), max_nodes=1500, margin=10, width=escape_width)
                 if path is None:
                     continue
-                self.track((x, y), self.to_mm(sx, sy), net, side); self.emit(path, net); self.via(self.to_mm(ex, ey), net)
+                self.track((x, y), self.to_mm(sx, sy), net, side, escape_width); self.emit(path, net, escape_width); self.via(self.to_mm(ex, ey), net)
                 self.ports[net].append((ex, ey, port_layer, ref, number)); routed = True
                 break
             if not routed:
@@ -608,36 +924,121 @@ class Router:
         self.stats['fanout_unresolved'] += len(failures)
         return failures
 
-    def route_net(self, net, ports=None, layers=None, allow_front_fallback=True):
-        """Connect the ports of ``net`` with a greedy nearest-first spanning set of A* paths.
+    def _stub_clear(self, side, a, b, code):
+        """True when every grid cell along the mm segment a-b (sampled at the grid pitch) is free or owned by ``code`` on layer ``side``."""
+        g = self.grid
+        n = max(1, int(math.ceil(math.dist(a, b) / g.grid)))
+        for i in range(n + 1):
+            x, y = self.to_grid(a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n)
+            if not g.inside(x, y) or int(g.occ[side, y, x]) not in (0, code):
+                return False
+        return True
 
-        ``ports`` default to the fanout ports; ``layers`` to ``default_layers``.
-        Critical nets are forced to the front layer. When a path fails and the net
-        is neither critical nor power, ``allow_front_fallback`` retries on every
-        layer. Returns the failure records (also appended to ``unresolved``).
+    def _stub_port_layer(self, record, ex, ey, side, exact_via):
+        """Layer of an exact-stub port: the stub's layer, or None (every layer) when ``exact_via`` asks for a via at the stub end and
+        a via fits there (hole, via occupancy and the net's via region); the via is added to the board."""
+        if not exact_via(record):
+            return side
+        net = record['net']
+        if not self.via_allowed(ex, ey, net):
+            self.stats['exact_via_skipped'] += 1
+            return side
+        self.via(self.to_mm(ex, ey), net)
+        return None
+
+    def _reserve_lane(self, a, b, net, layer, width=None):
+        """Reserve the corridor a-b (mm) on a routing layer index for ``net`` without adding copper: the cells a track of the net's
+        width would occupy there (and the via centres it would exclude) are marked with the net's code, so foreign tracks keep clear
+        of a port's exit until the net itself routes through it."""
+        g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
+        width = self.width_for(net) if width is None else float(width)
+        lane = (tuple(a), tuple(b), net, int(layer), width)
+        self._lanes.append(lane)
+        self._lane_memory.setdefault(net, []).append(lane) if lane not in self._lane_memory.get(net, []) else None
+        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
+        g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + EPS, code)
+
+    def route_net(self, net, ports=None, layers=None, allow_front_fallback=True):
+        """Connect the ports of ``net`` with the shortest available connections first (Kruskal over the manhattan
+        distances of the port pairs, merging components).
+
+        ``ports`` default to the fanout ports; ``layers`` to ``default_layers``. Critical nets are forced to the
+        front layer. When a path fails and the net is neither critical nor power, ``allow_front_fallback`` retries
+        on every layer. A failed pair does not drop a port: when the search ran dry before the node budget one side
+        sits in an enclosed pocket, and the side whose reachable area is smaller (the reverse search, capped at the
+        forward count, tells which) is retired; a port that twice exhausts the budget is retired as well. The other
+        ports keep merging, so a sealed port costs the net one connection instead of every connection from it.
+        Returns one failure record per missing connection (also appended to ``unresolved``).
         """
         ports = list(self.ports.get(net, []) if ports is None else ports)
         layers = tuple(self.default_layers(net) if layers is None else layers)
         critical = self.is_critical(net)
         def resolve(p):
             layer = 0 if critical else p[2]
-            return (p[0], p[1], layers[0] if layer is None else layer)
+            return (p[0], p[1], layer)  # None (plated through pad / pre-routed via): any routing layer may start or end there
         points = list(dict.fromkeys(resolve(p) for p in ports))
         if len(points) < 2:
             return []
-        connected = [points.pop(0)]; failures = []
         g = self.grid
-        while points:
-            _, a, b = min((abs(a[0] - b[0]) + abs(a[1] - b[1]), a, b) for a in connected for b in points)
-            path = self.astar(a, b, net, layers=layers)
-            if path is None and allow_front_fallback and not critical and not self.is_power(net):
-                path = self.astar(a, b, net, layers=tuple(range(self.nl)))
-            if path is None:
-                record = dict(stage='route', net=net, start=a, end=b,
-                              occupancy=dict(start=int(g.occ[a[2], a[1], a[0]]), end=int(g.occ[b[2], b[1], b[0]]), code=self.code[net]))
-                failures.append(record); self.unresolved.append(record); points.remove(b)
+        fallback = allow_front_fallback and not critical and not self.is_power(net)
+        every = tuple(range(self.nl))
+        parent = list(range(len(points)))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]; i = parent[i]
+            return i
+
+        def occ_at(p):
+            return int(g.occ[layers[0] if p[2] is None else p[2], p[1], p[0]])
+
+        def search(a, b, cap=None):
+            path = self.astar(a, b, net, layers=layers, max_nodes=cap)
+            expanded = int(getattr(g, 'last_expanded', 0))
+            if path is None and fallback:
+                path = self.astar(a, b, net, layers=every, max_nodes=cap)
+                expanded = max(expanded, int(getattr(g, 'last_expanded', 0)))
+            return path, expanded
+        pairs = sorted((abs(a[0] - b[0]) + abs(a[1] - b[1]), i, j) for i, a in enumerate(points) for j, b in enumerate(points) if i < j)
+        retired, strikes, last_failure, components = set(), defaultdict(int), {}, len(points)
+        for _, i, j in pairs:
+            if components < 2:
+                break
+            if i in retired or j in retired or find(i) == find(j):
                 continue
-            self.emit(path, net); connected.append(b); points.remove(b)
+            a, b = points[i], points[j]
+            path, expanded = search(a, b)
+            if path is None and expanded <= self.max_nodes:
+                # ran dry: one side is enclosed; the reverse search (capped at the forward count) measures the other side
+                back, back_expanded = search(b, a, cap=max(1, expanded))
+                if back is not None:
+                    path, a, b = back, b, a
+                else:
+                    retired.add(j if back_expanded <= expanded else i)
+            elif path is None:
+                for k in (i, j):
+                    strikes[k] += 1
+                    if strikes[k] >= 2:
+                        retired.add(k)
+            if path is not None:
+                self.emit(path, net); parent[find(i)] = find(j); components -= 1
+                continue
+            record = dict(stage='route', net=net, start=a, end=b, expanded=expanded,
+                          occupancy=dict(start=occ_at(a), end=occ_at(b), code=self.code[net]))
+            last_failure[i] = record; last_failure[j] = record
+        failures = []
+        if components > 1:  # one record per component that stays apart from the largest one
+            members = defaultdict(list)
+            for i in range(len(points)):
+                members[find(i)].append(i)
+            main = max(members.values(), key=len)
+            for group in members.values():
+                if group is main:
+                    continue
+                k = next((m for m in group if m in last_failure), group[0])
+                record = last_failure.get(k) or dict(stage='route', net=net, start=points[k], end=points[main[0]], expanded=0,
+                                                       occupancy=dict(start=occ_at(points[k]), end=occ_at(points[main[0]]), code=self.code[net]))
+                failures.append(record); self.unresolved.append(record)
         return failures
 
     def route_power_stub(self, net, anchors, ports, layers=None):
@@ -651,6 +1052,250 @@ class Router:
             anchor = min(anchors, key=lambda p: (abs(port[0] - p[0]) + abs(port[1] - p[1]), p[0], p[1]))
             failures.extend(self.route_net(net, [anchor, port], layers=layers))
         return failures
+
+    # ----- snapshot / restore (order trials) -----------------------------------------------------
+    def snapshot(self):
+        """Capture the occupancy grids, via map, lengths, stats and unresolved list; start recording created items."""
+        g = self.grid
+        state = dict(occ=g.occ.copy(), vocc=g.vocc.copy(), holes=g.holes.copy(), alt=g.alt.copy(), vias=dict(self.vias),
+                     length=dict(self.length), stats=dict(self.stats), unresolved=list(self.unresolved))
+        self.created = []
+        return state
+
+    def restore(self, state):
+        """Remove every item created since ``snapshot`` and put the router back into the captured state."""
+        g = self.grid
+        for item in self.created or ():
+            self.board.Remove(item)
+        self.created = []
+        g.occ[...] = state['occ']; g.vocc[...] = state['vocc']; g.holes[...] = state['holes']
+        if 'alt' in state:
+            g.alt[...] = state['alt']
+        self.vias = dict(state['vias'])
+        self.length = defaultdict(float, state['length'])
+        self.stats = defaultdict(int, state['stats'])
+        self.unresolved = list(state['unresolved'])
+
+    def end_snapshot(self):
+        """Stop recording created items (the current state is kept)."""
+        self.created = None
+
+    # ----- rip-up and re-route -----------------------------------------------------------------
+    def rebuild_occupancy(self):
+        """Recompute every occupancy array from the board (pads, keepouts, all tracks and vias on it)."""
+        g = self.grid
+        g.occ[...] = 0; g.vocc[...] = 0; g.holes[...] = 0; g.transitions[...] = 0; g.zocc[...] = 0; g.alt[...] = 0
+        m = g.margin
+        if m:
+            g.occ[:, :m, :] = -1; g.occ[:, -m:, :] = -1; g.occ[:, :, :m] = -1; g.occ[:, :, -m:] = -1
+            g.vocc[:m, :] = -1; g.vocc[-m:, :] = -1; g.vocc[:, :m] = -1; g.vocc[:, -m:] = -1
+        self.vias = {}; self.through = []; self.pad_records = []
+        self.length = defaultdict(float)
+        self._register_pads()
+        keepouts = list(self._keepouts)
+        self._keepouts = []
+        for layer, x0, y0, x1, y1, code, block_vias, *zone in keepouts:
+            self.keepout(layer, x0, y0, x1, y1, code, block_vias, bool(zone and zone[0]))
+        self._register_existing()
+        lanes = list(self._lanes)
+        self._lanes = []
+        for a, b, net, layer, width in lanes:  # the reserved exit corridors are not board items: replay them
+            self._reserve_lane(a, b, net, layer, width)
+
+    def rip_net(self, net):
+        """Remove the recorded signal-stage items of ``net`` from the board and drop its route failures."""
+        for item in self.net_items.get(net, []):
+            self.board.Remove(item)
+        self.net_items[net] = []
+        self.unresolved = [u for u in self.unresolved if not (u.get('stage') == 'route' and u.get('net') == net)]
+
+    def signal_geometry(self):
+        """Serialisable copy of every recorded signal-stage item (for restoring the best negotiation state)."""
+        pcb = self.pcb
+        out = {}
+        for net, items in self.net_items.items():
+            recs = []
+            for it in items:
+                if isinstance(it, pcb.PCB_VIA):
+                    recs.append(('via', tuple(pcb.ToMM(it.GetPosition())), pcb.ToMM(it.GetWidth(pcb.F_Cu)), pcb.ToMM(it.GetDrillValue())))
+                else:
+                    recs.append(('track', tuple(pcb.ToMM(it.GetStart())), tuple(pcb.ToMM(it.GetEnd())), self.layers.index(it.GetLayer()), pcb.ToMM(it.GetWidth())))
+            out[net] = recs
+        return out
+
+    def restore_signal_geometry(self, geometry, unresolved):
+        """Replace the recorded signal-stage items by ``geometry`` (see signal_geometry) and rebuild the occupancy."""
+        for net in list(self.net_items):
+            for item in self.net_items[net]:
+                self.board.Remove(item)
+            self.net_items[net] = []
+        self.rebuild_occupancy()
+        for net, recs in geometry.items():
+            self.recording_net = net
+            for rec in recs:
+                if rec[0] == 'via':
+                    self.via(rec[1], net, rec[2], rec[3])
+                else:
+                    self.track(rec[1], rec[2], net, rec[3], rec[4])
+            self.recording_net = None
+        self.unresolved = list(unresolved)
+
+    def negotiate(self, layers, allow_front_fallback=True, rounds=20, penalty=40.0, protected=(), tabu=4):
+        """Rip-up and re-route the unresolved signal connections; returns the log of rounds.
+
+        For each failed connection a soft A* finds a path across other signal nets' copper; those nets are ripped up,
+        the failed connection is routed first and the ripped nets are re-routed. A round is kept when the unresolved
+        count does not grow and the resulting set of failures is new (a set seen before is a cycle and is reverted).
+        The targets of the last ``tabu`` kept rounds cannot be ripped again, so two connections fighting over the same
+        lane do not alternate forever. ``protected`` nets are never ripped.
+        """
+        log = []
+        protected = set(protected)
+        code_to_net = {code: name for name, code in self.code.items()}
+        layers = tuple(layers)
+        attempted = set()
+        penalties = (float(penalty),)  # one attempt per failing connection and failure set (the 0.4x / 2.5x variants never succeeded in the stage-4 runs)
+        last_failure_set = None
+        seen = set()
+        recent = []
+        recent_targets = []
+        for rnd in range(rounds):
+            current = [u for u in self.unresolved if u.get('stage') == 'route']
+            failing = {u['net'] for u in current}
+            self.release_lanes({lane[2] for lane in self._lanes if lane[2] not in failing})  # routed nets no longer need their corridors
+            failure_set = frozenset((u['net'], tuple(u['start']), tuple(u['end'])) for u in current)
+            seen.add(failure_set)
+            if failure_set != last_failure_set:
+                attempted = set()  # the failing connections changed: every (connection, penalty) is worth another try
+                last_failure_set = failure_set
+            candidates = [(u, pen) for u in current for pen in penalties if (u['net'], tuple(u['start']), tuple(u['end']), pen) not in attempted]
+            if not candidates:
+                break
+            fresh = [c for c in candidates if c[0]['net'] not in recent_targets]  # take turns between the failing nets
+            target, pen = (fresh or candidates)[0]
+            recent_targets.append(target['net']); del recent_targets[:-3]
+            attempted.add((target['net'], tuple(target['start']), tuple(target['end']), pen))
+            net = target['net']
+            before_geometry, before_unresolved = self.signal_geometry(), list(self.unresolved)
+            before_count = len(current)
+            start, end = tuple(target['start']), tuple(target['end'])
+            own = self.code[net]
+            direct = self._hard_path(start, end, net, layers, allow_front_fallback)
+            if direct is not None:  # routable now: copper moved by an earlier round, nothing to rip
+                self.recording_net = net; self.emit(direct, net); self.recording_net = None
+                self.unresolved = [u for u in self.unresolved if u is not target]
+                log.append(dict(round=rnd, net=net, penalty=pen, result=f'routed directly ({before_count} -> {before_count - 1})'))
+                continue
+            blocked = protected | {n for n in recent if n != net}
+            rippable = {self.code[n] for n in self.net_items if n not in blocked and n != net and self.net_items[n]}
+            allowed, via_allowed = self.region_masks(net)
+            path = self.grid.astar_soft(start, end, own, layers, penalty=pen, max_nodes=self.max_nodes, rippable=rippable,
+                                        allowed=allowed, via_allowed=via_allowed)
+            if path is None:
+                log.append(dict(round=rnd, net=net, penalty=pen, result='no soft path'))
+                continue
+            victims = set()
+            g = self.grid
+            for (x, y, l) in path:
+                v = int(g.occ[l, y, x])
+                if v == -2:
+                    v = int(g.alt[l, y, x])  # the newer owner of a soft conflict cell
+                if v > 0 and v != own and code_to_net.get(v) in self.net_items and code_to_net[v] not in protected:
+                    victims.add(code_to_net[v])
+            segments, via_cells = compress_path(path)
+            for (x, y) in via_cells:
+                v = int(g.vocc[y, x])
+                if v > 0 and v != own and code_to_net.get(v) in self.net_items and code_to_net[v] not in protected:
+                    victims.add(code_to_net[v])
+            victims = sorted(victims)
+            if not victims:
+                log.append(dict(round=rnd, net=net, penalty=pen, result='soft path crosses no rippable net'))
+                continue
+            for victim in victims:
+                self.rip_net(victim)
+            self.rip_net(net)
+            self.restore_lanes(set(victims) | {net})  # the ripped nets' port exits stay open while the target routes first
+            self.rebuild_occupancy()
+            self.recording_net = net
+            self.route_net(net, layers=layers, allow_front_fallback=allow_front_fallback)
+            self.recording_net = None
+            for victim in victims:
+                self.recording_net = victim
+                self.route_net(victim, layers=layers, allow_front_fallback=allow_front_fallback)
+                self.recording_net = None
+            after = [u for u in self.unresolved if u.get('stage') == 'route']
+            after_count = len(after)
+            after_set = frozenset((u['net'], tuple(u['start']), tuple(u['end'])) for u in after)
+            if after_count > before_count:
+                self.restore_signal_geometry(before_geometry, before_unresolved)
+                log.append(dict(round=rnd, net=net, penalty=pen, victims=victims, result=f'reverted ({after_count} > {before_count})'))
+            elif after_count == before_count and after_set in seen:
+                self.restore_signal_geometry(before_geometry, before_unresolved)
+                log.append(dict(round=rnd, net=net, penalty=pen, victims=victims, result=f'reverted (cycle: failure set seen before)'))
+            else:
+                log.append(dict(round=rnd, net=net, penalty=pen, victims=victims, result=f'kept ({before_count} -> {after_count})'))
+                recent.append(net)
+                if tabu:
+                    del recent[:-int(tabu)]
+                else:
+                    recent.clear()
+        return log
+
+    def release_lanes(self, nets=None):
+        """Drop the reserved exit corridors of ``nets`` (every lane when None) and rebuild the occupancy; returns the number dropped.
+        A routed net's lane is obsolete (its track occupies what it needs), and before the final retry pass every lane is: the
+        corridors reserved for other ports are free copper for the connections that are still open."""
+        before = len(self._lanes)
+        self._lanes = [] if nets is None else [lane for lane in self._lanes if lane[2] not in nets]
+        if len(self._lanes) != before:
+            self.rebuild_occupancy()
+        return before - len(self._lanes)
+
+    def restore_lanes(self, nets):
+        """Re-list the remembered exit corridors of ``nets`` (dropped by release_lanes) without rebuilding the occupancy; returns
+        the number re-listed. The caller rebuilds the occupancy (negotiate does so after the rip-up)."""
+        active = set(self._lanes)
+        added = 0
+        for net in nets:
+            for lane in self._lane_memory.get(net, []):
+                if lane not in active:
+                    self._lanes.append(lane); active.add(lane); added += 1
+        return added
+
+    def _hard_path(self, start, end, net, layers, allow_front_fallback=True):
+        """Plain A* for one connection on ``layers`` (then on every layer when the fallback applies); None when no path exists."""
+        path = self.astar(start, end, net, layers=tuple(layers))
+        if path is None and allow_front_fallback and not self.is_critical(net) and not self.is_power(net):
+            path = self.astar(start, end, net, layers=tuple(range(self.nl)))
+        return path
+
+    def retry_unresolved(self, layers, allow_front_fallback=True):
+        """Route the unresolved signal connections whose ports have become mutually reachable (copper moved by later nets' rip-up
+        rounds or by the order replay); returns the number routed. Each record gets one hard search."""
+        routed = 0
+        for keep_own in (True, False):  # first with the open nets' own corridors still reserved, then without any lane
+            failing = {u['net'] for u in self.unresolved if u.get('stage') == 'route'}
+            self.release_lanes({lane[2] for lane in self._lanes if lane[2] not in failing} if keep_own else None)
+            for record in [u for u in self.unresolved if u.get('stage') == 'route']:
+                net = record['net']
+                if net not in self.code:
+                    continue
+                path = self._hard_path(tuple(record['start']), tuple(record['end']), net, layers, allow_front_fallback)
+                if path is None:
+                    continue
+                self.recording_net = net; self.emit(path, net); self.recording_net = None
+                self.unresolved = [u for u in self.unresolved if u is not record]
+                routed += 1
+        self.stats['retried'] += routed
+        return routed
+
+    def net_span(self, net):
+        """Manhattan extent (cells) of a net's ports: a proxy for the routing length the net needs."""
+        pts = self.ports.get(net, [])
+        if len(pts) < 2:
+            return 0
+        xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+        return (max(xs) - min(xs)) + (max(ys) - min(ys))
 
     # ----- zones ------------------------------------------------------------------------------
     def zone(self, net, layer, points, priority=1, clearance=0.5, min_thickness=0.2, thermal_relief=False,
@@ -693,19 +1338,20 @@ class Router:
 
     # ----- clean-up and reporting --------------------------------------------------------------
     def prune_unused_vias(self, exclude_nets=()):
-        """Remove vias touching copper on fewer than two layers; returns the count removed.
+        """Remove vias whose net touches them on fewer than two layers; returns the count removed.
 
-        Nets in ``exclude_nets`` (zone nets) are kept. A via is removed only when at
-        least two tracks or pads meet at its centre, so no track end is left dangling.
-        Grid occupancy is left reserved.
+        Nets in ``exclude_nets`` (zone nets) are kept. A via is removed only when at least two items of its net
+        overlap it (tracks ending at or running through its ring, pads under it), so no track end is left dangling:
+        a pre-routed escape via whose port the router left on the via's own layer is such a case, a via with copper
+        on two or more layers is a real layer change and stays. Grid occupancy is left reserved.
         """
         pcb = self.pcb; exclude = set(exclude_nets)
-        ends = defaultdict(list)
+        segments = defaultdict(list)
         for item in self.board.GetTracks():
             if isinstance(item, pcb.PCB_VIA):
                 continue
-            for p in (item.GetStart(), item.GetEnd()):
-                ends[(item.GetNetCode(), p.x, p.y)].append(item.GetLayer())
+            a, b = item.GetStart(), item.GetEnd()
+            segments[item.GetNetCode()].append((a.x, a.y, b.x, b.y, item.GetWidth() / 2, item.GetLayer()))
         pads = defaultdict(list)
         for pad in self.board.GetPads():
             pads[pad.GetNetCode()].append(pad)
@@ -714,7 +1360,9 @@ class Router:
             if via.GetNetname() in exclude:
                 continue
             xy = via.GetPosition()
-            touching = list(ends.get((via.GetNetCode(), xy.x, xy.y), []))
+            ring = via.GetWidth(pcb.F_Cu) / 2  # KiCad 10: via width needs a layer
+            touching = [layer for ax, ay, bx, by, half, layer in segments[via.GetNetCode()]
+                        if point_segment_distance(xy.x, xy.y, ax, ay, bx, by) <= ring + half]
             for pad in pads[via.GetNetCode()]:
                 if pad.HitTest(xy):
                     touching.extend(layer for layer in self.layers if pad.IsOnLayer(layer))
@@ -725,8 +1373,9 @@ class Router:
         return removed
 
     def report(self):
-        """Summary dict: counts, pruned vias, unresolved records and per-net track length (mm)."""
-        return dict(status='requires-native-DRC', tracks=int(self.stats['tracks']), vias=int(self.stats['vias']),
+        """Summary dict: counts (vias = created minus pruned, i.e. the vias left on the board), pruned vias, unresolved records and
+        per-net track length (mm)."""
+        return dict(status='requires-native-DRC', tracks=int(self.stats['tracks']), vias=int(self.stats['vias'] - self.stats['pruned_unused_vias']),
                     zones=int(self.stats['zones']), pruned=int(self.stats['pruned_unused_vias']),
                     unresolved=list(self.unresolved),
                     net_length_mm={net: round(value, 3) for net, value in sorted(self.length.items())},
@@ -742,17 +1391,26 @@ def validate_plan(plan):
     Plan keys: ``board`` {width, height, origin?, margin?}; ``layers`` [names];
     ``grid``/``trace``/``clearance``/``hole_clearance`` mm; ``via`` [diameter, drill];
     ``directions`` ['h'|'v'|None per layer]; ``net_rules`` {net: {width, clearance}};
-    ``keepouts`` [{layer?, rect:[x0,y0,x1,y1], net?, vias?}]; ``pre_routed`` {tracks:
+    ``keepouts`` [{layer?, rect:[x0,y0,x1,y1], net?, vias?, zone?}] (``zone`` marks a pour of another net:
+    tracks stay out, via barrels may pass); ``net_rules`` may carry ``region`` (list of rects or {layer: [rects],
+    'vias': [rects]}) - the only area where that net's tracks and vias may go; ``pre_routed`` {tracks:
     [{net, layer|layers, a, b, width?}], vias: [{net, xy, diameter?, drill?, port?,
     if_allowed?}], via_arrays: [{net, origin, pitch, count, diameter?, drill?, port?}]};
     ``critical`` [nets in order]; ``critical_layers`` [names]; ``power`` {net: {anchors?:
     [refs], stubs?, layers?, zones?: {layer: polygon}, clearance?, priority?,
     min_thickness?, thermal_relief?}}; ``fanout`` {skip_refs?, skip_nets?, skip_pads?,
-    inpad_vias?, inward_pads?, order?}; ``signal_order`` [names or prefixes];
+    inpad_vias?, inward_pads?, order?, escape_layer?, direct_nets?, exact_via_pads? ([[ref, pad], ...]: a via at the exact
+    stub's end, port on every layer), direct_lane_mm? (reserved exit corridor of every direct port), exact_lane_pads? ([[ref, pad, mm], ...]:
+    reserved corridor beyond the stub end)}; pre-routed vias may carry ``lane: [dx, dy, mm, layer]``; ``signal_order`` [names or prefixes];
     ``signal_layers`` [names]; ``exclude_nets``; ``front_fallback``; ``ground`` {net,
     layers, polygon?, holes?: {layer: [polygon,...]}, clearance?, priority?,
     thermal_relief?}; ``prune_vias``; ``fill``; ``save`` path; ``strict``; ``max_nodes``
-    A* expansion budget per path (default 700000).
+    A* expansion budget per path (default 700000); ``signal_order_trials`` number of deterministic
+    signal-stage orders tried (the best is kept; default 1); ``ripup_rounds`` rip-up and re-route
+    rounds for the connections that stay unresolved (default 0 = off), ``ripup_penalty`` soft-path cost
+    per foreign cell (default 40); ``signal_groups`` [[names or prefixes], ...] splits the signal nets into
+    independent groups (regions that never meet) routed one after the other, each with its own order trials -
+    nets matching no group form a last group.
     """
     if not isinstance(plan, dict):
         raise ValueError('plan must be a dict')
@@ -802,6 +1460,33 @@ def save_and_reload(board, path):
     return dict(path=str(path), **after)
 
 
+def orders_meta(router, remaining, trials, rank=None, first=()):
+    """[(name, order)] of deterministic signal-stage base orders: the plan order, short-span nets first (long nets last),
+    long nets first, and (when ``rank`` gives the plan priority rank of a net) the prioritised nets first in rank order
+    followed by the rest short-span first (at most ``trials`` entries; further trials are perturbations built in run_plan)."""
+    base = list(remaining)
+    position = {n: i for i, n in enumerate(base)}
+    result = [('plan', base)]
+    if trials > 1:
+        result.append(('span_asc', sorted(base, key=lambda n: (router.net_span(n), position[n]))))
+    if trials > 2:
+        result.append(('span_desc', sorted(base, key=lambda n: (-router.net_span(n), position[n]))))
+    if trials > 3 and (first or rank is not None):
+        if first:  # the plan's signal_first nets, in that order, then everything else short-span first
+            prioritised = [n for n in first if n in position]
+            rest = [n for n in base if n not in set(prioritised)]
+            result.append(('first_span_asc', prioritised + sorted(rest, key=lambda n: (router.net_span(n), position[n]))))
+        else:
+            ranks = {n: rank(n) for n in base}
+            top = max(ranks.values()) if ranks else 0
+            prioritised = [n for n in base if ranks[n] < top]
+            if prioritised:
+                rest = [n for n in base if ranks[n] >= top]
+                result.append(('priority_span_asc', sorted(prioritised, key=lambda n: (ranks[n], position[n])) +
+                               sorted(rest, key=lambda n: (router.net_span(n), position[n]))))
+    return result[:trials]
+
+
 def run_plan(board, plan):
     """Execute a declarative routing plan on an open pcbnew BOARD and return the report dict.
 
@@ -822,11 +1507,12 @@ def run_plan(board, plan):
     for keepout in plan.get('keepouts', ()):
         layer = keepout.get('layer')
         router.keepout(router.layer_index(layer) if isinstance(layer, str) else layer, *keepout['rect'],
-                       net=keepout.get('net', -1) if keepout.get('net') is not None else -1, block_vias=bool(keepout.get('vias')))
+                       net=keepout.get('net', -1) if keepout.get('net') is not None else -1, block_vias=bool(keepout.get('vias')),
+                       zone=bool(keepout.get('zone')))
     pre = plan.get('pre_routed', {})
     for t in pre.get('tracks', ()):
         for layer in t.get('layers', [t.get('layer')]):
-            router.track(tuple(t['a']), tuple(t['b']), t['net'], router.layer_index(layer), t.get('width'))
+            router.track(tuple(t['a']), tuple(t['b']), t['net'], router.layer_index(layer), t.get('width'), t.get('mark_width'))
     for v in pre.get('vias', ()):
         xy = tuple(v['xy']); gx, gy = router.to_grid(*xy)
         if v.get('if_allowed') and not router.via_allowed(gx, gy, v['net']):
@@ -834,6 +1520,10 @@ def run_plan(board, plan):
         router.via(xy, v['net'], v.get('diameter'), v.get('drill'))
         if v.get('port'):
             router.ports[v['net']].append((gx, gy, None, 'PRE_VIA', ''))
+        if v.get('lane'):  # [dx, dy, mm, layer]: reserved exit corridor of a pre-routed port via
+            dx, dy, length, layer = v['lane']
+            router._reserve_lane(xy, (xy[0] + dx * length, xy[1] + dy * length), v['net'],
+                                 router.layer_index(layer) if isinstance(layer, str) else int(layer))
     for array in pre.get('via_arrays', ()):
         (x0, y0), (px, py), (count_x, count_y) = array['origin'], array['pitch'], array['count']
         for ix in range(int(count_x)):
@@ -846,12 +1536,23 @@ def run_plan(board, plan):
     skip_refs, skip_nets = set(fan.get('skip_refs', ())), set(fan.get('skip_nets', ()))
     skip_pads = {tuple(p) for p in fan.get('skip_pads', ())}
     inward = {tuple(p) for p in fan.get('inward_pads', ())}
+    exact_pads = {(p[0], p[1]): ((float(p[2]), tuple(p[3]), *p[4:6]) if len(p) > 3 else float(p[2])) if len(p) > 2 else 0.6 for p in fan.get('exact_stub_pads', ())}
     order = list(fan.get('order', ())); rank = {ref: i for i, ref in enumerate(order)}
+    escape_layer = fan.get('escape_layer')
+    direct_nets = set(fan.get('direct_nets', ()))
+    exact_vias = {tuple(p) for p in fan.get('exact_via_pads', ())}
+    exact_lanes = {(p[0], p[1]): float(p[2]) for p in fan.get('exact_lane_pads', ())}
     router.fanout(order_key=lambda r: (rank.get(r['ref'], len(order) + (0 if r['ref'].startswith('U') else 1)),
                                        natural_ref_key(r['ref']), pad_sort_key(r['number'])),
                   skip=lambda r: r['ref'] in skip_refs or r['net'] in skip_nets or (r['ref'], r['number']) in skip_pads,
                   inpad_vias=[tuple(p) for p in fan.get('inpad_vias', ())],
-                  inward=lambda r: (r['ref'], r['number']) in inward)
+                  inward=lambda r: (r['ref'], r['number']) in inward,
+                  exact=lambda r: exact_pads.get((r['ref'], r['number'])),
+                  escape_layer=router.layer_index(escape_layer) if isinstance(escape_layer, str) else escape_layer,
+                  direct=lambda r: r['net'] in direct_nets,
+                  exact_via=lambda r: (r['ref'], r['number']) in exact_vias,
+                  direct_lane=float(fan.get('direct_lane_mm', 0.0) or 0.0),
+                  exact_lane=lambda r: exact_lanes.get((r['ref'], r['number']), 0.0))
     indices = lambda names: tuple(router.layer_index(n) for n in names) if names else None
     critical_layers = indices(plan.get('critical_layers'))
     for net in plan.get('critical', ()):
@@ -875,8 +1576,87 @@ def run_plan(board, plan):
         return next((i for i, pattern in enumerate(priority) if net == pattern or net.startswith(pattern)), len(priority))
     remaining = sorted((n for n in router.ports if n not in excluded), key=lambda n: (rank_net(n), len(router.ports[n]), n))
     signal_layers = indices(plan.get('signal_layers'))
-    for net in remaining:
-        router.route_net(net, layers=signal_layers, allow_front_fallback=plan.get('front_fallback', True))
+    trials = max(1, int(plan.get('signal_order_trials', 1)))
+    first = list(plan.get('signal_first', ()))
+    pinned = list(plan.get('signal_pinned', ()))  # names or prefixes routed first (in this order) in every trial order of their group
+    # independent signal groups (regions that never meet) are routed one after the other, each with its own order trials
+    group_specs = [list(g) for g in plan.get('signal_groups', ())] or [None]
+    groups, taken = [], set()
+    for group_spec in group_specs:
+        if group_spec is None:
+            members = [n for n in remaining if n not in taken]
+        else:
+            members = [n for n in remaining if n not in taken and any(n == pat or n.startswith(pat) for pat in group_spec)]
+        taken.update(members); groups.append(members)
+    rest = [n for n in remaining if n not in taken]
+    if rest:
+        groups.append(rest)
+    trial_log, selected = [], []
+    for group_index, members in enumerate(g for g in groups if g):
+        def pin(order):  # the plan's signal_pinned nets (names or prefixes) first, in that order, then the rest in the trial's order
+            head = list(dict.fromkeys(n for pat in pinned for n in order if n == pat or n.startswith(pat)))
+            return head + [n for n in order if n not in set(head)] if head else list(order)
+        meta = [(name, pin(order)) for name, order in orders_meta(router, members, min(trials, 4), rank_net, first)]  # plan order, long nets last, long nets first, first/priority then short first
+        best = None
+        state = router.snapshot() if trials > 1 else None
+        pre_unresolved = len(router.unresolved)
+        group_log = []
+        index = 0
+        while index < trials:
+            if index < len(meta):
+                name, order = meta[index]
+            else:  # refinement: seeded perturbation of the best order so far, the nets that failed in it promoted
+                import random
+                best_order, failed_before = meta[best[1]][1], best[2]
+                rng = random.Random(index)
+                rank = {n: i for i, n in enumerate(best_order)}
+                spread = 0.15 + 0.1 * (index - len(orders_meta(router, members, min(trials, 4), rank_net, first)))  # widening perturbation
+                def key(n):
+                    base = rank[n] * (1.0 + rng.uniform(-spread, spread))
+                    return base * (0.5 if n in failed_before else 1.0)
+                order = pin(sorted(best_order, key=key))
+                name = f'perturb_{index}'
+                if any(order == o for _, o in meta):
+                    break  # no new order to try
+                meta.append((name, order))
+            if state is not None and index > 0:
+                router.restore(state)
+                router.net_items = {k: v for k, v in router.net_items.items() if k not in set(members)} if group_index else defaultdict(list)
+                router.net_items = defaultdict(list, router.net_items)
+            for net in order:
+                router.recording_net = net
+                router.route_net(net, layers=signal_layers, allow_front_fallback=plan.get('front_fallback', True))
+                router.recording_net = None
+            new_failures = [u for u in router.unresolved[pre_unresolved:] if u.get('stage') == 'route']
+            failed_nets = {u['net'] for u in new_failures}
+            unresolved = len(new_failures)
+            total = sum(router.length.values())
+            group_log.append(dict(trial=index, group=group_index, order=name, unresolved=unresolved, track_mm=round(total, 1), failed_nets=sorted(failed_nets)))
+            key = (unresolved, round(total, 3))
+            if best is None or key < best[0]:
+                best = (key, index, failed_nets)
+            if unresolved == 0:
+                break
+            index += 1
+        if state is not None and best is not None and best[1] != len(group_log) - 1:  # replay the best trial onto the board
+            router.restore(state)
+            router.net_items = defaultdict(list, {k: v for k, v in router.net_items.items() if k not in set(members)})
+            for net in meta[best[1]][1]:
+                router.recording_net = net
+                router.route_net(net, layers=signal_layers, allow_front_fallback=plan.get('front_fallback', True))
+                router.recording_net = None
+        if state is not None:
+            router.end_snapshot()
+        trial_log.extend(group_log)
+        selected.append(group_log[best[1]]['order'] if group_log and best is not None else None)
+    ripup_log = []
+    if int(plan.get('ripup_rounds', 0)) > 0 and any(u.get('stage') == 'route' for u in router.unresolved):
+        ripup_log = router.negotiate(signal_layers if signal_layers else router.default_layers(remaining[0]) if remaining else (0,),
+                                     allow_front_fallback=plan.get('front_fallback', True), rounds=int(plan['ripup_rounds']),
+                                     penalty=float(plan.get('ripup_penalty', 40.0)), protected=excluded)
+    retried = 0
+    if any(u.get('stage') == 'route' for u in router.unresolved):  # connections that became routable while later nets moved
+        retried = router.retry_unresolved(signal_layers if signal_layers else tuple(range(router.nl)), allow_front_fallback=plan.get('front_fallback', True))
     if plan.get('prune_vias', True):
         router.prune_unused_vias(exclude_nets=set(power) | ({ground_net} if ground_net else set()))
     if ground:
@@ -890,7 +1670,9 @@ def run_plan(board, plan):
     if plan.get('fill', True):
         router.fill()
     report = router.report()
-    report.update(stage='routed_candidate', seconds=round(time.monotonic() - start, 3))
+    report.update(stage='routed_candidate', seconds=round(time.monotonic() - start, 3), signal_order_trials=trial_log,
+                  signal_order_selected=(selected[0] if len(selected) == 1 else selected) if selected else None, ripup_rounds=ripup_log,
+                  retried=retried)
     if plan.get('save'):
         report['saved'] = save_and_reload(board, plan['save'])
     if plan.get('strict') and report['unresolved']:

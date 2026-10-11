@@ -1,0 +1,581 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "project": "AIPE_SiC_Buck_Power",
+  "generated_utc": "2026-10-11T05:44:53.373168+00:00",
+  "board": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
+  "board_sha256": "b1bb5698194b9aea681cf10ee529eaa77e9510ea0241b889ead7221b86f4f7a2",
+  "stage": "routed",
+  "router_status": "requires-native-DRC",
+  "footprints": 237,
+  "tracks": 4755,
+  "vias": 606,
+  "zones": 36,
+  "ripup_rounds": [
+    {
+      "round": 0,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 1,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    },
+    {
+      "round": 2,
+      "net": "LS_CLMP",
+      "penalty": 40.0,
+      "victims": [
+        "LS_OUTH",
+        "VEE_L"
+      ],
+      "result": "kept (8 -> 7)"
+    },
+    {
+      "round": 3,
+      "net": "LS_FB_VEE",
+      "penalty": 40.0,
+      "victims": [
+        "DESAT_L_A",
+        "VEE_L"
+      ],
+      "result": "kept (7 -> 6)"
+    },
+    {
+      "round": 4,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 5,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    },
+    {
+      "round": 6,
+      "net": "PWM_L",
+      "penalty": 40.0,
+      "victims": [
+        "OC_N",
+        "VOUT_SENSE"
+      ],
+      "result": "reverted (7 > 6)"
+    },
+    {
+      "round": 7,
+      "net": "FLT_L_N",
+      "penalty": 40.0,
+      "result": "routed directly (6 -> 5)"
+    },
+    {
+      "round": 8,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 9,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    },
+    {
+      "round": 10,
+      "net": "PWM_L",
+      "penalty": 40.0,
+      "victims": [
+        "FAULT_N",
+        "SPARE_D2"
+      ],
+      "result": "kept (5 -> 5)"
+    },
+    {
+      "round": 11,
+      "net": "FLT_H_N",
+      "penalty": 40.0,
+      "result": "routed directly (5 -> 4)"
+    },
+    {
+      "round": 12,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 13,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    },
+    {
+      "round": 14,
+      "net": "3V3",
+      "penalty": 40.0,
+      "victims": [
+        "ISENSE_REF"
+      ],
+      "result": "reverted (5 > 4)"
+    },
+    {
+      "round": 15,
+      "net": "SPARE_D2",
+      "penalty": 40.0,
+      "victims": [
+        "BIAS_EN",
+        "VOUT_AMP_N"
+      ],
+      "result": "kept (4 -> 3)"
+    },
+    {
+      "round": 16,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 17,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    },
+    {
+      "round": 18,
+      "net": "3V3",
+      "penalty": 40.0,
+      "victims": [
+        "ISENSE_REF"
+      ],
+      "result": "kept (3 -> 2)"
+    },
+    {
+      "round": 19,
+      "net": "KS_H",
+      "penalty": 40.0,
+      "victims": [
+        "G_H"
+      ],
+      "result": "reverted (cycle: failure set seen before)"
+    },
+    {
+      "round": 20,
+      "net": "G_H",
+      "penalty": 40.0,
+      "result": "soft path crosses no rippable net"
+    }
+  ],
+  "router_report_counts": {
+    "tracks": 39321,
+    "vias": 2721,
+    "zones": 7
+  },
+  "unresolved": [],
+  "unresolved_count": 0,
+  "signal_order_trials": [
+    {
+      "trial": 0,
+      "group": 0,
+      "order": "plan",
+      "unresolved": 2,
+      "track_mm": 1041.2,
+      "failed_nets": [
+        "G_H",
+        "KS_H"
+      ]
+    },
+    {
+      "trial": 1,
+      "group": 0,
+      "order": "span_asc",
+      "unresolved": 3,
+      "track_mm": 1017.0,
+      "failed_nets": [
+        "DESAT_H_A",
+        "G_H",
+        "KS_H"
+      ]
+    },
+    {
+      "trial": 2,
+      "group": 0,
+      "order": "span_desc",
+      "unresolved": 2,
+      "track_mm": 1042.5,
+      "failed_nets": [
+        "G_H",
+        "KS_H"
+      ]
+    },
+    {
+      "trial": 3,
+      "group": 0,
+      "order": "priority_span_asc",
+      "unresolved": 2,
+      "track_mm": 1041.2,
+      "failed_nets": [
+        "G_H",
+        "KS_H"
+      ]
+    },
+    {
+      "trial": 0,
+      "group": 1,
+      "order": "plan",
+      "unresolved": 2,
+      "track_mm": 1764.7,
+      "failed_nets": [
+        "LS_CLMP",
+        "LS_FB_VEE"
+      ]
+    },
+    {
+      "trial": 1,
+      "group": 1,
+      "order": "span_asc",
+      "unresolved": 3,
+      "track_mm": 1653.0,
+      "failed_nets": [
+        "DESAT_L_A",
+        "DESAT_L_OC"
+      ]
+    },
+    {
+      "trial": 2,
+      "group": 1,
+      "order": "span_desc",
+      "unresolved": 4,
+      "track_mm": 1657.5,
+      "failed_nets": [
+        "LS_CLMP",
+        "LS_FB_VEE",
+        "LS_OUTH",
+        "LS_OUTL"
+      ]
+    },
+    {
+      "trial": 3,
+      "group": 1,
+      "order": "priority_span_asc",
+      "unresolved": 2,
+      "track_mm": 1764.7,
+      "failed_nets": [
+        "LS_CLMP",
+        "LS_FB_VEE"
+      ]
+    },
+    {
+      "trial": 0,
+      "group": 2,
+      "order": "plan",
+      "unresolved": 12,
+      "track_mm": 4841.0,
+      "failed_nets": [
+        "FAN_TACH",
+        "FAULT_N",
+        "ISENSE_REF",
+        "OC_N",
+        "RDY_H",
+        "RDY_L",
+        "SPARE_D2",
+        "VIN_AMP_N",
+        "VIN_OUTN",
+        "VIN_SENSE",
+        "VOUT_SENSE"
+      ]
+    },
+    {
+      "trial": 1,
+      "group": 2,
+      "order": "span_asc",
+      "unresolved": 4,
+      "track_mm": 5300.6,
+      "failed_nets": [
+        "3V3",
+        "FLT_H_N",
+        "FLT_L_N",
+        "PWM_L"
+      ]
+    },
+    {
+      "trial": 2,
+      "group": 2,
+      "order": "span_desc",
+      "unresolved": 20,
+      "track_mm": 5169.8,
+      "failed_nets": [
+        "12V_BIAS_L",
+        "FAULT_N",
+        "FLT_L_N",
+        "GNDP_L",
+        "ISENSE",
+        "ISENSE_REF",
+        "OC_N",
+        "PG_BIAS_L_N",
+        "PG_BIAS_S_N",
+        "PWM_H_F",
+        "PWM_L",
+        "RDY_H",
+        "RDY_L",
+        "SPARE_D2",
+        "VIN_AMP_N",
+        "VIN_OUTN",
+        "VIN_SENSE",
+        "VOUT_AMP_N",
+        "VOUT_OUTN"
+      ]
+    },
+    {
+      "trial": 3,
+      "group": 2,
+      "order": "priority_span_asc",
+      "unresolved": 12,
+      "track_mm": 4841.0,
+      "failed_nets": [
+        "FAN_TACH",
+        "FAULT_N",
+        "ISENSE_REF",
+        "OC_N",
+        "RDY_H",
+        "RDY_L",
+        "SPARE_D2",
+        "VIN_AMP_N",
+        "VIN_OUTN",
+        "VIN_SENSE",
+        "VOUT_SENSE"
+      ]
+    }
+  ],
+  "signal_order_selected": [
+    "plan",
+    "plan",
+    "span_asc"
+  ],
+  "chain_issues": [
+    "DAMP_MID: straight link skipped, it would cross ['R12.2', 'R13.2']"
+  ],
+  "escape_issues": [],
+  "net_length_mm": {
+    "12V_BIAS_H": 30.45,
+    "12V_BIAS_L": 37.825,
+    "12V_BIAS_S": 100.075,
+    "12V_PROT": 276.629,
+    "3V3": 433.92,
+    "5V_ISO": 66.418,
+    "BIAS_EN": 147.861,
+    "BIAS_EN_F": 133.226,
+    "BLD_IN_1": 0.95,
+    "BLD_IN_2": 0.95,
+    "BLD_OUT_1": 0.95,
+    "DAMP_MID": 25.875,
+    "DESAT_H_A": 37.062,
+    "DESAT_H_OC": 29.345,
+    "DESAT_L_A": 44.0,
+    "DESAT_L_OC": 99.095,
+    "FAN_TACH": 158.503,
+    "FAULT_N": 33.374,
+    "FLT_H_N": 166.3,
+    "FLT_L_N": 119.996,
+    "GNDP_H": 49.809,
+    "GNDP_L": 55.934,
+    "GNDP_S": 119.309,
+    "GND_CTRL": 153.494,
+    "G_H": 26.375,
+    "G_L": 33.125,
+    "HS_CLMP": 5.545,
+    "HS_FB_VDD": 13.559,
+    "HS_FB_VEE": 8.284,
+    "HS_GK": 6.625,
+    "HS_OUTH": 4.066,
+    "HS_OUTL": 3.953,
+    "HS_RLIM": 9.434,
+    "IND_IN_1": 0.95,
+    "IND_IN_2": 0.95,
+    "IND_IN_3": 1.45,
+    "IND_OUT_1": 0.95,
+    "IND_OUT_2": 1.45,
+    "ISENSE": 83.796,
+    "ISENSE_REF": 90.1,
+    "ISO_15V": 32.575,
+    "ISO_FB_VDD": 17.684,
+    "ISO_FB_VEE": 13.159,
+    "ISO_RLIM": 8.684,
+    "K1_LOW": 16.75,
+    "KS_H": 97.702,
+    "KS_L": 88.202,
+    "LS_CLMP": 21.42,
+    "LS_FB_VDD": 72.809,
+    "LS_FB_VEE": 44.159,
+    "LS_GK": 13.25,
+    "LS_OUTH": 19.691,
+    "LS_OUTL": 10.203,
+    "LS_RLIM": 17.184,
+    "OC_N": 75.706,
+    "PE": 76.912,
+    "PE_REF_MID": 3.064,
+    "PGND": 22.477,
+    "PG_BIAS_H_N": 268.529,
+    "PG_BIAS_L_N": 56.411,
+    "PG_BIAS_S_N": 52.434,
+    "PWM_H": 132.286,
+    "PWM_H_F": 56.907,
+    "PWM_L": 111.624,
+    "PWM_L_F": 54.657,
+    "RDY_H": 127.993,
+    "RDY_L": 112.289,
+    "REF2V5_PB": 12.375,
+    "RELAY_ON": 203.85,
+    "RESET_N": 129.246,
+    "RESET_N_F": 48.119,
+    "RLY_G": 18.125,
+    "SNUB_MID": 1.475,
+    "SPARE_D1": 12.245,
+    "SPARE_D2": 46.983,
+    "SW": 9.623,
+    "VDD_H": 86.341,
+    "VDD_L": 80.091,
+    "VEE_H": 88.374,
+    "VEE_L": 100.124,
+    "VIN": 3.125,
+    "VIN_AMP_N": 35.047,
+    "VIN_AMP_P": 29.047,
+    "VIN_DIV": 30.22,
+    "VIN_DIV_T1": 0.95,
+    "VIN_DIV_T2": 0.95,
+    "VIN_DIV_T3": 0.95,
+    "VIN_OUTN": 79.397,
+    "VIN_OUTP": 80.905,
+    "VIN_RAW": 51.335,
+    "VIN_SENSE": 71.614,
+    "VOC_SET": 11.955,
+    "VOUT": 6.125,
+    "VOUT_AMP_N": 25.547,
+    "VOUT_AMP_P": 22.247,
+    "VOUT_DIV": 21.198,
+    "VOUT_DIV_T1": 0.95,
+    "VOUT_OUTN": 63.147,
+    "VOUT_OUTP": 64.905,
+    "VOUT_SENSE": 71.286
+  },
+  "grid": {
+    "nx": 1921,
+    "ny": 1441,
+    "pitch": 0.125,
+    "margin_cells": 10,
+    "layers": [
+      "F.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "directions": [
+      null,
+      null,
+      null
+    ]
+  },
+  "routing_seconds": 523.657,
+  "rule_aware_refill": {
+    "filled": true,
+    "python": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\python.exe",
+    "zones": 18,
+    "changed_areas_mm2": {
+      "KS_H/In2.Cu": [
+        505.1,
+        501.4
+      ],
+      "PGND/B.Cu": [
+        10759.5,
+        9042.0
+      ],
+      "PGND/In1.Cu": [
+        30030.9,
+        28679.7
+      ],
+      "SW/In2.Cu": [
+        3270.7,
+        3236.6
+      ],
+      "VIN/F.Cu": [
+        5638.8,
+        4530.4
+      ],
+      "VIN/In2.Cu": [
+        18091.0,
+        16940.0
+      ],
+      "VIN_RAW/B.Cu": [
+        432.2,
+        422.8
+      ],
+      "VIN_RAW/F.Cu": [
+        432.2,
+        422.8
+      ],
+      "VOUT/B.Cu": [
+        2437.0,
+        2406.0
+      ],
+      "VOUT/F.Cu": [
+        2222.8,
+        2218.8
+      ],
+      "VOUT/In2.Cu": [
+        3267.2,
+        3126.3
+      ],
+      "VOUT_L/F.Cu": [
+        506.0,
+        422.2
+      ]
+    }
+  },
+  "stored_fill_check": {
+    "violations": 0,
+    "unconnected_items": 0,
+    "by_type": {},
+    "by_rule": {}
+  },
+  "drc": {
+    "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261011T054445Z-drc-d0914d79\\run.json",
+    "wrapper_exit_code": 0,
+    "tool_exit_code": 0,
+    "status": "passed",
+    "finding_count": 0,
+    "violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity": 0,
+    "details": [],
+    "error": null
+  },
+  "layout_metrics": {
+    "json": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_metrics_power.json",
+    "md": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_metrics_power.md",
+    "summary": {
+      "rows": 58,
+      "within_threshold": 27,
+      "exceeding_threshold": 6,
+      "measured_only": 25,
+      "not_measured": 0
+    }
+  },
+  "seconds": 564.719,
+  "evidence_note": "Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals."
+}

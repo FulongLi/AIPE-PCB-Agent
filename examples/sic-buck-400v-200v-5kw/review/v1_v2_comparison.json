@@ -1,0 +1,4010 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "title": "V1 (48 V -> 24 V / 1 kW Si buck) versus V2 (400 V -> 200 V / 5 kW SiC buck): process, knowledge, verification and layout comparison",
+  "generated_utc": "2026-10-11T05:47:10.919935+00:00",
+  "generated_by": "python -m automation.scripts.compare_v1_v2",
+  "definitions": {
+    "specific_power_W_per_dm2": "rated output power divided by the summed PCB area of all boards",
+    "volumetric_power_W_per_L": "rated output power divided by (summed PCB area x assembly height); V1 height = board 2.0 mm + 55 mm inductor, V2 height = 67 mm documented stack (15 + 2 + 50)",
+    "components_per_dm2": "footprints (V1 measured; V2 schematic items until the boards exist) divided by summed PCB area",
+    "cost_index_layer_dm2": "sum over boards of copper layers x board area in dm2; relative fabrication proxy, not a quotation",
+    "nets_per_board": "named nets divided by board count",
+    "basis": "measured = CAD/simulation tool output; counted = counted from repository files; documented = stated in a design document; planned = design target not yet measured; derived = computed here; not yet available = source file missing"
+  },
+  "generations": {
+    "v1": {
+      "generation": "V1",
+      "name": "48 V -> 24 V / 1 kW Si synchronous buck, integrated board",
+      "vin_nominal_V": {
+        "value": 48.0,
+        "unit": "V",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "vout_V": {
+        "value": 24.0,
+        "unit": "V",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "pout_W": {
+        "value": 1000.0,
+        "unit": "W",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "iout_A": {
+        "value": 41.6666666667,
+        "unit": "A",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "board_count": {
+        "value": 1,
+        "unit": null,
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "architecture": {
+        "value": "integrated_power_and_control_board",
+        "unit": null,
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "fsw_Hz": {
+        "value": 100000.0,
+        "unit": "Hz",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "vin_range_V": {
+        "value": [
+          36.0,
+          54.0
+        ],
+        "unit": "V",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "input cases evaluated (design/assumptions.md: 36-54 V continuous)",
+        "kind": "range"
+      },
+      "inductance_uH": {
+        "value": 10.0,
+        "unit": "uH",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "operating_points": {
+        "value": 3,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "loss_items": {
+        "value": 14,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "total_loss_W": {
+        "value": 38.67376356303632,
+        "unit": "W",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "efficiency_estimate": {
+        "value": 0.9627662073311922,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "efficiency_sensitivity": {
+        "value": 0.928205592737188,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "efficiency if the assumed loss doubles"
+      },
+      "calculation_invariants": {
+        "value": 0,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": "no machine-checked invariants in the V1 record"
+      },
+      "calculation_inputs_register": {
+        "value": 0,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": "inputs are embedded in the generator script, not registered"
+      },
+      "board_outline_mm": {
+        "value": [
+          300.0,
+          220.0
+        ],
+        "unit": "mm",
+        "source": "design/placement.json",
+        "basis": "documented",
+        "note": null,
+        "kind": "dims"
+      },
+      "board_outlines": {
+        "value": {
+          "integrated": [
+            300.0,
+            220.0
+          ]
+        },
+        "unit": "mm",
+        "source": "design/placement.json",
+        "basis": "documented",
+        "note": null,
+        "kind": "dims"
+      },
+      "total_board_area_mm2": {
+        "value": 66000.0,
+        "unit": "mm2",
+        "source": "design/placement.json",
+        "basis": "derived",
+        "note": null
+      },
+      "placement_candidates": {
+        "value": 1,
+        "unit": null,
+        "source": "design/placement.json",
+        "basis": "counted",
+        "note": "single placement; no alternatives recorded"
+      },
+      "assumption_rows": {
+        "value": 13,
+        "unit": null,
+        "source": "design/assumptions.md",
+        "basis": "counted",
+        "note": "rows of the single assumptions table"
+      },
+      "bom_rows": {
+        "value": 220,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "bom_distinct_mpn": {
+        "value": 68,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "bom_distinct_manufacturers": {
+        "value": 17,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "component_records": {
+        "value": 220,
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "counted",
+        "note": "one row per reference designator"
+      },
+      "component_record_fields": {
+        "value": 13,
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "component_record_types": {
+        "value": 68,
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "counted",
+        "note": "distinct part numbers"
+      },
+      "component_verification_levels": {
+        "value": {
+          "not recorded": 220
+        },
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "documented",
+        "note": "a uniform 'verification_limit' sentence; no per-part datasheet-fetch level"
+      },
+      "mosfet": {
+        "value": {
+          "part": "CSD19536KCS",
+          "manufacturer": "Texas Instruments",
+          "qty": 4,
+          "package": "Package_TO_SOT_THT:TO-220-3_Vertical",
+          "voltage_rating": "100 V VDS; +/-20 V VGS"
+        },
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "documented",
+        "note": null
+      },
+      "gate_driver": {
+        "value": {
+          "part": "UCC27211DDAR",
+          "isolation": "none (bootstrap half-bridge driver)"
+        },
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "documented",
+        "note": null
+      },
+      "current_sensing": {
+        "value": {
+          "part": "INA240A1DR",
+          "method": "2 mohm shunt + INA240 (non-isolated Kelvin shunt)"
+        },
+        "unit": null,
+        "source": "components/component_selection.csv",
+        "basis": "documented",
+        "note": null
+      },
+      "isolation_concept": {
+        "value": "48 V SELV-class system on one board; no reinforced isolation barrier, no isolated gate bias, no isolated sensing",
+        "unit": null,
+        "source": "design/architecture.md",
+        "basis": "documented",
+        "note": null
+      },
+      "erc_findings": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "drc_findings": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "verification_status": {
+        "value": "passed",
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "footprints": {
+        "value": 240,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "purchased_components": {
+        "value": 220,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "named_nets": {
+        "value": 85,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "mapped_pins": {
+        "value": 645,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_commands": {
+        "value": 11,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_files": {
+        "value": 38,
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "erc_runs_recorded": {
+        "value": 6,
+        "unit": null,
+        "source": "verification/",
+        "basis": "counted",
+        "note": null
+      },
+      "drc_runs_recorded": {
+        "value": 14,
+        "unit": null,
+        "source": "verification/",
+        "basis": "counted",
+        "note": null
+      },
+      "tracks": {
+        "value": 3491,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "vias": {
+        "value": 720,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "copper_layers": {
+        "value": 6,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "board_thickness_mm": {
+        "value": 2.0,
+        "unit": "mm",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "copper_um": {
+        "value": "70 outer/In2/In3, 35 In1/In4",
+        "unit": "um",
+        "source": "design/assumptions.md",
+        "basis": "documented",
+        "note": null
+      },
+      "critical_topology_checks": {
+        "value": 18,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "hf_capacitor_to_device_mm": {
+        "value": [
+          11.0,
+          16.0
+        ],
+        "unit": "mm",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": "MOSFET pad centre to nearest HF ceramic pad centre",
+        "kind": "range"
+      },
+      "driver_to_gate_pin_mm": {
+        "value": [
+          8.735,
+          16.17
+        ],
+        "unit": "mm",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "range"
+      },
+      "dsp_bypass_max_mm": {
+        "value": 6.861,
+        "unit": "mm",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "sw_copper_mm2": {
+        "value": {
+          "F.Cu": 507.7,
+          "B.Cu": 546.33,
+          "In3.Cu": 606.4
+        },
+        "unit": "mm2",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "sw_copper_total_mm2": {
+        "value": 1660.4299999999998,
+        "unit": "mm2",
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "copper_zones": {
+        "value": 15,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "measured",
+        "note": null
+      },
+      "isolation_min_distance_mm": {
+        "value": null,
+        "unit": null,
+        "source": "verification/power-layout-metrics.json",
+        "basis": "documented",
+        "note": "not applicable: no isolation barrier on a 48 V board"
+      },
+      "barrier_parts": {
+        "value": 0,
+        "unit": null,
+        "source": "design/architecture.md",
+        "basis": "documented",
+        "note": "no barrier parts"
+      },
+      "documented_open_issues": {
+        "value": 12,
+        "unit": null,
+        "source": "verification/known_issues.md",
+        "basis": "counted",
+        "note": null
+      },
+      "design_report_words": {
+        "value": 1344,
+        "unit": null,
+        "source": "review/design_report.md",
+        "basis": "counted",
+        "note": null
+      },
+      "schematic_sheets": {
+        "value": 14,
+        "unit": null,
+        "source": "kicad/",
+        "basis": "counted",
+        "note": null
+      },
+      "board_files": {
+        "value": 1,
+        "unit": null,
+        "source": "kicad/",
+        "basis": "counted",
+        "note": null
+      },
+      "custom_footprints": {
+        "value": 3,
+        "unit": null,
+        "source": "kicad/libraries/",
+        "basis": "counted",
+        "note": null
+      },
+      "export_manifest_commands": {
+        "value": 11,
+        "unit": null,
+        "source": "manufacturing/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_manifest_artifacts": {
+        "value": 38,
+        "unit": null,
+        "source": "manufacturing/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_manifest_status": {
+        "value": "passed",
+        "unit": null,
+        "source": "manufacturing/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "release_frozen": {
+        "value": true,
+        "unit": null,
+        "source": "releases/v1/SHA256SUMS.json",
+        "basis": "counted",
+        "note": null
+      },
+      "release_files": {
+        "value": 5,
+        "unit": null,
+        "source": "releases/v1/SHA256SUMS.json",
+        "basis": "counted",
+        "note": null
+      },
+      "independent_review_records": {
+        "value": 2,
+        "unit": null,
+        "source": "verification/",
+        "basis": "counted",
+        "note": "AI visual review and PCB rule review of the final CAD; no separate verifier lenses"
+      },
+      "review_lenses": {
+        "value": [
+          "visual-review",
+          "pcb_rule_review"
+        ],
+        "unit": null,
+        "source": "verification/",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_items_used": {
+        "value": {
+          "skills": 0,
+          "rules": 0,
+          "blocks": 0,
+          "components": 0,
+          "references": 0,
+          "project_rules": 8
+        },
+        "unit": null,
+        "source": "docs/pcb-design-rules.md",
+        "basis": "documented",
+        "note": "no knowledge system existed for V1; only the eight project PCB rules were applied in review"
+      },
+      "knowledge_applicability": {
+        "value": {
+          "direct": 0,
+          "adapted": 0,
+          "not-applicable": 0,
+          "human-review": 0
+        },
+        "unit": null,
+        "source": null,
+        "basis": "documented",
+        "note": null
+      },
+      "knowledge_queries": {
+        "value": 0,
+        "unit": null,
+        "source": null,
+        "basis": "documented",
+        "note": "no retrieval interface existed"
+      },
+      "simulation_runs": {
+        "value": 0,
+        "unit": null,
+        "source": "docs/knowledge-status.md",
+        "basis": "documented",
+        "note": "'No simulation or hardware validation' (docs/knowledge-status.md); docs/status.md lists no simulation milestone"
+      },
+      "simulation_models": {
+        "value": 0,
+        "unit": null,
+        "source": "docs/knowledge-status.md",
+        "basis": "documented",
+        "note": null
+      },
+      "parasitic_studies": {
+        "value": 0,
+        "unit": null,
+        "source": "docs/knowledge-status.md",
+        "basis": "documented",
+        "note": null
+      },
+      "test_modules": {
+        "value": 1,
+        "unit": null,
+        "source": "tests/test_setup.py",
+        "basis": "counted",
+        "note": "V1-era module; docs/status.md: 'Six automation tests pass'"
+      },
+      "test_functions": {
+        "value": 6,
+        "unit": null,
+        "source": "tests/test_setup.py",
+        "basis": "counted",
+        "note": "docs/status.md: 'Six automation tests pass'"
+      },
+      "documentation_files": {
+        "value": 11,
+        "unit": null,
+        "source": "design/, review/, verification/ (*.md)",
+        "basis": "counted",
+        "note": null
+      },
+      "documentation_words": {
+        "value": 6869,
+        "unit": null,
+        "source": "design/, review/, verification/ (*.md)",
+        "basis": "counted",
+        "note": null
+      },
+      "thermal_document_words": {
+        "value": 308,
+        "unit": null,
+        "source": "design/thermal_estimate.md",
+        "basis": "counted",
+        "note": null
+      },
+      "thermal_corners": {
+        "value": 1,
+        "unit": null,
+        "source": "design/thermal_estimate.md",
+        "basis": "documented",
+        "note": "one illustrative 95 C junction estimate at 50 C ambient"
+      },
+      "thermal_heatsink": {
+        "value": "external sink <= 1.5 C/W, part not selected",
+        "unit": null,
+        "source": "design/thermal_estimate.md",
+        "basis": "documented",
+        "note": null
+      },
+      "thermal_interface": {
+        "value": "0.5 C/W per isolated TO-220 interface, material not selected",
+        "unit": null,
+        "source": "design/thermal_estimate.md",
+        "basis": "documented",
+        "note": null
+      },
+      "thermal_fan_failure": {
+        "value": false,
+        "unit": null,
+        "source": "design/thermal_estimate.md",
+        "basis": "documented",
+        "note": "no cooling-failure analysis"
+      },
+      "thermal_sensor_mapping": {
+        "value": "LM61 measures power-area PCB temperature, not junction",
+        "unit": null,
+        "source": "design/architecture.md",
+        "basis": "documented",
+        "note": null
+      },
+      "tallest_part_mm": {
+        "value": 55.0,
+        "unit": "mm",
+        "source": "design/pcb_stackup.md",
+        "basis": "documented",
+        "note": "upright inductor envelope"
+      },
+      "assembly_height_mm": {
+        "value": 57.0,
+        "unit": "mm",
+        "source": "design/pcb_stackup.md",
+        "basis": "derived",
+        "note": "board thickness + tallest part"
+      },
+      "sources": {
+        "read": [
+          "examples/buck-48v-24v-1kw/input/requirements.yaml",
+          "examples/buck-48v-24v-1kw/design/calculations.json",
+          "examples/buck-48v-24v-1kw/design/placement.json",
+          "examples/buck-48v-24v-1kw/design/assumptions.md",
+          "examples/buck-48v-24v-1kw/components/bom.csv",
+          "examples/buck-48v-24v-1kw/components/component_selection.csv",
+          "examples/buck-48v-24v-1kw/verification/verification-summary.json",
+          "examples/buck-48v-24v-1kw/verification/power-layout-metrics.json",
+          "examples/buck-48v-24v-1kw/verification/known_issues.md",
+          "examples/buck-48v-24v-1kw/review/design_report.md",
+          "examples/buck-48v-24v-1kw/manufacturing/export-manifest.json",
+          "examples/buck-48v-24v-1kw/releases/v1/SHA256SUMS.json",
+          "docs/knowledge-status.md",
+          "docs/status.md",
+          "examples/buck-48v-24v-1kw/design/thermal_estimate.md"
+        ],
+        "missing": []
+      }
+    },
+    "v2": {
+      "generation": "V2",
+      "name": "400 V -> 200 V / 5 kW / 50 kHz SiC synchronous buck, power board + SELV control board",
+      "vin_nominal_V": {
+        "value": 400.0,
+        "unit": "V",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "vout_V": {
+        "value": 200.0,
+        "unit": "V",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "pout_W": {
+        "value": 5000.0,
+        "unit": "W",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "iout_A": {
+        "value": 25.0,
+        "unit": "A",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "fsw_Hz": {
+        "value": 50000.0,
+        "unit": "Hz",
+        "source": "input/requirements.yaml",
+        "basis": "documented",
+        "note": null
+      },
+      "vin_range_V": {
+        "value": [
+          360,
+          440
+        ],
+        "unit": "V",
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null,
+        "kind": "range"
+      },
+      "board_count": {
+        "value": 2,
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "architecture": {
+        "value": "B: separate power PCB and DSP control PCB; drivers ...",
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "architecture_scores": {
+        "value": {
+          "A": 2.75,
+          "B": 4.0,
+          "C": 3.1
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "board_outlines_planned": {
+        "value": {
+          "power": [
+            240.0,
+            180.0
+          ],
+          "control": [
+            120.0,
+            80.0
+          ]
+        },
+        "unit": "mm",
+        "source": "design/design_decisions.json",
+        "basis": "planned",
+        "note": null,
+        "kind": "dims"
+      },
+      "copper_layers_planned": {
+        "value": {
+          "power": 4,
+          "control": 4
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "planned",
+        "note": null
+      },
+      "copper_um_planned": {
+        "value": {
+          "power": 70,
+          "control": 35
+        },
+        "unit": "um",
+        "source": "design/design_decisions.json",
+        "basis": "planned",
+        "note": null
+      },
+      "board_thickness_planned_mm": {
+        "value": {
+          "power": 2.0,
+          "control": 1.6
+        },
+        "unit": "mm",
+        "source": "design/design_decisions.json",
+        "basis": "planned",
+        "note": null
+      },
+      "layout_targets": {
+        "value": {
+          "power_board_area_mm2_max": 43200,
+          "hv_to_selv_clearance_mm_min": 9.0,
+          "driver_to_gate_pin_mm_max": 15,
+          "hf_cap_to_device_pin_mm_max": [
+            5,
+            15
+          ],
+          "commutation_loop_board_nH_target": 20
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "planned",
+        "note": null
+      },
+      "assembly_height_mm": {
+        "value": 67.0,
+        "unit": "mm",
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": "standoffs + board + heatsink (architecture.mechanical)"
+      },
+      "assumptions_accepted": {
+        "value": 34,
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "counted",
+        "note": null
+      },
+      "conflict_resolutions": {
+        "value": 26,
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "counted",
+        "note": null
+      },
+      "open_items_for_human_review": {
+        "value": 13,
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "counted",
+        "note": null
+      },
+      "operating_points_baseline": {
+        "value": 3,
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "counted",
+        "note": null
+      },
+      "mosfet": {
+        "value": {
+          "part": "C4MS025120K",
+          "manufacturer": "Wolfspeed",
+          "qty": 2,
+          "package": "TO-247-4 Kelvin source",
+          "voltage_rating": "1200 V class"
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "gate_driver": {
+        "value": {
+          "part": "UCC21710QDWRQ1",
+          "isolation": "5.7 kVrms, VIORM 2121 Vpk, VIOWM 1500 Vrms / 2121 VDC ...",
+          "bias": "3 (HS gate, LS gate, sensing island) x UCC14141QDWNRQ1"
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "current_sensing": {
+        "value": {
+          "part": "TMCS1133C2AQDVGR",
+          "method": "isolated Hall sensor in the inductor output path"
+        },
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "isolation_concept": {
+        "value": "control electronics are a SELV domain; the single-point SGND-to-PE bond (PELV) is a PROPOSED DEVIATION from the SELV seed that the human reviewer must approve ...",
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "isolation_rules_mm": {
+        "value": {
+          "HV_or_DRV_or_DESAT_or_SENSE_ISO_to_CTRL_SELV_all_layers": 9.0,
+          "ISO_BARRIER_keepout_width": 10.0,
+          "HV_to_PE": 5.0,
+          "HV_functional_outer": 3.0,
+          "HV_functional_inner": 1.0,
+          "same_reference_island": 0.3,
+          "CTRL_SELV": 0.2,
+          "HV_to_board_edge": 1.0,
+          "slot_width_nonplated_nominal": 1.2,
+          "slot_width_after_tolerance_min": 1.0
+        },
+        "unit": "mm",
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "isolation_rules_headline_mm": {
+        "value": {
+          "HV to SELV (all layers)": 9.0,
+          "barrier strip": 10.0,
+          "HV to PE": 5.0,
+          "HV functional outer/inner": [
+            3.0,
+            1.0
+          ]
+        },
+        "unit": "mm",
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null,
+        "kind": "list"
+      },
+      "thermal_heatsink": {
+        "value": "Fischer Elektronik LAM 5 D K 100 12, R_th 0.30 K/W at nominal fan flow ...",
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "thermal_interface": {
+        "value": "Bergquist Sil-Pad TSP A2000 0.254 mm (6 kVac class) custom cut 28 x 32 mm per device ...",
+        "unit": null,
+        "source": "design/design_decisions.json",
+        "basis": "documented",
+        "note": null
+      },
+      "assumption_rows": {
+        "value": 49,
+        "unit": null,
+        "source": "design/assumptions.md",
+        "basis": "counted",
+        "note": "U-/A- register rows"
+      },
+      "knowledge_items_used": {
+        "value": {
+          "skills": 6,
+          "rules": 43,
+          "blocks": 13,
+          "components": 16,
+          "references": 4,
+          "project_rules": 10
+        },
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": "project_rules counts 2 aggregate citation string(s) such as 'PE-PCB-001..008' besides the 8 individual rules"
+      },
+      "knowledge_items_total": {
+        "value": {
+          "skills": 6,
+          "rules": 43,
+          "blocks": 13,
+          "components": 19,
+          "references": 4,
+          "project_rules": 8
+        },
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_applicability": {
+        "value": {
+          "direct": 114,
+          "adapted": 101,
+          "not-applicable": 35,
+          "human-review": 23
+        },
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_citation_rows": {
+        "value": 317,
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_distinct_ids": {
+        "value": 96,
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_unknown_ids": {
+        "value": 5,
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_queries": {
+        "value": 91,
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_areas": {
+        "value": 10,
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "knowledge_validation_status": {
+        "value": {
+          "reference-derived": 160,
+          "analytically-checked": 42
+        },
+        "unit": null,
+        "source": "design/knowledge_trace.json",
+        "basis": "counted",
+        "note": null
+      },
+      "research_records": {
+        "value": 10,
+        "unit": null,
+        "source": "design/research/*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_records": {
+        "value": 20,
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_verdicts": {
+        "value": {
+          "confirmed-with-corrections": 20
+        },
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_lenses": {
+        "value": {
+          "ENGINEERING RECOMPUTE AND APPLICABILITY": 8,
+          "SOURCE FACT-CHECK": 10,
+          "ENGINEERING RECOMPUTE AND APPLICABILITY - Controller, auxiliary supplies, PWM/fault logic and interconnect": 1,
+          "ENGINEERING RECOMPUTE AND APPLICABILITY - output inductor L1 design and selection (400 V -> 200 V, 5 kW, 25 A, 50 kHz SiC synchronous buck)": 1
+        },
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_checked_items": {
+        "value": {
+          "verified": 409,
+          "contradicted": 91,
+          "unverified": 100
+        },
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_recomputed": {
+        "value": {
+          "agrees": 353,
+          "disagrees": 61
+        },
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_required_changes": {
+        "value": 223,
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_knowledge_misuse": {
+        "value": 105,
+        "unit": null,
+        "source": "design/research/verify_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "consistency_review": {
+        "value": true,
+        "unit": null,
+        "source": "design/consistency_review.md",
+        "basis": "counted",
+        "note": null
+      },
+      "independent_review_records": {
+        "value": 21,
+        "unit": null,
+        "source": "design/research/verify_*.json, design/consistency_review.md",
+        "basis": "counted",
+        "note": "two verifier lenses per research area plus the cross-document consistency review"
+      },
+      "review_lenses": {
+        "value": [
+          "ENGINEERING RECOMPUTE AND APPLICABILITY",
+          "ENGINEERING RECOMPUTE AND APPLICABILITY - Controller, auxiliary supplies, PWM/fault logic and interconnect",
+          "ENGINEERING RECOMPUTE AND APPLICABILITY - output inductor L1 design and selection (400 V -> 200 V, 5 kW, 25 A, 50 kHz SiC synchronous buck)",
+          "SOURCE FACT-CHECK",
+          "consistency-review"
+        ],
+        "unit": null,
+        "source": "design/research/",
+        "basis": "counted",
+        "note": null
+      },
+      "operating_points": {
+        "value": 6,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "calculation_inputs_register": {
+        "value": 250,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "calculation_invariants": {
+        "value": 19,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": "19 PASS"
+      },
+      "baseline_crosscheck": {
+        "value": {
+          "items": 58,
+          "agrees": 57
+        },
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "total_loss_W": {
+        "value": 65.74677508741273,
+        "unit": "W",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "typical_expected scenario, converter only"
+      },
+      "efficiency_estimate": {
+        "value": 0.9870213064319073,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "typical_expected scenario, converter only"
+      },
+      "efficiency_system": {
+        "value": 0.9838307543252641,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "including auxiliary electronics, relay hold and fan"
+      },
+      "efficiency_target": {
+        "value": {
+          "target": 0.98,
+          "floor": 0.975
+        },
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "efficiency_scenarios": {
+        "value": 5,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "efficiency_sensitivity": {
+        "value": 0.9827322049823068,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "lowest converter-only efficiency over the recorded scenarios"
+      },
+      "loss_items": {
+        "value": 13,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "calculation_limitations": {
+        "value": 9,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "calculation_open_items": {
+        "value": 10,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": null
+      },
+      "thermal_corners": {
+        "value": 24,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "counted",
+        "note": "loss/temperature corners (R variants x k_RG)"
+      },
+      "thermal_tj_expected_C": {
+        "value": 105.6667658837838,
+        "unit": "C",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "HS junction at 400 V / 25 A, typical parts"
+      },
+      "thermal_tj_hottest_C": {
+        "value": 143.14544404691878,
+        "unit": "C",
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "360V/27.5A max R, k_RG 2.0"
+      },
+      "thermal_fan_failure": {
+        "value": true,
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": "4 natural-convection cases with time-to-trip"
+      },
+      "thermal_sensor_mapping": {
+        "value": "heatsink NTC mapped to T_J with a stated offset band",
+        "unit": null,
+        "source": "design/calculations.json",
+        "basis": "documented",
+        "note": null
+      },
+      "thermal_document_words": {
+        "value": 5751,
+        "unit": null,
+        "source": "design/thermal_analysis.md",
+        "basis": "counted",
+        "note": null
+      },
+      "circuit_parts": {
+        "value": {
+          "power": 237,
+          "control": 207
+        },
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "footprints": {
+        "value": 444,
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": "schematic items on both boards (PCB footprint count follows after layout)"
+      },
+      "purchased_components": {
+        "value": 382,
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "dnp_parts": {
+        "value": {
+          "power": 16,
+          "control": 1
+        },
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "named_nets_per_board": {
+        "value": {
+          "power": 101,
+          "control": 111
+        },
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "named_nets": {
+        "value": 212,
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": "sum over both boards"
+      },
+      "schematic_pages_model": {
+        "value": {
+          "power": 6,
+          "control": 8
+        },
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "custom_footprints": {
+        "value": 9,
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": "distinct AIPE-library footprints"
+      },
+      "circuit_distinct_mpn": {
+        "value": {
+          "power": 66,
+          "control": 61
+        },
+        "unit": null,
+        "source": "design/circuit_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "bom_rows": {
+        "value": 444,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "bom_distinct_mpn": {
+        "value": 116,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "bom_distinct_manufacturers": {
+        "value": 22,
+        "unit": null,
+        "source": "components/bom.csv",
+        "basis": "counted",
+        "note": null
+      },
+      "component_records": {
+        "value": 65,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": "one record per part type"
+      },
+      "component_record_fields": {
+        "value": 18,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": null
+      },
+      "component_record_types": {
+        "value": 65,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": "distinct part numbers"
+      },
+      "component_verification_levels": {
+        "value": {
+          "fetched-datasheet": 29,
+          "search-snippet": 7,
+          "unverified": 26,
+          "manufacturer-page": 3
+        },
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": null
+      },
+      "component_knowledge_refs": {
+        "value": 235,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": null
+      },
+      "component_open_issues": {
+        "value": 100,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": null
+      },
+      "component_alternatives": {
+        "value": 81,
+        "unit": null,
+        "source": "components/component_records.json",
+        "basis": "counted",
+        "note": null
+      },
+      "magnetic_record": {
+        "value": true,
+        "unit": null,
+        "source": "components/magnetic_record.json",
+        "basis": "counted",
+        "note": null
+      },
+      "erc_findings_power": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/erc/20261010T165532Z-erc-02a2619f/run.json",
+        "basis": "measured",
+        "note": null
+      },
+      "erc_findings_control": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/erc/20261010T071810Z-erc-b207ac59/run.json",
+        "basis": "measured",
+        "note": null
+      },
+      "erc_findings": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/erc/*/run.json",
+        "basis": "measured",
+        "note": "sum of the latest run per board"
+      },
+      "erc_runs_recorded": {
+        "value": 7,
+        "unit": null,
+        "source": "verification/erc/",
+        "basis": "counted",
+        "note": null
+      },
+      "drc_findings_power": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/drc/20261011T054445Z-drc-d0914d79/run.json",
+        "basis": "measured",
+        "note": null
+      },
+      "drc_findings_control": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/drc/20261011T051246Z-drc-f801ed3c/run.json",
+        "basis": "measured",
+        "note": null
+      },
+      "drc_findings": {
+        "value": 0,
+        "unit": null,
+        "source": "verification/drc/*/run.json",
+        "basis": "measured",
+        "note": "sum of the latest run per board"
+      },
+      "drc_runs_recorded": {
+        "value": 51,
+        "unit": null,
+        "source": "verification/drc/",
+        "basis": "counted",
+        "note": null
+      },
+      "verification_status": {
+        "value": "passed",
+        "unit": null,
+        "source": "verification/verification-summary.json",
+        "basis": "measured",
+        "note": "0 open problems listed"
+      },
+      "pipeline_smoke": {
+        "value": "passed",
+        "unit": null,
+        "source": "verification/environment/v2-pipeline-smoke.json",
+        "basis": "measured",
+        "note": "footprints -> schematic -> routing -> DRC -> exports -> ngspice on a disposable half bridge"
+      },
+      "schematic_sheets_per_board": {
+        "value": {
+          "power": 12,
+          "control": 10
+        },
+        "unit": null,
+        "source": "kicad/*/",
+        "basis": "counted",
+        "note": null
+      },
+      "schematic_sheets": {
+        "value": 22,
+        "unit": null,
+        "source": "kicad/*/",
+        "basis": "counted",
+        "note": "sum over both boards"
+      },
+      "board_files": {
+        "value": 2,
+        "unit": null,
+        "source": "kicad/*/",
+        "basis": "counted",
+        "note": null
+      },
+      "placement_candidates": {
+        "value": 2,
+        "unit": null,
+        "source": "design/placement_*.json",
+        "basis": "counted",
+        "note": null
+      },
+      "placement_board_mm": {
+        "value": {
+          "placement_control": [
+            120.0,
+            80.0
+          ],
+          "placement_power": [
+            240.0,
+            180.0
+          ]
+        },
+        "unit": "mm",
+        "source": "design/placement_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "layout_metrics_boards": {
+        "value": [
+          "control",
+          "power"
+        ],
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "board_outlines": {
+        "value": {
+          "power": [
+            240.0,
+            180.0
+          ],
+          "control": [
+            120.0,
+            80.0
+          ]
+        },
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "dims"
+      },
+      "total_board_area_mm2": {
+        "value": 52800.0,
+        "unit": "mm2",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "copper_layers": {
+        "value": {
+          "power": 4,
+          "control": 4
+        },
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "board_thickness_mm": {
+        "value": {
+          "power": 2.0,
+          "control": 1.6
+        },
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "copper_um": {
+        "value": {
+          "power": {
+            "F.Cu": 70.0,
+            "In1.Cu": 70.0,
+            "In2.Cu": 70.0,
+            "B.Cu": 70.0
+          },
+          "control": {
+            "F.Cu": 35.0,
+            "In1.Cu": 35.0,
+            "In2.Cu": 35.0,
+            "B.Cu": 35.0
+          }
+        },
+        "unit": "um",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "pcb_footprints": {
+        "value": 444,
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "tracks": {
+        "value": 10750,
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "vias": {
+        "value": 1404,
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "hf_capacitor_to_device_mm": {
+        "value": [
+          8.3667,
+          41.1654
+        ],
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": "MOSFET drain/source pad to nearest same-net HF capacitor pad",
+        "kind": "range"
+      },
+      "driver_to_gate_pin_mm": {
+        "value": [
+          14.3526,
+          14.3596
+        ],
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "range"
+      },
+      "sw_copper_mm2": {
+        "value": {
+          "F.Cu": 196.2431,
+          "In1.Cu": 72.2098,
+          "In2.Cu": 3308.8058,
+          "B.Cu": 82.9905
+        },
+        "unit": "mm2",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "sw_copper_total_mm2": {
+        "value": 3660.2492,
+        "unit": "mm2",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "isolation_min_distance_mm": {
+        "value": 1.0003,
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": "5/7 class pairs within threshold"
+      },
+      "barrier_parts": {
+        "value": 8,
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "barrier_surface_path_min_mm": {
+        "value": 9.8073,
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "dsp_bypass_max_mm": {
+        "value": 5.3811,
+        "unit": "mm",
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "layout_rule_rows": {
+        "value": {
+          "power": {
+            "rows": 58,
+            "within": 27,
+            "exceeding": 6,
+            "not_measured": 0
+          },
+          "control": {
+            "rows": 31,
+            "within": 2,
+            "exceeding": 2,
+            "not_measured": 10
+          }
+        },
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "checker_power_density": {
+        "value": {
+          "power": {
+            "W_per_dm2": 1157.4074,
+            "W_per_L": 1607.5103,
+            "height_mm": 72.0
+          },
+          "control": {
+            "W_per_dm2": null,
+            "W_per_L": null,
+            "height_mm": 13.6
+          }
+        },
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": "checker figures use the spec assembly height, which may differ from the task height"
+      },
+      "layout_specs": {
+        "value": 2,
+        "unit": null,
+        "source": "verification/engineering_checks/",
+        "basis": "counted",
+        "note": null
+      },
+      "critical_topology_checks": {
+        "value": 89,
+        "unit": null,
+        "source": "verification/engineering_checks/layout_metrics_*.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_manifests": {
+        "value": {
+          "control_board": {
+            "commands": 11,
+            "artifacts": 35,
+            "status": "passed"
+          },
+          "power_board": {
+            "commands": 11,
+            "artifacts": 35,
+            "status": "passed"
+          }
+        },
+        "unit": null,
+        "source": "manufacturing/*/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_manifest_commands": {
+        "value": 22,
+        "unit": null,
+        "source": "manufacturing/*/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "export_manifest_artifacts": {
+        "value": 70,
+        "unit": null,
+        "source": "manufacturing/*/export-manifest.json",
+        "basis": "measured",
+        "note": null
+      },
+      "release_frozen": {
+        "value": null,
+        "unit": null,
+        "source": "releases/",
+        "basis": "not yet available",
+        "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+      },
+      "release_files": {
+        "value": null,
+        "unit": null,
+        "source": "releases/",
+        "basis": "not yet available",
+        "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+      },
+      "documented_open_issues": {
+        "value": null,
+        "unit": null,
+        "source": "verification/known_issues.md",
+        "basis": "not yet available",
+        "note": "PCB-level known-issues register not written yet; design-level open items are counted separately"
+      },
+      "design_report_words": {
+        "value": null,
+        "unit": null,
+        "source": "review/design_report.md",
+        "basis": "not yet available",
+        "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+      },
+      "simulation_runs": {
+        "value": 20,
+        "unit": null,
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": "open-loop PWL gates 11; cascade 8; module 1"
+      },
+      "simulation_summary": {
+        "value": {
+          "runs": 20,
+          "controllers": {
+            "open-loop PWL gates": 11,
+            "cascade": 8,
+            "module": 1
+          },
+          "steady_checks_passed": 120,
+          "steady_checks_total": 120,
+          "event_checks_passed": 23,
+          "event_checks_total": 32,
+          "failed_event_checks": [
+            {
+              "run": "cl_400V_dump",
+              "event": "load_step_off",
+              "failed_checks": [
+                "excursion_within_10V",
+                "recovery_within_5ms"
+              ],
+              "load_step_A": [
+                24.99742093440605,
+                0.00020020916477325103
+              ]
+            },
+            {
+              "run": "cl_440V_dump",
+              "event": "load_step_off",
+              "failed_checks": [
+                "excursion_within_10V",
+                "recovery_within_5ms"
+              ],
+              "load_step_A": [
+                24.997042212982866,
+                0.0002002008932680728
+              ]
+            },
+            {
+              "run": "cl_400V_dump_irefmin0",
+              "event": "load_step_off",
+              "failed_checks": [
+                "excursion_within_10V",
+                "recovery_within_5ms"
+              ],
+              "load_step_A": [
+                24.997688773168967,
+                0.0010458109747948621
+              ]
+            },
+            {
+              "run": "cl_400V_singleloop_modulePI",
+              "event": "load_step_on",
+              "failed_checks": [
+                "excursion_within_10V",
+                "il_below_oc_trip_37p5A",
+                "recovery_within_5ms"
+              ],
+              "load_step_A": [
+                12.409769371556115,
+                25.1064754201835
+              ]
+            }
+          ],
+          "events": 8,
+          "vout_ripple_Vpp": [
+            0.15289593389019274,
+            0.41135082059764727
+          ],
+          "load_step_excursion_V": [
+            7.536867312714463,
+            16.20914728648961
+          ],
+          "recovery_ms": [
+            0.7508000000000011,
+            5.020400000000005
+          ],
+          "vout_raw_max_V": 216.16220387985564,
+          "ngspice_warnings": 0,
+          "parasitic_cases": 4,
+          "total_runtime_s": 186.98701840000103,
+          "cross_check_vout_mean_pct": 0.018809365337538776,
+          "loop_gain_analysis": true,
+          "ngspice": "ngspice-46",
+          "limits": {
+            "vout_ripple_max_Vpp": 2.0,
+            "vin_ripple_max_pct_pp": 2.0,
+            "load_step_excursion_max_V": 10.0,
+            "load_step_recovery_max_ms": 5.0,
+            "recovery_band_pct": 1.0,
+            "ovp_out_V": 230.0,
+            "oc_trip_A": 37.5,
+            "isat_30pct_nominal_A": 37.3,
+            "isat_30pct_worst_A": 35.0,
+            "cin_irms_rating_per_part_A": 14.5,
+            "cout_irms_rating_per_part_A": 23.5
+          }
+        },
+        "unit": null,
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "parasitic_studies": {
+        "value": 4,
+        "unit": null,
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "simulation_steady_checks": {
+        "value": "120/120",
+        "unit": null,
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null
+      },
+      "simulation_event_checks": {
+        "value": "23/32",
+        "unit": null,
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": "failing checks in cl_400V_dump (load_step_off), cl_400V_dump_irefmin0 (load_step_off), cl_400V_singleloop_modulePI (load_step_on), cl_440V_dump (load_step_off): the 12.5 A-step limits (10 V / 5 ms) applied to the 25 A load-dump events, whose design-basis limit is the 230 V output OVP, plus the deliberately failing single-loop reference case"
+      },
+      "simulation_vout_ripple_Vpp": {
+        "value": [
+          0.15289593389019274,
+          0.41135082059764727
+        ],
+        "unit": "Vpp",
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "range"
+      },
+      "simulation_load_step_excursion_V": {
+        "value": [
+          7.536867312714463,
+          16.20914728648961
+        ],
+        "unit": "V",
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "range"
+      },
+      "simulation_recovery_ms": {
+        "value": [
+          0.7508000000000011,
+          5.020400000000005
+        ],
+        "unit": "ms",
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": null,
+        "kind": "range"
+      },
+      "simulation_vout_raw_max_V": {
+        "value": 216.16220387985564,
+        "unit": "V",
+        "source": "simulation/results/campaign_summary.json",
+        "basis": "measured",
+        "note": "worst raw output peak over the load-dump events"
+      },
+      "simulation_models": {
+        "value": 20,
+        "unit": null,
+        "source": "simulation/models/",
+        "basis": "counted",
+        "note": null
+      },
+      "simulation_report": {
+        "value": true,
+        "unit": null,
+        "source": "simulation/simulation_report.md",
+        "basis": "counted",
+        "note": null
+      },
+      "test_modules": {
+        "value": 16,
+        "unit": null,
+        "source": "tests/",
+        "basis": "counted",
+        "note": "all automation test modules in the repository at V2 time"
+      },
+      "test_functions": {
+        "value": 253,
+        "unit": null,
+        "source": "tests/",
+        "basis": "counted",
+        "note": null
+      },
+      "test_functions_per_module": {
+        "value": {
+          "test_check_sic_layout": 22,
+          "test_compare_v1_v2": 19,
+          "test_generate_sic_control_board": 28,
+          "test_generate_sic_power_board": 20,
+          "test_generate_sic_power_floorplan": 15,
+          "test_generate_sic_schematics": 12,
+          "test_grid_router": 15,
+          "test_knowledge": 35,
+          "test_project_footprints": 15,
+          "test_project_schematic": 15,
+          "test_setup": 6,
+          "test_sic_buck_control_model": 8,
+          "test_sic_buck_power_model": 10,
+          "test_simulation": 20,
+          "test_v2_pipeline_smoke": 8,
+          "test_verify_sic_buck": 5
+        },
+        "unit": null,
+        "source": "tests/",
+        "basis": "counted",
+        "note": null
+      },
+      "documentation_files": {
+        "value": 20,
+        "unit": null,
+        "source": "design/, review/, simulation/, verification/ (*.md)",
+        "basis": "counted",
+        "note": null
+      },
+      "documentation_words": {
+        "value": 134039,
+        "unit": null,
+        "source": "design/, review/, simulation/, verification/ (*.md)",
+        "basis": "counted",
+        "note": "includes generated tables (knowledge_trace.md, calculations.md)"
+      },
+      "sources": {
+        "read": [
+          "examples/sic-buck-400v-200v-5kw/input/requirements.yaml",
+          "examples/sic-buck-400v-200v-5kw/design/design_decisions.json",
+          "examples/sic-buck-400v-200v-5kw/design/assumptions.md",
+          "examples/sic-buck-400v-200v-5kw/design/knowledge_trace.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_applicable_standards_insulation_coordina_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_applicable_standards_insulation_coordina_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_assumptions_register_and_requirements_se_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_assumptions_register_and_requirements_se_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_controller_auxiliary_supplies_pwm_fault__engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_controller_auxiliary_supplies_pwm_fault__factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_dc_link_input_and_output_capacitor_desig_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_dc_link_input_and_output_capacitor_desig_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_isolated_sic_gate_driver_stage_and_gate__engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_isolated_sic_gate_driver_stage_and_gate__factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_output_inductor_design_and_selection_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_output_inductor_design_and_selection_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_pcb_architecture_selection_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_pcb_architecture_selection_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_power_semiconductor_selection_wolfspeed__engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_power_semiconductor_selection_wolfspeed__factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_sensing_protection_and_power_path_auxili_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_sensing_protection_and_power_path_auxili_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_thermal_design_heatsink_interface_materi_engineering.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/verify_thermal_design_heatsink_interface_materi_factcheck.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/architecture.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/assumptions.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/capacitors.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/controller_aux_interconnect.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/gate_driver.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/inductor.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/mosfet.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/sensing_protection.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/standards_safety.json",
+          "examples/sic-buck-400v-200v-5kw/design/research/thermal.json",
+          "examples/sic-buck-400v-200v-5kw/design/calculations.json",
+          "examples/sic-buck-400v-200v-5kw/design/thermal_analysis.md",
+          "examples/sic-buck-400v-200v-5kw/design/circuit_power.json",
+          "examples/sic-buck-400v-200v-5kw/design/circuit_control.json",
+          "examples/sic-buck-400v-200v-5kw/components/bom.csv",
+          "examples/sic-buck-400v-200v-5kw/components/component_records.json",
+          "examples/sic-buck-400v-200v-5kw/verification/verification-summary.json",
+          "examples/sic-buck-400v-200v-5kw/verification/environment/v2-pipeline-smoke.json",
+          "examples/sic-buck-400v-200v-5kw/design/placement_control.json",
+          "examples/sic-buck-400v-200v-5kw/design/placement_power.json",
+          "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_metrics_power.json",
+          "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_metrics_control.json",
+          "examples/sic-buck-400v-200v-5kw/manufacturing/control_board/export-manifest.json",
+          "examples/sic-buck-400v-200v-5kw/manufacturing/power_board/export-manifest.json",
+          "examples/sic-buck-400v-200v-5kw/simulation/results/campaign_summary.json"
+        ],
+        "missing": []
+      }
+    }
+  },
+  "derived": {
+    "v1": {
+      "total_board_area_dm2": {
+        "value": 6.6,
+        "unit": "dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "specific_power_W_per_dm2": {
+        "value": 151.51515151515153,
+        "unit": "W/dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "assembly_height_mm": {
+        "value": 57.0,
+        "unit": "mm",
+        "source": null,
+        "basis": "documented",
+        "note": null
+      },
+      "volume_L": {
+        "value": 3.762,
+        "unit": "L",
+        "source": null,
+        "basis": "derived",
+        "note": "summed board area x assembly height, not an enclosure volume"
+      },
+      "volumetric_power_W_per_L": {
+        "value": 265.8160552897395,
+        "unit": "W/L",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "components_per_dm2": {
+        "value": 36.36363636363637,
+        "unit": "1/dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "nets_per_board": {
+        "value": 85.0,
+        "unit": "nets",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "cost_index_layer_dm2": {
+        "value": 39.6,
+        "unit": "layer-dm2",
+        "source": null,
+        "basis": "derived",
+        "note": "sum of copper layers x area per board; relative proxy, not a quotation"
+      },
+      "mosfet_count": {
+        "value": 4,
+        "unit": null,
+        "source": null,
+        "basis": "documented",
+        "note": null
+      },
+      "power_per_mosfet_W": {
+        "value": 250.0,
+        "unit": "W",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "bom_rows_per_kW": {
+        "value": 220.0,
+        "unit": "rows/kW",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      }
+    },
+    "v2": {
+      "total_board_area_dm2": {
+        "value": 5.28,
+        "unit": "dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "specific_power_W_per_dm2": {
+        "value": 946.9696969696969,
+        "unit": "W/dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "assembly_height_mm": {
+        "value": 67.0,
+        "unit": "mm",
+        "source": null,
+        "basis": "documented",
+        "note": null
+      },
+      "volume_L": {
+        "value": 3.5376,
+        "unit": "L",
+        "source": null,
+        "basis": "derived",
+        "note": "summed board area x assembly height, not an enclosure volume"
+      },
+      "volumetric_power_W_per_L": {
+        "value": 1413.3876074174582,
+        "unit": "W/L",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "components_per_dm2": {
+        "value": 84.0909090909091,
+        "unit": "1/dm2",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "nets_per_board": {
+        "value": 106.0,
+        "unit": "nets",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "cost_index_layer_dm2": {
+        "value": 21.12,
+        "unit": "layer-dm2",
+        "source": null,
+        "basis": "derived",
+        "note": "sum of copper layers x area per board; relative proxy, not a quotation"
+      },
+      "mosfet_count": {
+        "value": 2,
+        "unit": null,
+        "source": null,
+        "basis": "documented",
+        "note": null
+      },
+      "power_per_mosfet_W": {
+        "value": 2500.0,
+        "unit": "W",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      },
+      "bom_rows_per_kW": {
+        "value": 88.8,
+        "unit": "rows/kW",
+        "source": null,
+        "basis": "derived",
+        "note": null
+      }
+    }
+  },
+  "tables": {
+    "1_specification_driven_differences": [
+      {
+        "quantity": "Nominal input voltage",
+        "v1": "48 V (36-54 V assumed range)",
+        "v2": "400 V (360-440 V operating)",
+        "effect_on_metrics": "8.3x higher voltage forces reinforced isolation, 9 mm HV-to-SELV spacing, copper-free barrier strips and 1200 V-class parts; it enlarges the HV area and lowers the achievable component density"
+      },
+      {
+        "quantity": "Output voltage",
+        "v1": "24 V",
+        "v2": "200 V (hazardous, insulated like the input)",
+        "effect_on_metrics": "the output is a hazardous voltage in V2: isolated output sensing, bleeders and discharge-time requirements appear that V1 did not need"
+      },
+      {
+        "quantity": "Output power",
+        "v1": "1000 W",
+        "v2": "5000 W",
+        "effect_on_metrics": "5x power raises W/dm2 and W/L arithmetically; the specific-power ratio between generations is therefore mostly specification, not layout skill"
+      },
+      {
+        "quantity": "Output current",
+        "v1": "41.67 A",
+        "v2": "25 A",
+        "effect_on_metrics": "V1 carries 1.7x more current at low voltage: heavy copper on six layers, 2 mohm shunt and M5 terminals were current-driven; V2 copper is sized for 25 A"
+      },
+      {
+        "quantity": "Switching frequency",
+        "v1": "100 kHz",
+        "v2": "50 kHz",
+        "effect_on_metrics": "half the frequency with 8x the volt-seconds: a 27x larger inductance (custom 272 uH choke, 632 g) and film DC-link capacitors replace the 10 uH part and electrolytic bank"
+      },
+      {
+        "quantity": "Semiconductor class",
+        "v1": "4 x CSD19536KCS (100 V VDS; +/-20 V VGS, Package_TO_SOT_THT:TO-220-3_Vertical)",
+        "v2": "2 x C4MS025120K (1200 V class, TO-247-4 Kelvin source)",
+        "effect_on_metrics": "SiC allows two devices instead of four paralleled Si parts; fewer power footprints and a shorter commutation cell are a technology effect, not a layout-process result"
+      },
+      {
+        "quantity": "Gate drive",
+        "v1": "UCC27211DDAR: none (bootstrap half-bridge driver)",
+        "v2": "UCC21710QDWRQ1: isolated (5.7 kVrms, VIORM 2121 Vpk, VIOWM 1500 Vrms / 2121 VDC ...); bias 3 (HS gate, LS gate, sensing island) x UCC14141QDWNRQ1",
+        "effect_on_metrics": "isolated drivers and three isolated bias modules add parts, barrier slots and decoupling islands; part count and BOM rows grow for safety reasons"
+      },
+      {
+        "quantity": "Current sensing",
+        "v1": "INA240A1DR: 2 mohm shunt + INA240 (non-isolated Kelvin shunt)",
+        "v2": "TMCS1133C2AQDVGR: isolated Hall sensor in the inductor output path",
+        "effect_on_metrics": "isolated sensing removes the shunt loss and Kelvin-matching issue of V1 but adds an isolated supply and reinforced-isolation footprint"
+      },
+      {
+        "quantity": "Isolation concept",
+        "v1": "48 V SELV-class system on one board; no reinforced isolation barrier, no isolated gate bias, no isolated sensing",
+        "v2": "control electronics are a SELV domain; the single-point SGND-to-PE bond (PELV) is a PROPOSED DEVIATION from the SELV seed that the human reviewer must approve ...",
+        "effect_on_metrics": "KiCad spacing rules (HV to SELV (all layers) 9; barrier strip 10; HV to PE 5; HV functional outer/inner 3 x 1 mm) exist only in V2; any V2 clearance or barrier metric has no V1 counterpart"
+      },
+      {
+        "quantity": "Board architecture",
+        "v1": "integrated_power_and_control_board (1 board)",
+        "v2": "option B: separate power PCB and DSP control PCB; drivers ... (2 boards, stacked mezzanine)",
+        "effect_on_metrics": "the two-board split is an AI architecture decision scored against alternatives (A/B/C), so layer-count and area comparisons mix a process choice with the specification"
+      }
+    ],
+    "2_process_metrics": {
+      "workflow_completeness": {
+        "requirements_assumptions": {
+          "v1": {
+            "state": "done",
+            "evidence": "input/requirements.yaml; design/assumptions.md (13 rows)"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "input/requirements.yaml; design/assumptions.md (49 register rows); design_decisions.json (34 accepted assumptions, 26 conflict resolutions)"
+          }
+        },
+        "knowledge_retrieval": {
+          "v1": {
+            "state": "not done",
+            "evidence": "no knowledge system existed (0 skills/rules retrievable)"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "knowledge_trace.json: 91 logged queries over 10 areas, 317 citation rows"
+          }
+        },
+        "calculations_script": {
+          "v1": {
+            "state": "done",
+            "evidence": "automation/scripts/calculate_buck.py -> design/calculations.json (3 input cases, 14 loss items, no invariants)"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "automation/scripts/calculate_sic_buck.py -> design/calculations.json (6 operating points, 250 registered inputs, 19 invariants, 58 baseline cross-checks of which 57 agree)"
+          }
+        },
+        "component_records": {
+          "v1": {
+            "state": "done",
+            "evidence": "component_selection.csv: 220 rows x 13 fields; uniform verification sentence"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "component_records.json: 65 part-type records x 18 fields with per-part verification levels (fetched-datasheet 29; search-snippet 7; unverified 26; manufacturer-page 3)"
+          }
+        },
+        "schematic_erc": {
+          "v1": {
+            "state": "done",
+            "evidence": "14 sheets, latest ERC 0 findings"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "power 12; control 10 sheets; latest ERC findings power 0 / control 0"
+          }
+        },
+        "simulation": {
+          "v1": {
+            "state": "not done",
+            "evidence": "no simulation (docs/knowledge-status.md)"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "20 ngspice transient runs + 4 parasitic cases; steady checks 120/120, event checks 23/32"
+          }
+        },
+        "placement_candidates": {
+          "v1": {
+            "state": "done",
+            "evidence": "design/placement.json: one placement, no alternatives compared"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "2 placement file(s): placement_control 120 x 80; placement_power 240 x 180"
+          }
+        },
+        "routing": {
+          "v1": {
+            "state": "done",
+            "evidence": "3491 tracks, 720 vias on 6 layers"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "2 board file(s); 10750 tracks, 1404 vias"
+          }
+        },
+        "drc": {
+          "v1": {
+            "state": "done",
+            "evidence": "latest DRC 0 findings (14 runs recorded)"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "latest DRC findings power 0 / control 0"
+          }
+        },
+        "layout_metrics": {
+          "v1": {
+            "state": "done",
+            "evidence": "power-layout-metrics.json: 18 critical topology checks, rule review in pcb_rule_review.md"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "layout_metrics_*.json for control / power: power rows 58; within 27; exceeding 6; not_measured 0; control rows 31; within 2; exceeding 2; not_measured 10"
+          }
+        },
+        "independent_review": {
+          "v1": {
+            "state": "done",
+            "evidence": "2 review records (AI visual review, PCB rule review); known_issues.md 12 rows"
+          },
+          "v2": {
+            "state": "done",
+            "evidence": "20 verify_*.json records (confirmed-with-corrections 20) + consistency review; PCB-level review not yet available"
+          }
+        },
+        "release": {
+          "v1": {
+            "state": "done",
+            "evidence": "releases/v1 frozen with SHA256SUMS.json (5 files) and review package zip"
+          },
+          "v2": {
+            "state": "not yet available",
+            "evidence": "releases/ empty"
+          }
+        }
+      },
+      "knowledge_utilisation": [
+        {
+          "metric": "Knowledge items used (skills/rules/blocks/components/references/project rules)",
+          "v1": {
+            "value": {
+              "skills": 0,
+              "rules": 0,
+              "blocks": 0,
+              "components": 0,
+              "references": 0,
+              "project_rules": 8
+            },
+            "unit": null,
+            "source": "docs/pcb-design-rules.md",
+            "basis": "documented",
+            "note": "no knowledge system existed for V1; only the eight project PCB rules were applied in review"
+          },
+          "v2": {
+            "value": {
+              "skills": 6,
+              "rules": 43,
+              "blocks": 13,
+              "components": 16,
+              "references": 4,
+              "project_rules": 10
+            },
+            "unit": null,
+            "source": "design/knowledge_trace.json",
+            "basis": "counted",
+            "note": "project_rules counts 2 aggregate citation string(s) such as 'PE-PCB-001..008' besides the 8 individual rules"
+          },
+          "comment": "V2 totals available: skills 6; rules 43; blocks 13; components 19; references 4; project_rules 8; project_rules counts 2 aggregate citation string(s) such as 'PE-PCB-001..008' besides the 8 individual rules"
+        },
+        {
+          "metric": "Applicability classes of citations",
+          "v1": {
+            "value": {
+              "direct": 0,
+              "adapted": 0,
+              "not-applicable": 0,
+              "human-review": 0
+            },
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": {
+              "direct": 114,
+              "adapted": 101,
+              "not-applicable": 35,
+              "human-review": 23
+            },
+            "unit": null,
+            "source": "design/knowledge_trace.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "direct / adapted / not-applicable / human-review (plus 'see text' rows cited in markdown only)"
+        },
+        {
+          "metric": "Logged retrieval queries",
+          "v1": {
+            "value": 0,
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": "no retrieval interface existed"
+          },
+          "v2": {
+            "value": 91,
+            "unit": null,
+            "source": "design/knowledge_trace.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Citation rows / distinct ids",
+          "v1": {
+            "value": [
+              0,
+              0
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              317,
+              96
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V1 column shows 0: no citations existed"
+        },
+        {
+          "metric": "Validation status of cited items",
+          "v1": null,
+          "v2": {
+            "value": {
+              "reference-derived": 160,
+              "analytically-checked": 42
+            },
+            "unit": null,
+            "source": "design/knowledge_trace.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "nothing in the knowledge base is simulated or hardware-validated"
+        },
+        {
+          "metric": "Unknown ids flagged by the trace",
+          "v1": null,
+          "v2": {
+            "value": 5,
+            "unit": null,
+            "source": "design/knowledge_trace.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "aggregate citations and external sources that the trace could not resolve"
+        }
+      ],
+      "verification_coverage": [
+        {
+          "metric": "Research records / verification records",
+          "v1": {
+            "value": [
+              0,
+              0
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              10,
+              20
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "two lenses per area in V2: engineering recompute and source fact-check"
+        },
+        {
+          "metric": "Verification verdicts",
+          "v1": null,
+          "v2": {
+            "value": {
+              "confirmed-with-corrections": 20
+            },
+            "unit": null,
+            "source": "design/research/verify_*.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Checked items by status",
+          "v1": null,
+          "v2": {
+            "value": {
+              "verified": 409,
+              "contradicted": 91,
+              "unverified": 100
+            },
+            "unit": null,
+            "source": "design/research/verify_*.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Recomputed quantities (agrees / disagrees)",
+          "v1": null,
+          "v2": {
+            "value": {
+              "agrees": 353,
+              "disagrees": 61
+            },
+            "unit": null,
+            "source": "design/research/verify_*.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Required changes raised / knowledge-misuse items",
+          "v1": null,
+          "v2": {
+            "value": [
+              223,
+              105
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Calculation invariants / baseline cross-checks",
+          "v1": {
+            "value": [
+              0,
+              0
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              19,
+              58
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Independent review records",
+          "v1": {
+            "value": 2,
+            "unit": null,
+            "source": "verification/",
+            "basis": "counted",
+            "note": "AI visual review and PCB rule review of the final CAD; no separate verifier lenses"
+          },
+          "v2": {
+            "value": 21,
+            "unit": null,
+            "source": "design/research/verify_*.json, design/consistency_review.md",
+            "basis": "counted",
+            "note": "two verifier lenses per research area plus the cross-document consistency review"
+          },
+          "comment": "V2 PCB-level review (rule review, known issues) not yet available"
+        },
+        {
+          "metric": "ERC findings (latest run)",
+          "v1": {
+            "value": 0,
+            "unit": null,
+            "source": "verification/verification-summary.json",
+            "basis": "measured",
+            "note": null
+          },
+          "v2": {
+            "value": 0,
+            "unit": null,
+            "source": "verification/erc/*/run.json",
+            "basis": "measured",
+            "note": "sum of the latest run per board"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "DRC findings (latest run)",
+          "v1": {
+            "value": 0,
+            "unit": null,
+            "source": "verification/verification-summary.json",
+            "basis": "measured",
+            "note": null
+          },
+          "v2": {
+            "value": 0,
+            "unit": null,
+            "source": "verification/drc/*/run.json",
+            "basis": "measured",
+            "note": "sum of the latest run per board"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "ERC / DRC runs recorded",
+          "v1": {
+            "value": [
+              6,
+              14
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              7,
+              51
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "history of native check runs, not a quality score"
+        },
+        {
+          "metric": "Verification summary status",
+          "v1": {
+            "value": "passed",
+            "unit": null,
+            "source": "verification/verification-summary.json",
+            "basis": "measured",
+            "note": null
+          },
+          "v2": {
+            "value": "passed",
+            "unit": null,
+            "source": "verification/verification-summary.json",
+            "basis": "measured",
+            "note": "0 open problems listed"
+          },
+          "comment": "V2 'failed' means missing PCB-phase artefacts, not failing checks"
+        },
+        {
+          "metric": "Pipeline smoke (all modules on a disposable board)",
+          "v1": {
+            "value": null,
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": "V1 smoke covered KiCad checks and exports only"
+          },
+          "v2": {
+            "value": "passed",
+            "unit": null,
+            "source": "verification/environment/v2-pipeline-smoke.json",
+            "basis": "measured",
+            "note": "footprints -> schematic -> routing -> DRC -> exports -> ngspice on a disposable half bridge"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Simulation runs / models / parasitic cases",
+          "v1": {
+            "value": [
+              0,
+              0,
+              0
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              20,
+              20,
+              4
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Simulation checks passed (steady / event)",
+          "v1": null,
+          "v2": {
+            "value": "steady 120/120; event 23/32",
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "comment": "failing checks in cl_400V_dump (load_step_off), cl_400V_dump_irefmin0 (load_step_off), cl_400V_singleloop_modulePI (load_step_on), cl_440V_dump (load_step_off): the 12.5 A-step limits (10 V / 5 ms) applied to the 25 A load-dump events, whose design-basis limit is the 230 V output OVP, plus the deliberately failing single-loop reference case"
+        },
+        {
+          "metric": "Simulated output ripple (Vpp)",
+          "v1": null,
+          "v2": {
+            "value": [
+              0.15289593389019274,
+              0.41135082059764727
+            ],
+            "unit": "Vpp",
+            "source": "simulation/results/campaign_summary.json",
+            "basis": "measured",
+            "note": null,
+            "kind": "range"
+          },
+          "comment": "limit 2.0 Vpp; range over all runs"
+        },
+        {
+          "metric": "Simulated load-step excursion (V) / recovery (ms)",
+          "v1": null,
+          "v2": {
+            "value": "7.5-16.2 V / 0.751-5.0 ms",
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "comment": "ranges over all load events including the 25 A dumps and the deliberately failing single-loop reference case; limits for the 12.5 A step are 10 V / 5 ms"
+        },
+        {
+          "metric": "Documented open issues (PCB-level register)",
+          "v1": {
+            "value": 12,
+            "unit": null,
+            "source": "verification/known_issues.md",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": null,
+            "unit": null,
+            "source": "verification/known_issues.md",
+            "basis": "not yet available",
+            "note": "PCB-level known-issues register not written yet; design-level open items are counted separately"
+          },
+          "comment": "V2 design-level open items: 13 in design_decisions.json, 10 in calculations.json"
+        }
+      ],
+      "documentation_and_tests": [
+        {
+          "metric": "Design documents (files / words)",
+          "v1": {
+            "value": [
+              11,
+              6869
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              20,
+              134039
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V2 includes generated tables; volume is not quality"
+        },
+        {
+          "metric": "Design report words",
+          "v1": {
+            "value": 1344,
+            "unit": null,
+            "source": "review/design_report.md",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": null,
+            "unit": null,
+            "source": "review/design_report.md",
+            "basis": "not yet available",
+            "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Schematic sheets",
+          "v1": {
+            "value": 14,
+            "unit": null,
+            "source": "kicad/",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": 22,
+            "unit": null,
+            "source": "kicad/*/",
+            "basis": "counted",
+            "note": "sum over both boards"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Automation test modules / functions",
+          "v1": {
+            "value": [
+              1,
+              6
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              16,
+              253
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V1 figure from the V1-era module and docs/status.md; V2 counts every module in tests/"
+        },
+        {
+          "metric": "Export manifest commands / artifacts",
+          "v1": {
+            "value": [
+              11,
+              38
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              22,
+              70
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Frozen release",
+          "v1": {
+            "value": true,
+            "unit": null,
+            "source": "releases/v1/SHA256SUMS.json",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": null,
+            "unit": null,
+            "source": "releases/",
+            "basis": "not yet available",
+            "note": "PCB phase running - re-run after the V2 boards are placed, routed and checked"
+          },
+          "comment": ""
+        }
+      ]
+    },
+    "3_layout_and_architecture": [
+      {
+        "metric": "Board outline(s) (mm)",
+        "v1": {
+          "value": {
+            "integrated": [
+              300.0,
+              220.0
+            ]
+          },
+          "unit": "mm",
+          "source": "design/placement.json",
+          "basis": "documented",
+          "note": null,
+          "kind": "dims"
+        },
+        "v2": {
+          "value": {
+            "power": [
+              240.0,
+              180.0
+            ],
+            "control": [
+              120.0,
+              80.0
+            ]
+          },
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null,
+          "kind": "dims"
+        },
+        "comment": "V2 outlines are design targets until the routed boards are measured"
+      },
+      {
+        "metric": "Total PCB area (mm2)",
+        "v1": {
+          "value": 66000.0,
+          "unit": "mm2",
+          "source": "design/placement.json",
+          "basis": "derived",
+          "note": null
+        },
+        "v2": {
+          "value": 52800.0,
+          "unit": "mm2",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "area alone proves nothing: V2 must host a 9 mm isolation barrier, films and a heatsink"
+      },
+      {
+        "metric": "Copper layers",
+        "v1": {
+          "value": 6,
+          "unit": null,
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": {
+            "power": 4,
+            "control": 4
+          },
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "fewer layers per board in V2 follow from moving the fine-pitch DSP off the heavy-copper board"
+      },
+      {
+        "metric": "Copper weight (um)",
+        "v1": {
+          "value": "70 outer/In2/In3, 35 In1/In4",
+          "unit": "um",
+          "source": "design/assumptions.md",
+          "basis": "documented",
+          "note": null
+        },
+        "v2": {
+          "value": {
+            "power": {
+              "F.Cu": 70.0,
+              "In1.Cu": 70.0,
+              "In2.Cu": 70.0,
+              "B.Cu": 70.0
+            },
+            "control": {
+              "F.Cu": 35.0,
+              "In1.Cu": 35.0,
+              "In2.Cu": 35.0,
+              "B.Cu": 35.0
+            }
+          },
+          "unit": "um",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Board thickness (mm)",
+        "v1": {
+          "value": 2.0,
+          "unit": "mm",
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": {
+            "power": 2.0,
+            "control": 1.6
+          },
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Cost index (layers x dm2)",
+        "v1": {
+          "value": 39.6,
+          "unit": "layer-dm2",
+          "source": null,
+          "basis": "derived",
+          "note": "sum of copper layers x area per board; relative proxy, not a quotation"
+        },
+        "v2": {
+          "value": 21.12,
+          "unit": "layer-dm2",
+          "source": null,
+          "basis": "derived",
+          "note": "sum of copper layers x area per board; relative proxy, not a quotation"
+        },
+        "comment": "fabrication proxy only; V2 adds a mezzanine connector pair and non-plated slots"
+      },
+      {
+        "metric": "Footprints / schematic items",
+        "v1": {
+          "value": 240,
+          "unit": null,
+          "source": "verification/verification-summary.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": 444,
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "V2 counts schematic items until the boards exist; includes test points and mounting holes on both generations"
+      },
+      {
+        "metric": "Components per dm2",
+        "v1": {
+          "value": 36.36363636363637,
+          "unit": "1/dm2",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "v2": {
+          "value": 84.0909090909091,
+          "unit": "1/dm2",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "comment": "V2 is 5x the power with isolation parts, so a higher density is expected, not earned"
+      },
+      {
+        "metric": "Named nets (per board)",
+        "v1": {
+          "value": 85,
+          "unit": null,
+          "source": "verification/verification-summary.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": {
+            "power": 101,
+            "control": 111
+          },
+          "unit": null,
+          "source": "design/circuit_*.json",
+          "basis": "counted",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Nets per board",
+        "v1": {
+          "value": 85.0,
+          "unit": "nets",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "v2": {
+          "value": 106.0,
+          "unit": "nets",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Tracks",
+        "v1": {
+          "value": 3491,
+          "unit": null,
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": 10750,
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Vias",
+        "v1": {
+          "value": 720,
+          "unit": null,
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": 1404,
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "HF capacitor to MOSFET pad (mm)",
+        "v1": {
+          "value": [
+            11.0,
+            16.0
+          ],
+          "unit": "mm",
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": "MOSFET pad centre to nearest HF ceramic pad centre",
+          "kind": "range"
+        },
+        "v2": {
+          "value": [
+            8.3667,
+            41.1654
+          ],
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": "MOSFET drain/source pad to nearest same-net HF capacitor pad",
+          "kind": "range"
+        },
+        "comment": "V2 target 5 mm (row 1) / 15 mm (row 2); straight-line proxy, not loop inductance"
+      },
+      {
+        "metric": "Driver output to gate pad (mm)",
+        "v1": {
+          "value": [
+            8.735,
+            16.17
+          ],
+          "unit": "mm",
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null,
+          "kind": "range"
+        },
+        "v2": {
+          "value": [
+            14.3526,
+            14.3596
+          ],
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null,
+          "kind": "range"
+        },
+        "comment": "V2 target <= 15 mm; V1 range was flagged long in known issue V1-01"
+      },
+      {
+        "metric": "Switch-node copper (mm2)",
+        "v1": {
+          "value": 1660.4299999999998,
+          "unit": "mm2",
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": 3660.2492,
+          "unit": "mm2",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "sum over layers; V2 SW carries 400 V at 110 V/ns so a smaller area is required, not optional"
+      },
+      {
+        "metric": "DSP bypass max pad distance (mm)",
+        "v1": {
+          "value": 6.861,
+          "unit": "mm",
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": 5.3811,
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "V1 maximum 6.86 mm was known issue V1-08"
+      },
+      {
+        "metric": "Isolation min copper distance (mm)",
+        "v1": {
+          "value": null,
+          "unit": null,
+          "source": "verification/power-layout-metrics.json",
+          "basis": "documented",
+          "note": "not applicable: no isolation barrier on a 48 V board"
+        },
+        "v2": {
+          "value": 1.0003,
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": "5/7 class pairs within threshold"
+        },
+        "comment": "no V1 counterpart (48 V board); V2 threshold 9.0 mm on all layers"
+      },
+      {
+        "metric": "Barrier parts (slots required)",
+        "v1": {
+          "value": 0,
+          "unit": null,
+          "source": "design/architecture.md",
+          "basis": "documented",
+          "note": "no barrier parts"
+        },
+        "v2": {
+          "value": 8,
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": ""
+      },
+      {
+        "metric": "Barrier surface path min (mm)",
+        "v1": null,
+        "v2": {
+          "value": 9.8073,
+          "unit": "mm",
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "2*sqrt((g/2)^2 + e^2) around the slot ends; required >= 9.0 mm"
+      },
+      {
+        "metric": "Assembly height used (mm)",
+        "v1": {
+          "value": 57.0,
+          "unit": "mm",
+          "source": "design/pcb_stackup.md",
+          "basis": "derived",
+          "note": "board thickness + tallest part"
+        },
+        "v2": {
+          "value": 67.0,
+          "unit": "mm",
+          "source": "design/design_decisions.json",
+          "basis": "documented",
+          "note": "standoffs + board + heatsink (architecture.mechanical)"
+        },
+        "comment": "V1: 2.0 mm board + 55 mm inductor; V2: 15 mm standoffs + 2 mm board + 50 mm heatsink"
+      },
+      {
+        "metric": "Specific power (W/dm2)",
+        "v1": {
+          "value": 151.51515151515153,
+          "unit": "W/dm2",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "v2": {
+          "value": 946.9696969696969,
+          "unit": "W/dm2",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "comment": "rated power over summed PCB area"
+      },
+      {
+        "metric": "Volumetric power (W/L)",
+        "v1": {
+          "value": 265.8160552897395,
+          "unit": "W/L",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "v2": {
+          "value": 1413.3876074174582,
+          "unit": "W/L",
+          "source": null,
+          "basis": "derived",
+          "note": null
+        },
+        "comment": "summed PCB area x assembly height; not an enclosure volume"
+      },
+      {
+        "metric": "Layout rule rows (within / exceeding)",
+        "v1": {
+          "value": 18,
+          "unit": null,
+          "source": "verification/power-layout-metrics.json",
+          "basis": "measured",
+          "note": null
+        },
+        "v2": {
+          "value": {
+            "power": {
+              "rows": 58,
+              "within": 27,
+              "exceeding": 6,
+              "not_measured": 0
+            },
+            "control": {
+              "rows": 31,
+              "within": 2,
+              "exceeding": 2,
+              "not_measured": 10
+            }
+          },
+          "unit": null,
+          "source": "verification/engineering_checks/layout_metrics_*.json",
+          "basis": "measured",
+          "note": null
+        },
+        "comment": "V1 checker had no thresholds; V2 rows carry spec thresholds where the design defines one"
+      }
+    ],
+    "4_component_selection_thermal_manufacturability": {
+      "component_selection": [
+        {
+          "metric": "Records / fields per record",
+          "v1": {
+            "value": [
+              220,
+              13
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              65,
+              18
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V1: one row per reference designator; V2: one record per part type"
+        },
+        {
+          "metric": "Distinct part numbers / manufacturers (BOM)",
+          "v1": {
+            "value": [
+              68,
+              17
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              116,
+              22
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "BOM rows (incl. DNP in V2)",
+          "v1": {
+            "value": 220,
+            "unit": null,
+            "source": "components/bom.csv",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": 444,
+            "unit": null,
+            "source": "components/bom.csv",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V2 DNP parts power 16; control 1"
+        },
+        {
+          "metric": "Per-part verification level",
+          "v1": {
+            "value": {
+              "not recorded": 220
+            },
+            "unit": null,
+            "source": "components/component_selection.csv",
+            "basis": "documented",
+            "note": "a uniform 'verification_limit' sentence; no per-part datasheet-fetch level"
+          },
+          "v2": {
+            "value": {
+              "fetched-datasheet": 29,
+              "search-snippet": 7,
+              "unverified": 26,
+              "manufacturer-page": 3
+            },
+            "unit": null,
+            "source": "components/component_records.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V2 states fetched-datasheet / manufacturer-page / search-snippet / unverified per record"
+        },
+        {
+          "metric": "Knowledge references inside component records",
+          "v1": {
+            "value": 0,
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": 235,
+            "unit": null,
+            "source": "components/component_records.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Open sourcing issues / alternatives recorded",
+          "v1": null,
+          "v2": {
+            "value": [
+              100,
+              81
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Custom footprints",
+          "v1": {
+            "value": 3,
+            "unit": null,
+            "source": "kicad/libraries/",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": 9,
+            "unit": null,
+            "source": "design/circuit_*.json",
+            "basis": "counted",
+            "note": "distinct AIPE-library footprints"
+          },
+          "comment": "V2 isolation parts need slotted custom footprints"
+        },
+        {
+          "metric": "Magnetic design record",
+          "v1": {
+            "value": false,
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": "catalogue 10 uH part"
+          },
+          "v2": {
+            "value": true,
+            "unit": null,
+            "source": "components/magnetic_record.json",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": "V2 output choke is a custom wound part with a Magnetic Database record"
+        }
+      ],
+      "thermal_design": [
+        {
+          "metric": "Thermal document words",
+          "v1": {
+            "value": 308,
+            "unit": null,
+            "source": "design/thermal_estimate.md",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": 5751,
+            "unit": null,
+            "source": "design/thermal_analysis.md",
+            "basis": "counted",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Loss / temperature corners evaluated",
+          "v1": {
+            "value": 1,
+            "unit": null,
+            "source": "design/thermal_estimate.md",
+            "basis": "documented",
+            "note": "one illustrative 95 C junction estimate at 50 C ambient"
+          },
+          "v2": {
+            "value": 24,
+            "unit": null,
+            "source": "design/calculations.json",
+            "basis": "counted",
+            "note": "loss/temperature corners (R variants x k_RG)"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Heatsink",
+          "v1": {
+            "value": "external sink <= 1.5 C/W, part not selected",
+            "unit": null,
+            "source": "design/thermal_estimate.md",
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "Fischer Elektronik LAM 5 D K 100 12, R_th 0.30 K/W at nominal fan flow ...",
+            "unit": null,
+            "source": "design/design_decisions.json",
+            "basis": "documented",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Interface material",
+          "v1": {
+            "value": "0.5 C/W per isolated TO-220 interface, material not selected",
+            "unit": null,
+            "source": "design/thermal_estimate.md",
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "Bergquist Sil-Pad TSP A2000 0.254 mm (6 kVac class) custom cut 28 x 32 mm per device ...",
+            "unit": null,
+            "source": "design/design_decisions.json",
+            "basis": "documented",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Expected / hottest junction temperature (C)",
+          "v1": {
+            "value": "illustrative 95 C",
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": [
+              105.6667658837838,
+              143.14544404691878
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "comment": "lumped steady-state arithmetic in both generations; nothing simulated or measured; V2 hottest corner: 360V/27.5A max R, k_RG 2.0"
+        },
+        {
+          "metric": "Cooling-failure analysis",
+          "v1": {
+            "value": false,
+            "unit": null,
+            "source": "design/thermal_estimate.md",
+            "basis": "documented",
+            "note": "no cooling-failure analysis"
+          },
+          "v2": {
+            "value": true,
+            "unit": null,
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": "4 natural-convection cases with time-to-trip"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Temperature sensor to junction mapping",
+          "v1": {
+            "value": "LM61 measures power-area PCB temperature, not junction",
+            "unit": null,
+            "source": "design/architecture.md",
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "heatsink NTC mapped to T_J with a stated offset band",
+            "unit": null,
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Efficiency estimate (converter)",
+          "v1": {
+            "value": 0.9627662073311922,
+            "unit": null,
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": 0.9870213064319073,
+            "unit": null,
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": "typical_expected scenario, converter only"
+          },
+          "comment": "V2 target/floor target 0.980; floor 0.975; V1 sensitivity 0.928 if loss doubles"
+        },
+        {
+          "metric": "Total loss estimate (W)",
+          "v1": {
+            "value": 38.67376356303632,
+            "unit": "W",
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": 65.74677508741273,
+            "unit": "W",
+            "source": "design/calculations.json",
+            "basis": "documented",
+            "note": "typical_expected scenario, converter only"
+          },
+          "comment": "different power levels; compare loss fraction, not watts"
+        }
+      ],
+      "manufacturability": [
+        {
+          "metric": "Boards x layers x copper",
+          "v1": {
+            "value": "1 x 6 layers, 70 outer/In2/In3, 35 In1/In4 um, 2 mm",
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "power 4 layers / F.Cu 70; In1.Cu 70; In2.Cu 70; B.Cu 70 um / 2 mm; control 4 layers / F.Cu 35; In1.Cu 35; In2.Cu 35; B.Cu 35 um / 1.6 mm",
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "comment": "V1 combined heavy copper with an LQFP-176 on one board (known issue V1-09); V2 keeps fine pitch off the heavy-copper board"
+        },
+        {
+          "metric": "Fine-pitch parts on heavy-copper board",
+          "v1": {
+            "value": "yes (LQFP-176, 0.5 mm pitch on 70 um outer copper)",
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "no (DSP on the 35 um control board)",
+            "unit": null,
+            "source": null,
+            "basis": "planned",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Non-plated barrier slots",
+          "v1": {
+            "value": 0,
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": 8,
+            "unit": null,
+            "source": "verification/engineering_checks/layout_metrics_*.json",
+            "basis": "measured",
+            "note": null
+          },
+          "comment": "slots under isolators where the land gap is below 9 mm"
+        },
+        {
+          "metric": "Custom footprints",
+          "v1": {
+            "value": 3,
+            "unit": null,
+            "source": "kicad/libraries/",
+            "basis": "counted",
+            "note": null
+          },
+          "v2": {
+            "value": 9,
+            "unit": null,
+            "source": "design/circuit_*.json",
+            "basis": "counted",
+            "note": "distinct AIPE-library footprints"
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Export manifest (commands / artifacts)",
+          "v1": {
+            "value": [
+              11,
+              38
+            ],
+            "unit": null,
+            "source": null,
+            "basis": "measured",
+            "note": null
+          },
+          "v2": {
+            "value": {
+              "control_board": {
+                "commands": 11,
+                "artifacts": 35,
+                "status": "passed"
+              },
+              "power_board": {
+                "commands": 11,
+                "artifacts": 35,
+                "status": "passed"
+              }
+            },
+            "unit": null,
+            "source": "manufacturing/*/export-manifest.json",
+            "basis": "measured",
+            "note": null
+          },
+          "comment": ""
+        },
+        {
+          "metric": "Fabrication notes raised",
+          "v1": {
+            "value": "plated slots, exposed-pad vias, fine pitch with heavy copper (V1-09)",
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "v2": {
+            "value": "0.20 mm prepreg between two 70 um layers to confirm; 2.0 mm core stack; slot widths >= 1.0 mm after tolerance",
+            "unit": null,
+            "source": null,
+            "basis": "documented",
+            "note": null
+          },
+          "comment": "from the stack-up documents; fabricator DFM feedback is pending in both generations"
+        }
+      ]
+    }
+  },
+  "pending_v2_metrics": [
+    "design_report_words",
+    "documented_open_issues",
+    "release_files",
+    "release_frozen"
+  ],
+  "caveats": [
+    "Raw PCB area, component density and specific power do not prove that either generation is better engineered: V2 carries 5x the power at 8x the voltage with an isolation barrier that V1 never needed, so most density ratios are specification effects (table 1).",
+    "V2 layout, DRC, placement, export and release metrics are produced by a concurrent PCB phase; every such entry is marked 'not yet available' and the script must be re-run to complete the tables.",
+    "Counts of files, rows, words, citations, tests and runs measure process coverage, not engineering correctness; a verified-with-corrections record can still contain a wrong number that both lenses missed.",
+    "All thermal and efficiency figures of both generations are lumped analytical estimates; the V2 simulation is a behavioural ngspice model without SiC device physics, switching loss or firmware. Nothing in either generation is measured on hardware.",
+    "V1 is frozen and read-only; this comparison never alters it, and its known issues remain the authoritative V1 review state."
+  ],
+  "can_show": [
+    "whether each workflow step exists in each generation and which file is the evidence (table 2.1);",
+    "how much of the knowledge base was retrieved, how it was classified (direct / adapted / not applicable / human review) and how many citations were checked by independent verifiers (tables 2.2 and 2.3);",
+    "which automated checks exist and their recorded results (ERC, DRC, layout rules, simulation checks, calculation invariants, tests);",
+    "the planned versus measured V2 board geometry once the layout metrics exist, against the V1 measurements already on record (table 3)."
+  ],
+  "cannot_show": [
+    "that V2 is a better converter: no efficiency, EMI, thermal rise, insulation or control-loop result is measured in either generation;",
+    "that fewer layers, smaller area or higher W/dm2 are achievements: they follow from the specification and the two-board split, and V2 must still prove 9 mm clearances, slot creepage and loop inductance on the routed boards;",
+    "that more documents, citations or tests mean higher quality; they show traceability and coverage, which the human reviewer still has to judge;",
+    "anything about manufacturability beyond the stack-up statements and export manifests: no fabricator DFM review exists for either generation."
+  ]
+}

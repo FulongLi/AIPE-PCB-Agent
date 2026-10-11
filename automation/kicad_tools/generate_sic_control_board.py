@@ -7,7 +7,11 @@ schematic, a pcbnew BOARD with the project footprint libraries and the symbol pa
 design/schematic_mapping_control.json, deterministic placement with a courtyard-overlap check, the
 4 x 35 um / 1.6 mm stackup injected as text, grid_router.run_plan for the routing (LQFP-176 escapes
 pre-routed as alternating inward/outward vias with staggered outer rows, signals on F.Cu/B.Cu, In1.Cu
-one solid GND_CTRL plane, In2.Cu rail islands 12V_PROT / 5V / 1V9 over a 3V3 background), zone fill,
+one solid GND_CTRL plane, In2.Cu rail islands 12V_PROT / 5V / 1V9 over a 3V3 background), a single-layer
+In2.Cu pass for INNER_SIGNAL_NETS (BIAS_EN) and for any connection the F.Cu/B.Cu stages leave unresolved
+(islands are keepouts, vias and plated pads obstacles, a pruned DSP escape via is re-created at a fallback port), the
+rip-up negotiation driven through RIPUP_PENALTY_LADDER by LadderRouter (the shared grid_router is used unchanged), zone fill, corridor zones for rail copper outside its
+island, a sliver trim that widens corridor edges next to sub-0.05 mm2 fill fragments (review LR-15),
 SaveBoard/LoadBoard, then kicad-cli DRC with --schematic-parity --severity-all through
 automation.kicad_tools.run_check and the layout metrics checker automation.verification.check_sic_layout.
 
@@ -67,6 +71,25 @@ WIDTH, HEIGHT = 120.0, 80.0
 COPPER_LAYERS = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 ROUTING_LAYERS = ['F.Cu', 'B.Cu']  # In1.Cu is the unbroken GND_CTRL plane, In2.Cu carries only rail islands
 GROUND_LAYER, ISLAND_LAYER = 'In1.Cu', 'In2.Cu'
+# Nets routed as single tracks on the island layer In2.Cu (through the 3V3 background, never through another rail's island) by
+# a separate single-layer router pass after the F.Cu/B.Cu stages. BIAS_EN is the static bias-module enable (DSP GPIO -> mezzanine
+# pin 9); under the DSP's south escape rows the 43 south-side escapes and the mezzanine fan-in left no F.Cu/B.Cu lane for it
+# (the rip-up negotiation cycled against DSP_TRIP_N for 97 rounds, DRC 1 unconnected). The In2.Cu pass keeps INNER_KEEPOUT_MARGIN
+# from every island polygon, treats vias and plated pads as obstacles with INNER_CLEARANCE and is itself an obstacle for the
+# stage-2 corridor zones, so no island or corridor is cut; the fill is rebuilt afterwards and the kicad-cli DRC judges the result.
+INNER_SIGNAL_NETS = ('BIAS_EN',)
+INNER_LAYER_FALLBACK = True  # connections the F.Cu/B.Cu stages leave unresolved also get one In2.Cu attempt (reported as 'fallback')
+INNER_KEEPOUT_MARGIN = 0.5  # In2.Cu signal track to rail-island polygon edge (mm): island fill (0.25 mm zone clearance) stays whole
+INNER_CLEARANCE = 0.3  # In2.Cu signal track to vias / plated pads (mm): the 0.2 mm rule plus margin for the 0.25 mm zone clearance
+INNER_TURN_SEARCH = (1.5, 10.0, 0.25)  # the horizontal leg of an In2.Cu route lies 1.5-10 mm beyond the first port (0.25 mm steps);
+# the ordinate with the fewest through items within INNER_TURN_RADIUS of the leg wins (ties: nearest), so the track leaves the DSP
+# escape via rows and their corridor fingers before it turns
+INNER_TURN_RADIUS = 1.0
+INNER_EDGE_BAND = 3.0  # an In2.Cu signal track keeps this distance from every rail-island polygon except along its own port's exit channel:
+# a track running parallel to an island edge closer than this isolates the strip of background copper between them, and that strip is
+# where the corridor notches of the island's exception vias reach the background (iteration 6: PG_BIAS_L_N along the 1V9 island's east
+# edge cut off the 3V3 exit of U5.45's corridor - DRC manifest 20261010T233115Z-drc-2e44897b, 1 unconnected)
+INNER_CHANNEL_HALF_WIDTH = 0.5  # half width of a port's straight exit channel through the band (0.2 mm track + 0.3 mm clearance per side)
 GROUND = 'GND_CTRL'
 RAILS = ('12V_PROT', '5V', '3V3', '1V9')
 CORE_NET, IO_NET = '1V9', '3V3'
@@ -102,6 +125,11 @@ ESCAPE_DISTANCES = (0.65, 1.3, 2.15, 2.9, 3.65, 4.5, 6.0)  # fanout via rows bey
 # 0.125 mm grid snapping (the router blocks below 0.81 mm); the module default (1.25 mm) can snap to 0.80 mm and fail
 CORRIDOR_HALF_WIDTH, CORRIDOR_OVERSHOOT, CORRIDOR_MAX_MM = 0.65, 0.5, 20.0
 CORRIDOR_PRIORITY = 3
+# Review LR-15: the 3V3 background fill left 20-30 um wide fragments along corridor-zone edges where a foreign via's clearance
+# ring crosses the edge. After the corridor zones are filled, every rail fill outline below SLIVER_AREA_MM2 on In2.Cu is a sliver;
+# the adjacent same-net corridor edge is widened by SLIVER_TRIM_STEP and the zones are refilled, for at most SLIVER_TRIM_ROUNDS
+# rounds (a nudge that would bring the corridor within the zone clearance of an other-net corridor is skipped and reported).
+SLIVER_AREA_MM2, SLIVER_TRIM_STEP, SLIVER_TRIM_ROUNDS = 0.05, 0.125, 8
 PLACE_STEP = 0.5
 CORNER_EXCLUSION = 2.4  # DSP bypass rings stop this far (mm) before the package corners so the side groups never meet
 # Courtyard-to-courtyard gaps (mm); a pair uses the larger of both parts' values per axis. Escape geometry: the second
@@ -112,13 +140,31 @@ GAP_IC_ESCAPE, GAP_IC_SIDE, GAP_CONNECTOR = 1.6, 0.8, 0.8  # ICs: pin-row sides 
 GAP_IC_EP_ESCAPE = 2.0  # exposed-pad packages cannot escape inward: both staggered rows lie outside (1.4 + 0.3 + 0.2 - 0.6 + margin)
 GAP_QFP = 2.7  # the LQFP-176: its far escape row ends 15.875 mm from the centre, 2.15 mm beyond the 13.725 mm courtyard
 MAX_NODES = 2500000
+SIGNAL_ORDER_TRIALS = 6  # grid_router signal-stage orders tried (plan order, long nets last/first, then seeded perturbations of the best)
+RIPUP_ROUNDS = 240  # grid_router rip-up and re-route rounds for the connections the best order leaves unresolved (round 9 was still gaining at 84/90)
+RIPUP_PENALTY_LADDER = (1.0, 0.4, 2.5)  # multiples of the plan's ripup_penalty that LadderRouter.negotiate cycles through. The shared
+# grid_router.negotiate() tries one penalty per failing connection since the power-board agent's 2026-10-11 change (the variants never
+# helped the power board); the control board's last connections closed in iteration 4 only through the 2.5x step, and without the
+# ladder the negotiation stops at 2 unconnected (RDY_H, PG_BIAS_L_N; DRC manifest 20261010T230400Z-drc-a401f5ad). The generator
+# therefore keeps the ladder on its side of the shared module (LadderRouter), which stays unchanged.
 SIGNAL_ORDER = ['EPWM1A', 'EPWM1B', 'PWM_H_G', 'PWM_L_G', 'PWM_H', 'PWM_L', 'GATE_EN', 'FAULT_N', 'OC_N', 'FAULT_LATCH_N',
                 'CLK30', 'ADC_', 'ADCREF', 'ADCRESEXT', 'VIN_SENSE', 'VOUT_SENSE', 'ISENSE', 'TEMP_', 'I12V_MON', 'V12V_MON',
                 'REF', '5V_SW', '5V_BST', '5V_FB', '12V_IN', 'EFUSE_']
-NET_RULES = {'12V_IN': dict(width=0.4), 'EFUSE_RTN': dict(width=0.4), '5V_SW': dict(width=0.4),
-             '3V3_BULK': dict(width=0.6), '1V9_BULK': dict(width=0.6),
-             '12V_PROT': dict(width=0.3), '5V': dict(width=0.3), '3V3': dict(width=0.3), '1V9': dict(width=0.3)}
-INPAD_VIAS = [['U1', '17'], ['U3', '29']]  # HTSSOP exposed pads: EFUSE_RTN PowerPad and the LDO ground pad
+# Track widths per net (mm). CTRL_PWR class value 1.0 mm (project .kicad_pro) where the pad geometry allows it:
+# 12V_IN is pre-routed as a 1.0 mm F.Cu bus (candidate pre_routed), 12V_PROT and 5V reach their In2.Cu islands
+# through fanout vias only (the island is the conductor), so their routed width matters for stubs alone; the pad
+# escape of a 0.65 mm pitch HTSSOP / 0.95 mm SOT-23 pin cannot exceed ~0.4 mm without touching its neighbours
+# (fanout_width). EFUSE_RTN is the TPS26400 device return (RTN pin 8 between two other-net 0.65 mm pins), not the
+# load path, and keeps 0.4 mm. IPC-2221 (35 um, external): 0.54 A on 0.4 mm -> ~1.6 K; 1.96 A on 1.0 mm -> 6.4 K.
+NET_RULES = {'12V_IN': dict(width=1.0, fanout_width=0.4), 'EFUSE_RTN': dict(width=0.4), '5V_SW': dict(width=0.7, fanout_width=0.4),
+             '5V_BST': dict(width=0.3), '3V3_BULK': dict(width=0.6), '1V9_BULK': dict(width=0.6),
+             '12V_PROT': dict(width=1.0, fanout_width=0.4), '5V': dict(width=0.6, fanout_width=0.4), '3V3': dict(width=0.3), '1V9': dict(width=0.3)}
+INPAD_VIAS = [['U1', '17'], ['U3', '29']]  # HTSSOP exposed pads: EFUSE_RTN PowerPad and the LDO ground pad (single via unless the
+# candidate defines exposed_pad_vias arrays; the refs still select the exposed-pad escape gap in gap_for)
+EXPOSED_PAD_MARGIN = 0.45  # via centre to exposed-pad edge (0.3 mm via radius + 0.15 mm inside the pad copper)
+EXPOSED_PAD_COMB_WIDTH = 0.4  # B.Cu tracks joining the vias of an exposed-pad array whose net has no plane (EFUSE_RTN)
+PREROUTE_GAP = 0.3  # placement keep-away around candidate pre-routed copper (clearance 0.2 + margin)
+CORRIDOR_HALF_WIDTH_BY_NET = {'12V_PROT': 1.0, '5V': 1.0}  # >= 2 mm wide In2.Cu corridor fingers for the current-carrying rails
 ANALOG_NETS = ('ADC_', 'ADCREF', 'ADCRESEXT', 'VIN_SENSE', 'VOUT_SENSE', 'ISENSE', 'TEMP_', 'I12V_MON', 'V12V_MON', 'REF2V5', 'REF3V0',
                'OVP_IN_REF', 'OVP_OUT_REF', 'UVLO_REF', 'OTP_REF')
 # Nets that define the analogue SECTION for the separation metric (the 12 V monitor dividers V12V_MON / I12V_MON belong to the supply entry).
@@ -142,6 +188,19 @@ NOTES = [
     'Rail nets reach their islands through the fanout vias; a rail via outside its island is reported and bridged by a corridor zone.',
     'The grid router report is a geometric proposal; only the kicad-cli DRC manifest (schematic parity, severity-all) is verification.',
     'Silkscreen text is placed in part-free areas and its real bounding boxes are checked against the courtyards before saving.',
+    'Candidate pre_routed entries (12V_IN 1.0 mm F.Cu bus, 5V_SW/5V_BST hot-loop tracks, eFuse-output via group) and exposed_pad_vias arrays are '
+    'placed before the fanout; their pads are skipped by the fanout and the auto-placer keeps parts off that copper.',
+    'The mezzanine header J8 is on B.Cu (pins toward the power-board socket); through-hole parts block both placement sides.',
+    'BIAS_EN (static bias-module enable, DSP pin 12 -> J8 pin 9) is routed as one 0.2 mm track on In2.Cu through the 3V3 background by a '
+    'single-layer router pass after the F.Cu/B.Cu stages: the band under the DSP south escape rows had no lane for it. The track keeps '
+    '0.5 mm from every rail-island polygon and 0.3 mm from vias/plated pads, counts as an obstacle for the corridor zones, and the island '
+    'fills are rebuilt afterwards; connections the F.Cu/B.Cu stages leave unresolved get the same In2.Cu attempt (reported as fallback; '
+    'a DSP escape via the outer stages pruned is re-created at the port when it still fits). Every In2.Cu signal track keeps INNER_EDGE_BAND '
+    'from the island polygons except along its own port exit channel: a track hugging an island edge isolates the background strip in which the '
+    'corridor notches of that island reach the background (iteration 6, U5.45 3V3).',
+    'The rip-up negotiation runs with the penalty ladder 1x / 0.4x / 2.5x of the plan ripup_penalty (LadderRouter in this generator; '
+    'the shared grid_router tries one penalty per failing connection since 2026-10-11): without the ladder the control board stops at '
+    '2 unconnected (RDY_H, PG_BIAS_L_N).',
 ]
 
 
@@ -175,6 +234,137 @@ def point_in_polygon(point, polygon) -> bool:
 def polygon_bbox(polygon):
     xs, ys = [p[0] for p in polygon], [p[1] for p in polygon]
     return (min(xs), min(ys), max(xs), max(ys))
+
+
+def rectilinear_rectangles(polygon) -> list[tuple]:
+    """Axis-aligned rectangles (x0, y0, x1, y1) whose union is the rectilinear ``polygon`` (strip decomposition along the
+    vertex ordinates; every cell between consecutive vertex abscissae is classified by its midpoint)."""
+    xs = sorted({float(p[0]) for p in polygon})
+    ys = sorted({float(p[1]) for p in polygon})
+    rects = []
+    for y0, y1 in zip(ys, ys[1:]):
+        mid_y = (y0 + y1) / 2
+        run = None
+        for x0, x1 in zip(xs, xs[1:]):
+            if point_in_polygon(((x0 + x1) / 2, mid_y), polygon):
+                run = x0 if run is None else run
+            elif run is not None:
+                rects.append((run, y0, x0, y1))
+                run = None
+        if run is not None:
+            rects.append((run, y0, xs[-1], y1))
+    return rects
+
+
+def rect_minus(rect, holes) -> list[tuple]:
+    """Axis-aligned ``rect`` (x0, y0, x1, y1) minus the ``holes`` rectangles, as disjoint rectangles (pure)."""
+    pieces = [tuple(float(v) for v in rect)]
+    for hole in holes:
+        hx0, hy0, hx1, hy1 = hole
+        out = []
+        for x0, y0, x1, y1 in pieces:
+            if hx1 <= x0 or hx0 >= x1 or hy1 <= y0 or hy0 >= y1:
+                out.append((x0, y0, x1, y1))
+                continue
+            ix0, iy0, ix1, iy1 = max(x0, hx0), max(y0, hy0), min(x1, hx1), min(y1, hy1)
+            if iy0 > y0:
+                out.append((x0, y0, x1, iy0))
+            if iy1 < y1:
+                out.append((x0, iy1, x1, y1))
+            if ix0 > x0:
+                out.append((x0, iy0, ix0, iy1))
+            if ix1 < x1:
+                out.append((ix1, iy0, x1, iy1))
+        pieces = out
+    return pieces
+
+
+def inflated_rect(rect, margin: float) -> tuple:
+    return (rect[0] - margin, rect[1] - margin, rect[2] + margin, rect[3] + margin)
+
+
+def port_channel(port, island_rects, band: float = INNER_EDGE_BAND, *, half_width: float = INNER_CHANNEL_HALF_WIDTH,
+                 margin: float = INNER_KEEPOUT_MARGIN):
+    """Exit channel of an inner-layer port that lies inside an island's edge band (pure): ``(rect, axis, sign)`` of the straight
+    channel from the port away from the nearest island side to ``half_width`` beyond the band, ``axis`` 'x' for a horizontal
+    exit and 'y' for a vertical one, ``sign`` +1 towards larger coordinates; None when the port lies outside every band (or
+    inside an island keepout, where no route can start anyway). With several bands the nearest island side decides."""
+    px, py = float(port[0]), float(port[1])
+    best = None
+    for x0, y0, x1, y1 in island_rects:
+        if not (x0 - band <= px <= x1 + band and y0 - band <= py <= y1 + band):
+            continue
+        if x0 - margin <= px <= x1 + margin and y0 - margin <= py <= y1 + margin:
+            continue
+        sides = [('x', x0 - px, -1, x0 - band - half_width), ('x', px - x1, +1, x1 + band + half_width),
+                 ('y', y0 - py, -1, y0 - band - half_width), ('y', py - y1, +1, y1 + band + half_width)]
+        axis, dist, sign, end = max(sides, key=lambda s: s[1])  # the side the port lies beyond (largest outside distance)
+        if best is None or dist < best[0]:
+            best = (dist, axis, sign, end)
+    if best is None:
+        return None
+    _dist, axis, sign, end = best
+    if axis == 'x':  # the channel starts half a width behind the port: Grid.box marks its bounds inclusively, so the port cell stays free
+        start = px - sign * half_width
+        return ((min(start, end), py - half_width, max(start, end), py + half_width), 'x', sign)
+    start = py - sign * half_width
+    return ((px - half_width, min(start, end), px + half_width, max(start, end)), 'y', sign)
+
+
+def band_keepouts(island_rects, ports, band: float = INNER_EDGE_BAND, *, margin: float = INNER_KEEPOUT_MARGIN):
+    """Keepout rectangles of the island edge bands minus the exit channels of ``ports`` (pure).
+
+    Returns ``(rects, channels)``: ``rects`` cover every island rectangle inflated by ``band`` except the channels, so an inner
+    track can leave or reach a port that sits inside a band only straight through its channel and otherwise stays ``band`` away
+    from the islands; ``channels`` maps each such port (rounded tuple) to ``(rect, axis, sign)``."""
+    channels = {}
+    for port in ports:
+        key = (round(float(port[0]), 4), round(float(port[1]), 4))
+        if key in channels:
+            continue
+        channel = port_channel(key, island_rects, band, margin=margin)
+        if channel is not None:
+            channels[key] = channel
+    holes = [channel[0] for channel in channels.values()]
+    rects = []
+    for island in island_rects:
+        rects.extend(rect_minus(inflated_rect(island, band), holes))
+    return rects, channels
+
+
+def inner_route_waypoints(a, b, through_items, *, search=INNER_TURN_SEARCH, radius: float = INNER_TURN_RADIUS, grid: float = GRID,
+                          axis: str = 'y', direction=None) -> list:
+    """Grid-snapped waypoints of a Z-shaped inner-layer route from port ``a`` to port ``b``: a vertical leg away from ``a``,
+    a horizontal leg at the ordinate (``search`` = (min, max, step) mm beyond ``a`` towards ``b``) crossed by the fewest
+    ``through_items`` ({xy} vias / plated pads within ``radius`` of the leg; ties: the nearest ordinate), then a vertical leg
+    to ``b``. ``axis='x'`` transposes the Z (a horizontal leg away from ``a`` first: ports whose exit channel is horizontal);
+    ``direction`` (+1 / -1) forces the first leg's sense (the port channel's outward side) even when ``b`` lies the other way,
+    which turns the Z into a U. Ports closer than the minimum, or aligned ports, get the direct two-point list."""
+    if axis == 'x':
+        swapped = inner_route_waypoints([a[1], a[0]], [b[1], b[0]], [dict(xy=[it['xy'][1], it['xy'][0]]) for it in through_items],
+                                        search=search, radius=radius, grid=grid, axis='y', direction=direction)
+        return [[pt[1], pt[0]] for pt in swapped]
+    ax, ay = snap(a[0], grid), snap(a[1], grid)
+    bx, by = snap(b[0], grid), snap(b[1], grid)
+    if abs(ax - bx) < 1e-9 or (abs(ay - by) < 1e-9 and direction is None):
+        return [[ax, ay], [bx, by]]
+    towards = 1.0 if by > ay else -1.0
+    sign = float(direction) if direction in (1, -1, 1.0, -1.0) else towards
+    lo, hi, step = search
+    x_lo, x_hi = min(ax, bx) - radius, max(ax, bx) + radius
+    best = None
+    t = lo
+    while t <= hi + 1e-9:
+        y = snap(ay + sign * t, grid)
+        if sign == towards and ((sign > 0 and y >= by) or (sign < 0 and y <= by)):
+            break
+        crossing = sum(1 for item in through_items if abs(item['xy'][1] - y) < radius and x_lo < item['xy'][0] < x_hi)
+        if best is None or crossing < best[0]:
+            best = (crossing, y)
+        t = round(t + step, 6)
+    if best is None:
+        return [[ax, ay], [bx, by]]
+    return [[ax, ay], [ax, best[1]], [bx, best[1]], [bx, by]]
 
 
 def manhattan_mst(points) -> float:
@@ -274,8 +464,22 @@ def load_candidate(path) -> dict:
         if net not in data['islands'] or net not in data['island_priority']:
             raise ValueError(f'{path}: island/priority for {net} missing')
     for ref, pose in data['fixed'].items():
-        if len(pose) != 3:
-            raise ValueError(f'{path}: fixed {ref} needs [x, y, angle]')
+        if len(pose) not in (3, 4) or (len(pose) == 4 and pose[3] not in ('F', 'B')):
+            raise ValueError(f'{path}: fixed {ref} needs [x, y, angle] or [x, y, angle, "F"|"B"]')
+    for item in data.get('pre_routed', []):
+        for key in ('net', 'layer', 'width', 'points'):
+            if key not in item:
+                raise ValueError(f'{path}: pre_routed item needs {key!r}: {item}')
+        if item['layer'] not in ROUTING_LAYERS or len(item['points']) < 1:
+            raise ValueError(f'{path}: pre_routed item layer/points invalid: {item}')
+    for ref, cfg in data.get('exposed_pad_vias', {}).items():
+        if 'pad' not in cfg or len(cfg.get('count', [])) != 2 or min(cfg['count']) < 1:
+            raise ValueError(f'{path}: exposed_pad_vias.{ref} needs pad and count [nx, ny]')
+    if not isinstance(data.get('signal_priority', []), list):
+        raise ValueError(f'{path}: signal_priority must be a list of net names or prefixes')
+    for ref, spec in data.get('dsp_near_rings', {}).items():
+        if 'pin' not in spec or spec.get('side') not in ('F', 'B') or spec.get('radius_mm', 0) <= 0:
+            raise ValueError(f'{path}: dsp_near_rings.{ref} needs pin, side F|B and radius_mm')
     dsp = data['dsp']
     if dsp['angle'] % 90 != 0:
         raise ValueError(f'{path}: dsp angle must be a multiple of 90')
@@ -340,7 +544,7 @@ def assignment_report(parts: list[dict], candidate: dict) -> dict:
     for part in parts:
         if part['ref'] in fixed:
             continue
-        if 'near_dsp_pin' in part:
+        if 'near_dsp_pin' in part or part['ref'] in candidate.get('dsp_near_rings', {}):
             report['bypass'].append(part['ref'])
             continue
         region = region_of(part, candidate)
@@ -670,7 +874,7 @@ CORRIDOR_L_OFFSETS = (1.5, -1.5, 2.0, -2.0, 2.5, -2.5, 3.0, -3.0)  # lateral fir
 
 def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] | None = None, half_width: float = CORRIDOR_HALF_WIDTH,
                      overshoot: float = CORRIDOR_OVERSHOOT, max_mm: float = CORRIDOR_MAX_MM, via_radius: float = VIA[0] / 2,
-                     clearance: float = ZONE_CLEARANCE) -> dict:
+                     clearance: float = ZONE_CLEARANCE, half_width_by_net: dict | None = None) -> dict:
     """Corrective In2.Cu corridor zones for rail vias/through pads that sit outside their own island.
 
     ``items``: [{net, xy, kind}] for every via and plated through pad of a rail net; ``islands``: {net: polygon |
@@ -687,6 +891,8 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
     polys = {n: p for n, p in islands.items() if p != 'background'}
     corridors, issues = [], []
     obstacles = items if obstacles is None else obstacles
+    widths = dict(half_width_by_net or {})
+    default_half_width = half_width
 
     def territory(net, point) -> bool:
         if any(point_in_polygon(point, poly) for n, poly in polys.items() if n != net):
@@ -734,6 +940,7 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
         net, xy = item['net'], tuple(item['xy'])
         if net not in islands or territory(net, xy):
             continue
+        half_width = float(widths.get(net, default_half_width))  # the closures above read the per-item value
         straight, severed = [], []
         for d in directions:
             found = reach(net, xy, d)
@@ -781,6 +988,30 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
     return dict(corridors=corridors, issues=issues)
 
 
+def sliver_edge(rect, sliver_bbox, tol: float = 0.03, slack: float = 0.3):
+    """Which edge of the corridor rectangle ``rect`` (x0, y0, x1, y1) a fill sliver's bounding box touches: 'x0' (left), 'x1',
+    'y0' (top) or 'y1', else None. The sliver lies outside the rectangle along that edge within ``tol``; its centre must lie
+    within the edge's extent plus ``slack``."""
+    x0, y0, x1, y1 = sliver_bbox
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    if abs(rect[0] - x1) < tol and rect[1] - slack <= cy <= rect[3] + slack:
+        return 'x0'
+    if abs(rect[2] - x0) < tol and rect[1] - slack <= cy <= rect[3] + slack:
+        return 'x1'
+    if abs(rect[1] - y1) < tol and rect[0] - slack <= cx <= rect[2] + slack:
+        return 'y0'
+    if abs(rect[3] - y0) < tol and rect[0] - slack <= cx <= rect[2] + slack:
+        return 'y1'
+    return None
+
+
+def widened(rect, edge, step: float):
+    """Rectangle ``rect`` with ``edge`` ('x0'/'y0'/'x1'/'y1') moved outward by ``step`` mm."""
+    x0, y0, x1, y1 = rect
+    return {'x0': (round(x0 - step, 4), y0, x1, y1), 'y0': (x0, round(y0 - step, 4), x1, y1),
+            'x1': (x0, y0, round(x1 + step, 4), y1), 'y1': (x0, y0, x1, round(y1 + step, 4))}[edge]
+
+
 def uncovered_rail_items(items: list[dict], islands: dict, corridors: list[dict]) -> list[dict]:
     """Rail items that are outside their own territory and not covered by a corridor of their net (expected: none)."""
     polys = {n: p for n, p in islands.items() if p != 'background'}
@@ -813,11 +1044,15 @@ def island_polygon(candidate: dict, net: str):
 
 
 def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_escapes: dict | None = None, dsp_centre=None,
-                 dsp_signal_nets=(), lanes: dict | None = None) -> dict:
-    """grid_router plan: pre-routed LQFP escapes with B.Cu exit stubs, pre-routed fine-pitch IC escapes, fanout for the
-    rest (DSP and pre-routed pads skipped), signals on F.Cu/B.Cu (DSP nets first), rail islands and the GND plane."""
+                 dsp_signal_nets=(), lanes: dict | None = None, extra: dict | None = None, inpad_vias=None) -> dict:
+    """grid_router plan: pre-routed LQFP escapes with B.Cu exit stubs, pre-routed fine-pitch IC escapes, the candidate's
+    pre-routed copper and exposed-pad via arrays (``extra`` = {tracks, vias, skip_pads}), fanout for the rest (DSP and
+    pre-routed pads skipped), signals on F.Cu/B.Cu (candidate signal_priority, then the DSP nets), rail islands and the GND plane."""
+    extra = extra or {}
     tracks = [dict(net=e['net'], layer='F.Cu', a=list(e['pad']), b=list(e['via']), width=TRACE) for e in escapes]
     vias = [dict(net=e['net'], xy=list(e['via']), port=True) for e in escapes]
+    tracks += [dict(t) for t in extra.get('tracks', [])]
+    vias += [dict(v) for v in extra.get('vias', [])]
     stubs = 0
     lanes = lanes or {}
     lane_ends = lanes.get('ends', {})
@@ -826,7 +1061,16 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
             if e['net'] in RAILS or e['net'] == GROUND:
                 continue
             if e['direction'] != 'in':
-                continue  # outward pins leave on F.Cu through the router (free layer beyond the far via row)
+                if e['net'] in INNER_SIGNAL_NETS:
+                    continue  # leaves its escape via on In2.Cu (inner_layer_route); no F.Cu lane is reserved for it
+                # outward pins leave on F.Cu: reserve the straight exit from the via to STUB_RADIUS (between the far-row
+                # vias) so that no earlier-routed net seals the pin in; the router continues from the lane end
+                lane = outward_stub(e, dsp_centre, STUB_RADIUS)
+                for a, b in zip(lane, lane[1:]):
+                    if math.dist(a, b) > 1e-6:
+                        tracks.append(dict(net=e['net'], layer='F.Cu', a=list(a), b=list(b), width=TRACE))
+                        stubs += 1
+                continue
             points = exit_stub(e, escapes, dsp_centre, min(STUB_B_MAX, lane_ends.get(e['number'], STUB_RADIUS)))
             layer = 'B.Cu'
             for a, b in zip(points, points[1:]):
@@ -836,7 +1080,7 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
         for peel in lanes.get('peel_offs', []):
             if math.dist(peel['a'], peel['b']) > 1e-6:
                 tracks.append(dict(net=peel['net'], layer=peel['layer'], a=list(peel['a']), b=list(peel['b']), width=TRACE))
-    skip_pads = [[candidate['dsp']['ref'], e['number']] for e in escapes]
+    skip_pads = [[candidate['dsp']['ref'], e['number']] for e in escapes] + [list(p) for p in extra.get('skip_pads', [])]
     for ref, records in sorted((ic_escapes or {}).items()):
         for e in records:
             tracks.append(dict(net=e['net'], layer='F.Cu', a=list(e['pad']), b=list(e['via']), width=TRACE))
@@ -854,7 +1098,9 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
         power[net] = dict(stubs=False, priority=int(candidate['island_priority'][net]), clearance=ZONE_CLEARANCE,
                           min_thickness=ZONE_MIN_THICKNESS, zones={ISLAND_LAYER: island_polygon(candidate, net)})
     order = [candidate['dsp']['ref']] + [r for r in ic_refs if r != candidate['dsp']['ref']]
-    signal_order = list(SIGNAL_ORDER)
+    signal_order = list(candidate.get('signal_priority', []))  # the candidate's congestion-critical nets first
+    signal_first = list(candidate.get('signal_first', []))  # routed before everything else in the 4th order trial
+    signal_order += [n for n in SIGNAL_ORDER if n not in signal_order]
     for net in dsp_signal_nets:  # every DSP net before the generic remainder, PWM/TZ keep their place at the top
         if net not in signal_order:
             signal_order.append(net)
@@ -865,13 +1111,96 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
         'net_rules': {k: dict(v) for k, v in NET_RULES.items()},
         'keepouts': [],
         'pre_routed': {'tracks': tracks, 'vias': vias},
-        'fanout': {'order': order, 'skip_refs': [candidate['dsp']['ref']], 'skip_pads': skip_pads, 'inpad_vias': [list(p) for p in INPAD_VIAS]},
+        'fanout': {'order': order, 'skip_refs': [candidate['dsp']['ref']], 'skip_pads': skip_pads,
+                   'inpad_vias': [list(p) for p in (INPAD_VIAS if inpad_vias is None else inpad_vias)]},
         'critical': [], 'critical_layers': list(ROUTING_LAYERS),
         'power': power,
         'signal_order': signal_order, 'signal_layers': list(ROUTING_LAYERS), 'front_fallback': True,
+        'exclude_nets': list(INNER_SIGNAL_NETS),  # routed on In2.Cu after the F.Cu/B.Cu stages (inner_layer_route)
         'ground': {'net': GROUND, 'layers': [GROUND_LAYER], 'clearance': ZONE_CLEARANCE, 'priority': 0, 'polygon': background_polygon()},
         'prune_vias': True, 'fill': True, 'save': str(save), 'strict': False, 'max_nodes': MAX_NODES,
+        'signal_first': signal_first,
+        'signal_pinned': list(candidate.get('signal_pinned', [])),  # r20 (LR-32): the protection lines routed first in every order trial (direct runs)
+        'signal_order_trials': SIGNAL_ORDER_TRIALS, 'ripup_rounds': RIPUP_ROUNDS,
     }
+
+
+# --- candidate pre-routed copper (pure) --------------------------------------------------------------------------------
+
+
+def resolve_point(spec, table: dict):
+    """Board point (x, y) of a candidate point spec: ``[x, y]`` absolute, or ``["@REF.PAD", dx, dy]`` relative to a placed pad."""
+    if len(spec) == 2:
+        return (float(spec[0]), float(spec[1]))
+    if len(spec) == 3 and isinstance(spec[0], str) and spec[0].startswith('@') and '.' in spec[0]:
+        ref, number = spec[0][1:].split('.', 1)
+        pad = table.get((ref, number))
+        if pad is None:
+            raise ValueError(f'pre-routed point {spec}: pad {ref}.{number} is not placed')
+        return (round(pad['xy'][0] + float(spec[1]), 4), round(pad['xy'][1] + float(spec[2]), 4))
+    raise ValueError(f'unsupported point spec {spec}')
+
+
+def candidate_pre_routed(candidate: dict, table: dict) -> dict:
+    """grid_router pre_routed tracks/vias and the fanout skip_pads from the candidate's ``pre_routed`` list.
+
+    Each entry: {net, layer, width, points: [...], vias?: [...], port_vias?: [...], skip_pads?: [[ref, pad], ...]}.
+    Consecutive points become tracks; ``vias`` are plain through vias (connected by the tracks or a zone), ``port_vias``
+    additionally register as routing ports so the router joins the rest of the net to them; ``skip_pads`` lists the
+    pads the copper already connects (no fanout via). Point specs: see resolve_point.
+    """
+    tracks, vias, skip = [], [], []
+    for item in candidate.get('pre_routed', []):
+        points = [resolve_point(pt, table) for pt in item['points']]
+        for a, b in zip(points, points[1:]):
+            if math.dist(a, b) > 1e-6:
+                tracks.append(dict(net=item['net'], layer=item['layer'], a=[a[0], a[1]], b=[b[0], b[1]], width=float(item['width'])))
+        for pt in item.get('vias', []):
+            x, y = resolve_point(pt, table)
+            vias.append(dict(net=item['net'], xy=[x, y], port=False))
+        for pt in item.get('port_vias', []):
+            x, y = resolve_point(pt, table)
+            vias.append(dict(net=item['net'], xy=[x, y], port=True))
+        skip.extend([list(p) for p in item.get('skip_pads', [])])
+    return dict(tracks=tracks, vias=vias, skip_pads=skip)
+
+
+def exposed_pad_arrays(pad_boxes: dict, candidate: dict, plane_nets=()) -> dict:
+    """Via arrays inside exposed pads: ``exposed_pad_vias`` {ref: {pad, count: [nx, ny]}} with the pad boxes
+    {(ref, pad): dict(bbox=[x0, y0, x1, y1], net=...)} of the placed board.
+
+    Vias sit EXPOSED_PAD_MARGIN inside the pad edges on an even grid (0.125 mm snapped). For a net with a plane or
+    island (``plane_nets``) the zone connects the vias; otherwise a B.Cu comb (EXPOSED_PAD_COMB_WIDTH) joins them and the
+    first via is a routing port, so the net reaches the array once and every via carries copper on two layers.
+    """
+    tracks, vias, skip, records = [], [], [], []
+    for ref, cfg in sorted(candidate.get('exposed_pad_vias', {}).items()):
+        key = (ref, str(cfg['pad']))
+        if key not in pad_boxes:
+            raise ValueError(f'exposed_pad_vias: pad {ref}.{cfg["pad"]} not on the board')
+        box, net = pad_boxes[key]['bbox'], pad_boxes[key]['net']
+        nx, ny = int(cfg['count'][0]), int(cfg['count'][1])
+        xs = [snap((box[0] + box[2]) / 2)] if nx == 1 else [snap(box[0] + EXPOSED_PAD_MARGIN + (box[2] - box[0] - 2 * EXPOSED_PAD_MARGIN) * i / (nx - 1)) for i in range(nx)]
+        ys = [snap((box[1] + box[3]) / 2)] if ny == 1 else [snap(box[1] + EXPOSED_PAD_MARGIN + (box[3] - box[1] - 2 * EXPOSED_PAD_MARGIN) * j / (ny - 1)) for j in range(ny)]
+        for xa, xb in zip(xs, xs[1:]):
+            if xb - xa < VIA[1] + HOLE_CLEARANCE:
+                raise ValueError(f'exposed_pad_vias {ref}: x pitch {xb - xa} below the hole-to-hole minimum')
+        for ya, yb in zip(ys, ys[1:]):
+            if yb - ya < VIA[1] + HOLE_CLEARANCE:
+                raise ValueError(f'exposed_pad_vias {ref}: y pitch {yb - ya} below the hole-to-hole minimum')
+        grid_pts = [(x, y) for x in xs for y in ys]
+        plane = net in plane_nets
+        for i, (x, y) in enumerate(grid_pts):
+            vias.append(dict(net=net, xy=[x, y], port=(not plane and i == 0)))
+        if not plane:  # comb: columns joined vertically, the first row joined horizontally
+            for x in xs:
+                for ya, yb in zip(ys, ys[1:]):
+                    tracks.append(dict(net=net, layer='B.Cu', a=[x, ya], b=[x, yb], width=EXPOSED_PAD_COMB_WIDTH))
+            for xa, xb in zip(xs, xs[1:]):
+                tracks.append(dict(net=net, layer='B.Cu', a=[xa, ys[0]], b=[xb, ys[0]], width=EXPOSED_PAD_COMB_WIDTH))
+        skip.append([ref, str(cfg['pad'])])
+        records.append(dict(ref=ref, pad=str(cfg['pad']), net=net, vias=len(grid_pts), positions=grid_pts, comb=not plane, pad_bbox=[round(v, 3) for v in box]))
+    return dict(tracks=tracks, vias=vias, skip_pads=skip, records=records)
 
 
 # --- pcbnew helpers --------------------------------------------------------------------------------------------------
@@ -921,6 +1250,52 @@ def read_manifest(path) -> dict:
         manifest['details'] = [f"{v.get('type')}: {v.get('description')}" + (f" @ {v['items'][0].get('pos')}" if v.get('items') else '')
                                for key in ('violations', 'unconnected_items', 'schematic_parity') for v in data.get(key, [])]
     return manifest
+
+
+def negotiate_with_ladder(step, count, rounds: int, penalty: float, ladder=RIPUP_PENALTY_LADDER) -> list[dict]:
+    """Drive a single-penalty rip-up negotiation ``step(penalty, rounds) -> log`` through the penalty ``ladder`` (pure).
+
+    ``count()`` returns the number of unresolved route connections. Each ladder step runs until the step itself gives up
+    (every failing connection attempted at that penalty); a step that lowers the count restarts the ladder at its first
+    multiple on the new failure set. The negotiation stops at zero, after a full ladder cycle without progress, or when
+    ``rounds`` is spent (a step that attempts nothing still costs one round, so the loop terminates). Returns the merged
+    log with the rounds renumbered and the ladder multiple recorded on every entry.
+    """
+    log = []
+    remaining = int(rounds)
+    while remaining > 0 and count() > 0:
+        progressed = False
+        for multiple in ladder:
+            before = count()
+            if before == 0 or remaining <= 0:
+                break
+            part = step(float(penalty) * multiple, remaining)
+            for entry in part:
+                entry = dict(entry)
+                entry['round'] = len(log)
+                entry['ladder'] = multiple
+                log.append(entry)
+            remaining -= max(1, len(part))
+            if count() < before:
+                progressed = True
+                break  # restart at the first multiple on the new failure set
+        if not progressed:
+            break
+    return log
+
+
+class LadderRouter(gr.Router):
+    """grid_router.Router whose rip-up negotiation cycles RIPUP_PENALTY_LADDER (negotiate_with_ladder). build_control installs
+    it as gr.Router for the duration of gr.run_plan, so the shared module is used unchanged; every other behaviour is inherited."""
+
+    def negotiate(self, layers, allow_front_fallback=True, rounds=20, penalty=40.0, protected=(), tabu=4):
+        def step(pen, budget):
+            return super(LadderRouter, self).negotiate(layers, allow_front_fallback=allow_front_fallback, rounds=int(budget), penalty=pen,
+                                                      protected=protected, tabu=tabu)
+
+        def count():
+            return sum(1 for u in self.unresolved if u.get('stage') == 'route')
+        return negotiate_with_ladder(step, count, rounds, penalty)
 
 
 class Builder:
@@ -1037,7 +1412,15 @@ class Builder:
             if box[0] < EDGE_COURTYARD or box[1] < EDGE_COURTYARD or box[2] > WIDTH - EDGE_COURTYARD or box[3] > HEIGHT - EDGE_COURTYARD:
                 raise ValueError(('courtyard outside the board margin', ref, [round(v, 3) for v in box]))
         _, local_pads = self.pose_geometry(ref, angle, side)
-        self.occupied[side].append((ref, box, self.gap_for(self.by_ref[ref], angle, local_pads)))
+        gaps = self.gap_for(self.by_ref[ref], angle, local_pads)
+        self.occupied[side].append((ref, box, gaps))
+        if any(pad.GetAttribute() in (self.pcb.PAD_ATTRIB_PTH, self.pcb.PAD_ATTRIB_NPTH) for pad in fp.Pads()):
+            other = 'B' if side == 'F' else 'F'  # through-hole pins are copper on both outer layers: block the other side too
+            if check:
+                for other_ref, other_box, _ in self.occupied[other]:
+                    if boxes_overlap(box, other_box):
+                        raise ValueError(('courtyard overlap (through-hole, other side)', ref, other_ref, [round(v, 3) for v in box], [round(v, 3) for v in other_box]))
+            self.occupied[other].append((ref, box, gaps))
         self.placements[ref] = dict(x=round(x, 4), y=round(y, 4), angle=angle, side=side, region=region, courtyard=[round(v, 3) for v in box])
         return box
 
@@ -1046,12 +1429,27 @@ class Builder:
         c = self.candidate
         dsp = c['dsp']
         self.place(dsp['ref'], dsp['xy'][0], dsp['xy'][1], dsp['angle'], region='dsp')
-        for ref, (x, y, angle) in c['fixed'].items():
+        for ref, pose in c['fixed'].items():
             if ref not in self.footprints:
                 raise ValueError(f'fixed part {ref} is not in the model')
-            self.place(ref, x, y, angle, region='fixed')
+            x, y, angle = pose[:3]
+            self.place(ref, x, y, angle, side=pose[3] if len(pose) == 4 else 'F', region='fixed')
         for item in c['silkscreen']:
             self.occupied['F'].append((f"TEXT:{item['text']}", list(text_box(item['text'], item['xy'], item['size'])), (0.3, 0.3)))
+        # candidate pre-routed copper (12V_IN bus, 5 V buck hot loop, eFuse output vias): keep auto-placed parts off it
+        table = self.placed_pads()
+        for item in c.get('pre_routed', []):
+            points = [resolve_point(pt, table) for pt in item['points']]
+            half = float(item['width']) / 2 + PREROUTE_GAP
+            side = 'B' if item['layer'] == 'B.Cu' else 'F'
+            for a, b in zip(points, points[1:]):
+                box = [min(a[0], b[0]) - half, min(a[1], b[1]) - half, max(a[0], b[0]) + half, max(a[1], b[1]) + half]
+                self.occupied[side].append((f"PREROUTE:{item['net']}", box, (0.0, 0.0)))
+            for pt in list(item.get('vias', [])) + list(item.get('port_vias', [])):
+                x, y = resolve_point(pt, table)
+                r = VIA[0] / 2 + PREROUTE_GAP
+                for s_ in ('F', 'B'):
+                    self.occupied[s_].append((f"PREROUTE:{item['net']}", [x - r, y - r, x + r, y + r], (0.0, 0.0)))
 
     def dsp_pads(self, connected_only=True) -> list[dict]:
         dsp = self.footprints[self.candidate['dsp']['ref']]
@@ -1071,26 +1469,32 @@ class Builder:
         pads = {p['number']: p for p in self.dsp_pads(connected_only=False)}
         cfg = c['dsp_bypass']
         pitch = float(cfg.get('min_lateral_pitch_mm', 2.35))
+        rings = c.get('dsp_near_rings', {})  # {ref: {pin, side, radius_mm}}: further parts placed radially at their DSP pin (review LR-04)
         groups: dict = {}
         for part in self.parts:
-            if 'near_dsp_pin' not in part:
+            if 'near_dsp_pin' in part:
+                pad = pads[str(part['near_dsp_pin'])]
+                rail = part['nets'].get('1')
+                if rail not in cfg:
+                    raise ValueError(f"{part['ref']}: no dsp_bypass configuration for rail {rail}")
+                ring = (cfg[rail]['side'], float(cfg[rail]['radius_mm']), rail)
+            elif part['ref'] in rings:
+                spec = rings[part['ref']]
+                pad = pads[str(spec['pin'])]
+                ring = (spec['side'], float(spec['radius_mm']), f"ring{spec['radius_mm']}")
+            else:
                 continue
-            pad = pads[str(part['near_dsp_pin'])]
-            rail = part['nets'].get('1')
-            if rail not in cfg:
-                raise ValueError(f"{part['ref']}: no dsp_bypass configuration for rail {rail}")
             dx, dy = pad['xy'][0] - centre[0], pad['xy'][1] - centre[1]
             if abs(dx) >= abs(dy):
                 side_key, out, lateral = ('E' if dx > 0 else 'W'), (1 if dx > 0 else -1, 0), pad['xy'][1]
             else:
                 side_key, out, lateral = ('S' if dy > 0 else 'N'), (0, 1 if dy > 0 else -1), pad['xy'][0]
-            groups.setdefault((side_key, rail), []).append(dict(part=part, pad=pad, out=out, lateral=lateral))
-        rails = sorted({rail for (_, rail) in groups})
+            groups.setdefault((side_key, ring), []).append(dict(part=part, pad=pad, out=out, lateral=lateral))
+        rails = sorted({ring for (_, ring) in groups}, key=lambda r: (r[0], r[1], r[2]))
         for rail in rails:
-            radius = float(cfg[rail]['radius_mm'])
-            side = cfg[rail]['side']
+            side, radius = rail[0], rail[1]
             queue = []
-            for (side_key, r_), items in sorted(groups.items()):
+            for (side_key, r_), items in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1][0], kv[0][1][1], kv[0][1][2])):
                 if r_ != rail:
                     continue
                 items.sort(key=lambda it: it['lateral'])
@@ -1128,7 +1532,7 @@ class Builder:
                             if any(boxes_overlap(candidate_box, other, gx if ref_ == dsp_ref else max(gx, og[0]), gy if ref_ == dsp_ref else max(gy, og[1]))
                                    for ref_, other, og in self.occupied[side]):
                                 continue
-                            self.place(it['part']['ref'], x, y, angle, side=side, region=f'dsp_bypass_{rail}')
+                            self.place(it['part']['ref'], x, y, angle, side=side, region=f'dsp_bypass_{rail[2]}')
                             placed = True
                             break
                         if placed:
@@ -1407,6 +1811,19 @@ def fine_pitch_ic_escapes(board, parts: list[dict], blocked=()) -> dict:
     return result
 
 
+def pad_boxes(board) -> dict:
+    """(ref, number) -> dict(bbox=[x0, y0, x1, y1] mm, net) of every numbered pad (axis-aligned copper box) of a loaded board."""
+    import pcbnew as pcb
+    table = {}
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            if pad.GetNumber():
+                bb = pad.GetBoundingBox()
+                table[(fp.GetReference(), pad.GetNumber())] = dict(bbox=[pcb.ToMM(bb.GetX()), pcb.ToMM(bb.GetY()), pcb.ToMM(bb.GetRight()), pcb.ToMM(bb.GetBottom())],
+                                                                    net=pad.GetNetname())
+    return table
+
+
 def pad_table(board) -> dict:
     """(ref, number) -> dict(xy, net, thru) from a loaded board."""
     import pcbnew as pcb
@@ -1433,13 +1850,21 @@ def rail_items(board) -> list[dict]:
     return items
 
 
-def copper_obstacles(board) -> list[dict]:
-    """Every via and plated through pad on the board with its copper radius: In2.Cu corridor obstacles."""
+def copper_obstacles(board, track_sample_mm: float = 0.25) -> list[dict]:
+    """Every via and plated through pad on the board with its copper radius, plus the tracks on the island layer sampled
+    every ``track_sample_mm`` as discs of half their width: In2.Cu corridor obstacles."""
     import pcbnew as pcb
     items = []
+    island_layer = board.GetLayerID(ISLAND_LAYER)
     for item in board.GetTracks():
         if isinstance(item, pcb.PCB_VIA):
             items.append(dict(net=item.GetNetname(), xy=[round(v, 4) for v in pcb.ToMM(item.GetPosition())], r=round(pcb.ToMM(item.GetWidth(getattr(pcb, ISLAND_LAYER.replace('.', '_')))) / 2, 4)))
+        elif item.GetLayer() == island_layer:
+            a, b = pcb.ToMM(item.GetStart()), pcb.ToMM(item.GetEnd())
+            steps = max(1, int(math.ceil(math.dist(a, b) / track_sample_mm - 1e-9)))
+            radius = round(pcb.ToMM(item.GetWidth()) / 2, 4)
+            for i in range(steps + 1):
+                items.append(dict(net=item.GetNetname(), xy=[round(a[0] + (b[0] - a[0]) * i / steps, 4), round(a[1] + (b[1] - a[1]) * i / steps, 4)], r=radius, kind='track'))
     for fp in board.GetFootprints():
         for pad in fp.Pads():
             if pad.GetAttribute() == pcb.PAD_ATTRIB_PTH:
@@ -1484,9 +1909,11 @@ def prune_dangling(board, protected_nets=()) -> dict:
         via_keys = {(v.GetNetCode(), v.GetPosition().x, v.GetPosition().y) for v in vias}
         changed = False
         for t in tracks:  # every net: a track end connects only to another track end, a via or a pad (zones connect vias)
+            half = t.GetWidth() // 2  # a wide cross piece ending between two same-net pads still overlaps both pads
+            layer = t.GetLayer()
             for pt in (t.GetStart(), t.GetEnd()):
                 key = (t.GetNetCode(), pt.x, pt.y)
-                if ends[key] > 1 or key in via_keys or any(pad.HitTest(pt) for pad in pads_by_code[t.GetNetCode()]):
+                if ends[key] > 1 or key in via_keys or any(pad.IsOnLayer(layer) and pad.HitTest(pt, half) for pad in pads_by_code[t.GetNetCode()]):
                     continue
                 board.Remove(t)
                 removed['tracks'] += 1
@@ -1504,7 +1931,7 @@ def prune_dangling(board, protected_nets=()) -> dict:
             pos = v.GetPosition()
             layers = set(layers_at.get((v.GetNetCode(), pos.x, pos.y), set()))
             for pad in pads_by_code[v.GetNetCode()]:
-                if pad.HitTest(pos):
+                if pad.HitTest(pos, v.GetWidth(pcb.F_Cu) // 2):
                     layers.update(layer for layer in (pcb.F_Cu, pcb.B_Cu) if pad.IsOnLayer(layer))
             if len(layers) < 2:  # connected on one layer only (KiCad: via_dangling)
                 board.Remove(v)
@@ -1524,6 +1951,373 @@ def add_zones(board, zones: list[dict], save_path: Path) -> dict:
                     min_thickness=ZONE_MIN_THICKNESS)
     router.fill()
     return gr.save_and_reload(board, save_path)
+
+
+def refill_zones(board):
+    """Rebuild connectivity and refill every zone (copper was added or removed outside a grid_router pass)."""
+    import pcbnew as pcb
+    board.BuildConnectivity()
+    pcb.ZONE_FILLER(board).Fill(board.Zones())
+
+
+def through_items(board) -> list[dict]:
+    """Vias and plated through pads {net, xy, kind}: the only copper a single-layer inner route can start or end on."""
+    import pcbnew as pcb
+    items = []
+    for item in board.GetTracks():
+        if isinstance(item, pcb.PCB_VIA):
+            items.append(dict(net=item.GetNetname(), xy=[round(v, 4) for v in pcb.ToMM(item.GetPosition())], kind='via'))
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            if pad.GetAttribute() == pcb.PAD_ATTRIB_PTH and pad.GetNetname():
+                items.append(dict(net=pad.GetNetname(), xy=[round(v, 4) for v in pcb.ToMM(pad.GetPosition())], kind=f'pad {fp.GetReference()}.{pad.GetNumber()}'))
+    return items
+
+
+def group_components(records: list[dict]) -> list[list[dict]]:
+    """Connected groups of copper ``records`` by coincident geometry (pure). A record is dict(kind, pos=(x, y)[, layer][, hits]):
+    track ends ('end', one per end, with its layer) join other ends of the same layer at the same position; vias and plated
+    pads ('via' / 'pth', no layer) join everything at their position; ``hits`` names the record ids a pad overlaps. Positions
+    coincide within 1e-3 mm. Each record carries ``id`` (the owning item); the groups are lists of records."""
+    parent = {}
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    def union(i, j):
+        ri, rj = find(i), find(j)
+        if ri != rj:
+            parent[ri] = rj
+    for r in records:
+        parent.setdefault(r['id'], r['id'])
+    by_pos = {}
+    for r in records:
+        key = (round(r['pos'][0] * 1000), round(r['pos'][1] * 1000))
+        by_pos.setdefault(key, []).append(r)
+    for group in by_pos.values():
+        anchors = [r for r in group if r.get('layer') is None]
+        by_layer = {}
+        for r in group:
+            if r.get('layer') is not None:
+                by_layer.setdefault(r['layer'], []).append(r)
+        for same in by_layer.values():
+            for r in same[1:]:
+                union(same[0]['id'], r['id'])
+        for a in anchors:
+            for r in group:
+                union(a['id'], r['id'])
+    for r in records:
+        for other in r.get('hits', ()):
+            if other in parent:
+                union(r['id'], other)
+    groups = {}
+    for r in records:
+        groups.setdefault(find(r['id']), []).append(r)
+    return list(groups.values())
+
+
+def net_components(board, net) -> list[dict]:
+    """Copper groups of ``net`` on ``board`` (tracks, vias, pads) by coincident geometry: [{points: {(x, y)}, through: [{xy, kind}]}].
+    Track ends meet on one layer, vias and plated pads on every layer, a pad takes the track ends and via centres it covers."""
+    import pcbnew as pcb
+    mm = pcb.ToMM
+    records = []
+    tracks = [item for item in board.GetTracks() if item.GetNetname() == net]
+    pads = [pad for pad in board.GetPads() if pad.GetNetname() == net]
+    for index, item in enumerate(tracks):
+        tid = ('t', index)
+        if isinstance(item, pcb.PCB_VIA):
+            records.append(dict(id=tid, kind='via', pos=tuple(round(v, 4) for v in mm(item.GetPosition()))))
+        else:
+            for pt in (item.GetStart(), item.GetEnd()):
+                records.append(dict(id=tid, kind='end', pos=tuple(round(v, 4) for v in mm(pt)), layer=item.GetLayer()))
+    for index, pad in enumerate(pads):
+        pid = ('p', index)
+        pth = pad.GetAttribute() == pcb.PAD_ATTRIB_PTH
+        hits = set()
+        for tindex, item in enumerate(tracks):
+            if isinstance(item, pcb.PCB_VIA):
+                if pth and pad.HitTest(item.GetPosition()):
+                    hits.add(('t', tindex))
+            elif any((pth or pad.IsOnLayer(item.GetLayer())) and pad.HitTest(pt) for pt in (item.GetStart(), item.GetEnd())):
+                hits.add(('t', tindex))
+        records.append(dict(id=pid, kind='pth' if pth else 'smd', pos=tuple(round(v, 4) for v in mm(pad.GetPosition())),
+                            layer=None if pth else pad.GetLayer(), hits=hits, label=f'pad {pad.GetParentFootprint().GetReference()}.{pad.GetNumber()}'))
+    components = []
+    for group in group_components(records):
+        points = {r['pos'] for r in group}
+        through = []
+        seen = set()
+        for r in group:
+            if r['kind'] in ('via', 'pth') and r['pos'] not in seen:
+                seen.add(r['pos'])
+                through.append(dict(xy=list(r['pos']), kind=r.get('label', 'via')))
+        components.append(dict(points=points, through=through))
+    return components
+
+
+def component_through_items(components: list[dict], xy, tolerance: float = 1e-3) -> list[dict]:
+    """Through items (vias, plated pads) of the copper group that contains the point ``xy`` (pure)."""
+    for component in components:
+        if any(abs(px - xy[0]) < tolerance and abs(py - xy[1]) < tolerance for px, py in component['points']):
+            return list(component['through'])
+    return []
+
+
+def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: dict | None = None, layer: str = ISLAND_LAYER) -> dict:
+    """Route whole ``nets`` and single unresolved F.Cu/B.Cu connections (grid_router 'route' records) as tracks on the island
+    layer with a single-layer grid_router pass: every rail island polygon (inflated by INNER_KEEPOUT_MARGIN) is a keepout, so is
+    the INNER_EDGE_BAND around it except for each port's straight exit channel (band_keepouts), vias and plated pads are obstacles
+    at INNER_CLEARANCE. Each connection is tried as a Z (inner_route_waypoints: leave the first port straight along its channel
+    axis, turn where the fewest through items lie) and then directly. ``port_hints`` {net: [[x, y], ...]} are escape via positions
+    the F.Cu/B.Cu pass pruned (their grid cells stayed reserved for the net): they are re-created for a whole net, and at a fallback
+    port when inner_via_fits allows it. Fallback connections carry their source record under ``source``.
+    Returns dict(layer, keepouts, band_keepouts, channels, tracks, vias_added, routed=[{net, kind, start, end, waypoints, length_mm}],
+    failed=[...]).
+    """
+    wanted = list(dict.fromkeys(list(nets) + [u['net'] for u in unresolved]))
+    result = dict(layer=layer, keepouts=0, band_keepouts=0, channels=[], tracks=0, vias_added=[], routed=[], failed=[])
+    if not wanted:
+        return result
+    router = gr.Router(board, WIDTH, HEIGHT, [layer], grid=GRID, trace=ROUTER_TRACE, clearance=CLEARANCE, via=VIA,
+                       net_rules={net: dict(clearance=INNER_CLEARANCE) for net in wanted}, board_margin=BOARD_MARGIN,
+                       hole_clearance=HOLE_CLEARANCE, max_nodes=MAX_NODES)
+    island_rects = []
+    for net, polygon in candidate['islands'].items():
+        if polygon == 'background':
+            continue
+        for rect in rectilinear_rectangles(polygon):
+            island_rects.append(rect)
+            x0, y0, x1, y1 = rect
+            router.keepout(0, x0 - INNER_KEEPOUT_MARGIN, y0 - INNER_KEEPOUT_MARGIN, x1 + INNER_KEEPOUT_MARGIN, y1 + INNER_KEEPOUT_MARGIN, -1)
+            result['keepouts'] += 1
+    items = through_items(board)
+
+    def at(net, xy, tolerance=0.1):
+        return [it for it in items if it['net'] == net and math.dist(it['xy'], xy) < tolerance]
+
+    def port(xy):
+        gx, gy = router.to_grid(*xy)
+        return (gx, gy, 0, 'INNER', '')
+
+    # ---- the connections to route (no copper yet except re-created escape vias) --------------------------------------------
+    connections = []  # (net, kind, a, b, extra)
+    for net in nets:
+        if net not in router.code:
+            result['failed'].append(dict(net=net, kind='net', reason='net not on the board'))
+            continue
+        for xy in (port_hints or {}).get(net, []):
+            if not at(net, xy, 1e-3):
+                router.via(tuple(xy), net)
+                items.append(dict(net=net, xy=[round(v, 4) for v in xy], kind='via'))
+                result['vias_added'].append(dict(net=net, xy=[round(v, 4) for v in xy], kind='net'))
+        anchors = [list(it['xy']) for it in sorted((it for it in items if it['net'] == net), key=lambda it: (0 if it['kind'] == 'via' else 1, it['xy']))]
+        if len(anchors) < 2:
+            result['failed'].append(dict(net=net, kind='net', reason=f'{len(anchors)} through item(s) of {net}: nothing to join on {layer}'))
+            continue
+        connected, rest = [anchors[0]], anchors[1:]
+        while rest:  # nearest-first chain; a two-pin net is one connection starting at its escape via
+            _, a, b = min((abs(a[0] - b[0]) + abs(a[1] - b[1]), a, b) for a in connected for b in rest)
+            connections.append((net, 'net', a, b, {}))
+            connected.append(b)
+            rest.remove(b)
+    for u in unresolved:
+        net = u['net']
+        if net not in router.code:
+            continue
+        a, b = [round(v, 4) for v in router.to_mm(*u['start'][:2])], [round(v, 4) for v in router.to_mm(*u['end'][:2])]
+        recreated = []
+        components = None
+
+        def outside_islands(xy):
+            return not any(x0 - INNER_KEEPOUT_MARGIN <= xy[0] <= x1 + INNER_KEEPOUT_MARGIN and y0 - INNER_KEEPOUT_MARGIN <= xy[1] <= y1 + INNER_KEEPOUT_MARGIN
+                           for x0, y0, x1, y1 in island_rects)
+
+        def candidates(xy, other):
+            """Through items usable as this side's port: the point itself, a re-created escape via there, or the through items
+            of the point's own copper group (nearest to the other side first), all outside the island keepouts."""
+            nonlocal components
+            if at(net, xy):
+                return [list(xy)]
+            if any(math.dist(xy, hint) < 1e-3 for hint in (port_hints or {}).get(net, [])) and inner_via_fits(router, board, net, xy, layer):
+                if router.via(tuple(xy), net) is not None:  # a pruned escape via: its F.Cu pad track is still there, the grid cell stayed reserved
+                    items.append(dict(net=net, xy=[round(v, 4) for v in xy], kind='via'))
+                    result['vias_added'].append(dict(net=net, xy=[round(v, 4) for v in xy], kind='fallback'))
+                recreated.append([round(v, 4) for v in xy])
+                return [list(xy)]
+            if components is None:
+                components = net_components(board, net)
+            through = [list(it['xy']) for it in component_through_items(components, xy) if outside_islands(it['xy'])]
+            return sorted(through, key=lambda p: (abs(p[0] - other[0]) + abs(p[1] - other[1]), p))
+        starts, ends = candidates(a, b), candidates(b, a)
+        if not starts or not ends:
+            result['failed'].append(dict(net=net, kind='fallback', start=a, end=b, source=dict(u),
+                                         reason=f'no via or plated pad of {net} in the copper group of {[xy for xy, c in ((a, starts), (b, ends)) if not c]}'))
+            continue
+        _, a2, b2 = min((abs(s[0] - e[0]) + abs(s[1] - e[1]), s, e) for s in starts[:6] for e in ends[:6])
+        connections.append((net, 'fallback', a2, b2, dict(source=dict(u), vias_recreated=recreated, recorded_ports=[a, b])))
+    # ---- island edge bands, open only along each port's exit channel -----------------------------------------------------------
+    ports = [c[2] for c in connections] + [c[3] for c in connections]
+    band_rects, channels = band_keepouts(island_rects, ports)
+    for x0, y0, x1, y1 in band_rects:
+        router.keepout(0, x0, y0, x1, y1, -1)
+    result['band_keepouts'] = len(band_rects)
+    result['band_mm'] = INNER_EDGE_BAND
+    result['channels'] = [dict(port=list(key), axis=axis, direction=sign, rect=[round(v, 4) for v in rect]) for key, (rect, axis, sign) in sorted(channels.items())]
+
+    def connect(net, kind, a, b, **extra):
+        before, length_before = len(router.unresolved), router.length[net]
+        channel = channels.get((round(a[0], 4), round(a[1], 4)))
+        axis, direction, search = 'y', None, INNER_TURN_SEARCH
+        if channel is not None:  # leave straight through the channel; the first turn lies beyond its far end
+            rect, axis, direction = channel
+            reach = ((rect[2] - a[0]) if direction > 0 else (a[0] - rect[0])) if axis == 'x' else ((rect[3] - a[1]) if direction > 0 else (a[1] - rect[1]))
+            search = (max(INNER_TURN_SEARCH[0], reach + 2 * GRID), INNER_TURN_SEARCH[1], INNER_TURN_SEARCH[2])
+        waypoints = inner_route_waypoints(a, b, items, axis=axis, direction=direction, search=search)
+        failures = router.route_net(net, ports=[port(p) for p in waypoints], layers=(0,), allow_front_fallback=False)
+        if failures and len(waypoints) > 2:  # a leg of the Z is blocked: plain A* between the two ports (prune_dangling drops leftover legs)
+            waypoints = [waypoints[0], waypoints[-1]]
+            failures = router.route_net(net, ports=[port(p) for p in waypoints], layers=(0,), allow_front_fallback=False)
+        del router.unresolved[before:]
+        record = dict(net=net, kind=kind, start=[round(v, 4) for v in a], end=[round(v, 4) for v in b], waypoints=waypoints, axis=axis, direction=direction,
+                      length_mm=round(router.length[net] - length_before, 3), **extra)
+        if failures:
+            record['reason'] = 'no path on the inner layer within the via/pad/island/band constraints'
+        (result['failed'] if failures else result['routed']).append(record)
+        return not failures
+
+    for net, kind, a, b, extra in connections:
+        connect(net, kind, a, b, **extra)
+    result['tracks'] = int(router.stats['tracks'])
+    return result
+
+
+def connectivity_unconnected(board) -> int:
+    """KiCad's own count of missing connections (ratsnest lines) on ``board`` after a connectivity rebuild - the same figure the
+    DRC reports as unconnected items; zone fills count as copper."""
+    board.BuildConnectivity()
+    return int(board.GetConnectivity().GetUnconnectedCount(False))
+
+
+def point_segment_distance(px: float, py: float, ax: float, ay: float, bx: float, by: float) -> float:
+    """Distance from point (px, py) to the segment (ax, ay)-(bx, by)."""
+    dx, dy = bx - ax, by - ay
+    length2 = dx * dx + dy * dy
+    t = 0.0 if length2 <= 0 else max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / length2))
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def inner_via_fits(router, board, net, xy, layer: str) -> bool:
+    """A via re-created at ``xy`` for ``net`` keeps the inner router's via rules (other vias, holes, regions) and INNER_CLEARANCE
+    to every other-net track on the inner ``layer``. The F.Cu/B.Cu copper around a pruned escape via is unchanged: the outer
+    stages kept its grid cell reserved for the net after prune_unused_vias."""
+    import pcbnew as pcb
+    gx, gy = router.to_grid(*xy)
+    if not router.via_allowed(gx, gy, net):
+        return False
+    layer_id = board.GetLayerID(layer)
+    for item in board.GetTracks():
+        if isinstance(item, pcb.PCB_VIA) or item.GetLayer() != layer_id or item.GetNetname() == net:
+            continue
+        a, b = pcb.ToMM(item.GetStart()), pcb.ToMM(item.GetEnd())
+        gap = point_segment_distance(xy[0], xy[1], a[0], a[1], b[0], b[1]) - pcb.ToMM(item.GetWidth()) / 2 - VIA[0] / 2
+        if gap < INNER_CLEARANCE - 1e-9:
+            return False
+    return True
+
+
+def fill_slivers(board, max_area: float = SLIVER_AREA_MM2) -> list[dict]:
+    """Rail-zone fill outlines on the island layer below ``max_area`` mm2 (review LR-15 fragments), with their bounding boxes."""
+    import pcbnew as pcb
+    layer = board.GetLayerID(ISLAND_LAYER)
+    found = []
+    for zone in board.Zones():
+        if zone.GetNetname() not in RAILS or not zone.IsOnLayer(layer):
+            continue
+        filled = zone.GetFilledPolysList(layer)
+        for i in range(filled.OutlineCount()):
+            outline = filled.Outline(i)
+            area = abs(outline.Area()) / 1e12
+            if area < max_area:
+                bb = outline.BBox()
+                found.append(dict(net=zone.GetNetname(), priority=int(zone.GetAssignedPriority()), area_mm2=round(area, 5),
+                                  bbox=[round(pcb.ToMM(bb.GetX()), 4), round(pcb.ToMM(bb.GetY()), 4), round(pcb.ToMM(bb.GetRight()), 4), round(pcb.ToMM(bb.GetBottom()), 4)]))
+    return found
+
+
+def trim_fill_slivers(board, corridors: list[dict], save_path: Path, *, step: float = SLIVER_TRIM_STEP, rounds: int = SLIVER_TRIM_ROUNDS) -> dict:
+    """Widen the same-net corridor edge next to every In2.Cu fill sliver by ``step``, refill and repeat (at most ``rounds`` times).
+
+    Corridor records are matched to their board zones by net and priority (distinct per corridor) and their polygons are
+    updated in place, so the rail-coverage check and the routing-plan record see the trimmed geometry. A nudge that would
+    put the corridor within ZONE_CLEARANCE of an other-net corridor is skipped and listed. Returns dict(rounds=[sliver count
+    per round], adjusted=[...], skipped=[...], remaining=[slivers left], saved=counts | None)."""
+    import pcbnew as pcb
+    layer = board.GetLayerID(ISLAND_LAYER)
+    zones = {(z.GetNetname(), int(z.GetAssignedPriority())): z for z in board.Zones() if z.IsOnLayer(layer)}
+    counts, adjusted, skipped = [], [], []
+    for round_index in range(rounds + 1):
+        slivers = fill_slivers(board)
+        counts.append(len(slivers))
+        if not slivers or round_index == rounds:
+            break
+        moved = 0
+        for sliver in slivers:
+            for record in corridors:
+                if record['net'] != sliver['net']:
+                    continue
+                rect = polygon_bbox(record['polygon'])
+                edge = sliver_edge(rect, sliver['bbox'])
+                if edge is None:
+                    continue
+                new_rect = widened(rect, edge, step)
+                if any(other['net'] != record['net'] and boxes_overlap(new_rect, polygon_bbox(other['polygon']), ZONE_CLEARANCE, ZONE_CLEARANCE) for other in corridors):
+                    skipped.append(dict(net=record['net'], xy=record['xy'], edge=edge, reason='would come within the zone clearance of an other-net corridor', sliver=sliver))
+                    continue
+                zone = zones.get((record['net'], int(record['priority'])))
+                if zone is None:
+                    skipped.append(dict(net=record['net'], xy=record['xy'], edge=edge, reason='corridor zone not found on the board', sliver=sliver))
+                    continue
+                record['polygon'] = [[new_rect[0], new_rect[1]], [new_rect[2], new_rect[1]], [new_rect[2], new_rect[3]], [new_rect[0], new_rect[3]]]
+                record['sliver_trim_mm'] = round(record.get('sliver_trim_mm', 0.0) + step, 4)
+                outline = zone.Outline()
+                outline.RemoveAllContours()
+                outline.NewOutline()
+                for x, y in record['polygon']:
+                    outline.Append(pcb.FromMM(x), pcb.FromMM(y))
+                adjusted.append(dict(net=record['net'], xy=record['xy'], priority=record['priority'], edge=edge, step_mm=step, sliver_mm2=sliver['area_mm2'], sliver_bbox=sliver['bbox']))
+                moved += 1
+        if not moved:
+            break
+        refill_zones(board)
+    saved = gr.save_and_reload(board, save_path) if adjusted else None
+    return dict(rounds=counts, adjusted=adjusted, skipped=skipped, remaining=fill_slivers(board), saved=saved)
+
+
+def rail_zone_outlines(board) -> list[dict]:
+    """Filled-outline statistics of every rail zone on the island layer: outline count, outlines above 1 mm2 (the rest are
+    fill slivers) and the largest outline's area. Island zones are expected to fill as one outline; the 3V3 background may
+    carry more where corridor zones or tracks separate same-net fragments."""
+    layer = board.GetLayerID(ISLAND_LAYER)
+    rows = []
+    for zone in board.Zones():
+        if zone.GetNetname() not in RAILS or not zone.IsOnLayer(layer):
+            continue
+        filled = zone.GetFilledPolysList(layer)
+        areas = []
+        for i in range(filled.OutlineCount()):
+            try:
+                areas.append(abs(filled.Outline(i).Area()) / 1e12)
+            except Exception:  # noqa: BLE001 - SWIG surface differences between KiCad builds
+                areas.append(None)
+        known = [a for a in areas if a is not None]
+        rows.append(dict(net=zone.GetNetname(), priority=int(zone.GetAssignedPriority()), outlines=int(filled.OutlineCount()),
+                         outlines_over_1mm2=sum(1 for a in known if a > 1.0) if known else None,
+                         largest_mm2=round(max(known), 1) if known else None, area_mm2=round(filled.Area() / 1e12, 1)))
+    return sorted(rows, key=lambda r: (r['net'], r['priority']))
 
 
 # --- comparison metrics ------------------------------------------------------------------------------------------------
@@ -1687,20 +2481,52 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     ic_escapes = fine_pitch_ic_escapes(loaded, parts, blocked=[e['via'] for e in escapes]) if PREROUTE_ICS else {}
     lanes = lane_plan(escapes, lane_destinations(escapes, table, candidate['dsp']['ref']), centre)
     dsp_signal_nets = dsp_net_order(escapes, table, centre, lanes)
+    # candidate pre-routed copper (12V_IN bus, 5 V buck hot loop, eFuse output via group) and exposed-pad via arrays
+    extra = candidate_pre_routed(candidate, table)
+    arrays = exposed_pad_arrays(pad_boxes(loaded), candidate, plane_nets=set(RAILS) | {GROUND})
+    extra['tracks'] += arrays['tracks']
+    extra['vias'] += arrays['vias']
+    extra['skip_pads'] += arrays['skip_pads']
+    inpad = [] if candidate.get('exposed_pad_vias') else None
     plan = routing_plan(candidate, escapes, output_pcb, ic_refs=ic_refs, ic_escapes=ic_escapes, dsp_centre=centre, dsp_signal_nets=dsp_signal_nets,
-                        lanes=lanes)
+                        lanes=lanes, extra=extra, inpad_vias=inpad)
+    result['pre_routed_copper'] = dict(candidate_tracks=len(extra['tracks']) - len(arrays['tracks']), candidate_vias=len(extra['vias']) - len(arrays['vias']),
+                                       skip_pads=extra['skip_pads'], exposed_pad_arrays=arrays['records'])
     if plan_filter is not None:  # diagnostics hook (tests, experiments): may restrict or adjust the plan before routing
         plan = plan_filter(plan)
     plan['escape_distances'] = list(ESCAPE_DISTANCES)  # recorded in the plan file; applied to the router module below
-    default_distances = gr.ESCAPE_DISTANCES
+    default_distances, default_router = gr.ESCAPE_DISTANCES, gr.Router
     gr.ESCAPE_DISTANCES = tuple(ESCAPE_DISTANCES)
+    gr.Router = LadderRouter  # rip-up negotiation with RIPUP_PENALTY_LADDER; the shared module itself is unchanged
     try:
         report = gr.run_plan(loaded, {k: v for k, v in plan.items() if k != 'escape_distances'})
     finally:
         gr.ESCAPE_DISTANCES = default_distances
+        gr.Router = default_router
+    report['ripup_penalty_ladder'] = [round(float(plan.get('ripup_penalty', 40.0)) * m, 3) for m in RIPUP_PENALTY_LADDER]
+    report['shared_router_sha256'] = hashlib.sha256(Path(gr.__file__).read_bytes()).hexdigest()  # grid_router.py is edited by the power-board agent
+    # ---- stage 1b: In2.Cu pass for the inner-layer nets and the connections the F.Cu/B.Cu stages left unresolved ------
+    board_nets = {p['net'] for p in table.values()}
+    inner_nets = [net for net in INNER_SIGNAL_NETS if net in board_nets]
+    hints = {}  # every DSP escape via: the In2.Cu pass re-creates one the F.Cu/B.Cu stage pruned when a route needs it as a port
+    for e in escapes:
+        hints.setdefault(e['net'], []).append(list(e['via']))
+    leftovers = [u for u in report.get('unresolved', []) if u.get('stage') == 'route'] if INNER_LAYER_FALLBACK else []
+    inner = inner_layer_route(loaded, inner_nets, leftovers, candidate, port_hints=hints)
+    inner['port_hints'] = sum(len(v) for v in hints.values())
+    resolved = [r['source'] for r in inner['routed'] if r.get('kind') == 'fallback']
+    report['unresolved'] = [u for u in report.get('unresolved', []) if u not in resolved]
+    report['inner_layer'] = inner
+    report['tracks'] = int(report.get('tracks') or 0) + inner['tracks']
+    report['vias'] = int(report.get('vias') or 0) + len(inner['vias_added'])
+    for r in inner['routed']:
+        report.setdefault('net_length_mm', {})[r['net']] = round(report['net_length_mm'].get(r['net'], 0.0) + r['length_mm'], 3)
     pruned = prune_dangling(loaded, protected_nets=set(RAILS) | {GROUND})
     report['pruned_dangling'] = pruned
-    if pruned['tracks'] or pruned['vias']:
+    inner_copper = bool(inner['routed'] or inner['vias_added'])
+    if inner_copper:
+        refill_zones(loaded)  # the island fills step back from the new In2.Cu copper (zone clearance 0.25 mm)
+    if pruned['tracks'] or pruned['vias'] or inner_copper:
         report['saved'] = gr.save_and_reload(loaded, output_pcb)
     if inject_stackup(output_pcb):
         report['stackup_reinjected'] = True
@@ -1708,19 +2534,23 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     # ---- stage 2: corridor zones for rail copper outside its island ------------------------------------------------
     board2 = pcb.LoadBoard(str(output_pcb))
     items = rail_items(board2)
-    corridor_result = island_corridors(items, candidate['islands'], obstacles=copper_obstacles(board2))
+    corridor_result = island_corridors(items, candidate['islands'], obstacles=copper_obstacles(board2), half_width_by_net=CORRIDOR_HALF_WIDTH_BY_NET)
     if corridor_result['corridors']:
         corridor_result['saved'] = add_zones(board2, corridor_result['corridors'], output_pcb)
+        corridor_result['sliver_trim'] = trim_fill_slivers(board2, corridor_result['corridors'], output_pcb)  # review LR-15
     uncovered = uncovered_rail_items(items, candidate['islands'], corridor_result['corridors'])
     fanout_rail_failures = rail_smd_pads_without_via(board2, report)
     final_board = pcb.LoadBoard(str(output_pcb))
     board_counts = dict(tracks=sum(1 for t in final_board.GetTracks() if not isinstance(t, pcb.PCB_VIA)),
                         vias=sum(1 for t in final_board.GetTracks() if isinstance(t, pcb.PCB_VIA)), zones=len(list(final_board.Zones())))
+    result['connectivity_unconnected'] = connectivity_unconnected(final_board)  # KiCad's ratsnest count on the finished copper (0 expected)
     result.update(escapes=dict(records=escapes, inward=sum(e['direction'] == 'in' for e in escapes), outward=sum(e['direction'] == 'out' for e in escapes),
+                               candidate_pre_routed=result.get('pre_routed_copper'),
                                exceptions=[e for e in escapes if e['exception']], stubs=sum(1 for t in plan['pre_routed']['tracks'] if t['layer'] == 'B.Cu'),
                                lanes=lanes, ic_escapes={ref: len(recs) for ref, recs in ic_escapes.items()}),
                   routing_plan=plan, report=report, corridors=corridor_result, board_counts=board_counts,
-                  rail_items_without_island_or_corridor=uncovered, rail_fanout_failures=fanout_rail_failures)
+                  rail_items_without_island_or_corridor=uncovered, rail_fanout_failures=fanout_rail_failures,
+                  rail_zone_outlines=rail_zone_outlines(final_board))
     # ---- metrics and DRC --------------------------------------------------------------------------------------------
     if metrics:
         result['layout_metrics'] = checker_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label)
@@ -1759,6 +2589,10 @@ def write_routing_outputs(result: dict, candidate: dict):
                                          lanes=result['escapes'].get('lanes', {}), exceptions=result['escapes']['exceptions'],
                                          records=result['escapes']['records']),
                     fine_pitch_ic_escapes=result['escapes']['ic_escapes'],
+                    stage1b_inner_layer_pass=dict(layer=ISLAND_LAYER, nets=list(INNER_SIGNAL_NETS), fallback_for_unresolved=INNER_LAYER_FALLBACK,
+                                                  keepout_margin_mm=INNER_KEEPOUT_MARGIN, clearance_mm=INNER_CLEARANCE, turn_search_mm=list(INNER_TURN_SEARCH),
+                                                  edge_band_mm=INNER_EDGE_BAND, channel_half_width_mm=INNER_CHANNEL_HALF_WIDTH,
+                                                  result=result['report'].get('inner_layer')),
                     notes=NOTES)
     (DESIGN_DIR / 'routing_plan_control.json').write_text(json.dumps(plan_doc, indent=2) + '\n', encoding='utf-8')
     report = result['report']
@@ -1770,10 +2604,16 @@ def write_routing_outputs(result: dict, candidate: dict):
                     router_report_counts=dict(tracks=report.get('tracks'), vias=report.get('vias'), zones=report.get('zones')),
                     pruned_vias=report.get('pruned'), pruned_dangling=report.get('pruned_dangling'),
                     unresolved=report.get('unresolved'), unresolved_count=len(report.get('unresolved', [])),
+                    signal_order_trials=report.get('signal_order_trials'), signal_order_selected=report.get('signal_order_selected'),
+                    ripup_rounds=report.get('ripup_rounds'), ripup_penalty_ladder=report.get('ripup_penalty_ladder'),
+                    shared_router_sha256=report.get('shared_router_sha256'),
                     net_length_mm=report.get('net_length_mm'), grid=report.get('grid'), routing_seconds=report.get('seconds'),
+                    inner_layer=report.get('inner_layer'),
                     corridor_zones=len(result['corridors']['corridors']), corridor_issues=result['corridors']['issues'],
+                    sliver_trim=result['corridors'].get('sliver_trim'),
                     rail_items_without_island_or_corridor=result['rail_items_without_island_or_corridor'],
-                    rail_fanout_failures=result['rail_fanout_failures'],
+                    rail_fanout_failures=result['rail_fanout_failures'], rail_zone_outlines=result.get('rail_zone_outlines'),
+                    connectivity_unconnected=result.get('connectivity_unconnected'),
                     drc=result.get('drc'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                     evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
     (VERIFICATION_DIR / 'routing_progress_control.json').write_text(json.dumps(progress, indent=2, default=str) + '\n', encoding='utf-8')
@@ -1892,7 +2732,8 @@ def summary_line(result: dict) -> str:
     counts = result.get('board_counts') or report
     drc = result.get('drc') or {}
     return (f"candidate {result['candidate']}: {result['footprints']} footprints, {counts.get('tracks')} tracks, {counts.get('vias')} vias, "
-            f"{counts.get('zones')} zones, {len(report.get('unresolved', []))} unresolved, {len(result.get('corridors', {}).get('corridors', []))} corridors, "
+            f"{counts.get('zones')} zones, {len(report.get('unresolved', []))} unresolved, "
+            f"{len((report.get('inner_layer') or {}).get('routed', []))} In2.Cu routes, {len(result.get('corridors', {}).get('corridors', []))} corridors, "
             f"{len(result.get('rail_items_without_island_or_corridor', []))} rail items without island/corridor; "
             f"DRC {drc.get('status')} findings={drc.get('finding_count')} (violations {drc.get('violations')}, unconnected {drc.get('unconnected_items')}, "
             f"parity {drc.get('schematic_parity')}) manifest={drc.get('manifest')}; {result['seconds']} s")

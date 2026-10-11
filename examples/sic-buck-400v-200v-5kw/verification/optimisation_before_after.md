@@ -190,3 +190,120 @@ Checker rows (power spec, corrected per LR-08):
 | LR-17 | note | False | {'status': 'not applied - library-level, open', 'detail': 'U1, U3, Y1 3D models are absent from the KiCad 10.0.7 bundle; libraries are frozen for the layout agents. STEP/renders still show the three parts bodiless.'} |
 | LR-18 | note | False | {'status': 'not applied - documentation/mechanical, open', 'detail': "architecture.md / pcb_stackup.md overhang and hole pattern text not changed (docs are frozen for this agent). Power-board J7 and H8-H11 were placed from the control board's J8 pin 1 (28.0, 74.0) and H3/H4 as proposed."} |
 | LR-19 | note | True | {'status': 'applied', 'detail': 'run_check manifests now carry report_sha256 and finding_counts (violations / unconnected_items / schematic_parity); verify_sic_buck.py recomputes the report hash (report_hash_checked).'} |
+
+---
+
+# Pass 2 - second independent review (LR-20..LR-35): measured before / after
+
+Generated 2026-10-11T05:46:20.198889+00:00 by `automation/scripts/optimisation_report_sic_pass2.py`. "Before" are the boards the second review judged (power sha256 `ae0f05d86ac6a104...`, control `dead06ed18d85154...`), "after" the current board files. Neck widths are erosion-connectivity measurements on the STORED fills (largest 2r for which the two named points stay connected after eroding the layer copper by r); hole and courtyard distances are copper / courtyard geometry. Only the DRC manifests are verification; the stored-fill rows are diagnostics.
+
+## Power board
+
+| Metric | Before (reviewed board) | After |
+|---|---|---|
+| Board sha256 | ae0f05d86ac6a104... | b1bb5698194b9aea... |
+| Tracks / vias / zone layers / rule areas | 4752 / 574 / 20 / 12 | 4755 / 606 / 20 / 16 |
+| Total track length (mm) | 5690.3 | 5744.6 |
+| DRC violations / unconnected / parity (run_check, --refill-zones) | 0 / 0 / 0 | 0 / 0 / 0 |
+| DRC manifest | verification/drc/20261011T021012Z-drc-0ebee900/run.json | verification/drc/20261011T054445Z-drc-d0914d79/run.json |
+| Stored fills checked WITHOUT refill: clearance findings (LR-20, diagnostic) | 499 | 0 (by rule: {}) |
+| Fill areas (mm2) VIN F.Cu / VIN In2 / PGND In1 / PGND B.Cu / SW In2 | 5690.4 / 19890.0 / 30559.6 / 10558.5 / 2085.8 | 4530.4 / 16940.0 / 28679.7 / 9042.0 / 3236.6 |
+| HS1 hole wall to HV copper, min per layer F / In1 / In2 / B (mm) (LR-21) | 8.85 / 0.25 / 0.25 / 9.0 | 8.85 / 5.1 / 5.1 / 9.0 |
+| Neck width PGND J2 -> Q2.2 In1.Cu (mm) | 4.56 | 24.22 |
+| Neck width PGND J2 -> C1.2 In1.Cu (mm) | 4.56 | 24.22 |
+| Neck width PGND J4 -> Q2.2 In1.Cu (mm) | 40.0 | 38.53 |
+| Neck width PGND J2 -> Q2.2 B.Cu (mm) | 0.0 | 0.0 |
+| Neck width PGND J2 -> C1.2 B.Cu (mm) | 0.0 | 0.0 |
+| Neck width PGND J4 -> Q2.2 B.Cu (mm) | 0.0 | 0.0 |
+| Neck width PGND J2 -> C6.2 In1.Cu (mm) | 4.56 | 16.56 |
+| Neck width PGND J2 -> C6.2 B.Cu (mm) | 0.0 | 0.0 |
+| Neck width SW Q1.2 -> L1.1 In2.Cu (mm) | 3.46 | 11.78 |
+| Neck width SW via group (109, 125) -> L1.1 In2.Cu (mm) | 5.22 | 18.48 |
+| Neck width VIN J6 -> Q1.1 In2.Cu (mm) | 11.3 | 8.87 |
+| Neck width VIN C6.1 -> Q1.1 F.Cu (mm) | 5.05 | 2.35 |
+| Neck width VOUT C13.1 -> J3 F.Cu (mm) | 13.0 | 15.83 |
+| Neck width VOUT C13.1 -> J3 In2.Cu (mm) | 22.94 | 22.85 |
+| Neck width VOUT C13.1 -> J3 B.Cu (mm) | 0.0 | 3.2 |
+| PGND / SW / VIN / VOUT vias | 58 / 25 / 34 / 63 | 90 / 25 / 34 / 63 |
+| Courtyard distance to the sink: C11 / C12 / C13 / L1 / RT1 / RV1 (mm) (LR-25) | 18.96 / 18.96 / 19.91 / 19.41 / 8.41 / 8.28 | 20.06 / 20.06 / 20.11 / 18.31 / 9.51 / 12.03 |
+| Films C13 / C14 to L1 courtyard (mm) | 15.16 / 15.16 | 15.16 / 15.16 |
+| Q1.1 -> nearest VIN HF pad; Q2.2 -> nearest PGND HF pad (mm) (LR-22) | (8.37, 'C1.1') ; (41.17, 'C1.2') | (8.37, 'C1.1') ; (41.17, 'C1.2') |
+| Positions J2 / J6 / RV1 / HS1 / J3 / J4 / C13 (mm) | J2 [7.5, 129.0] ; J6 [23.0, 129.0] ; RV1 [36.0, 85.0] ; HS1 [99.25, 67.0] ; J3 [161.0, 50.0] ; J4 [161.0, 65.5] ; C13 [185.5, 23.5] | J2 [23.0, 112.0] ; J6 [23.0, 129.0] ; RV1 [165.0, 88.5] ; HS1 [100.35, 67.0] ; J3 [162.2, 50.0] ; J4 [162.2, 65.5] ; C13 [186.8, 23.5] |
+
+Checker summary before / after: {'rows': 58, 'within_threshold': 24, 'exceeding_threshold': 9, 'measured_only': 25, 'not_measured': 0} / {'rows': 58, 'within_threshold': 27, 'exceeding_threshold': 6, 'measured_only': 25, 'not_measured': 0}
+
+### Checker rows that changed value or disposition (power)
+
+| Rule | metric | Before | Disp. | After | Disp. |
+|---|---|---|---|---|
+| PE-PCB-003 | SW copper area, all layers (mm2; per layer in JSON) | 2509.5 | measured - human revie | 3660.2 | measured - human revie |
+| PE-PCB-006 | VIN copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'F.Cu': 5690.4, 'In2.Cu': 19890.0}, 'vias | within spec threshold  | {'zone_area_mm2': {'F.Cu': 4530.4, 'In2.Cu': 16940.0}, 'vias | within spec threshold  |
+| PE-PCB-006 | VIN_RAW copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'F.Cu': 485.0, 'B.Cu': 485.0}, 'vias': 0, | exceeds spec threshold | {'zone_area_mm2': {'F.Cu': 422.8, 'B.Cu': 422.8}, 'vias': 0, | exceeds spec threshold |
+| PE-PCB-006 | SW copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'F.Cu': 120.0, 'In2.Cu': 2085.8}, 'vias': | within spec threshold  | {'zone_area_mm2': {'F.Cu': 120.0, 'In2.Cu': 3236.6}, 'vias': | within spec threshold  |
+| PE-PCB-006 | PGND copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'B.Cu': 10558.5, 'In1.Cu': 30559.6}, 'via | within spec threshold  | {'zone_area_mm2': {'B.Cu': 9042.0, 'In1.Cu': 28679.7}, 'vias | within spec threshold  |
+| PE-PCB-006 | VOUT copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'F.Cu': 2231.3, 'B.Cu': 2437.1, 'In2.Cu': | within spec threshold  | {'zone_area_mm2': {'F.Cu': 2218.8, 'B.Cu': 2406.0, 'In2.Cu': | within spec threshold  |
+| PE-PCB-006 | VOUT_L copper (zone area per layer, via count, track length) | {'zone_area_mm2': {'F.Cu': 506.0}, 'vias': 0, 'track_mm': 0. | exceeds spec threshold | {'zone_area_mm2': {'F.Cu': 422.2}, 'vias': 0, 'track_mm': 0. | exceeds spec threshold |
+| KR-ISO-002 | HV to PE: minimum copper distance per layer (mm) | {'F.Cu': 0.301, 'In1.Cu': 0.301, 'In2.Cu': 0.301, 'B.Cu': 0. | exceeds spec threshold | {'F.Cu': 5.0, 'In1.Cu': 5.0, 'In2.Cu': 5.0, 'B.Cu': 5.0} | within spec threshold  |
+| KR-ISO-002 | HV functional VIN to PGND (outside the TO-247-4 pin fields): minimum c | {'F.Cu': 0.3, 'In1.Cu': 0.3, 'In2.Cu': 0.3, 'B.Cu': 0.3} | exceeds spec threshold | {'F.Cu': 1.95, 'In1.Cu': 1.0, 'In2.Cu': 1.0, 'B.Cu': 3.0} | exceeds spec threshold |
+| KR-ISO-002 | HV functional SW to PGND (outside the TO-247-4 pin fields): minimum co | {'F.Cu': 8.575, 'In1.Cu': 0.3, 'In2.Cu': 1.45, 'B.Cu': 0.3} | exceeds spec threshold | {'F.Cu': 6.433, 'In1.Cu': 1.0, 'In2.Cu': 1.45, 'B.Cu': 3.001 | within spec threshold  |
+| KR-ISO-002 | HV functional VIN to SW (outside the TO-247-4 pin fields): minimum cop | {'F.Cu': 2.7, 'In1.Cu': 25.643, 'In2.Cu': 0.3, 'B.Cu': 25.64 | exceeds spec threshold | {'F.Cu': 3.0, 'In1.Cu': 23.582, 'In2.Cu': 1.0, 'B.Cu': 23.58 | within spec threshold  |
+| KR-ISO-002 | HV functional VOUT to PGND: minimum copper distance per layer (mm) | {'F.Cu': 0.3, 'In1.Cu': 0.3, 'In2.Cu': 0.3, 'B.Cu': 0.3} | exceeds spec threshold | {'F.Cu': 1.95, 'In1.Cu': 1.0, 'In2.Cu': 1.0, 'B.Cu': 3.0} | exceeds spec threshold |
+
+## Control board
+
+| Metric | Before (reviewed board) | After |
+|---|---|---|
+| Board sha256 | dead06ed18d85154... | dead06ed18d85154... |
+| Tracks / vias | 5995 / 798 | 5995 / 798 |
+| Total track length (mm) | 7055.2 | 7055.2 |
+| DRC violations / unconnected / parity | 0 / 0 / 0 | 0 / 0 / 0 |
+| DRC manifest | verification/drc/20261011T021018Z-drc-b9c91de5/run.json | verification/drc/20261011T051246Z-drc-f801ed3c/run.json |
+| DSP_TRIP_N: track (mm) / vias | 224.4 / 21 | 224.4 / 21 |
+| FAULT_N: track (mm) / vias | 319.7 / 16 | 319.7 / 16 |
+| OC_N: track (mm) / vias | 204.1 / 10 | 204.1 / 10 |
+| XRS_N: track (mm) / vias | 226.1 / 21 | 226.1 / 21 |
+| ESTOP_N: track (mm) / vias | 402.5 / 24 | 402.5 / 24 |
+| FLT_H_N: track (mm) / vias | 105.4 / 8 | 105.4 / 8 |
+| FLT_L_N: track (mm) / vias | 92.4 / 10 | 92.4 / 10 |
+| RDY_L: track (mm) / vias | 99.2 / 9 | 99.2 / 9 |
+| ISENSE: track (mm) / vias | 122.2 / 5 | 122.2 / 5 |
+| ISENSE_REF: track (mm) / vias | 54.5 / 6 | 54.5 / 6 |
+| VIN_SENSE: track (mm) / vias | 111.5 / 8 | 111.5 / 8 |
+| VOUT_SENSE: track (mm) / vias | 55.5 / 2 | 55.5 / 2 |
+| ADC_VOUT: track (mm) / vias | 139.2 / 14 | 139.2 / 14 |
+| EPWM1A: track (mm) / vias | 51.3 / 4 | 51.3 / 4 |
+| EPWM1B: track (mm) / vias | 42.9 / 2 | 42.9 / 2 |
+| PWM_H: track (mm) / vias | 15.3 / 2 | 15.3 / 2 |
+| PWM_L: track (mm) / vias | 26.7 / 2 | 26.7 / 2 |
+| ADC 1 nF filter pin-to-capacitor max (mm) (LR-33) | 14.75 | 14.75 |
+| DSP bypass max / mean (mm) | 5.381 / 4.402 | 5.381 / 4.402 |
+| J8 side / pin 1 (mm) (LR-27) | B.Cu / [28.0, 74.0] | B.Cu / [28.0, 74.0] |
+| GND_CTRL In1.Cu area (mm2) / outlines | 8376.1 / 1 | 8376.1 / 1 |
+| Min track/via copper to board edge (mm) | 1.2 | 1.2 |
+
+Checker summary before / after: {'rows': 31, 'within_threshold': 2, 'exceeding_threshold': 2, 'measured_only': 17, 'not_measured': 10} / {'rows': 31, 'within_threshold': 2, 'exceeding_threshold': 2, 'measured_only': 17, 'not_measured': 10}
+
+### Checker rows that changed value or disposition (control)
+
+(none)
+
+## Findings LR-20..LR-35: applied / not applied
+
+| ID | Severity | Board | Automation-verifiable | Status after pass 2 |
+|---|---|---|---|---|
+| LR-20 | blocker | power | True | PENDING |
+| LR-21 | blocker | power | True | PENDING |
+| LR-23 | blocker | power | True | PENDING |
+| LR-22 | should-fix | power | True | NOT APPLIED (should-fix, power). A second HF capacitor column east of Q2 needs VIN copper on F.Cu where the sink keep-out (y <= 122.65) and the SW In2 neck leave no path: VIN would have to be brought in by new 1.2 mm vias through the sense-island parts (R53 / C67-C69 at x 158-168) and an F.Cu strip across the snubber and the LS island's F.Cu routing rects, and the capacitors' PGND vias would land in the LS gate region on B.Cu. That is a redesign of the LS island whose routing is the critical path of this board (30 rip-up rounds); not attempted in this pass. The F.Cu VIN neck (2.0 / 2.3 mm after refill) is structural: the band passes between the 3 mm halos of the row-A and row-B PGND pads and the HS-island cut; the DC current reaches Q1's plated drain pin through the In2 backbone, the band carries the HF ripple only. Carried as an open engineering-review item (PE-PCB-002 row Q2.2 -> C1.2 41.2 mm stays 'exceeds'). |
+| LR-28 | should-fix | power | True | PENDING |
+| LR-24 | should-fix | power | True | NOT APPLIED after one attempt (should-fix, power). Routing G_L / LS_OUTH / LS_OUTL / LS_CLMP on B.Cu only (region restricted to B.Cu, as the HS side achieves naturally) failed immediately in r20c: the UCC21710 stub-end ports are F.Cu stubs and a single-layer region allows no via, so the three driver-output nets could not start; packing the LS gate network into one region rect from y 127.6 (off the SW In2 pour) placed all six parts but cost LS_FB_VEE / DESAT_L_OC their channels (9 open connections, DRC 8 / 10 / 0, manifest verification/drc/20261011T053341Z-drc-ba043c49). Reverted in r20d; the mechanism stays in generate_sic_power_board.py as the empty list LS_GATE_LOOP_NETS. R41 / TP2 stay over the SW In2 pour; the LS bulk capacitors stay in ls_bias (21-32 mm from Q2.3). A B.Cu-only LS gate loop needs the HS-side recipe (fixed gate-network rows directly above the driver's stub vias) applied to U3 - not attempted. |
+| LR-25 | should-fix | power | True | PENDING |
+| LR-26 | should-fix | power | True | NOT APPLIED after one attempt (should-fix, power). Restricting VIN_OUTP / VIN_OUTN / VOUT_OUTP / VOUT_OUTN to F.Cu (so each AMC1311 pair shares one layer and path) left VIN_OUTP and VOUT_OUTN open in r20c (the F.Cu path across the socket pin rows and the SELV parts field is sealed) and the extra F.Cu occupancy sealed RDY_L and 3V3; reverted in r20d (empty list AMC_PAIR_NETS). ISENSE <= 40 mm to J7.43 is not reachable: the mezzanine pin assignment puts pin 43 at x 157.7 while U10 sits at x 212 (barrier order fixed by the floorplan). U8 cannot move next to U6 / U7: the band y 152.4-155.5 holds the barrier escape fans and the socket body starts at y 155.65. |
+| LR-27 | should-fix | both | True | NOT APPLIED (should-fix, both boards; mechanical). The projected control outline overhangs the power board by 54 mm because the control board is 80 mm deep and the SELV strip 30 mm; J7 cannot move north (barrier strip y 140-150, SELV copper >= y 151, barrier escapes to y 156.5) and the power outline is fixed at 240 x 180 mm. The far control holes H1 / H2 therefore cannot land on the power board without a bracket or a bar; H10 / H11 are schematic parts of the power board (06_mechanical) and schematics are frozen for this agent. Recorded for the mechanical review: bracket / bar for H1 / H2, or a 50 mm deep control board, or the mezzanine on the long edge. Measured: J8 mates J7 at 0.00 mm, H3 / H4 land on H8 / H9 at 0.00 mm (unchanged). |
+| LR-29 | note | power | True | NOT APPLIED (note). A B.Cu HV keep-out under the sink would have to exclude the PE link column (R14-R16, PE_REF_MID, x 45.65-49.7) which straddles the courtyard edge; moving the column west is blocked by the 3 mm HV_PGND-to-PE_REF_MID rule inside the B.Cu PGND column (x <= 43.4). Documented: the bottom side under the sink carries no PE-bonded hardware other than the four NPTH holes, which now have all-layer keep-outs (LR-21). |
+| LR-30 | note | power | True | PARTLY APPLIED (note, checker quality). The checker still measures the stored fills, but the stored fills are now the rule-aware copper (LR-20), so its KR-ISO-002 rows read the real distances; a neck-width (erosion-connectivity) metric between named terminal pairs per layer is implemented in automation/scripts/optimisation_report_sic_pass2.py and reported in optimisation_before_after.md; the net-class pattern overlap (HV_VIN 'VIN_DIV_T*' vs SENSE_ISO 'VIN_DIV*') and the THT-joined-path reporting are left to the checker maintainer. |
+| LR-31 | note | power | False | NOT APPLIED (note). Accepted deviations as listed by the review; no layout change in this pass (drivers on F.Cu on the barrier line, back-side utilisation, bias-module decoupling distances, HF-tier via counts, 12V_PROT 0.25-0.35 mm, barrier land gaps 7.25-9.1 mm, pin-field exceptions). To be recorded in design_decisions.json (CR-27) by the design owner. |
+| LR-32 | should-fix | control | True | NOT APPLIED after one attempt (should-fix, control). Candidate B was regenerated with DSP_TRIP_N / FAULT_N / OC_N pinned first in every routing-order trial (generate_sic_control_board.routing_plan now passes a candidate 'signal_pinned' list): FAULT_N 325 -> 140 mm and OC_N 205 -> 144 mm, but the pinned trip line itself could not be closed (1 connection open after 27 rip-up rounds; kicad-cli DRC verification/drc/20261011T051014Z-drc-b9164471: 0 violations, 1 unconnected). The r19 control board (sha256 dead06ed18d85154...) was restored byte for byte and re-checked (new passing manifest); the attempt is recorded in routing_iterations_control.md. A direct trip run needs the fault combiner U9 / R51 fixed next to pin 13 with a pre-routed track - not attempted in this pass. |
+| LR-33 | should-fix | control | True | NOT APPLIED (should-fix, control). Placing C68-C75 within 3-5 mm of pins 38-42 / 46-49 puts them inside the LQFP escape via rows (0.65 / 2.0 mm inward/outward escapes, exit lanes to r 16.25 mm) on F.Cu, or on B.Cu under the DSP where the 1V9 bypass ring sits; the ADC filter strip of candidate B (x 84.5-91.5) is the nearest position outside the escape field. Pairing ISENSE with ISENSE_REF and VIN_SENSE with VOUT_SENSE from J8 pins 43-49 needs pre-routed tracks through the DSP escape band; not attempted in this pass (control board regenerated only for LR-32). |
+| LR-34 | note | control | True | NOT APPLIED (note, control DFM). Escape-via antipad merging, In2 rail fragments and the 3V3 / +3V3_PWRBOARD naming are left as recorded; the mezzanine net names are schematic items (frozen). |
+| LR-35 | note | both | True | NOT APPLIED (note, both). 3D models for L2-L4 (power) and U1 / U3 / Y1 (control) are library items (frozen for the layout agents); the STEP exports still omit them (export logs). |
