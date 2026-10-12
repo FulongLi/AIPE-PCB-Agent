@@ -2,6 +2,15 @@
 
 AI-assisted power-electronics PCB engineering with reproducible KiCad automation.
 
+> **AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED**
+
+V2.1 (branch `feat/sic-buck-v2.1-quality`) is a presentation and routing-geometry revision of the
+V2 SiC buck below: the same electrical design, netlist-identical to the frozen V2 release, drawn as
+wired engineering schematics in functional groups and routed with the upgraded grid router
+(octilinear simplification and tangent arcs; the 8-direction search is available as an option). It
+changes how the design is drawn and routed, not what it is; the V2 open engineering issues stay
+open. See [V2.1 status](#v21-status).
+
 > **AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED**
 
 The second benchmark is a 400 V (360-440 V) to 200 V, 5 kW, 25 A, 50 kHz SiC
@@ -21,6 +30,39 @@ energised or measured, and no firmware exists.
 The first benchmark is a 48 V nominal to 24 V, 1 kW synchronous buck converter
 with an integrated TMS320F28335 control section. The output current is
 approximately 41.7 A. V1 is a review deliverable, not an energisation approval.
+
+## V2.1 status
+
+V2.1 is complete as CAD on `feat/sic-buck-v2.1-quality` (HEAD `7f93a61`): the V2 design, redrawn
+and re-routed. Schematics: 7 + 9 sheets, pin-stub global labels 648 -> 7 (power) and 667 -> 7
+(control), wired pin share 0.897 / 0.757, native ERC 0 findings on both projects, exported netlist
+`(ref, pad) -> net` exact against the model and against the frozen V2 netlist
+(`examples/sic-buck-400v-200v-5kw/verification/schematic_gates/<board>/schematic_gates.json`,
+`verification/engineering_checks/schematic_readability_<board>.md`). Boards: 90-degree bends
+3609 -> 1121 (power) and 4069 -> 1233 (control), 145 and 261 tangent arcs, routed length
+5744.6 -> 5545.6 mm and 7055.2 -> 6700.7 mm, vias 606 and 798 as in V2, no net longer, no net
+with more vias or narrower copper, native DRC 0 / 0 / 0 with `--schematic-parity --severity-all
+--refill-zones` on both boards (`verification/engineering_checks/routing_quality_<board>_compare.md`,
+`verification/drc/20261012T100423Z-drc-8b9e64d1`, `verification/drc/20261012T114513Z-drc-3461f467`).
+Zero native findings is a CAD statement against the unchanged V2 rule set, not electrical, thermal, EMI or
+insulation validation; nothing was built, energised or measured and no firmware exists.
+The 8-direction search is implemented but opt-in (it left connections open on both boards), 1121 /
+1233 90-degree bends remain, and the V2 open engineering issues keep their status; see
+[V2.1 execution status](docs/status-v2.1.md) for the milestone table, the open points and the
+freeze and GitHub hand-off state.
+
+- [V2 vs V2.1 comparison report](examples/sic-buck-400v-200v-5kw/review/v2_v21_comparison.md)
+- [Known issues](examples/sic-buck-400v-200v-5kw/verification/known_issues.md) (the 49 V2 rows stay open with unchanged status - 15 of them annotated with the V2.1 value where the routing changed a quoted number - plus 18 V2.1 rows V2.1-01..V2.1-18) and [V2.1 validation](examples/sic-buck-400v-200v-5kw/verification/v21_validation.md)
+- [Schematic section crops](examples/sic-buck-400v-200v-5kw/review/schematic_sections) (`<section>_{v2,v21}.png`, 200 dpi, index in `sections.json`)
+- [Design report](examples/sic-buck-400v-200v-5kw/review/design_report.md) (V2 design; still the design record)
+- [V2.1 execution status](docs/status-v2.1.md), [reproduction, V2.1 section](docs/reproduce-v2.md), [architecture, V2.1 modules](docs/architecture.md), [prepared PR body](docs/v2.1-pull-request.md)
+- Routing quality V2 -> V2.1: [power](examples/sic-buck-400v-200v-5kw/verification/engineering_checks/routing_quality_power_compare.md), [control](examples/sic-buck-400v-200v-5kw/verification/engineering_checks/routing_quality_control_compare.md); schematic readability: [power](examples/sic-buck-400v-200v-5kw/verification/engineering_checks/schematic_readability_power.md), [control](examples/sic-buck-400v-200v-5kw/verification/engineering_checks/schematic_readability_control.md)
+- [Before / after routing crops](examples/sic-buck-400v-200v-5kw/review/crops) (`<area>_{v2,v21}_{top,bottom}.png`, about 2400 px long side, identical framing)
+- Schematic PDFs: [power board](examples/sic-buck-400v-200v-5kw/review/schematic_power.pdf), [control board](examples/sic-buck-400v-200v-5kw/review/schematic_control.pdf) (V2 copies under `examples/sic-buck-400v-200v-5kw/releases/v2/review/`)
+- Layout PDFs: [power board](examples/sic-buck-400v-200v-5kw/review/pcb_layout_power.pdf), [control board](examples/sic-buck-400v-200v-5kw/review/pcb_layout_control.pdf)
+- Power board renders: [front](examples/sic-buck-400v-200v-5kw/review/pcb_front_power.png), [back](examples/sic-buck-400v-200v-5kw/review/pcb_back_power.png), [3D](examples/sic-buck-400v-200v-5kw/review/pcb_3d_power.png)
+- Control board renders: [front](examples/sic-buck-400v-200v-5kw/review/pcb_front_control.png), [back](examples/sic-buck-400v-200v-5kw/review/pcb_back_control.png), [3D](examples/sic-buck-400v-200v-5kw/review/pcb_3d_control.png)
+- Frozen V2.1: `python -m automation.scripts.freeze_release --version v2.1` will write `examples/sic-buck-400v-200v-5kw/releases/v2.1/` and `releases/v2.1-review-package.zip` after this README; not on disk when this README was written - see [docs/status-v2.1.md](docs/status-v2.1.md)
 
 ## V2 status
 
@@ -99,6 +141,7 @@ metadata are committed.
 
 - [Original task](task071026.txt) and [execution constraints](agents/CODEX_V1_TASK.md)
 - [V2 task](task09102026.txt), [V2 requirements](examples/sic-buck-400v-200v-5kw/input/requirements.yaml) and [V2 execution status](docs/status-v2.md)
+- [V2.1 task](task11102026.txt) (schematic readability and routing quality) and [V2.1 execution status](docs/status-v2.1.md)
 - [Workflow and acceptance gates](docs/agent-workflow.md)
 - [Automation architecture](docs/architecture.md)
 - [Installation proposal](docs/installation-plan.md)
