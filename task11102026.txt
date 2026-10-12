@@ -1,0 +1,384 @@
+# AIPE-PCB-Agent V2.1
+# Schematic Readability & PCB Routing Optimisation
+
+## Mission
+
+Improve the existing 400 V → 200 V, 5 kW SiC Buck
+Converter design.
+
+The electrical architecture and component selection
+from V2 should be preserved unless a genuine error
+is identified.
+
+This iteration focuses on two major improvements:
+
+1. PCB routing geometry and visual quality.
+2. Engineering schematic readability.
+
+Use KiCad 10 and the existing AIPE-PCB-Agent
+automation system.
+
+Do not overwrite the frozen V2 release.
+
+
+==================================================
+TASK 1 — PCB ROUTING OPTIMISATION
+==================================================
+
+The existing PCB layout contains excessive
+90-degree corners, zigzag traces, stair-step
+patterns and unnecessary routing detours.
+
+The routing appearance is not satisfactory.
+
+Inspect and improve:
+
+automation/kicad_tools/grid_router.py
+
+Current problem:
+
+The router uses a 4-neighbour grid-based A*
+algorithm and generates straight PCB_TRACK
+segments.
+
+This produces excessive orthogonal bends.
+
+Required improvements:
+
+1. Upgrade pathfinding to support 8-direction
+   routing, including 45-degree directions.
+
+2. Introduce bend penalties into the routing
+   cost function.
+
+3. Minimise:
+   - unnecessary direction changes
+   - zigzag paths
+   - repeated short segments
+   - redundant detours
+   - unnecessary vias
+
+4. Add geometric path simplification and
+   smoothing before writing tracks to KiCad.
+
+5. Prefer long straight sections connected
+   by smooth, rounded corners.
+
+6. Use KiCad-native PCB arcs where practical.
+
+7. Replace avoidable 90-degree sharp corners
+   with smooth, tangent arc transitions.
+
+8. Support adaptive corner radius according
+   to trace width, clearance and free space.
+
+9. Preserve critical electrical constraints.
+
+IMPORTANT:
+
+Do not simply round an already poor route.
+
+Optimise the path first, then apply
+corner smoothing.
+
+Do not introduce longer commutation loops,
+excessive parasitic inductance or narrower
+high-current paths merely for appearance.
+
+Where an arc is not electrically or
+geometrically appropriate, retain a compliant
+route and report the exception.
+
+
+==================================================
+TASK 2 — ROUTING QUALITY VERIFICATION
+==================================================
+
+Introduce a Routing Quality Checker.
+
+Evaluate:
+
+- number of sharp 90-degree bends
+- number of direction changes
+- unnecessary zigzag segments
+- total routing length
+- via count
+- routing efficiency
+- arc continuity
+- DRC compliance
+
+Compare V2 and V2.1 quantitatively.
+
+The goal is a cleaner, more professional PCB
+routing result, without sacrificing electrical
+integrity.
+
+Apply the improved router to BOTH:
+
+- 5 kW SiC power PCB
+- TMS320F28335 control PCB
+
+
+==================================================
+TASK 3 — SCHEMATIC READABILITY
+==================================================
+
+The existing schematic relies excessively
+on Global Labels and short disconnected wires.
+
+Although electrically valid, the schematic
+is difficult for engineers to read.
+
+Use the TI TIDA-010054 schematic PDF
+as a reference for professional engineering
+schematic presentation.
+
+Inspect and improve:
+
+automation/kicad_tools/project_schematic.py
+
+Required improvements:
+
+1. Use physical wires for local circuit
+   connections whenever practical.
+
+2. Reduce unnecessary Global Labels.
+
+3. Use hierarchical labels primarily for
+   connections between functional blocks
+   and schematic sheets.
+
+4. Organise components according to
+   electrical function and signal flow.
+
+5. Improve placement, spacing and alignment.
+
+6. Avoid unnecessary wire crossings,
+   overlapping labels and isolated symbols.
+
+7. Use consistent orientation for
+   resistors, capacitors, diodes and MOSFETs.
+
+8. Keep related components visually grouped.
+
+
+==================================================
+TASK 4 — FUNCTIONAL SCHEMATIC LAYOUT
+==================================================
+
+Organise the existing schematic into
+clear engineering functional groups.
+
+Power Stage:
+- input DC link
+- high-side MOSFET
+- low-side MOSFET
+- output inductor
+- output capacitors
+- voltage/current sensing
+
+Gate Driver:
+- isolated driver
+- gate resistors
+- Miller clamp
+- DESAT protection
+- isolated bias supply
+- local decoupling
+
+Control:
+- DSP
+- PWM generation
+- ADC conditioning
+- protection
+- auxiliary supplies
+- communication interfaces
+
+The schematic should clearly communicate
+how the circuit operates.
+
+Use actual wires to express local
+electrical relationships.
+
+Do not use labels as a substitute
+for every physical connection.
+
+
+==================================================
+TASK 5 — GENERATOR ARCHITECTURE
+==================================================
+
+Improve the reusable schematic generator.
+
+Separate:
+
+Electrical Connectivity Layer
+    ↓
+Schematic Presentation Layer
+
+The connectivity layer defines the actual
+electrical circuit.
+
+The presentation layer determines:
+
+- component placement
+- component orientation
+- visible wiring
+- functional grouping
+- labels and ports
+- sheet organisation
+
+The schematic generator should be reusable
+for future Buck, Boost, DAB, LLC and
+other power-electronics projects.
+
+Do not hardcode the entire solution solely
+for this 5 kW example.
+
+
+==================================================
+TASK 6 — REGENERATE THE 5 kW DESIGN
+==================================================
+
+Using the improved generators, regenerate
+the existing:
+
+examples/sic-buck-400v-200v-5kw/
+
+Create a V2.1 revision.
+
+Preserve:
+
+- electrical topology
+- selected components
+- nominal operating specifications
+- existing engineering knowledge references
+- power/control board architecture
+
+Do not redesign unrelated circuitry.
+
+The primary objective is to improve
+schematic presentation and routing quality.
+
+If PCB placement adjustments are necessary
+to obtain cleaner routes, they are permitted
+provided all engineering constraints remain
+satisfied.
+
+Do not overwrite the existing frozen V2.
+
+
+==================================================
+TASK 7 — VALIDATION
+==================================================
+
+After regeneration:
+
+1. Run native KiCad ERC.
+2. Run native KiCad DRC.
+3. Verify schematic/netlist equivalence
+   against the original V2.
+4. Verify PCB connectivity and copper zones.
+5. Check high-voltage spacing constraints.
+6. Check critical power and gate loops.
+7. Verify no new unrouted connections.
+8. Regenerate PCB and schematic PDFs.
+9. Regenerate 2D and 3D PCB review images.
+
+Do not disable or weaken DRC rules
+to make the new design pass.
+
+Existing unresolved engineering issues
+must remain documented.
+
+Do not treat a clean DRC as proof of
+electrical, thermal or EMI validation.
+
+
+==================================================
+TASK 8 — BEFORE / AFTER COMPARISON
+==================================================
+
+Produce a V2 vs V2.1 comparison.
+
+Include:
+
+Schematic:
+- previous and updated PDF
+- representative circuit sections
+- connectivity equivalence
+- readability improvements
+
+PCB:
+- previous and updated routing images
+- 90-degree bend reduction
+- zigzag reduction
+- routing length comparison
+- via count comparison
+- sharp-corner exceptions
+- ERC/DRC results
+
+Include high-resolution images of
+representative routing areas.
+
+Explain which improvements are general
+router improvements rather than manual
+adjustments to this particular board.
+
+
+==================================================
+TASK 9 — DELIVERABLES
+==================================================
+
+1. Improved generic PCB Router.
+2. Arc-capable routing geometry.
+3. Routing Quality Checker.
+4. Improved schematic generator.
+5. Updated 5 kW schematic.
+6. Updated power PCB.
+7. Updated control PCB.
+8. ERC/DRC verification.
+9. V2 vs V2.1 comparison report.
+10. High-resolution review images.
+
+Create a dedicated development branch:
+
+feat/sic-buck-v2.1-quality
+
+Preserve the existing frozen releases.
+
+Submit changes through a Pull Request.
+
+PR title:
+
+AIPE-PCB-Agent V2.1 —
+Schematic & Routing Quality Upgrade
+
+Do not merge automatically.
+
+
+==================================================
+SUCCESS CRITERIA
+==================================================
+
+V2.1 should produce:
+
+- clean and readable engineering schematics
+- visually organised circuit diagrams
+- minimal unnecessary net labels
+- smoother PCB routing
+- substantially fewer zigzag patterns
+- rounded corners where appropriate
+- fewer unnecessary bends and vias
+- preserved electrical connectivity
+- valid KiCad projects
+- reproducible automation
+
+The final result should look like
+professional engineering CAD output,
+not raw grid-based autorouting.
+
+Most importantly:
+
+The improvements must become reusable
+capabilities of AIPE-PCB-Agent,
+not one-off manual corrections.
