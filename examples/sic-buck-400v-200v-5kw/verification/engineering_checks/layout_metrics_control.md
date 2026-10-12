@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck TMS320F28335 control board (AIPE_SiC_Buck_Control) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-12T10:37:54.506561+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 1.0 s).
+Status: **measured-human-review-required**. Generated 2026-10-12T11:45:12.656283+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 1.015 s).
 
-Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `a3f3604a516c6778...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
+Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `52ca6c234357948a...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
 
 ## Board
 

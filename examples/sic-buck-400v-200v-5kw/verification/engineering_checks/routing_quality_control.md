@@ -1,7 +1,7 @@
 # Routing quality
 
 Status: measured - human review required
-Board: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 a3f3604a516c, pcbnew 10.0.7)
+Board: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 52ca6c234357, pcbnew 10.0.7)
 Parameters: {"short_mm": 0.5, "l_short_mm": 1.0, "straight_tol_deg": 5.0, "tangent_tol_deg": 1.0, "min_turn_deg": 40.0, "quantum_nm": 1000, "efficiency_min_span_mm": 2.0}
 
 | scope | segments | arcs | vias | length mm | bends 90 | bends 45 | other | stair runs | zigzag runs | short segs | bends/100 mm | efficiency |
@@ -54,7 +54,7 @@ count 261, joints 519, discontinuous joints 0, radius mm {'min': 0.1962, 'median
 | ISENSE | 63 | 6 | 5 | 114.5 | 26 | 18 | 0 | 2 | 2 | 28 | 38.42 | 0.7501 |
 | OVP_IN_N | 52 | 0 | 5 | 66.6 | 26 | 12 | 0 | 2 | 1 | 25 | 57.07 | 0.7968 |
 
-DRC: passed findings {'violations': 0, 'unconnected_items': 0, 'schematic_parity': 0} same board bytes: True (D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\drc\20261012T103755Z-drc-0a4fa5cf\run.json)
+DRC: passed findings {'violations': 0, 'unconnected_items': 0, 'schematic_parity': 0} same board bytes: True (D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\drc\20261012T114513Z-drc-3461f467\run.json)
 
 Baseline: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\routing_quality_control_v2.json`
 

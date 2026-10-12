@@ -11,7 +11,9 @@ one solid GND_CTRL plane, In2.Cu rail islands 12V_PROT / 5V / 1V9 over a 3V3 bac
 In2.Cu pass for INNER_SIGNAL_NETS (BIAS_EN) and for any connection the F.Cu/B.Cu stages leave unresolved
 (islands are keepouts, vias and plated pads obstacles, a pruned DSP escape via is re-created at a fallback port), the
 rip-up negotiation driven through RIPUP_PENALTY_LADDER by LadderRouter (the shared grid_router is used unchanged), zone fill, corridor zones for rail copper outside its
-island, a sliver trim that widens corridor edges next to sub-0.05 mm2 fill fragments (review LR-15),
+island (records sorted by net and rectangle before their distinct priorities are assigned, so the result does not depend on the via order of
+the reloaded board), a sliver trim that widens corridor edges next to sub-0.05 mm2 fill fragments (review LR-15), deterministic zone KIIDs
+before the final fill (KiCad resolves touching zones of equal priority and different nets by KIID order),
 SaveBoard/LoadBoard, then kicad-cli DRC with --schematic-parity --severity-all through
 automation.kicad_tools.run_check and the layout metrics checker automation.verification.check_sic_layout.
 
@@ -41,6 +43,7 @@ import os
 import subprocess
 import sys
 import time
+import uuid
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -93,6 +96,12 @@ INNER_EDGE_BAND = 3.0  # an In2.Cu signal track keeps this distance from every r
 INNER_CHANNEL_HALF_WIDTH = 0.5  # half width of a port's straight exit channel through the band (0.2 mm track + 0.3 mm clearance per side)
 GROUND = 'GND_CTRL'
 RAILS = ('12V_PROT', '5V', '3V3', '1V9')
+# KiCad fills zones of equal priority and different nets in KIID order (ZONE::HigherPriority: the greater KIID keeps its outline, the
+# other steps back by the zone clearance). The 12V_PROT and 5V islands share the edge x = 21 mm, so with random KIIDs about 6 mm2 of
+# In2.Cu copper changed owner between builds. zone_identity() derives every zone's KIID from this order (first = keeps its outline;
+# 12V_PROT first reproduces the frozen V2 board) and from the zone's net, layer, priority and outline.
+ZONE_TIE_BREAK_ORDER = (*RAILS, GROUND)
+ZONE_IDENTITY_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, 'aipe://sic-buck/control-board/zone')
 CORE_NET, IO_NET = '1V9', '3V3'
 # Stackup (mm) written into the saved board as text (design/pcb_stackup.md section 2); pcbnew exposes no stackup mutation.
 STACKUP = [('F.Cu', 'copper', 0.035), ('dielectric 1', 'prepreg', 0.2), ('In1.Cu', 'copper', 0.035),
@@ -207,6 +216,11 @@ NOTES = [
     'a DSP escape via the outer stages pruned is re-created at the port when it still fits). Every In2.Cu signal track keeps INNER_EDGE_BAND '
     'from the island polygons except along its own port exit channel: a track hugging an island edge isolates the background strip in which the '
     'corridor notches of that island reach the background (iteration 6, U5.45 3V3).',
+    'Reproducible zone fill (V2.1): the stage-2 corridor records are sorted by net and rectangle before their distinct priorities are '
+    'assigned (the via order of a reloaded board is not reproducible, and overlapping same-net corridors are owned by the higher priority), '
+    'and every zone gets a deterministic KIID (zone_identity: ZONE_TIE_BREAK_ORDER rank, then a uuid5 of net, layer, priority and outline) '
+    'before the final fill, because KiCad resolves touching zones of equal priority and different nets by KIID order (the 12V_PROT and 5V '
+    'islands share the edge x = 21 mm; about 6 mm2 changed owner between builds). Geometry and priorities are unchanged.',
     'The rip-up negotiation runs with the penalty ladder 1x / 0.4x / 2.5x of the plan ripup_penalty (LadderRouter in this generator; '
     'the shared grid_router tries one penalty per failing connection since 2026-10-11): without the ladder the control board stops at '
     '2 unconnected (RDY_H, PG_BIAS_L_N).',
@@ -881,6 +895,29 @@ CORRIDOR_MIN_NECK = 0.5  # a corridor counts as severed when an obstacle's clear
 CORRIDOR_L_OFFSETS = (1.5, -1.5, 2.0, -2.0, 2.5, -2.5, 3.0, -3.0)  # lateral first legs tried for an L-shaped corridor
 
 
+def rail_item_key(item: dict) -> tuple:
+    """Deterministic order of rail items and obstacles (net, rounded position, kind): a reloaded board lists its vias in an order
+    that is not reproducible between runs, so nothing derived from them may follow that order."""
+    return (str(item['net']), tuple(round(float(v), 4) for v in item['xy']), str(item.get('kind') or ''))
+
+
+def corridor_sort_key(record: dict) -> tuple:
+    """Deterministic order of the corridor records: net, rounded rectangle (x0, y0, x1, y1), origin, leg and kind. The distinct
+    zone priorities CORRIDOR_PRIORITY + index follow this order, and with them the fill ownership where same-net corridors overlap."""
+    return (str(record['net']), tuple(round(float(v), 4) for v in polygon_bbox(record['polygon'])),
+            tuple(round(float(v), 4) for v in record['xy']), int(record.get('leg') or 0), str(record.get('kind') or ''))
+
+
+def zone_identity(net: str, layer: str, priority: int, polygon) -> str:
+    """Deterministic KIID string of a zone: the first 32 bits rank the net by ZONE_TIE_BREAK_ORDER (first = greatest = keeps its
+    outline where equal-priority zones of different nets touch), the remaining 96 bits are the uuid5 of net, layer, priority and the
+    rounded outline (distinct zones, distinct KIIDs). Pure; assign_zone_identities() applies it to a board before the final fill."""
+    rank = ZONE_TIE_BREAK_ORDER.index(net) if net in ZONE_TIE_BREAK_ORDER else len(ZONE_TIE_BREAK_ORDER)
+    outline = ';'.join(f'{round(float(x), 4)},{round(float(y), 4)}' for x, y in polygon)
+    digest = uuid.uuid5(ZONE_IDENTITY_NAMESPACE, f'{net}|{layer}|{int(priority)}|{outline}')
+    return f'{len(ZONE_TIE_BREAK_ORDER) - rank:08x}' + str(digest)[8:]
+
+
 def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] | None = None, half_width: float = CORRIDOR_HALF_WIDTH,
                      overshoot: float = CORRIDOR_OVERSHOOT, max_mm: float = CORRIDOR_MAX_MM, via_radius: float = VIA[0] / 2,
                      clearance: float = ZONE_CLEARANCE, half_width_by_net: dict | None = None) -> dict:
@@ -895,7 +932,8 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
     every straight direction is severed, an L-shaped corridor (lateral first leg of CORRIDOR_L_OFFSETS, then toward
     the territory) is tried; its two legs are emitted as two records sharing ``xy`` with ``leg`` 1 and 2. Every corridor
     gets its own zone priority above the islands (KiCad flags intersecting same-net zones of equal priority). Items with
-    no usable corridor within ``max_mm`` are reported as issues.
+    no usable corridor within ``max_mm`` are reported as issues. Items are visited in rail_item_key order and the records are
+    sorted by corridor_sort_key before the priorities are assigned, so the result is the same for every input order.
     """
     polys = {n: p for n, p in islands.items() if p != 'background'}
     corridors, issues = [], []
@@ -945,7 +983,7 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
                     polygon=[[rect[0], rect[1]], [rect[2], rect[1]], [rect[2], rect[3]], [rect[0], rect[3]]], priority=CORRIDOR_PRIORITY, **extra)
 
     directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
-    for item in items:
+    for item in sorted(items, key=rail_item_key):
         net, xy = item['net'], tuple(item['xy'])
         if net not in islands or territory(net, xy):
             continue
@@ -984,11 +1022,12 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
         if not l_shapes:
             hit = severed[0][3]
             issues.append(dict(net=net, xy=list(xy), kind=item.get('kind'),
-                               reason='every corridor direction is severed by other-net copper: ' + ', '.join(f"{b['net']}@{b['xy']}" for b in hit)))
+                               reason='every corridor direction is severed by other-net copper: ' + ', '.join(f"{b['net']}@{b['xy']}" for b in sorted(hit, key=rail_item_key))))
             continue
         total, offset, leg1_dir, leg1, corner, d, found, leg2 = min(l_shapes, key=lambda o: (o[0], o[1]))
         corridors.append(record(item, xy, leg1_dir, abs(offset), leg1, shape='L', leg=1))
         corridors.append(record(item, corner, d, found + overshoot, leg2, shape='L', leg=2))
+    corridors.sort(key=corridor_sort_key)  # reproducible priorities and overlap ownership whatever the via order of the reloaded board
     for i, a in enumerate(corridors):
         a['priority'] = CORRIDOR_PRIORITY + i  # distinct priorities: KiCad rejects intersecting same-net zones of equal priority (L legs overlap)
         for b in corridors[i + 1:]:
@@ -1025,7 +1064,7 @@ def uncovered_rail_items(items: list[dict], islands: dict, corridors: list[dict]
     """Rail items that are outside their own territory and not covered by a corridor of their net (expected: none)."""
     polys = {n: p for n, p in islands.items() if p != 'background'}
     result = []
-    for item in items:
+    for item in sorted(items, key=rail_item_key):
         net, xy = item['net'], tuple(item['xy'])
         if net not in islands:
             continue
@@ -1995,12 +2034,13 @@ def prune_dangling(board, protected_nets=()) -> dict:
 
 
 def add_zones(board, zones: list[dict], save_path: Path) -> dict:
-    """Add corridor zones with the grid router's zone API, refill every zone and save/reload."""
+    """Add corridor zones with the grid router's zone API, give every zone its deterministic KIID, refill every zone and save/reload."""
     router = gr.Router(board, WIDTH, HEIGHT, ROUTING_LAYERS, grid=GRID, trace=TRACE, clearance=CLEARANCE, via=VIA,
                        net_rules=NET_RULES, board_margin=BOARD_MARGIN, hole_clearance=HOLE_CLEARANCE)
     for zone in zones:
         router.zone(zone['net'], ISLAND_LAYER, [tuple(p) for p in zone['polygon']], priority=zone['priority'], clearance=ZONE_CLEARANCE,
                     min_thickness=ZONE_MIN_THICKNESS)
+    assign_zone_identities(board)  # before the fill: KiCad breaks equal-priority ties between zones by KIID
     router.fill()
     return gr.save_and_reload(board, save_path)
 
@@ -2010,6 +2050,42 @@ def refill_zones(board):
     import pcbnew as pcb
     board.BuildConnectivity()
     pcb.ZONE_FILLER(board).Fill(board.Zones())
+
+
+def zone_outline_mm(board, zone) -> list[list[float]]:
+    """Outer outline of a zone in mm (rounded to 4 decimals)."""
+    import pcbnew as pcb
+    chain = zone.Outline().Outline(0)
+    return [[round(v, 4) for v in pcb.ToMM(chain.CPoint(i))] for i in range(chain.PointCount())]
+
+
+def assign_zone_identities(board) -> list[dict]:
+    """Set every zone's KIID to zone_identity(net, layer, priority, outline) (a no-op for a zone that already carries it); the fill that
+    follows then resolves equal-priority ties the same way in every build. Returns [{net, layer, priority, uuid}]. Needs pcbnew."""
+    import pcbnew as pcb
+    rows, seen = [], set()
+    for zone in board.Zones():
+        layer, priority = board.GetLayerName(zone.GetLayer()), int(zone.GetAssignedPriority())
+        identity = zone_identity(zone.GetNetname(), layer, priority, zone_outline_mm(board, zone))
+        if identity in seen:
+            raise RuntimeError(f'two zones share the identity {identity} ({zone.GetNetname()} {layer} priority {priority})')
+        seen.add(identity)
+        if zone.m_Uuid.AsString() != identity:
+            zone.SetUuid(pcb.KIID(identity))
+        rows.append(dict(net=zone.GetNetname(), layer=layer, priority=priority, uuid=identity))
+    return rows
+
+
+def zone_table(board) -> list[dict]:
+    """Every zone with net, layer, priority, KIID, outline bounding box and filled area (mm2): the record a second build is compared with."""
+    rows = []
+    for zone in board.Zones():
+        layer = zone.GetLayer()
+        bbox = polygon_bbox(zone_outline_mm(board, zone))
+        rows.append(dict(net=zone.GetNetname(), layer=board.GetLayerName(layer), priority=int(zone.GetAssignedPriority()), uuid=zone.m_Uuid.AsString(),
+                         bbox=[round(v, 4) for v in bbox], outline_mm2=round(zone.Outline().Area() / 1e12, 3),
+                         filled_mm2=round(zone.GetFilledPolysList(layer).Area() / 1e12, 3)))
+    return sorted(rows, key=lambda r: (r['layer'], r['net'], r['priority'], r['bbox']))
 
 
 def through_items(board) -> list[dict]:
@@ -2614,8 +2690,12 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     items = rail_items(board2)
     corridor_result = island_corridors(items, candidate['islands'], obstacles=copper_obstacles(board2), half_width_by_net=CORRIDOR_HALF_WIDTH_BY_NET)
     if corridor_result['corridors']:
-        corridor_result['saved'] = add_zones(board2, corridor_result['corridors'], output_pcb)
+        corridor_result['saved'] = add_zones(board2, corridor_result['corridors'], output_pcb)  # assigns the zone KIIDs before its fill
         corridor_result['sliver_trim'] = trim_fill_slivers(board2, corridor_result['corridors'], output_pcb)  # review LR-15
+    else:  # no corridor: the final fill still has to run on deterministic zone KIIDs
+        assign_zone_identities(board2)
+        refill_zones(board2)
+        corridor_result['saved'] = gr.save_and_reload(board2, output_pcb)
     uncovered = uncovered_rail_items(items, candidate['islands'], corridor_result['corridors'])
     fanout_rail_failures = rail_smd_pads_without_via(board2, report)
     final_board = pcb.LoadBoard(str(output_pcb))
@@ -2628,7 +2708,7 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
                                lanes=lanes, ic_escapes={ref: len(recs) for ref, recs in ic_escapes.items()}),
                   routing_plan=plan, report=report, corridors=corridor_result, board_counts=board_counts,
                   rail_items_without_island_or_corridor=uncovered, rail_fanout_failures=fanout_rail_failures,
-                  rail_zone_outlines=rail_zone_outlines(final_board))
+                  rail_zone_outlines=rail_zone_outlines(final_board), zone_table=zone_table(final_board))
     # ---- metrics and DRC --------------------------------------------------------------------------------------------
     if metrics:
         result['layout_metrics'] = checker_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label)
@@ -2695,6 +2775,7 @@ def write_routing_outputs(result: dict, candidate: dict):
                     sliver_trim=result['corridors'].get('sliver_trim'),
                     rail_items_without_island_or_corridor=result['rail_items_without_island_or_corridor'],
                     rail_fanout_failures=result['rail_fanout_failures'], rail_zone_outlines=result.get('rail_zone_outlines'),
+                    zone_table=result.get('zone_table'),  # net, layer, priority, deterministic KIID, outline bbox, filled mm2 per zone (reproducibility record)
                     connectivity_unconnected=result.get('connectivity_unconnected'),
                     drc=result.get('drc'), stored_fill_check=result.get('stored_fill_check'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                     evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
