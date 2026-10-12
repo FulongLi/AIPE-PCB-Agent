@@ -221,6 +221,25 @@ class ChainTests(unittest.TestCase):
         self.assertEqual(len(pg.chains_from_items(items, fixed={('B', (5, 0))})), 2)   # another net's via at (5, 0) is no anchor for A
         self.assertEqual(len(pg.chains_from_items(items, fixed={(5, 0), (5, 1)})), 4)  # bare points still anchor every net
 
+    def test_connected_by_overlap_binds_router_vertices_to_off_grid_vias_and_stub_ends(self):
+        # power board case: a 0.6 mm fan-out via at (170.725, 168.375) and a 0.25 mm fan leg ending at (169.425, 167.725) are
+        # off the 0.25 mm grid; the router meets them at the nodes (170.75, 168.375) and (169.375, 167.75) - KiCad connects by
+        # copper overlap, so these vertices are anchors although the coordinates differ
+        via = (170.725, 168.375, 0.3)
+        self.assertTrue(pg.connected_by_overlap((170.75, 168.375), 0.125, vias=[via]))
+        self.assertTrue(pg.connected_by_overlap((170.75, 168.375), 0.0, vias=[via]))          # inside the ring: a 'via' chain end
+        self.assertFalse(pg.connected_by_overlap((171.25, 168.375), 0.125, vias=[via]))        # 0.525 > 0.3 + 0.125: clear of it
+        leg = ((169.425, 169.025), (169.425, 167.725), 0.125)
+        self.assertTrue(pg.connected_by_overlap((169.375, 167.75), 0.125, segments=[leg]))
+        self.assertTrue(pg.connected_by_overlap((169.375, 168.4), 0.125, segments=[leg]))      # alongside the leg: copper touches
+        self.assertFalse(pg.connected_by_overlap((169.375, 167.25), 0.125, segments=[leg]))    # 0.503 beyond the leg end
+        self.assertFalse(pg.connected_by_overlap((169.375, 167.75), 0.125))
+        # the (net, point) pair such a vertex adds keeps the chain split there while other nets are untouched
+        items = [dict(id='a', net='N', layer=0, a=(0, 0), b=(4, 0), width=0.25), dict(id='b', net='N', layer=0, a=(4, 0), b=(8, 0), width=0.25),
+                 dict(id='c', net='M', layer=0, a=(0, 1), b=(4, 1), width=0.25), dict(id='d', net='M', layer=0, a=(4, 1), b=(8, 1), width=0.25)]
+        chains = pg.chains_from_items(items, fixed={('N', (4, 0))})
+        self.assertEqual(sorted((c['net'], len(c['edges'])) for c in chains), [('M', 2), ('N', 1), ('N', 1)])
+
 
 if __name__ == '__main__':
     unittest.main()

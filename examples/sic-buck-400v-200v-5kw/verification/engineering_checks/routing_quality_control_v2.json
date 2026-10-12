@@ -1,0 +1,5376 @@
+{
+  "schema_version": 1,
+  "status": "measured - human review required",
+  "generated_utc": "2026-10-12T08:44:12.563095+00:00",
+  "checker": {
+    "file": "automation/verification/check_routing_quality.py",
+    "sha256": "c4522fe248ee0c6c448be0a96c885ab79e46e0cd38857385d77b108cbdc59812"
+  },
+  "board": {
+    "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
+    "sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+    "pcbnew_version": "10.0.7",
+    "layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ]
+  },
+  "parameters": {
+    "short_mm": 0.5,
+    "l_short_mm": 1.0,
+    "straight_tol_deg": 5.0,
+    "tangent_tol_deg": 1.0,
+    "min_turn_deg": 40.0,
+    "quantum_nm": 1000,
+    "efficiency_min_span_mm": 2.0
+  },
+  "totals": {
+    "segments": 5995,
+    "arcs": 0,
+    "vias": 798,
+    "length_mm": 7055.216,
+    "arc_length_mm": 0,
+    "joints": 4094,
+    "bends_90": 4069,
+    "bends_45": 0,
+    "bends_other": 12,
+    "direction_changes": 4081,
+    "stair_runs": 435,
+    "zigzag_runs": 31,
+    "short_run_segments": 2957,
+    "short_segments": 3677,
+    "short_segment_runs": 518,
+    "arc_joints": 0,
+    "arc_joints_discontinuous": 0,
+    "chains": 1901,
+    "degree2_joints": 4691,
+    "degree2_bends_90": 4184,
+    "bends_per_100mm": 57.84,
+    "efficiency": 0.7802
+  },
+  "by_layer": {
+    "B.Cu": {
+      "segments": 2861,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 3506.25,
+      "arc_length_mm": 0,
+      "joints": 2252,
+      "bends_90": 2252,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 2252,
+      "stair_runs": 250,
+      "zigzag_runs": 21,
+      "short_run_segments": 1676,
+      "short_segments": 1888,
+      "short_segment_runs": 299,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 609,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 64.23,
+      "efficiency": 0.7802
+    },
+    "F.Cu": {
+      "segments": 3004,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 3429.091,
+      "arc_length_mm": 0,
+      "joints": 1715,
+      "bends_90": 1691,
+      "bends_45": 0,
+      "bends_other": 12,
+      "direction_changes": 1703,
+      "stair_runs": 177,
+      "zigzag_runs": 6,
+      "short_run_segments": 1176,
+      "short_segments": 1690,
+      "short_segment_runs": 206,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 1289,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 49.66,
+      "efficiency": 0.7802
+    },
+    "In2.Cu": {
+      "segments": 130,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 119.875,
+      "arc_length_mm": 0,
+      "joints": 127,
+      "bends_90": 126,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 126,
+      "stair_runs": 8,
+      "zigzag_runs": 4,
+      "short_run_segments": 105,
+      "short_segments": 99,
+      "short_segment_runs": 13,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 3,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 105.11,
+      "efficiency": 0.7802
+    }
+  },
+  "by_attribution": {
+    "pad_link": {
+      "segments": 1105,
+      "arcs": 0,
+      "length_mm": 996.666,
+      "bends_90": 96,
+      "bends_45": 0,
+      "bends_other": 12,
+      "direction_changes": 108,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_segments": 459
+    },
+    "router": {
+      "segments": 4890,
+      "arcs": 0,
+      "length_mm": 6058.55,
+      "bends_90": 3973,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 3973,
+      "stair_runs": 435,
+      "zigzag_runs": 31,
+      "short_segments": 3218
+    }
+  },
+  "nets": {
+    "12V_IN": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 33.876,
+      "arc_length_mm": 0,
+      "joints": 2,
+      "bends_90": 2,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 2,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 1,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 10,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 5.9,
+      "efficiency": 0.8686,
+      "min_width_mm": 0.5,
+      "zone_connected": false
+    },
+    "12V_PROT": {
+      "segments": 32,
+      "arcs": 0,
+      "vias": 11,
+      "length_mm": 17.862,
+      "arc_length_mm": 0,
+      "joints": 11,
+      "bends_90": 11,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 11,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 12,
+      "short_segments": 23,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 21,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 61.58,
+      "efficiency": 0.9225,
+      "min_width_mm": 0.4,
+      "zone_connected": true
+    },
+    "1V9": {
+      "segments": 61,
+      "arcs": 0,
+      "vias": 37,
+      "length_mm": 50.003,
+      "arc_length_mm": 0,
+      "joints": 3,
+      "bends_90": 3,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 3,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 23,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 58,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 6.0,
+      "efficiency": 0.9507,
+      "min_width_mm": 0.25,
+      "zone_connected": true
+    },
+    "1V9_BULK": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 13.963,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 7.16,
+      "efficiency": 0.7672,
+      "min_width_mm": 0.6,
+      "zone_connected": false
+    },
+    "3V3": {
+      "segments": 195,
+      "arcs": 0,
+      "vias": 84,
+      "length_mm": 121.357,
+      "arc_length_mm": 0,
+      "joints": 35,
+      "bends_90": 35,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 35,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 16,
+      "short_segments": 101,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 160,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 28.84,
+      "efficiency": 0.791,
+      "min_width_mm": 0.25,
+      "zone_connected": true
+    },
+    "3V3_BULK": {
+      "segments": 5,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 4.463,
+      "arc_length_mm": 0,
+      "joints": 0,
+      "bends_90": 0,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 0,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 0.0,
+      "efficiency": 1.0,
+      "min_width_mm": 0.6,
+      "zone_connected": false
+    },
+    "5V": {
+      "segments": 43,
+      "arcs": 0,
+      "vias": 15,
+      "length_mm": 23.745,
+      "arc_length_mm": 0,
+      "joints": 13,
+      "bends_90": 13,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 13,
+      "stair_runs": 0,
+      "zigzag_runs": 1,
+      "short_run_segments": 4,
+      "short_segments": 25,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 30,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 54.75,
+      "efficiency": 0.614,
+      "min_width_mm": 0.4,
+      "zone_connected": true
+    },
+    "5V_BST": {
+      "segments": 1,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 2.55,
+      "arc_length_mm": 0,
+      "joints": 0,
+      "bends_90": 0,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 0,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 0,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 1,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 0.0,
+      "efficiency": 1.0,
+      "min_width_mm": 0.3,
+      "zone_connected": false
+    },
+    "5V_EN": {
+      "segments": 20,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 24.363,
+      "arc_length_mm": 0,
+      "joints": 12,
+      "bends_90": 12,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 12,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 6,
+      "short_segments": 11,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 49.26,
+      "efficiency": 0.7486,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "5V_FB": {
+      "segments": 27,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 54.052,
+      "arc_length_mm": 0,
+      "joints": 16,
+      "bends_90": 16,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 16,
+      "stair_runs": 0,
+      "zigzag_runs": 1,
+      "short_run_segments": 13,
+      "short_segments": 16,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 29.6,
+      "efficiency": 0.7156,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "5V_SW": {
+      "segments": 4,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 14.35,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 0,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 3,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 6.97,
+      "efficiency": 0.879,
+      "min_width_mm": 0.5,
+      "zone_connected": false
+    },
+    "ADCREFM": {
+      "segments": 16,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 8.725,
+      "arc_length_mm": 0,
+      "joints": 12,
+      "bends_90": 12,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 12,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 9,
+      "short_segments": 11,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 137.54,
+      "efficiency": 0.9122,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADCREFP": {
+      "segments": 16,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 8.375,
+      "arc_length_mm": 0,
+      "joints": 12,
+      "bends_90": 12,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 12,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 10,
+      "short_segments": 12,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 143.28,
+      "efficiency": 0.782,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADCRESEXT": {
+      "segments": 22,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 28.1,
+      "arc_length_mm": 0,
+      "joints": 16,
+      "bends_90": 16,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 16,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 8,
+      "short_segments": 12,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 6,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 56.94,
+      "efficiency": 0.8082,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_I12V": {
+      "segments": 28,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 32.4,
+      "arc_length_mm": 0,
+      "joints": 21,
+      "bends_90": 21,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 21,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 9,
+      "short_segments": 13,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 64.81,
+      "efficiency": 0.7621,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_ISENSE": {
+      "segments": 39,
+      "arcs": 0,
+      "vias": 6,
+      "length_mm": 36.25,
+      "arc_length_mm": 0,
+      "joints": 29,
+      "bends_90": 29,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 29,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 22,
+      "short_segments": 25,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 10,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 80.0,
+      "efficiency": 0.8181,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_ISENSE_REF": {
+      "segments": 54,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 46.15,
+      "arc_length_mm": 0,
+      "joints": 46,
+      "bends_90": 45,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 46,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 30,
+      "short_segments": 37,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 99.67,
+      "efficiency": 0.6423,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_TEMP_CTRL": {
+      "segments": 75,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 42.5,
+      "arc_length_mm": 0,
+      "joints": 67,
+      "bends_90": 67,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 67,
+      "stair_runs": 7,
+      "zigzag_runs": 0,
+      "short_run_segments": 53,
+      "short_segments": 54,
+      "short_segment_runs": 9,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 157.65,
+      "efficiency": 0.5378,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_TEMP_HS": {
+      "segments": 63,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 50.9,
+      "arc_length_mm": 0,
+      "joints": 54,
+      "bends_90": 54,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 54,
+      "stair_runs": 5,
+      "zigzag_runs": 0,
+      "short_run_segments": 40,
+      "short_segments": 43,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 9,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 106.09,
+      "efficiency": 0.8603,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_V12V": {
+      "segments": 57,
+      "arcs": 0,
+      "vias": 6,
+      "length_mm": 34.5,
+      "arc_length_mm": 0,
+      "joints": 47,
+      "bends_90": 47,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 47,
+      "stair_runs": 5,
+      "zigzag_runs": 1,
+      "short_run_segments": 36,
+      "short_segments": 36,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 10,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 136.23,
+      "efficiency": 0.8278,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_VIN": {
+      "segments": 46,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 40.025,
+      "arc_length_mm": 0,
+      "joints": 39,
+      "bends_90": 39,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 39,
+      "stair_runs": 3,
+      "zigzag_runs": 1,
+      "short_run_segments": 30,
+      "short_segments": 32,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 97.44,
+      "efficiency": 0.6966,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ADC_VOUT": {
+      "segments": 134,
+      "arcs": 0,
+      "vias": 14,
+      "length_mm": 139.25,
+      "arc_length_mm": 0,
+      "joints": 116,
+      "bends_90": 116,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 116,
+      "stair_runs": 14,
+      "zigzag_runs": 2,
+      "short_run_segments": 100,
+      "short_segments": 88,
+      "short_segment_runs": 19,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 18,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 83.3,
+      "efficiency": 0.8199,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ARM": {
+      "segments": 101,
+      "arcs": 0,
+      "vias": 10,
+      "length_mm": 98.906,
+      "arc_length_mm": 0,
+      "joints": 72,
+      "bends_90": 72,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 72,
+      "stair_runs": 5,
+      "zigzag_runs": 1,
+      "short_run_segments": 58,
+      "short_segments": 68,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 29,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 72.8,
+      "efficiency": 0.7752,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "BIAS_EN": {
+      "segments": 37,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 57.95,
+      "arc_length_mm": 0,
+      "joints": 35,
+      "bends_90": 34,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 34,
+      "stair_runs": 1,
+      "zigzag_runs": 3,
+      "short_run_segments": 28,
+      "short_segments": 24,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 2,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 58.67,
+      "efficiency": 0.6857,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "BOOT84": {
+      "segments": 36,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 57.975,
+      "arc_length_mm": 0,
+      "joints": 29,
+      "bends_90": 29,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 29,
+      "stair_runs": 5,
+      "zigzag_runs": 0,
+      "short_run_segments": 25,
+      "short_segments": 25,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 50.02,
+      "efficiency": 0.9485,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "BOOT85": {
+      "segments": 10,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 8.5,
+      "arc_length_mm": 0,
+      "joints": 6,
+      "bends_90": 6,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 6,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 3,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 70.59,
+      "efficiency": 0.828,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "BOOT86": {
+      "segments": 17,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 11.1,
+      "arc_length_mm": 0,
+      "joints": 13,
+      "bends_90": 13,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 13,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 11,
+      "short_segments": 10,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 117.12,
+      "efficiency": 0.7283,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "BOOT87": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 14.5,
+      "arc_length_mm": 0,
+      "joints": 6,
+      "bends_90": 5,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 6,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 5,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 6,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 41.38,
+      "efficiency": 0.9478,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "CLK30": {
+      "segments": 13,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 14.6,
+      "arc_length_mm": 0,
+      "joints": 9,
+      "bends_90": 9,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 9,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 6,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 61.64,
+      "efficiency": 0.7235,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "CLK30_SOURCE": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 5.965,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 16.76,
+      "efficiency": 0.7788,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "CORE_OK": {
+      "segments": 25,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 67.315,
+      "arc_length_mm": 0,
+      "joints": 14,
+      "bends_90": 14,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 14,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 6,
+      "short_segments": 12,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 20.8,
+      "efficiency": 0.8153,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "DSP_TRIP_N": {
+      "segments": 191,
+      "arcs": 0,
+      "vias": 21,
+      "length_mm": 224.402,
+      "arc_length_mm": 0,
+      "joints": 166,
+      "bends_90": 166,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 166,
+      "stair_runs": 21,
+      "zigzag_runs": 0,
+      "short_run_segments": 130,
+      "short_segments": 126,
+      "short_segment_runs": 23,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 25,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 73.97,
+      "efficiency": 0.7893,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EFUSE_DVDT": {
+      "segments": 28,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 32.206,
+      "arc_length_mm": 0,
+      "joints": 23,
+      "bends_90": 23,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 23,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 17,
+      "short_segments": 18,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 71.42,
+      "efficiency": 0.7832,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EFUSE_ILIM": {
+      "segments": 59,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 39.46,
+      "arc_length_mm": 0,
+      "joints": 54,
+      "bends_90": 54,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 54,
+      "stair_runs": 6,
+      "zigzag_runs": 0,
+      "short_run_segments": 43,
+      "short_segments": 43,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 136.85,
+      "efficiency": 0.7618,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EFUSE_OVP": {
+      "segments": 23,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 36.656,
+      "arc_length_mm": 0,
+      "joints": 14,
+      "bends_90": 13,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 14,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 9,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 9,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 38.19,
+      "efficiency": 0.7492,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EFUSE_RTN": {
+      "segments": 61,
+      "arcs": 0,
+      "vias": 15,
+      "length_mm": 67.835,
+      "arc_length_mm": 0,
+      "joints": 32,
+      "bends_90": 32,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 32,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 17,
+      "short_segments": 30,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 29,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 47.17,
+      "efficiency": 0.7219,
+      "min_width_mm": 0.4,
+      "zone_connected": false
+    },
+    "EFUSE_SHDN": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 15.325,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 6,
+      "short_segments": 7,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 45.68,
+      "efficiency": 0.7072,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EFUSE_UVLO": {
+      "segments": 13,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 41.26,
+      "arc_length_mm": 0,
+      "joints": 5,
+      "bends_90": 5,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 5,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 3,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 12.12,
+      "efficiency": 0.7212,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EMU0": {
+      "segments": 41,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 52.975,
+      "arc_length_mm": 0,
+      "joints": 34,
+      "bends_90": 34,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 34,
+      "stair_runs": 4,
+      "zigzag_runs": 1,
+      "short_run_segments": 26,
+      "short_segments": 27,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 64.18,
+      "efficiency": 0.7886,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EMU1": {
+      "segments": 43,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 57.125,
+      "arc_length_mm": 0,
+      "joints": 36,
+      "bends_90": 36,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 36,
+      "stair_runs": 3,
+      "zigzag_runs": 1,
+      "short_run_segments": 23,
+      "short_segments": 24,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 63.02,
+      "efficiency": 0.7703,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EPWM1A": {
+      "segments": 39,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 51.281,
+      "arc_length_mm": 0,
+      "joints": 29,
+      "bends_90": 29,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 29,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 20,
+      "short_segments": 22,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 10,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 56.55,
+      "efficiency": 0.8104,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "EPWM1B": {
+      "segments": 44,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 42.931,
+      "arc_length_mm": 0,
+      "joints": 37,
+      "bends_90": 37,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 37,
+      "stair_runs": 5,
+      "zigzag_runs": 0,
+      "short_run_segments": 30,
+      "short_segments": 31,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 86.18,
+      "efficiency": 0.6785,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ESTOP_N": {
+      "segments": 271,
+      "arcs": 0,
+      "vias": 24,
+      "length_mm": 402.527,
+      "arc_length_mm": 0,
+      "joints": 154,
+      "bends_90": 154,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 154,
+      "stair_runs": 17,
+      "zigzag_runs": 0,
+      "short_run_segments": 102,
+      "short_segments": 169,
+      "short_segment_runs": 20,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 117,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 38.26,
+      "efficiency": 0.8326,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FAN_TACH": {
+      "segments": 167,
+      "arcs": 0,
+      "vias": 8,
+      "length_mm": 214.0,
+      "arc_length_mm": 0,
+      "joints": 155,
+      "bends_90": 155,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 155,
+      "stair_runs": 18,
+      "zigzag_runs": 0,
+      "short_run_segments": 108,
+      "short_segments": 110,
+      "short_segment_runs": 18,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 12,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 72.43,
+      "efficiency": 0.5824,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FAULT_LATCH_N": {
+      "segments": 67,
+      "arcs": 0,
+      "vias": 5,
+      "length_mm": 67.747,
+      "arc_length_mm": 0,
+      "joints": 57,
+      "bends_90": 56,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 56,
+      "stair_runs": 7,
+      "zigzag_runs": 0,
+      "short_run_segments": 44,
+      "short_segments": 46,
+      "short_segment_runs": 8,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 10,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 82.66,
+      "efficiency": 0.8576,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FAULT_N": {
+      "segments": 297,
+      "arcs": 0,
+      "vias": 16,
+      "length_mm": 319.684,
+      "arc_length_mm": 0,
+      "joints": 140,
+      "bends_90": 140,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 140,
+      "stair_runs": 13,
+      "zigzag_runs": 2,
+      "short_run_segments": 100,
+      "short_segments": 207,
+      "short_segment_runs": 16,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 157,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 43.79,
+      "efficiency": 0.6895,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FB19": {
+      "segments": 22,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 46.628,
+      "arc_length_mm": 0,
+      "joints": 14,
+      "bends_90": 14,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 14,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 10,
+      "short_segments": 13,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 30.02,
+      "efficiency": 0.8853,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FLT_12V_N": {
+      "segments": 105,
+      "arcs": 0,
+      "vias": 16,
+      "length_mm": 151.663,
+      "arc_length_mm": 0,
+      "joints": 83,
+      "bends_90": 83,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 83,
+      "stair_runs": 10,
+      "zigzag_runs": 0,
+      "short_run_segments": 53,
+      "short_segments": 61,
+      "short_segment_runs": 10,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 22,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 54.73,
+      "efficiency": 0.8563,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FLT_H_N": {
+      "segments": 56,
+      "arcs": 0,
+      "vias": 8,
+      "length_mm": 105.427,
+      "arc_length_mm": 0,
+      "joints": 43,
+      "bends_90": 43,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 43,
+      "stair_runs": 5,
+      "zigzag_runs": 0,
+      "short_run_segments": 26,
+      "short_segments": 28,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 13,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 40.79,
+      "efficiency": 0.7376,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "FLT_L_N": {
+      "segments": 77,
+      "arcs": 0,
+      "vias": 10,
+      "length_mm": 92.402,
+      "arc_length_mm": 0,
+      "joints": 62,
+      "bends_90": 61,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 62,
+      "stair_runs": 6,
+      "zigzag_runs": 1,
+      "short_run_segments": 40,
+      "short_segments": 44,
+      "short_segment_runs": 8,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 15,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 67.1,
+      "efficiency": 0.7295,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "G1_N": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 19.603,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 4,
+      "short_segments": 6,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 35.71,
+      "efficiency": 0.7942,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "G2_N": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 9.704,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 10.31,
+      "efficiency": 0.7082,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "G3_N": {
+      "segments": 11,
+      "arcs": 0,
+      "vias": 0,
+      "length_mm": 13.204,
+      "arc_length_mm": 0,
+      "joints": 8,
+      "bends_90": 6,
+      "bends_45": 0,
+      "bends_other": 2,
+      "direction_changes": 8,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 4,
+      "short_segments": 6,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 3,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 60.59,
+      "efficiency": 0.4608,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "GATE_EN": {
+      "segments": 45,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 86.318,
+      "arc_length_mm": 0,
+      "joints": 28,
+      "bends_90": 27,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 28,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 14,
+      "short_segments": 19,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 17,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 32.44,
+      "efficiency": 0.7275,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "GND_CTRL": {
+      "segments": 296,
+      "arcs": 0,
+      "vias": 161,
+      "length_mm": 227.538,
+      "arc_length_mm": 0,
+      "joints": 26,
+      "bends_90": 26,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 26,
+      "stair_runs": 0,
+      "zigzag_runs": 1,
+      "short_run_segments": 18,
+      "short_segments": 131,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 270,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 11.43,
+      "efficiency": 0.8215,
+      "min_width_mm": 0.2,
+      "zone_connected": true
+    },
+    "I12V_MON": {
+      "segments": 90,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 149.75,
+      "arc_length_mm": 0,
+      "joints": 83,
+      "bends_90": 81,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 81,
+      "stair_runs": 11,
+      "zigzag_runs": 0,
+      "short_run_segments": 57,
+      "short_segments": 57,
+      "short_segment_runs": 11,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 54.09,
+      "efficiency": 0.6951,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "IO_EN_N": {
+      "segments": 16,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 38.125,
+      "arc_length_mm": 0,
+      "joints": 8,
+      "bends_90": 8,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 8,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 3,
+      "short_segments": 8,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 20.98,
+      "efficiency": 0.8301,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ISENSE": {
+      "segments": 77,
+      "arcs": 0,
+      "vias": 5,
+      "length_mm": 122.175,
+      "arc_length_mm": 0,
+      "joints": 64,
+      "bends_90": 64,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 64,
+      "stair_runs": 8,
+      "zigzag_runs": 0,
+      "short_run_segments": 43,
+      "short_segments": 44,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 13,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 52.38,
+      "efficiency": 0.7022,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "ISENSE_REF": {
+      "segments": 58,
+      "arcs": 0,
+      "vias": 6,
+      "length_mm": 54.55,
+      "arc_length_mm": 0,
+      "joints": 50,
+      "bends_90": 50,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 50,
+      "stair_runs": 6,
+      "zigzag_runs": 0,
+      "short_run_segments": 43,
+      "short_segments": 40,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 91.66,
+      "efficiency": 0.8921,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_12V_A": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 4.987,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 3,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 20.05,
+      "efficiency": 0.9136,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_ARMED_A": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 18.238,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 7,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 38.38,
+      "efficiency": 0.9219,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_FAULT": {
+      "segments": 11,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 25.25,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 6,
+      "short_segments": 7,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 27.72,
+      "efficiency": 0.9217,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_FAULT_A": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 26.488,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 7,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 26.43,
+      "efficiency": 0.6739,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_RUN": {
+      "segments": 30,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 28.35,
+      "arc_length_mm": 0,
+      "joints": 26,
+      "bends_90": 26,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 26,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 21,
+      "short_segments": 21,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 91.71,
+      "efficiency": 0.7346,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "LED_RUN_A": {
+      "segments": 12,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 24.238,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 4,
+      "short_segments": 7,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 28.88,
+      "efficiency": 0.7535,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "MON5": {
+      "segments": 9,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 21.113,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 3,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 4.74,
+      "efficiency": 0.8126,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "MR_N": {
+      "segments": 4,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 11.427,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 1,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 3,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 8.75,
+      "efficiency": 0.9055,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OC_N": {
+      "segments": 187,
+      "arcs": 0,
+      "vias": 10,
+      "length_mm": 204.137,
+      "arc_length_mm": 0,
+      "joints": 130,
+      "bends_90": 129,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 130,
+      "stair_runs": 14,
+      "zigzag_runs": 0,
+      "short_run_segments": 96,
+      "short_segments": 124,
+      "short_segment_runs": 13,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 57,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 63.68,
+      "efficiency": 0.7948,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OTP_N": {
+      "segments": 65,
+      "arcs": 0,
+      "vias": 8,
+      "length_mm": 76.704,
+      "arc_length_mm": 0,
+      "joints": 50,
+      "bends_90": 49,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 49,
+      "stair_runs": 7,
+      "zigzag_runs": 0,
+      "short_run_segments": 40,
+      "short_segments": 39,
+      "short_segment_runs": 8,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 15,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 63.88,
+      "efficiency": 0.8471,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OTP_REF": {
+      "segments": 25,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 29.427,
+      "arc_length_mm": 0,
+      "joints": 14,
+      "bends_90": 14,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 14,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 8,
+      "short_segments": 14,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 47.58,
+      "efficiency": 0.9342,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OVP_IN_N": {
+      "segments": 60,
+      "arcs": 0,
+      "vias": 5,
+      "length_mm": 67.907,
+      "arc_length_mm": 0,
+      "joints": 47,
+      "bends_90": 46,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 46,
+      "stair_runs": 6,
+      "zigzag_runs": 0,
+      "short_run_segments": 35,
+      "short_segments": 35,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 13,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 67.74,
+      "efficiency": 0.7831,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OVP_IN_REF": {
+      "segments": 13,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 20.677,
+      "arc_length_mm": 0,
+      "joints": 2,
+      "bends_90": 2,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 2,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 5,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 9.67,
+      "efficiency": 0.8512,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OVP_N": {
+      "segments": 23,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 25.502,
+      "arc_length_mm": 0,
+      "joints": 18,
+      "bends_90": 17,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 17,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 16,
+      "short_segments": 15,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 66.66,
+      "efficiency": 0.9062,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OVP_OUT_N": {
+      "segments": 46,
+      "arcs": 0,
+      "vias": 9,
+      "length_mm": 68.806,
+      "arc_length_mm": 0,
+      "joints": 30,
+      "bends_90": 30,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 30,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 19,
+      "short_segments": 27,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 16,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 43.6,
+      "efficiency": 0.8551,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "OVP_OUT_REF": {
+      "segments": 18,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 19.028,
+      "arc_length_mm": 0,
+      "joints": 7,
+      "bends_90": 7,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 7,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 6,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 36.79,
+      "efficiency": 0.9003,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_H_N": {
+      "segments": 105,
+      "arcs": 0,
+      "vias": 9,
+      "length_mm": 163.028,
+      "arc_length_mm": 0,
+      "joints": 85,
+      "bends_90": 84,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 85,
+      "stair_runs": 9,
+      "zigzag_runs": 1,
+      "short_run_segments": 61,
+      "short_segments": 66,
+      "short_segment_runs": 11,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 20,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 52.14,
+      "efficiency": 0.8054,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_H_OK": {
+      "segments": 44,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 23.025,
+      "arc_length_mm": 0,
+      "joints": 39,
+      "bends_90": 39,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 39,
+      "stair_runs": 3,
+      "zigzag_runs": 1,
+      "short_run_segments": 34,
+      "short_segments": 34,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 169.38,
+      "efficiency": 0.5735,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_L_N": {
+      "segments": 243,
+      "arcs": 0,
+      "vias": 12,
+      "length_mm": 228.528,
+      "arc_length_mm": 0,
+      "joints": 125,
+      "bends_90": 124,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 124,
+      "stair_runs": 12,
+      "zigzag_runs": 1,
+      "short_run_segments": 104,
+      "short_segments": 182,
+      "short_segment_runs": 14,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 118,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 54.26,
+      "efficiency": 0.8683,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_L_OK": {
+      "segments": 18,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 16.204,
+      "arc_length_mm": 0,
+      "joints": 13,
+      "bends_90": 13,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 13,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 9,
+      "short_segments": 11,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 80.23,
+      "efficiency": 0.7875,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_S_N": {
+      "segments": 237,
+      "arcs": 0,
+      "vias": 15,
+      "length_mm": 213.177,
+      "arc_length_mm": 0,
+      "joints": 217,
+      "bends_90": 216,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 216,
+      "stair_runs": 22,
+      "zigzag_runs": 0,
+      "short_run_segments": 180,
+      "short_segments": 180,
+      "short_segment_runs": 26,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 20,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 101.32,
+      "efficiency": 0.8332,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PG_BIAS_S_OK": {
+      "segments": 33,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 22.603,
+      "arc_length_mm": 0,
+      "joints": 26,
+      "bends_90": 26,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 26,
+      "stair_runs": 2,
+      "zigzag_runs": 1,
+      "short_run_segments": 23,
+      "short_segments": 23,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 115.03,
+      "efficiency": 0.7153,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PWM_H": {
+      "segments": 9,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 15.3,
+      "arc_length_mm": 0,
+      "joints": 4,
+      "bends_90": 4,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 4,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 26.14,
+      "efficiency": 0.8483,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PWM_H_G": {
+      "segments": 11,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 11.121,
+      "arc_length_mm": 0,
+      "joints": 6,
+      "bends_90": 5,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 5,
+      "stair_runs": 0,
+      "zigzag_runs": 1,
+      "short_run_segments": 4,
+      "short_segments": 4,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 44.96,
+      "efficiency": 0.8755,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PWM_L": {
+      "segments": 9,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 26.675,
+      "arc_length_mm": 0,
+      "joints": 4,
+      "bends_90": 4,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 4,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 15.0,
+      "efficiency": 0.7113,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "PWM_L_G": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 8.871,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 11.27,
+      "efficiency": 0.7546,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "RDY_H": {
+      "segments": 41,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 77.677,
+      "arc_length_mm": 0,
+      "joints": 32,
+      "bends_90": 31,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 31,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 14,
+      "short_segments": 19,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 9,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 39.91,
+      "efficiency": 0.7612,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "RDY_L": {
+      "segments": 82,
+      "arcs": 0,
+      "vias": 9,
+      "length_mm": 99.237,
+      "arc_length_mm": 0,
+      "joints": 68,
+      "bends_90": 68,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 68,
+      "stair_runs": 8,
+      "zigzag_runs": 1,
+      "short_run_segments": 47,
+      "short_segments": 47,
+      "short_segment_runs": 9,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 14,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 68.52,
+      "efficiency": 0.8161,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "REF2V5": {
+      "segments": 25,
+      "arcs": 0,
+      "vias": 5,
+      "length_mm": 33.78,
+      "arc_length_mm": 0,
+      "joints": 10,
+      "bends_90": 10,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 10,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 11,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 15,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 29.6,
+      "efficiency": 0.8751,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "REF3V0": {
+      "segments": 20,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 22.48,
+      "arc_length_mm": 0,
+      "joints": 8,
+      "bends_90": 8,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 8,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 9,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 12,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 35.59,
+      "efficiency": 0.8727,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "RELAY_ON": {
+      "segments": 59,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 56.45,
+      "arc_length_mm": 0,
+      "joints": 54,
+      "bends_90": 54,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 54,
+      "stair_runs": 5,
+      "zigzag_runs": 0,
+      "short_run_segments": 45,
+      "short_segments": 43,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 95.66,
+      "efficiency": 0.7458,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "RESET_CT": {
+      "segments": 6,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 6.952,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 2,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 14.38,
+      "efficiency": 0.7143,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "RESET_N": {
+      "segments": 58,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 57.175,
+      "arc_length_mm": 0,
+      "joints": 54,
+      "bends_90": 54,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 54,
+      "stair_runs": 6,
+      "zigzag_runs": 0,
+      "short_run_segments": 45,
+      "short_segments": 43,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 4,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 94.45,
+      "efficiency": 0.7741,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "SEQ_BASE": {
+      "segments": 9,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 12.555,
+      "arc_length_mm": 0,
+      "joints": 1,
+      "bends_90": 1,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 1,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 3,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 7.96,
+      "efficiency": 0.8727,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "SPARE_D1": {
+      "segments": 101,
+      "arcs": 0,
+      "vias": 6,
+      "length_mm": 121.05,
+      "arc_length_mm": 0,
+      "joints": 94,
+      "bends_90": 94,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 94,
+      "stair_runs": 10,
+      "zigzag_runs": 1,
+      "short_run_segments": 75,
+      "short_segments": 74,
+      "short_segment_runs": 13,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 77.65,
+      "efficiency": 0.8087,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "SPARE_D2": {
+      "segments": 66,
+      "arcs": 0,
+      "vias": 7,
+      "length_mm": 99.575,
+      "arc_length_mm": 0,
+      "joints": 57,
+      "bends_90": 57,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 57,
+      "stair_runs": 6,
+      "zigzag_runs": 0,
+      "short_run_segments": 38,
+      "short_segments": 40,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 9,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 57.24,
+      "efficiency": 0.8077,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TCK": {
+      "segments": 18,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 47.1,
+      "arc_length_mm": 0,
+      "joints": 11,
+      "bends_90": 11,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 11,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 6,
+      "short_segments": 6,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 23.35,
+      "efficiency": 0.7726,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TDI": {
+      "segments": 48,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 37.875,
+      "arc_length_mm": 0,
+      "joints": 43,
+      "bends_90": 43,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 43,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 33,
+      "short_segments": 31,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 113.53,
+      "efficiency": 0.7162,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TDO": {
+      "segments": 43,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 42.05,
+      "arc_length_mm": 0,
+      "joints": 41,
+      "bends_90": 41,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 41,
+      "stair_runs": 3,
+      "zigzag_runs": 1,
+      "short_run_segments": 31,
+      "short_segments": 29,
+      "short_segment_runs": 6,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 2,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 97.5,
+      "efficiency": 0.6999,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TEMP_CTRL": {
+      "segments": 15,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 30.005,
+      "arc_length_mm": 0,
+      "joints": 10,
+      "bends_90": 9,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 9,
+      "stair_runs": 1,
+      "zigzag_runs": 0,
+      "short_run_segments": 5,
+      "short_segments": 8,
+      "short_segment_runs": 1,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 30.0,
+      "efficiency": 0.8435,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TEMP_HS_NTC": {
+      "segments": 29,
+      "arcs": 0,
+      "vias": 5,
+      "length_mm": 39.153,
+      "arc_length_mm": 0,
+      "joints": 16,
+      "bends_90": 16,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 16,
+      "stair_runs": 2,
+      "zigzag_runs": 0,
+      "short_run_segments": 10,
+      "short_segments": 15,
+      "short_segment_runs": 2,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 13,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 40.87,
+      "efficiency": 0.9201,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TMS": {
+      "segments": 34,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 35.475,
+      "arc_length_mm": 0,
+      "joints": 28,
+      "bends_90": 28,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 28,
+      "stair_runs": 2,
+      "zigzag_runs": 1,
+      "short_run_segments": 20,
+      "short_segments": 21,
+      "short_segment_runs": 5,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 6,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 78.93,
+      "efficiency": 0.7041,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "TRST": {
+      "segments": 27,
+      "arcs": 0,
+      "vias": 1,
+      "length_mm": 35.375,
+      "arc_length_mm": 0,
+      "joints": 22,
+      "bends_90": 22,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 22,
+      "stair_runs": 1,
+      "zigzag_runs": 1,
+      "short_run_segments": 13,
+      "short_segments": 14,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 5,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 62.19,
+      "efficiency": 0.7677,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "UART_RX": {
+      "segments": 32,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 62.225,
+      "arc_length_mm": 0,
+      "joints": 25,
+      "bends_90": 25,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 25,
+      "stair_runs": 1,
+      "zigzag_runs": 1,
+      "short_run_segments": 17,
+      "short_segments": 19,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 7,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 40.18,
+      "efficiency": 0.9054,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "UART_TX": {
+      "segments": 44,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 74.575,
+      "arc_length_mm": 0,
+      "joints": 38,
+      "bends_90": 38,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 38,
+      "stair_runs": 4,
+      "zigzag_runs": 0,
+      "short_run_segments": 26,
+      "short_segments": 28,
+      "short_segment_runs": 4,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 6,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 50.96,
+      "efficiency": 0.8603,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "UVLO": {
+      "segments": 54,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 51.679,
+      "arc_length_mm": 0,
+      "joints": 43,
+      "bends_90": 43,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 43,
+      "stair_runs": 6,
+      "zigzag_runs": 1,
+      "short_run_segments": 36,
+      "short_segments": 37,
+      "short_segment_runs": 7,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 11,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 83.21,
+      "efficiency": 0.8766,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "UVLO_N": {
+      "segments": 110,
+      "arcs": 0,
+      "vias": 8,
+      "length_mm": 77.153,
+      "arc_length_mm": 0,
+      "joints": 98,
+      "bends_90": 98,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 98,
+      "stair_runs": 9,
+      "zigzag_runs": 2,
+      "short_run_segments": 84,
+      "short_segments": 82,
+      "short_segment_runs": 13,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 12,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 127.02,
+      "efficiency": 0.8254,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "UVLO_REF": {
+      "segments": 18,
+      "arcs": 0,
+      "vias": 4,
+      "length_mm": 26.977,
+      "arc_length_mm": 0,
+      "joints": 4,
+      "bends_90": 3,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 4,
+      "stair_runs": 0,
+      "zigzag_runs": 0,
+      "short_run_segments": 0,
+      "short_segments": 5,
+      "short_segment_runs": 0,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 14,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 14.83,
+      "efficiency": 0.7613,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "V12V_MON": {
+      "segments": 82,
+      "arcs": 0,
+      "vias": 3,
+      "length_mm": 167.65,
+      "arc_length_mm": 0,
+      "joints": 74,
+      "bends_90": 73,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 73,
+      "stair_runs": 7,
+      "zigzag_runs": 1,
+      "short_run_segments": 50,
+      "short_segments": 50,
+      "short_segment_runs": 8,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 43.54,
+      "efficiency": 0.6107,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "VIN_SENSE": {
+      "segments": 90,
+      "arcs": 0,
+      "vias": 8,
+      "length_mm": 111.528,
+      "arc_length_mm": 0,
+      "joints": 74,
+      "bends_90": 74,
+      "bends_45": 0,
+      "bends_other": 0,
+      "direction_changes": 74,
+      "stair_runs": 9,
+      "zigzag_runs": 0,
+      "short_run_segments": 56,
+      "short_segments": 56,
+      "short_segment_runs": 8,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 16,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 66.35,
+      "efficiency": 0.7858,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "VOUT_SENSE": {
+      "segments": 40,
+      "arcs": 0,
+      "vias": 2,
+      "length_mm": 55.477,
+      "arc_length_mm": 0,
+      "joints": 32,
+      "bends_90": 31,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 32,
+      "stair_runs": 3,
+      "zigzag_runs": 0,
+      "short_run_segments": 21,
+      "short_segments": 21,
+      "short_segment_runs": 3,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 8,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 57.68,
+      "efficiency": 0.7784,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    },
+    "XRS_N": {
+      "segments": 156,
+      "arcs": 0,
+      "vias": 21,
+      "length_mm": 226.11,
+      "arc_length_mm": 0,
+      "joints": 123,
+      "bends_90": 122,
+      "bends_45": 0,
+      "bends_other": 1,
+      "direction_changes": 123,
+      "stair_runs": 17,
+      "zigzag_runs": 0,
+      "short_run_segments": 83,
+      "short_segments": 84,
+      "short_segment_runs": 18,
+      "arc_joints": 0,
+      "arc_joints_discontinuous": 0,
+      "chains": 33,
+      "degree2_joints": 0,
+      "degree2_bends_90": 0,
+      "bends_per_100mm": 54.4,
+      "efficiency": 0.8054,
+      "min_width_mm": 0.2,
+      "zone_connected": false
+    }
+  },
+  "arcs": {
+    "count": 0,
+    "radius_mm": null,
+    "joints": 0,
+    "discontinuous": 0,
+    "tangency_failures": []
+  },
+  "sharp_corners": {
+    "bends_90": 4069,
+    "by_reason": {
+      "pad_link": 96,
+      "unexplained": 3973
+    },
+    "samples": [
+      {
+        "net": "12V_IN",
+        "layer": "F.Cu",
+        "xy_mm": [
+          12.0,
+          4.25
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "12V_IN",
+        "layer": "F.Cu",
+        "xy_mm": [
+          30.0,
+          5.55
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.5,
+          19.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.625,
+          19.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.625,
+          19.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.5,
+          25.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.875,
+          25.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.875,
+          25.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          19.125,
+          25.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          19.125,
+          25.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          19.25,
+          25.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          19.25,
+          24.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "12V_PROT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          19.375,
+          24.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "1V9",
+        "layer": "F.Cu",
+        "xy_mm": [
+          50.875,
+          17.0
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "1V9",
+        "layer": "F.Cu",
+        "xy_mm": [
+          50.875,
+          16.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "1V9",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.875,
+          16.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "1V9_BULK",
+        "layer": "B.Cu",
+        "xy_mm": [
+          57.5,
+          10.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          41.875,
+          56.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          41.875,
+          57.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          42.0,
+          57.25
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.0,
+          64.5
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.375,
+          64.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.375,
+          64.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.5,
+          64.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.5,
+          64.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.625,
+          64.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.625,
+          64.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          20.375
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          20.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          20.875
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          21.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.125,
+          21.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.125,
+          22.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          22.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          51.0,
+          22.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          49.875,
+          22.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          50.75,
+          37.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          58.25,
+          59.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          61.25,
+          48.875
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.375,
+          48.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.375,
+          49.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.25,
+          49.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.25,
+          50.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.375,
+          50.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          60.375,
+          50.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          61.25,
+          50.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          83.5,
+          41.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          41.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          41.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          87.875,
+          59.25
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          92.5,
+          57.25
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "3V3",
+        "layer": "F.Cu",
+        "xy_mm": [
+          92.875,
+          58.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          42.375,
+          16.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          42.375,
+          16.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.125,
+          16.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.125,
+          16.375
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          20.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          20.375
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          20.875
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          21.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          42.875,
+          21.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          42.875,
+          22.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          22.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          43.0,
+          22.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          44.125,
+          22.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.5,
+          20.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.875,
+          20.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.875,
+          20.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          14.0,
+          20.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          14.0,
+          20.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          14.125,
+          20.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          14.125,
+          14.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          21.625,
+          13.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          25.0,
+          13.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          25.0,
+          13.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "B.Cu",
+        "xy_mm": [
+          26.125,
+          13.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_EN",
+        "layer": "F.Cu",
+        "xy_mm": [
+          27.125,
+          13.5
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.5,
+          20.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.25,
+          20.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.25,
+          20.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.125,
+          20.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.125,
+          20.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.0,
+          20.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.0,
+          20.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          12.875,
+          20.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          12.875,
+          21.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.0,
+          21.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.0,
+          21.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.125,
+          21.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          13.125,
+          21.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          22.625,
+          21.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          22.625,
+          18.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_FB",
+        "layer": "B.Cu",
+        "xy_mm": [
+          38.5,
+          14.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "5V_SW",
+        "layer": "F.Cu",
+        "xy_mm": [
+          18.6,
+          24.5
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          81.625,
+          36.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          81.625,
+          36.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.0,
+          36.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.0,
+          36.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.125,
+          36.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.125,
+          36.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.375,
+          36.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.375,
+          36.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          36.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          36.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          36.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFM",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          36.5
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.5,
+          36.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.5,
+          36.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.5,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.625,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.625,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.75,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.75,
+          34.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.375,
+          33.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          33.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.5,
+          33.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          33.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCREFP",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          33.5
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          81.625,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          81.625,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.0,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.0,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          83.125,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          84.625,
+          49.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.0,
+          49.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.0,
+          49.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.125,
+          49.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.125,
+          49.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.25,
+          49.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          35.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          35.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          86.375,
+          35.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          86.375,
+          37.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "xy_mm": [
+          85.25,
+          37.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          90.0,
+          38.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          90.875,
+          38.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          90.875,
+          38.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          91.0,
+          38.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          91.0,
+          38.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          91.125,
+          38.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          91.125,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          92.375,
+          35.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          92.375,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          93.625,
+          35.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          93.625,
+          35.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.5,
+          35.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.5,
+          35.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.625,
+          35.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.625,
+          35.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.75,
+          35.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "B.Cu",
+        "xy_mm": [
+          95.75,
+          33.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.375,
+          41.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.375,
+          40.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          90.0,
+          40.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_I12V",
+        "layer": "F.Cu",
+        "xy_mm": [
+          90.0,
+          40.75
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.625,
+          42.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.625,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.75,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.75,
+          42.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.875,
+          42.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          77.875,
+          42.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.875,
+          42.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.875,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.0,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.0,
+          42.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.125,
+          42.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.125,
+          42.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          82.625,
+          42.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          85.875,
+          37.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          86.5,
+          37.5
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          86.5,
+          37.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          86.625,
+          37.375
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          86.625,
+          37.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "B.Cu",
+        "xy_mm": [
+          86.75,
+          37.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          82.875,
+          42.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          82.875,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          83.0,
+          42.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          83.0,
+          42.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          83.125,
+          42.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          83.125,
+          42.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          42.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          84.625,
+          42.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          86.75,
+          30.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE",
+        "layer": "F.Cu",
+        "xy_mm": [
+          93.0,
+          30.125
+        ],
+        "reason": "pad_link",
+        "attribution": "pad_link"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.5,
+          45.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.5,
+          48.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.625,
+          48.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.625,
+          48.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.75,
+          48.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          75.75,
+          48.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.75,
+          48.25
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.75,
+          48.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.875,
+          48.125
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          78.875,
+          48.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.0,
+          48.0
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.0,
+          47.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.125,
+          47.875
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.125,
+          47.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.25,
+          47.75
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "xy_mm": [
+          79.25,
+          47.625
+        ],
+        "reason": "unexplained",
+        "attribution": "router"
+      }
+    ]
+  },
+  "worst_cases": {
+    "short_runs": [
+      {
+        "net": "ADC_TEMP_HS",
+        "layer": "B.Cu",
+        "kind": "stair",
+        "segments": 23,
+        "length_mm": 3.625,
+        "from_mm": [
+          79.0,
+          48.75
+        ],
+        "to_mm": [
+          80.375,
+          46.5
+        ]
+      },
+      {
+        "net": "PG_BIAS_L_N",
+        "layer": "In2.Cu",
+        "kind": "zigzag",
+        "segments": 22,
+        "length_mm": 4.125,
+        "from_mm": [
+          83.25,
+          58.5
+        ],
+        "to_mm": [
+          83.375,
+          60.75
+        ]
+      },
+      {
+        "net": "PG_BIAS_S_N",
+        "layer": "B.Cu",
+        "kind": "stair",
+        "segments": 21,
+        "length_mm": 3.625,
+        "from_mm": [
+          98.375,
+          70.0
+        ],
+        "to_mm": [
+          100.25,
+          68.25
+        ]
+      },
+      {
+        "net": "ADC_ISENSE_REF",
+        "layer": "B.Cu",
+        "kind": "stair",
+        "segments": 18,
+        "length_mm": 2.25,
+        "from_mm": [
+          78.75,
+          48.25
+        ],
+        "to_mm": [
+          79.875,
+          47.125
+        ]
+      },
+      {
+        "net": "GND_CTRL",
+        "layer": "F.Cu",
+        "kind": "zigzag",
+        "segments": 18,
+        "length_mm": 5.5,
+        "from_mm": [
+          60.25,
+          51.5
+        ],
+        "to_mm": [
+          61.25,
+          49.75
+        ]
+      },
+      {
+        "net": "VIN_SENSE",
+        "layer": "F.Cu",
+        "kind": "stair",
+        "segments": 18,
+        "length_mm": 2.375,
+        "from_mm": [
+          103.0,
+          54.125
+        ],
+        "to_mm": [
+          104.25,
+          53.0
+        ]
+      },
+      {
+        "net": "BIAS_EN",
+        "layer": "In2.Cu",
+        "kind": "zigzag",
+        "segments": 17,
+        "length_mm": 3.875,
+        "from_mm": [
+          38.125,
+          71.375
+        ],
+        "to_mm": [
+          38.125,
+          69.25
+        ]
+      },
+      {
+        "net": "ADC_VOUT",
+        "layer": "B.Cu",
+        "kind": "zigzag",
+        "segments": 16,
+        "length_mm": 4.0,
+        "from_mm": [
+          45.75,
+          36.5
+        ],
+        "to_mm": [
+          44.125,
+          38.375
+        ]
+      },
+      {
+        "net": "ARM",
+        "layer": "F.Cu",
+        "kind": "stair",
+        "segments": 16,
+        "length_mm": 3.5,
+        "from_mm": [
+          49.875,
+          67.625
+        ],
+        "to_mm": [
+          50.875,
+          65.125
+        ]
+      },
+      {
+        "net": "EFUSE_ILIM",
+        "layer": "B.Cu",
+        "kind": "stair",
+        "segments": 16,
+        "length_mm": 2.25,
+        "from_mm": [
+          26.0,
+          15.125
+        ],
+        "to_mm": [
+          27.25,
+          14.125
+        ]
+      }
+    ],
+    "low_efficiency": [
+      {
+        "net": "FAN_TACH",
+        "layer": "B.Cu",
+        "from_mm": [
+          78.375,
+          30.25
+        ],
+        "to_mm": [
+          92.125,
+          25.5
+        ],
+        "span_mm": 14.547,
+        "routed_mm": 83.0,
+        "efficiency": 0.175
+      },
+      {
+        "net": "FAULT_N",
+        "layer": "B.Cu",
+        "from_mm": [
+          67.25,
+          35.25
+        ],
+        "to_mm": [
+          97.125,
+          28.0
+        ],
+        "span_mm": 30.742,
+        "routed_mm": 102.125,
+        "efficiency": 0.301
+      },
+      {
+        "net": "GND_CTRL",
+        "layer": "F.Cu",
+        "from_mm": [
+          60.25,
+          51.5
+        ],
+        "to_mm": [
+          61.25,
+          49.75
+        ],
+        "span_mm": 2.016,
+        "routed_mm": 5.5,
+        "efficiency": 0.366
+      },
+      {
+        "net": "ADC_TEMP_CTRL",
+        "layer": "B.Cu",
+        "from_mm": [
+          76.25,
+          42.25
+        ],
+        "to_mm": [
+          84.625,
+          38.5
+        ],
+        "span_mm": 9.176,
+        "routed_mm": 23.875,
+        "efficiency": 0.384
+      },
+      {
+        "net": "PG_BIAS_S_OK",
+        "layer": "F.Cu",
+        "from_mm": [
+          64.625,
+          64.5
+        ],
+        "to_mm": [
+          66.625,
+          63.25
+        ],
+        "span_mm": 2.358,
+        "routed_mm": 6.0,
+        "efficiency": 0.393
+      },
+      {
+        "net": "UVLO_REF",
+        "layer": "F.Cu",
+        "from_mm": [
+          97.0,
+          63.875
+        ],
+        "to_mm": [
+          94.375,
+          65.125
+        ],
+        "span_mm": 2.907,
+        "routed_mm": 6.875,
+        "efficiency": 0.423
+      },
+      {
+        "net": "GND_CTRL",
+        "layer": "F.Cu",
+        "from_mm": [
+          16.875,
+          21.75
+        ],
+        "to_mm": [
+          20.75,
+          20.0
+        ],
+        "span_mm": 4.252,
+        "routed_mm": 9.625,
+        "efficiency": 0.442
+      },
+      {
+        "net": "FLT_L_N",
+        "layer": "B.Cu",
+        "from_mm": [
+          40.0,
+          53.125
+        ],
+        "to_mm": [
+          45.875,
+          49.0
+        ],
+        "span_mm": 7.179,
+        "routed_mm": 16.0,
+        "efficiency": 0.449
+      },
+      {
+        "net": "ADCRESEXT",
+        "layer": "F.Cu",
+        "from_mm": [
+          83.125,
+          35.5
+        ],
+        "to_mm": [
+          85.25,
+          37.875
+        ],
+        "span_mm": 3.187,
+        "routed_mm": 7.0,
+        "efficiency": 0.455
+      },
+      {
+        "net": "G3_N",
+        "layer": "F.Cu",
+        "from_mm": [
+          74.75,
+          58.125
+        ],
+        "to_mm": [
+          76.625,
+          63.875
+        ],
+        "span_mm": 6.048,
+        "routed_mm": 13.125,
+        "efficiency": 0.461
+      }
+    ]
+  },
+  "zone_connected_nets": [
+    "12V_PROT",
+    "1V9",
+    "3V3",
+    "5V",
+    "GND_CTRL"
+  ],
+  "notes": [
+    "geometry only: no inductance, EMI or current-capacity claim",
+    "bends are measured at joints of two straight items; arc joints are judged by tangency",
+    "chain anchors (not counted as joints): via centres and pad hits of the same net, junctions, width changes; degree2_joints / degree2_bends_90 count every node where exactly two straight items of one net and layer meet, anchors included (the degree-2 probe figure)",
+    "attribution 'pre_routed' needs --plan (pre_routed tracks); 'pad_link' = an item ending inside a pad of its net; everything else is 'router'"
+  ]
+}

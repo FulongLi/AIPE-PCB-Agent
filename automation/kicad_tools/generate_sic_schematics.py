@@ -807,6 +807,26 @@ def export_pdf(board: str, kicad_target: Path | None = None, target: Path | None
                 stderr=completed.stderr.strip()[-2000:])
 
 
+def write_readability_report(board: str, kicad_target: Path | None = None, release: Path | None = None,
+                             out_dir: Path | None = None, mapping: Path | None = None) -> dict:
+    """verification/engineering_checks/schematic_readability_<board>.{json,md}: V2 release sheets vs the generated sheets."""
+    from automation.kicad_tools import schematic_metrics as sm
+    kicad_target = Path(kicad_target or kicad_dir(board))
+    release = Path(release or RELEASE_V2) / "kicad" / f"{board}_board"
+    out_dir = Path(out_dir or common.EXAMPLE / "verification/engineering_checks")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    mapping = Path(mapping or DESIGN_DIR / f"schematic_mapping_{board}.json")
+    result = sm.compare_projects(release, kicad_target, before_root=project_name(board), after_root=project_name(board), mapping=mapping)
+    result["board"] = board
+    result["before"]["label"] = "V2 frozen release (releases/v2)"
+    result["after"]["label"] = f"{REVISION} wired generation"
+    json_path = out_dir / f"schematic_readability_{board}.json"
+    md_path = out_dir / f"schematic_readability_{board}.md"
+    json_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    md_path.write_text(sm.comparison_markdown(result, f"Schematic readability - {board} board (V2 -> {REVISION})"), encoding="utf-8")
+    return dict(json=str(json_path), markdown=str(md_path), totals=result["totals"], delta=result["delta"])
+
+
 def write_merged_bom(target: Path = BOM_CSV, sources: dict | None = None) -> dict:
     """components/bom.csv: bom_power.csv and bom_control.csv rows with a leading board column."""
     sources = sources or BOM_SOURCES
@@ -837,6 +857,8 @@ def main(argv=None) -> int:
     parser.add_argument("--bom", action="store_true", help="write components/bom.csv from the two board BOMs")
     parser.add_argument("--style", choices=STYLES, default=None, help=f"drawing style (default {SCHEMATIC_STYLE})")
     parser.add_argument("--gates", action="store_true", help="run the V2.1 gates (DRU identity, net_settings, ERC 0, netlist vs model and V2)")
+    parser.add_argument("--readability", action="store_true",
+                        help="write verification/engineering_checks/schematic_readability_<board>.{json,md} (V2 release vs this generation)")
     args = parser.parse_args(argv)
     boards = BOARDS if args.board == "all" else (args.board,)
     print(common.BANNER)
@@ -863,6 +885,13 @@ def main(argv=None) -> int:
             print(f"{board} gates: {'passed' if gates['passed'] else 'FAILED'} " +
                   ", ".join(f"{k}={'ok' if v['passed'] else 'FAIL'}" for k, v in gates["gates"].items()))
             failures += not gates["passed"]
+        if args.readability:
+            report = write_readability_report(board)
+            t = report["totals"]
+            v2, v21 = t[list(t)[0]], t[list(t)[1]]
+            print(f"{board} readability: stub labels {v2['global_labels_on_pin_stubs']} -> {v21['global_labels_on_pin_stubs']}, "
+                  f"wired pin share {v2['wired_pin_share']} -> {v21['wired_pin_share']}, crossings {v2['crossings']} -> {v21['crossings']}, "
+                  f"text overlaps {v2['text_overlaps']} -> {v21['text_overlaps']} -> {report['markdown']}")
     if args.bom:
         print("BOM:", write_merged_bom())
     return 1 if failures else 0

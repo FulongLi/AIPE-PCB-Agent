@@ -704,6 +704,7 @@ def generate_project(spec) -> dict:
         files.append(kicad_dir / sheet['file'])
     root.write(kicad_dir / (spec.name + '.kicad_sch'))
     files.append(kicad_dir / (spec.name + '.kicad_sch'))
+    removed_sheets = remove_stale_sheets(kicad_dir, set(spec.pages), files)
     lib_path = kicad_dir / 'libraries' / (spec.library + '.kicad_sym')
     lib_path.write_text('(kicad_symbol_lib (version 20250114) (generator "aipe")\n' + '\n'.join(gen.definitions.values()) + ')\n',
                         encoding='utf-8')
@@ -733,10 +734,29 @@ def generate_project(spec) -> dict:
     return dict(name=spec.name, root=str(kicad_dir / (spec.name + '.kicad_sch')), project=str(pro), mapping=str(mapping_path),
                 files=[str(f) for f in files], sheets=sheets, parts_placed=len(gen.paths), skipped=skipped,
                 continuation_sheets=[s['key'] for s in sheets if s['key'] != s['page']], symbol_fallbacks=fallbacks,
-                flags=flag_nets, diagnostics=diagnostics, library_root=mapping['library_root'])
+                flags=flag_nets, diagnostics=diagnostics, library_root=mapping['library_root'], removed_sheets=removed_sheets)
 
 
 # --- V2.1 wired presentation --------------------------------------------------------------------------------------
+
+def remove_stale_sheets(kicad_dir: Path, pages, written) -> list[str]:
+    """Delete <page>.kicad_sch / <page>_N.kicad_sch files of known pages that this generation did not write.
+
+    A regeneration that needs fewer continuation sheets (or none, in the wired style) must not leave the previous
+    run's sheets beside the project: they are not referenced by the root but confuse reviewers and tools.  Only
+    files whose stem is a page key of the spec are touched; the root sheet and foreign files are never removed.
+    """
+    written = {Path(p).resolve() for p in written}
+    removed = []
+    for path in sorted(Path(kicad_dir).glob('*.kicad_sch')):
+        if path.resolve() in written:
+            continue
+        match = re.fullmatch(r'(.+?)(?:_\d+)?\.kicad_sch', path.name)
+        if match and match.group(1) in pages:
+            path.unlink()
+            removed.append(path.name)
+    return removed
+
 
 def _write_project_files(spec: ProjectSpec, gen: _Generator, root: Schematic, definitions: dict, library: _Library,
                          mapping_extra: dict, fallbacks: dict, skipped: dict, diagnostics: dict, flag_nets: list) -> dict:
@@ -750,6 +770,7 @@ def _write_project_files(spec: ProjectSpec, gen: _Generator, root: Schematic, de
         files.append(kicad_dir / sheet['file'])
     root.write(kicad_dir / (spec.name + '.kicad_sch'))
     files.append(kicad_dir / (spec.name + '.kicad_sch'))
+    mapping_extra = dict(mapping_extra, removed_sheets=remove_stale_sheets(kicad_dir, set(spec.pages), files))
     lib_path = kicad_dir / 'libraries' / (spec.library + '.kicad_sym')
     lib_path.write_text('(kicad_symbol_lib (version 20250114) (generator "aipe")\n' + '\n'.join(definitions.values()) + ')\n',
                         encoding='utf-8')
@@ -805,11 +826,16 @@ def _generate_wired(spec: ProjectSpec, parts: list, flag_nets: list, diagnostics
     fallbacks = {}
 
     def rail_pin_order(part, number):
-        """Signal pins first (pin-number order), then rail pins grouped by net so consecutive same-rail pins form one bus."""
+        """Supply pins first, signal pins (pin-number order) in the middle, ground-style rails last on every side.
+
+        Consecutive same-rail pins form one bus; a supply symbol at the top of a side and a ground symbol at its
+        bottom point into free space instead of into the neighbouring signal lanes (TI reference-schematic order).
+        """
         net = part['nets'].get(number)
-        if net is None or planner.nets.get(net, {}).get('role') != 'rail':
-            return (0, '')
-        return (1, net)
+        info = planner.nets.get(net, {}) if net is not None else {}
+        if net is None or info.get('role') != 'rail':
+            return (1, '')
+        return (2, net) if info.get('down') else (0, net)
 
     def symbol_for_part(part):
         name, definition, extents, source = symbol_for(part, spec, library, grouping, rail_pin_order)
@@ -828,18 +854,19 @@ def _generate_wired(spec: ProjectSpec, parts: list, flag_nets: list, diagnostics
         is_flag_page = page == spec.flag_page and bool(flag_nets)
         if not page_parts and not planner.flags_for_page(page, flag_nets, is_flag_page):
             continue
-        planned = planner.plan_page(page, page_parts, flag_nets, is_flag_page)
         note = spec.page_notes.get(page, '')
         if is_flag_page:
             note = (note + ' ' if note else '') + FLAG_NOTE
         note_lines = textwrap.wrap(note, presentation['note_width']) if note else []
         header_height = 2.54 + len(note_lines) * presentation['note_size'] * 1.6 + 5.08
-        paper, positions = sp.pack_sheet(planned['layouts'], papers, PAPER, header_height)
+        planned = planner.plan_page(page, page_parts, flag_nets, is_flag_page, papers, PAPER, header_height)
+        paper, positions = planned['paper'], planned['positions']
         width = PAPER[paper][0]
         texts = [dict(kind='title', text=spec.pages[page], x=snap(width / 2), y=10.16),
                  dict(kind='note', text='\n'.join(note_lines), x=6.35, y=15.24)]
         plan = sp.route_sheet(planner, page, positions, paper, PAPER, texts)
         plan.title = spec.pages[page]
+        plan.counts['layout_variant'] = planned['variant']
         plans.append(plan)
     root = gen.root
     root.text(spec.comment, 20, 20, 2)

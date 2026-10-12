@@ -34,12 +34,15 @@ from automation.kicad_tools import schematic_wiring as sw
 from automation.kicad_tools.native_schematic import Schematic, pins, placed_pins, power_symbol_definition, quote, uid
 
 GRID = 1.27
-PITCH = 12.7            # lane slot pitch for hanging parts
-CAP_PITCH = 12.7        # decoupling row pitch (room for values such as 0.47u/630V beside each part)
+PITCH = 12.7            # minimum lane slot pitch for hanging parts (widened per item when its texts need more room)
+CAP_PITCH = 12.7        # minimum decoupling row pitch (widened per row from the longest value text)
 STUB = 2.54
-JOG0 = 3.81
+JOG0 = 5.08             # first jog column outside the pin ends; keeps jog wires clear of the rail-symbol glyphs at STUB
 GAP = 1.27
 TEXT_W = 0.9            # text width per character per mm of size (approximate font metric)
+TEXT_X = 2.54 + 0.762   # reference / value column beside a hanging two-pin part (capacitor plates are +-2.54 wide)
+SYMBOL_TEXT = 1.0       # font size of the rail names on power symbols
+TERMINALS_PER_ROW = 8   # lone single-pin parts (test points, studs) are drawn as a grid, not one lane each
 DEFAULT_DOWN_PATTERN = r'(^|_)(GND|PGND|GNDP|VSS|VEE|COM|KS)(_|$|\d)|GND'
 RAIL_RANK = ((r'VEE|VSS|PGND|^GND|_GND', 3), (r'GNDP|GND', 2), (r'KS|COM', 1))
 DEFAULT_PRESENTATION = dict(style='wired', groups={}, group_titles={}, group_order={}, supply='auto', exclude_supply=[],
@@ -49,7 +52,8 @@ DEFAULT_PRESENTATION = dict(style='wired', groups={}, group_titles={}, group_ord
                             label_size=1.27,       # hierarchical labels, name tags and root anchors (KiCad default 1.27)
                             max_row_mm=250.0,      # anchors of one group wrap into a new row beyond this width
                             max_col_mm=180.0,      # free lanes of one group wrap into a new column beyond this height
-                            max_wire_mm=150.0,     # longer same-sheet connections are drawn as a pair of name tags
+                            max_wire_mm=100.0,     # longer same-sheet connections of a local net are drawn as a pair of name tags
+                            max_cross_wire_mm=80.0,  # longer same-sheet connections of a cross net repeat its hierarchical label
                             loop_slack_mm=12.7,    # a routed wire longer than 1.5 x distance + slack becomes a tag pair
                             min_fill=0.3)          # escalated papers must reach this hull / drawable area ratio (gate floor)
 ANCHOR_KINDS = ('IC', 'DSP', 'Q')
@@ -303,7 +307,8 @@ class Lane:
     bundle_pins: list = field(default_factory=list)
     needs_jog: bool = False
     rank: int = 0
-    flip: bool = False
+    mode: str = ''                # power / bundle lanes: 'end' (vertical symbol at the bus end) or 'side' (horizontal symbol)
+    jog0: float = JOG0            # first jog column of this side (outside the flat rail symbols' zone)
     items_start: float = 0.0
 
 
@@ -345,21 +350,68 @@ class GroupLayout:
         self.placed.append(placed)
         return placed
 
-    def power(self, net, point, down=None, text_side: int = 0) -> Placed:
-        """Power symbol at `point`; text_side -1/+1 writes the rail name beside the glyph (left/right), 0 above/below it."""
-        down = self.is_down(net) if down is None else down
+    def power(self, net, point, down=None, text_side: int = 0, horizontal: int = 0, text_toward: int = 0) -> Placed:
+        """Power symbol at `point`.
+
+        The glyph always points away from the wire end: `down` hangs it below the point (rail bar or ground bars
+        below), otherwise above; the library body is drawn for the net's own style (ground bars for `down_pattern`
+        nets), so the instance is rotated by 180 degrees only when the hang direction differs from that style.
+        `horizontal` -1 / +1 lays the glyph flat, pointing left / right, with the rail name beyond the bar (fits a
+        2.54 mm pin pitch); `text_toward` -1 / +1 justifies the name of a vertical glyph so it extends to that side;
+        `text_side` -1 / +1 writes the name beside a vertical glyph instead of above / below it.
+        """
+        style_down = self.is_down(net)
+        down = style_down if down is None else down
         name = self.planner.power_name(net)
-        placed = Placed(self.planner.next_power_ref(), 1, dict(ref='#PWR', value=net, footprint='', kind='power', nets={}, pins={}),
-                        name, self.planner.power_definition(net), 180 if down else 0, r4(point[0]), r4(point[1]), kind='power', net=net,
-                        hide_reference=True)
-        if text_side < 0:
-            placed.texts = {'Value': (r4(point[0] - 1.905), r4(point[1]), 'right', 1.0)}
-        elif text_side > 0:
-            placed.texts = {'Value': (r4(point[0] + 1.905), r4(point[1]), 'left', 1.0)}
+        x, y = r4(point[0]), r4(point[1])
+        if horizontal:
+            # up-style body: 90 points left, 270 right; ground-style body (bars at negative library y): the reverse
+            angle = {(1, False): 270, (-1, False): 90, (1, True): 90, (-1, True): 270}[(1 if horizontal > 0 else -1, style_down)]
         else:
-            placed.texts = {'Value': (r4(point[0]), r4(point[1] + (3.302 if down else -3.302)), None, 1.0)}
+            angle = 180 if down != style_down else 0
+        placed = Placed(self.planner.next_power_ref(), 1, dict(ref='#PWR', value=net, footprint='', kind='power', nets={}, pins={}),
+                        name, self.planner.power_definition(net), angle, x, y, kind='power', net=net, hide_reference=True)
+        if horizontal:
+            tip = 1.905 + 0.635
+            placed.texts = {'Value': (r4(x + (tip if horizontal > 0 else -tip)), y, 'left' if horizontal > 0 else 'right', SYMBOL_TEXT)}
+        elif text_side < 0:
+            placed.texts = {'Value': (r4(x - 1.905), y, 'right', SYMBOL_TEXT)}
+        elif text_side > 0:
+            placed.texts = {'Value': (r4(x + 1.905), y, 'left', SYMBOL_TEXT)}
+        elif text_toward:
+            placed.texts = {'Value': (r4(x + (1.27 if text_toward > 0 else -1.27)), r4(y + (3.302 if down else -3.302)),
+                                      'left' if text_toward > 0 else 'right', SYMBOL_TEXT)}
+        else:
+            placed.texts = {'Value': (x, r4(y + (3.302 if down else -3.302)), None, SYMBOL_TEXT)}
         self.placed.append(placed)
         return placed
+
+    def text_width(self, text: str, size: float = 1.27) -> float:
+        return TEXT_W * size * len(str(text))
+
+    def part_text_width(self, part) -> float:
+        """Width of the longer of reference and value of a part at the 1.27 mm field size."""
+        return self.text_width(max((part['ref'], str(part['value'])), key=len))
+
+    def hang_text_x(self, part) -> float:
+        """Distance from a hanging part's centre line to its reference / value column (body half-width plus a gap)."""
+        name, definition, extents, _ = self.symbol(part)
+        if len(part['pins']) <= 2:
+            return TEXT_X
+        w, h = extents[0]       # the part is rotated so its library x axis points along the lane normal: h is the sheet width
+        return r4(max(2.54, h / 2) + 0.762)
+
+    def hang_width(self, part) -> float:
+        """Lane slot width of a hanging part: PITCH or wider so its texts clear the next slot's part body."""
+        return max(PITCH, snap_up(PITCH / 2 + self.hang_text_x(part) + self.part_text_width(part) + GAP))
+
+    def inline_width(self, part) -> tuple:
+        """(slot width, lead) of an inline two-pin part: the texts above / below are centred on the part."""
+        name, definition, extents, _ = self.symbol(part)
+        span = two_pin_span(definition)
+        wanted = max(span + 2 * STUB, self.part_text_width(part) + 2 * GAP)
+        lead = snap_up((wanted - span) / 2)
+        return r4(span + 2 * lead), lead
 
     def wire(self, net, a, b):
         if a != b:
@@ -383,27 +435,30 @@ class GroupLayout:
             return 'port' if (self.page, net) not in self.planner.ports_placed else 'open'
         return 'tag' if net not in self.planner.tags_placed else 'open'
 
-    def end_marker(self, net, point, dx, angle=None):
+    def end_marker(self, net, point, dx, angle=None, force: bool = False, down=None):
         """Port / tag / power / open end for the final net of a lane at `point`; returns the marker kind.
-        `angle` 90 / 270 writes the label vertically (text away from the wire end, above / below)."""
+        `angle` 90 / 270 writes the label vertically (text away from the wire end, above / below); `force` repeats a
+        port / tag even when the sheet already carries one (a lone test point reads better than a wire across the sheet)."""
         role = self.role(net)
         angle = (0 if dx > 0 else 180) if angle is None else angle
         if role == 'rail':
-            self.power(net, point)
+            self.power(net, point, down=down)
             return 'power'
         if role == 'cross':
-            if (self.page, net) not in self.planner.ports_placed:
+            if force or (self.page, net) not in self.planner.ports_placed:
                 self.port(net, point, angle)
                 return 'port'
             return 'open'
-        if net not in self.planner.tags_placed:
+        if force or net not in self.planner.tags_placed:
             self.tag(net, point, angle)
             return 'tag'
         return 'open'
 
     # --- lane content ---------------------------------------------------------------------------------------------
     def satellites_on(self, net):
-        return [p for p in self.members if p['ref'] in self.pool and net in p['nets'].values()]
+        """Pooled parts on `net` that a lane may pick up; parts between two rails (decoupling, MOV, PTC bridging two
+        supply nets) are left for the decoupling rows."""
+        return [p for p in self.members if p['ref'] in self.pool and net in p['nets'].values() and not self.classify_decoupling(p)]
 
     def classify_item(self, part, net):
         """(kind, far_net) of a pooled part seen from `net`: shunt / series / terminal / decoupling."""
@@ -437,11 +492,13 @@ class GroupLayout:
             self.pool.pop(part['ref'], None)
             items.append(dict(kind=kind, part=part, net=net, far=far))
         if series:
-            # continue inline with the series part whose far net has the most unplaced content
+            # continue inline with the series part whose far net has the most unplaced content, so a network is
+            # drawn as one chain; among equals prefer ending at a port or rail
             def weight(entry):
                 part, far = entry
+                content = len([p for p in self.satellites_on(far) if p is not part])
                 leaves = 0 if self.role(far) in ('rail', 'cross') else 1
-                return (leaves, -len([p for p in self.satellites_on(far) if p is not part]))
+                return (-content, leaves)
             series.sort(key=weight)
             inline, branches = series[0], series[1:]
             for part, far in branches:
@@ -454,7 +511,7 @@ class GroupLayout:
         return items
 
     def item_extents(self, item) -> tuple:
-        """(above, below, width) of one lane item."""
+        """(above, below, width) of one lane item; the width is also stored in item['width']."""
         part = item['part']
         name, definition, extents, _ = self.symbol(part)
         if item['kind'] in ('shunt', 'branch'):
@@ -463,14 +520,21 @@ class GroupLayout:
             if item['kind'] == 'branch' and self.role(item['far']) != 'rail':
                 tail = max(tail, TEXT_W * self.planner.presentation.get('label_size', 1.27) * len(item['far']) + 3.0)
             tall = STUB + span + STUB + tail
+            width = self.hang_width(part)
+            item['width'] = width
             if item['kind'] == 'shunt' and not self.is_down(item['far']):
-                return tall, GAP, PITCH
-            return GAP, tall, PITCH
+                return tall, GAP, width
+            return GAP, tall, width
         if item['kind'] == 'series':
-            return 5.08, 5.08, two_pin_span(definition) + 2 * STUB
+            width, lead = self.inline_width(part)
+            item['width'] = width
+            return 5.08, 5.08, width
         if item['kind'] == 'terminal':
             w, h = extents[0]
-            return GAP, STUB + w + 5.08 + 2.54, PITCH
+            width = self.hang_width(part)
+            item['width'] = width
+            return GAP, STUB + w + 5.08 + 2.54, width
+        item['width'] = PITCH
         return GAP, GAP, PITCH
 
     # --- anchor lanes ----------------------------------------------------------------------------------------------
@@ -511,7 +575,9 @@ class GroupLayout:
                     continue
                 lane = Lane(pad, net, 'signal', pin_info['point'], dx)
                 lane.items = self.collect_items(net)
-                above, below, length = GAP, GAP, 0.0
+                # a lane without items is a stub plus its end label (1.27 mm tall): it stays on its pin row and, when
+                # jogged below hanging content, stacks at the 2.54 mm pitch (GAP / 2 above and below plus GAP between)
+                above, below, length = (GAP, GAP, 0.0) if lane.items else (GAP / 2, GAP / 2, 0.0)
                 for item in lane.items:
                     a, b, w = self.item_extents(item)
                     above, below, length = max(above, a), max(below, b), length + w
@@ -534,23 +600,44 @@ class GroupLayout:
         return lanes
 
     def pack_side(self, lanes: list) -> None:
-        """Vertical packing of one side's lanes: monotonic, each lane at or below its pin."""
+        """Vertical packing of one side's lanes: monotonic, each lane at or below its pin.
+
+        Rail lanes (power / bundle) stay at their pin rows.  A rail symbol pointing away from the body needs 3.81 mm
+        beyond the bus end (glyph plus name); when the neighbouring rows are taken (another rail bundle, the thin lane
+        above) the symbol is laid flat at the end row instead ('side' mode, 1.27 mm tall).  Signal lanes jog down
+        below everything drawn above them.
+        """
         bottom = -1e9
-        for lane in lanes:
+        for index, lane in enumerate(lanes):
             pin_y = lane.pin_point[1]
             if lane.kind == 'nc':
                 lane.y = pin_y
                 continue
-            if lane.kind == 'bundle':
-                lane.y = pin_y
-                ys = [p[1] for _, p in lane.bundle_pins]
-                # the symbol sits at the outer end of the bus unless the lane above reaches into that glyph
-                lane.flip = (not self.is_down(lane.net)) and (min(ys) - lane.above < bottom - 1e-6)
-                bottom = max(bottom, max(ys) + (lane.below if not lane.flip else 2.54))
-                continue
-            if lane.kind == 'power' and pin_y - lane.above >= bottom - 1e-6:
-                lane.y, lane.needs_jog = pin_y, False     # fixed: stub plus symbol right at the pin row
-                bottom = pin_y + lane.below
+            if lane.kind in ('bundle', 'power'):
+                lane.y, lane.needs_jog = pin_y, False
+                ys = sorted(p[1] for _, p in lane.bundle_pins) if lane.kind == 'bundle' else [pin_y]
+                down = self.is_down(lane.net)
+                nxt = next((l for l in lanes[index + 1:] if l.kind != 'nc'), None)
+                if down:
+                    # the glyph hangs below the last row: fine unless another lane's pin row follows within 3.81 mm
+                    free_below = nxt is None or nxt.pin_point[1] - ys[-1] >= lane.below + GAP - 1e-6
+                    lane.mode = 'end' if free_below else 'side'
+                    bottom = max(bottom, ys[-1] + (lane.below if lane.mode == 'end' else GAP))
+                else:
+                    if ys[0] - lane.above >= bottom - 1e-6:
+                        lane.mode = 'end'                       # glyph and name above the first row
+                        bottom = max(bottom, ys[-1] + GAP)
+                    elif ys[0] - GAP >= bottom - 1e-6:
+                        lane.mode = 'side'                      # thin row above: flat glyph at the first row
+                        bottom = max(bottom, ys[-1] + GAP)
+                    elif lane.kind == 'power':
+                        lane.y = max(pin_y, snap_up(bottom + lane.above + GAP))     # jog below the content above
+                        lane.needs_jog = True
+                        lane.mode = 'end'
+                        bottom = max(bottom, lane.y + GAP)
+                    else:
+                        lane.mode = 'side'                      # a bus cannot move: flat glyph at its first row
+                        bottom = max(bottom, ys[-1] + GAP)
                 continue
             y = max(pin_y, snap_up(bottom + lane.above + GAP))
             lane.y = y
@@ -560,8 +647,13 @@ class GroupLayout:
         for i, lane in enumerate(jog_lanes):
             lane.rank = len(jog_lanes) - 1 - i          # the top lane jogs farthest out
         n = len(jog_lanes)
+        # jog wires run vertically past the rail rows: the first jog column lies beyond the flat rail symbols' names
+        zone = [2 * STUB + 1.905 + 0.635 + self.text_width(l.net, SYMBOL_TEXT) + GAP for l in lanes
+                if l.kind in ('power', 'bundle') and l.mode == 'side']
+        jog0 = max([JOG0] + [snap_up(z) for z in zone])
         for lane in lanes:
-            lane.items_start = JOG0 + GRID * n + STUB
+            lane.jog0 = jog0
+            lane.items_start = jog0 + GRID * n + STUB
 
     def draw_lane(self, lane: Lane) -> tuple:
         """Emit the geometry of one lane; returns the far x reached."""
@@ -572,13 +664,19 @@ class GroupLayout:
             return px
         if lane.kind == 'bundle':
             bus_x = r4(px + dx * STUB)
-            ys = [p[1] for _, p in lane.bundle_pins]
+            ys = sorted(p[1] for _, p in lane.bundle_pins)
             for _, p in lane.bundle_pins:
                 self.wire(lane.net, p, (bus_x, p[1]))
             down = self.is_down(lane.net)
-            self.wire(lane.net, (bus_x, min(ys)), (bus_x, max(ys)))
-            at_bottom = down or getattr(lane, 'flip', False)
-            self.power(lane.net, (bus_x, max(ys) if at_bottom else min(ys)), down=down)
+            self.wire(lane.net, (bus_x, ys[0]), (bus_x, ys[-1]))
+            row = ys[-1] if down else ys[0]
+            if lane.mode == 'side':
+                end = (r4(bus_x + dx * STUB), row)
+                self.wire(lane.net, (bus_x, row), end)
+                self.power(lane.net, end, horizontal=dx)
+                return end[0]
+            # the name of a vertical glyph at the bus end extends towards the body: the jog columns outside stay clear
+            self.power(lane.net, (bus_x, row), down=down, text_toward=-dx)
             return bus_x
         if lane.kind == 'vertical':
             dy = lane.dx
@@ -596,8 +694,19 @@ class GroupLayout:
             return px
         # power or signal lane: optional jog to lane.y
         y = lane.y
+        force = False
+        if lane.kind == 'signal':
+            # the lane's final net may already be labelled elsewhere on the sheet ('open' end): when that label is close
+            # by in this group the router joins the two with a short wire, otherwise the lane ends in its own copy of the
+            # label instead of a wire across the sheet (decided before this lane draws any wire of its own)
+            final = lane.end[1] if lane.end else lane.net
+            if self.marker_kind(final) == 'open':
+                near = self.near_own_net(final, (px, py), 3 * PITCH)
+                if near and not lane.items:
+                    return px
+                force = not near
         if lane.needs_jog:
-            xj = r4(px + dx * (JOG0 + GRID * lane.rank))
+            xj = r4(px + dx * (lane.jog0 + GRID * lane.rank))
             self.wire(lane.net, (px, py), (xj, py))
             self.wire(lane.net, (xj, py), (xj, y))
             cursor = xj
@@ -606,7 +715,10 @@ class GroupLayout:
         if lane.kind == 'power':
             end_x = r4(cursor + dx * (STUB if not lane.needs_jog else GRID))
             self.wire(lane.net, (cursor, y), (end_x, y))
-            self.power(lane.net, (end_x, y))
+            if lane.mode == 'side':
+                self.power(lane.net, (end_x, y), horizontal=dx)
+            else:
+                self.power(lane.net, (end_x, y), text_toward=-dx if not lane.needs_jog else 0)
             return end_x
         # signal lane with items
         start_items = r4(px + dx * lane.items_start)
@@ -614,56 +726,75 @@ class GroupLayout:
         if lane.items:
             x = start_items
             for item in lane.items:
-                part = item['part']
-                name, definition, extents, _ = self.symbol(part)
-                near_pad = next(pad for pad, n in part['nets'].items() if n == item['net'])
-                far_pad = next((pad for pad, n in part['nets'].items() if pad != near_pad), None)
-                if item['kind'] in ('shunt', 'branch', 'terminal'):
-                    x_item = r4(x + dx * PITCH / 2)
-                    hang_down = not (item['kind'] == 'shunt' and not self.is_down(item['far']))
-                    s = 1 if hang_down else -1
-                    self.wire(item['net'], (cursor, y), (x_item, y))
-                    cursor = x_item
-                    near_point = (x_item, r4(y + s * STUB))
-                    self.wire(item['net'], (x_item, y), near_point)
-                    angle = angle_for(definition, 1, near_pad, (0, -s))
-                    probe = placed_pins(definition, 1, 0, 0, angle)
-                    ox, oy = probe[near_pad]['point']
-                    placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
-                    self.side_texts(placed)
-                    if item['kind'] == 'terminal':
-                        self.terminal_rails(placed, near_pad)
-                    else:
-                        far_point = placed.pins()[far_pad]['point']
-                        rail_point = (far_point[0], r4(far_point[1] + s * STUB))
-                        if item['kind'] == 'shunt':
-                            self.wire(item['far'], far_point, rail_point)
-                            self.power(item['far'], rail_point, down=hang_down)
-                        elif self.marker_kind(item['far']) != 'open':
-                            self.wire(item['far'], far_point, rail_point)
-                            self.end_marker(item['far'], rail_point, dx, angle=270 if hang_down else 90)
-                    x = r4(x + dx * PITCH)
-                else:  # series: inline part, the lane continues with the far net
-                    near_point = (r4(x + dx * STUB), y)
-                    self.wire(item['net'], (cursor, y), near_point)
-                    self.spine_tag(item['net'], cursor, near_point, y, dx)
-                    angle = angle_for(definition, 1, near_pad, (-dx, 0))
-                    probe = placed_pins(definition, 1, 0, 0, angle)
-                    ox, oy = probe[near_pad]['point']
-                    placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
-                    self.inline_texts(placed)
-                    far_point = placed.pins()[far_pad]['point']
-                    cursor = far_point[0]
-                    x = cursor
-                    net = item['far']
+                cursor, x, net = self.draw_item(item, cursor, x, y, dx, net)
             end_x = r4(cursor + dx * STUB)
         else:
             end_x = r4(cursor + dx * (STUB if not lane.needs_jog else GRID))
-        if self.marker_kind(net) == 'open':
+        if not force and self.marker_kind(net) == 'open':
             return cursor
         self.wire(net, (cursor, y), (end_x, y))
-        self.end_marker(net, (end_x, y), dx)
+        self.end_marker(net, (end_x, y), dx, force=force)
         return end_x
+
+    def near_own_net(self, net, point, limit: float) -> bool:
+        """True when this group already draws `net` (label, wire end or another placed pin) within `limit` mm of
+        `point`; the pin at `point` itself does not count."""
+        point = (r4(point[0]), r4(point[1]))
+        points = [l['point'] for l in self.labels if l['name'] == net]
+        points += [s.a for s in self.segments if s.net == net] + [s.b for s in self.segments if s.net == net]
+        for p in self.placed:
+            if p.kind == 'part':
+                points += [info['point'] for pad, info in p.pins().items() if p.part['nets'].get(pad) == net]
+        return any((r4(q[0]), r4(q[1])) != point and abs(q[0] - point[0]) + abs(q[1] - point[1]) <= limit for q in points)
+
+    def draw_item(self, item, cursor, x, y, dx, net, force_marker: bool = False) -> tuple:
+        """Draw one lane item whose slot starts at `x` on the lane at `y`; returns (cursor, next slot x, lane net).
+
+        Hanging items (shunt / branch / terminal) sit PITCH / 2 into their slot, texts on the side the lane runs to;
+        inline (series) parts are centred in their slot and the lane continues with their far net.
+        """
+        part = item['part']
+        name, definition, extents, _ = self.symbol(part)
+        near_pad = next(pad for pad, n in part['nets'].items() if n == item['net'])
+        far_pad = next((pad for pad, n in part['nets'].items() if pad != near_pad), None)
+        width = item.get('width') or self.item_extents(item)[2]
+        if item['kind'] in ('shunt', 'branch', 'terminal'):
+            x_item = r4(x + dx * PITCH / 2)
+            hang_down = not (item['kind'] == 'shunt' and not self.is_down(item['far']))
+            s = 1 if hang_down else -1
+            self.wire(item['net'], (cursor, y), (x_item, y))
+            cursor = x_item
+            near_point = (x_item, r4(y + s * STUB))
+            self.wire(item['net'], (x_item, y), near_point)
+            angle = angle_for(definition, 1, near_pad, (0, -s))
+            probe = placed_pins(definition, 1, 0, 0, angle)
+            ox, oy = probe[near_pad]['point']
+            placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
+            self.side_texts(placed, side=dx, text_x=self.hang_text_x(part))
+            if item['kind'] == 'terminal':
+                self.terminal_rails(placed, near_pad)
+            else:
+                far_point = placed.pins()[far_pad]['point']
+                rail_point = (far_point[0], r4(far_point[1] + s * STUB))
+                if item['kind'] == 'shunt':
+                    self.wire(item['far'], far_point, rail_point)
+                    self.power(item['far'], rail_point, down=hang_down)
+                elif force_marker or self.marker_kind(item['far']) != 'open':
+                    self.wire(item['far'], far_point, rail_point)
+                    self.end_marker(item['far'], rail_point, dx, angle=270 if hang_down else 90, force=force_marker)
+            return cursor, r4(x + dx * width), net
+        # series: inline part centred in its slot, the lane continues with the far net
+        lead = r4((width - two_pin_span(definition)) / 2)
+        near_point = (r4(x + dx * lead), y)
+        self.wire(item['net'], (cursor, y), near_point)
+        self.spine_tag(item['net'], cursor, near_point, y, dx)
+        angle = angle_for(definition, 1, near_pad, (-dx, 0))
+        probe = placed_pins(definition, 1, 0, 0, angle)
+        ox, oy = probe[near_pad]['point']
+        placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
+        self.inline_texts(placed)
+        far_point = placed.pins()[far_pad]['point']
+        return far_point[0], r4(x + dx * width), item['far']
 
     def spine_tag(self, net, cursor, near_point, y, dx) -> None:
         """Name tag (local net) or port (cross net) of a net that continues through a series part: vertical label above the spine."""
@@ -692,16 +823,26 @@ class GroupLayout:
             self.wire(net, info['point'], end)
             self.power(net, end, down=(oy > 0) if oy else None)
 
-    def side_texts(self, placed: Placed) -> None:
-        """Reference above value, both right of a vertical two-pin part (reference-style rule F2)."""
-        x = r4(placed.x + 2.54 + 0.762)
-        placed.texts = {'Reference': (x, r4(placed.y - 1.27), 'left'), 'Value': (x, r4(placed.y + 1.27), 'left')}
+    def side_texts(self, placed: Placed, side: int = 1, text_x: float = TEXT_X) -> None:
+        """Reference above value beside a vertical part (reference-style rule F2): on the right for `side` +1 (the
+        default and the free-lane / decoupling-row direction), on the left for -1 (lanes running left)."""
+        if side >= 0:
+            x, justify = r4(placed.x + text_x), 'left'
+        else:
+            x, justify = r4(placed.x - text_x), 'right'
+        placed.texts = {'Reference': (x, r4(placed.y - 1.27), justify), 'Value': (x, r4(placed.y + 1.27), justify)}
 
     def inline_texts(self, placed: Placed) -> None:
         placed.texts = {'Reference': (placed.x, r4(placed.y - 3.175), None), 'Value': (placed.x, r4(placed.y + 3.175), None)}
 
     # --- group assembly ---------------------------------------------------------------------------------------------
-    def layout(self) -> None:
+    def layout(self, extras: str = 'auto') -> None:
+        """Place anchors with their lanes, then the extras (free lanes, decoupling rows, mechanical parts).
+
+        `extras` 'below' stacks the extras under the anchor block (narrow group), 'beside' puts them in a column to
+        its right (short group); 'auto' chooses beside for tall anchor blocks.  The page planner tries the
+        alternatives when the page would otherwise escalate to a larger paper.
+        """
         x_cursor = 0.0
         max_bottom = 0.0
         row_top, row_width = 0.0, 0.0
@@ -715,9 +856,9 @@ class GroupLayout:
                 for side in ('left', 'right'):
                     self.pack_side(lanes[side])
                 left_len = max([l.length + l.items_start for l in lanes['left'] if l.kind == 'signal'] +
-                               [JOG0 + GRID * 8 + 5.08 for l in lanes['left'] if l.kind == 'power'] + [7.62])
+                               [l.jog0 + GRID * 8 + 5.08 for l in lanes['left'] if l.kind in ('power', 'bundle')] + [7.62])
                 right_len = max([l.length + l.items_start for l in lanes['right'] if l.kind == 'signal'] +
-                                [JOG0 + GRID * 8 + 5.08 for l in lanes['right'] if l.kind == 'power'] + [7.62])
+                                [l.jog0 + GRID * 8 + 5.08 for l in lanes['right'] if l.kind in ('power', 'bundle')] + [7.62])
                 top_room = max([l.above for l in lanes['left'][:1] + lanes['right'][:1]] + [10.16]) + (7.62 if lanes['up'] else 0)
                 body = probe.body()
                 pin_pts = [i['point'] for i in probe.pins().values()]
@@ -752,7 +893,8 @@ class GroupLayout:
         pairs = {self.classify_decoupling(part) for part in self.pool.values()} - {None}
         free = [r for r, part in self.pool.items() if not self.classify_decoupling(part)]
         extras_estimate = 7.62 + 13.0 * len(free) + 26.0 * len(pairs) + (20.0 if self.mech else 0.0)
-        if self.anchor_blocks and (anchors_h > 110.0 or (anchors_h >= 50.0 and anchors_h + extras_estimate > max_col)):
+        beside = extras == 'beside' or (extras == 'auto' and (anchors_h > 110.0 or (anchors_h >= 50.0 and anchors_h + extras_estimate > max_col)))
+        if self.anchor_blocks and beside:
             self.extra_x, y_cursor = snap_up(anchors_w + 7.62), 12.7     # tall anchor block: extras in a column beside it
         else:
             self.extra_x, y_cursor = 10.16, snap_up(max_bottom + 7.62)
@@ -811,25 +953,36 @@ class GroupLayout:
                     xs.append(text_box(v[0], v[1], p.ref if 'Ref' in str(v) else str(p.net or p.part['value']), 1.27, v[2])[2])
         return max(xs, default=0.0)
 
+    def net_of(self, part) -> str | None:
+        """The single connected net of a lone part."""
+        return next((n for n in part['nets'].values() if n is not None), None)
+
+    def is_lone(self, part) -> bool:
+        """A pooled part with exactly one connected pad (test point, stud, single terminal)."""
+        return len([n for n in part['nets'].values() if n is not None]) == 1
+
     def free_lanes(self, y_cursor: float) -> float:
         """Chains of pooled parts no anchor lane reached: one horizontal lane per connected component; the lanes wrap
-        into a new column (right of everything drawn so far) when a column would grow beyond max_col_mm."""
+        into a new column (right of everything drawn so far) when a column would grow beyond max_col_mm.  Lone
+        single-pin parts that no chain picks up are drawn afterwards as a grid (terminal_grid)."""
         col_top, col_x, max_col = y_cursor, self.extra_x, self.planner.presentation.get('max_col_mm', 180.0)
         bottom_seen = y_cursor
         while True:
             decoupling = [r for r, p in self.pool.items() if self.classify_decoupling(p)]
-            candidates = [r for r in self.pool if r not in decoupling]
+            candidates = [r for r, p in self.pool.items() if r not in decoupling and not self.is_lone(p)]
             if not candidates:
-                return max(y_cursor, bottom_seen)
+                y_cursor = max(y_cursor, bottom_seen)
+                return self.terminal_grid(y_cursor)
             start_ref = candidates[0]
             part = self.pool[start_ref]
-            # choose the starting net: a cross net first, then a rail, then a local net
+            # choose the starting net: a cross net first, then a rail (a ladder reads from its supply), then a local net;
+            # decoupling-class parts never join a lane (satellites_on), so a rail start collects only the ladder
             nets_of = [n for n in part['nets'].values() if n is not None]
             start_net = sorted(nets_of, key=lambda n: ({'cross': 0, 'rail': 1, 'local': 2}[self.role(n)], n))[0]
             lane = Lane('', start_net, 'free', (0.0, 0.0), 1)
             lane.items = self.collect_items(start_net)
             if not lane.items and start_ref in self.pool:
-                # a lone part (e.g. test point on a rail): place it as a terminal
+                # a multi-pin part with one connected pad that no chain reaches: place it as a terminal
                 self.pool.pop(start_ref)
                 lane.items = [dict(kind='terminal', part=part, net=start_net, far=None)]
             above, below, length = 5.08, GAP, 0.0
@@ -844,64 +997,69 @@ class GroupLayout:
             # start marker
             if self.role(start_net) == 'rail':
                 self.power(start_net, (x0, lane.y))
-                cursor = x0
             elif self.role(start_net) == 'cross' and (self.page, start_net) not in self.planner.ports_placed:
                 self.port(start_net, (x0, lane.y), 180)
-                cursor = x0
             elif self.role(start_net) == 'local' and start_net not in self.planner.tags_placed:
                 self.tag(start_net, (x0, lane.y), 180)
-                cursor = x0
-            else:
-                cursor = x0
+            cursor = x0
             x = r4(x0 + STUB)
             net = start_net
             for item in lane.items:
-                part = item['part']
-                name, definition, extents, _ = self.symbol(part)
-                near_pad = next(pad for pad, n in part['nets'].items() if n == item['net'])
-                far_pad = next((pad for pad, n in part['nets'].items() if pad != near_pad), None)
-                if item['kind'] in ('shunt', 'branch', 'terminal'):
-                    x_item = r4(x + PITCH / 2)
-                    hang_down = not (item['kind'] == 'shunt' and not self.is_down(item['far']))
-                    s = 1 if hang_down else -1
-                    self.wire(item['net'], (cursor, lane.y), (x_item, lane.y))
-                    cursor = x_item
-                    near_point = (x_item, r4(lane.y + s * STUB))
-                    self.wire(item['net'], (x_item, lane.y), near_point)
-                    angle = angle_for(definition, 1, near_pad, (0, -s))
-                    ox, oy = placed_pins(definition, 1, 0, 0, angle)[near_pad]['point']
-                    placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
-                    self.side_texts(placed)
-                    if item['kind'] == 'terminal':
-                        self.terminal_rails(placed, near_pad)
-                    else:
-                        far_point = placed.pins()[far_pad]['point']
-                        rail_point = (far_point[0], r4(far_point[1] + s * STUB))
-                        if item['kind'] == 'shunt':
-                            self.wire(item['far'], far_point, rail_point)
-                            self.power(item['far'], rail_point, down=hang_down)
-                        elif self.marker_kind(item['far']) != 'open':
-                            self.wire(item['far'], far_point, rail_point)
-                            self.end_marker(item['far'], rail_point, 1, angle=270 if hang_down else 90)
-                    x = r4(x + PITCH)
-                else:
-                    near_point = (r4(x + STUB), lane.y)
-                    self.wire(item['net'], (cursor, lane.y), near_point)
-                    self.spine_tag(item['net'], cursor, near_point, lane.y, 1)
-                    angle = angle_for(definition, 1, near_pad, (-1, 0))
-                    ox, oy = placed_pins(definition, 1, 0, 0, angle)[near_pad]['point']
-                    placed = self.place(part, 1, near_point[0] - ox, near_point[1] - oy, angle)
-                    self.inline_texts(placed)
-                    far_point = placed.pins()[far_pad]['point']
-                    cursor = far_point[0]
-                    x = cursor
-                    net = item['far']
+                cursor, x, net = self.draw_item(item, cursor, x, lane.y, 1, net)
             if self.marker_kind(net) != 'open':
                 end_x = r4(cursor + STUB)
                 self.wire(net, (cursor, lane.y), (end_x, lane.y))
                 self.end_marker(net, (end_x, lane.y), 1)
             y_cursor = snap_up(lane.y + below + GAP)
             bottom_seen = max(bottom_seen, y_cursor)
+
+    def terminal_grid(self, y_cursor: float) -> float:
+        """Lone single-pin parts in rows of TERMINALS_PER_ROW: a stub from the pin to a marker of their own (power
+        symbol, repeated port or name tag), so no wire has to cross the sheet to reach a test point.  Parts on a
+        ground-style rail hang from a row of their own with the ground glyph below them."""
+        lone = [self.pool.pop(r) for r in list(self.pool) if self.is_lone(self.pool[r])]
+        if not lone:
+            return y_cursor
+        label_size = self.planner.presentation.get('label_size', 1.27)
+
+        def grounded(part):
+            net = self.net_of(part)
+            return self.role(net) == 'rail' and self.is_down(net)
+
+        for parts, s in (([p for p in lone if not grounded(p)], -1), ([p for p in lone if grounded(p)], 1)):
+            if not parts:
+                continue
+            x, count = self.extra_x, 0
+            row_top = y_cursor
+            row_bottom = row_top
+            for part in parts:
+                net = self.net_of(part)
+                pad = next(pad for pad, n in part['nets'].items() if n == net)
+                name, definition, extents, _ = self.symbol(part)
+                w, h = extents[0]
+                label_w = TEXT_W * label_size * len(net) + 3.0 if self.role(net) != 'rail' else self.text_width(net, SYMBOL_TEXT)
+                width = max(self.hang_width(part), snap_up(label_w + 2 * GAP))
+                if count and (count >= TERMINALS_PER_ROW or x + width > self.extra_x + 170.0):
+                    x, count, row_top = self.extra_x, 0, snap_up(row_bottom + 5.08)
+                x_item = r4(x + PITCH / 2)
+                if s < 0:          # marker above, body hanging below the pin
+                    marker = (x_item, snap_up(row_top + 5.08))
+                    pin = (x_item, r4(marker[1] + STUB))
+                    bottom = pin[1] + 5.08 + w + 2.54
+                else:              # body above, pin at its bottom, ground marker below
+                    pin = (x_item, snap_up(row_top + 2.54 + 5.08 + w))
+                    marker = (x_item, r4(pin[1] + STUB))
+                    bottom = marker[1] + 3.81 + 2.54
+                angle = angle_for(definition, 1, pad, (0, s))
+                ox, oy = placed_pins(definition, 1, 0, 0, angle)[pad]['point']
+                placed = self.place(part, 1, pin[0] - ox, pin[1] - oy, angle)
+                self.side_texts(placed, text_x=self.hang_text_x(part))
+                self.wire(net, pin, marker)
+                self.end_marker(net, marker, 1, angle=0, force=True, down=(s > 0))
+                row_bottom = max(row_bottom, bottom)
+                x, count = r4(x + width), count + 1
+            y_cursor = snap_up(row_bottom + 2.54)
+        return y_cursor
 
     def classify_decoupling(self, part) -> tuple | None:
         """(up rail, down rail) when a two-pin part sits between two rails."""
@@ -922,12 +1080,14 @@ class GroupLayout:
             x0 = self.extra_x
             last_x = x0
             spans = []
+            # row pitch from the longest reference / value so the texts beside one part clear the next part
+            pitch = max(CAP_PITCH, snap_up(TEXT_X + max(self.part_text_width(p) for p in parts) + 2 * GAP))
             for i, part in enumerate(parts):
                 name, definition, extents, _ = self.symbol(part)
                 up_pad = next(pad for pad, n in part['nets'].items() if n == up)
                 angle = angle_for(definition, 1, up_pad, (0, -1))
                 ox, oy = placed_pins(definition, 1, 0, 0, angle)[up_pad]['point']
-                x_item = r4(x0 + STUB + i * CAP_PITCH)
+                x_item = r4(x0 + STUB + i * pitch)
                 placed = self.place(part, 1, x_item - ox, (y_top + STUB) - oy, angle)
                 self.side_texts(placed)
                 info = placed.pins()
@@ -1105,19 +1265,63 @@ class Planner:
                 chosen.append(net)
         return chosen
 
-    def plan_page(self, page: str, page_parts: list, flag_nets: list, is_flag_page: bool) -> dict:
-        layouts = []
-        for gid, title, members in self.groups_for(page, page_parts):
-            layout = GroupLayout(self, page, gid, members)
-            layout.layout()
-            layout.title = title
-            layouts.append(layout)
+    def snapshot(self) -> dict:
+        """Copy of the cross-page state a page plan mutates (so alternative layouts of one page can be tried)."""
+        return dict(ports_placed=dict(self.ports_placed), tags_placed=set(self.tags_placed), power_counter=self.power_counter,
+                    flag_counter=getattr(self, 'flag_counter', 0), power_definitions=dict(self.power_definitions),
+                    exceptions=list(self.exceptions))
+
+    def restore(self, state: dict) -> None:
+        self.ports_placed = dict(state['ports_placed'])
+        self.tags_placed = set(state['tags_placed'])
+        self.power_counter = state['power_counter']
+        self.flag_counter = state['flag_counter']
+        self.power_definitions = dict(state['power_definitions'])
+        self.exceptions = list(state['exceptions'])
+
+    def plan_page(self, page: str, page_parts: list, flag_nets: list, is_flag_page: bool, papers: list | None = None,
+                  PAPER: dict | None = None, header_height: float = 0.0) -> dict:
+        """Group layouts of one page; with `papers` also the paper and group positions.
+
+        The groups are laid out with the automatic extras placement first; when that needs a paper larger than
+        papers[0], the uniform alternatives ('below', 'beside') are tried and the plan with the smallest paper
+        (then the best fill) wins.  Every attempt starts from the same planner state.
+        """
+        groups = self.groups_for(page, page_parts)
         page_flags = self.flags_for_page(page, flag_nets, is_flag_page)
-        if page_flags:
-            layouts.append(self.flag_block(page, page_flags))
+
+        def build(extras: str) -> list:
+            layouts = []
+            for gid, title, members in groups:
+                layout = GroupLayout(self, page, gid, members)
+                layout.layout(extras=extras)
+                layout.title = title
+                layouts.append(layout)
+            if page_flags:
+                layouts.append(self.flag_block(page, page_flags))
+            return layouts
+
+        start = self.snapshot()
+        layouts = build('auto')
+        result = dict(page=page, layouts=layouts, variant='auto')
+        if papers:
+            paper, positions = pack_sheet(layouts, papers, PAPER, header_height)
+            best = dict(key=(papers.index(paper), -paper_fill(layouts, paper, PAPER, header_height)), variant='auto', layouts=layouts,
+                        paper=paper, positions=positions, state=self.snapshot())
+            if paper != papers[0]:
+                for variant in ('below', 'beside'):
+                    self.restore(start)
+                    alt = build(variant)
+                    alt_paper, alt_positions = pack_sheet(alt, papers, PAPER, header_height)
+                    key = (papers.index(alt_paper), -paper_fill(alt, alt_paper, PAPER, header_height))
+                    if key < best['key']:
+                        best = dict(key=key, variant=variant, layouts=alt, paper=alt_paper, positions=alt_positions, state=self.snapshot())
+                self.restore(best['state'])
+                layouts = best['layouts']
+            result = dict(page=page, layouts=layouts, variant=best['variant'], paper=best['paper'], positions=best['positions'])
         self.groups_by_page[page] = [dict(id=l.group_id, title=getattr(l, 'title', l.group_id), parts=[p.ref for p in l.placed if p.kind == 'part'])
                                      for l in layouts]
-        return dict(page=page, layouts=layouts)
+        return result
 
     def flag_block(self, page: str, flag_nets: list) -> GroupLayout:
         layout = GroupLayout(self, page, f'{page}/supply_flags', [])
@@ -1190,8 +1394,10 @@ def _pack_columns(layouts: list, left: float, top: float, right: float, bottom: 
         if h + heading > bottom - top:
             return None
         placed = False
-        for col in columns:
-            if col[2] + h + heading <= bottom and col[0] + max(col[1], w) <= right:
+        for index, col in enumerate(columns):
+            # a column may only grow up to the next column's left edge, never under its neighbour
+            limit = columns[index + 1][0] - 12.7 if index + 1 < len(columns) else right
+            if col[2] + h + heading <= bottom and col[0] + max(col[1], w) <= limit:
                 col[3].append((layout, snap(col[0]), snap(col[2] + heading)))
                 col[2] = snap_up(col[2] + h + heading + 7.62)
                 col[1] = max(col[1], w)
@@ -1307,7 +1513,10 @@ def route_sheet(planner: Planner, key: str, positions: list, paper: str, PAPER: 
             grid.block_rect(x - 1.0, y - width, x + 1.0, y - GRID)
         else:
             grid.block_rect(x - 1.0, y + GRID, x + 1.0, y + width)
-        wiring.labels.append(dict(kind=label['kind'], name=label['name'], point=label['point']))
+        # angle and shape travel with the label: KiCad draws the text on the side the angle says, so a label at a
+        # left-running wire end must be emitted at 180 or its text covers the wire
+        wiring.labels.append(dict(kind=label['kind'], name=label['name'], point=label['point'], angle=angle,
+                                  shape=label.get('shape', 'bidirectional')))
     for seg in wiring.segments:
         grid.add_segment(seg)
     # connect the remaining components of every net on this sheet
@@ -1318,7 +1527,45 @@ def route_sheet(planner: Planner, key: str, positions: list, paper: str, PAPER: 
                 outward[pin['point']] = tuple(pin['outward'])
     exceptions, label_pairs = [], []
     max_wire = planner.presentation.get('max_wire_mm', 150.0)
+    max_cross_wire = planner.presentation.get('max_cross_wire_mm', 80.0)
     loop_slack = planner.presentation.get('loop_slack_mm', 25.4)
+
+    def free_direction(p) -> int:
+        """Label angle at a component point: away from the pin or from the wire that ends there."""
+        if p in outward:
+            d = outward[p]
+        else:
+            seg = next((s for s in wiring.segments if p in (s.a, s.b)), None)
+            if seg is None:
+                return 0
+            o = seg.b if seg.a == p else seg.a
+            d = (int(math.copysign(1, p[0] - o[0])) if p[0] != o[0] else 0, int(math.copysign(1, p[1] - o[1])) if p[1] != o[1] else 0)
+        return {(1, 0): 0, (-1, 0): 180, (0, -1): 90, (0, 1): 270}.get(tuple(d), 0)
+
+    def pair_labels(net, base, other):
+        """A reference of `net` on each of two drawn components that stay unwired: hierarchical labels for a cross net
+        (the sheet already carries its port), global name tags for a local net.  A component that already carries a
+        label of the net (a lane-end port or tag) needs nothing more."""
+        role = planner.nets[net]['role']
+        degree = defaultdict(int)
+        for s in wiring.segments:
+            if s.net == net:
+                degree[s.a] += 1
+                degree[s.b] += 1
+        for component in (base, other):
+            if any(l['name'] == net and l['point'] in component for l in wiring.labels):
+                continue
+            # the label goes to the least connected point (a wire end before a junction), top-left first among equals
+            p = min(component, key=lambda q: (degree[q], q[1], q[0]))
+            if role == 'cross':
+                shape = planner.ports_placed.get((key, net)) or port_shape(net, key, planner.nets[net])
+                planner.ports_placed.setdefault((key, net), shape)
+                wiring.labels.append(dict(kind='hier', name=net, point=p, angle=free_direction(p), shape=shape))
+            else:
+                wiring.labels.append(dict(kind='global', name=net, point=p, angle=free_direction(p), shape='bidirectional'))
+                planner.tags_placed.add(net)
+            grid.add_label(p, net)
+
     for net in sorted({info['net'] for info in wiring.pins.values() if info['net']} | {s.net for s in wiring.segments}):
         if planner.nets[net]['role'] == 'rail':
             continue
@@ -1332,15 +1579,10 @@ def route_sheet(planner: Planner, key: str, positions: list, paper: str, PAPER: 
                 if best is None or d < best[0]:
                     best = (d, other)
             other = best[1]
-            if best[0] > max_wire and planner.nets[net]['role'] != 'cross':
-                a = min(base, key=lambda p: (p[1], p[0]))
-                b = min(other, key=lambda p: (p[1], p[0]))
-                for p in (a, b):
-                    if not any(l['point'] == p for l in wiring.labels):
-                        wiring.labels.append(dict(kind='global', name=net, point=p))
-                        grid.add_label(p, net)
+            limit = max_cross_wire if planner.nets[net]['role'] == 'cross' else max_wire
+            if best[0] > limit:
+                pair_labels(net, base, other)
                 label_pairs.append(dict(net=net, distance=round(best[0], 1), reason='distance'))
-                planner.tags_placed.add(net)
                 components = [base | other] + [c for c in components if c is not base and c is not other]
                 continue
             sources = {}
@@ -1350,29 +1592,19 @@ def route_sheet(planner: Planner, key: str, positions: list, paper: str, PAPER: 
             targets = {sw.cell(p) for p in other}
             path = grid.route(net, sources, targets)
             if path is None:
-                # label fallback: a global label at the nearest point of each component
-                a = min(base, key=lambda p: p[1])
-                b = min(other, key=lambda p: p[1])
-                for p in (a, b):
-                    if not any(l['point'] == p for l in wiring.labels):
-                        wiring.labels.append(dict(kind='global', name=net, point=p))
-                        grid.add_label(p, net)
+                # label fallback: a label on each component
+                a = min(base, key=lambda p: (p[1], p[0]))
+                b = min(other, key=lambda p: (p[1], p[0]))
+                pair_labels(net, base, other)
                 exceptions.append(dict(sheet=key, net=net, reason='no_wire_path', at=[a, b]))
-                planner.tags_placed.add(net)
                 components = [base | other] + components[1:]
                 components.remove(other)
                 continue
             length = sum(abs(path[i + 1][0] - path[i][0]) + abs(path[i + 1][1] - path[i][1]) for i in range(len(path) - 1))
             if length > 1.5 * best[0] + loop_slack:
-                # the only wire path loops around other content: a pair of name tags reads better than the loop
-                a = min(base, key=lambda p: (p[1], p[0]))
-                b = min(other, key=lambda p: (p[1], p[0]))
-                for p in (a, b):
-                    if not any(l['point'] == p for l in wiring.labels):
-                        wiring.labels.append(dict(kind='global', name=net, point=p))
-                        grid.add_label(p, net)
+                # the only wire path loops around other content: a pair of labels reads better than the loop
+                pair_labels(net, base, other)
                 label_pairs.append(dict(net=net, distance=round(best[0], 1), wire_length=round(length, 1), reason='loop'))
-                planner.tags_placed.add(net)
                 components = [base | other] + [c for c in components if c is not base and c is not other]
                 continue
             for i in range(len(path) - 1):
@@ -1409,10 +1641,17 @@ def net_components(wiring: sw.SheetWiring, net: str) -> list:
         if info['net'] == net:
             points.add(info['point'])
             uf.find(info['point'])
+    # labels of the net connect by name: two global tags or two hierarchical labels of one net on a sheet are one
+    # connection in KiCad, so their components need no wire between them
+    named = []
     for label in wiring.labels:
         if label['name'] == net and label['kind'] in ('hier', 'power', 'global'):
             points.add(label['point'])
             uf.find(label['point'])
+            if label['kind'] in ('hier', 'global'):
+                named.append(label['point'])
+    for p in named[1:]:
+        uf.union(named[0], p)
     # a point lying on the interior of a same-net segment is connected once normalise() splits it there
     segs = [s for s in wiring.segments if s.net == net]
     for p in list(points):

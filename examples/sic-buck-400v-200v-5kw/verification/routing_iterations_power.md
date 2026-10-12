@@ -543,3 +543,115 @@ scratchpad (`c2/before/`) and are referenced by sha256 in `optimisation_before_a
 - The r20a, r20b and r20c boards and their logs live only in the agent scratchpad (`c2/`); their DRC manifests stay under `verification/drc/`
   as the history of this round. Nothing was committed; no rule, library, schematic or project file was changed (the project-file hash is
   recorded in every manifest).
+
+## 16. V2.1 - routing geometry upgrade (2026-10-12, power-board agent of the V2.1 round)
+
+**AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED.** Scope of this round (task11102026.txt, Tasks 1, 2, 6-8): the same
+placement, net rules, regions, keep-outs, pours and via groups as the frozen V2 board (`releases/v2`, read-only); only the router geometry
+changes through the `grid_router` plan key `style` (8-direction search / octilinear simplification / tangent arcs, V2.1 core at HEAD fa8c482).
+The schematics were regenerated in the wired V2.1 style before this round, so the board had to be regenerated for `--schematic-parity`.
+Only `run_check` manifests under `verification/drc/` written for the repository board count as verification; the scratch builds below are
+candidate comparisons (their DRC runs live under `%TEMP%` project copies and are quoted as numbers only).
+
+### 16.1 Generator changes (`automation/kicad_tools/generate_sic_power_board.py`)
+
+- `Builder`: `FOOTPRINT.SetDNP(True)` for every model part with `dnp` (16 parts: RV1, snubber / damping / Y2 placeholders, DNP gate-Kelvin RCs,
+  BAT42W clamps). The wired schematics write `(dnp yes)` with `in_bom` / `on_board` yes, so only the DNP attribute is set; parity 0 confirms it.
+- `build_power(..., outputs=None)` / CLI `--outputs DIR`: scratch-build mode. With a directory, the netlist, `placement_power.json`,
+  `routing_plan_power.json`, `routing_progress_power.json`, the engineering checks and the DRC manifests are written under that directory
+  instead of the example `design/` and `verification/` folders, so candidate builds can run in parallel in short `%TEMP%` project copies
+  without touching the repository (`stored_fill_check(..., checks_dir=)`, `write_outputs(result, outputs=None)` parametrised accordingly).
+- Style blocks: `ROUTING_STYLE_V21` (diagonal, bend penalties 0.6 / 2.0 cells, octilinear simplification, arcs, `straight_nets=['PE']`) and the
+  new `ROUTING_STYLE_OCTILINEAR` (the same without the 8-direction search); `--style default|v21|octilinear|none`. **`ROUTING_STYLE =
+  ROUTING_STYLE_OCTILINEAR` is the V2.1 default** (16.3). Both blocks keep `eps` at the V2 0.01: on this 0.125 mm grid a diagonal step between
+  free cells intrudes at most 0.0039 / R mm into a round halo of radius R (<= 0.007 mm for the smallest 0.56 mm signal halos), below eps, and
+  the router's 0.3 mm clearance already exceeds the 0.25 mm Default class; the first attempt with the control board's eps 0.02 changed the
+  V2 search itself (KS_L 88 -> 131 mm, FLT_H_N +3 vias) and was dropped.
+- `BANNER` / `REVISION` -> V2.1 (title block and the status line of every JSON record).
+- No placement, region, net-rule, keep-out, pour, via-group or DRC/netclass change. `.kicad_pro` / `.kicad_dru` untouched.
+
+### 16.2 Shared router fix (`automation/kicad_tools/grid_router.py`, `path_geometry.py`) - confirmed bug, reported to the orchestrator
+
+`Router.beautify` anchored chains at via centres and non-eligible track ends by exact coordinates. The power board's fine-pitch escapes end
+in *exact* (off-grid) vias and fan legs (`fine_pitch_escapes`, e.g. the VOUT_SENSE fan via at (170.725, 168.375), the U8 fan legs ending at
+(169.425, 167.725)), and the router's own tracks meet them at the nearest 0.125 mm grid node, 0.025-0.06 mm away; KiCad connects the two by
+copper overlap, but the string pulling saw an ordinary interior vertex and removed it. Attempt B (16.3) showed the symptom: 3 `track_dangling`
+/ `via_dangling` + 4 `unconnected_items` (VOUT_SENSE, VEE_L, 3V3, VOUT_AMP_P), all of this kind. Fix: `path_geometry.connected_by_overlap`
+(vertex copper overlapping a same-net via ring or a same-net, same-layer fixed item) marks such vertices as `(net, point)` anchors in
+`chains_from_items`, and a chain end inside an off-grid via ring is a `'via'` end (straight exit kept). Unit test
+`test_connected_by_overlap_binds_router_vertices_to_off_grid_vias_and_stub_ends` (tests/test_path_geometry.py); `tests.test_grid_router`
+21 OK, `tests.test_path_geometry` + `tests.test_check_routing_quality` 25 OK. The control board (on-grid escape vias) was not affected, but
+the fix applies to every board routed with a `style` block; it adds anchors only, so it can never admit a violation.
+
+### 16.3 Builds of this round (all with the regenerated V2.1 schematics; 4 order trials, 30 rip-up rounds as V2)
+
+| id | style | where | routing s | tracks / vias | unresolved | DRC (viol / unconn / parity) | note |
+|---|---|---|---|---|---|---|---|
+| C | none (V2 geometry) | scratch `aipe_v21_pC` | 417 | 4755 / 606 | 0 | 0 / 0 / 0 (scratch) | identical quality totals to the frozen V2 board (5744.6 mm, 3609 bends_90): the V2 search regenerates exactly; DNP parity 0 |
+| B | octilinear + arcs, eps 0.02 | scratch `aipe_v21_pB` | 447 | 3120 / 608 | 0 | 3 / 4 / 0 (scratch) | dangling fan vias / legs (16.2); eps 0.02 changed the search: KS_L 88 -> 131 mm, FLT_H_N 166 -> 180 mm / +3 vias, HS_GK +0.25 mm |
+| A0 | v21 (8-direction), eps 0.02 | repository | killed | - | - | - | stopped at 12 min (and again at 3 min after FIX 1) so that both fixes could go into the comparison |
+| B2 | octilinear + arcs, eps 0.01, FIX 1 | scratch `aipe_v21_pB2` | 752 (CPU shared with A) | 3136 / 606 | 0 | 0 / 0 / 0 (scratch) | 145 arcs all tangent, bends_90 3609 -> 1121, no net longer / more vias / narrower |
+| A | v21 (8-direction), eps 0.01, FIX 1 | repository | 1605 (3.8 x V2) | 1868 / 602 | **2** (LS_FB_VDD, VDD_L) | **1 / 2 / 0** `verification/drc/20261012T084719Z-drc-93962d5d` | bends_90 73, efficiency 0.887, but 10 nets longer (3V3 +88 mm / +5 vias, RDY_L +35 mm / +9 vias, RDY_H +29 mm, VOUT_SENSE +23 mm, RELAY_ON +14 mm, DESAT_H_A +1.5 mm / +2 vias, HS_OUTL +1.7 mm), 25 nets with a regression |
+| **final** | **octilinear + arcs (default)** | **repository** | 762 (CPU shared with the concurrent control-board builds; C alone: 417) | 3136 / 606 | 0 | **0 / 0 / 0** `verification/drc/20261012T090308Z-drc-8fd50803/run.json` | the delivered board, sha256 `dcd148fbdf65253a...`; same geometry as B2 |
+
+Decision: the 8-direction block (A) exceeds 1.5 x the V2 routing time, leaves two LS-island connections unresolved that the V2 geometry
+routes, fails the native DRC and lengthens critical nets, so it stays opt-in (`--style v21`); the octilinear + arcs block is the default. It
+keeps the V2 search unchanged (byte-identical routes, as C proves) and rewrites only the final geometry, so no net can get longer, no via
+moves and no width changes - the per-net compare confirms it. The LS_FB_VDD / VDD_L failures of A are a search-space effect of the 8-direction
+negotiation inside the packed `ls_bias` / `u5_bias` regions (both nets route in every 4-direction run); no placement was changed for A because
+the fallback meets every criterion without it.
+
+### 16.4 Quality (V2 `releases/v2` -> V2.1 repository board; `verification/engineering_checks/routing_quality_power{,_v2,_compare}.{json,md}`)
+
+| metric | V2 | V2.1 |
+|---|---|---|
+| straight segments | 4755 | 2991 |
+| arcs (PCB_ARC), tangent joints / discontinuous | 0 | 145 / 287 / 0 |
+| vias | 606 | 606 |
+| routed length mm | 5744.6 | 5545.6 |
+| 90-degree bends / 45-degree / other | 3609 / 6 / 109 | 1121 / 583 / 110 |
+| stair-step runs / zigzag runs | 382 / 12 | 124 / 26 |
+| short segments (< 0.5 mm) | 2914 | 1225 |
+| bends per 100 mm | 64.8 | 32.7 |
+| routing efficiency (Manhattan span / length) | 0.776 | 0.806 |
+| degree-2 probe (joints / 90-degree) | 3972 / 3739 | 2065 / 1251 |
+
+Per-net compare (100 routed nets): 66 nets shorter, 34 unchanged, **0 longer, 0 with more vias, 0 with a smaller minimum
+width** - critical (gate / Kelvin / driver-island), HV / power and sensing nets included; the commutation loop, gate loops and the
+high-current pours are pre-routed chains / zones that `beautify` never touches (`straight_nets=['PE']`, stage filter). Remaining 90-degree
+bends by reason (`sharp_corners.by_reason`): leg_too_short 614 (legs shorter than the minimum fillet radius and no clear on-grid chamfer), pad_exit 252 (frozen pad exit legs), unexplained 141 (kept chains and straight sub-chains without an exception record), pad_link 71 (chain stubs ending inside pads), clearance 43 (no arc sample clear of the dilated foreign mask). The zigzag-run count rises because the checker counts the alternating 45-degree
+chamfer pairs of a collapsed stair as a zigzag run; the stair runs they replace fall 382 -> 124.
+
+### 16.5 Checks, exports and review images
+
+- Native DRC of the repository board: `verification/drc/20261012T090308Z-drc-8fd50803/run.json` (`--schematic-parity --severity-all --refill-zones`): 0 violations, 0 unconnected,
+  0 parity on sha256 `dcd148fbdf65253a...`; stored fills without refill (`engineering_checks/stored_zone_fill_check_power.json`, diagnostic): 0 violations / 0 unconnected.
+- Layout metrics (`engineering_checks/layout_metrics_power.{json,md}`): 58 rows - 27 within, 6 exceeding, 25 measured-only (V2: 27 within, 6 exceeding, 25 measured-only; the six V2
+  exceptions are placement / pour facts that this round does not touch).
+- Netlist check `automation/verification/netlist_check_sic.py --board power`: exact_match true - 648 pads equal in all three maps (schematic XML vs model, board vs model, board vs schematic), components equal; `verification/netlist_check_power.json`.
+- Exports: `manufacturing/power_board/` rebuilt by `automation.kicad_tools.export_outputs` (11 commands, layers F.Cu, In1.Cu, In2.Cu, B.Cu,
+  F.SilkS, B.SilkS, F.Fab, Edge.Cuts, PDF scale 1.0): status passed, 35 artifacts hashed in `export-manifest.json`; `review/pcb_{front,back,3d}_power.png`, `review/pcb_layout_power.pdf` replaced.
+- High-resolution crops (`review/crops/power/<area>_{v2,v21}_{top,bottom}.png`, 2400 px long side, same framing for both boards, single-layer
+  kicad-cli PDF plots rasterised with pymupdf): `hs_island` (60-118 x 116-152 mm: Q1 / Q2, HS driver U1, hs_gate / hs_bias / hs_desat),
+  `ls_island` (118-170 x 108-152: U3 / U4 / U5, ls_gate / ls_desat / ls_bias / u5_bias), `sensing_island` (165-205 x 120-152: U6 / U7 ladders,
+  sense_b), `selv_socket` (150-232 x 148-180: mezzanine socket J7, U8, selv_sense / selv_east), `selv_mid` (96-152 x 148-180: dense SELV bus
+  band). Visual review: the stair-steps along the SELV bus band and the island escape channels are gone, long runs end in 45-degree
+  chamfers or 0.30-0.70 mm fillets; remaining sharp corners sit at pad exits (frozen exit leg), at via exits shorter than the keep length and
+  in channels where no clear chamfer exists (`leg_too_short` / `pad_exit` / `clearance`).
+
+### 16.6 What is generic and what is board-specific
+
+Generic (reusable `grid_router` capabilities): the `style` block (8-direction A* with bend penalties, octilinear string pulling, short-run
+collapse, on-grid chamfers, adaptive-radius tangent fillets validated against the occupancy), the overlap-anchor rule of 16.2, and the routing
+quality checker. Board-specific in this round: the choice of the style block, `straight_nets=['PE']`, the DNP attribute and the scratch-build
+mode of the power generator. No manual track edits, no placement changes.
+
+### 16.7 Open items (unchanged honesty register)
+
+- 1121 90-degree bends remain (V2 3609); they are listed per reason above and per corner in `routing_quality_power.json`
+  (`sharp_corners`). The 8-direction search that would remove most of them (A: 73) is not deliverable on this board without unresolved
+  connections and critical-net regressions; it stays opt-in for further work (per-region use, more rip-up rounds, or placement room in
+  `ls_bias` / `u5_bias`).
+- The six layout-metric exceptions of V2 (LR-22 PE-PCB-002 Q2.2 -> C1.2 41.2 mm, PE-PCB-006 THT-joined pours, KR-ISO-002 pin-field
+  clearances, KR-TH-002 courtyard rows) are placement / pour facts and remain as documented in sections 14-15.
+- A clean DRC is not electrical, thermal or EMI validation (V2 known-issues register applies).

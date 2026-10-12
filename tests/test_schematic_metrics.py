@@ -78,6 +78,25 @@ class MetricsTests(unittest.TestCase):
         self.assertTrue(sm.on_grid(1.27 * 7))
         self.assertFalse(sm.on_grid(1.0))
 
+    def test_compare_projects_folds_continuation_sheets_and_writes_markdown(self):
+        ps.generate_project(wired_spec(self.root / 'legacy', presentation=None))
+        ps.generate_project(wired_spec(self.root / 'wired'))
+        result = sm.compare_projects(self.root / 'legacy/kicad', self.root / 'wired/kicad', before_root='W', after_root='W',
+                                     mapping=self.root / 'wired/design/schematic_mapping.json')
+        self.assertEqual(result['labels'], ['V2', 'V2.1'])
+        self.assertEqual(set(result['pages']), {'p1', 'p2', 'root'})
+        self.assertGreater(result['totals']['V2']['global_labels_on_pin_stubs'], 0)
+        self.assertEqual(result['totals']['V2.1']['global_labels_on_pin_stubs'], 0)
+        self.assertLess(result['delta']['global_labels_on_pin_stubs'], 0)
+        self.assertIsNotNone(result['planner'])
+        self.assertIn('p1', result['planner']['sheets'])
+        self.assertIn('label_fallbacks', result['planner']['totals'])
+        self.assertEqual(sm.page_key('06_pwm_fault_logic_2.kicad_sch'), '06_pwm_fault_logic')
+        md = sm.comparison_markdown(result, 'test')
+        self.assertIn('| wired_pin_share |', md)
+        self.assertIn('| p1 |', md)
+        self.assertIn('single_global_label', md)
+
 
 if __name__ == '__main__':
     unittest.main()

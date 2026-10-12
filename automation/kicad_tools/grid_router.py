@@ -1716,9 +1716,12 @@ class Router:
         items, fixed = [], set()
         layer_index = {layer: i for i, layer in enumerate(self.layers)}
         all_items = list(self.board.GetTracks())
+        vias_by_net = defaultdict(list)       # (x, y, ring radius) in board units per net: copper the router's vertices may overlap
+        fixed_by_net_layer = defaultdict(list)  # ((ax, ay), (bx, by), half width) of the non-eligible items per (net, layer index)
         for it in all_items:
             if isinstance(it, pcb.PCB_VIA):
                 p = it.GetPosition(); fixed.add((int(p.x), int(p.y)))
+                vias_by_net[it.GetNetname()].append((int(p.x), int(p.y), it.GetWidth(pcb.F_Cu) // 2))  # KiCad 10: via width needs a layer
                 continue
             a, b = it.GetStart(), it.GetEnd()
             ka, kb = (int(a.x), int(a.y)), (int(b.x), int(b.y))
@@ -1729,9 +1732,17 @@ class Router:
             eligible = (idx is not None and not isinstance(it, pcb.PCB_ARC) and policy[net] != 'none'
                         and self.item_stage.get(it.m_Uuid.AsString()) in stages)
             if eligible:
-                items.append(dict(id=it.m_Uuid.AsString(), net=net, layer=idx, a=ka, b=kb, width=pcb.ToMM(it.GetWidth()), item=it))
+                items.append(dict(id=it.m_Uuid.AsString(), net=net, layer=idx, a=ka, b=kb, width=pcb.ToMM(it.GetWidth()), item=it,
+                                  half=it.GetWidth() // 2))
             else:
                 fixed.add(ka); fixed.add(kb)
+                if idx is not None:
+                    half = it.GetWidth() // 2
+                    if isinstance(it, pcb.PCB_ARC):  # an arc is covered by its two chords (as in prune_unused_vias)
+                        m = it.GetMid(); km = (int(m.x), int(m.y))
+                        fixed_by_net_layer[(net, idx)] += [(ka, km, half), (km, kb, half)]
+                    else:
+                        fixed_by_net_layer[(net, idx)].append((ka, kb, half))
         pads_of = defaultdict(list)
         for pad in self.board.GetPads():
             pads_of[pad.GetNetname()].append(pad)
@@ -1740,6 +1751,16 @@ class Router:
             point = pcb.VECTOR2I(key[0], key[1])
             if any(pad.HitTest(point) for pad in pads_of.get(net, ())):
                 fixed.add(key)
+        # KiCad connects copper by overlap, not by coincident coordinates: a router vertex on the grid node nearest an exact (off-grid)
+        # via or stub end of its net is connected to it although the coordinates differ (power board fan-out vias and fan legs sit
+        # 0.025-0.06 mm off the 0.25 mm grid). Such a vertex is an anchor as well - as a (net, point) pair, so other nets are not
+        # affected - otherwise the string pulling removes it and the via / stub is left dangling (attempt B of the V2.1 power board).
+        for rec in items:
+            for key in (rec['a'], rec['b']):
+                if key in fixed or (rec['net'], key) in fixed:
+                    continue
+                if pg.connected_by_overlap(key, rec['half'], vias_by_net.get(rec['net'], ()), fixed_by_net_layer.get((rec['net'], rec['layer']), ())):
+                    fixed.add((rec['net'], key))
         by_id = {rec['id']: rec for rec in items}
         chains = pg.chains_from_items(items, fixed)
         counts = Counter(); kept = Counter(); exceptions = self.exceptions
@@ -1774,6 +1795,8 @@ class Router:
                 if any(pad.HitTest(mm) for pad in pads_of.get(net, ())):
                     return 'pad'
                 if key in fixed and self.vias.get(self._key((pcb.ToMM(key[0]), pcb.ToMM(key[1])))) == net:
+                    return 'via'
+                if pg.connected_by_overlap(key, 0, vias_by_net.get(net, ())):  # chain end inside the ring of an exact (off-grid) via
                     return 'via'
                 return 'port'
             kinds = (end_kind(chain['points'][0]), end_kind(chain['points'][-1]))

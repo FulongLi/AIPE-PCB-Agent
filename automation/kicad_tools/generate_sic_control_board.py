@@ -1247,6 +1247,46 @@ def kicad_python():
         return None
 
 
+def stored_fill_check(board_path: Path, cli, label: str = 'control') -> dict:
+    """Diagnostic (NOT verification evidence): kicad-cli DRC WITHOUT --refill-zones on a temporary copy of the board directory, i.e.
+    of the zone fills as stored in the file - the copper that the gerber / PDF / render / STEP exports contain. Writes
+    engineering_checks/stored_zone_fill_check_<label>.json and returns the counts. The verification DRC stays run_check (--refill-zones)."""
+    import re
+    import shutil
+    import tempfile
+    board_path = Path(board_path)
+    tmp = Path(tempfile.mkdtemp(prefix='aipe_sf_'))  # short system temp path: the library file names exceed MAX_PATH under long scratch paths
+    record = dict(schema_version=2, status=BANNER, title='Stored zone fills checked without refill (diagnostic, not a verification record)',
+                  generated_utc=datetime.now(timezone.utc).isoformat(), board=str(board_path), board_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
+                  method='copy of the board directory in a temporary folder; kicad-cli pcb drc --format json --severity-all WITHOUT --refill-zones '
+                         '(no schematic parity: copper only); counts of the stored fills. The run_check manifests under verification/drc remain the evidence.')
+    try:
+        copy = tmp / board_path.parent.name
+        shutil.copytree(board_path.parent, copy)
+        report = tmp / 'drc_stored_fills.json'
+        command = [str(cli), 'pcb', 'drc', '--format', 'json', '--severity-all', '--output', str(report), str(copy / board_path.name)]
+        completed = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=900)
+        record['tool_exit_code'] = completed.returncode
+        data = json.loads(report.read_text(encoding='utf-8-sig'))
+        violations = data.get('violations', [])
+        by_type: dict = {}
+        by_rule: dict = {}
+        for v in violations:
+            by_type[v.get('type')] = by_type.get(v.get('type'), 0) + 1
+            m = re.search(r'\((.+?) clearance ', v.get('description', ''))
+            rule = m.group(1) if m else v.get('type')
+            by_rule[rule] = by_rule.get(rule, 0) + 1
+        record.update(violations=len(violations), unconnected_items=len(data.get('unconnected_items', [])), by_type=by_type, by_rule=by_rule,
+                      lib_warnings_note='lib_footprint_issues / lib_footprint_mismatch entries, if any, are copied-path artefacts of the temporary folder')
+    except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as exc:
+        record['error'] = str(exc)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    CHECKS_DIR.mkdir(parents=True, exist_ok=True)
+    (CHECKS_DIR / f'stored_zone_fill_check_{label}.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+    return {k: record.get(k) for k in ('violations', 'unconnected_items', 'by_type', 'by_rule', 'error') if k in record}
+
+
 def read_manifest(path) -> dict:
     """run_check manifest with the DRC category counts and finding details added from KiCad's JSON report."""
     manifest = json.loads(Path(path).read_text(encoding='utf-8'))
@@ -1352,6 +1392,8 @@ class Builder:
             fp.SetFPID(pcb.LIB_ID(lib, name))
             fp.SetReference(part['ref'])
             fp.SetValue(part['value'])
+            if part.get('dnp'):
+                fp.SetDNP(True)  # V2.1: the schematics write (dnp yes) for DNP parts and kicad-cli --schematic-parity compares the attribute
             if part['ref'] not in self.mapping:
                 raise ValueError(f"{part['ref']}: no schematic path in {MAPPING_JSON.name}")
             fp.SetPath(pcb.KIID_PATH(self.mapping[part['ref']]))
@@ -2076,7 +2118,7 @@ def component_through_items(components: list[dict], xy, tolerance: float = 1e-3)
     return []
 
 
-def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: dict | None = None, layer: str = ISLAND_LAYER) -> dict:
+def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: dict | None = None, layer: str = ISLAND_LAYER, style=None) -> dict:
     """Route whole ``nets`` and single unresolved F.Cu/B.Cu connections (grid_router 'route' records) as tracks on the island
     layer with a single-layer grid_router pass: every rail island polygon (inflated by INNER_KEEPOUT_MARGIN) is a keepout, so is
     the INNER_EDGE_BAND around it except for each port's straight exit channel (band_keepouts), vias and plated pads are obstacles
@@ -2093,7 +2135,9 @@ def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: d
         return result
     router = gr.Router(board, WIDTH, HEIGHT, [layer], grid=GRID, trace=ROUTER_TRACE, clearance=CLEARANCE, via=VIA,
                        net_rules={net: dict(clearance=INNER_CLEARANCE) for net in wanted}, board_margin=BOARD_MARGIN,
-                       hole_clearance=HOLE_CLEARANCE, max_nodes=MAX_NODES)
+                       hole_clearance=HOLE_CLEARANCE, max_nodes=MAX_NODES, style=style)
+    router.stage = 'signal'  # V2.1: this pass's own tracks are eligible for Router.beautify (style.stages); the registered copper stays fixed
+    start_length = dict(router.length)  # registered copper per net: the inner-layer addition is the difference after beautify
     island_rects = []
     for net, polygon in candidate['islands'].items():
         if polygon == 'background':
@@ -2200,7 +2244,11 @@ def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: d
 
     for net, kind, a, b, extra in connections:
         connect(net, kind, a, b, **extra)
+    if router.style['simplify'] != 'none' or router.style['arcs']:  # V2.1: the final geometry stage of grid_router.run_plan, on this pass's copper
+        result['beautify'] = router.beautify()
     result['tracks'] = int(router.stats['tracks'])
+    result['arcs'] = int(router.stats['arcs'])
+    result['net_length_mm'] = {net: round(router.length[net] - start_length.get(net, 0.0), 3) for net in dict.fromkeys(r['net'] for r in result['routed'])}
     return result
 
 
@@ -2533,15 +2581,23 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     for e in escapes:
         hints.setdefault(e['net'], []).append(list(e['via']))
     leftovers = [u for u in report.get('unresolved', []) if u.get('stage') == 'route'] if INNER_LAYER_FALLBACK else []
-    inner = inner_layer_route(loaded, inner_nets, leftovers, candidate, port_hints=hints)
+    inner = inner_layer_route(loaded, inner_nets, leftovers, candidate, port_hints=hints, style=plan.get('style'))  # same V2.1 style as the plan
     inner['port_hints'] = sum(len(v) for v in hints.values())
     resolved = [r['source'] for r in inner['routed'] if r.get('kind') == 'fallback']
     report['unresolved'] = [u for u in report.get('unresolved', []) if u not in resolved]
     report['inner_layer'] = inner
     report['tracks'] = int(report.get('tracks') or 0) + inner['tracks']
     report['vias'] = int(report.get('vias') or 0) + len(inner['vias_added'])
-    for r in inner['routed']:
-        report.setdefault('net_length_mm', {})[r['net']] = round(report['net_length_mm'].get(r['net'], 0.0) + r['length_mm'], 3)
+    report['arcs'] = int(report.get('arcs') or 0) + int(inner.get('arcs') or 0)
+    for net, added in inner.get('net_length_mm', {}).items():  # after the pass's beautify (the routed records keep the pre-beautify lengths)
+        report.setdefault('net_length_mm', {})[net] = round(report['net_length_mm'].get(net, 0.0) + added, 3)
+    inner_beautify = inner.get('beautify')
+    if inner_beautify and inner_beautify.get('enabled') and (report.get('beautify') or {}).get('enabled'):  # one exception list for the checker's reasons
+        main = report['beautify']
+        main['exceptions'] = list(main.get('exceptions', [])) + list(inner_beautify.get('exceptions', []))
+        for reason, count in inner_beautify.get('exceptions_by_reason', {}).items():
+            main.setdefault('exceptions_by_reason', {})[reason] = main['exceptions_by_reason'].get(reason, 0) + count
+        inner['beautify'] = {k: v for k, v in inner_beautify.items() if k != 'exceptions'}
     pruned = prune_dangling(loaded, protected_nets=set(RAILS) | {GROUND})
     report['pruned_dangling'] = pruned
     inner_copper = bool(inner['routed'] or inner['vias_added'])
@@ -2585,6 +2641,8 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
                              status=manifest.get('status'), finding_count=manifest.get('finding_count'), violations=manifest.get('violations'),
                              unconnected_items=manifest.get('unconnected_items'), schematic_parity=manifest.get('schematic_parity'),
                              details=manifest.get('details', [])[:200], error=manifest.get('error'))
+        if write_outputs:
+            result['stored_fill_check'] = stored_fill_check(output_pcb, cli, metrics_label)  # diagnostic: the fills as stored (exports) vs the refill DRC
     result['seconds'] = round(time.monotonic() - start, 3)
     if write_outputs:
         write_placement(result, candidate)
@@ -2637,7 +2695,7 @@ def write_routing_outputs(result: dict, candidate: dict):
                     rail_items_without_island_or_corridor=result['rail_items_without_island_or_corridor'],
                     rail_fanout_failures=result['rail_fanout_failures'], rail_zone_outlines=result.get('rail_zone_outlines'),
                     connectivity_unconnected=result.get('connectivity_unconnected'),
-                    drc=result.get('drc'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
+                    drc=result.get('drc'), stored_fill_check=result.get('stored_fill_check'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                     evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
     (VERIFICATION_DIR / 'routing_progress_control.json').write_text(json.dumps(progress, indent=2, default=str) + '\n', encoding='utf-8')
 

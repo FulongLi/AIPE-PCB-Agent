@@ -320,6 +320,21 @@ def point_segment_distance(c, p, q):
     return math.dist(c, (p[0] + t * vx, p[1] + t * vy))
 
 
+def connected_by_overlap(point, half_width, vias=(), segments=(), tol=0.0):
+    """True when a track vertex ``point`` (track half width ``half_width``) overlaps same-net copper that is not part of the
+    chain structure: a via ``(x, y, ring_radius)`` or a fixed segment ``((ax, ay), (bx, by), half)`` on the same layer. KiCad's
+    connectivity is collision based, so such a vertex is electrically bound to that copper although the coordinates differ (the
+    router meets an exact, off-grid via or stub end at the nearest grid node) and it must not be moved by a chain rewrite."""
+    px, py = point
+    for vx, vy, r in vias:
+        if math.hypot(px - vx, py - vy) <= r + half_width + tol:
+            return True
+    for p, q, half in segments:
+        if point_segment_distance(point, p, q) <= half + half_width + tol:
+            return True
+    return False
+
+
 def diagonals_clear_of(points, guards):
     """True when no diagonal segment of the polyline comes closer than ``keep`` to any guard point (``guards``:
     [(point, keep)]); orthogonal segments are free. Used to keep a straight orthogonal run of ``keep`` at a via end."""

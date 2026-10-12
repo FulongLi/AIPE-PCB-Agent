@@ -212,6 +212,19 @@ class PlanAndHelperTests(unittest.TestCase):
         self.assertEqual(plan['power']['3V3']['zones']['In2.Cu'], g.background_polygon())
         self.assertGreaterEqual(plan['grid'], 0.1)
         self.assertEqual(plan['via'], [0.6, 0.3])
+        self.assertNotIn('style', plan)  # no style argument = the V2 plan
+
+    def test_default_routing_style_validates_and_the_v2_geometry_is_opt_in(self):
+        cand = g.load_candidate(g.candidate_path('B'))
+        escapes = g.plan_dsp_escapes(lqfp_side('SG9S3S'), (68.0, 33.0))
+        styled = g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style=g.ROUTING_STYLE)
+        self.assertEqual(styled['style'], g.ROUTING_STYLE)
+        self.assertLessEqual(set(g.ROUTING_STYLE), set(gr.STYLE_DEFAULTS))
+        self.assertLessEqual(set(g.ROUTING_STYLE_DIAGONAL), set(gr.STYLE_DEFAULTS))
+        gr.validate_plan(styled)  # the style block passes the shared router's validation
+        gr.validate_plan(g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style=g.ROUTING_STYLE_DIAGONAL))
+        self.assertFalse(g.ROUTING_STYLE['diagonal'])  # 8-direction search stays opt-in on the control board (run time, see ROUTING_STYLE comment)
+        self.assertNotIn('style', g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style={}))
 
     def test_stackup_text_and_geometry_helpers(self):
         self.assertAlmostEqual(g.stackup_thickness_mm(), 1.6)
@@ -474,7 +487,8 @@ def place_scenario(out_dir) -> dict:
     for fp in board.GetFootprints():
         sides[fp.GetReference()] = 'B' if fp.IsFlipped() else 'F'
     text = (out_dir / f'{g.NAME}.kicad_pcb').read_text(encoding='utf-8')
-    return dict(footprints=len(result['placements']), issues=result['placement_issues'], sides=sides, copper_layers=board.GetCopperLayerCount(),
+    dnp = sorted(fp.GetReference() for fp in board.GetFootprints() if fp.IsDNP())
+    return dict(footprints=len(result['placements']), issues=result['placement_issues'], sides=sides, dnp=dnp, copper_layers=board.GetCopperLayerCount(),
                 stackup='(stackup' in text, nets=result['nets'], estimates={k: v for k, v in result['estimates'].items() if k.endswith('_mm') or k.endswith('fraction')},
                 silkscreen=len(result['silkscreen']))
 
@@ -505,6 +519,11 @@ class PlacementTests(unittest.TestCase):
         self.assertEqual(s['sides']['J8'], 'B')
         self.assertGreater(s['estimates']['analog_pwm_separation_mm'], 0.0)
         self.assertEqual(s['silkscreen'], 16)  # incl. the 'J8 PIN 1 >' and 'MEZZANINE (B.Cu)' labels of the B.Cu header (review LR-03)
+
+    def test_dnp_parts_carry_the_footprint_attribute(self):
+        expected = sorted(p['ref'] for p in g.load_parts() if p.get('dnp'))
+        self.assertTrue(expected, 'the control model has at least one DNP part (A-C12 UVLO_REF capacitor)')
+        self.assertEqual(self.summary['dnp'], expected)  # V2.1: the schematics write (dnp yes); kicad-cli --schematic-parity compares the attribute
 
 
 class EvidenceTests(unittest.TestCase):

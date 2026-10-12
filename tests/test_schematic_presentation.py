@@ -250,7 +250,9 @@ class WiredGenerationTests(unittest.TestCase):
     def test_long_detour_becomes_a_name_tag_pair(self):
         # a route whose only path is far longer than the pin distance is replaced by a pair of global name tags
         spec = wired_spec(self.root)
-        spec['presentation'] = dict(supply='auto', loop_slack_mm=0.0)
+        # distance rule off and the second IC inside U1's group (close to the MID chain): the planner leaves the join to
+        # the router, whose (patched) long detour must then be replaced by a tag pair
+        spec['presentation'] = dict(supply='auto', loop_slack_mm=0.0, max_wire_mm=1000.0, groups={'U6': 'U1'})
         # a second IC on MID: the lanes draw two MID components, the router must join them
         spec['parts'].append(part('U6', 'IC', {'1': 'MID', '2': 'GND', '3': 'VCC'}, pin_defs('1:IN:input 2:GND:power_in 3:VCC:power_in'),
                                   footprint='Package_TO_SOT_SMD:SOT-23'))
@@ -297,8 +299,8 @@ class WiredGenerationTests(unittest.TestCase):
         spec = wired_spec(self.root)
         original = sp.Planner.plan_page
 
-        def broken(self_, page, page_parts, flag_nets, is_flag_page):
-            planned = original(self_, page, page_parts, flag_nets, is_flag_page)
+        def broken(self_, page, page_parts, flag_nets, is_flag_page, *args, **kwargs):
+            planned = original(self_, page, page_parts, flag_nets, is_flag_page, *args, **kwargs)
             if page == 'p1':
                 layout = planned['layouts'][0]
                 layout.labels = [l for l in layout.labels if l['name'] != 'MID']   # drop the MID name tag
@@ -336,6 +338,164 @@ class WiredGenerationTests(unittest.TestCase):
         self.assertEqual(sorted(feedback['parts']), ['R4', 'R5'])
         text = (self.root / 'kicad/p1.kicad_sch').read_text(encoding='utf-8')
         self.assertIn('"Feedback divider"', text)
+
+
+class V21ReviewFixesTests(unittest.TestCase):
+    """Generator defects found in the V2.1 visual review and their fixes (all generic, no project-specific code)."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='aipe_wired_fix_')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+
+    def _labels(self, page):
+        tree = parse((self.root / f'kicad/{page}.kicad_sch').read_text(encoding='utf-8'))
+        out = []
+        for kind in ('hierarchical_label', 'global_label'):
+            for l in children(tree, kind):
+                at = children(l, 'at')[0]
+                just = children(children(l, 'effects')[0], 'justify')
+                out.append(dict(kind=kind, name=l[1], x=float(at[1]), y=float(at[2]), angle=float(at[3]) if len(at) > 3 else 0.0,
+                                justify=just[0][1] if just else '', shape=children(l, 'shape')[0][1] if children(l, 'shape') else None))
+        return out
+
+    def test_labels_keep_their_angle_shape_and_justification(self):
+        # a free-lane port at a left-running wire end is emitted at 180 / justify right (text away from the wire); lane-end
+        # ports keep the shape of the net's driving pins instead of the generic 'bidirectional'
+        ps.generate_project(wired_spec(self.root))
+        labels = self._labels('p1')
+        hier = [l for l in labels if l['kind'] == 'hierarchical_label']
+        self.assertTrue(hier)
+        for l in hier:
+            self.assertEqual(l['justify'], 'right' if l['angle'] in (180.0, 270.0) else 'left', l)
+        out = next(l for l in hier if l['name'] == 'OUT')
+        self.assertEqual(out['shape'], 'output')
+        p2 = [l for l in self._labels('p2') if l['kind'] == 'hierarchical_label']
+        left = [l for l in p2 if l['angle'] == 180.0]
+        self.assertTrue(left, 'the connector page has ports on left-running lanes')
+        # a label's text never lies on its own wire: for a 180 label the wire continues to the right of the anchor
+        tree = parse((self.root / 'kicad/p2.kicad_sch').read_text(encoding='utf-8'))
+        wires = [tuple((float(xy[1]), float(xy[2])) for xy in children(children(w, 'pts')[0], 'xy')) for w in children(tree, 'wire')]
+        for l in left:
+            touching = [w for w in wires if (l['x'], l['y']) in w and w[0][1] == w[1][1]]
+            for w in touching:
+                other = w[1] if w[0] == (l['x'], l['y']) else w[0]
+                self.assertGreater(other[0], l['x'], (l, w))
+
+    def test_power_glyphs_point_away_from_the_wire_and_rails_are_ordered(self):
+        import re
+        ps.generate_project(wired_spec(self.root))
+        text = (self.root / 'kicad/p1.kicad_sch').read_text(encoding='utf-8')
+        gnd = re.findall(r'\(lib_id "AIPE:PWR_GND"\) \(at [\d.]+ [\d.]+ (\d+)\)', text)
+        vcc = re.findall(r'\(lib_id "AIPE:PWR_VCC"\) \(at [\d.]+ [\d.]+ (\d+)\)', text)
+        self.assertTrue(gnd and vcc)
+        # a ground-style body hangs below its point unrotated (angle 0); the 180 rotation that used to turn every ground
+        # glyph upside down into its wire is gone
+        self.assertIn('0', gnd)
+        self.assertNotIn('180', gnd)
+        self.assertIn('0', vcc)
+        # generated symbols put supply pins first and ground pins last on each side
+        lib = (self.root / 'kicad/libraries/AIPE.kicad_sym').read_text(encoding='utf-8')
+        start = lib.index('(symbol "Sym_U1"')
+        end = re.search(r'\(symbol "Sym_(?!U1)', lib[start + 1:])
+        sym = lib[start:start + 1 + end.start()] if end else lib[start:]
+        left = sorted([(float(m.group(1)), m.group(2)) for m in re.finditer(r'\(pin \w+ line \(at -[\d.]+ ([-\d.]+) 0\)[^\n]*?\(name "(\w+)"', sym)],
+                      reverse=True)
+        names = [n for _, n in left]
+        if 'VCC' in names and 'GND' in names:
+            self.assertLess(names.index('VCC'), names.index('GND'))
+
+    def test_item_less_lanes_stay_on_their_pin_rows(self):
+        # a connector whose signal pins carry no satellites: every port sits on its pin row (no jog staircase)
+        spec = wired_spec(self.root)
+        pins = {str(i): f'SIG{i}' for i in range(1, 9)}
+        spec['parts'].append(part('J9', 'J', pins, footprint='Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical', page='p2'))
+        spec['parts'].append(part('J10', 'J', pins, footprint='Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical', page='p1'))
+        ps.generate_project(spec)
+        for page in ('p1', 'p2'):
+            labels = [l for l in self._labels(page) if l['name'].startswith('SIG')]
+            self.assertEqual(len(labels), 8, page)
+            for angle in (0.0, 180.0):          # the generic header has four pins per side: one port per pin row on each side
+                ys = sorted(round(l['y'], 2) for l in labels if l['angle'] == angle)
+                self.assertEqual(len(ys), 4, (page, angle))
+                gaps = {round(b - a, 2) for a, b in zip(ys, ys[1:])}
+                self.assertEqual(gaps, {2.54}, (page, angle, ys))
+
+    def test_hanging_parts_with_long_values_do_not_overlap(self):
+        spec = wired_spec(self.root)
+        for i in range(4):
+            spec['parts'].append(part(f'C{20 + i}', 'C', {'1': 'EN', '2': 'GND'}, TWO, value='0.47u/630V film'))
+        ps.generate_project(spec)
+        p1 = sm.measure_sheet(self.root / 'kicad/p1.kicad_sch')
+        self.assertEqual(p1['text_overlaps'], 0)
+        self.assertEqual(p1['isolated_symbols'], 0)
+
+    def test_stale_continuation_sheets_are_removed_but_foreign_files_kept(self):
+        kicad = self.root / 'kicad'
+        kicad.mkdir(parents=True)
+        (kicad / 'p1_2.kicad_sch').write_text('(kicad_sch (version 20250114) (generator "old"))\n', encoding='utf-8')
+        (kicad / 'p1.kicad_sch').write_text('(kicad_sch (version 20250114) (generator "old"))\n', encoding='utf-8')
+        (kicad / 'notes.kicad_sch').write_text('(kicad_sch (version 20250114) (generator "foreign"))\n', encoding='utf-8')
+        result = ps.generate_project(wired_spec(self.root))
+        self.assertEqual(result['removed_sheets'], ['p1_2.kicad_sch'])
+        self.assertFalse((kicad / 'p1_2.kicad_sch').exists())
+        self.assertTrue((kicad / 'notes.kicad_sch').exists())
+        self.assertIn('(generator "aipe")', (kicad / 'p1.kicad_sch').read_text(encoding='utf-8'))
+        legacy = ps.generate_project(wired_spec(self.root / 'legacy', presentation=None))
+        self.assertEqual(legacy['removed_sheets'], [])
+
+    def test_lone_test_points_form_a_grid_with_their_own_labels(self):
+        # test points on a net that an anchor lane carries hang off that lane; test points on a net of their own (PROBE,
+        # twelve pads) and on a ground rail have no lane and are drawn as a grid, each with its own marker
+        spec = wired_spec(self.root)
+        for i in range(12):
+            spec['parts'].append(part(f'TP{i + 10}', 'TP', {'1': 'OUT' if i % 2 else 'PROBE'}, footprint='TestPoint:TestPoint_Pad_D2.0mm', page='p1'))
+        spec['parts'].append(part('TP30', 'TP', {'1': 'GND'}, footprint='TestPoint:TestPoint_Pad_D2.0mm', page='p1'))
+        result = ps.generate_project(spec)
+        self.assertTrue(result['presentation']['guard']['identical'])
+        labels = self._labels('p1')
+        self.assertEqual(sum(1 for l in labels if l['name'] == 'PROBE'), 6, 'every PROBE test point carries its own tag')
+        tree = parse((self.root / 'kicad/p1.kicad_sch').read_text(encoding='utf-8'))
+        tps = [s for s in children(tree, 'symbol') if any(p[1] == 'Reference' and p[2].startswith('TP') for p in children(s, 'property'))]
+        rows = {round(float(children(s, 'at')[0][2]), 1) for s in tps}
+        self.assertGreaterEqual(len(rows), 2, 'test points wrap into rows (8 per row) and the ground one hangs from its own row')
+        p1 = sm.measure_sheet(self.root / 'kicad/p1.kicad_sch')
+        self.assertEqual(p1['isolated_symbols'], 0)
+
+    def test_far_apart_cross_net_components_repeat_the_hierarchical_label(self):
+        # OUT appears on p1 at U1 and, far away, at a second anchor in another group: the sheet carries two OUT ports
+        spec = wired_spec(self.root, presentation=dict(supply='auto', max_cross_wire_mm=20.0,
+                                                          groups={'U7': 'far', 'R8': 'far'}, group_titles={'far': 'Far group'}))
+        spec['parts'].append(part('U7', 'IC', {'1': 'OUT', '2': 'GND', '3': 'VCC', '4': 'EN'},
+                                  pin_defs('1:IN:input 2:GND:power_in 3:VCC:power_in 4:EN2:input'), footprint='Package_TO_SOT_SMD:SOT-23'))
+        spec['parts'].append(part('R8', 'R', {'1': 'OUT', '2': 'GND'}, TWO))
+        result = ps.generate_project(spec)
+        self.assertTrue(result['presentation']['guard']['identical'])
+        outs = [l for l in self._labels('p1') if l['name'] == 'OUT' and l['kind'] == 'hierarchical_label']
+        self.assertGreaterEqual(len(outs), 2)
+        self.assertEqual({l['shape'] for l in outs}, {'output'})
+        root = parse((self.root / 'kicad/W.kicad_sch').read_text(encoding='utf-8'))
+        p1_sheet = next(s for s in children(root, 'sheet') if any(p[2] == 'p1.kicad_sch' for p in children(s, 'property')))
+        self.assertEqual(sum(1 for pin in children(p1_sheet, 'pin') if pin[1] == 'OUT'), 1, 'one sheet pin per net')
+
+    def test_first_fit_columns_never_grow_under_a_neighbour(self):
+        class L:
+            def __init__(self, w, h, title):
+                self.bbox, self.title = (0.0, 0.0, w, h), title
+        # tall-narrow, tall-narrow, short-narrow, short-wide: FFD must not append the wide one into column 1 under column 2
+        layouts = [L(60.0, 150.0, 'a'), L(60.0, 150.0, 'b'), L(60.0, 60.0, 'c'), L(250.0, 40.0, 'd')]
+        positions = sp._pack_columns(layouts, 6.35, 45.0, 407.0, 267.0, True)
+        self.assertIsNotNone(positions)
+        rects = [(x, y, x + l.bbox[2], y + l.bbox[3]) for l, x, y in positions]
+        for i in range(len(rects)):
+            for j in range(i + 1, len(rects)):
+                a, b = rects[i], rects[j]
+                self.assertFalse(a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3], (a, b))
+
+    def test_page_planner_tries_the_extras_variants_and_records_the_choice(self):
+        result = ps.generate_project(wired_spec(self.root))
+        for sheet in result['presentation']['sheets']:
+            self.assertIn(sheet['counts']['layout_variant'], ('auto', 'below', 'beside'))
 
 
 if __name__ == '__main__':

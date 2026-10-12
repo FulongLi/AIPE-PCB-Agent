@@ -65,8 +65,8 @@ CHECKS_DIR = VERIFICATION_DIR / 'engineering_checks'
 DRC_DIR = VERIFICATION_DIR / 'drc'
 NAME = 'AIPE_SiC_Buck_Power'
 TITLE = 'AIPE SiC buck 400 V -> 200 V / 5 kW - power board (SiC half bridge, drivers, isolators, SELV strip)'
-BANNER = 'AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED'
-REVISION = 'V2'
+BANNER = 'AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED'
+REVISION = 'V2.1'
 WIDTH, HEIGHT = 240.0, 180.0
 COPPER_LAYERS = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 ROUTING_LAYERS = ['F.Cu', 'In2.Cu', 'B.Cu']  # In2.Cu only inside the driver islands (zone keep-outs elsewhere); In1.Cu is never routed
@@ -159,12 +159,21 @@ SIGNAL_ORDER = ['KS_H', 'KS_L', 'G_H', 'G_L', 'VDD_', 'VEE_', 'ISO_15V', '5V_ISO
 SIGNAL_ORDER_TRIALS = 4  # plan order, short nets first, long nets first, then a seeded perturbation of the best - the best is kept
 SIGNAL_PINNED = ['KS_H', 'KS_L', 'G_H', 'G_L', 'VDD_H', 'VEE_H', 'VDD_L', 'VEE_L', 'ISO_15V', '5V_ISO']  # routed first in every order trial: the Kelvin and gate nets and the island rails (0.35 mm) - the nets whose pads the 0.25 mm feedback nets would otherwise seal inside the packed regions
 RIPUP_ROUNDS = 30  # grid_router rip-up negotiation after the best order trial (stage 5: direct routing of connections that became free, lane release; 7 of 20 rounds kept in b5)
-ROUTING_STYLE_V21 = dict(diagonal=True, bend_penalty_cells=[0.6, 2.0], simplify='octilinear', arcs=True, straight_nets=['PE'], eps=0.02)  # V2.1 grid_router
+ROUTING_STYLE_V21 = dict(diagonal=True, bend_penalty_cells=[0.6, 2.0], simplify='octilinear', arcs=True, straight_nets=['PE'])  # V2.1 grid_router
 # geometry (plan key 'style'): 8-direction A* with bend penalties, final octilinear simplification and tangent arcs on the signal nets (zone/power
-# nets and tracks above 0.6 mm: diagonals only); eps 0.02 (V2: 0.01) closes the orthogonal marking margin of the 0.25 mm grid against off-grid
-# copper (loss up to 0.0175 mm for 0.45-0.6 mm halos), as the control board does. The power board keeps the V2 geometry until the integration phase validates this block
-# (78 region rules, 84 keep-outs): ROUTING_STYLE below is what build_power uses by default; --style v21 / build_power(style=ROUTING_STYLE_V21) opts in.
-ROUTING_STYLE = None
+# nets and tracks above 0.6 mm: diagonals only). eps stays at the V2 0.01: on this 0.125 mm grid a diagonal step between free cells can intrude
+# at most 0.0039 / R mm into a round halo of radius R (<= 0.007 mm for the smallest 0.56 mm signal halos), below eps, and the router's 0.3 mm
+# clearance already exceeds the 0.25 mm Default class; eps 0.02 (the control board's 0.125 mm / 0.2 mm setting) changed the V2 search itself
+# (attempt B, 2026-10-12: KS_L 88 -> 131 mm, FLT_H_N +3 vias), so the search stays byte-identical to V2 and only the final geometry differs.
+ROUTING_STYLE_OCTILINEAR = dict(diagonal=False, simplify='octilinear', arcs=True, straight_nets=['PE'])  # V2.1 fallback geometry: the V2
+# 4-direction search (same algorithm, order trials and rip-up rounds, same routes as the frozen V2 board), then the final octilinear
+# simplification (string pulling, short-run collapse, on-grid chamfers) and tangent arcs on the signal nets - the control board's
+# ROUTING_STYLE without its eps 0.02 (see above) plus the untouched PE spine.
+ROUTING_STYLE = ROUTING_STYLE_OCTILINEAR  # V2.1 default (build_power(style=None) / --style default). Chosen 2026-10-12 after three attempts on the
+# full board (verification/routing_iterations_power.md section 16): the 8-direction block (--style v21) routed in 1605 s (3.8 x V2), left
+# LS_FB_VDD and VDD_L unresolved (DRC 1 + 2) and lengthened 10 nets (3V3 +88 mm, RDY_L +35 mm / +9 vias, DESAT_H_A +2 vias), while this block
+# keeps the V2 search (same routes, 606 vias, no net longer) and only rewrites the final geometry: bends_90 3609 -> 1121, 145 tangent arcs,
+# stair runs 382 -> 124, DRC 0 / 0 / 0. build_power(style={}) / --style none routes the V2 geometry.
 FINE_PITCH_MM = 1.0  # pad rows below this pitch escape with exact straight stubs (no via at the row) and 0.25 mm escapes
 BARRIER_ROW_PITCH_MM = 1.5  # barrier packages: the 1.27 mm rows (SOIC-16W / SOIC-8W / TMCS) escape through exact stubs too - a port at the pad end is sealed by the first track that runs along the row
 STUB_ROW_REFS = ()  # (r14: short stubs on the strip SOIC-8 rows were sealed by their row neighbours' escapes; U8 / U9 escape inward instead, INWARD_REFS)
@@ -511,7 +520,7 @@ def rule_aware_refill(board_path: Path) -> dict:
     return dict(filled=data['filled'], python=str(python), zones=len(data['after']), changed_areas_mm2=changed)
 
 
-def stored_fill_check(board_path: Path, cli, label: str = 'power') -> dict:
+def stored_fill_check(board_path: Path, cli, label: str = 'power', checks_dir: Path = CHECKS_DIR) -> dict:
     """r20 (LR-20) diagnostic (NOT verification evidence): kicad-cli DRC WITHOUT --refill-zones on a temporary copy of the board
     directory, i.e. of the zone fills as stored in the file - the copper that gerber / PDF / render / STEP exports contain. Writes
     engineering_checks/stored_zone_fill_check_<label>.json and returns the counts. The verification DRC stays run_check (--refill-zones)."""
@@ -546,8 +555,9 @@ def stored_fill_check(board_path: Path, cli, label: str = 'power') -> dict:
         record['error'] = str(exc)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    CHECKS_DIR.mkdir(parents=True, exist_ok=True)
-    (CHECKS_DIR / f'stored_zone_fill_check_{label}.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+    checks_dir = Path(checks_dir)
+    checks_dir.mkdir(parents=True, exist_ok=True)
+    (checks_dir / f'stored_zone_fill_check_{label}.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     return {k: record.get(k) for k in ('violations', 'unconnected_items', 'by_type', 'by_rule', 'error') if k in record}
 
 
@@ -782,6 +792,8 @@ class Builder:
             fp.SetFPID(pcb.LIB_ID(lib, name))
             fp.SetReference(part['ref'])
             fp.SetValue(part['value'])
+            if part.get('dnp'):
+                fp.SetDNP(True)  # V2.1: the wired schematics write (dnp yes) (in_bom / on_board stay yes); kicad-cli --schematic-parity compares the attribute
             if part['ref'] not in mapping:
                 raise ValueError(f"{part['ref']}: no schematic path in {MAPPING_JSON.name}")
             fp.SetPath(pcb.KIID_PATH(mapping[part['ref']]))
@@ -1778,15 +1790,21 @@ def router_keepouts(boxes: dict, areas: list[dict]) -> list[dict]:
     return keepouts
 
 
-def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=None, trials=None, ripup=None, style=None) -> dict:
+def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=None, trials=None, ripup=None, style=None, outputs=None) -> dict:
     """Place, route, zone, check and DRC the power board into ``output_pcb``. ``style``: grid_router V2.1 ``style`` block
-    (None = ``ROUTING_STYLE``, {} = V2 geometry, ``ROUTING_STYLE_V21`` = the recommended V2.1 block)."""
+    (None = ``ROUTING_STYLE``, {} = V2 geometry, ``ROUTING_STYLE_V21`` = the 8-direction block). ``outputs``: None = the example's
+    design/ and verification/ folders; a directory = scratch build (candidate comparison) whose netlist, placement, routing plan,
+    progress JSON, engineering checks (``engineering_checks/``) and DRC manifests (``drc/``) are written there instead - the
+    output board still needs the project files (.kicad_pro / .kicad_dru / schematics / libraries) next to it for the parity DRC."""
     import pcbnew as pcb
     start = time.monotonic()
+    outputs = Path(outputs) if outputs is not None else None
+    checks_dir = CHECKS_DIR if outputs is None else outputs / 'engineering_checks'
+    drc_dir = DRC_DIR if outputs is None else outputs / 'drc'
     parts = load_parts()
     mapping = json.loads(MAPPING_JSON.read_text(encoding='utf-8'))['paths']
     cli = cli or find_kicad_cli()
-    pin_nets = export_netlist(KICAD_DIR / f'{NAME}.kicad_sch', DESIGN_DIR / 'netlist_power.xml', cli)
+    pin_nets = export_netlist(KICAD_DIR / f'{NAME}.kicad_sch', (DESIGN_DIR if outputs is None else outputs) / 'netlist_power.xml', cli)
     builder = Builder(parts, mapping, pin_nets)
     placements = builder.place_all()
     boxes = pad_boxes(builder.board)
@@ -1803,7 +1821,7 @@ def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=Non
                   pcbnew_version=pcb.GetBuildVersion(), stackup_mm=stackup_thickness_mm())
     if not route:
         result['seconds'] = round(time.monotonic() - start, 3)
-        write_outputs(result)
+        write_outputs(result, outputs)
         return result
     # ---- copper: HV via groups, in-pad vias, chain tracks, zones, then the router for the signals -------------------
     boxes = pad_boxes(loaded)
@@ -1893,19 +1911,19 @@ def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=Non
         spec = cl.load_spec(SPEC_JSON)
         model = cl.load_model(MODEL_JSON)
         m = cl.run_check(output_pcb, spec, model, backend=None, spec_path=SPEC_JSON, model_path=MODEL_JSON)
-        json_path, md_path = cl.write_outputs(m, CHECKS_DIR, 'power')
+        json_path, md_path = cl.write_outputs(m, checks_dir, 'power')
         result['layout_metrics'] = dict(json=str(json_path), md=str(md_path), summary=m.get('summary'))
-        result['routing_quality'] = routing_quality_metrics(output_pcb, CHECKS_DIR, 'power', plan, report)  # V2.1 TASK 2 (plan still carries pre_routed)
+        result['routing_quality'] = routing_quality_metrics(output_pcb, checks_dir, 'power', plan, report)  # V2.1 TASK 2 (plan still carries pre_routed)
     if drc:
         from automation.kicad_tools.run_check import run_check
-        code, manifest_path = run_check('drc', output_pcb, DRC_DIR, cli)
+        code, manifest_path = run_check('drc', output_pcb, drc_dir, cli)
         manifest = read_manifest(manifest_path)
         result['drc'] = dict(manifest=str(manifest_path), wrapper_exit_code=code, tool_exit_code=manifest.get('tool_exit_code'), status=manifest.get('status'),
                              finding_count=manifest.get('finding_count'), violations=manifest.get('violations'), unconnected_items=manifest.get('unconnected_items'),
                              schematic_parity=manifest.get('schematic_parity'), details=manifest.get('details', [])[:400], error=manifest.get('error'))
-        result['stored_fill_check'] = stored_fill_check(output_pcb, cli)  # r20 (LR-20) diagnostic: the stored fills judged without refill
+        result['stored_fill_check'] = stored_fill_check(output_pcb, cli, checks_dir=checks_dir)  # r20 (LR-20) diagnostic: the stored fills judged without refill
     result['seconds'] = round(time.monotonic() - start, 3)
-    write_outputs(result)
+    write_outputs(result, outputs)
     return result
 
 
@@ -1920,17 +1938,20 @@ def routing_quality_metrics(board_path, output_dir, label: str, plan: dict | Non
                 sharp_corners_by_reason=m['sharp_corners']['by_reason'], arcs={k: v for k, v in m['arcs'].items() if k != 'tangency_failures'})
 
 
-def write_outputs(result: dict):
-    DESIGN_DIR.mkdir(parents=True, exist_ok=True)
+def write_outputs(result: dict, outputs=None):
+    """placement_power.json / routing_plan_power.json (design/) and routing_progress_power.json (verification/); ``outputs`` = one scratch directory for all three."""
+    design_dir = DESIGN_DIR if outputs is None else Path(outputs)
+    verification_dir = VERIFICATION_DIR if outputs is None else Path(outputs)
+    design_dir.mkdir(parents=True, exist_ok=True)
     placement = dict(schema_version=1, status=BANNER, project=NAME, board_mm=[WIDTH, HEIGHT], copper_layers=COPPER_LAYERS,
                      stackup=[dict(layer=l, type=t, thickness_mm=th) for l, t, th in STACKUP], fixed=FIXED, regions=REGIONS, items=result['placements'],
                      silkscreen=result.get('silkscreen', []), slots=result.get('slots'), rule_areas=result.get('rule_areas'),
                      placement_issues=result.get('placement_issues', []), notes=NOTES)
-    (DESIGN_DIR / 'placement_power.json').write_text(json.dumps(placement, indent=2, default=str) + '\n', encoding='utf-8')
+    (design_dir / 'placement_power.json').write_text(json.dumps(placement, indent=2, default=str) + '\n', encoding='utf-8')
     if 'routing_plan' in result:
         plan_doc = dict(schema_version=1, status=BANNER, project=NAME, run_plan=result['routing_plan'], zones=zone_plan(), via_groups=via_groups(),
                         pre_routed=result.get('pre_routed'), notes=NOTES)
-        (DESIGN_DIR / 'routing_plan_power.json').write_text(json.dumps(plan_doc, indent=2, default=str) + '\n', encoding='utf-8')
+        (design_dir / 'routing_plan_power.json').write_text(json.dumps(plan_doc, indent=2, default=str) + '\n', encoding='utf-8')
         report = result['report']
         counts = result.get('board_counts') or {}
         progress = dict(schema_version=1, status=BANNER, project=NAME, generated_utc=datetime.now(timezone.utc).isoformat(), board=result['board'],
@@ -1947,7 +1968,7 @@ def write_outputs(result: dict):
                         rule_aware_refill=report.get('rule_aware_refill'), stored_fill_check=result.get('stored_fill_check'),
                         drc=result.get('drc'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                         evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
-        (VERIFICATION_DIR / 'routing_progress_power.json').write_text(json.dumps(progress, indent=2, default=str) + '\n', encoding='utf-8')
+        (verification_dir / 'routing_progress_power.json').write_text(json.dumps(progress, indent=2, default=str) + '\n', encoding='utf-8')
 
 
 def main(argv=None) -> int:
@@ -1959,8 +1980,12 @@ def main(argv=None) -> int:
     parser.add_argument('--no-reexec', action='store_true')
     parser.add_argument('--trials', type=int, default=None, help=f'signal routing-order trials (default {SIGNAL_ORDER_TRIALS})')
     parser.add_argument('--ripup', type=int, default=None, help=f'rip-up negotiation rounds (default {RIPUP_ROUNDS})')
-    parser.add_argument('--style', choices=['default', 'v21', 'none'], default='default',
-                        help='grid_router geometry: default = ROUTING_STYLE, v21 = ROUTING_STYLE_V21 (8-direction search, simplification, arcs), none = V2')
+    parser.add_argument('--outputs', type=Path, default=None,
+                        help='scratch build: write the netlist, placement, routing plan, progress JSON, engineering checks and DRC manifests under this '
+                             'directory instead of the example design/ and verification/ folders (candidate comparison; not verification)')
+    parser.add_argument('--style', choices=['default', 'v21', 'octilinear', 'none'], default='default',
+                        help='grid_router geometry: default = ROUTING_STYLE, v21 = ROUTING_STYLE_V21 (8-direction search, simplification, arcs), '
+                             'octilinear = ROUTING_STYLE_OCTILINEAR (4-direction search, simplification, arcs), none = V2')
     args = parser.parse_args(argv)
     try:
         import pcbnew  # noqa: F401
@@ -1976,9 +2001,9 @@ def main(argv=None) -> int:
         completed = subprocess.run([str(python), str(Path(__file__).resolve()), *passthrough, '--no-reexec'], cwd=str(ROOT))
         return completed.returncode
     cli = find_kicad_cli()
-    style = {'default': None, 'v21': ROUTING_STYLE_V21, 'none': {}}[args.style]
+    style = {'default': None, 'v21': ROUTING_STYLE_V21, 'octilinear': ROUTING_STYLE_OCTILINEAR, 'none': {}}[args.style]
     result = build_power(args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli, trials=args.trials, ripup=args.ripup,
-                         style=style)
+                         style=style, outputs=args.outputs)
     report = result.get('report', {})
     drc = result.get('drc') or {}
     counts = result.get('board_counts') or {}

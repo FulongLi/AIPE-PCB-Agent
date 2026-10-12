@@ -15,13 +15,14 @@ paper_fill (hull of symbols, wires, labels and sheets over the drawable area of 
 Sheet-pin names count as text (they are drawn inside the sheet symbol) in text_overlaps.
 
 CLI: python -m automation.kicad_tools.schematic_metrics <kicad_dir> [--json out.json]
+     python -m automation.kicad_tools.schematic_metrics <kicad_dir> --compare <older kicad_dir> [--mapping m.json] --json c.json --markdown c.md
 """
 from __future__ import annotations
 
 import argparse
 import json
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from automation.kicad_tools.native_schematic import children, parse, pins, placed_pins
@@ -262,6 +263,7 @@ def measure_sheet(path: Path) -> dict:
         area = (width - left - right) * (height - top - bottom)
         fill = round((max(xs) - min(xs)) * (max(ys) - min(ys)) / area, 3) if xs and ys else 0.0
     return dict(file=Path(path).name, paper=paper_name, paper_fill=fill, symbols=symbols, power_symbols=power, wires=len(wires),
+                global_label_names=sorted(l['name'] for l in labels if l['kind'] == 'global_label'),
                 junctions=len(junctions), global_labels=sum(1 for l in labels if l['kind'] == 'global_label'),
                 global_labels_on_pin_stubs=stub_labels,
                 name_tags=sum(1 for l in labels if l['kind'] == 'global_label') - stub_labels,
@@ -307,18 +309,157 @@ def measure_project(kicad_dir: Path, root_name: str | None = None) -> dict:
         sheets.append(entry)
     totals = {k: round(sum(s[k] for s in sheets), 2) for k in SUM_KEYS}
     totals['wired_pin_share'] = round(totals['wired_pins'] / totals['connected_pins'], 4) if totals['connected_pins'] else None
+    # global labels whose name occurs once in the whole project: what KiCad's (default-ignored) single_global_label check reports
+    counts = Counter(name for s in sheets for name in s['global_label_names'])
+    totals['single_global_labels'] = sum(1 for n, c in counts.items() if c == 1)
     totals['sheets'] = len(sheets)
     totals['continuation_sheets'] = sum(1 for s in sheets if re.search(r'_\d+\.kicad_sch$', s['file']))
     totals['papers'] = sorted({s['paper'] for s in sheets if s['paper']})
     return dict(kicad_dir=str(kicad_dir), sheets=sheets, totals=totals)
 
 
+PAGE_KEYS = ('symbols', 'power_symbols', 'wires', 'wire_length_mm', 'junctions', 'global_labels', 'global_labels_on_pin_stubs',
+             'name_tags', 'hierarchical_labels', 'local_labels', 'no_connects', 'crossings', 'four_way_junctions', 'text_overlaps',
+             'off_grid_points', 'isolated_symbols', 'dangling_wire_ends', 'connected_pins', 'wired_pins', 'labelled_pins')
+PLANNER_KEYS = ('label_fallbacks', 'loop_tags', 'label_pairs')
+DEPENDENCY_NOTE = ('Every local net keeps at least one global name tag: KiCad names the net after it, which the netlist gates against '
+                   'the live model and the frozen V2 netlist (bare V2 net names) rely on; a local net gets a second tag only where the '
+                   'planner repeats the name at a far-away pin or replaces a long / looping wire by a tag pair.  single_global_labels '
+                   'counts the global labels whose name occurs exactly once in the project: each one is a warning of KiCad\'s '
+                   'single_global_label ERC check, which is ignored by default and is not part of the ERC gate (0 findings with '
+                   '--severity-all).  four_way_junctions counts points where four wires meet (one junction dot, two nets would be '
+                   'unreadable there): the planner itself only draws T-joins, the sheet router may land a fourth leg on an existing '
+                   'junction of the same net, so a non-zero count is a reading-ambiguity figure, not a connectivity error.')
+
+
+def page_key(file_name: str) -> str:
+    """Page key of a sheet file: continuation sheets '<page>_N.kicad_sch' fold into '<page>'."""
+    return re.sub(r'(_\d+)?\.kicad_sch$', '', file_name)
+
+
+def group_by_page(project: dict) -> dict:
+    """{page key: aggregated sheet metrics} of a measure_project() result; the root sheet is keyed 'root'."""
+    pages: dict = {}
+    for sheet in project['sheets']:
+        key = 'root' if sheet['root'] else page_key(sheet['file'])
+        entry = pages.setdefault(key, dict(files=[], papers=[], paper_fill=[], **{k: 0 for k in PAGE_KEYS}))
+        entry['files'].append(sheet['file'])
+        entry['papers'].append(sheet['paper'])
+        entry['paper_fill'].append(sheet['paper_fill'])
+        for k in PAGE_KEYS:
+            entry[k] = round(entry[k] + (sheet.get(k) or 0), 2)
+    for entry in pages.values():
+        entry['wired_pin_share'] = round(entry['wired_pins'] / entry['connected_pins'], 4) if entry['connected_pins'] else None
+        entry['sheets'] = len(entry['files'])
+    return pages
+
+
+def compare_projects(before_dir: Path, after_dir: Path, *, before_root: str | None = None, after_root: str | None = None,
+                     mapping: Path | None = None, labels=('V2', 'V2.1')) -> dict:
+    """Readability of two generations of one project side by side: totals, per page, planner counts, dependency note.
+
+    Both directories are measured with measure_project (one definition for every generator version); the per-page
+    view folds continuation sheets into their page.  `mapping` (the after generation's schematic_mapping JSON) adds
+    the planner's own counts per sheet (label fallbacks, loop tags, tag pairs, layout variant) and its name-tag total.
+    """
+    before = measure_project(before_dir, root_name=before_root)
+    after = measure_project(after_dir, root_name=after_root)
+    pages_before, pages_after = group_by_page(before), group_by_page(after)
+    keys = [k for k in pages_before if k != 'root'] + [k for k in pages_after if k not in pages_before and k != 'root']
+    pages = {}
+    for key in sorted(keys) + ['root']:
+        pages[key] = {labels[0]: pages_before.get(key), labels[1]: pages_after.get(key)}
+    totals = {labels[0]: before['totals'], labels[1]: after['totals']}
+    delta = {}
+    for k, v in after['totals'].items():
+        b = before['totals'].get(k)
+        if isinstance(v, (int, float)) and isinstance(b, (int, float)) and not isinstance(v, bool):
+            delta[k] = round(v - b, 4)
+    planner = None
+    if mapping and Path(mapping).is_file():
+        data = json.loads(Path(mapping).read_text(encoding='utf-8'))
+        pres = data.get('presentation', {})
+        planner = dict(name_tags=pres.get('name_tags'), exceptions=pres.get('exceptions', []), root=pres.get('root'),
+                       sheets={s['key']: {**{k: s['counts'].get(k) for k in PLANNER_KEYS}, 'layout_variant': s['counts'].get('layout_variant'),
+                                          'paper': s.get('paper'), 'paper_fill': s['counts'].get('paper_fill')} for s in pres.get('sheets', [])})
+        planner['totals'] = {k: sum((s[k] or 0) for s in planner['sheets'].values()) for k in PLANNER_KEYS}
+    return dict(labels=list(labels), before=dict(kicad_dir=str(before_dir)), after=dict(kicad_dir=str(after_dir)),
+                totals=totals, delta=delta, pages=pages, planner=planner, dependency_note=DEPENDENCY_NOTE,
+                definitions=__doc__.split('\n\n')[1].strip())
+
+
+def _fmt(value) -> str:
+    if value is None:
+        return '-'
+    if isinstance(value, float):
+        return f'{value:.3f}' if abs(value) < 10 else f'{value:.1f}'
+    if isinstance(value, list):
+        return ' / '.join(str(v) for v in value)
+    return str(value)
+
+
+def comparison_markdown(result: dict, title: str) -> str:
+    """Markdown twin of compare_projects(): totals table, per-page table, planner counts, dependency note."""
+    a, b = result['labels']
+    lines = [f'# {title}', '', f'`{a}`: {result["before"]["kicad_dir"]}  ', f'`{b}`: {result["after"]["kicad_dir"]}', '',
+             '## Totals (all sheets, root included)', '', f'| metric | {a} | {b} | delta |', '|---|---:|---:|---:|']
+    order = ['sheets', 'continuation_sheets', 'papers', 'symbols', 'power_symbols', 'wires', 'wire_length_mm', 'junctions', 'four_way_junctions',
+             'global_labels', 'global_labels_on_pin_stubs', 'name_tags', 'hierarchical_labels', 'local_labels', 'sheet_pins', 'no_connects',
+             'crossings', 'text_overlaps', 'off_grid_points', 'isolated_symbols', 'dangling_wire_ends', 'connected_pins', 'wired_pins',
+             'labelled_pins', 'wired_pin_share', 'single_global_labels']
+    for key in order:
+        tb, ta = result['totals'][a].get(key), result['totals'][b].get(key)
+        lines.append(f'| {key} | {_fmt(tb)} | {_fmt(ta)} | {_fmt(result["delta"].get(key))} |')
+    lines += ['', '## Per page', '', f'| page | {a} sheets / paper / fill | {b} paper / fill | wires {a} -> {b} | stub labels | hier labels | junctions | '
+              f'power symbols | crossings | text overlaps | isolated | wired pin share |', '|---|---|---|---|---|---|---|---|---|---|---|---|']
+    planner = result.get('planner') or {}
+    for key, entry in result['pages'].items():
+        pb, pa = entry.get(a), entry.get(b)
+
+        def pair(k):
+            return f'{_fmt(pb[k]) if pb else "-"} -> {_fmt(pa[k]) if pa else "-"}'
+        before_cell = f'{pb["sheets"]} / {_fmt(pb["papers"])} / {_fmt(pb["paper_fill"])}' if pb else '-'
+        after_cell = f'{_fmt(pa["papers"])} / {_fmt(pa["paper_fill"])}' if pa else '-'
+        lines.append(f'| {key} | {before_cell} | {after_cell} | {pair("wires")} | {pair("global_labels_on_pin_stubs")} | '
+                     f'{pair("hierarchical_labels")} | {pair("junctions")} | {pair("power_symbols")} | {pair("crossings")} | '
+                     f'{pair("text_overlaps")} | {pair("isolated_symbols")} | {pair("wired_pin_share")} |')
+    if planner:
+        lines += ['', f'## Planner counts ({b})', '', '| sheet | paper | fill | label fallbacks | loop tags | tag pairs | layout variant |',
+                  '|---|---|---:|---:|---:|---:|---|']
+        for key, s in planner['sheets'].items():
+            lines.append(f'| {key} | {s["paper"]} | {_fmt(s["paper_fill"])} | {_fmt(s["label_fallbacks"])} | {_fmt(s["loop_tags"])} | '
+                         f'{_fmt(s["label_pairs"])} | {s["layout_variant"]} |')
+        lines.append(f'| total | | | {planner["totals"]["label_fallbacks"]} | {planner["totals"]["loop_tags"]} | {planner["totals"]["label_pairs"]} | |')
+        lines += ['', f'Name tags (single global labels naming local nets): {planner.get("name_tags")}; root sheet: {planner.get("root")}.']
+        if planner.get('exceptions'):
+            lines += ['', 'Label fallbacks (no wire path found, drawn as a tag pair):']
+            lines += [f'- {e["sheet"]}: {e["net"]} at {e["at"]}' for e in planner['exceptions']]
+    lines += ['', '## single_global_label / four_way_junction dependency', '', result['dependency_note'], '', '## Definitions', '',
+              result['definitions'], '']
+    return '\n'.join(lines)
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     parser.add_argument('kicad_dir', type=Path)
-    parser.add_argument('--json', type=Path, help='write the metrics here')
+    parser.add_argument('--json', type=Path, help='write the metrics (or the comparison with --compare) here')
+    parser.add_argument('--compare', type=Path, help='a previous generation of the same project to compare against (V2 release)')
+    parser.add_argument('--mapping', type=Path, help='schematic_mapping JSON of kicad_dir (planner counts for the comparison)')
+    parser.add_argument('--markdown', type=Path, help='with --compare: write the Markdown twin here')
+    parser.add_argument('--title', default='Schematic readability', help='Markdown title')
+    parser.add_argument('--root-name', help='root sheet basename (default: the sheet that carries sheet symbols)')
     args = parser.parse_args(argv)
-    result = measure_project(args.kicad_dir)
+    if args.compare:
+        result = compare_projects(args.compare, args.kicad_dir, before_root=args.root_name, after_root=args.root_name, mapping=args.mapping)
+        if args.json:
+            args.json.parent.mkdir(parents=True, exist_ok=True)
+            args.json.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+        if args.markdown:
+            args.markdown.parent.mkdir(parents=True, exist_ok=True)
+            args.markdown.write_text(comparison_markdown(result, args.title), encoding='utf-8')
+        print(json.dumps(dict(totals=result['totals'], delta=result['delta']), indent=2))
+        return 0
+    result = measure_project(args.kicad_dir, root_name=args.root_name)
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')

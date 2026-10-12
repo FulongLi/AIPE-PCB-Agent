@@ -1,0 +1,111 @@
+{
+  "board": "control",
+  "kicad_dir": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board",
+  "passed": true,
+  "gates": {
+    "dru_identical": {
+      "passed": true,
+      "identical_to_legacy_generation": true,
+      "identical_to_v2_release": false,
+      "bytes_new": 8437,
+      "bytes_v2": 7924
+    },
+    "net_settings_equal": {
+      "passed": true,
+      "equal_to_legacy_generation": true,
+      "equal_to_v2_release": true,
+      "classes": 11,
+      "classes_v2": 11
+    },
+    "erc_zero": {
+      "passed": true,
+      "findings": 0,
+      "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\control\\erc\\20261012T075122Z-erc-af20359a\\run.json",
+      "finding_types": {},
+      "erc_nonfootprint_findings": 0,
+      "details": []
+    },
+    "netlist_vs_model": {
+      "passed": true,
+      "export_exit": 0,
+      "refs": 207,
+      "duplicates": [],
+      "exact": true,
+      "pads": 667,
+      "mismatch_count": 0,
+      "mismatches": [],
+      "net_names_equal": true,
+      "extra_names": [],
+      "missing_names": []
+    },
+    "netlist_vs_v2": {
+      "passed": true,
+      "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\manufacturing\\control_board\\netlist.xml",
+      "exact": true,
+      "pads": 667,
+      "mismatch_count": 0,
+      "mismatches": [],
+      "net_names_equal": true,
+      "extra_names": [],
+      "missing_names": []
+    },
+    "paper_fill": {
+      "passed": true,
+      "min_fill": 0.25,
+      "base_paper": "A3",
+      "escalated": [
+        {
+          "sheet": "02_supplies.kicad_sch",
+          "paper": "A2",
+          "fill": 0.65
+        },
+        {
+          "sheet": "06_pwm_fault_logic.kicad_sch",
+          "paper": "A2",
+          "fill": 0.68
+        }
+      ],
+      "sheets": {
+        "01_aux_12v.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.345
+        },
+        "02_supplies.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.65
+        },
+        "03_dsp.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.305
+        },
+        "04_dsp_decoupling.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.329
+        },
+        "05_clock_debug.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.662
+        },
+        "06_pwm_fault_logic.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.68
+        },
+        "07_adc_frontend.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.517
+        },
+        "08_interconnect.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.581
+        },
+        "AIPE_SiC_Buck_Control.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.628
+        }
+      },
+      "text_overlaps": 3,
+      "name_tags": 200,
+      "note": "name_tags are single global labels: KiCad's default-ignored single_global_label check would report one warning per tag"
+    }
+  }
+}

@@ -496,12 +496,14 @@ def gate_channel(c: Circuit, x: str, other: str, drain_net: str, page: str, *, q
     node_a, node_oc, gk = f"DESAT_{x}_A", f"DESAT_{x}_OC", f"{island}_GK"
     outh, outl, clmp = f"{island}_OUTH", f"{island}_OUTL", f"{island}_CLMP"
     pwm_f, pwm_other_f = f"PWM_{x}_F", f"PWM_{other}_F"
-    with c.block(f"pwm_input_{x.lower()}", f"PWM_{x} receiving network"):
+    # Presentation block (V2.1): the driver's own satellites - PWM receiving network, gate network, decoupling and the
+    # RDY / FLT pull-ups - are one functional group so they hang off the driver's pin lanes instead of forming tiny
+    # groups that the sheet router has to join with long wires.  The DESAT network and the bias module stay separate.
+    with c.block(f"driver_{x.lower()}", f"{island} isolated gate driver (UCC21710-Q1): PWM input, gate network, status pull-ups, decoupling"):
         # Mezzanine receiving network of the own PWM (baseline gate_driver.inputs: 100 ohm + 100 pF + 10 k pull-down).
         c.resistor("100", f"PWM_{x}", pwm_f, page, note=f"PWM_{x} series element of the 100 ohm / 100 pF / 10 k receiving network (KR-GD-008 adapted)")
         capx(c, "100p/50V/0603", pwm_f, "GND_CTRL", page, note="100 pF at the driver input pin (tau 10 ns)")
         c.resistor("10k", pwm_f, "GND_CTRL", page, note="10 k pull-down: driver input defined low when the mezzanine is open")
-    with c.block(f"driver_{x.lower()}", f"{island} isolated gate driver (UCC21710-Q1), gate network, decoupling"):
         nets = {1: ks, 2: node_oc, 3: ks, 4: outh, 5: vdd, 6: outl, 7: clmp, 8: vee, 9: "GND_CTRL", 10: pwm_f, 11: pwm_other_f,
                 12: f"RDY_{x}", 13: f"FLT_{x}_N", 14: "RESET_N_F", 15: "3V3", 16: None}
         c.add("U", "UCC21710QDWRQ1", "AIPE:" + CUSTOM_NAMES["ucc21710"], nets, page=page, kind="IC", mpn="UCC21710QDWRQ1", maker=TI,
@@ -535,7 +537,8 @@ def gate_channel(c: Circuit, x: str, other: str, drain_net: str, page: str, *, q
         diode(c, "BAT42W Schottky", "Diode_SMD:D_SOD-123", node_oc, ks, page, mpn="BAT42W-V", maker="Vishay",
               source="https://www.vishay.com/docs/85660/bat42w.pdf", dnp=True,
               note="DNP reference-derived clamp COM -> OC (anode at COM); the -0.67 V DC case does not occur dynamically; unverified part")
-    with c.block(f"status_{x.lower()}", f"RDY_{x} / FLT_{x}_N status pull-ups"):
+    with c.block(f"driver_{x.lower()}"):
+        # Same add order as V2 (reference numbering and netlist identity); presentation group = the driver block above.
         c.resistor("4.7k", "3V3", f"RDY_{x}", page, note="RDY open-drain pull-up (research record gate_driver.per_channel_bom R_PU)")
         c.resistor("4.7k", "3V3", f"FLT_{x}_N", page, note="FLT open-drain pull-up (latched fault, active low)")
     bias_module(c, x, page, vdd=vdd, vee=vee, com=ks, r_top_vdd="107k", r_top_com="9.76k", pg_net=f"PG_BIAS_{x}_N", ref=bias_ref, island=island,
@@ -709,20 +712,22 @@ def selv_strip(c: Circuit):
 
 def mechanical(c: Circuit):
     page = "06_mechanical"
-    c.add("HS", "LAM 5 D K 100 12", aipe("heatsink"), {}, page=page, kind="HS", mpn="LAM 5 D K 100 12", maker="Fischer Elektronik",
-          source="https://www.fischerelektronik.de/", definitions={},
-          note="Fan heatsink envelope 100.5 x 100 x 50 mm, 0.30 K/W distributor figure (unverified), PE-bonded; both TO-247-4 clipped to one face at 28 mm "
-          "pitch; corner holes are placeholders; reserve 175 x 110 mm incl. air corridors")
-    for i in range(6):
-        c.add("H", "M4 standoff", "MountingHole:MountingHole_4.3mm_M4", {}, page=page, kind="H", definitions={},
-              note=f"Power-board mounting hole {i + 1}/6, M4 x 15 mm standoff on the PE-bonded baseplate")
-    for i in range(4):
-        c.add("H", "M3 standoff", "MountingHole:MountingHole_3.2mm_M3", {}, page=page, kind="H", definitions={},
-              note=f"Control-board standoff hole {i + 1}/4 (stack ~11 mm) on the SELV strip")
-    for net in ("3V3", "GND_CTRL", "GND_CTRL", "PWM_H_F", "PWM_L_F", "FAULT_N", "ISENSE", "VIN_SENSE", "VOUT_SENSE"):
-        testpoint(c, net, page)
-    for net in ("SPARE_D1", "SPARE_D2"):
-        testpoint(c, net, page, note="A-P9: spare mezzanine line terminated on a test pad")
+    with c.block("mounting", "Heatsink envelope and mounting holes"):
+        c.add("HS", "LAM 5 D K 100 12", aipe("heatsink"), {}, page=page, kind="HS", mpn="LAM 5 D K 100 12", maker="Fischer Elektronik",
+              source="https://www.fischerelektronik.de/", definitions={},
+              note="Fan heatsink envelope 100.5 x 100 x 50 mm, 0.30 K/W distributor figure (unverified), PE-bonded; both TO-247-4 clipped to one face at 28 mm "
+              "pitch; corner holes are placeholders; reserve 175 x 110 mm incl. air corridors")
+        for i in range(6):
+            c.add("H", "M4 standoff", "MountingHole:MountingHole_4.3mm_M4", {}, page=page, kind="H", definitions={},
+                  note=f"Power-board mounting hole {i + 1}/6, M4 x 15 mm standoff on the PE-bonded baseplate")
+        for i in range(4):
+            c.add("H", "M3 standoff", "MountingHole:MountingHole_3.2mm_M3", {}, page=page, kind="H", definitions={},
+                  note=f"Control-board standoff hole {i + 1}/4 (stack ~11 mm) on the SELV strip")
+    with c.block("test_points", "Bare-PCB test pads (SELV signals)"):
+        for net in ("3V3", "GND_CTRL", "GND_CTRL", "PWM_H_F", "PWM_L_F", "FAULT_N", "ISENSE", "VIN_SENSE", "VOUT_SENSE"):
+            testpoint(c, net, page)
+        for net in ("SPARE_D1", "SPARE_D2"):
+            testpoint(c, net, page, note="A-P9: spare mezzanine line terminated on a test pad")
 
 
 def build() -> Circuit:
