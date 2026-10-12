@@ -1,0 +1,159 @@
+{
+  "lens": "SOURCE FACT-CHECK",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "Selected heatsink Fischer LAM 5 K 100 12: 0.68 K/W, 100 x 50 x 50 mm, integrated 12 V fan, 'K' = clip mounting",
+      "status": "unverified",
+      "evidence": "fischerelektronik.de datasheet pages return HTTP 403 (agent's 'blocked' statement confirmed). RS 774-2827 (search listing; page itself 403) = 'LAM 5 100 12, Universal Rectangular Alu with fan, 0.68K/W, 100 x 50 x 50mm, PCB Mount' - no 'K'. The exact string 'LAM 5 K 100 12' was not found at RS, Farnell, DigiKey or Mouser. Family members found: LAM 5 K 100 24 (Farnell 4709031: 0.27 K/W, 20 m3/h, 24 V fan), LAM 5 K 50 5 (Farnell 4709042: 10.1 m3/h), LAM 5 D K 100 12 (novapart: 0.3 K/W, 14.3 m3/h, 27 dBA, clip-on), RS 7742821 '0.4 degC/W, 50 x 100 x 50 with fan' (part number not retrievable, 403).",
+      "correction": "Keep 0.68 K/W as the conservative family value but mark airflow, fan current, mass and natural-convection R_th as unknown for the selected unit. The 0.27 K/W (24 V, 20 m3/h) vs 0.68 K/W (12 V) spread implies the 12 V fan moves far less than 14.3-20 m3/h, so the exhaust/velocity calculation (2.6-3.7 m/s, '>= 2 m/s seed satisfied') is unsupported for this unit."
+    },
+    {
+      "item": "Upgrade LAM 5 D K 100 12 (0.30 K/W, 100 x 100.5 x 50 mm, 14.3 m3/h); rejected LAM 5 K 100 5 (1.1 K/W); reference LAM 5 D K 125 24 (0.43 forced / 1.73 natural K/W)",
+      "status": "unverified",
+      "evidence": "novapart listing reproduces 0.3 K/W / 14.3 m3/h / clip-on for LAM 5 D K 100 12 (distributor-level only). The LAM 5 K 100 5 and LAM 5 D K 125 24 figures were not re-found in this check (DigiKey pages not fetched); Fischer source blocked.",
+      "correction": "Leave as distributor-level; the fan-fail conclusion (T_J > 175 degC at stall) is insensitive to the exact natural R_th and stands."
+    },
+    {
+      "item": "Ohmite CR201-50VE (TIDA-010054 heatsink) kept as alternative 'only if measured R_th <= 1.0 K/W'; 'no forced-air data'; 25-week lead",
+      "status": "contradicted",
+      "evidence": "Ohmite CR-series datasheet (sink-cr.pdf, rev 2/18-1, text extracted): 'CR201-50 47,409/73.5 [mm2/in2] 3.6/103 [oz/g] 50 [mm] 3.3 [degC/W]', '*Natural convection thermal resistance based on 70 degC Temp rise above ambient', 'V = degreased', cam clip 'CLA-TO-21E ... ordered separately'. The same sheet carries a 'Thermal Performance' chart: Thermal Resistance (degC/W) 0.25-2.75 vs Air Velocity (ft/min) 0-1200 for CR101/201/301/401, 'Two TO-247 heat sources uniformly spaced on the heat Sink, L = 1.97 in [50 mm] and total of 10 W'. The sheet also states: 'This product has been DISCONTINUED since August 2024'.",
+      "correction": "Drop CR201-50VE and CLA-TO-21E from the candidate/alternative list (discontinued). Correct the statement that the datasheet has no forced-air data: it has a forced-convection curve, so TI's 0.5 degC/W is plausibly a chart reading at an unstated airflow rather than an unsupported value; soften the proposed SKILL-006 caveat accordingly."
+    },
+    {
+      "item": "Bergquist Sil-Pad TSP 3500 (formerly Sil-Pad 2000): 0.254-0.508 mm, 3.5 W/mK, impedance 0.57/0.43/0.33/0.25/0.20 degC-in2/W at 10/25/50/100/200 psi, TO-220 2.02 degC/W at 50 psi, 4000 Vac, Dk 4.0, 1e11 ohm-m, -60 to 200 degC, fiberglass, UL 94 V-0, TDS Nov 2018",
+      "status": "verified",
+      "evidence": "https://datasheets.tdx.henkel.com/BERGQUIST-SIL-PAD-TSP-3500-en_GL.pdf (text extracted): 'Known as BERGQUIST SIL-PAD 2000', 'November -2018', 'Reinforcement Carrier Fiberglass', 'Total Thickness, ASTM D374 0.254 to 0.508mm', 'Operating Temperature Range -60 to 200 C', 'Thermal Conductivity, ASTM D5470 3.5', 'Dielectric Breakdown Voltage, ASTM D149, Vac 4,000', 'Dielectric Constant @ 1,000 Hz 4.0', 'Volume Resistivity 1x10^11', 'UL 94 V-0'; Thermal Impedance @0.01in: 10 psi 0.57 / 25 psi 0.43 / 50 psi 0.33 / 100 psi 0.25 / 200 psi 0.2; TO-220: 2.61/2.32/2.02/1.65/1.37. Note: 'values are provided for reference only ... includes interfacial thermal resistance'."
+    },
+    {
+      "item": "Bergquist Sil-Pad TSP A2000 (formerly A1500): 0.254 mm, 2.0 W/mK, 0.59/0.50/0.42/0.34/0.31 degC-in2/W, 6000 Vac, Dk 7.0, -60 to 180 degC",
+      "status": "verified",
+      "evidence": "https://datasheets.tdx.henkel.com/BERGQUIST-SIL-PAD-TSP-A2000-en_GL.pdf (text extracted, Nov 2018): 'Known as BERGQUIST SIL-PAD A1500', 'Total Thickness 0.254mm', '-60 to 180 C', 'Thermal Conductivity 2.0', 'Dielectric Breakdown Voltage, ASTM D149, Vac 6,000', 'Dielectric Constant 7.0', impedance 0.59/0.5/0.42/0.34/0.31; TO-220 3.03/2.62/2.21/1.92/1.78; fiberglass carrier; UL 94 V-0."
+    },
+    {
+      "item": "Wakefield-Vette ulTIMiFlux CD-02-05-247 / -247-N / -025 / 5x5 sheet: 0.003 in +/-10 % polyimide carrier, 0.107 degC-in2/W at 100 psi, 9200 V isolation, 60 degC phase change, UL 94 V-0, die-cut sizes",
+      "status": "verified",
+      "evidence": "Wakefield datasheet (text extracted, undated): '60oC/140oF PHASE-CHANGE TEMPERATURE', 'polyimide film ... carrier', 'CD-02-05-247 Phase Change TO-247 Pad with mounting hole 0.95 x 0.75 in', 'CD-02-05-247-N ... NO HOLE', 'CD-02-05-025 1 x 1 Square Pad', 'CD-02-05-127 5 x 5 Square Pad', 'Overall Thickness 0.003 +/- 10%', '0.107 oC-in2/Watt (@100 PSI)', '9200V', 'UL94V-0'. Test method for 9200 V not stated (agent's caveat correct)."
+    },
+    {
+      "item": "Vishay NTCALUG01A103F: 10 kohm +/-1 %, B25/85 3984 K +/-0.5 %, -40 to +150 degC, 23 mW/K, tau 7.5 s, 1500 Vac terminals-to-lug, 100 Mohm at 500 Vdc, M3 ring lug, AWG24 PTFE 38.1 mm, AEC-Q200 grade 1, datasheet 29092 rev 17-Nov-17",
+      "status": "contradicted",
+      "evidence": "https://www.vishay.com/docs/29092/ntcalug01a.pdf is now 'Revision: 14-Jan-2026, Document Number: 29092'. Ordering table: 'NTCALUG01A103F / NTCALUG01A103FA: 10 000 ohm, 1 %, 3984 K, 0.5 %, 38.1 +/- 3.8 mm, PTFE AWG#24' (80 mm variant also listed); 'NTCALUG01A103FL' is the 3435 K version. Specs: 'Operating temperature range (without connector) -55 to +150 degC', 'Response time (for info) 4 s', 'Thermal time constant 5 s', 'Dissipation factor 13 mW/K', 'Maximum power dissipation at 55 degC 400 mW', 'Min. dielectric withstanding voltage between terminals and lug 1500 VAC', 'Min. insulation resistance ... at 500 VDC 100 Mohm', 'AEC-Q200 qualified (grade 1)', 'By means of M3 (stud #3, #4) or M3,5 (stud #5, #6) screw', weight 1.5-2.3 g.",
+      "correction": "Part number, R25, B, tolerance, 1500 Vac, 100 Mohm, lug, leads and AEC-Q200 confirmed. Update to the current revision: -55 to +150 degC, 13 mW/K (self-heating 0.74 mW -> 0.06 K, still negligible), thermal time constant 5 s, response time 4 s, 400 mW max. Keep '103F' (3984 K), not '103FL' (3435 K)."
+    },
+    {
+      "item": "Wolfspeed C4MS025120K thermal inputs: R_thJC 0.41 K/W, R_DS(on) 48.5 mohm typ / 57.2 mohm max at 150 degC, TO-247-4, T_J max 175 degC",
+      "status": "verified",
+      "evidence": "https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf 'Rev. 2, December 2025' (text extracted): 'RthetaJC Thermal Resistance from Junction to Case 0.41 degC/W' (Typ. column only, no max); 'RDS(on) 25 typ / 33 max mohm, VGS = 18 V, ID = 39.2 A'; '47 [typ] VGS = 18 V, ID = 39.2 A, TJ = 175 C'; '28 [typ] VGS = 15 V'; 'RDS(on) Tempco 1.88' (175 C / 25 C); package 'TO-247-4', outline 'TO-247-4L' (PRD 05966); TJ 175 degC. mosfet.json derives 48.5 mohm = 28 x (1 + 0.88 x 125/150) and 57.2 as a scaled estimate - consistent, but 57.2 is not a datasheet maximum.",
+      "correction": "State that R_thJC 0.41 K/W is a typical value with no datasheet maximum and that the 150 degC R_DS(on) values are interpolations from 25/175 degC data."
+    },
+    {
+      "item": "TO-247 pad contact area 16 x 21 mm = 3.37 cm2 (0.523 in2) used for R_pad (0.82 / 0.63 K/W) and C_pad (47 pF)",
+      "status": "contradicted",
+      "evidence": "C4MS025120K outline TO-247-4L: body E 15.75-16.13 mm, overall D 23.30-23.63 mm (includes tab region), back-view dimensions D1 16.25-17.65 mm and E1 13.1-14.15 mm (the exposed-metal dimensions per the back-view symbol list), hole P 3.51-3.65 mm, hole-region thickness A1 2.23-2.54 mm. Exposed metal is therefore about 17.0 x 13.6 mm = 2.3 cm2 = 0.36 in2, 31 % less than assumed (the agent called the difference 'slightly').",
+      "correction": "If D1 x E1 is confirmed as the exposed metal: R_pad TSP 3500 = 0.43/0.36 = 1.20 K/W at 25 psi (clip) and 0.92 K/W at 50 psi (screw); T_J,HS = 88.2 + 28.7 x (1.20 + 0.41) = 134.4 degC typ and 92.8 + 31.7 x 1.61 = 143.8 degC max-R on the 0.68 K/W sink; P_max(150) = 33.7 W (margin 1.17, not 1.36); P_max(125) = 25.3 W < 28.7 W, so the 125 degC preference fails even with typical parts. This crosses the agent's own '> 1 K/W -> switch to screw mounting or the D K sink' trigger. Clip pressure for 40-60 N becomes 25-38 psi; C_pad falls to about 32 pF."
+    },
+    {
+      "item": "Boyd 7721-7PPSG #4 shoulder washer as screw-mount insulation: shoulder dia 3.43 mm, bore 2.95 mm, flange 5.46 mm, thickness 1.83 mm, PPS 40 % GF 260 degC, torque 0.56-0.68 N m",
+      "status": "contradicted",
+      "evidence": "DigiKey 1625304 / Farnell 1703100: ID 0.116 in (2.95 mm), OD 0.215 in (5.46 mm), shoulder dia 0.135 in (3.43 mm), overall thickness 0.072 in (1.83 mm), 'Length below head 0.032 in (0.81 mm)', PPS 40 % glass filled, 260 degC. Torque figure not found. Wolfspeed TO-247-4L hole-region thickness A1 = 2.23-2.54 mm, hole P = 3.51-3.65 mm.",
+      "correction": "The 0.81 mm shoulder covers only about one third of the 2.2-2.5 mm hole depth; below it the bare #4-40/M2.5 screw shank faces the drain-potential hole wall across about 0.4-0.55 mm of air, which cannot meet basic-insulation clearance at 400-480 V. Replace with a TO-247 insulating bushing whose shoulder length is >= 2.5 mm (rated for the working voltage) or delete the screw alternative; the stated torque is unverified."
+    },
+    {
+      "item": "Sunon MF60251V1-1000U-A99: 60 x 60 x 25 mm, 12 V (4.5-13.8 V), 23.5 CFM, 52.3 Pa, 0.9 W",
+      "status": "verified",
+      "evidence": "DigiKey 6198741 (search listing): 23.5 CFM (0.658 m3/min), 0.210 in H2O (52.3 Pa), 900 mW, 0.075 A, 4.5-13.8 VDC, 4500 rpm, 27 dBA, vapo bearing, 70,000 h at 40 degC; RS 2884912: '0.90/1.05 W, 87 mA max'. Distributor-level only; relevant only to the (discontinued) CR-series alternative."
+    },
+    {
+      "item": "Fischer AOS 247 Al2O3 wafer: 23 x 20 x 1 mm, 0.30 K/W (test area unstated), 25 vs 9 W/mK inconsistency, 10 kV/mm; AOS 218/247 25 x 21 x 3 mm",
+      "status": "unverified",
+      "evidence": "Fischer page returns HTTP 403. Distributor listings: TO-247 AOS wafer 23 x 20 x 1 mm; 'AOS 218 247' 25 x 21 x 3 mm with 4 mm hole; Axuas: 25 W/mK, 0.3 K/W 'measured at 1 in2'; 10 kV/mm. Consistent with the agent's figures; manufacturer confirmation outstanding."
+    },
+    {
+      "item": "DuPont Kapton MT+ (listed option, ~200 pF estimate)",
+      "status": "unverified",
+      "evidence": "Not fetched by the agent (declared) nor by this check; the capacitance figure is an estimate from assumed 50 um / Dk 3.5."
+    },
+    {
+      "item": "Creepage requirement 5.0 mm sink-to-tab/HV copper (500 V, PD2, material group IIIa, IEC 60664-1 Table F.5 'from memory')",
+      "status": "unverified",
+      "evidence": "Standard text not accessible. Secondary sources: Analog Devices article reproduces IEC 60950 Table 2N (derived from IEC 60664-1): 400 V basic PD2 I/II/III = 2.0/2.8/4.0 mm, PD3 = 5.0/5.6/6.3 mm, reinforced 400 V PD2 III = 8.0 mm (no 500 V row shown); this row pattern matches IEC 60664-1 Table F.4/F.5, whose next row (500 V, PD2, III) is 5.0 mm. A conflicting reproduction (tamhash.co.il catalogue table, 'Values taken from IEC 60664-1, but maintaining a minimum value of 1.5 mm', IEC 60947-1/61439-1 style) gives PD2 IIIa/IIIb: 400 V 5.0 mm, 500 V 6.3 mm, 630 V 8.0 mm - one row higher because that family assigns the next-higher voltage row.",
+      "correction": "5.0 mm is plausible as the IEC 60664-1 basic-insulation creepage at 500 V/PD2/IIIa but could not be confirmed from the standard; if the isolation review applies an IEC 60947-1/61439-1-derived table the value is 6.3 mm at Ui 500 V, and reinforced insulation would require 10 mm. The 5.5 mm pad overhang then no longer suffices; make the pad size conditional on the review."
+    },
+    {
+      "item": "'4 kVac breakdown = 1.6x the 2.5 kV requirement' for the insulating pad",
+      "status": "unverified",
+      "evidence": "No 2.5 kV figure exists in the design basis, in KR-TH-002 or in the cited references; the agent itself states the type-test voltage is 'to be defined'.",
+      "correction": "Remove the '2.5 kV requirement' wording or cite its source; let the isolation agent define the pad type-test voltage."
+    },
+    {
+      "item": "REF-TI-TIDA-010054 Decision 9 reading and non-copying of TI instance values (40 degC, 0.5 degC/W sink, 0.1 degC/W pad, 50/69 W)",
+      "status": "verified",
+      "evidence": "knowledge/references/ti/tida-010054/analysis.md Decision 9: 'four Ohmite CR201-50VE heat sinks, two FETs per sink, Wakefield-Vette CD-02-05-247 insulating phase-change pads, two 12 V fans'; 'P_max = (T_J,max - T_A)/(2R_th,HS + R_th,iso + R_th,JC) gives 50 W and 69 W - recomputed EC-019, EC-020. TI does not explain the factor 2'. SKILL-006 lines 25, 42-43 quote the TI instance values. The agent's budget uses 50 degC, 0.68 K/W, 0.80 K/W, 28.7/31.7 W - none copied; its factor-2 reading matches the skill's."
+    },
+    {
+      "item": "KR-TH-001 (hard constraint, 'effective share of the heat-sink resistance'), KR-TH-002 (rated insulating interface; human review of voltage rating, package-edge creepage, thermal resistance)",
+      "status": "verified",
+      "evidence": "Records read via automation.knowledge.query: KR-TH-001 applicability 'Heat-sinked power semiconductors', limit 'T_J,max of the selected device'; KR-TH-002 applicability 'TO-247 class packages on common heat sinks', verification 'Check interface voltage rating, creepage at the package edge and thermal resistance'. The agent applied both directly and surfaced the human-review items; the '2*R_th,HS' form is TI Eq. 32 (EC-019/020) and is equivalent to the rule's 'effective share' for two near-equal devices."
+    },
+    {
+      "item": "KR-TH-003 and CB-PR-002 reading: NTC = cooling supervision, mapping for review, 'isolate NTC feedback'",
+      "status": "verified",
+      "evidence": "KR-TH-003 statement: 'Treat module/board NTC readings as substrate or board temperature for cooling supervision; do not use them as junction-temperature protection without a validated thermal model, and isolate NTC feedback'; verification 'calibrate the chain with a potentiometer'. CB-PR-002: UCC21710 AIN biased 200 uA, APWM 10-88 % at 400 kHz, 'Calibrate with a potentiometer in place of the NTC'. gate_driver.json already selects UCC21710QDWRQ1 x2 with 'the LS channel carries the heat-sink NTC on AIN/APWM'.",
+      "correction": "Two deviations to record: (a) the 'direct ADC if control ground is PE-bonded' option bypasses the rule's 'isolate NTC feedback' and must be logged as a deviation if kept; (b) the 2.2 kohm / 3.00 V divider readout (15.5 mV/K, 21 LSB/K) conflicts with the gate-driver agent's AIN/APWM route (V_AIN = 200 uA x R_NTC: 2.0 V at 25 degC, 0.18 V at 90, 0.14 V at 100, 0.10 V at 110 degC) - thresholds must be re-expressed and the AIN input range checked against a 10 kohm NTC. Calibration per CB-PR-002 uses a potentiometer, not a fixed resistor."
+    },
+    {
+      "item": "KR-PCB-006, KR-ISO-002, KR-ISO-004, KR-PCB-005, KR-PCB-004, KR-PR-001, SKILL-006, PE-PCB-001/003/005/006 citations",
+      "status": "verified",
+      "evidence": "All records exist and are read correctly: KR-PCB-006 wide pours on several layers sized by temperature-rise analysis (confidence low); KR-ISO-002 hard constraint with 'per applicable standard ... no universal value'; KR-ISO-004 slots when creepage limits; KR-PCB-005 drivers beside switches; KR-PCB-004 commutation loop first; KR-PR-001 correctly marked not-applicable; SKILL-006 principles 1-5, procedure 1-6 and known limitations ('Single reference thermal model at 40 degC', 'No transient or lifetime analysis') match the agent's text; PE-PCB rules present in docs/pcb-design-rules.md."
+    },
+    {
+      "item": "KR-CAP-003 cited for 'HV ceramics beside the legs rated >= 125 degC'",
+      "status": "contradicted",
+      "evidence": "KR-CAP-003 statement: 'Combine bulk film capacitance ... with high-voltage ceramic capacitors distributed immediately beside each half-bridge to keep the high-frequency commutation loop small' - a placement rule with no temperature-rating content.",
+      "correction": "Label the >= 125 degC requirement as an AIPE recommendation derived from the thermal zone, not as KR-CAP-003 content."
+    },
+    {
+      "item": "Agent's analytical results (loss re-check, T_J, P_max, required R_th, fan-fail, pad R and C, NTC divider, copper, inductor, exhaust, time constants)",
+      "status": "verified",
+      "evidence": "All recomputed independently (see recomputed list); arithmetic agrees to rounding. Only the input assumptions (pad contact area, airflow, NTC dissipation factor) change results."
+    }
+  ],
+  "recomputed": [
+    {"name": "Worst-corner RMS currents and conduction loss (D 0.4545, Io 27.5 A, dI 8.17 A, 48.5/57.2 mohm)", "agent_value": "I_rms HS 18.61 A, LS 20.38 A; P_cond 16.8/20.2 W typ, 19.8/23.8 W max-R; P_total 56.2/62.9 W", "verifier_value": "18.61 A, 20.39 A; 16.79/20.16 W; 19.80/23.77 W; 56.2/62.9 W", "agrees": true},
+    {"name": "T_sink and T_J with 0.68 K/W sink, 0.80 K/W pad, 0.41 K/W R_JC", "agent_value": "T_sink 88.2 / 92.8 degC; T_J,HS 122.9 / 131.1; T_J,LS 121.5; nominal 112.1; sw +30 % 129.7", "verifier_value": "88.2 / 92.8; 122.9 / 131.1; 121.5; 112.1; 129.7", "agrees": true, "note": "Arithmetic correct for the stated inputs; see pad-area item for the input correction."},
+    {"name": "P_max per device (KR-TH-001 form) and required R_th,HS", "agent_value": "38.9 W (150) / 29.2 W (125); R_th,HS <= 1.16 / 0.98 / 0.72 / 0.58 K/W", "verifier_value": "100/2.57 = 38.9 W; 75/2.57 = 29.2 W; (100-34.7)/56.2 = 1.16; (100-38.4)/62.9 = 0.98; 40.3/56.2 = 0.72; 36.6/62.9 = 0.58", "agrees": true},
+    {"name": "Pad resistance from impedance (TSP 3500 0.43 / 0.33 degC-in2/W) with the exposed-metal area", "agent_value": "0.82 / 0.63 K/W using 0.523 in2 (16 x 21 mm)", "verifier_value": "1.20 / 0.92 K/W using 0.36 in2 (D1 x E1 = 17.0 x 13.6 mm from the TO-247-4L outline)", "agrees": false, "note": "Agent's arithmetic is right for its area; the area is the full body outline, not the exposed tab."},
+    {"name": "T_J,HS with corrected pad area (0.68 K/W sink)", "agent_value": "122.9 degC typ / 131.1 degC max-R; P_max(125) 29.2 W 'just met'", "verifier_value": "134.4 degC typ / 143.8 degC max-R; P_max(150) 33.7 W (margin 1.17); P_max(125) 25.3 W < 28.7 W", "agrees": false, "note": "150 degC limit still met; 125 degC preference not met even with typical parts; crosses the agent's own 1 K/W trigger."},
+    {"name": "Clip clamp pressure 40-60 N", "agent_value": "17-26 psi (calculation) but '12-26 psi' in the markdown", "verifier_value": "17-26 psi on 3.37 cm2; 25-38 psi on 2.3 cm2", "agrees": true, "note": "Internal inconsistency 12 vs 17 psi in the agent's text."},
+    {"name": "Pad capacitance and displacement current (50 V/ns)", "agent_value": "47 pF / 2.3 A (TSP 3500), 82 pF / 4.1 A, 137 pF / 6.9 A, 29 pF / 1.5 A", "verifier_value": "47.0 pF / 2.35 A; 82 pF / 4.1 A; 137 pF / 6.9 A; 29 pF / 1.5 A (32 pF with 2.3 cm2)", "agrees": true},
+    {"name": "Fan-failure steady state and time to 100 degC", "agent_value": "247 degC (3.5 K/W) / 147 degC (1.73 K/W), T_J,HS 182 degC; 61-73 s", "verifier_value": "246.7 / 147.2 degC; 181.9 degC; tau 788-945 s, t = tau x 0.0774 = 61-73 s", "agrees": true},
+    {"name": "NTC divider (10 k, B 3984, 2.2 k to 3.00 V) and sensitivity", "agent_value": "2.459 / 1.854 / 0.979 / 0.881 / 0.710 / 0.570 / 0.410 V at 25/50/85/90/100/110/125 degC; 15.5 mV/K; self-heating 0.03 K", "verifier_value": "2.459 / 1.853 / 0.979 / 0.881 / 0.710 / 0.570 / 0.410 V; 15.5 mV/K; self-heating 0.74 mW / 13 mW/K = 0.06 K", "agrees": true, "note": "Divider arithmetic right, but this readout conflicts with the gate-driver agent's AIN/APWM route (0.2 mA bias -> 0.14 V at 100 degC)."},
+    {"name": "NTC-to-junction offset at full load", "agent_value": "+39 K typ / +43 K max-R", "verifier_value": "4 + 28.7 x 1.21 = 38.7 K; 4 + 31.7 x 1.21 = 42.4 K (with corrected pad: 50 / 55 K)", "agrees": true},
+    {"name": "IPC-2221 copper width for 25 / 27.5 A on 70 um", "agent_value": "12.7 / 8.4 / 6.5 mm (10/20/30 K) at 25 A; 14.5 mm at 27.5 A / 10 K; internal 2.6x", "verifier_value": "12.7 / 8.4 / 6.5 mm; 14.5 mm; factor 2^(1/0.725) = 2.60", "agrees": true},
+    {"name": "Copper loss 12 mm x 70 um at 100 degC", "agent_value": "0.265 mohm/cm, 0.17 W/cm, about 2.5 W per 15 cm", "verifier_value": "0.266 mohm/cm, 0.166 W/cm, 2.5 W", "agrees": true},
+    {"name": "Inductor surface rise and exhaust air rise", "agent_value": "60 mm: 35-58 K natural, 11-19 K forced; 80 mm: 20-33 / 6-10 K; exhaust +12.4 / +8.9 K, 2.6-3.7 m/s", "verifier_value": "34.7-57.9 / 11.1-18.5 K; 19.5-32.6 / 6.3-10.4 K; +12.4 / +8.9 K; 2.65-3.7 m/s", "agrees": true, "note": "Arithmetic agrees; the 14.3-20 m3/h airflow input is unsupported for the selected 12 V unit."},
+    {"name": "Heat-sink time constants", "agent_value": "150-180 s forced; 790-950 s natural", "verifier_value": "153-184 s; 788-945 s", "agrees": true},
+    {"name": "Boyd 7721-7PPSG shoulder length vs TO-247 hole depth", "agent_value": "not evaluated ('shoulder dia 3.43 mm fits the 3.6 mm hole')", "verifier_value": "shoulder 0.81 mm vs A1 = 2.23-2.54 mm hole-region thickness; residual air gap screw-to-hole wall 0.4-0.55 mm", "agrees": false}
+  ],
+  "knowledge_misuse": [
+    "No TI instance values were copied as design values: the agent used 50 degC ambient, 0.68 K/W sink, 0.80 K/W pad and its own losses instead of TI's 40 degC, 0.5 degC/W, 0.1 degC/W and 50/69 W (SKILL-006 lines 25, 42-43; EC-019/020).",
+    "KR-CAP-003 is cited as the source of a '>= 125 degC' ceramic rating; the record is a placement rule (bulk film + distributed HV ceramics beside the bridge) with no temperature content - attribution error, not a value copy.",
+    "KR-TH-003 says 'isolate NTC feedback'; the agent offers a 'direct ADC if control ground is PE-bonded' option without recording it as a deviation, and its divider-based readout ignores the CB-PR-002 AIN/APWM route that gate_driver.json has already adopted.",
+    "The proposed SKILL-006 caveat ('CR201-50VE 0.5 degC/W not supported by the datasheet') overstates the case: the Ohmite sheet contains a forced-convection chart (0.25-2.75 degC/W vs 0-1200 ft/min, two TO-247 sources, 10 W) from which 0.5 degC/W is a plausible reading; the genuine gaps are the unstated airflow, the 10 W test power and the series' discontinuation.",
+    "CB-PR-002 and KR-TH-003 prescribe calibration with a potentiometer; the agent wrote 'fixed resistor' (minor)."
+  ],
+  "required_changes": [
+    "Re-baseline the interface resistance on the exposed-metal area of the TO-247-4L outline (D1 x E1 = 16.25-17.65 x 13.1-14.15 mm, about 2.3 cm2 / 0.36 in2, to be confirmed on the drawing): R_pad TSP 3500 about 1.20 K/W (clip, 25 psi) / 0.92 K/W (screw, 50 psi); update T_J (about 134 degC typ / 144 degC max-R on 0.68 K/W), P_max (33.7 W at 150 degC, 25.3 W at 125 degC) and the statement that the 125 degC preference is met; since this crosses the agent's own 1 K/W trigger, decide now between screw mounting, the LAM 5 D K 100 12 sink or a lower-impedance interface.",
+    "Remove Ohmite CR201-50VE and CLA-TO-21E as alternatives: the Ohmite datasheet states 'DISCONTINUED since August 2024'. Correct the 'no forced-air data' statement (a forced-convection chart exists) and soften the SKILL-006 caveat accordingly.",
+    "Replace Boyd 7721-7PPSG in the screw-mount alternative: its 0.81 mm shoulder does not cover the 2.23-2.54 mm TO-247 hole depth, leaving 0.4-0.55 mm of air between the screw and the drain-potential hole wall. Specify a TO-247 insulating bushing with >= 2.5 mm shoulder rated for the working voltage, or delete the screw alternative; the 0.56-0.68 N m torque is unverified.",
+    "Update the NTC record to Vishay document 29092 Rev 14-Jan-2026: -55 to +150 degC, dissipation factor 13 mW/K (self-heating 0.06 K), thermal time constant 5 s, response time 4 s, 400 mW max at 55 degC; keep part number NTCALUG01A103F (3984 K), not the 3435 K 'FL' variant.",
+    "Reconcile the NTC readout with gate_driver.json (NTC on the LS UCC21710 AIN/APWM): drop the 2.2 kohm / 3.00 V divider, 15.5 mV/K and 21 LSB/K figures or move them to an 'if direct ADC' appendix; re-express the 90/100/110 degC thresholds as AIN voltage / APWM duty (V_AIN = 0.2 mA x R_NTC = 0.18 / 0.14 / 0.10 V), check the AIN input range against a 10 kohm NTC at trip temperatures (a higher R25 or series resistor may be needed), and log any 'direct ADC' path as an explicit KR-TH-003 deviation.",
+    "Mark the LAM 5 K 100 12 airflow (14.3-20 m3/h), exhaust velocity (2.6-3.7 m/s) and the '>= 2 m/s seed satisfied' statement as unsupported; the family spread 0.27 K/W (24 V, 20 m3/h) vs 0.68 K/W (12 V) implies much lower flow at 12 V. Obtain the Fischer datasheet (the exact 'LAM 5 K 100 12' string was found at no distributor) before BOM freeze.",
+    "Creepage: present 5.0 mm as the IEC 60664-1 Table F.4/F.5 basic-insulation value for 500 V / PD2 / IIIa (consistent with IEC 60950-1 Table 2N as reproduced by ADI) but state that IEC 60947-1/61439-1-derived tables give 6.3 mm at Ui 500 V and that reinforced insulation would need 10 mm; make the pad oversize (currently 5.5 mm overhang) conditional on the isolation review's choice.",
+    "Delete or source the '2.5 kV requirement' for the pad breakdown voltage; the type-test voltage is the isolation agent's to define.",
+    "State that R_thJC 0.41 K/W is a typical value with no datasheet maximum and that 48.5 / 57.2 mohm at 150 degC are interpolated/scaled, not datasheet values; add an explicit margin or sensitivity.",
+    "Minor: re-label the >= 125 degC ceramic requirement as an AIPE recommendation (not KR-CAP-003 content); use 'potentiometer' per CB-PR-002; fix the 12-26 vs 17-26 psi inconsistency; the max-R NTC offset is 42 K; update the Vishay datasheet revision and the Henkel TDS reference (TDS Nov 2018, PDF signed 2025-11-27)."
+  ],
+  "summary": "Source fact-check of the thermal area. Verified against primary datasheets: Bergquist TSP 3500 and TSP A2000 (all impedance, breakdown, Dk, temperature and thickness figures match the Nov 2018 TDS), Wakefield ulTIMiFlux (0.003 in, 0.107 degC-in2/W at 100 psi, 9200 V, 60 degC, die-cut sizes), Wolfspeed C4MS025120K Rev. 2 (R_thJC 0.41 K/W typ, R_DS(on) 25/33 mohm at 25 degC, 47 mohm at 175 degC, TO-247-4L), Vishay NTCALUG01A103F identity and 1500 Vac / 100 Mohm isolation, Sunon fan and Boyd washer dimensions (distributor level), TIDA-010054 Decision 9 and all knowledge-record readings; no TI instance value was copied. Arithmetic recomputed throughout and agrees. Contradicted: (1) the Ohmite CR201-50VE/CLA-TO-21E alternative is discontinued since August 2024 and its datasheet does contain a forced-convection chart; (2) the pad contact area (3.37 cm2) is the full body outline, whereas the outline's exposed-metal dimensions give about 2.3 cm2, raising R_pad to about 1.2 K/W and T_J,HS to about 134/144 degC (150 degC still met, 125 degC preference not met, the agent's own 1 K/W switch trigger is crossed); (3) the Boyd 7721-7PPSG shoulder (0.81 mm) cannot insulate the 2.2-2.5 mm deep TO-247 hole; (4) several NTC parameters are from a superseded revision (current: -55 to +150 degC, 13 mW/K, 5 s) and the divider readout conflicts with the gate-driver agent's UCC21710 AIN/APWM route and with KR-TH-003's 'isolate NTC feedback'. Unverified: every Fischer LAM 5 figure (site blocked, exact part string found at no distributor, airflow of the 12 V unit unknown), AOS 247, Kapton MT+, the 5.0 mm creepage figure (plausible for IEC 60664-1 basic insulation; 6.3 mm under IEC 60947/61439-derived tables; 10 mm if reinforced) and the unexplained '2.5 kV requirement'. Core selection (LAM 5 K 100 12 + Sil-Pad TSP 3500 + NTCALUG01A103F) survives with reduced margin; verdict confirmed-with-corrections."
+}

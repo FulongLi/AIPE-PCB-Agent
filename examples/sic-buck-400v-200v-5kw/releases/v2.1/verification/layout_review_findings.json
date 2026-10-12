@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "title": "Independent layout review findings - V2 power and control boards (task section 17)",
+  "date": "2026-10-11",
+  "reviewer": "independent layout-review agent (did not create the boards); supersedes the 2026-10-10 findings LR-01..LR-19",
+  "inputs": {
+    "power_board": {"path": "kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb", "sha256_prefix": "ae0f05d86ac6a104", "drc_manifest": "verification/drc/20261011T021012Z-drc-0ebee900/run.json"},
+    "control_board": {"path": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb", "sha256_prefix": "dead06ed18d85154", "drc_manifest": "verification/drc/20261011T021018Z-drc-b9c91de5/run.json"},
+    "method": "pcbnew 10.0.7 extraction (check_sic_layout.extract_board) + shapely measurements on the stored fills and on a rule-aware refill made in scratch with kicad-cli pcb drc --refill-zones --save-board; independent no-refill DRC; layer PDFs and renders rasterised and inspected; run.json hashes recomputed"
+  },
+  "severity_scale": ["blocker", "should-fix", "note"],
+  "dispositions_note": "Each finding names the rule, the measured evidence with net / pad / coordinates (mm, board origin), the proposed correction and whether an automated check can verify the correction.",
+  "findings": [
+    {
+      "id": "LR-20", "severity": "blocker", "board": "power",
+      "rule": "KR-ISO-002 / HV functional clearance / evidence validity (project .kicad_dru; task rule: only kicad-cli DRC counts)",
+      "evidence": "The zone fills stored in the board file were made with the 0.3 mm zone clearance only. kicad-cli pcb drc --severity-all WITHOUT --refill-zones on a scratch copy: 499 clearance errors (HV functional inner 324, outer 154, HV side to PE 16, pin-field R4/R5/R6/R14 5), all at 0.30 mm, e.g. VIN F.Cu/In2 fill 0.30 mm from the PE stud H1 (43.8, 27.5) and from the Y-cap PE pads C18.2 (42.5, 19.0) / C19.2 (42.5, 36.0); PGND vs VIN/VOUT/SW pours at 0.30 mm on every layer. The recorded 0/0/0 DRC used --refill-zones and judged in-memory copper. A refilled scratch copy passes without refill (0). The refill changes the copper materially: F.Cu VIN 5690 -> 4508 mm2, In2 VIN 19890 -> 18915, In1 PGND 30560 -> 29181, B.Cu PGND 10559 -> 8873 mm2. manufacturing/power_board gerbers, PDFs, renders, STEP and verification/engineering_checks/layout_metrics_power.* all describe the stored fills.",
+      "proposed_correction": "Fill the zones through the DRC engine in the generator (or run kicad-cli pcb drc --refill-zones --save-board on the deliverable) so that the stored fills are the rule-compliant copper; pass --check-zones in export_outputs.py; re-run run_check DRC, netlist check, layout metrics and the export; then re-review the copper widths (LR-22, LR-23, LR-28), which shrink after the refill.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-21", "severity": "blocker", "board": "power",
+      "rule": "KR-ISO-002 HV to PE 5.0 mm / KR-TH-002 (baseline: >= 5 mm HV copper keep-out around the PE-bonded heatsink)",
+      "evidence": "HS1 (LAM 5 D K, PE-bonded) has four 3.2 mm NPTH mounting holes at (54.25, 22.0), (54.25, 112.0), (144.25, 22.0), (144.25, 112.0). HV-side copper distance to the hole wall: F.Cu 8.85-15.05 mm, B.Cu 9.0-11.0 mm, In1.Cu (PGND pour) 0.25 mm, In2.Cu (VIN pour) 0.25 mm at every hole, in both fill states. The M4 standoffs H2-H7, the stud H1 and the L1 standoffs carry all-layer rule areas (M4_STANDOFF_*, L1_STANDOFF_*); the HS1 holes carry none; NPTH pads have no net so neither the HV-to-PE rule nor the checker sees them.",
+      "proposed_correction": "Add all-layer HV keep-out rule areas (>= 5 mm radius, like M4_STANDOFF_*) around the four HS1 holes in the generator (or move the holes out of the HV pours), or specify insulating hardware with a documented through-insulation argument; refill and re-run DRC.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-23", "severity": "blocker", "board": "power",
+      "rule": "KR-PCB-006 / PE-PCB-006 (IPC-2221 width; baseline 12 mm outer / 22 mm inner per 25 A, pours paralleled)",
+      "evidence": "Input return: J2 PGND (-IN) at (7.5, 129.0) sits in the pocket formed by J1 (7.5, 112), J6 (23.0, 129.0) and the ISO_BARRIER (y 140). Its B.Cu copper is an isolated 415 mm2 island (1.2-43.4 x 120.0-139.9), there is no F.Cu PGND, so the whole input current leaves through the In1 plane: widest passage 3.8 mm at (23.0, 137.9) between the J6 pin field and the barrier, plus a 2.2 mm passage above J6; total 6.8 mm of 70 um inner copper at x = 23 (8.1 mm at x = 20 / 26). At 17.7 A rms (12.5 A dc) IPC-2221 gives 160 K (3.8 mm) / 62 K (6.8 mm); 37-66 A/mm2. Measured on the refilled copper (connectivity of the eroded In1 polygon).",
+      "proposed_correction": "Move J2 out of the pocket (e.g. swap J2 and J5 so the two PGND/VIN_RAW terminals are not boxed in by the relay terminals) or bridge the J2 field to the main PGND copper on B.Cu and F.Cu with >= 12 mm pours (join the 415 mm2 island to the 4046 mm2 B.Cu PGND pour above y 118.5); verify with a pour-width metric (neck width between J2 pads and Q2.2 >= 12 mm outer-equivalent).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-22", "severity": "should-fix", "board": "power",
+      "rule": "PE-PCB-002 / PE-PCB-003 / KR-PCB-004 / KR-CAP-003 (HF ceramics in columns beside the legs on both sides, rows <= 5 and <= 15 mm)",
+      "evidence": "C1-C6 in one row at y 125.9 (x 48.0-79.0) and C7-C10 at y 136.5 (x 41.8-60.4), all west of Q1 (pads x 87.0-97.2). VIN pad -> Q1.1: 8.4 (C1), 14.4, 20.5, 26.7, 32.9, 39.1 mm (C6); 29.6-47.0 mm (C7-C10). PGND pad -> Q2.2 (120.08, 126.0): 41.2 mm nearest (C1.2) to 78.7 mm. Loop: F.Cu VIN -> Q1.1 -> Q1.2 -> In2 SW pour (F.Cu SW strip cut to 0.8 mm slivers at the KS_H/G_H pads (95.9, 123.0)) -> Q2.1 -> Q2.2 -> In1 PGND plane 41-79 mm back under the tier -> one 0.6 mm via per capacitor. After the rule-aware refill the F.Cu VIN pour along the tier narrows to 2.0 mm at (38.9, 138.9) and 2.3 mm at (72.7, 128.4) because the 3.0 mm outer clearance to the neighbouring capacitors' PGND pads (pad gap 5.2 mm) and the sink keep-out (y <= 122.6) leave no room. Board loop estimate 6-8 nH (SW leg on In2 across the 1.32 mm core).",
+      "proposed_correction": "Place a second capacitor column at the LS source: 2-4 of C1-C10 at x 128-150, y 126 (east of Q2, the band is free except C44/C46), and orient the 2220 capacitors so that both VIN pads face one continuous VIN pour and both PGND pads face a PGND via field; keep SW on F.Cu/In1-adjacent copper where the pin field allows; re-measure PE-PCB-002 rows (Q1.1 <= 5 mm, Q2.2 <= 15 mm) and the VIN F.Cu neck (>= 8 mm) on the refilled copper.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-28", "severity": "should-fix", "board": "power",
+      "rule": "KR-PCB-006 / PE-PCB-006 (SW and output PGND copper, paralleled layers)",
+      "evidence": "SW: F.Cu 120 mm2 strip (91.0-116.1 x 122.6-128.6) is not a current path (0.8 mm slivers at the KS/G pads); B.Cu 6 mm2; the 25 A inductor current Q1.2/Q2.1 -> L1.1 (191.8, 95.0) runs on the In2 pour alone (2052 mm2 refilled), attachments 3.4 mm at (102.0, 120.8) and 4.5 mm at (118.1, 121.0) (pin-field limited), bulk width 12.7 mm at (144.3, 120.2): IPC-2221 48 K at 25 A (28 A/mm2) vs 21.8 mm required inner. Output PGND J4 (161.0, 65.5) -> C13.2: In1 only, 19.3 mm at (154.1, 28.0) (24 K); the B.Cu PGND pours near the output (1903 + 1213 mm2) are not joined to the J4 field. VOUT by contrast is 24.6 / 25.5 / 25.5 mm on F.Cu / In2 / B.Cu (pass).",
+      "proposed_correction": "Add SW copper on B.Cu (and F.Cu outside the pin field) from the device pads toward L1.1 with >= 24 x 0.6 mm vias at the device end, widen the In2 pour at (144, 120) by moving the snubber R11/C15 and the LS bulk capacitors; join the B.Cu PGND pours to the J4 field; verify with the pour-width metric (>= 12 mm outer-equivalent).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-24", "severity": "should-fix", "board": "power",
+      "rule": "KR-PCB-001 / KR-PCB-002 / PE-PCB-001 (LS gate loop)",
+      "evidence": "G_L: 15.6 mm F.Cu + 8.6 mm B.Cu + 8.9 mm In2 track, 34 mm2 B.Cu pour, 7 vias; LS_OUTH 19.6 mm / 3 vias, LS_CLMP 21.5 mm / 3 vias; 84 mm total vs 40 mm on the HS side (G_H 26.4 mm B.Cu, 0 vias). 57 % of the B.Cu gate copper lies over the KS_L In2 pour (HS: 70 %); F.Cu / In2 gate copper has no Kelvin copper on an adjacent layer. R41 (G_L / LS_GK, B.Cu, (134.0, 121.5)) and TP2 sit directly over the In2 SW pour (0.20 mm prepreg, about 1.5 pF -> about 30 mA at 20 kV/us). Bulk rail capacitors C42 / C43 / C45 (B.Cu, (143-154, 130.0)) 21-32 mm from Q2.3 and 24-34 mm from U3; HS bulk C22 / C23 / C25 at (69.5-75.0, 130.5-134.5) 20-27 mm from Q1.3. The 100 nF C44 / C46 (7.3 / 9.8 mm) and C24 / C26 (5.1 / 5.8 mm) are placed correctly.",
+      "proposed_correction": "Route G_L / LS_OUTH / LS_CLMP entirely on B.Cu over the KS_L In2 pour as on the HS side (pre-routed tracks in the plan), move R41 and TP2 off the SW pour footprint, bring C42 / C43 / C45 and C22 / C23 / C25 to within 10 mm of the Kelvin pin between driver and device; verify with the gate-loop rows (track length, via count, over_kelvin_pour fraction >= 0.7).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-25", "severity": "should-fix", "board": "power",
+      "rule": "CR-23 / SKILL-006 step 3 / design_decisions.architecture.placement_rules (films and inductor >= 20 mm from the sink; corridor parts <= 15 mm tall)",
+      "evidence": "HS1 courtyard 48.5-150.0 x 16.5-117.5 (not flush with the left edge as floorplan B stated). In the 48 mm band at its -x face: C11 / C12 (37 mm tall) courtyards 19.1 mm from the sink courtyard (about 19.9 mm body), RT1 (22 mm tall) 8.5 mm, RV1 (23 mm) 8.4 mm. L1 19.5 mm courtyard-to-courtyard (about 20.3 mm body); C13 20.0, C14 52.0 mm; films to L1 15.3 / 15.4 mm. Whether the -x face is the fan intake depends on the LAM 5 D K orientation (floorplan: exhaust along +x).",
+      "proposed_correction": "Confirm the fan/intake face from the Fischer drawing; if the intake is at -x, move C11 / C12 / RT1 / RV1 out of the corridor (e.g. above the sink with the input terminals) or shift the sink to the edge; otherwise document the orientation on the fab drawing; re-run the floorplan rule checks (courtyard distance >= 20 mm, corridor height <= 15 mm).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-26", "severity": "should-fix", "board": "power",
+      "rule": "PE-PCB-004 (differential sense path inspection)",
+      "evidence": "AMC1311 outputs routed as split-layer pairs: VIN_OUTP 80.9 mm on In2 vs VIN_OUTN 79.4 mm on F.Cu (U6 (181.0, 145.0) -> R71 / R73 at the OPA2320 U8 (165.5, 170.0)); VOUT_OUTP 64.9 mm on B.Cu vs VOUT_OUTN 63.1 mm on In2 (U7 (195.0, 145.0) -> R75 / R77). Length mismatch 1.5 / 1.8 mm but no common path. ISENSE (U10.6 -> J7.43) 84 mm / 7 vias on In2+B.Cu; ISENSE_REF generated on the strip (R82 / R83 / C89) 90 mm / 5 vias.",
+      "proposed_correction": "Pre-route each AMC1311 output pair side by side on one layer (F.Cu, 0.25 mm gap) and place U8 adjacent to U6 / U7 (the strip has room at (175-200, 155-165)); keep ISENSE short to J7.43 (<= 40 mm) and route it next to ISENSE_REF; verify with the sensing rows (per-net layer sets equal, mismatch <= 2 mm, length <= 50 mm).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-27", "severity": "should-fix", "board": "both",
+      "rule": "design_decisions.interconnect / architecture.control_board.mounting (four M3 standoffs, about 40 mm overhang)",
+      "evidence": "J8 (control, B.Cu, pin 1 (28.0, 74.0)) maps onto J7 (power, pin 1 (211.0, 160.0)) with 0.00 mm error under a 180 deg rotation; projected control outline on the power board x 119.0-239.0, y 154.0-234.0: 26 mm over the SELV strip, 54 mm overhang beyond the y = 180 edge. Control holes H3 / H4 land on power H8 (235, 158) / H9 (123, 158) to 0.00 mm; control H1 / H2 map to (235, 230) / (123, 230), 50 mm beyond the edge, unsupported; power H10 (60, 170) / H11 (90, 170) match nothing. No HV-side copper under the projected outline on any layer (nearest 12.6 mm).",
+      "proposed_correction": "Either move J7 toward the board edge so the control board overhangs by <= 40 mm and its far holes land on the power board (or add a bracket / bar for H1 / H2), remove or re-place H10 / H11, and update architecture.md / pcb_stackup.md section 9 to the measured geometry; verify by mapping the hole patterns (all four within 0.1 mm).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-29", "severity": "note", "board": "power",
+      "rule": "KR-TH-002 (HV copper keep-out around the sink, outer layers)",
+      "evidence": "B.Cu: PE_REF_MID copper (R15.2, R16.1 and their track, HV_PGND class) inside the HS1 courtyard at 0.0 mm; R41 (G_L / LS_GK) and tracks 4.0 mm from it; F.Cu rule area HEATSINK_HV_KEEPOUT exists (43.4-155.1 x 11.4-122.6) but no B.Cu rule area. PE_REF_MID floats between PGND and PE through R15 / R16 (1 M); with the 0 R link R14 fitted it is at PGND potential.",
+      "proposed_correction": "Mirror the keep-out rule area onto B.Cu and move R15 / R16 / R41 out of it, or document that the bottom side under the sink carries no PE-bonded hardware other than the four holes (LR-21).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-30", "severity": "note", "board": "power",
+      "rule": "checker / spec quality (check_sic_layout.py, layout_spec_power.json)",
+      "evidence": "The checker measures the stored fills, so its KR-ISO-002 rows (0.300 mm) report the LR-20 defect as isolation distances; PE-PCB-006 counts vias only (VIN_RAW / VOUT_L '0 vias' are THT-joined pours); the net-class patterns HV_VIN 'VIN_DIV_T*' and SENSE_ISO 'VIN_DIV*' overlap (SENSE_ISO-to-HV row reads 0.2 mm at the divider pad pairs); no pour-width metric exists although the baseline's 12 / 22 mm rule is the main copper requirement.",
+      "proposed_correction": "Run the checker on a rule-aware refill (ZONE_FILLER with the project loaded, or on the --save-board copy), add a neck-width metric between named terminal pairs per layer with the IPC-2221 outer-equivalent, make the class patterns disjoint, and report THT-joined paths separately from via arrays.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-31", "severity": "note", "board": "power",
+      "rule": "architecture.placement_rules / PE-PCB-008 / KR-PCB-005 (deviations without measured harm)",
+      "evidence": "Drivers U1 / U3 on F.Cu on the barrier line (14.35 / 14.36 mm from the gate pads) instead of B.Cu under the device row; back-side courtyard fraction 0.01. Bias-module decoupling U5 pins 6 / 7 -> C60 27.5 mm, U4 13.9 mm; U10 3V3 15.5 mm. HF-tier PGND pads: one 0.6 mm via each. 12V_PROT 277 mm at 0.25-0.35 mm (about 1.3 A -> about 8 K, about 0.27 ohm). Barrier package land gaps 7.25 (DW), 8.1 (DWN), 7.75 (DVG), 9.1 mm (DWV) set the through-air clearance below the 9.0 mm board rule (standard minimum 5.5 mm; package ratings HR). Pin-field exceptions accept 0.9-2.7 mm outer at the film / snubber / bleeder / damping pad pairs and 4.69 mm at R14 / R16 (PE).",
+      "proposed_correction": "Record as accepted deviations in design_decisions.json (CR-27) or correct in the next placement round; no automation change needed.",
+      "verifiable_by_automation": false
+    },
+    {
+      "id": "LR-32", "severity": "should-fix", "board": "control",
+      "rule": "routing quality of the protection path (PE-PCB-007 ground-return review; TZ / fault lines)",
+      "evidence": "DSP_TRIP_N 224.4 mm with 21 vias; FAULT_N 319.7 mm / 16 vias (40.8 mm of it not over In1 copper); XRS_N 226.1 mm / 21 vias; OC_N 204.1 mm / 10 vias; ESTOP_N 403 mm / 24 vias; FLT_H_N 105 / 8, FLT_L_N 92 / 10, RDY_L 99 / 9. All on F.Cu / B.Cu over the one-island GND_CTRL plane (8376 mm2).",
+      "proposed_correction": "Pre-route DSP_TRIP_N, FAULT_N, OC_N and XRS_N as direct runs (plan 'pre_routed' tracks) with <= 4 vias each, placing the fault combiner next to the DSP's TZ pins; verify with per-net length / via limits (<= 80 mm, <= 4 vias).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-33", "severity": "should-fix", "board": "control",
+      "rule": "PE-PCB-005 / PE-PCB-008 / PE-PCB-004 (ADC front end at the pins; sense pairs)",
+      "evidence": "1 nF filter capacitor to DSP pin: ADC_VIN 6.9 (C68), ADC_ISENSE 9.3 (C69), ADC_I12V 9.9 (C73), ADC_VOUT 10.1 (C74), ADC_TEMP_HS 10.2 (C70), ADC_V12V 10.7 (C75), ADC_TEMP_CTRL 11.1 (C71), ADC_ISENSE_REF 14.8 mm (C72); ADCREFM / P 5.8 / 6.4 mm. ADC_VOUT 139.2 mm / 14 vias (17.7 mm not over In1 copper); ISENSE 122.2 mm / 5 vias vs ISENSE_REF 54.5 mm / 6 vias, Hausdorff distance 21 mm; VIN_SENSE 111.5 mm / 8 vias vs VOUT_SENSE 55.5 mm / 2 vias. No analogue net runs parallel to a clock / PWM / fault net for more than 1.6 mm at < 0.6 mm.",
+      "proposed_correction": "Place C68-C75 within 3-5 mm of pins 38-42 / 46-49 outside the escape via rows and route ISENSE with ISENSE_REF and VIN_SENSE with VOUT_SENSE as pairs from J8 pins 43 / 45 / 47 / 49 (plan pre_routed); verify with the ADC rows (<= 5 mm) and pair metrics (length ratio <= 1.3, Hausdorff <= 3 mm).",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-34", "severity": "note", "board": "control",
+      "rule": "PE-PCB-008 / plane continuity / DFM",
+      "evidence": "DSP bypass: C29 / C31 (3V3) 5.38 mm from pins 93 / 107 vs the 5.0 mm proxy, all 26 capacitors with a GND via within 2.0 mm; In1 void of merged escape-via antipads 10 x 1.1 mm at (62.7-72.8, 41.7-42.8) under the ADC side, crossed by ADC_VOUT and fault lines; eleven In2 zone fragments of 2-6 mm2 (3V3 / 5V / 1V9); J8 pins 39 / 40 named 3V3 vs baseline +3V3_PWRBOARD; 3D models missing for U1, U3, Y1 (export log).",
+      "proposed_correction": "Stagger the ADC-side escape vias so the antipads do not merge, merge or drop the In2 fragments, align the mezzanine net names across the two schematics; optional.",
+      "verifiable_by_automation": true
+    },
+    {
+      "id": "LR-35", "severity": "note", "board": "both",
+      "rule": "exports (3D models)",
+      "evidence": "manufacturing/power_board/logs/step.log: Inductor_SMD.3dshapes/L_CommonMode_Wuerth_WE-SL2.step missing for L2 / L3 / L4; control: HTSSOP-28-1EP (U3), TSSOP-16-1EP (U1), SG8002CA oscillator (Y1) models missing.",
+      "proposed_correction": "Library maintainer: add the models or re-point the model fields (libraries are frozen for the layout agents).",
+      "verifiable_by_automation": true
+    }
+  ],
+  "measured_summary": {
+    "power": {
+      "drc_recorded": "0 / 0 / 0 with --refill-zones (20261011T021012Z-drc-0ebee900), hashes intact",
+      "drc_stored_fills_no_refill": {"clearance": 499, "HV functional inner": 324, "HV functional outer": 154, "HV side to PE": 16, "pin field": 5},
+      "isolation_refilled_mm": {"HV side to CTRL_SELV": {"F.Cu": 9.49, "In1.Cu": 11.1, "In2.Cu": 11.1, "B.Cu": 11.3}, "HV to PE": {"F.Cu": 5.0, "In1.Cu": 5.0, "In2.Cu": 5.0, "B.Cu": 4.69}, "HS island to LS island": {"F.Cu": 6.27, "In1.Cu": 6.4, "In2.Cu": 4.8, "B.Cu": 6.4}},
+      "slots": {"U1_U3": {"g": 7.25, "e": 3.55, "path": 10.15}, "U2_U4_U5": {"g": 8.1, "e": 3.0, "path": 10.08}, "U6_U7": {"g": 9.1, "e": 3.19, "path": 11.12}, "U10": {"g": 7.75, "e": 3.0, "path": 9.81}, "width_mm": 1.2},
+      "heatsink_holes_hv_copper_mm": {"F.Cu": "8.85-15.05", "B.Cu": "9.0-11.0", "In1.Cu": 0.25, "In2.Cu": 0.25},
+      "gate": {"U1_to_Q1_gate_mm": 14.35, "U3_to_Q2_gate_mm": 14.36, "G_H_track_mm": 26.4, "G_H_vias": 0, "G_L_track_mm": 33.1, "G_L_vias": 7, "HS_gate_over_kelvin_fraction": 0.70, "LS_gate_over_kelvin_fraction": 0.57},
+      "commutation": {"Q1_drain_to_nearest_VIN_pad_mm": 8.4, "Q2_source_to_nearest_PGND_pad_mm": 41.2, "F_Cu_VIN_neck_after_refill_mm": 2.0, "board_loop_estimate_nH": "6-8"},
+      "copper_necks_refilled_mm": {"SW_In2_bulk": 12.7, "SW_In2_attachments": [3.4, 4.5], "PGND_in_J2_isthmus": 3.8, "PGND_in_J2_total_cross_section": 6.8, "PGND_out_In1": 19.3, "VOUT_F_In2_B": [24.6, 25.5, 25.5], "VOUT_L_F": 4.8, "VIN_RAW_F_B": [12.4, 12.4]},
+      "vias_power_nets": {"VIN": "32 x 0.6", "SW": "24 x 0.6", "PGND": "32 x 0.6 + 18 x 0.3 + 8 x 0.4", "VOUT": "61 x 0.6"},
+      "thermal_spacing_mm": {"L1_to_sink_courtyard": 19.5, "C11_C12_to_sink": 19.1, "C13_to_sink": 20.0, "films_to_L1": 15.3},
+      "area": {"outline_mm": [240, 180], "hv_bbox_fraction": 0.77, "W_per_dm2": 1157},
+      "complexity": {"tracks": 4752, "vias": 574, "CTRL_SELV_track_mm": 4282, "longest_net_mm": {"3V3": 434, "12V_PROT": 277, "PG_BIAS_H_N": 269}}
+    },
+    "control": {
+      "drc_recorded": "0 / 0 / 0 (20261011T021018Z-drc-b9c91de5), stored fills = DRC'd copper",
+      "dsp_bypass_max_mm": 5.38, "dsp_bypass_gnd_via_max_mm": 1.99,
+      "adc_filter_cap_to_pin_mm": {"min": 6.9, "max": 14.8},
+      "in1_gnd_area_mm2": 8376, "in1_islands": 1,
+      "pwm_mm": {"EPWM1A": 51.3, "EPWM1B": 42.9, "PWM_H": 15.3, "PWM_L": 26.7},
+      "fault_mm_vias": {"DSP_TRIP_N": [224.4, 21], "FAULT_N": [319.7, 16], "XRS_N": [226.1, 21], "OC_N": [204.1, 10], "ESTOP_N": [403, 24]},
+      "sense_mm": {"ISENSE": 122.2, "ISENSE_REF": 54.5, "VIN_SENSE": 111.5, "VOUT_SENSE": 55.5},
+      "J8": {"side": "B.Cu", "pin1": [28.0, 74.0], "mates_J7_error_mm": 0.0, "holes_on_power_board": "H3/H4 -> H8/H9 exact; H1/H2 50 mm beyond the edge"},
+      "complexity": {"tracks": 5995, "vias": 798, "track_mm": 7055}
+    }
+  }
+}

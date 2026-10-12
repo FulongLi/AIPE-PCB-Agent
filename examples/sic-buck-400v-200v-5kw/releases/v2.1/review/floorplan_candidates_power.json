@@ -1,0 +1,2451 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "generated_utc": "2026-10-10T13:17:07.908013+00:00",
+  "scratch": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan",
+  "generator": "automation/kicad_tools/generate_sic_power_floorplan.py",
+  "weights": {
+    "power_path_mm": 2.0,
+    "power_path_layer_transitions": 1.0,
+    "hf_cap_row1_max_mm": 2.0,
+    "hf_pads_within_row2_min": 1.0,
+    "driver_to_gate_max_mm": 2.0,
+    "sw_copper_mm2": 1.0,
+    "hv_to_selv_min_mm": 1.5,
+    "heatsink_hv_min_mm": 1.0,
+    "film_to_heatsink_min_mm": 1.5,
+    "inductor_to_heatsink_mm": 1.5,
+    "film_to_inductor_min_mm": 1.0,
+    "tall_parts_in_corridors": 1.5,
+    "drc_lite_findings": 2.0,
+    "board_area_mm2": 0.5,
+    "placement_issues": 1.0
+  },
+  "higher_is_better": [
+    "film_to_heatsink_min_mm",
+    "film_to_inductor_min_mm",
+    "heatsink_hv_min_mm",
+    "hf_pads_within_row2_min",
+    "hv_to_selv_min_mm",
+    "inductor_to_heatsink_mm"
+  ],
+  "criteria": {
+    "A": {
+      "board_area_mm2": 43200.0,
+      "hv_area_utilisation": 0.752,
+      "power_path_mm": 889.1,
+      "power_path_layer_transitions": 3,
+      "hf_cap_row1_max_mm": 8.0,
+      "hf_pads_within_row2_min": 2,
+      "driver_to_gate_max_mm": 11.378,
+      "sw_copper_mm2": 3922.9,
+      "hv_to_selv_min_mm": 12.0,
+      "barrier_min_land_gap_mm": 7.25,
+      "barrier_slots_present": "8/8",
+      "heatsink_hv_min_mm": 5.075,
+      "film_to_heatsink_min_mm": 15.16,
+      "inductor_to_heatsink_mm": 20.055,
+      "film_to_inductor_min_mm": 0.405,
+      "tall_parts_in_corridors": 3,
+      "mezzanine_xy": [
+        185.0,
+        163.0
+      ],
+      "drc_lite_findings": 20,
+      "drc_lite_by_type": {
+        "clearance": 12,
+        "isolated_copper": 2,
+        "items_not_allowed": 2,
+        "silk_edge_clearance": 4
+      },
+      "placement_issues": 42
+    },
+    "B": {
+      "board_area_mm2": 43200.0,
+      "hv_area_utilisation": 0.752,
+      "power_path_mm": 639.2,
+      "power_path_layer_transitions": 3,
+      "hf_cap_row1_max_mm": 8.0,
+      "hf_pads_within_row2_min": 2,
+      "driver_to_gate_max_mm": 11.378,
+      "sw_copper_mm2": 3087.8,
+      "hv_to_selv_min_mm": 12.0,
+      "barrier_min_land_gap_mm": 7.25,
+      "barrier_slots_present": "8/8",
+      "heatsink_hv_min_mm": 5.075,
+      "film_to_heatsink_min_mm": 33.91,
+      "inductor_to_heatsink_mm": 20.355,
+      "film_to_inductor_min_mm": 15.334,
+      "tall_parts_in_corridors": 0,
+      "mezzanine_xy": [
+        176.0,
+        163.0
+      ],
+      "drc_lite_findings": 16,
+      "drc_lite_by_type": {
+        "clearance": 12,
+        "silk_edge_clearance": 4
+      },
+      "placement_issues": 14
+    }
+  },
+  "scoring": {
+    "scores": {
+      "A": 11.5,
+      "B": 0.0
+    },
+    "detail": {
+      "power_path_mm": {
+        "values": {
+          "A": 889.1,
+          "B": 639.2
+        },
+        "weight": 2.0
+      },
+      "power_path_layer_transitions": {
+        "values": {
+          "A": 3,
+          "B": 3
+        },
+        "weight": 1.0
+      },
+      "hf_cap_row1_max_mm": {
+        "values": {
+          "A": 8.0,
+          "B": 8.0
+        },
+        "weight": 2.0
+      },
+      "hf_pads_within_row2_min": {
+        "values": {
+          "A": 2,
+          "B": 2
+        },
+        "weight": 1.0
+      },
+      "driver_to_gate_max_mm": {
+        "values": {
+          "A": 11.378,
+          "B": 11.378
+        },
+        "weight": 2.0
+      },
+      "sw_copper_mm2": {
+        "values": {
+          "A": 3922.9,
+          "B": 3087.8
+        },
+        "weight": 1.0
+      },
+      "hv_to_selv_min_mm": {
+        "values": {
+          "A": 12.0,
+          "B": 12.0
+        },
+        "weight": 1.5
+      },
+      "heatsink_hv_min_mm": {
+        "values": {
+          "A": 5.075,
+          "B": 5.075
+        },
+        "weight": 1.0
+      },
+      "film_to_heatsink_min_mm": {
+        "values": {
+          "A": 15.16,
+          "B": 33.91
+        },
+        "weight": 1.5
+      },
+      "inductor_to_heatsink_mm": {
+        "values": {
+          "A": 20.055,
+          "B": 20.355
+        },
+        "weight": 1.5
+      },
+      "film_to_inductor_min_mm": {
+        "values": {
+          "A": 0.405,
+          "B": 15.334
+        },
+        "weight": 1.0
+      },
+      "tall_parts_in_corridors": {
+        "values": {
+          "A": 3,
+          "B": 0
+        },
+        "weight": 1.5
+      },
+      "drc_lite_findings": {
+        "values": {
+          "A": 20,
+          "B": 16
+        },
+        "weight": 2.0
+      },
+      "board_area_mm2": {
+        "values": {
+          "A": 43200.0,
+          "B": 43200.0
+        },
+        "weight": 0.5
+      },
+      "placement_issues": {
+        "values": {
+          "A": 42,
+          "B": 14
+        },
+        "weight": 1.0
+      }
+    },
+    "selected": "B"
+  },
+  "selected": "B",
+  "failures": {
+    "C": "RuntimeError: no placement space for C19 (Capacitor_THT:C_Disc_D12.5mm_W5.0mm_P10.00mm) in region pe_group [[4.5, 104.5, 48.5, 129.5], [167.0, 0.4, 195.5, 37.5]] side F; 22 items already inside: ['C11', 'C13', 'C18', 'C3', 'C4', 'C5', 'C7', 'D3', 'H1', 'HS1', 'L1', 'L1#NPTH', 'TEXT:PE', 'U2']"
+  },
+  "rationale": [
+    "Candidate B has the lowest weighted score (0.0).",
+    "Board area (mm2): A = 43200.0, B = 43200.0 (best: A, B).",
+    "HF capacitor row 1: nearest same-net pad to Q1 drain / Q2 source, worse of the two (mm, <= 5): A = 8.0, B = 8.0 (best: A, B).",
+    "HF capacitor pads within 15 mm of the pin (same net), fewer of Q1 drain / Q2 source (count): A = 2, B = 2 (best: A, B).",
+    "Driver output pad to gate pad, worse of U1/Q1 and U3/Q2 (mm, <= 15): A = 11.378, B = 11.378 (best: A, B).",
+    "Power path J1 -> RT1 -> J6 -> C11 -> Q1 -> SW -> L1 -> U10 -> C13 -> J3 (pad-centre sum, mm): A = 889.1, B = 639.2 (best: B).",
+    "Planned layer transitions on the power path (count): A = 3, B = 3 (best: A, B).",
+    "SW copper area, all layers (mm2, filled zones + pads): A = 3922.9, B = 3087.8 (best: B).",
+    "HV/DRV/DESAT/SENSE_ISO to CTRL_SELV minimum copper distance, any layer (mm, >= 9): A = 12.0, B = 12.0 (best: A, B).",
+    "HV copper to the heatsink courtyard, outer layers (mm, >= 5): A = 5.075, B = 5.075 (best: A, B).",
+    "Film capacitor courtyard to heatsink courtyard, minimum (mm, >= 20): A = 15.16, B = 33.91 (best: B).",
+    "Inductor keep-out circle to heatsink courtyard (mm, >= 20): A = 20.055, B = 20.355 (best: B).",
+    "Film capacitor courtyard to inductor keep-out circle, minimum (mm, >= 15): A = 0.405, B = 15.334 (best: B).",
+    "Parts taller than 15 mm inside the intake/exhaust corridors (count, inductor exempt): A = 3, B = 0 (best: B).",
+    "DRC-lite violations (kicad-cli, no parity, severity-all; unconnected items excluded): A = 20, B = 16 (best: B).",
+    "Placement + floorplan rule issues recorded by the generator (count): A = 42, B = 14 (best: B).",
+    "Candidate C could not be placed: RuntimeError: no placement space for C19 (Capacitor_THT:C_Disc_D12.5mm_W5.0mm_P10.00mm) in region pe_group [[4.5, 104.5, 48.5, 129.5], [167.0, 0.4, 195.5, 37.5]] side F; 22 items already inside: ['C11', 'C13', 'C18', 'C3', 'C4', 'C5', 'C7', 'D3', 'H1', 'HS1', 'L1', 'L1#NPTH', 'TEXT:PE', 'U2']"
+  ],
+  "open_issues": [
+    "DRU / net classes: the unconnected pins of U1/U3 (APWM, pad 16) and U10 (NC, pad 5) carry \"unconnected-...\" nets in the Default class; the 9 mm HV-to-SELV rule includes Default but the pin-field exceptions name only CTRL_SELV, so 12 clearance findings (7.25-8.64 mm) sit inside those land patterns on every build. Fix belongs to the project owner (.kicad_pro pattern or .kicad_dru exception), not the layout.",
+    "Library: the AMC1311 DWV slot (10.4 mm) extends 2.995 mm beyond the pad rows, 5 um short of the 3.0 mm baseline (path 10.9 mm >= 9.0 mm); the official SOIC-16W silkscreen of U1/U3 crosses their board-level slots (4 silk_edge_clearance warnings; trimming the board copy would raise lib_footprint_mismatch instead).",
+    "Mechanical: TO-247-4 lead row 7.5 mm from the sink face (5 mm HV-copper keep-out from the courtyard), baseline 3-5 mm - formed leads or a spacer; the LS source pin (second pin) cannot have a same-net HF capacitor pad within 5 mm (nearest 8.0 mm), the HS drain pin has 4.66 mm.",
+    "Mezzanine: J7 pin 1 at (176, 163) with pins toward -x assumes the control board mounted rotated 180 deg about z (J8 at (28, 76) rotated 90 deg); the two in-strip M3 holes (88, 163) / (200, 163) follow the 112 mm pattern, the other two M3 holes are spares - to be cross-checked with the control-board drawing.",
+    "Metrics: PE-PCB-007 reports a 0 mm section separation because the barrier packages belong to both bounding boxes (artefact of the bounding-box proxy); PE-PCB-006 via counts are zero until routing.",
+    "Candidate C (220 x 170 mm) could not place the PE group (two Y-capacitor discs and three 2512 links need 5 mm to every HV part) after sink, inductor, films and terminals; the stretch outline is confirmed infeasible with the baseline envelopes and spacings.",
+    "Process: a parallel routing-stage generator owns automation/kicad_tools/generate_sic_power_board.py and will write design/placement_power.json, design/routing_plan_power.json and verification/routing_progress_power.json again when it routes; this floorplan stage keeps its own module generate_sic_power_floorplan.py and candidate/comparison files."
+  ],
+  "candidates": {
+    "A": {
+      "candidate": "A",
+      "candidate_title": "Power board floorplan A - heatsink top centre(-left), device row facing the barrier, inductor right, films left",
+      "candidate_file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\floorplan_candidates\\power_A.json",
+      "board": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_pcb",
+      "board_mm": [
+        240.0,
+        180.0
+      ],
+      "bands": {
+        "hv_y_max": 140.0,
+        "barrier": [
+          140.0,
+          150.0
+        ],
+        "barrier_line_y": 145.0,
+        "selv_y_min": 150.0
+      },
+      "footprints": 237,
+      "nets": 104,
+      "netlist_nodes": 651,
+      "placement_issues": [
+        "C31: region selv_hs_b full, rectangles grown by 1.5 mm (within its band)",
+        "C32: region selv_hs_b full, rectangles grown by 1.5 mm (within its band)",
+        "R13: region hv_corridor full, rectangles grown by 1.5 mm (within its band)",
+        "R16: region pe_group full, rectangles grown by 1.5 mm (within its band)",
+        "R16: region pe_group full, rectangles grown by 3.0 mm (within its band)",
+        "R20: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R21: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R22: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R23: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R24: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R24: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R25: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R25: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R26: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R26: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R29: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R29: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R30: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R30: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R31: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R31: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R31: region hs_island_b full, rectangles grown by 4.5 mm (within its band)",
+        "R32: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R32: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R32: region hs_island_b full, rectangles grown by 4.5 mm (within its band)",
+        "R33: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R33: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "R33: region hs_island_b full, rectangles grown by 4.5 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 4.5 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 6.0 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 7.5 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 3.0 mm (within its band)"
+      ],
+      "barrier": [
+        {
+          "ref": "U2",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                48.75,
+                144.4,
+                66.25,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        },
+        {
+          "ref": "U1",
+          "hv_pads": 8,
+          "selv_pads": 8,
+          "hv_y_max": 141.375,
+          "selv_y_min": 148.625,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.25,
+          "slot": {
+            "kind": "board Edge.Cuts",
+            "rects": [
+              [
+                68.255,
+                144.4,
+                83.745,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 9.411
+        },
+        {
+          "ref": "U3",
+          "hv_pads": 8,
+          "selv_pads": 8,
+          "hv_y_max": 141.375,
+          "selv_y_min": 148.625,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.25,
+          "slot": {
+            "kind": "board Edge.Cuts",
+            "rects": [
+              [
+                96.255,
+                144.4,
+                111.745,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 9.411
+        },
+        {
+          "ref": "U4",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                113.75,
+                144.4,
+                131.25,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        },
+        {
+          "ref": "U5",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                157.25,
+                144.4,
+                174.75,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        },
+        {
+          "ref": "U6",
+          "hv_pads": 4,
+          "selv_pads": 4,
+          "hv_y_max": 140.45,
+          "selv_y_min": 149.55,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 9.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                178.8,
+                144.4,
+                189.2,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 2.995,
+          "surface_path_mm": 10.894
+        },
+        {
+          "ref": "U7",
+          "hv_pads": 4,
+          "selv_pads": 4,
+          "hv_y_max": 140.45,
+          "selv_y_min": 149.55,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 9.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                193.8,
+                144.4,
+                204.2,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 2.995,
+          "surface_path_mm": 10.894
+        },
+        {
+          "ref": "U10",
+          "hv_pads": 2,
+          "selv_pads": 8,
+          "hv_y_max": 141.125,
+          "selv_y_min": 148.875,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.75,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                208.25,
+                144.4,
+                223.75,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.005,
+          "surface_path_mm": 9.807
+        }
+      ],
+      "slots_added": [
+        {
+          "ref": "U1",
+          "rect": [
+            68.255,
+            144.4,
+            83.745,
+            145.6
+          ],
+          "land_gap_mm": 7.25,
+          "row_axis": "x",
+          "surface_path_mm": 9.4108,
+          "silkscreen_note": "library silkscreen crosses the slot (DRC warning silk_edge_clearance, cosmetic)"
+        },
+        {
+          "ref": "U3",
+          "rect": [
+            96.255,
+            144.4,
+            111.745,
+            145.6
+          ],
+          "land_gap_mm": 7.25,
+          "row_axis": "x",
+          "surface_path_mm": 9.4108,
+          "silkscreen_note": "library silkscreen crosses the slot (DRC warning silk_edge_clearance, cosmetic)"
+        }
+      ],
+      "rule_areas": [
+        {
+          "name": "ISO_BARRIER_1",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            1.0,
+            140.0,
+            47.905,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_2",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            67.095,
+            140.0,
+            70.255,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_3",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            81.745,
+            140.0,
+            98.255,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_4",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            109.745,
+            140.0,
+            112.905,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_5",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            132.095,
+            140.0,
+            156.405,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_6",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            175.595,
+            140.0,
+            177.955,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_7",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            190.045,
+            140.0,
+            192.955,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_8",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            205.045,
+            140.0,
+            207.405,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_9",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            224.595,
+            140.0,
+            239.0,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        }
+      ],
+      "zones": {
+        "zones": [
+          {
+            "net": "SW",
+            "layer": "F.Cu",
+            "priority": 9,
+            "bbox": [
+              68.0,
+              126.6,
+              96.5,
+              139.0
+            ]
+          },
+          {
+            "net": "SW",
+            "layer": "F.Cu",
+            "priority": 8,
+            "bbox": [
+              174.0,
+              58.0,
+              196.0,
+              76.0
+            ]
+          },
+          {
+            "net": "VOUT_L",
+            "layer": "F.Cu",
+            "priority": 7,
+            "bbox": [
+              210.0,
+              58.0,
+              225.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VOUT",
+            "layer": "F.Cu",
+            "priority": 6,
+            "bbox": [
+              200.0,
+              128.0,
+              209.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VOUT",
+            "layer": "F.Cu",
+            "priority": 5,
+            "bbox": [
+              225.5,
+              101.0,
+              239.0,
+              115.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "F.Cu",
+            "priority": 4,
+            "bbox": [
+              60.2,
+              126.6,
+              70.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "F.Cu",
+            "priority": 3,
+            "bbox": [
+              79.0,
+              1.0,
+              116.5,
+              15.4
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "F.Cu",
+            "priority": 2,
+            "bbox": [
+              98.0,
+              126.6,
+              110.8,
+              139.0
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "F.Cu",
+            "priority": 1,
+            "bbox": [
+              119.0,
+              1.0,
+              133.0,
+              15.4
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "In1.Cu",
+            "priority": 1,
+            "bbox": [
+              1.0,
+              1.0,
+              239.0,
+              139.0
+            ]
+          },
+          {
+            "net": "GND_CTRL",
+            "layer": "In1.Cu",
+            "priority": 2,
+            "bbox": [
+              1.0,
+              151.0,
+              239.0,
+              179.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "In2.Cu",
+            "priority": 3,
+            "bbox": [
+              1.0,
+              1.0,
+              116.5,
+              139.0
+            ]
+          },
+          {
+            "net": "SW",
+            "layer": "In2.Cu",
+            "priority": 4,
+            "bbox": [
+              66.0,
+              58.0,
+              196.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VOUT",
+            "layer": "In2.Cu",
+            "priority": 2,
+            "bbox": [
+              200.0,
+              1.0,
+              239.0,
+              139.0
+            ]
+          }
+        ],
+        "saved": {
+          "path": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_pcb",
+          "footprints": 237,
+          "tracks": 0,
+          "vias": 0,
+          "zones": 23,
+          "nets": 104
+        },
+        "refill": {
+          "status": "ok",
+          "returncode": 0,
+          "stdout": "refilled 23",
+          "stderr": ""
+        }
+      },
+      "project_files_copied": [
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_pro",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_dru",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\01_power_stage.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\01_power_stage_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\02_gate_driver_hs.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\02_gate_driver_hs_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\03_gate_driver_ls.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\03_gate_driver_ls_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\04_sensing_island.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\04_sensing_island_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\05_selv_strip.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\05_selv_strip_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\06_mechanical.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\sym-lib-table",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\fp-lib-table"
+      ],
+      "checks": {
+        "issues": [
+          "13 HV pads closer than 5.0 mm to the HS1 courtyard (first: {'pad': 'R22.1', 'net': 'G_H', 'distance_mm': 4.255})",
+          "C11: 16.2 mm from the heatsink courtyard (< 20.0 mm, CR-23)",
+          "C12: 16.2 mm from the heatsink courtyard (< 20.0 mm, CR-23)",
+          "C13: 15.2 mm from the heatsink courtyard (< 20.0 mm, CR-23)",
+          "C14: 0.4 mm from the inductor keep-out circle (< 15.0 mm, CR-23)",
+          "3 parts taller than 15.0 mm inside the heatsink corridors: C11(intake), C12(intake), C13(intake)",
+          "Q2 pin 2 (PGND): no HF capacitor pad within 5.0 mm"
+        ],
+        "band_violations": [],
+        "heatsink_courtyard": [
+          46.705,
+          20.455,
+          148.295,
+          121.545
+        ],
+        "corridors": {
+          "intake": [
+            1.705,
+            20.455,
+            46.705,
+            121.545
+          ],
+          "exhaust": [
+            148.295,
+            20.455,
+            178.295,
+            121.545
+          ],
+          "intake_on_board_mm": 45.0,
+          "exhaust_on_board_mm": 30.0
+        },
+        "hv_pad_to_heatsink_min_mm": 1.255,
+        "hv_pads_inside_heatsink_keepout": [
+          {
+            "pad": "R22.1",
+            "net": "G_H",
+            "distance_mm": 4.255
+          },
+          {
+            "pad": "R22.2",
+            "net": "KS_H",
+            "distance_mm": 4.255
+          },
+          {
+            "pad": "R32.1",
+            "net": "HS_FB_VEE",
+            "distance_mm": 4.387
+          },
+          {
+            "pad": "R32.2",
+            "net": "VEE_H",
+            "distance_mm": 2.888
+          },
+          {
+            "pad": "R21.1",
+            "net": "HS_CLMP",
+            "distance_mm": 4.48
+          },
+          {
+            "pad": "R21.2",
+            "net": "G_H",
+            "distance_mm": 4.48
+          },
+          {
+            "pad": "R33.1",
+            "net": "HS_RLIM",
+            "distance_mm": 1.255
+          },
+          {
+            "pad": "R33.2",
+            "net": "KS_H",
+            "distance_mm": 1.255
+          },
+          {
+            "pad": "R25.1",
+            "net": "DESAT_H_A",
+            "distance_mm": 3.23
+          },
+          {
+            "pad": "R25.2",
+            "net": "DESAT_H_OC",
+            "distance_mm": 4.88
+          },
+          {
+            "pad": "R30.1",
+            "net": "HS_FB_VDD",
+            "distance_mm": 3.73
+          },
+          {
+            "pad": "R31.1",
+            "net": "KS_H",
+            "distance_mm": 1.48
+          },
+          {
+            "pad": "R31.2",
+            "net": "HS_FB_VEE",
+            "distance_mm": 1.48
+          }
+        ],
+        "spacing": {
+          "C11": {
+            "to_heatsink_mm": 16.16,
+            "to_inductor_mm": 139.251
+          },
+          "C12": {
+            "to_heatsink_mm": 16.16,
+            "to_inductor_mm": 137.805
+          },
+          "C13": {
+            "to_heatsink_mm": 15.16,
+            "to_inductor_mm": 138.791
+          },
+          "C14": {
+            "to_heatsink_mm": 33.81,
+            "to_inductor_mm": 0.405
+          },
+          "L1": {
+            "to_heatsink_mm": 20.055,
+            "in_exhaust_stream": true
+          }
+        },
+        "tall_parts_in_corridors": [
+          {
+            "ref": "C11",
+            "corridor": "intake",
+            "height_mm": 37.0
+          },
+          {
+            "ref": "C12",
+            "corridor": "intake",
+            "height_mm": 37.0
+          },
+          {
+            "ref": "C13",
+            "corridor": "intake",
+            "height_mm": 45.0
+          }
+        ],
+        "driver_to_gate": {
+          "Q1": {
+            "driver": "U1",
+            "distance_mm": 11.378,
+            "within_15mm": true
+          },
+          "Q2": {
+            "driver": "U3",
+            "distance_mm": 11.378,
+            "within_15mm": true
+          }
+        },
+        "hf_capacitors": {
+          "Q1.1": {
+            "net": "VIN",
+            "nearest_mm": 4.66,
+            "within_row1": 1,
+            "within_row2": 2
+          },
+          "Q2.2": {
+            "net": "PGND",
+            "nearest_mm": 8.0,
+            "within_row1": 0,
+            "within_row2": 3
+          }
+        },
+        "island_courtyard_gap_mm": 3.66,
+        "hv_to_selv_pad_min_mm": 10.994,
+        "hv_to_selv_pair": [
+          "R26",
+          "U1"
+        ]
+      },
+      "power_path": {
+        "total_mm": 889.1,
+        "segments": [
+          {
+            "from_": "J1.1",
+            "to": "RT1.1",
+            "mm": 41.8
+          },
+          {
+            "from_": "RT1.1",
+            "to": "RT1.2",
+            "mm": 10.0
+          },
+          {
+            "from_": "RT1.2",
+            "to": "J6.1",
+            "mm": 20.06
+          },
+          {
+            "from_": "J6.1",
+            "to": "C11.1",
+            "mm": 74.86
+          },
+          {
+            "from_": "C11.1",
+            "to": "Q1.1",
+            "mm": 97.86
+          },
+          {
+            "from_": "Q1.1",
+            "to": "Q1.2",
+            "mm": 5.08
+          },
+          {
+            "from_": "Q1.2",
+            "to": "Q2.1",
+            "mm": 22.92
+          },
+          {
+            "from_": "Q2.1",
+            "to": "L1.1",
+            "mm": 114.87
+          },
+          {
+            "from_": "L1.1",
+            "to": "L1.2",
+            "mm": 25.4
+          },
+          {
+            "from_": "L1.2",
+            "to": "U10.1",
+            "mm": 72.67
+          },
+          {
+            "from_": "U10.1",
+            "to": "U10.2",
+            "mm": 5.08
+          },
+          {
+            "from_": "U10.2",
+            "to": "C13.1",
+            "mm": 187.42
+          },
+          {
+            "from_": "C13.1",
+            "to": "J3.1",
+            "mm": 211.13
+          }
+        ],
+        "layer_transitions": 3,
+        "layer_plan": [
+          "VIN In2.Cu from the left film column to the HF tier (via array: 1)",
+          "SW F.Cu node -> In2.Cu -> L1 pad 1 (2)",
+          "VOUT F.Cu patch -> In2.Cu bus -> J3 / C14 (3)"
+        ]
+      },
+      "hv_area_utilisation": 0.752,
+      "hf_pads_within_row2_min": 2,
+      "mezzanine_xy": [
+        185.0,
+        163.0
+      ],
+      "board_counts": {
+        "tracks": 0,
+        "vias": 0,
+        "zones": 23
+      },
+      "pcbnew_version": "10.0.7",
+      "stackup_mm": 2.0,
+      "routed": false,
+      "layout_metrics": {
+        "json": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\layout_metrics_power_A.json",
+        "md": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\layout_metrics_power_A.md",
+        "summary": {
+          "rows": 81,
+          "within_threshold": 32,
+          "exceeding_threshold": 24,
+          "measured_only": 25,
+          "not_measured": 0
+        }
+      },
+      "drc_lite": {
+        "kind": "drc-lite (no schematic parity; floorplan comparison only, not verification)",
+        "command": [
+          "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+          "pcb",
+          "drc",
+          "--format",
+          "json",
+          "--severity-all",
+          "--exit-code-violations",
+          "--refill-zones",
+          "--output",
+          "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\drc\\20261010T131552Z-drc-lite\\drc.json",
+          "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_pcb"
+        ],
+        "source": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\AIPE_SiC_Buck_Power.kicad_pcb",
+        "source_sha256": "b9ad78ed8d1f7d94dc07aa310d07729ce9d55bc34d51b4880696c01547c8ff92",
+        "report": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\drc\\20261010T131552Z-drc-lite\\drc.json",
+        "tool_exit_code": 5,
+        "violations": 20,
+        "unconnected_items": 499,
+        "schematic_parity": 0,
+        "violations_by_type": {
+          "clearance": 12,
+          "isolated_copper": 2,
+          "items_not_allowed": 2,
+          "silk_edge_clearance": 4
+        },
+        "details": [
+          "items_not_allowed: \u4e0d\u5141\u8bb8\u7684\u9879\u76ee (keepout \u57df 'ISO_BARRIER_1') @ {'x': 6.0, 'y': 142.0}",
+          "items_not_allowed: \u4e0d\u5141\u8bb8\u7684\u9879\u76ee (keepout \u57df 'ISO_BARRIER_1') @ {'x': 6.0, 'y': 142.0}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 100.825, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0218 mm) @ {'x': 218.54, 'y': 139.625}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.7500 mm) @ {'x': 214.095, 'y': 149.875}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 71.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 71.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 71.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 71.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 71.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 99.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 99.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 99.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 99.555, 'y': 149.65}",
+          "isolated_copper: Isolated copper fill @ {'x': 200.0, 'y': 139.0}",
+          "isolated_copper: Isolated copper fill @ {'x': 200.0, 'y': 139.0}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 96.255, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 96.255, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 68.255, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 68.255, 'y': 144.4}"
+        ],
+        "status": "completed",
+        "manifest": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\A\\drc\\20261010T131552Z-drc-lite\\run.json"
+      },
+      "seconds": 32.484,
+      "criteria": {
+        "board_area_mm2": 43200.0,
+        "hv_area_utilisation": 0.752,
+        "power_path_mm": 889.1,
+        "power_path_layer_transitions": 3,
+        "hf_cap_row1_max_mm": 8.0,
+        "hf_pads_within_row2_min": 2,
+        "driver_to_gate_max_mm": 11.378,
+        "sw_copper_mm2": 3922.9,
+        "hv_to_selv_min_mm": 12.0,
+        "barrier_min_land_gap_mm": 7.25,
+        "barrier_slots_present": "8/8",
+        "heatsink_hv_min_mm": 5.075,
+        "film_to_heatsink_min_mm": 15.16,
+        "inductor_to_heatsink_mm": 20.055,
+        "film_to_inductor_min_mm": 0.405,
+        "tall_parts_in_corridors": 3,
+        "mezzanine_xy": [
+          185.0,
+          163.0
+        ],
+        "drc_lite_findings": 20,
+        "drc_lite_by_type": {
+          "clearance": 12,
+          "isolated_copper": 2,
+          "items_not_allowed": 2,
+          "silk_edge_clearance": 4
+        },
+        "placement_issues": 42
+      },
+      "placements_count": 237
+    },
+    "B": {
+      "candidate": "B",
+      "candidate_title": "Power board floorplan B - heatsink top-left, inductor and films in a row to the right",
+      "candidate_file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\floorplan_candidates\\power_B.json",
+      "board": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_pcb",
+      "board_mm": [
+        240.0,
+        180.0
+      ],
+      "bands": {
+        "hv_y_max": 140.0,
+        "barrier": [
+          140.0,
+          150.0
+        ],
+        "barrier_line_y": 145.0,
+        "selv_y_min": 150.0
+      },
+      "footprints": 237,
+      "nets": 104,
+      "netlist_nodes": 651,
+      "placement_issues": [
+        "C32: region selv_hs_b full, rectangles grown by 1.5 mm (within its band)",
+        "R11: region snubber full, rectangles grown by 1.5 mm (within its band)",
+        "R11: region snubber full, rectangles grown by 3.0 mm (within its band)",
+        "R11: region snubber full, rectangles grown by 4.5 mm (within its band)",
+        "R13: region damping full, rectangles grown by 1.5 mm (within its band)",
+        "R50: region ls_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "R51: region ls_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "TP1: region hs_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 1.5 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 3.0 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 4.5 mm (within its band)",
+        "TP2: region ls_island_b full, rectangles grown by 6.0 mm (within its band)"
+      ],
+      "barrier": [
+        {
+          "ref": "U2",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                44.75,
+                144.4,
+                62.25,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        },
+        {
+          "ref": "U1",
+          "hv_pads": 8,
+          "selv_pads": 8,
+          "hv_y_max": 141.375,
+          "selv_y_min": 148.625,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.25,
+          "slot": {
+            "kind": "board Edge.Cuts",
+            "rects": [
+              [
+                64.255,
+                144.4,
+                79.745,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 9.411
+        },
+        {
+          "ref": "U3",
+          "hv_pads": 8,
+          "selv_pads": 8,
+          "hv_y_max": 141.375,
+          "selv_y_min": 148.625,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.25,
+          "slot": {
+            "kind": "board Edge.Cuts",
+            "rects": [
+              [
+                92.255,
+                144.4,
+                107.745,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 9.411
+        },
+        {
+          "ref": "U4",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                109.75,
+                144.4,
+                127.25,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        },
+        {
+          "ref": "U10",
+          "hv_pads": 2,
+          "selv_pads": 8,
+          "hv_y_max": 141.125,
+          "selv_y_min": 148.875,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 7.75,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                159.25,
+                144.4,
+                174.75,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.005,
+          "surface_path_mm": 9.807
+        },
+        {
+          "ref": "U7",
+          "hv_pads": 4,
+          "selv_pads": 4,
+          "hv_y_max": 140.45,
+          "selv_y_min": 149.55,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 9.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                183.8,
+                144.4,
+                194.2,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 2.995,
+          "surface_path_mm": 10.894
+        },
+        {
+          "ref": "U6",
+          "hv_pads": 4,
+          "selv_pads": 4,
+          "hv_y_max": 140.45,
+          "selv_y_min": 149.55,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 9.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                198.8,
+                144.4,
+                209.2,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 2.995,
+          "surface_path_mm": 10.894
+        },
+        {
+          "ref": "U5",
+          "hv_pads": 18,
+          "selv_pads": 18,
+          "hv_y_max": 140.95,
+          "selv_y_min": 149.05,
+          "hv_toward_hv_area": true,
+          "land_gap_mm": 8.1,
+          "slot": {
+            "kind": "footprint NPTH",
+            "rects": [
+              [
+                213.75,
+                144.4,
+                231.25,
+                145.6
+              ]
+            ]
+          },
+          "slot_extension_mm": 3.0,
+          "surface_path_mm": 10.08
+        }
+      ],
+      "slots_added": [
+        {
+          "ref": "U1",
+          "rect": [
+            64.255,
+            144.4,
+            79.745,
+            145.6
+          ],
+          "land_gap_mm": 7.25,
+          "row_axis": "x",
+          "surface_path_mm": 9.4108,
+          "silkscreen_note": "library silkscreen crosses the slot (DRC warning silk_edge_clearance, cosmetic)"
+        },
+        {
+          "ref": "U3",
+          "rect": [
+            92.255,
+            144.4,
+            107.745,
+            145.6
+          ],
+          "land_gap_mm": 7.25,
+          "row_axis": "x",
+          "surface_path_mm": 9.4108,
+          "silkscreen_note": "library silkscreen crosses the slot (DRC warning silk_edge_clearance, cosmetic)"
+        }
+      ],
+      "rule_areas": [
+        {
+          "name": "ISO_BARRIER_1",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            1.0,
+            140.0,
+            43.905,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_2",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            63.095,
+            140.0,
+            66.255,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_3",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            77.745,
+            140.0,
+            94.255,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_4",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            105.745,
+            140.0,
+            108.905,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_5",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            128.095,
+            140.0,
+            158.405,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_6",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            175.595,
+            140.0,
+            182.955,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_7",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            195.045,
+            140.0,
+            197.955,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_8",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            210.045,
+            140.0,
+            212.905,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        },
+        {
+          "name": "ISO_BARRIER_9",
+          "layers": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "bbox": [
+            232.095,
+            140.0,
+            239.0,
+            150.0
+          ],
+          "forbid": [
+            "copperpour",
+            "footprints",
+            "pads",
+            "tracks",
+            "vias"
+          ]
+        }
+      ],
+      "zones": {
+        "zones": [
+          {
+            "net": "SW",
+            "layer": "F.Cu",
+            "priority": 9,
+            "bbox": [
+              64.0,
+              126.6,
+              92.5,
+              139.0
+            ]
+          },
+          {
+            "net": "SW",
+            "layer": "F.Cu",
+            "priority": 8,
+            "bbox": [
+              128.0,
+              86.0,
+              150.0,
+              104.0
+            ]
+          },
+          {
+            "net": "VOUT_L",
+            "layer": "F.Cu",
+            "priority": 7,
+            "bbox": [
+              168.0,
+              86.0,
+              180.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VOUT",
+            "layer": "F.Cu",
+            "priority": 6,
+            "bbox": [
+              150.0,
+              128.0,
+              195.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "F.Cu",
+            "priority": 5,
+            "bbox": [
+              56.2,
+              126.6,
+              66.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "F.Cu",
+            "priority": 4,
+            "bbox": [
+              49.0,
+              1.0,
+              86.5,
+              15.4
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "F.Cu",
+            "priority": 3,
+            "bbox": [
+              94.0,
+              126.6,
+              106.8,
+              139.0
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "F.Cu",
+            "priority": 2,
+            "bbox": [
+              89.0,
+              1.0,
+              103.0,
+              15.4
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "F.Cu",
+            "priority": 1,
+            "bbox": [
+              226.0,
+              93.5,
+              239.0,
+              107.5
+            ]
+          },
+          {
+            "net": "PGND",
+            "layer": "In1.Cu",
+            "priority": 1,
+            "bbox": [
+              1.0,
+              1.0,
+              239.0,
+              139.0
+            ]
+          },
+          {
+            "net": "GND_CTRL",
+            "layer": "In1.Cu",
+            "priority": 2,
+            "bbox": [
+              1.0,
+              151.0,
+              239.0,
+              179.0
+            ]
+          },
+          {
+            "net": "VIN",
+            "layer": "In2.Cu",
+            "priority": 3,
+            "bbox": [
+              41.0,
+              1.0,
+              208.5,
+              139.0
+            ]
+          },
+          {
+            "net": "SW",
+            "layer": "In2.Cu",
+            "priority": 4,
+            "bbox": [
+              62.0,
+              86.0,
+              150.0,
+              139.0
+            ]
+          },
+          {
+            "net": "VOUT",
+            "layer": "In2.Cu",
+            "priority": 2,
+            "bbox": [
+              181.0,
+              38.0,
+              238.5,
+              139.0
+            ]
+          }
+        ],
+        "saved": {
+          "path": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_pcb",
+          "footprints": 237,
+          "tracks": 0,
+          "vias": 0,
+          "zones": 23,
+          "nets": 104
+        },
+        "refill": {
+          "status": "ok",
+          "returncode": 0,
+          "stdout": "refilled 23",
+          "stderr": ""
+        }
+      },
+      "project_files_copied": [
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_pro",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_dru",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\01_power_stage.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\01_power_stage_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\02_gate_driver_hs.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\02_gate_driver_hs_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\03_gate_driver_ls.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\03_gate_driver_ls_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\04_sensing_island.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\04_sensing_island_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\05_selv_strip.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\05_selv_strip_2.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\06_mechanical.kicad_sch",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\sym-lib-table",
+        "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\fp-lib-table"
+      ],
+      "checks": {
+        "issues": [
+          "Q2 pin 2 (PGND): no HF capacitor pad within 5.0 mm"
+        ],
+        "band_violations": [],
+        "heatsink_courtyard": [
+          1.005,
+          20.455,
+          102.595,
+          121.545
+        ],
+        "corridors": {
+          "intake": [
+            0.0,
+            20.455,
+            1.005,
+            121.545
+          ],
+          "exhaust": [
+            102.595,
+            20.455,
+            132.595,
+            121.545
+          ],
+          "intake_on_board_mm": 1.005,
+          "exhaust_on_board_mm": 30.0
+        },
+        "hv_pad_to_heatsink_min_mm": 5.02,
+        "hv_pads_inside_heatsink_keepout": [],
+        "spacing": {
+          "C11": {
+            "to_heatsink_mm": 33.91,
+            "to_inductor_mm": 26.905
+          },
+          "C12": {
+            "to_heatsink_mm": 76.56,
+            "to_inductor_mm": 18.051
+          },
+          "C13": {
+            "to_heatsink_mm": 105.76,
+            "to_inductor_mm": 33.63
+          },
+          "C14": {
+            "to_heatsink_mm": 105.76,
+            "to_inductor_mm": 15.334
+          },
+          "L1": {
+            "to_heatsink_mm": 20.355,
+            "in_exhaust_stream": true
+          }
+        },
+        "tall_parts_in_corridors": [],
+        "driver_to_gate": {
+          "Q1": {
+            "driver": "U1",
+            "distance_mm": 11.378,
+            "within_15mm": true
+          },
+          "Q2": {
+            "driver": "U3",
+            "distance_mm": 11.378,
+            "within_15mm": true
+          }
+        },
+        "hf_capacitors": {
+          "Q1.1": {
+            "net": "VIN",
+            "nearest_mm": 4.66,
+            "within_row1": 1,
+            "within_row2": 2
+          },
+          "Q2.2": {
+            "net": "PGND",
+            "nearest_mm": 8.0,
+            "within_row1": 0,
+            "within_row2": 3
+          }
+        },
+        "island_courtyard_gap_mm": 4.38,
+        "hv_to_selv_pad_min_mm": 11.09,
+        "hv_to_selv_pair": [
+          "U2",
+          "U1"
+        ]
+      },
+      "power_path": {
+        "total_mm": 639.2,
+        "segments": [
+          {
+            "from_": "J1.1",
+            "to": "RT1.1",
+            "mm": 41.8
+          },
+          {
+            "from_": "RT1.1",
+            "to": "RT1.2",
+            "mm": 10.0
+          },
+          {
+            "from_": "RT1.2",
+            "to": "J6.1",
+            "mm": 20.06
+          },
+          {
+            "from_": "J6.1",
+            "to": "C11.1",
+            "mm": 78.91
+          },
+          {
+            "from_": "C11.1",
+            "to": "Q1.1",
+            "mm": 132.99
+          },
+          {
+            "from_": "Q1.1",
+            "to": "Q1.2",
+            "mm": 5.08
+          },
+          {
+            "from_": "Q1.2",
+            "to": "Q2.1",
+            "mm": 22.92
+          },
+          {
+            "from_": "Q2.1",
+            "to": "L1.1",
+            "mm": 66.54
+          },
+          {
+            "from_": "L1.1",
+            "to": "L1.2",
+            "mm": 25.4
+          },
+          {
+            "from_": "L1.2",
+            "to": "U10.1",
+            "mm": 47.64
+          },
+          {
+            "from_": "U10.1",
+            "to": "U10.2",
+            "mm": 5.08
+          },
+          {
+            "from_": "U10.2",
+            "to": "C13.1",
+            "mm": 119.28
+          },
+          {
+            "from_": "C13.1",
+            "to": "J3.1",
+            "mm": 63.55
+          }
+        ],
+        "layer_transitions": 3,
+        "layer_plan": [
+          "J1/RT1/J6 F.Cu+In2.Cu VIN top band",
+          "VIN In2.Cu bus under the sink to the HF tier (via array to F.Cu: 1)",
+          "Q1/Q2 PTH; SW F.Cu node -> In2.Cu path -> L1 pad 1 PTH (2)",
+          "VOUT_L F.Cu to U10 (SMD)",
+          "VOUT F.Cu patch -> via array -> In2.Cu bus -> C13/C14 and J3 PTH (3)"
+        ]
+      },
+      "hv_area_utilisation": 0.752,
+      "hf_pads_within_row2_min": 2,
+      "mezzanine_xy": [
+        176.0,
+        163.0
+      ],
+      "board_counts": {
+        "tracks": 0,
+        "vias": 0,
+        "zones": 23
+      },
+      "pcbnew_version": "10.0.7",
+      "stackup_mm": 2.0,
+      "routed": false,
+      "layout_metrics": {
+        "json": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\layout_metrics_power_B.json",
+        "md": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\layout_metrics_power_B.md",
+        "summary": {
+          "rows": 81,
+          "within_threshold": 32,
+          "exceeding_threshold": 24,
+          "measured_only": 25,
+          "not_measured": 0
+        }
+      },
+      "drc_lite": {
+        "kind": "drc-lite (no schematic parity; floorplan comparison only, not verification)",
+        "command": [
+          "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+          "pcb",
+          "drc",
+          "--format",
+          "json",
+          "--severity-all",
+          "--exit-code-violations",
+          "--refill-zones",
+          "--output",
+          "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\drc\\20261010T131628Z-drc-lite\\drc.json",
+          "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_pcb"
+        ],
+        "source": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\AIPE_SiC_Buck_Power.kicad_pcb",
+        "source_sha256": "1a567c547936b2aff6217f4886a6b683daaaeca0fe1d8584292b829c28291915",
+        "report": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\drc\\20261010T131628Z-drc-lite\\drc.json",
+        "tool_exit_code": 5,
+        "violations": 16,
+        "unconnected_items": 499,
+        "schematic_parity": 0,
+        "violations_by_type": {
+          "clearance": 12,
+          "silk_edge_clearance": 4
+        },
+        "details": [
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 96.825, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 67.555, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.7500 mm) @ {'x': 164.46, 'y': 139.625}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 68.825, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0218 mm) @ {'x': 165.095, 'y': 149.875}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 70.095, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 71.365, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 72.635, 'y': 140.35}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 95.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 95.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 95.555, 'y': 149.65}",
+          "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 95.555, 'y': 149.65}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 64.254999, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 64.254999, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 92.255, 'y': 144.4}",
+          "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 92.255, 'y': 144.4}"
+        ],
+        "status": "completed",
+        "manifest": "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\B\\drc\\20261010T131628Z-drc-lite\\run.json"
+      },
+      "seconds": 35.406,
+      "criteria": {
+        "board_area_mm2": 43200.0,
+        "hv_area_utilisation": 0.752,
+        "power_path_mm": 639.2,
+        "power_path_layer_transitions": 3,
+        "hf_cap_row1_max_mm": 8.0,
+        "hf_pads_within_row2_min": 2,
+        "driver_to_gate_max_mm": 11.378,
+        "sw_copper_mm2": 3087.8,
+        "hv_to_selv_min_mm": 12.0,
+        "barrier_min_land_gap_mm": 7.25,
+        "barrier_slots_present": "8/8",
+        "heatsink_hv_min_mm": 5.075,
+        "film_to_heatsink_min_mm": 33.91,
+        "inductor_to_heatsink_mm": 20.355,
+        "film_to_inductor_min_mm": 15.334,
+        "tall_parts_in_corridors": 0,
+        "mezzanine_xy": [
+          176.0,
+          163.0
+        ],
+        "drc_lite_findings": 16,
+        "drc_lite_by_type": {
+          "clearance": 12,
+          "silk_edge_clearance": 4
+        },
+        "placement_issues": 14
+      },
+      "placements_count": 237
+    }
+  },
+  "final": {
+    "board": "C:\\Users\\ZHONGN~1\\AppData\\Local\\Temp\\claude\\d--Cursor-Workspace-AIPE-PCB-Agent\\d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8\\scratchpad\\power_board\\floorplan\\selected\\AIPE_SiC_Buck_Power.kicad_pcb",
+    "drc": {
+      "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261010T131707Z-drc-be0bc838\\run.json",
+      "wrapper_exit_code": 5,
+      "tool_exit_code": 5,
+      "status": "failed",
+      "finding_count": 515,
+      "violations": 16,
+      "violations_by_type": {
+        "clearance": 12,
+        "silk_edge_clearance": 4
+      },
+      "unconnected_items": 499,
+      "schematic_parity": 0,
+      "details": [
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 95.555, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 98.095, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.2500 mm) @ {'x': 67.555, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 99.365, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 100.635, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0218 mm) @ {'x': 169.54, 'y': 139.625}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.6359 mm) @ {'x': 72.635, 'y': 140.35}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.7500 mm) @ {'x': 165.095, 'y': 149.875}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 95.555, 'y': 149.65}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.3121 mm) @ {'x': 67.555, 'y': 149.65}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 7.5753 mm) @ {'x': 67.555, 'y': 149.65}",
+        "clearance: \u95f4\u8ddd\u8fdd\u89c4 (\u89c4\u5219 'HV side to CTRL_SELV (all layers)' \u95f4\u8ddd 9.0000 mm; \u5b9e\u9645 8.0260 mm) @ {'x': 67.555, 'y': 149.65}",
+        "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 64.254999, 'y': 144.4}",
+        "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 64.254999, 'y': 144.4}",
+        "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 92.255, 'y': 144.4}",
+        "silk_edge_clearance: Silkscreen clipped by board edge @ {'x': 92.255, 'y': 144.4}"
+      ],
+      "error": null
+    },
+    "checks": {
+      "issues": [
+        "Q2 pin 2 (PGND): no HF capacitor pad within 5.0 mm"
+      ],
+      "band_violations": [],
+      "heatsink_courtyard": [
+        1.005,
+        20.455,
+        102.595,
+        121.545
+      ],
+      "corridors": {
+        "intake": [
+          0.0,
+          20.455,
+          1.005,
+          121.545
+        ],
+        "exhaust": [
+          102.595,
+          20.455,
+          132.595,
+          121.545
+        ],
+        "intake_on_board_mm": 1.005,
+        "exhaust_on_board_mm": 30.0
+      },
+      "hv_pad_to_heatsink_min_mm": 5.02,
+      "hv_pads_inside_heatsink_keepout": [],
+      "spacing": {
+        "C11": {
+          "to_heatsink_mm": 33.91,
+          "to_inductor_mm": 26.905
+        },
+        "C12": {
+          "to_heatsink_mm": 76.56,
+          "to_inductor_mm": 18.051
+        },
+        "C13": {
+          "to_heatsink_mm": 105.76,
+          "to_inductor_mm": 33.63
+        },
+        "C14": {
+          "to_heatsink_mm": 105.76,
+          "to_inductor_mm": 15.334
+        },
+        "L1": {
+          "to_heatsink_mm": 20.355,
+          "in_exhaust_stream": true
+        }
+      },
+      "tall_parts_in_corridors": [],
+      "driver_to_gate": {
+        "Q1": {
+          "driver": "U1",
+          "distance_mm": 11.378,
+          "within_15mm": true
+        },
+        "Q2": {
+          "driver": "U3",
+          "distance_mm": 11.378,
+          "within_15mm": true
+        }
+      },
+      "hf_capacitors": {
+        "Q1.1": {
+          "net": "VIN",
+          "nearest_mm": 4.66,
+          "within_row1": 1,
+          "within_row2": 2
+        },
+        "Q2.2": {
+          "net": "PGND",
+          "nearest_mm": 8.0,
+          "within_row1": 0,
+          "within_row2": 3
+        }
+      },
+      "island_courtyard_gap_mm": 4.38,
+      "hv_to_selv_pad_min_mm": 11.09,
+      "hv_to_selv_pair": [
+        "U4",
+        "U3"
+      ]
+    },
+    "barrier": [
+      {
+        "ref": "U2",
+        "hv_pads": 18,
+        "selv_pads": 18,
+        "hv_y_max": 140.95,
+        "selv_y_min": 149.05,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 8.1,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              44.75,
+              144.4,
+              62.25,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.0,
+        "surface_path_mm": 10.08
+      },
+      {
+        "ref": "U1",
+        "hv_pads": 8,
+        "selv_pads": 8,
+        "hv_y_max": 141.375,
+        "selv_y_min": 148.625,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 7.25,
+        "slot": {
+          "kind": "board Edge.Cuts",
+          "rects": [
+            [
+              64.255,
+              144.4,
+              79.745,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.0,
+        "surface_path_mm": 9.411
+      },
+      {
+        "ref": "U3",
+        "hv_pads": 8,
+        "selv_pads": 8,
+        "hv_y_max": 141.375,
+        "selv_y_min": 148.625,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 7.25,
+        "slot": {
+          "kind": "board Edge.Cuts",
+          "rects": [
+            [
+              92.255,
+              144.4,
+              107.745,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.0,
+        "surface_path_mm": 9.411
+      },
+      {
+        "ref": "U4",
+        "hv_pads": 18,
+        "selv_pads": 18,
+        "hv_y_max": 140.95,
+        "selv_y_min": 149.05,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 8.1,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              109.75,
+              144.4,
+              127.25,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.0,
+        "surface_path_mm": 10.08
+      },
+      {
+        "ref": "U10",
+        "hv_pads": 2,
+        "selv_pads": 8,
+        "hv_y_max": 141.125,
+        "selv_y_min": 148.875,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 7.75,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              159.25,
+              144.4,
+              174.75,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.005,
+        "surface_path_mm": 9.807
+      },
+      {
+        "ref": "U7",
+        "hv_pads": 4,
+        "selv_pads": 4,
+        "hv_y_max": 140.45,
+        "selv_y_min": 149.55,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 9.1,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              183.8,
+              144.4,
+              194.2,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 2.995,
+        "surface_path_mm": 10.894
+      },
+      {
+        "ref": "U6",
+        "hv_pads": 4,
+        "selv_pads": 4,
+        "hv_y_max": 140.45,
+        "selv_y_min": 149.55,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 9.1,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              198.8,
+              144.4,
+              209.2,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 2.995,
+        "surface_path_mm": 10.894
+      },
+      {
+        "ref": "U5",
+        "hv_pads": 18,
+        "selv_pads": 18,
+        "hv_y_max": 140.95,
+        "selv_y_min": 149.05,
+        "hv_toward_hv_area": true,
+        "land_gap_mm": 8.1,
+        "slot": {
+          "kind": "footprint NPTH",
+          "rects": [
+            [
+              213.75,
+              144.4,
+              231.25,
+              145.6
+            ]
+          ]
+        },
+        "slot_extension_mm": 3.0,
+        "surface_path_mm": 10.08
+      }
+    ]
+  }
+}

@@ -3,7 +3,8 @@
 Pure-Python parts run with the host interpreter: candidate loading and validation (regions, rectilinear
 islands, disjoint islands, every model part assigned), the LQFP escape planner (alternation along pin runs,
 core-rail pins inward / I/O-rail pins outward where parity allows, grid-snapped vias, via spacing), the
-In2.Cu corridor geometry, the routing plan (validated by grid_router.validate_plan), the stackup arithmetic,
+In2.Cu corridor geometry (records and priorities independent of the item order), the deterministic zone identities (KIID
+tie-break rank), the routing plan (validated by grid_router.validate_plan), the stackup arithmetic,
 the Manhattan MST, the candidate scoring and the In2.Cu signal pass helpers (rectilinear island decomposition for
 the keepouts, Z-shaped waypoint choice, inner-layer nets excluded from the F.Cu/B.Cu stages without an F.Cu lane
 stub). The pcbnew part runs this file under KiCad's bundled Python
@@ -148,8 +149,8 @@ class CorridorTests(unittest.TestCase):
                  dict(net='1V9', xy=[22.0, 12.0], kind='via')]   # core via outside: finger to the island
         result = g.island_corridors(items, self.ISLANDS)
         self.assertEqual(result['issues'], [])
-        self.assertEqual([c['net'] for c in result['corridors']], ['3V3', '1V9'])
-        notch, finger = result['corridors']
+        self.assertEqual([c['net'] for c in result['corridors']], ['1V9', '3V3'])  # corridor_sort_key order: net first, not the item order
+        finger, notch = result['corridors']
         self.assertEqual(notch['direction'], [1, 0])
         box = g.polygon_bbox(notch['polygon'])
         self.assertTrue(box[0] <= 18.5 <= box[2] and box[1] <= 15.0 <= box[3])
@@ -176,8 +177,8 @@ class CorridorTests(unittest.TestCase):
         obstacles = [dict(net='SIG', xy=[21.0, 12.0], r=0.3)]
         result = g.island_corridors(items, self.ISLANDS, obstacles=obstacles)
         self.assertEqual(result['issues'], [])
-        self.assertEqual([c.get('leg') for c in result['corridors']], [1, 2])
-        leg1, leg2 = result['corridors']
+        self.assertEqual(sorted(c.get('leg') for c in result['corridors']), [1, 2])
+        leg1, leg2 = sorted(result['corridors'], key=lambda c: c['leg'])  # the records are sorted by rectangle; pick the legs by number
         self.assertNotEqual(leg1['priority'], leg2['priority'])  # overlapping same-net zones need distinct priorities
         self.assertTrue(min(leg1['priority'], leg2['priority']) >= g.CORRIDOR_PRIORITY)
         self.assertEqual(leg1['direction'][0], 0)  # lateral first leg
@@ -192,6 +193,64 @@ class CorridorTests(unittest.TestCase):
         wider = g.island_corridors(items, self.ISLANDS, obstacles=obstacles + [dict(net='SIG', xy=[22.0, 13.5], r=0.3), dict(net='SIG', xy=[22.0, 10.5], r=0.3)])
         self.assertEqual(wider['corridors'], [])
         self.assertEqual(len(wider['issues']), 1)
+
+    def test_records_do_not_depend_on_the_input_order(self):
+        # A reloaded board lists its vias in an order that is not reproducible between runs. The corridor records - polygons, the
+        # distinct priorities CORRIDOR_PRIORITY + index, the issue texts - must be identical for every permutation of the items
+        # and of the obstacles (the priorities decide which same-net corridor owns an overlap on the filled board).
+        import random
+        items = [dict(net='3V3', xy=[18.5, 15.0], kind='via'), dict(net='3V3', xy=[12.5, 11.0], kind='pad U1.3'),  # notches east / north
+                 dict(net='1V9', xy=[22.0, 12.0], kind='via'),                                                      # L-shape around the SIG via
+                 dict(net='1V9', xy=[22.0, 17.0], kind='via'), dict(net='1V9', xy=[12.0, 22.5], kind='via'),       # straight fingers
+                 dict(net='3V3', xy=[15.0, 15.0], kind='via')]                                                      # severed on every side
+        obstacles = [dict(net='SIG', xy=[21.0, 12.0], r=0.3)]
+        obstacles += [dict(net='1V9', xy=[15.0 + dx, 15.0 + dy], r=0.3) for dx, dy in ((0.7, 0), (-0.7, 0), (0, 0.7), (0, -0.7), (1.5, 0))]
+        obstacles += [dict(net=i['net'], xy=list(i['xy']), r=0.3) for i in items]
+        baseline = g.island_corridors(items, self.ISLANDS, obstacles=obstacles)
+        self.assertEqual([(c['net'], c.get('leg')) for c in baseline['corridors']],
+                         [('1V9', None), ('1V9', 2), ('1V9', None), ('1V9', 1), ('3V3', None), ('3V3', None)])  # net, then rectangle
+        self.assertEqual([c['priority'] for c in baseline['corridors']], [g.CORRIDOR_PRIORITY + i for i in range(6)])
+        keys = [g.corridor_sort_key(c) for c in baseline['corridors']]
+        self.assertEqual(keys, sorted(keys))
+        self.assertEqual(len(set(keys)), 6)
+        self.assertEqual([i['kind'] for i in baseline['issues']], ['via', 'corridor'])
+        self.assertIn('1V9@[14.3, 15.0], 1V9@[15.7, 15.0], 1V9@[16.5, 15.0]', baseline['issues'][0]['reason'])  # blockers in rail_item_key order
+        uncovered = g.uncovered_rail_items(items, self.ISLANDS, baseline['corridors'])
+        self.assertEqual(uncovered, [dict(net='3V3', xy=[15.0, 15.0], kind='via')])
+        for seed in range(8):
+            rng = random.Random(seed)
+            shuffled_items, shuffled_obstacles = list(items), list(obstacles)
+            rng.shuffle(shuffled_items)
+            rng.shuffle(shuffled_obstacles)
+            result = g.island_corridors(shuffled_items, self.ISLANDS, obstacles=shuffled_obstacles)
+            self.assertEqual(result, baseline, f'seed {seed}')  # priorities, polygons and issues alike
+            self.assertEqual(g.uncovered_rail_items(shuffled_items, self.ISLANDS, result['corridors']), uncovered)
+        self.assertEqual(g.island_corridors(list(reversed(items)), self.ISLANDS, obstacles=list(reversed(obstacles))), baseline)
+
+
+class ZoneIdentityTests(unittest.TestCase):
+    ISLAND_5V = [[21.0, 13.0], [43.5, 13.0], [43.5, 42.5], [21.0, 42.5]]
+    ISLAND_12V = [[3.0, 2.0], [44.0, 2.0], [44.0, 12.0], [21.0, 12.0], [21.0, 40.0], [8.5, 40.0], [8.5, 59.5], [33.0, 59.5], [33.0, 78.0],
+                  [3.0, 78.0], [3.0, 42.0], [8.0, 42.0], [8.0, 22.5], [3.0, 22.5]]
+
+    def test_zone_identity_is_deterministic_distinct_and_ranks_the_touching_islands(self):
+        import uuid
+        five = g.zone_identity('5V', 'In2.Cu', 2, self.ISLAND_5V)
+        self.assertEqual(five, g.zone_identity('5V', 'In2.Cu', 2, [(x, y) for x, y in self.ISLAND_5V]))  # same zone, same KIID
+        self.assertEqual(str(uuid.UUID(five)), five)  # a well-formed KIID string
+        self.assertNotEqual(five, g.zone_identity('5V', 'In2.Cu', 3, self.ISLAND_5V))  # the priority is part of the identity,
+        self.assertNotEqual(five, g.zone_identity('5V', 'In2.Cu', 2, [[21.0, 13.0], [43.5, 13.0], [43.5, 42.0], [21.0, 42.0]]))  # the outline
+        self.assertNotEqual(five, g.zone_identity('5V', 'In1.Cu', 2, self.ISLAND_5V))  # and the layer
+        # KiCad resolves touching zones of equal priority and different nets by KIID: the greater KIID keeps its outline. The 12V_PROT
+        # and 5V islands share the edge x = 21 mm; 12V_PROT first (as on the frozen V2 board), unknown nets last.
+        twelve = g.zone_identity('12V_PROT', 'In2.Cu', 2, self.ISLAND_12V)
+        self.assertGreater(uuid.UUID(twelve).int, uuid.UUID(five).int)
+        self.assertEqual(g.ZONE_TIE_BREAK_ORDER[0], '12V_PROT')
+        prefixes = [g.zone_identity(net, 'In2.Cu', 2, self.ISLAND_5V)[:8] for net in g.ZONE_TIE_BREAK_ORDER + ('SIG',)]
+        self.assertEqual(prefixes, sorted(prefixes, reverse=True))
+        self.assertEqual(len(set(prefixes)), len(prefixes))
+        notch = [[78.35, 40.85], [81.55, 40.85], [81.55, 42.4], [78.35, 42.4]]
+        self.assertNotEqual(g.zone_identity('3V3', 'In2.Cu', g.CORRIDOR_PRIORITY, notch), g.zone_identity('3V3', 'In2.Cu', g.CORRIDOR_PRIORITY + 1, notch))
 
 
 class PlanAndHelperTests(unittest.TestCase):
@@ -212,6 +271,19 @@ class PlanAndHelperTests(unittest.TestCase):
         self.assertEqual(plan['power']['3V3']['zones']['In2.Cu'], g.background_polygon())
         self.assertGreaterEqual(plan['grid'], 0.1)
         self.assertEqual(plan['via'], [0.6, 0.3])
+        self.assertNotIn('style', plan)  # no style argument = the V2 plan
+
+    def test_default_routing_style_validates_and_the_v2_geometry_is_opt_in(self):
+        cand = g.load_candidate(g.candidate_path('B'))
+        escapes = g.plan_dsp_escapes(lqfp_side('SG9S3S'), (68.0, 33.0))
+        styled = g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style=g.ROUTING_STYLE)
+        self.assertEqual(styled['style'], g.ROUTING_STYLE)
+        self.assertLessEqual(set(g.ROUTING_STYLE), set(gr.STYLE_DEFAULTS))
+        self.assertLessEqual(set(g.ROUTING_STYLE_DIAGONAL), set(gr.STYLE_DEFAULTS))
+        gr.validate_plan(styled)  # the style block passes the shared router's validation
+        gr.validate_plan(g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style=g.ROUTING_STYLE_DIAGONAL))
+        self.assertFalse(g.ROUTING_STYLE['diagonal'])  # 8-direction search stays opt-in on the control board (run time, see ROUTING_STYLE comment)
+        self.assertNotIn('style', g.routing_plan(cand, escapes, 'x.kicad_pcb', ic_refs=['U5'], style={}))
 
     def test_stackup_text_and_geometry_helpers(self):
         self.assertAlmostEqual(g.stackup_thickness_mm(), 1.6)
@@ -474,7 +546,8 @@ def place_scenario(out_dir) -> dict:
     for fp in board.GetFootprints():
         sides[fp.GetReference()] = 'B' if fp.IsFlipped() else 'F'
     text = (out_dir / f'{g.NAME}.kicad_pcb').read_text(encoding='utf-8')
-    return dict(footprints=len(result['placements']), issues=result['placement_issues'], sides=sides, copper_layers=board.GetCopperLayerCount(),
+    dnp = sorted(fp.GetReference() for fp in board.GetFootprints() if fp.IsDNP())
+    return dict(footprints=len(result['placements']), issues=result['placement_issues'], sides=sides, dnp=dnp, copper_layers=board.GetCopperLayerCount(),
                 stackup='(stackup' in text, nets=result['nets'], estimates={k: v for k, v in result['estimates'].items() if k.endswith('_mm') or k.endswith('fraction')},
                 silkscreen=len(result['silkscreen']))
 
@@ -505,6 +578,11 @@ class PlacementTests(unittest.TestCase):
         self.assertEqual(s['sides']['J8'], 'B')
         self.assertGreater(s['estimates']['analog_pwm_separation_mm'], 0.0)
         self.assertEqual(s['silkscreen'], 16)  # incl. the 'J8 PIN 1 >' and 'MEZZANINE (B.Cu)' labels of the B.Cu header (review LR-03)
+
+    def test_dnp_parts_carry_the_footprint_attribute(self):
+        expected = sorted(p['ref'] for p in g.load_parts() if p.get('dnp'))
+        self.assertTrue(expected, 'the control model has at least one DNP part (A-C12 UVLO_REF capacitor)')
+        self.assertEqual(self.summary['dnp'], expected)  # V2.1: the schematics write (dnp yes); kicad-cli --schematic-parity compares the attribute
 
 
 class EvidenceTests(unittest.TestCase):

@@ -1,0 +1,60 @@
+schema_version: 1
+source: task09102026.txt
+generation: v2
+status: requirements_captured_design_in_progress
+label: AI-GENERATED ENGINEERING PROTOTYPE V2 - HUMAN REVIEW REQUIRED
+
+# --- User requirements (given in the task; not negotiable by the agent) ---
+converter:
+  topology: synchronous_buck
+  isolation: non_isolated_common_negative_rail
+  input_voltage_nominal_V: 400.0
+  output_voltage_V: 200.0
+  output_power_W: 5000.0
+  output_current_nominal_A: 25.0
+  switching_frequency_Hz: 50000.0
+  power_semiconductor: Wolfspeed SiC MOSFET (real part number selected and justified in design/component_selection.md)
+controller:
+  preferred_device: TMS320F28335
+pcb:
+  cad_tool: KiCad
+  architecture: ai_selected   # decided in review/architecture_comparison.md
+  preferred_layer_counts:
+    power_board: 2-4 where technically feasible
+    control_board: 4 preferred
+    six_layers: allowed only if justified
+knowledge:
+  system: AIPE Engineering Knowledge System V0 (knowledge/)
+  retrieval_interface: automation/knowledge/query.py
+  mandatory_outputs:
+    - design/knowledge_application.md
+    - review/knowledge_utilisation_report.md
+release:
+  human_review_required: true
+  fabrication_in_scope: false
+  purchasing_in_scope: false
+  energisation_in_scope: false
+execution:
+  repository: FulongLi/AIPE-PCB-Agent
+  branch: feat/sic-buck-5kw-v2
+  pr_title: "AIPE-PCB-Agent V2 - Knowledge-Driven 5kW SiC Buck"
+  frozen_do_not_modify: examples/buck-48v-24v-1kw/
+
+# --- Inputs the task leaves open. Values and their basis live in design/assumptions.md,
+#     each classified as agent-selected assumption or agent-derived value. ---
+unresolved_user_inputs:
+  input_voltage_operating_range_V: null
+  input_transient_envelope: null
+  output_voltage_tolerance: null
+  inductor_current_ripple_target: null
+  output_voltage_ripple_target: null
+  load_transient_envelope: null
+  ambient_temperature_range_C: null
+  cooling_conditions: null
+  efficiency_target: null
+  auxiliary_supply: null
+  mechanical_envelope_and_mounting: null
+  pcb_manufacturing_constraints: null
+  applicable_standards_and_environment: null
+  firmware_and_control_validation_scope: null
+agent_selected_assumptions_register: design/assumptions.md

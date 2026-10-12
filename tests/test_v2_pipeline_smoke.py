@@ -99,6 +99,11 @@ class ModelTests(unittest.TestCase):
     def test_routing_plan_is_valid_and_keeps_hv_on_zones(self):
         plan = sm.routing_plan(SAMPLE_PADS, 'x.kicad_pcb')
         self.assertEqual(gr.validate_plan(plan), plan)
+        self.assertNotIn('style', plan)  # the V2 plan byte for byte
+        styled = sm.routing_plan(SAMPLE_PADS, 'x.kicad_pcb', style=sm.V21_STYLE)
+        self.assertEqual(gr.validate_plan(styled), styled)
+        self.assertEqual(styled['style'], sm.V21_STYLE)
+        self.assertEqual({k: v for k, v in styled.items() if k != 'style'}, plan)
         self.assertEqual(plan['layers'], sm.LAYERS)
         for net in sm.HV_NETS:
             self.assertFalse(plan['power'][net]['stubs'])
@@ -187,6 +192,29 @@ class EndToEndTests(unittest.TestCase):
             for name in ('kicad/AIPE_V2_Smoke.kicad_pcb', 'kicad/AIPE_V2_Smoke.kicad_sch', 'kicad/AIPE_V2_Smoke.kicad_dru', 'kicad/fp-lib-table',
                          'design/schematic_mapping.json', 'design/routing_report.json', 'exports/export-manifest.json', 'smoke-summary.json'):
                 self.assertTrue((root / name).is_file(), name)
+
+    def test_smoke_passes_with_the_v21_router_style(self):
+        """The same pipeline with the V2.1 geometry enabled (8-direction search, octilinear simplification, arcs): the board routes
+        with zero unresolved connections, the beautify stage runs, and native DRC with schematic parity stays at zero findings."""
+        with tempfile.TemporaryDirectory(prefix='aipe v2 smoke styled ') as folder:
+            summary = sm.run(folder, skip_simulation=True, style=sm.V21_STYLE)
+            steps = summary['steps']
+            board = steps['board']
+            self.assertEqual(board['status'], 'passed', board.get('error'))
+            report = board['report']
+            self.assertEqual(report['unresolved'], [])
+            self.assertEqual(report['zones'], 8)
+            self.assertTrue(report['style']['diagonal'])
+            self.assertTrue(report['beautify']['enabled'])
+            self.assertGreater(report['beautify']['chains'], 0)
+            self.assertLessEqual(report['beautify']['length_after_mm'], report['beautify']['length_before_mm'] + 1e-6)
+            drc = steps['drc']
+            self.assertEqual(drc['status'], 'passed', drc.get('details'))
+            self.assertEqual((drc['violations'], drc['unconnected_items'], drc['schematic_parity'], drc['tool_exit_code']), (0, 0, 0, 0))
+            self.assertEqual(steps['exports']['status'], 'passed')
+            self.assertEqual(summary['status'], 'passed')
+            plan = json.loads((Path(folder) / 'design/routing_plan.json').read_text(encoding='utf-8'))
+            self.assertEqual(plan['style'], sm.V21_STYLE)
 
 
 if __name__ == '__main__':

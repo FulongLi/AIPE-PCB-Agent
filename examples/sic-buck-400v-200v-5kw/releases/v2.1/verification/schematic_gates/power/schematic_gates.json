@@ -1,0 +1,113 @@
+{
+  "board": "power",
+  "kicad_dir": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board",
+  "passed": true,
+  "gates": {
+    "dru_identical": {
+      "passed": true,
+      "identical_to_legacy_generation": true,
+      "identical_to_v2_release": false,
+      "bytes_new": 17460,
+      "bytes_v2": 17458
+    },
+    "net_settings_equal": {
+      "passed": true,
+      "equal_to_legacy_generation": true,
+      "equal_to_v2_release": true,
+      "classes": 13,
+      "classes_v2": 13
+    },
+    "erc_zero": {
+      "passed": true,
+      "findings": 0,
+      "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\power\\erc\\20261012T094957Z-erc-c1123cae\\run.json",
+      "finding_types": {},
+      "erc_nonfootprint_findings": 0,
+      "details": []
+    },
+    "netlist_vs_model": {
+      "passed": true,
+      "export_exit": 0,
+      "refs": 237,
+      "duplicates": [],
+      "exact": true,
+      "pads": 648,
+      "mismatch_count": 0,
+      "mismatches": [],
+      "net_names_equal": true,
+      "extra_names": [],
+      "missing_names": []
+    },
+    "netlist_vs_v2": {
+      "passed": true,
+      "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\manufacturing\\power_board\\netlist.xml",
+      "exact": true,
+      "pads": 648,
+      "mismatch_count": 0,
+      "mismatches": [],
+      "net_names_equal": true,
+      "extra_names": [],
+      "missing_names": []
+    },
+    "paper_fill": {
+      "passed": true,
+      "min_fill": 0.25,
+      "base_paper": "A3",
+      "escalated": [
+        {
+          "sheet": "02_gate_driver_hs.kicad_sch",
+          "paper": "A2",
+          "fill": 0.538
+        },
+        {
+          "sheet": "03_gate_driver_ls.kicad_sch",
+          "paper": "A2",
+          "fill": 0.535
+        },
+        {
+          "sheet": "04_sensing_island.kicad_sch",
+          "paper": "A2",
+          "fill": 0.406
+        },
+        {
+          "sheet": "05_selv_strip.kicad_sch",
+          "paper": "A2",
+          "fill": 0.526
+        }
+      ],
+      "sheets": {
+        "01_power_stage.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.807
+        },
+        "02_gate_driver_hs.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.538
+        },
+        "03_gate_driver_ls.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.535
+        },
+        "04_sensing_island.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.406
+        },
+        "05_selv_strip.kicad_sch": {
+          "paper": "A2",
+          "fill": 0.526
+        },
+        "06_mechanical.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.221
+        },
+        "AIPE_SiC_Buck_Power.kicad_sch": {
+          "paper": "A3",
+          "fill": 0.366
+        }
+      },
+      "text_overlaps": 3,
+      "name_tags": 119,
+      "note": "name_tags are single global labels: KiCad's default-ignored single_global_label check would report one warning per tag"
+    }
+  }
+}

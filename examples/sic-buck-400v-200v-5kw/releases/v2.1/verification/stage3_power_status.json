@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "written_local": "2026-10-10 23:54",
+  "power_board": {
+    "done": false,
+    "repository_board": "examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
+    "repository_board_sha256": "246385bde4b444d6",
+    "repository_board_note": "written 23:49 by the sibling run (generate_sic_power_board --trials 1 --ripup 60, 2736 s); routing_progress_power.json consistent",
+    "last_routed_board_drc": {
+      "manifest": "examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261010T154954Z-drc-48a5e8dc\\run.json",
+      "violations": 373,
+      "unconnected": 161,
+      "parity": 0,
+      "board_sha256_prefix": "246385bd",
+      "exit_code": 5,
+      "router_unresolved": 161
+    },
+    "floorplan_drc": {
+      "manifest": "examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261010T131707Z-drc-be0bc838\\run.json",
+      "violations": 16,
+      "unconnected": 499,
+      "parity": 0
+    },
+    "stage3_zones_only_experiment": {
+      "sibling_text_2111": 162,
+      "sibling_text_2305": 120,
+      "fork": 18,
+      "fork_breakdown": {
+        "HV side to CTRL_SELV (APWM/NC Default-class pads, structural)": 12,
+        "HV functional outer at the 0805 LEDs (structural: footprint pitch vs 3 mm rule)": 2,
+        "silk_edge_clearance (U1/U3 silkscreen over the board-level slot, structural)": 4
+      }
+    },
+    "stage3_fork_full_run_1": {
+      "tracks": 3781,
+      "vias": 645,
+      "router_unresolved": 167,
+      "violations": 624,
+      "unconnected": 154,
+      "parity": 0,
+      "note": "scratch diagnostic, not repository evidence; see stage3_power_patch/fork_full_run_diagnostic"
+    },
+    "stage3_fork_full_run_3_router_guards": {
+      "tracks": 3536,
+      "vias": 596,
+      "router_unresolved": 156,
+      "violations": 241,
+      "unconnected": 146,
+      "parity": 0,
+      "seconds": 463,
+      "note": "scratch diagnostic; see stage3_power_patch/fork_full_run3_router_guards"
+    },
+    "deliverables": [
+      "examples\\sic-buck-400v-200v-5kw\\verification\\routing_iterations_power.md",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\patch_s3_v2.py",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\generate_sic_power_board_stage3_fork.py",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\hunks_vs_generator_2305.txt",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\zones_only_drc_comparison.json",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\fork_full_run_diagnostic",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\fork_full_run3_router_guards",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_patch\\repo_board_drc_48a5e8dc_by_type.txt",
+      "examples\\sic-buck-400v-200v-5kw\\verification\\stage3_power_status.json"
+    ],
+    "structural_open_issues": [
+      "12 x 9 mm rule: unconnected-(U1/U3-APWM-Pad16) and unconnected-(U10-NC-Pad5) are Default class and not covered by the .kicad_dru pin-field exceptions (project rule/footprint change needed)",
+      "2 x 3 mm rule at the 0805 indicator LEDs D1/D2: both connections of a 1.875 mm pitch LED are < 3 mm apart and only pad pairs of one footprint are exempted",
+      "4 x silk_edge_clearance: SOIC-16W silkscreen of U1/U3 crosses the baseline-prescribed board-level Edge.Cuts slot",
+      "Q2 source to nearest same-net HF capacitor 41 mm (> 15 mm): C7-C10 sit beside Q1 in both floorplans (design item)"
+    ],
+    "previous_routed_board_drc": {
+      "manifest": "examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261010T141722Z-drc-0be35e58\\run.json",
+      "violations": 680,
+      "unconnected": 115,
+      "parity": 0,
+      "board_sha256_prefix": "5038bde5"
+    }
+  },
+  "control_board": {
+    "done": false,
+    "repository_board_sha256": "68c3558fb0353dc10e7a5012eb45b1683bd809eff2138c191d05f1dd2ac37e0a",
+    "last_drc": {
+      "manifest": "examples\\sic-buck-400v-200v-5kw\\verification\\drc\\20261010T144718Z-drc-6798d486\\run.json",
+      "violations": 0,
+      "unconnected": 1,
+      "parity": 0,
+      "unresolved_net": "BIAS_EN"
+    },
+    "note": "manufacturing/control_board and review/pcb_*_control.* exports are from 18:50 and predate this board"
+  }
+}

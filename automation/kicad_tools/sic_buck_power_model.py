@@ -1,6 +1,6 @@
-"""Power-board electrical model of the V2 SiC synchronous buck (board = "power").
+"""Power-board electrical model of the SiC synchronous buck (board = "power"; V2 design, V2.1 generation).
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 400 V (360-440 V) -> 200 V, 5 kW, 25 A, 50 kHz non-isolated SiC synchronous buck; Wolfspeed
 C4MS025120K half bridge, UCC21710-Q1 isolated drivers, UCC14141-Q1 isolated bias modules,
@@ -458,34 +458,35 @@ def bias_module(c: Circuit, tag: str, page: str, *, vdd, vee, com, r_top_vdd, r_
     100 nF (baseline bias_supply.input).  Secondary: VDD-VEE = 2.5 V x (R_top + 16.2 k) / 16.2 k, COM-VEE likewise,
     330 pF C0G across each bottom resistor, RLIM 1 k placeholder (human review), 2 x 4.7 uF + 100 nF VDD-VEE, 4.7 uF COM-VEE.
     """
-    vbias, gndp = f"12V_BIAS_{tag}", f"GNDP_{tag}"
-    fb_vdd, fb_vee, rlim = f"{island}_FB_VDD", f"{island}_FB_VEE", f"{island}_RLIM"
-    c.add("L", "744226S", "Inductor_SMD:L_CommonMode_Wuerth_WE-SL2", {1: "12V_PROT", 2: "GND_CTRL", 3: gndp, 4: vbias}, page=page,
-          kind="L", mpn="744226S", maker="Wuerth Elektronik", source="https://www.we-online.com/components/products/datasheet/744226S.pdf",
-          definitions=CHOKE_PINS, note=f"WE-SL2 CM choke 10 uH / 1.6 A at the {tag} bias input (KR-IS-002); windings 1-4 (12 V) and 2-3 (return); "
-          "A-P3: module ground GNDP after the choke")
-    for _ in range(3):
-        capx(c, "10u/25V/1210", vbias, gndp, page, note="UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)")
-    capx(c, "100n/50V/0603", vbias, gndp, page, note="UCC14141 VIN high-frequency bypass at pins 7/8 (SLUSF10B)")
-    nets = {n: gndp for n in (1, 2, 5, *range(8, 19))}
-    nets.update({3: pg_net, 4: "BIAS_EN_F", 6: vbias, 7: vbias, 28: vdd, 29: vdd, 32: rlim, 33: fb_vee, 34: fb_vdd, 35: vee})
-    nets.update({n: vee for n in (19, 20, 21, 22, 23, 24, 25, 26, 27, 30, 31, 36)})
-    c.add("U", "UCC14141QDWNRQ1", aipe("ucc14141"), nets, page=page, kind="IC", mpn="UCC14141QDWNRQ1", maker=TI,
-          source=TI_DS.format("ucc14141-q1"), definitions=ucc14141_pins("passive" if vee in FLAG_NETS else "power_out"), ref=ref,
-          note=note + "; reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good")
-    thin_film(c, r_top_vdd, vdd, fb_vdd, page, note=f"FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
-    thin_film(c, "16.2k", fb_vdd, vee, page, note="FBVDD bottom (VEEA single-point return)")
-    capx(c, "330p/50V/0603", fb_vdd, vee, page, note="330 pF C0G across the FBVDD bottom resistor (SLUSF10B)")
-    thin_film(c, r_top_com, com, fb_vee, page, note="FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
-    thin_film(c, "16.2k", fb_vee, vee, page, note="FBVEE bottom (VEEA single-point return)")
-    capx(c, "330p/50V/0603", fb_vee, vee, page, note="330 pF C0G across the FBVEE bottom resistor (SLUSF10B)")
-    c.resistor("1k", rlim, com, page, package="0805", note="RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW "
-               "(COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)")
-    for _ in range(2):
-        capx(c, "4.7u/25V/1206", vdd, vee, page, note="UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)")
-    capx(c, "100n/50V/0603", vdd, vee, page, note="A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)")
-    capx(c, "4.7u/25V/1206", com, vee, page, note="UCC14141 COM-VEE output capacitor (baseline bias_supply.output_caps)")
-    c.resistor("10k", "3V3", pg_net, page, note="A-P5: pull-up for the open-drain PG output (active-low power good)")
+    with c.block(f"bias_{tag.lower()}", f"{island} isolated bias supply (UCC14141-Q1)"):
+        vbias, gndp = f"12V_BIAS_{tag}", f"GNDP_{tag}"
+        fb_vdd, fb_vee, rlim = f"{island}_FB_VDD", f"{island}_FB_VEE", f"{island}_RLIM"
+        c.add("L", "744226S", "Inductor_SMD:L_CommonMode_Wuerth_WE-SL2", {1: "12V_PROT", 2: "GND_CTRL", 3: gndp, 4: vbias}, page=page,
+              kind="L", mpn="744226S", maker="Wuerth Elektronik", source="https://www.we-online.com/components/products/datasheet/744226S.pdf",
+              definitions=CHOKE_PINS, note=f"WE-SL2 CM choke 10 uH / 1.6 A at the {tag} bias input (KR-IS-002); windings 1-4 (12 V) and 2-3 (return); "
+              "A-P3: module ground GNDP after the choke")
+        for _ in range(3):
+            capx(c, "10u/25V/1210", vbias, gndp, page, note="UCC14141 input capacitor (3 x 10 uF for >= 20 uF effective at 13.2 V, CR-19)")
+        capx(c, "100n/50V/0603", vbias, gndp, page, note="UCC14141 VIN high-frequency bypass at pins 7/8 (SLUSF10B)")
+        nets = {n: gndp for n in (1, 2, 5, *range(8, 19))}
+        nets.update({3: pg_net, 4: "BIAS_EN_F", 6: vbias, 7: vbias, 28: vdd, 29: vdd, 32: rlim, 33: fb_vee, 34: fb_vdd, 35: vee})
+        nets.update({n: vee for n in (19, 20, 21, 22, 23, 24, 25, 26, 27, 30, 31, 36)})
+        c.add("U", "UCC14141QDWNRQ1", aipe("ucc14141"), nets, page=page, kind="IC", mpn="UCC14141QDWNRQ1", maker=TI,
+              source=TI_DS.format("ucc14141-q1"), definitions=ucc14141_pins("passive" if vee in FLAG_NETS else "power_out"), ref=ref,
+              note=note + "; reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good")
+        thin_film(c, r_top_vdd, vdd, fb_vdd, page, note=f"FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
+        thin_film(c, "16.2k", fb_vdd, vee, page, note="FBVDD bottom (VEEA single-point return)")
+        capx(c, "330p/50V/0603", fb_vdd, vee, page, note="330 pF C0G across the FBVDD bottom resistor (SLUSF10B)")
+        thin_film(c, r_top_com, com, fb_vee, page, note="FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
+        thin_film(c, "16.2k", fb_vee, vee, page, note="FBVEE bottom (VEEA single-point return)")
+        capx(c, "330p/50V/0603", fb_vee, vee, page, note="330 pF C0G across the FBVEE bottom resistor (SLUSF10B)")
+        c.resistor("1k", rlim, com, page, package="0805", note="RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW "
+                   "(COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)")
+        for _ in range(2):
+            capx(c, "4.7u/25V/1206", vdd, vee, page, note="UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)")
+        capx(c, "100n/50V/0603", vdd, vee, page, note="A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)")
+        capx(c, "4.7u/25V/1206", com, vee, page, note="UCC14141 COM-VEE output capacitor (baseline bias_supply.output_caps)")
+        c.resistor("10k", "3V3", pg_net, page, note="A-P5: pull-up for the open-drain PG output (active-low power good)")
 
 
 def gate_channel(c: Circuit, x: str, other: str, drain_net: str, page: str, *, q_ref, u_ref, bias_ref):
@@ -495,44 +496,51 @@ def gate_channel(c: Circuit, x: str, other: str, drain_net: str, page: str, *, q
     node_a, node_oc, gk = f"DESAT_{x}_A", f"DESAT_{x}_OC", f"{island}_GK"
     outh, outl, clmp = f"{island}_OUTH", f"{island}_OUTL", f"{island}_CLMP"
     pwm_f, pwm_other_f = f"PWM_{x}_F", f"PWM_{other}_F"
-    # Mezzanine receiving network of the own PWM (baseline gate_driver.inputs: 100 ohm + 100 pF + 10 k pull-down).
-    c.resistor("100", f"PWM_{x}", pwm_f, page, note=f"PWM_{x} series element of the 100 ohm / 100 pF / 10 k receiving network (KR-GD-008 adapted)")
-    capx(c, "100p/50V/0603", pwm_f, "GND_CTRL", page, note="100 pF at the driver input pin (tau 10 ns)")
-    c.resistor("10k", pwm_f, "GND_CTRL", page, note="10 k pull-down: driver input defined low when the mezzanine is open")
-    nets = {1: ks, 2: node_oc, 3: ks, 4: outh, 5: vdd, 6: outl, 7: clmp, 8: vee, 9: "GND_CTRL", 10: pwm_f, 11: pwm_other_f,
-            12: f"RDY_{x}", 13: f"FLT_{x}_N", 14: "RESET_N_F", 15: "3V3", 16: None}
-    c.add("U", "UCC21710QDWRQ1", "AIPE:" + CUSTOM_NAMES["ucc21710"], nets, page=page, kind="IC", mpn="UCC21710QDWRQ1", maker=TI,
-          source=TI_DS.format("ucc21710-q1"), definitions=UCC21710_PINS, ref=u_ref,
-          note=f"{island} isolated SiC driver, pinout SLUSDH8D (fetched-datasheet); IN+ = PWM_{x}_F, IN- = PWM_{other}_F interlock (KR-GD-009); "
-          "AIN tied to COM (CR-01); APWM unused; AIPE footprint with the KiCad SOIC-16W land pattern and the 1.2 x 16.6 mm isolation slot")
-    erjp08(c, "10", "10R0", outh, g, page, note="R_ON 10 ohm bring-up (tuning target 6.8 ohm = ERJ-P08F6R80V), baseline rg_on_ohm")
-    erjp08(c, "3.3", "3R30", outl, g, page, note="R_OFF 3.3 ohm, baseline rg_off_ohm")
-    c.resistor("0", clmp, g, page, mpn="RC0603JR-070RL", note="Miller clamp link CLMPI -> gate, 0 ohm 0603, path <= 15 mm (KR-GD-003, REQUIRED)")
-    c.resistor("10k", g, ks, page, package="0805", note="R_GS gate-to-Kelvin discharge at the device side of R_G (KR-GD-007)")
-    c.resistor("1", g, gk, page, dnp=True, note="DNP gate-Kelvin RC (KR-GD-010 review): 1 ohm 0603 pads")
-    capx(c, "470p/50V/0603", gk, ks, page, dnp=True, note="DNP gate-Kelvin RC (KR-GD-010 review): 470 pF C0G pads")
-    c.add("TP", f"VGS_{x}", "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm", {1: g, 2: ks}, page=page, kind="TP",
-          definitions=pin_defs("1:G:passive 2:KS:passive"),
-          note=f"V_GS probe loop at the device side of R_G (CR-11); {'floats at the switch node - ' if x == 'H' else ''}HV referenced, isolated probe only")
-    for _ in range(2):
-        capx(c, "4.7u/25V/1206", vdd, ks, page, note="VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)")
-    capx(c, "100n/50V/0603", vdd, ks, page, note="VDD-COM high-frequency decoupling at the pins")
-    capx(c, "4.7u/25V/1206", ks, vee, page, note="COM-VEE decoupling (KR-PCB-002)")
-    capx(c, "100n/50V/0603", ks, vee, page, note="COM-VEE high-frequency decoupling at the pins")
-    capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="VCC decoupling 1 uF (datasheet condition) at pin 15")
-    capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="VCC high-frequency decoupling at pin 15")
-    # DESAT network (baseline gate_driver.desat.network).
-    erjp08(c, "2.2k", "2201", vdd, node_a, page, note="DESAT R1 2.2 k: VDD -> node A (bias 6-9 mA)")
-    diode(c, "US1M 1000V", "Diode_SMD:D_SMA", drain_net, node_a, page, mpn="US1M-13-F", maker="Diodes Incorporated",
-          source="https://www.diodes.com/part/view/US1M/", note=f"DESAT diode, cathode on the drain net {drain_net}, anode at node A; lifecycle unverified")
-    c.resistor("4.99k", node_a, node_oc, page, note="DESAT R2 4.99 k: node A -> OC")
-    c.resistor("1k", node_oc, ks, page, note="DESAT R3 1.00 k: OC -> COM (trip V_DS 3.6 V with R1/R2/R3)")
-    capx(c, "680p/50V/0603", node_oc, ks, page, note="DESAT blanking 680 pF C0G at OC/COM (288 ns external blanking)")
-    diode(c, "BAT42W Schottky", "Diode_SMD:D_SOD-123", node_oc, ks, page, mpn="BAT42W-V", maker="Vishay",
-          source="https://www.vishay.com/docs/85660/bat42w.pdf", dnp=True,
-          note="DNP reference-derived clamp COM -> OC (anode at COM); the -0.67 V DC case does not occur dynamically; unverified part")
-    c.resistor("4.7k", "3V3", f"RDY_{x}", page, note="RDY open-drain pull-up (research record gate_driver.per_channel_bom R_PU)")
-    c.resistor("4.7k", "3V3", f"FLT_{x}_N", page, note="FLT open-drain pull-up (latched fault, active low)")
+    # Presentation block (V2.1): the driver's own satellites - PWM receiving network, gate network, decoupling and the
+    # RDY / FLT pull-ups - are one functional group so they hang off the driver's pin lanes instead of forming tiny
+    # groups that the sheet router has to join with long wires.  The DESAT network and the bias module stay separate.
+    with c.block(f"driver_{x.lower()}", f"{island} isolated gate driver (UCC21710-Q1): PWM input, gate network, status pull-ups, decoupling"):
+        # Mezzanine receiving network of the own PWM (baseline gate_driver.inputs: 100 ohm + 100 pF + 10 k pull-down).
+        c.resistor("100", f"PWM_{x}", pwm_f, page, note=f"PWM_{x} series element of the 100 ohm / 100 pF / 10 k receiving network (KR-GD-008 adapted)")
+        capx(c, "100p/50V/0603", pwm_f, "GND_CTRL", page, note="100 pF at the driver input pin (tau 10 ns)")
+        c.resistor("10k", pwm_f, "GND_CTRL", page, note="10 k pull-down: driver input defined low when the mezzanine is open")
+        nets = {1: ks, 2: node_oc, 3: ks, 4: outh, 5: vdd, 6: outl, 7: clmp, 8: vee, 9: "GND_CTRL", 10: pwm_f, 11: pwm_other_f,
+                12: f"RDY_{x}", 13: f"FLT_{x}_N", 14: "RESET_N_F", 15: "3V3", 16: None}
+        c.add("U", "UCC21710QDWRQ1", "AIPE:" + CUSTOM_NAMES["ucc21710"], nets, page=page, kind="IC", mpn="UCC21710QDWRQ1", maker=TI,
+              source=TI_DS.format("ucc21710-q1"), definitions=UCC21710_PINS, ref=u_ref,
+              note=f"{island} isolated SiC driver, pinout SLUSDH8D (fetched-datasheet); IN+ = PWM_{x}_F, IN- = PWM_{other}_F interlock (KR-GD-009); "
+              "AIN tied to COM (CR-01); APWM unused; AIPE footprint with the KiCad SOIC-16W land pattern and the 1.2 x 16.6 mm isolation slot")
+        erjp08(c, "10", "10R0", outh, g, page, note="R_ON 10 ohm bring-up (tuning target 6.8 ohm = ERJ-P08F6R80V), baseline rg_on_ohm")
+        erjp08(c, "3.3", "3R30", outl, g, page, note="R_OFF 3.3 ohm, baseline rg_off_ohm")
+        c.resistor("0", clmp, g, page, mpn="RC0603JR-070RL", note="Miller clamp link CLMPI -> gate, 0 ohm 0603, path <= 15 mm (KR-GD-003, REQUIRED)")
+        c.resistor("10k", g, ks, page, package="0805", note="R_GS gate-to-Kelvin discharge at the device side of R_G (KR-GD-007)")
+        c.resistor("1", g, gk, page, dnp=True, note="DNP gate-Kelvin RC (KR-GD-010 review): 1 ohm 0603 pads")
+        capx(c, "470p/50V/0603", gk, ks, page, dnp=True, note="DNP gate-Kelvin RC (KR-GD-010 review): 470 pF C0G pads")
+        c.add("TP", f"VGS_{x}", "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm", {1: g, 2: ks}, page=page, kind="TP",
+              definitions=pin_defs("1:G:passive 2:KS:passive"),
+              note=f"V_GS probe loop at the device side of R_G (CR-11); {'floats at the switch node - ' if x == 'H' else ''}HV referenced, isolated probe only")
+        for _ in range(2):
+            capx(c, "4.7u/25V/1206", vdd, ks, page, note="VDD-COM decoupling between driver output pins and gate/Kelvin connection (KR-PCB-002)")
+        capx(c, "100n/50V/0603", vdd, ks, page, note="VDD-COM high-frequency decoupling at the pins")
+        capx(c, "4.7u/25V/1206", ks, vee, page, note="COM-VEE decoupling (KR-PCB-002)")
+        capx(c, "100n/50V/0603", ks, vee, page, note="COM-VEE high-frequency decoupling at the pins")
+        capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="VCC decoupling 1 uF (datasheet condition) at pin 15")
+        capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="VCC high-frequency decoupling at pin 15")
+    with c.block(f"desat_{x.lower()}", f"{island} DESAT protection network"):
+        # DESAT network (baseline gate_driver.desat.network).
+        erjp08(c, "2.2k", "2201", vdd, node_a, page, note="DESAT R1 2.2 k: VDD -> node A (bias 6-9 mA)")
+        diode(c, "US1M 1000V", "Diode_SMD:D_SMA", drain_net, node_a, page, mpn="US1M-13-F", maker="Diodes Incorporated",
+              source="https://www.diodes.com/part/view/US1M/", note=f"DESAT diode, cathode on the drain net {drain_net}, anode at node A; lifecycle unverified")
+        c.resistor("4.99k", node_a, node_oc, page, note="DESAT R2 4.99 k: node A -> OC")
+        c.resistor("1k", node_oc, ks, page, note="DESAT R3 1.00 k: OC -> COM (trip V_DS 3.6 V with R1/R2/R3)")
+        capx(c, "680p/50V/0603", node_oc, ks, page, note="DESAT blanking 680 pF C0G at OC/COM (288 ns external blanking)")
+        diode(c, "BAT42W Schottky", "Diode_SMD:D_SOD-123", node_oc, ks, page, mpn="BAT42W-V", maker="Vishay",
+              source="https://www.vishay.com/docs/85660/bat42w.pdf", dnp=True,
+              note="DNP reference-derived clamp COM -> OC (anode at COM); the -0.67 V DC case does not occur dynamically; unverified part")
+    with c.block(f"driver_{x.lower()}"):
+        # Same add order as V2 (reference numbering and netlist identity); presentation group = the driver block above.
+        c.resistor("4.7k", "3V3", f"RDY_{x}", page, note="RDY open-drain pull-up (research record gate_driver.per_channel_bom R_PU)")
+        c.resistor("4.7k", "3V3", f"FLT_{x}_N", page, note="FLT open-drain pull-up (latched fault, active low)")
     bias_module(c, x, page, vdd=vdd, vee=vee, com=ks, r_top_vdd="107k", r_top_com="9.76k", pg_net=f"PG_BIAS_{x}_N", ref=bias_ref, island=island,
                 note=f"{island} gate bias VDD-VEE 19.0 V (107 k / 16.2 k), COM-VEE 4.0 V (9.76 k / 16.2 k) -> +15 V / -4 V at the gate "
                 "(baseline bias_supply.gate_channels); +18 V option = FBVDD top 127 k (BOM option, C4MS only)")
@@ -547,166 +555,179 @@ def power_stage(c: Circuit):
                  ("PGND (-OUT)", "PGND", "DC output return"),
                  ("RLY_A (VIN_RAW)", "VIN_RAW", "bypass relay contact terminal A (Omron G9EA-1 DC12, chassis mounted)"),
                  ("RLY_B (VIN)", "VIN", "bypass relay contact terminal B; PTC RT1 bridges A-B on board")]
-    for value, net, note in terminals:
-        c.add("J", value, redcube, {1: net}, page=page, kind="J", mpn="74651195", maker="Wurth Elektronik",
-              source="https://www.we-online.de/katalog/datasheet/74651195.pdf", note=f"REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; {note}")
-    c.add("RT", "PTC precharge (re-select)", aipe("ptc"), {1: "VIN_RAW", 2: "VIN"}, page=page, kind="RT",
-          mpn="TDK B59xxx PTC to be re-selected", maker="TDK (EPCOS)", source="https://www.tdk-electronics.tdk.com/en/ptc-thermistors",
-          note="Precharge PTC across the relay contacts: R25 100-150 ohm, Vmax >= 480 V DC, Vlink >= 620 V DC (CR-19, human review); envelope footprint")
-    c.add("RV", "S20K385 MOV", "Varistor:RV_Disc_D21.5mm_W5.4mm_P10mm", {1: "VIN", 2: "PGND"}, page=page, kind="RV", mpn="B72220S0381K101",
-          maker="TDK (EPCOS)", source="https://www.tdk-electronics.tdk.com/inf/70/db/var/SIOV_Leaded_StandarD.pdf", dnp=True,
-          note="Optional input MOV (8 kA, 150 J, 1 W), DNP; disc thickness vs footprint W5.4 to confirm")
-    for ref, drain, source, ks, g, note in (("Q1", "VIN", "SW", "KS_H", "G_H", "high-side; tab = VIN (DC)"),
-                                            ("Q2", "SW", "PGND", "KS_L", "G_L", "low-side; tab = SW (switching)")):
-        c.add("Q", "C4MS025120K", "Package_TO_SOT_THT:TO-247-4_Vertical", {1: drain, 2: source, 3: ks, 4: g}, page=page, kind="Q",
-              mpn="C4MS025120K", maker="Wolfspeed", ref=ref, definitions=FET_PINS,
-              source="https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
-              note=f"1200 V / 25 mohm SiC MOSFET TO-247-4 Kelvin source, {note}; pad order 1 D, 2 S, 3 KS, 4 G per PRD 05966 front view "
-              "(ASSUMPTION - verify pad-1 side); insulated to the PE-bonded heatsink with Sil-Pad TSP A2000 (CR-13)")
-    for i in range(10):
-        capx(c, "0.47u/630V/2220", "VIN", "PGND", page, note=f"C_HF {i + 1}/10, row {'1 (<= 5 mm)' if i < 5 else '2 (<= 15 mm)'} beside the TO-247-4 legs; "
-             "DC-bias curve unverified (open item)")
-    for n in (1, 2):
-        c.add("C", "20uF/800V film", aipe("c_in"), {1: "VIN", 2: "PGND"}, page=page, kind="C", mpn="B32776G8206K000", maker="TDK (EPCOS)",
-              source="https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
-              note=f"DC-link input film C_IN{n} (14.5 A rms rating, 6.92 A each worst); alternates KEMET C4AQIBW5200A3JJ / Vishay MKP1848C62080JP4")
-    c.add("L", "272uH/25A toroid", aipe("toroid"), {1: "SW", 2: "VOUT_L"}, page=page, kind="L", mpn="AIPE custom choke: 2 x Magnetics 0058192A2 stacked, 34 T AWG10",
-          maker="custom winding (house to be selected)", source="design/research/inductor.json selection.magnetic_record",
-          note="L1: 319 uH at 0 A, 272 uH at 25 A, 210 uH at 41 A (nominal); DCR 12.2 mohm; in the fan stream (CR-14); mass carried by the cup standoffs")
-    c.add("U", "TMCS1133C2AQDVGR", aipe("tmcs1133"), {1: "VOUT_L", 2: "VOUT", 3: "GND_CTRL", 4: "GND_CTRL", 5: None, 6: "ISENSE", 7: "OC_N",
-                                                     8: "VOC_SET", 9: "3V3", 10: "3V3"}, page=page, kind="IC", mpn="TMCS1133C2AQDVGR", maker=TI,
-          source=TI_DS.format("tmcs1133"), definitions=TMCS1133_PINS, ref="U10",
-          note="Isolated Hall current sensor in the inductor output path (IN+ bar = VOUT_L, IN- bar = VOUT), 50 mV/A, 0.33 V at 0 A, VS 3.3 V; "
-          "OC threshold 37.5 A via VOC_SET 0.750 V; pinout SBOSAG0E (fetched-datasheet); ALERT unused -> GND per datasheet (A-P10)")
-    for n in (1, 2):
-        c.add("C", "60uF/450V film", aipe("c_out"), {1: "VOUT", 2: "PGND"}, page=page, kind="C", mpn="B32776G4606K000", maker="TDK (EPCOS)",
-              source="https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
-              note=f"Output film C_OUT{n} (1.43 A rms each); 440 V high-side-short fault survivable")
-    # Bleeders and indicators (baseline capacitors.bleeders, CR-03).
-    for a, b in (("VIN", "BLD_IN_1"), ("BLD_IN_1", "BLD_IN_2"), ("BLD_IN_2", "PGND")):
-        c.resistor("120k", a, b, page, package="2512", note="Input bleeder chain 3 x 120 k (360 k, 0.54 W at 440 V, 160 V per element at 480 V)")
-    for a, b in (("VIN", "IND_IN_1"), ("IND_IN_1", "IND_IN_2"), ("IND_IN_2", "IND_IN_3")):
-        c.resistor("150k", a, b, page, package="1206", note="Input DC-LINK LIVE indicator string 3 x 150 k 1206 (<= 160 V, 0.17 W per element)")
-    c.add("D", "LED red", "LED_SMD:LED_0805_2012Metric", {1: "PGND", 2: "IND_IN_3"}, page=page, kind="D", mpn="LTST-C170KRKT", maker="Lite-On",
-          source="https://optoelectronics.liteon.com/", definitions=DIODE_PINS, note="Input DC-LINK LIVE LED (warning only, not proof of safe voltage); part unverified")
-    for a, b in (("VOUT", "BLD_OUT_1"), ("BLD_OUT_1", "PGND")):
-        c.resistor("100k", a, b, page, package="2512", note="Output bleeder chain 2 x 100 k (200 k, 0.20 W; 0.97 W / 220 V per element in the 440 V fault)")
-    for a, b in (("VOUT", "IND_OUT_1"), ("IND_OUT_1", "IND_OUT_2")):
-        c.resistor("100k", a, b, page, package="1206", note="Output LIVE indicator string 2 x 100 k 1206")
-    c.add("D", "LED red", "LED_SMD:LED_0805_2012Metric", {1: "PGND", 2: "IND_OUT_2"}, page=page, kind="D", mpn="LTST-C170KRKT", maker="Lite-On",
-          source="https://optoelectronics.liteon.com/", definitions=DIODE_PINS, note="Output LIVE LED; part unverified")
-    # Snubber pads (DNP) across the LS device and the damping leg (DNP) across the HF tier.
-    c.resistor("10", "SW", "SNUB_MID", page, package="2512", dnp=True, note="A-P7: RC snubber pads SW-PGND, DNP until double-pulse results (value placeholder)")
-    capx(c, "1n/1kV/1812", "SNUB_MID", "PGND", page, dnp=True, note="A-P7: snubber capacitor 1 kV 1812 pads, DNP (value placeholder)")
-    for _ in range(2):
-        capx(c, "0.47u/630V/2220", "VIN", "DAMP_MID", page, dnp=True, note="Damping leg (DNP): 2 x 0.47 uF 630 V in parallel across the HF tier (baseline damping_leg_dnp)")
-        c.resistor("0.47", "DAMP_MID", "PGND", page, package="2512", dnp=True, mpn="ERJ-1TRQFR47U", maker="Panasonic", source=PANASONIC_ERJP,
-                   note="Damping leg (DNP): 2 x 0.47 ohm 1 W 2512 in parallel (>= 2 W for ~1 W ring energy); part number unverified")
-    # PE network (baseline protection.power_path.pe).
-    c.add("H", "PE M4 stud", "MountingHole:MountingHole_4.3mm_M4_Pad", {1: "PE"}, page=page, kind="H",
-          note="M4 PE stud pad bonded to heatsink and baseplate (bond <= 0.1 ohm); IEC 60417-5019 label")
-    c.resistor("0", "PGND", "PE", page, package="2512", dnp=True, mpn="CRCW25120000Z0EG", note="PGND-to-PE configurable link, DNP until the source earthing is defined (A-23 review)")
-    c.resistor("1M", "PGND", "PE_REF_MID", page, package="2512", mpn="CRCW25121M00FKEG", note="A-P11: PGND-PE reference 2 x 1 M in series (<= 240 V per 500 V element)")
-    c.resistor("1M", "PE_REF_MID", "PE", page, package="2512", mpn="CRCW25121M00FKEG", note="A-P11: PGND-PE reference, second element")
-    capx(c, "10n/300VAC/Y2", "VIN", "PE", page, dnp=True, note="Y2 footprint VIN-PE, DNP (touch-current review)")
-    capx(c, "10n/300VAC/Y2", "PGND", "PE", page, dnp=True, note="Y2 footprint PGND-PE, DNP (touch-current review)")
+    with c.block("terminals", "Power terminals, precharge PTC, MOV"):
+        for value, net, note in terminals:
+            c.add("J", value, redcube, {1: net}, page=page, kind="J", mpn="74651195", maker="Wurth Elektronik",
+                  source="https://www.we-online.de/katalog/datasheet/74651195.pdf", note=f"REDCUBE THR M5 (CR-10); ring lug under IPXXB cover; {note}")
+        c.add("RT", "PTC precharge (re-select)", aipe("ptc"), {1: "VIN_RAW", 2: "VIN"}, page=page, kind="RT",
+              mpn="TDK B59xxx PTC to be re-selected", maker="TDK (EPCOS)", source="https://www.tdk-electronics.tdk.com/en/ptc-thermistors",
+              note="Precharge PTC across the relay contacts: R25 100-150 ohm, Vmax >= 480 V DC, Vlink >= 620 V DC (CR-19, human review); envelope footprint")
+        c.add("RV", "S20K385 MOV", "Varistor:RV_Disc_D21.5mm_W5.4mm_P10mm", {1: "VIN", 2: "PGND"}, page=page, kind="RV", mpn="B72220S0381K101",
+              maker="TDK (EPCOS)", source="https://www.tdk-electronics.tdk.com/inf/70/db/var/SIOV_Leaded_StandarD.pdf", dnp=True,
+              note="Optional input MOV (8 kA, 150 J, 1 W), DNP; disc thickness vs footprint W5.4 to confirm")
+    with c.block("half_bridge", "Half bridge, HF capacitor bank, DC-link capacitors"):
+        for ref, drain, source, ks, g, note in (("Q1", "VIN", "SW", "KS_H", "G_H", "high-side; tab = VIN (DC)"),
+                                                ("Q2", "SW", "PGND", "KS_L", "G_L", "low-side; tab = SW (switching)")):
+            c.add("Q", "C4MS025120K", "Package_TO_SOT_THT:TO-247-4_Vertical", {1: drain, 2: source, 3: ks, 4: g}, page=page, kind="Q",
+                  mpn="C4MS025120K", maker="Wolfspeed", ref=ref, definitions=FET_PINS,
+                  source="https://assets.wolfspeed.com/uploads/2025/11/Wolfspeed_C4MS025120K_data_sheet.pdf",
+                  note=f"1200 V / 25 mohm SiC MOSFET TO-247-4 Kelvin source, {note}; pad order 1 D, 2 S, 3 KS, 4 G per PRD 05966 front view "
+                  "(ASSUMPTION - verify pad-1 side); insulated to the PE-bonded heatsink with Sil-Pad TSP A2000 (CR-13)")
+        for i in range(10):
+            capx(c, "0.47u/630V/2220", "VIN", "PGND", page, note=f"C_HF {i + 1}/10, row {'1 (<= 5 mm)' if i < 5 else '2 (<= 15 mm)'} beside the TO-247-4 legs; "
+                 "DC-bias curve unverified (open item)")
+        for n in (1, 2):
+            c.add("C", "20uF/800V film", aipe("c_in"), {1: "VIN", 2: "PGND"}, page=page, kind="C", mpn="B32776G8206K000", maker="TDK (EPCOS)",
+                  source="https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+                  note=f"DC-link input film C_IN{n} (14.5 A rms rating, 6.92 A each worst); alternates KEMET C4AQIBW5200A3JJ / Vishay MKP1848C62080JP4")
+    with c.block("output", "Output inductor, current sensor, output capacitors"):
+        c.add("L", "272uH/25A toroid", aipe("toroid"), {1: "SW", 2: "VOUT_L"}, page=page, kind="L", mpn="AIPE custom choke: 2 x Magnetics 0058192A2 stacked, 34 T AWG10",
+              maker="custom winding (house to be selected)", source="design/research/inductor.json selection.magnetic_record",
+              note="L1: 319 uH at 0 A, 272 uH at 25 A, 210 uH at 41 A (nominal); DCR 12.2 mohm; in the fan stream (CR-14); mass carried by the cup standoffs")
+        c.add("U", "TMCS1133C2AQDVGR", aipe("tmcs1133"), {1: "VOUT_L", 2: "VOUT", 3: "GND_CTRL", 4: "GND_CTRL", 5: None, 6: "ISENSE", 7: "OC_N",
+                                                         8: "VOC_SET", 9: "3V3", 10: "3V3"}, page=page, kind="IC", mpn="TMCS1133C2AQDVGR", maker=TI,
+              source=TI_DS.format("tmcs1133"), definitions=TMCS1133_PINS, ref="U10",
+              note="Isolated Hall current sensor in the inductor output path (IN+ bar = VOUT_L, IN- bar = VOUT), 50 mV/A, 0.33 V at 0 A, VS 3.3 V; "
+              "OC threshold 37.5 A via VOC_SET 0.750 V; pinout SBOSAG0E (fetched-datasheet); ALERT unused -> GND per datasheet (A-P10)")
+        for n in (1, 2):
+            c.add("C", "60uF/450V film", aipe("c_out"), {1: "VOUT", 2: "PGND"}, page=page, kind="C", mpn="B32776G4606K000", maker="TDK (EPCOS)",
+                  source="https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32774_778.pdf",
+                  note=f"Output film C_OUT{n} (1.43 A rms each); 440 V high-side-short fault survivable")
+    with c.block("bleeders", "Bleeders and LIVE indicators"):
+        # Bleeders and indicators (baseline capacitors.bleeders, CR-03).
+        for a, b in (("VIN", "BLD_IN_1"), ("BLD_IN_1", "BLD_IN_2"), ("BLD_IN_2", "PGND")):
+            c.resistor("120k", a, b, page, package="2512", note="Input bleeder chain 3 x 120 k (360 k, 0.54 W at 440 V, 160 V per element at 480 V)")
+        for a, b in (("VIN", "IND_IN_1"), ("IND_IN_1", "IND_IN_2"), ("IND_IN_2", "IND_IN_3")):
+            c.resistor("150k", a, b, page, package="1206", note="Input DC-LINK LIVE indicator string 3 x 150 k 1206 (<= 160 V, 0.17 W per element)")
+        c.add("D", "LED red", "LED_SMD:LED_0805_2012Metric", {1: "PGND", 2: "IND_IN_3"}, page=page, kind="D", mpn="LTST-C170KRKT", maker="Lite-On",
+              source="https://optoelectronics.liteon.com/", definitions=DIODE_PINS, note="Input DC-LINK LIVE LED (warning only, not proof of safe voltage); part unverified")
+        for a, b in (("VOUT", "BLD_OUT_1"), ("BLD_OUT_1", "PGND")):
+            c.resistor("100k", a, b, page, package="2512", note="Output bleeder chain 2 x 100 k (200 k, 0.20 W; 0.97 W / 220 V per element in the 440 V fault)")
+        for a, b in (("VOUT", "IND_OUT_1"), ("IND_OUT_1", "IND_OUT_2")):
+            c.resistor("100k", a, b, page, package="1206", note="Output LIVE indicator string 2 x 100 k 1206")
+        c.add("D", "LED red", "LED_SMD:LED_0805_2012Metric", {1: "PGND", 2: "IND_OUT_2"}, page=page, kind="D", mpn="LTST-C170KRKT", maker="Lite-On",
+              source="https://optoelectronics.liteon.com/", definitions=DIODE_PINS, note="Output LIVE LED; part unverified")
+    with c.block("snubber_damping", "Snubber and damping leg (DNP)"):
+        # Snubber pads (DNP) across the LS device and the damping leg (DNP) across the HF tier.
+        c.resistor("10", "SW", "SNUB_MID", page, package="2512", dnp=True, note="A-P7: RC snubber pads SW-PGND, DNP until double-pulse results (value placeholder)")
+        capx(c, "1n/1kV/1812", "SNUB_MID", "PGND", page, dnp=True, note="A-P7: snubber capacitor 1 kV 1812 pads, DNP (value placeholder)")
+        for _ in range(2):
+            capx(c, "0.47u/630V/2220", "VIN", "DAMP_MID", page, dnp=True, note="Damping leg (DNP): 2 x 0.47 uF 630 V in parallel across the HF tier (baseline damping_leg_dnp)")
+            c.resistor("0.47", "DAMP_MID", "PGND", page, package="2512", dnp=True, mpn="ERJ-1TRQFR47U", maker="Panasonic", source=PANASONIC_ERJP,
+                       note="Damping leg (DNP): 2 x 0.47 ohm 1 W 2512 in parallel (>= 2 W for ~1 W ring energy); part number unverified")
+    with c.block("pe", "PE network"):
+        # PE network (baseline protection.power_path.pe).
+        c.add("H", "PE M4 stud", "MountingHole:MountingHole_4.3mm_M4_Pad", {1: "PE"}, page=page, kind="H",
+              note="M4 PE stud pad bonded to heatsink and baseplate (bond <= 0.1 ohm); IEC 60417-5019 label")
+        c.resistor("0", "PGND", "PE", page, package="2512", dnp=True, mpn="CRCW25120000Z0EG", note="PGND-to-PE configurable link, DNP until the source earthing is defined (A-23 review)")
+        c.resistor("1M", "PGND", "PE_REF_MID", page, package="2512", mpn="CRCW25121M00FKEG", note="A-P11: PGND-PE reference 2 x 1 M in series (<= 240 V per 500 V element)")
+        c.resistor("1M", "PE_REF_MID", "PE", page, package="2512", mpn="CRCW25121M00FKEG", note="A-P11: PGND-PE reference, second element")
+        capx(c, "10n/300VAC/Y2", "VIN", "PE", page, dnp=True, note="Y2 footprint VIN-PE, DNP (touch-current review)")
+        capx(c, "10n/300VAC/Y2", "PGND", "PE", page, dnp=True, note="Y2 footprint PGND-PE, DNP (touch-current review)")
 
 
 def sensing_island(c: Circuit):
     page = "04_sensing_island"
     bias_module(c, "S", page, vdd="ISO_15V", vee="PGND", com="5V_ISO", r_top_vdd="80.6k", r_top_com="16.2k", pg_net="PG_BIAS_S_N", ref="U5", island="ISO",
                 note="Sensing-island bias (CR-12): VDD-VEE 15 V (A-P2: 80.6 k / 16.2 k = 14.94 V, capacitor load only), COM-VEE 5.0 V (16.2 k / 16.2 k) = 5V_ISO; VEE = PGND")
-    for ref, label, top_net, div_net, outp, outn, count, fs in (("U6", "VIN", "VIN", "VIN_DIV", "VIN_OUTP", "VIN_OUTN", 4, "602 V"),
-                                                               ("U7", "VOUT", "VOUT", "VOUT_DIV", "VOUT_OUTP", "VOUT_OUTN", 2, "302 V")):
-        prev = top_net
-        for i in range(count):
-            nxt = div_net if i == count - 1 else f"{label}_DIV_T{i + 1}"
-            thin_film(c, "750k", prev, nxt, page, package="1206", note=f"{label} ladder element {i + 1}/{count} (750 k 1206 0.1 %, <= 120 V / 19 mW each)")
-            prev = nxt
-        thin_film(c, "10k", div_net, "PGND", page, note=f"{label} ladder bottom 10.0 k (full scale {fs} = 2 V)")
-        capx(c, "1n/50V/0603", div_net, "PGND", page, note="1 nF C0G across the ladder bottom (16 kHz)")
-        capx(c, "100p/50V/0603", div_net, "PGND", page, note="100 pF directly at the AMC1311 IN pin")
-        c.add("U", "AMC1311BDWVR", aipe("amc1311"), {1: "5V_ISO", 2: div_net, 3: "PGND", 4: "PGND", 5: "GND_CTRL", 6: outn, 7: outp, 8: "3V3"},
-              page=page, kind="IC", mpn="AMC1311BDWVR", maker=TI, source=TI_DS.format("amc1311"), definitions=AMC1311_PINS, ref=ref,
-              note=f"Reinforced isolated {label} sense amplifier (2 V input range, gain 1); SHTDN tied to GND1 (active high); pinout SBAS786C (fetched-datasheet)")
-        capx(c, "100n/50V/0603", "5V_ISO", "PGND", page, note=f"{ref} VDD1 decoupling (PE-PCB-008)")
-        capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note=f"{ref} VDD2 decoupling (PE-PCB-008)")
+    with c.block("isolated_sensing", "Isolated VIN / VOUT sensing (AMC1311)"):
+        for ref, label, top_net, div_net, outp, outn, count, fs in (("U6", "VIN", "VIN", "VIN_DIV", "VIN_OUTP", "VIN_OUTN", 4, "602 V"),
+                                                                   ("U7", "VOUT", "VOUT", "VOUT_DIV", "VOUT_OUTP", "VOUT_OUTN", 2, "302 V")):
+            prev = top_net
+            for i in range(count):
+                nxt = div_net if i == count - 1 else f"{label}_DIV_T{i + 1}"
+                thin_film(c, "750k", prev, nxt, page, package="1206", note=f"{label} ladder element {i + 1}/{count} (750 k 1206 0.1 %, <= 120 V / 19 mW each)")
+                prev = nxt
+            thin_film(c, "10k", div_net, "PGND", page, note=f"{label} ladder bottom 10.0 k (full scale {fs} = 2 V)")
+            capx(c, "1n/50V/0603", div_net, "PGND", page, note="1 nF C0G across the ladder bottom (16 kHz)")
+            capx(c, "100p/50V/0603", div_net, "PGND", page, note="100 pF directly at the AMC1311 IN pin")
+            c.add("U", "AMC1311BDWVR", aipe("amc1311"), {1: "5V_ISO", 2: div_net, 3: "PGND", 4: "PGND", 5: "GND_CTRL", 6: outn, 7: outp, 8: "3V3"},
+                  page=page, kind="IC", mpn="AMC1311BDWVR", maker=TI, source=TI_DS.format("amc1311"), definitions=AMC1311_PINS, ref=ref,
+                  note=f"Reinforced isolated {label} sense amplifier (2 V input range, gain 1); SHTDN tied to GND1 (active high); pinout SBAS786C (fetched-datasheet)")
+            capx(c, "100n/50V/0603", "5V_ISO", "PGND", page, note=f"{ref} VDD1 decoupling (PE-PCB-008)")
+            capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note=f"{ref} VDD2 decoupling (PE-PCB-008)")
 
 
 def selv_strip(c: Circuit):
     page = "05_selv_strip"
-    nets = {str(n): mezzanine_net(str(n)) for n in range(1, 51)}
-    c.add("J", "Mezzanine 2x25 socket", "Connector_PinSocket_2.54mm:PinSocket_2x25_P2.54mm_Vertical", nets, page=page, kind="J",
-          mpn="SSW-125-01-G-D", maker="Samtec", source="https://www.samtec.com/products/ssw",
-          definitions={str(n): dict(name=str(n), type="passive") for n in range(1, 51)},
-          note="Stacked mezzanine to the control board (TSW-125-07-G-D header there); nets per design_decisions.json interconnect.pin_assignment; "
-          "24 ground pins; stack height ~11 mm (unverified)")
-    for raw, filtered, note in (("RESET_N", "RESET_N_F", "driver RST/EN x2"), ("BIAS_EN", "BIAS_EN_F", "UCC14141 ENA x3")):
-        c.resistor("100", raw, filtered, page, note=f"A-P6: receiving network for {note} (100 ohm / 100 pF / 10 k pull-down, baseline interconnect.signalling)")
-        capx(c, "100p/50V/0603", filtered, "GND_CTRL", page, note=f"A-P6: 100 pF at the receiving pins ({note})")
-        c.resistor("10k", filtered, "GND_CTRL", page, note=f"A-P6: 10 k pull-down - {note} held off when the mezzanine is open")
-    # OPA2320 difference amplifiers, gain 1.5 (baseline sensing.vin.conversion, CR-16).
-    c.add("U", "OPA2320AIDGKR", "Package_SO:VSSOP-8_3x3mm_P0.65mm", {1: "VIN_SENSE", 2: "VIN_AMP_N", 3: "VIN_AMP_P", 4: "GND_CTRL", 5: "VOUT_AMP_P",
-                                                                      6: "VOUT_AMP_N", 7: "VOUT_SENSE", 8: "3V3"}, page=page, kind="IC",
-          mpn="OPA2320AIDGKR", maker=TI, source=TI_DS.format("opa2320"), definitions=OPA2320_PINS, ref="U8",
-          note="Difference amplifiers A = VIN, B = VOUT, gain 1.5 (10.0 k / 15.0 k 0.1 %), 32 kHz; pinout SBOS513F (fetched-datasheet)")
-    capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="OPA2320 supply decoupling")
-    for label, outp, outn, amp_p, amp_n, out in (("VIN", "VIN_OUTP", "VIN_OUTN", "VIN_AMP_P", "VIN_AMP_N", "VIN_SENSE"),
-                                                 ("VOUT", "VOUT_OUTP", "VOUT_OUTN", "VOUT_AMP_P", "VOUT_AMP_N", "VOUT_SENSE")):
-        thin_film(c, "10k", outp, amp_p, page, note=f"{label} difference amplifier input resistor (+)")
-        thin_film(c, "15k", amp_p, "GND_CTRL", page, note=f"{label} difference amplifier shunt resistor (+), gain 1.5")
-        capx(c, "330p/50V/0603", amp_p, "GND_CTRL", page, note=f"A-P8: 330 pF on the (+) leg for CMRR balance ({label})")
-        thin_film(c, "10k", outn, amp_n, page, note=f"{label} difference amplifier input resistor (-)")
-        thin_film(c, "15k", amp_n, out, page, note=f"{label} difference amplifier feedback resistor, gain 1.5")
-        capx(c, "330p/50V/0603", amp_n, out, page, note=f"330 pF across the feedback resistor (32 kHz) ({label})")
-    # Reference, OC threshold and ISENSE_REF.
-    c.add("U", "REF3125AIDBZR", "Package_TO_SOT_SMD:SOT-23", {1: "3V3", 2: "REF2V5_PB", 3: "GND_CTRL"}, page=page, kind="IC", mpn="REF3125AIDBZR", maker=TI,
-          source="https://www.ti.com/lit/gpn/REF31", definitions=REF3125_PINS, ref="U9",
-          note="2.5 V reference for the TMCS1133 OC threshold (power-board SELV strip, CR-16); pinout SBVS046E (fetched-datasheet)")
-    capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="REF3125 supply bypass (>= 0.47 uF per SBVS046E)")
-    capx(c, "100n/50V/0603", "REF2V5_PB", "GND_CTRL", page, note="REF3125 output capacitor (stable with any load capacitance)")
-    thin_film(c, "2.32k", "REF2V5_PB", "VOC_SET", page, note="V_OC divider top: VOC = 2.5 V x 1.00 k / 3.32 k = 0.753 V -> I_OC 37.5 A (0.7487 V with the 120 k pin load)")
-    thin_film(c, "1k", "VOC_SET", "GND_CTRL", page, note="V_OC divider bottom 1.00 k (< 10 k per SBOSAG0E Figure 9-5)")
-    c.resistor("10k", "3V3", "OC_N", page, note="OC_N open-drain pull-up 10 k (task baseline); OC_N -> TZ2 and the fault latch on the control board")
-    capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS decoupling 100 nF at pins 9/10")
-    capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS bulk 1 uF")
-    thin_film(c, "9.09k", "3V3", "ISENSE_REF", page, note="A-P1: ISENSE_REF = 3V3 x 1.00 k / 10.09 k = 0.327 V ratiometric zero-current reference (TMCS1133 has no VREF pin)")
-    thin_film(c, "1k", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF divider bottom")
-    capx(c, "100n/50V/0603", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF filter")
-    # Fan, relay coil, 12 V bulk.
-    c.header(3, {1: "12V_PROT", 2: "GND_CTRL", 3: "FAN_TACH"}, page, note="FAN 12V/GND/TACH")
-    c.resistor("10k", "3V3", "FAN_TACH", page, note="FAN_TACH open-collector pull-up (LAM 5 D K fan tacho, stall derating within 2 s)")
-    c.add("J", "Relay coil K1", "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal", {1: "12V_PROT", 2: "K1_LOW"}, page=page,
-          kind="J", mpn="1715721", maker="Phoenix Contact", source="https://www.phoenixcontact.com/",
-          note="Relay coil terminals (Omron G9EA-1 DC12 coil 417 mA, chassis mounted); firmware PWM hold 50-60 % REQUIRED; order code unverified")
-    c.add("Q", "AO3400A", "Package_TO_SOT_SMD:SOT-23", {1: "RLY_G", 2: "GND_CTRL", 3: "K1_LOW"}, page=page, kind="Q", mpn="AO3400A",
-          maker="Alpha and Omega Semiconductor", source="https://www.aosmd.com/res/datasheets/AO3400A.pdf", definitions=AO3400A_PINS,
-          note="Relay coil low-side switch (30 V, 5.7 A, 48 mohm max at 2.5 V); pinout AOS Rev 3.1 (fetched-datasheet): 1 G, 2 S, 3 D")
-    c.resistor("100", "RELAY_ON", "RLY_G", page, note="RELAY_ON gate series resistor")
-    c.resistor("10k", "RLY_G", "GND_CTRL", page, note="Gate pull-down: relay off when the mezzanine is open")
-    diode(c, "SS14 Schottky", "Diode_SMD:D_SMA", "12V_PROT", "K1_LOW", page, mpn="SS14", maker="onsemi / Vishay / Diodes Inc (multi-source)",
-          source="https://www.onsemi.com/products/discrete-power-modules/schottky-diodes-schottky-rectifiers/ss14",
-          note="Coil freewheel diode >= 1 A (CR-19): anode K1_LOW, cathode 12V_PROT; datasheet not fetched")
-    capx(c, "100u/25V/elec", "12V_PROT", "GND_CTRL", page, note="12V_PROT bulk 100 uF (baseline aux_12V_protection.bulk_uF)")
-    capx(c, "10u/25V/1210", "12V_PROT", "GND_CTRL", page, note="12V_PROT bulk 10 uF ceramic")
+    with c.block("mezzanine", "Mezzanine socket and receiving networks"):
+        nets = {str(n): mezzanine_net(str(n)) for n in range(1, 51)}
+        c.add("J", "Mezzanine 2x25 socket", "Connector_PinSocket_2.54mm:PinSocket_2x25_P2.54mm_Vertical", nets, page=page, kind="J",
+              mpn="SSW-125-01-G-D", maker="Samtec", source="https://www.samtec.com/products/ssw",
+              definitions={str(n): dict(name=str(n), type="passive") for n in range(1, 51)},
+              note="Stacked mezzanine to the control board (TSW-125-07-G-D header there); nets per design_decisions.json interconnect.pin_assignment; "
+              "24 ground pins; stack height ~11 mm (unverified)")
+        for raw, filtered, note in (("RESET_N", "RESET_N_F", "driver RST/EN x2"), ("BIAS_EN", "BIAS_EN_F", "UCC14141 ENA x3")):
+            c.resistor("100", raw, filtered, page, note=f"A-P6: receiving network for {note} (100 ohm / 100 pF / 10 k pull-down, baseline interconnect.signalling)")
+            capx(c, "100p/50V/0603", filtered, "GND_CTRL", page, note=f"A-P6: 100 pF at the receiving pins ({note})")
+            c.resistor("10k", filtered, "GND_CTRL", page, note=f"A-P6: 10 k pull-down - {note} held off when the mezzanine is open")
+    with c.block("difference_amplifiers", "OPA2320 difference amplifiers"):
+        # OPA2320 difference amplifiers, gain 1.5 (baseline sensing.vin.conversion, CR-16).
+        c.add("U", "OPA2320AIDGKR", "Package_SO:VSSOP-8_3x3mm_P0.65mm", {1: "VIN_SENSE", 2: "VIN_AMP_N", 3: "VIN_AMP_P", 4: "GND_CTRL", 5: "VOUT_AMP_P",
+                                                                          6: "VOUT_AMP_N", 7: "VOUT_SENSE", 8: "3V3"}, page=page, kind="IC",
+              mpn="OPA2320AIDGKR", maker=TI, source=TI_DS.format("opa2320"), definitions=OPA2320_PINS, ref="U8",
+              note="Difference amplifiers A = VIN, B = VOUT, gain 1.5 (10.0 k / 15.0 k 0.1 %), 32 kHz; pinout SBOS513F (fetched-datasheet)")
+        capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="OPA2320 supply decoupling")
+        for label, outp, outn, amp_p, amp_n, out in (("VIN", "VIN_OUTP", "VIN_OUTN", "VIN_AMP_P", "VIN_AMP_N", "VIN_SENSE"),
+                                                     ("VOUT", "VOUT_OUTP", "VOUT_OUTN", "VOUT_AMP_P", "VOUT_AMP_N", "VOUT_SENSE")):
+            thin_film(c, "10k", outp, amp_p, page, note=f"{label} difference amplifier input resistor (+)")
+            thin_film(c, "15k", amp_p, "GND_CTRL", page, note=f"{label} difference amplifier shunt resistor (+), gain 1.5")
+            capx(c, "330p/50V/0603", amp_p, "GND_CTRL", page, note=f"A-P8: 330 pF on the (+) leg for CMRR balance ({label})")
+            thin_film(c, "10k", outn, amp_n, page, note=f"{label} difference amplifier input resistor (-)")
+            thin_film(c, "15k", amp_n, out, page, note=f"{label} difference amplifier feedback resistor, gain 1.5")
+            capx(c, "330p/50V/0603", amp_n, out, page, note=f"330 pF across the feedback resistor (32 kHz) ({label})")
+    with c.block("reference_oc", "REF3125 reference, OC threshold, ISENSE_REF"):
+        # Reference, OC threshold and ISENSE_REF.
+        c.add("U", "REF3125AIDBZR", "Package_TO_SOT_SMD:SOT-23", {1: "3V3", 2: "REF2V5_PB", 3: "GND_CTRL"}, page=page, kind="IC", mpn="REF3125AIDBZR", maker=TI,
+              source="https://www.ti.com/lit/gpn/REF31", definitions=REF3125_PINS, ref="U9",
+              note="2.5 V reference for the TMCS1133 OC threshold (power-board SELV strip, CR-16); pinout SBVS046E (fetched-datasheet)")
+        capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="REF3125 supply bypass (>= 0.47 uF per SBVS046E)")
+        capx(c, "100n/50V/0603", "REF2V5_PB", "GND_CTRL", page, note="REF3125 output capacitor (stable with any load capacitance)")
+        thin_film(c, "2.32k", "REF2V5_PB", "VOC_SET", page, note="V_OC divider top: VOC = 2.5 V x 1.00 k / 3.32 k = 0.753 V -> I_OC 37.5 A (0.7487 V with the 120 k pin load)")
+        thin_film(c, "1k", "VOC_SET", "GND_CTRL", page, note="V_OC divider bottom 1.00 k (< 10 k per SBOSAG0E Figure 9-5)")
+        c.resistor("10k", "3V3", "OC_N", page, note="OC_N open-drain pull-up 10 k (task baseline); OC_N -> TZ2 and the fault latch on the control board")
+        capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS decoupling 100 nF at pins 9/10")
+        capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS bulk 1 uF")
+        thin_film(c, "9.09k", "3V3", "ISENSE_REF", page, note="A-P1: ISENSE_REF = 3V3 x 1.00 k / 10.09 k = 0.327 V ratiometric zero-current reference (TMCS1133 has no VREF pin)")
+        thin_film(c, "1k", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF divider bottom")
+        capx(c, "100n/50V/0603", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF filter")
+    with c.block("relay_fan", "Relay coil drive, fan header, 12 V bulk"):
+        # Fan, relay coil, 12 V bulk.
+        c.header(3, {1: "12V_PROT", 2: "GND_CTRL", 3: "FAN_TACH"}, page, note="FAN 12V/GND/TACH")
+        c.resistor("10k", "3V3", "FAN_TACH", page, note="FAN_TACH open-collector pull-up (LAM 5 D K fan tacho, stall derating within 2 s)")
+        c.add("J", "Relay coil K1", "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal", {1: "12V_PROT", 2: "K1_LOW"}, page=page,
+              kind="J", mpn="1715721", maker="Phoenix Contact", source="https://www.phoenixcontact.com/",
+              note="Relay coil terminals (Omron G9EA-1 DC12 coil 417 mA, chassis mounted); firmware PWM hold 50-60 % REQUIRED; order code unverified")
+        c.add("Q", "AO3400A", "Package_TO_SOT_SMD:SOT-23", {1: "RLY_G", 2: "GND_CTRL", 3: "K1_LOW"}, page=page, kind="Q", mpn="AO3400A",
+              maker="Alpha and Omega Semiconductor", source="https://www.aosmd.com/res/datasheets/AO3400A.pdf", definitions=AO3400A_PINS,
+              note="Relay coil low-side switch (30 V, 5.7 A, 48 mohm max at 2.5 V); pinout AOS Rev 3.1 (fetched-datasheet): 1 G, 2 S, 3 D")
+        c.resistor("100", "RELAY_ON", "RLY_G", page, note="RELAY_ON gate series resistor")
+        c.resistor("10k", "RLY_G", "GND_CTRL", page, note="Gate pull-down: relay off when the mezzanine is open")
+        diode(c, "SS14 Schottky", "Diode_SMD:D_SMA", "12V_PROT", "K1_LOW", page, mpn="SS14", maker="onsemi / Vishay / Diodes Inc (multi-source)",
+              source="https://www.onsemi.com/products/discrete-power-modules/schottky-diodes-schottky-rectifiers/ss14",
+              note="Coil freewheel diode >= 1 A (CR-19): anode K1_LOW, cathode 12V_PROT; datasheet not fetched")
+        capx(c, "100u/25V/elec", "12V_PROT", "GND_CTRL", page, note="12V_PROT bulk 100 uF (baseline aux_12V_protection.bulk_uF)")
+        capx(c, "10u/25V/1210", "12V_PROT", "GND_CTRL", page, note="12V_PROT bulk 10 uF ceramic")
 
 
 def mechanical(c: Circuit):
     page = "06_mechanical"
-    c.add("HS", "LAM 5 D K 100 12", aipe("heatsink"), {}, page=page, kind="HS", mpn="LAM 5 D K 100 12", maker="Fischer Elektronik",
-          source="https://www.fischerelektronik.de/", definitions={},
-          note="Fan heatsink envelope 100.5 x 100 x 50 mm, 0.30 K/W distributor figure (unverified), PE-bonded; both TO-247-4 clipped to one face at 28 mm "
-          "pitch; corner holes are placeholders; reserve 175 x 110 mm incl. air corridors")
-    for i in range(6):
-        c.add("H", "M4 standoff", "MountingHole:MountingHole_4.3mm_M4", {}, page=page, kind="H", definitions={},
-              note=f"Power-board mounting hole {i + 1}/6, M4 x 15 mm standoff on the PE-bonded baseplate")
-    for i in range(4):
-        c.add("H", "M3 standoff", "MountingHole:MountingHole_3.2mm_M3", {}, page=page, kind="H", definitions={},
-              note=f"Control-board standoff hole {i + 1}/4 (stack ~11 mm) on the SELV strip")
-    for net in ("3V3", "GND_CTRL", "GND_CTRL", "PWM_H_F", "PWM_L_F", "FAULT_N", "ISENSE", "VIN_SENSE", "VOUT_SENSE"):
-        testpoint(c, net, page)
-    for net in ("SPARE_D1", "SPARE_D2"):
-        testpoint(c, net, page, note="A-P9: spare mezzanine line terminated on a test pad")
+    with c.block("mounting", "Heatsink envelope and mounting holes"):
+        c.add("HS", "LAM 5 D K 100 12", aipe("heatsink"), {}, page=page, kind="HS", mpn="LAM 5 D K 100 12", maker="Fischer Elektronik",
+              source="https://www.fischerelektronik.de/", definitions={},
+              note="Fan heatsink envelope 100.5 x 100 x 50 mm, 0.30 K/W distributor figure (unverified), PE-bonded; both TO-247-4 clipped to one face at 28 mm "
+              "pitch; corner holes are placeholders; reserve 175 x 110 mm incl. air corridors")
+        for i in range(6):
+            c.add("H", "M4 standoff", "MountingHole:MountingHole_4.3mm_M4", {}, page=page, kind="H", definitions={},
+                  note=f"Power-board mounting hole {i + 1}/6, M4 x 15 mm standoff on the PE-bonded baseplate")
+        for i in range(4):
+            c.add("H", "M3 standoff", "MountingHole:MountingHole_3.2mm_M3", {}, page=page, kind="H", definitions={},
+                  note=f"Control-board standoff hole {i + 1}/4 (stack ~11 mm) on the SELV strip")
+    with c.block("test_points", "Bare-PCB test pads (SELV signals)"):
+        for net in ("3V3", "GND_CTRL", "GND_CTRL", "PWM_H_F", "PWM_L_F", "FAULT_N", "ISENSE", "VIN_SENSE", "VOUT_SENSE"):
+            testpoint(c, net, page)
+        for net in ("SPARE_D1", "SPARE_D2"):
+            testpoint(c, net, page, note="A-P9: spare mezzanine line terminated on a test pad")
 
 
 def build() -> Circuit:

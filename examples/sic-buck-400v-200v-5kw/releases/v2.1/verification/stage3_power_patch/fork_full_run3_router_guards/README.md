@@ -1,0 +1,1 @@
+Scratch diagnostic evidence of the Stage-3 fork, third iteration (router guards: HV pour keep-outs, barrier-strip edges, feed-via keep-outs, PE 5.3 mm, two order trials). Not repository verification evidence.

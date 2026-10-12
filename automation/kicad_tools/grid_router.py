@@ -22,6 +22,17 @@ engineering review. A zero ``unresolved`` list is a geometric proposal, not DRC.
 
 Only ``Router`` and ``run_plan`` import pcbnew; ``Grid`` and the helpers need
 numpy alone so they can be unit-tested with the host interpreter.
+
+V2.1 geometry (all opt-in through the plan key ``style``; without it every stage is byte-for-byte V2):
+``style.diagonal`` switches ``Grid.astar`` to 8 directions (octile heuristic, no corner cutting: both
+orthogonal neighbours of a diagonal step must be free, parent-direction bend penalties in cells, cell
+state so ``max_nodes`` keeps its meaning); pad-escape fanout and the rip-up victim search stay 4-direction.
+``style.simplify = 'octilinear'`` and ``style.arcs`` run ``Router.beautify`` once after via pruning and
+before the ground zones: per chain of router-made tracks between pads/vias/junctions, octilinear string
+pulling, short-run collapse and on-grid 45-degree chamfers are validated by the exact grid rule the 8-direction
+search uses, tangent fillets (adaptive radius, ``PCB_ARC``) by a corridor test on the dilated foreign mask;
+a chain is rewritten whole or kept whole, so no net gets longer, no via moves and no width changes.
+``smooth_policy`` keeps arcs off power/critical nets and wide tracks (diagonals only) unless the plan says otherwise.
 """
 from __future__ import annotations
 
@@ -29,9 +40,11 @@ import heapq
 import math
 import re
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 import numpy as np
+
+from automation.kicad_tools import path_geometry as pg
 
 EPS = 0.01
 ESCAPE_DISTANCES = (0.65, 1.25, 1.9, 2.65, 3.5, 4.5, 6.0)
@@ -40,7 +53,70 @@ PLAN_KEYS = {'board', 'layers', 'grid', 'trace', 'clearance', 'via', 'hole_clear
              'net_rules', 'keepouts', 'pre_routed', 'critical', 'critical_layers', 'power', 'fanout',
              'signal_order', 'signal_layers', 'exclude_nets', 'front_fallback', 'ground', 'prune_vias',
              'fill', 'save', 'strict', 'max_nodes', 'signal_order_trials', 'ripup_rounds', 'ripup_penalty', 'signal_first', 'signal_groups',
-             'signal_pinned'}
+             'signal_pinned', 'style'}
+# V2.1 routing style (plan key ``style``). Every default reproduces V2: 4-direction search, no simplification, no arcs.
+STYLE_DEFAULTS = dict(
+    diagonal=False,            # 8-direction A* (octile heuristic, corner rule) for the route/negotiate/retry searches
+    bend_penalty_cells=None,   # [45-degree, 90-degree] penalty in cells; None = [0.6, 2.0] when diagonal else [0, 0]
+    via_cost_cells=8,          # layer-change cost of Grid.astar (V2: 8)
+    heuristic_weight=1.0,      # emergency knob only: > 1 trades optimality for speed
+    diagonal_pref_factor=1.075,  # diagonal step factor on a layer with a preferred direction (orthogonal off-direction: 1.15)
+    simplify='none',           # 'octilinear': final-stage string pulling + short-run collapse (+ chamfer) of router chains
+    chamfer=True,              # with simplify: cut remaining 90-degree corners by the largest clear on-grid 45-degree chamfer
+    arcs=False,                # final-stage tangent fillets (PCB_ARC) on nets whose smooth_policy is 'arc'
+    arc_radius_mm=[0.0, 0.0, 1.0],  # [minimum (0 = track width), preferred (0 = 2 x width), maximum]
+    arc_steps=5,               # radius candidates tried per corner (geometric sequence preferred -> minimum)
+    arc_dilate_cells=2,        # extra dilation of the foreign mask for the off-grid arc samples (see Router.check_arc)
+    min_turn_deg=5.0,          # corners turning less are left as they are (no "almost straight" arcs)
+    max_turn_deg=170.0,        # corners turning more (reversals) are never filleted
+    corner_keep_mm={'via': None, 'port': 0.0},  # straight length kept at a chain end: via = via_d/2 + clearance when None; pads keep the whole exit leg
+    straight_nets=[],          # names or prefixes whose chains are never touched
+    max_width_for_arcs_mm=0.6,  # wider tracks get diagonals only
+    smooth_power=False,        # power (zone) nets: diagonals only unless True
+    smooth_critical=False,     # critical nets: diagonals only unless True
+    stages=['signal', 'negotiate', 'retry', 'critical'],  # router stages whose copper beautify may rewrite ('fanout', 'power' optional)
+    l_short_mm=None,           # short-run threshold for the collapse pass; None = max(2 x width, 4 x grid)
+    eps=EPS,                   # marking slack added to every copper radius (raise to 0.02 on 0.2 mm clearance boards if DRC asks)
+)
+SMOOTH_POLICIES = ('none', 'diagonal', 'arc')
+BEAUTIFY_STAGES = ('pre_routed', 'fanout', 'critical', 'power', 'signal', 'negotiate', 'retry')
+
+
+def normalise_style(style):
+    """Merge a plan ``style`` dict over ``STYLE_DEFAULTS`` (validated) and resolve the derived defaults."""
+    style = dict(style or {})
+    unknown = set(style) - set(STYLE_DEFAULTS)
+    if unknown:
+        raise ValueError(f'unknown style keys: {sorted(unknown)}')
+    cfg = {**STYLE_DEFAULTS, **style}
+    cfg['corner_keep_mm'] = {**STYLE_DEFAULTS['corner_keep_mm'], **dict(style.get('corner_keep_mm') or {})}
+    if set(cfg['corner_keep_mm']) - {'via', 'port'}:
+        raise ValueError('style.corner_keep_mm accepts via and port only')
+    bend = cfg['bend_penalty_cells']
+    if bend is None:
+        bend = [0.6, 2.0] if cfg['diagonal'] else [0.0, 0.0]
+    if len(bend) != 2 or any(float(b) < 0 for b in bend):
+        raise ValueError('style.bend_penalty_cells must be [bend_45, bend_90] with non-negative cells')
+    cfg['bend_penalty_cells'] = [float(bend[0]), float(bend[1])]
+    if cfg['simplify'] not in ('none', 'octilinear'):
+        raise ValueError("style.simplify must be 'none' or 'octilinear'")
+    if float(cfg['via_cost_cells']) <= 0 or float(cfg['heuristic_weight']) < 1.0 or float(cfg['diagonal_pref_factor']) < 1.0:
+        raise ValueError('style.via_cost_cells must be positive, heuristic_weight and diagonal_pref_factor at least 1')
+    radii = list(cfg['arc_radius_mm'])
+    if len(radii) != 3 or any(float(r) < 0 for r in radii) or (radii[1] and radii[1] > radii[2]) or radii[0] > radii[2]:
+        raise ValueError('style.arc_radius_mm must be [min, preferred, max] with min <= preferred <= max (0 = width-derived)')
+    cfg['arc_radius_mm'] = [float(r) for r in radii]
+    if not 0 < float(cfg['min_turn_deg']) < float(cfg['max_turn_deg']) <= 180:
+        raise ValueError('style.min_turn_deg must lie in (0, max_turn_deg] with max_turn_deg <= 180')
+    if set(cfg['stages']) - set(BEAUTIFY_STAGES):
+        raise ValueError(f'style.stages must be a subset of {BEAUTIFY_STAGES}')
+    if float(cfg['eps']) < EPS:
+        raise ValueError(f'style.eps must be at least {EPS}')
+    if int(cfg['arc_steps']) < 1 or int(cfg['arc_dilate_cells']) < 1:
+        raise ValueError('style.arc_steps and arc_dilate_cells must be at least 1')
+    cfg['straight_nets'] = [str(n) for n in cfg['straight_nets']]
+    cfg['stages'] = [str(s) for s in cfg['stages']]
+    return cfg
 
 
 def grid_shape(width_mm, height_mm, grid=0.25):
@@ -131,13 +207,20 @@ class Grid:
     map them to board millimetres.
     """
 
-    def __init__(self, nx, ny, layer_count, grid=0.25, margin_cells=4, origin=(0.0, 0.0), directions=None):
+    def __init__(self, nx, ny, layer_count, grid=0.25, margin_cells=4, origin=(0.0, 0.0), directions=None,
+                 moves=4, bend=(0.0, 0.0), diagonal_pref_factor=1.075, heuristic_weight=1.0):
         if nx < 3 or ny < 3 or layer_count < 1 or grid <= 0:
             raise ValueError('grid needs at least 3 x 3 cells, one layer and a positive pitch')
+        if int(moves) not in (4, 8):
+            raise ValueError('moves must be 4 or 8')
         self.nx, self.ny, self.nl, self.grid = int(nx), int(ny), int(layer_count), float(grid)
         self.ox, self.oy = float(origin[0]), float(origin[1])
         self.margin = max(0, int(margin_cells))
         self.directions = list(directions) if directions is not None else default_directions(self.nl)
+        self.moves = int(moves)  # default neighbourhood of astar (4 = V2, 8 = with 45-degree steps)
+        self.bend = (float(bend[0]), float(bend[1]))  # parent-direction penalties in cells for 45 / 90 degree turns
+        self.diagonal_pref_factor = float(diagonal_pref_factor)
+        self.heuristic_weight = float(heuristic_weight)
         self.occ = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)
         self.zocc = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)  # zone keep-outs: block tracks, never via barrels
         self.alt = np.zeros((self.nl, self.ny, self.nx), dtype=np.int16)  # newer owner of a -2 cell (two nets' clearance halos overlap)
@@ -210,9 +293,56 @@ class Grid:
         """Plain via check: inside, no nearby drill and the via cell free or owned by ``code``."""
         return self.inside(x, y) and self.holes[y, x] == 0 and int(self.vocc[y, x]) in (0, code)
 
+    # ----- read-only clearance tests for the beautify stage ---------------------------------------
+    def foreign_mask(self, layer, code, extra=0.0, region=None, dilate_cells=0):
+        """bool (ny, nx): cells net ``code`` may not use on ``layer`` - foreign copper halos and zone keep-outs dilated by
+        ``extra`` + ``dilate_cells`` cells (exactly like ``astar`` for ``extra``), cells outside the net's ``region`` (per-layer
+        list as in ``astar``) dilated by ``dilate_cells``. The margin frame is foreign copper (-1) already."""
+        occ, zocc = self.occ[layer], self.zocc[layer]
+        mask = ((occ != 0) & (occ != code)) | ((zocc != 0) & (zocc != code))
+        if extra + dilate_cells > 0:
+            mask = dilate(mask, extra + dilate_cells)
+        if region is not None and layer < len(region) and region[layer] is not None:
+            outside = ~region[layer]
+            mask = mask | (dilate(outside, dilate_cells) if dilate_cells > 0 else outside)
+        return mask
+
+    def cells_free(self, mask, points):
+        """True when the on-grid octilinear polyline ``points`` (integer cells, legs axis-parallel or exact diagonals) stays
+        inside the routable area and off ``mask``, with the 8-direction corner rule for every diagonal step (both orthogonal
+        neighbours free): the same test ``astar`` applies to its own moves, so the result is as safe as a routed path."""
+        if not points:
+            return False
+        x, y = points[0]
+        if not self.inside(x, y) or mask[y, x]:
+            return False
+        for p, q in zip(points, points[1:]):
+            steps = pg._unit_steps(p, q)
+            if steps is None:
+                return False
+            (ux, uy), n = steps
+            x, y = p
+            for _ in range(n):
+                xx, yy = x + ux, y + uy
+                if not self.inside(xx, yy) or mask[yy, xx]:
+                    return False
+                if ux and uy and (mask[y, xx] or mask[yy, x]):
+                    return False
+                x, y = xx, yy
+        return True
+
+    def samples_free(self, mask, samples):
+        """True when the nearest cell of every mm sample lies inside the routable area and off ``mask`` (the caller dilates
+        the mask so that an off-grid point between cell centres keeps its clearance; see Router.check_arc)."""
+        for x, y in samples:
+            gx, gy = self.to_grid(x, y)
+            if not self.inside(gx, gy) or mask[gy, gx]:
+                return False
+        return True
+
     def astar(self, start, end, code, layers, max_nodes=700000, margin=None, extra=0.0, via_extra=0.0,
-              transition=None, via_cost=8, allowed=None, via_allowed=None):
-        """4-neighbour A* over (x, y, layer) cells for net ``code``.
+              transition=None, via_cost=8, allowed=None, via_allowed=None, moves=None, bend=None):
+        """4- or 8-neighbour A* over (x, y, layer) cells for net ``code``.
 
         ``start``/``end`` are (x, y, layer); a ``None`` layer means any layer in
         ``layers`` (plated through pads). Planar steps cost 1.0 along a layer's
@@ -225,8 +355,26 @@ class Grid:
         ``via_allowed`` (bool array) restricts the cells where a layer change may happen.
         Zone keep-outs (``zocc``) block tracks like foreign copper. Returns the node
         list or None when no path exists within ``max_nodes`` expansions.
+
+        ``moves`` (default ``self.moves``) = 8 adds the four diagonal steps (cost sqrt(2), times
+        ``diagonal_pref_factor`` on a layer with a preferred direction) with the octile heuristic;
+        a diagonal step is taken only when both orthogonally adjacent cells are free as well (no
+        corner cutting, so the clearance argument of the inflated halos holds). ``bend`` (default
+        ``self.bend``) = (b45, b90) adds a penalty in cells for turning relative to the direction the
+        cell was reached from (135 degrees: b90 + b45, reversal: 2 x b90; the first step after a layer
+        change is free); the state stays the cell, so the search is not strictly optimal with penalties
+        but keeps the ``max_nodes`` budget semantics. With moves 4 and no penalties the search is the V2 one.
         """
         nx, ny = self.nx, self.ny
+        moves = self.moves if moves is None else int(moves)
+        b45, b90 = self.bend if bend is None else (float(bend[0]), float(bend[1]))
+        eight = moves == 8
+        table = pg.MOVES8 if eight else pg.MOVES4
+        octants = [pg.OCTANT[m] for m in table]
+        penalties = (0.0, b45, b90, b90 + b45, 2.0 * b90)
+        use_bend = b45 > 0 or b90 > 0
+        weight = self.heuristic_weight
+        pref_factor = self.diagonal_pref_factor
         occ, vocc, holes, zocc = self.occ, self.vocc, self.holes, self.zocc
         sx, sy, sl = start; ex, ey, el = end
         layers = tuple(layers)
@@ -265,7 +413,12 @@ class Grid:
         directions = self.directions
         inf = math.inf
 
-        def h(x, y, l): return abs(ex - x) + abs(ey - y) + (0 if el is None or l == el else 5)
+        if eight:
+            def h(x, y, l): return pg.octile(ex - x, ey - y) * weight + (0 if el is None or l == el else 5)
+        elif weight != 1.0:
+            def h(x, y, l): return (abs(ex - x) + abs(ey - y)) * weight + (0 if el is None or l == el else 5)
+        else:
+            def h(x, y, l): return abs(ex - x) + abs(ey - y) + (0 if el is None or l == el else 5)
         def enc(x, y, l): return (l * ny + y) * nx + x
         def dec(k): return (k % nx, (k // nx) % ny, k // (nx * ny))
         heap, costs, parent = [], {}, {}
@@ -290,13 +443,27 @@ class Grid:
                 self.last_expanded = expanded
                 return None
             pref = directions[l] if l < len(directions) else None
-            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            d_in = pg.NO_DIR
+            if use_bend:
+                pk = parent.get(k)
+                if pk is not None:
+                    px, py, _pl = dec(pk)
+                    if (px, py) != (x, y):
+                        d_in = pg.OCTANT[(x - px, y - py)]  # a layer change resets the direction: the first step after a via is free
+            for i, (dx, dy) in enumerate(table):
                 xx, yy = x + dx, y + dy
                 if not (xmin <= xx <= xmax and ymin <= yy <= ymax):
                     continue
                 if not free(l, xx, yy) and not (xx == ex and yy == ey and int(occ[l, yy, xx]) in (0, code)):
                     continue  # the goal cell itself (the net's own port) is enterable even inside a dilated foreign halo
-                step = 1.0 if pref is None or (pref == 'h' and dy == 0) or (pref == 'v' and dx == 0) else 1.15
+                if dx and dy:
+                    if not (free(l, xx, y) and free(l, x, yy)):
+                        continue  # no corner cutting: both orthogonal neighbours must be free (no goal exception for them)
+                    step = pg.SQRT2 if pref is None else pg.SQRT2 * pref_factor
+                else:
+                    step = 1.0 if pref is None or (pref == 'h' and dy == 0) or (pref == 'v' and dx == 0) else 1.15
+                if d_in != pg.NO_DIR:
+                    step += penalties[pg.turn_class(d_in, octants[i])]
                 nc = cost + step; nk = enc(xx, yy, l)
                 if nc < costs.get(nk, inf):
                     costs[nk] = nc; parent[nk] = k; heapq.heappush(heap, (nc + h(xx, yy, l), nc, nk))
@@ -420,13 +587,18 @@ class Router:
 
     def __init__(self, board, width_mm, height_mm, layers, grid=0.25, trace=0.2, clearance=0.2, via=(0.6, 0.3),
                  net_rules=None, keepouts=None, board_margin=1.0, origin=(0.0, 0.0), critical=(), power=(),
-                 hole_clearance=0.25, directions=None, max_nodes=700000):
+                 hole_clearance=0.25, directions=None, max_nodes=700000, style=None):
         import pcbnew as pcb
         self.pcb, self.board = pcb, board
         self.width, self.height = float(width_mm), float(height_mm)
         self.trace, self.clearance = float(trace), float(clearance)
         self.via_d, self.via_drill = float(via[0]), float(via[1])
         self.hole_clearance = float(hole_clearance); self.max_nodes = int(max_nodes)
+        self.style = normalise_style(style)  # V2.1 geometry knobs; defaults = V2 behaviour
+        self.eps = float(self.style['eps'])
+        self.stage = 'pre_routed'  # run_plan names the stage whose copper is being created; beautify rewrites eligible stages only
+        self.item_stage = {}  # KIID string -> stage of every track, arc and via this router created
+        self.exceptions = []  # beautify: corners kept sharp, with a reason
         self.net_rules = {k: dict(v) for k, v in (net_rules or {}).items()}
         self.critical = set(critical) | {n for n, r in self.net_rules.items() if r.get('critical')}
         self.power = set(power) | {n for n, r in self.net_rules.items() if r.get('power')}
@@ -437,7 +609,9 @@ class Router:
         self.names = [board.GetLayerName(l) for l in self.layers]
         self.nl = len(self.layers)
         nx, ny = grid_shape(width_mm, height_mm, grid)
-        self.grid = Grid(nx, ny, self.nl, grid, max(1, math.ceil(board_margin / grid - 1e-9)), origin, directions)
+        self.grid = Grid(nx, ny, self.nl, grid, max(1, math.ceil(board_margin / grid - 1e-9)), origin, directions,
+                         moves=8 if self.style['diagonal'] else 4, bend=tuple(self.style['bend_penalty_cells']),
+                         diagonal_pref_factor=self.style['diagonal_pref_factor'], heuristic_weight=self.style['heuristic_weight'])
         self.escape_distances, self.escape_shifts = ESCAPE_DISTANCES, ESCAPE_SHIFTS
         self.nets = {n.GetNetname(): n for n in board.GetNetInfo().NetsByNetcode().values() if n.GetNetCode()}
         self.code = {name: net.GetNetCode() for name, net in self.nets.items()}
@@ -574,6 +748,9 @@ class Router:
                 if self._key(xy) in self.vias:
                     continue
                 self._mark_via(xy, net, pcb.ToMM(item.GetWidth(pcb.F_Cu)), pcb.ToMM(item.GetDrillValue()))  # KiCad 10: via width needs a layer
+            elif isinstance(item, pcb.PCB_ARC) and item.GetLayer() in self.layers:  # before the track branch: a PCB_ARC is a PCB_TRACK
+                a, m, b = (tuple(pcb.ToMM(v)) for v in (item.GetStart(), item.GetMid(), item.GetEnd()))
+                self._mark_arc(a, m, b, net, self.layers.index(item.GetLayer()), pcb.ToMM(item.GetWidth()), pcb.ToMM(item.GetLength()))
             elif item.GetLayer() in self.layers:
                 a, b = tuple(pcb.ToMM(item.GetStart())), tuple(pcb.ToMM(item.GetEnd()))
                 self._mark_track(a, b, net, self.layers.index(item.GetLayer()), pcb.ToMM(item.GetWidth()))
@@ -639,17 +816,35 @@ class Router:
     # ----- copper creation -------------------------------------------------------------------
     def _mark_track(self, a, b, net, layer, width):
         g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
-        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
-        g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + EPS, code)
+        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + self.eps, code, alt=g.alt[layer])
+        g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + self.eps, code)
         self.length[net] += math.dist(a, b)
+
+    def _mark_arc(self, a, m, b, net, layer, width, length):
+        """Mark an arc (mm start, mid, end) as short chords with the track radii and add its true ``length`` (taken from the
+        pcbnew item so that re-registration of a saved board reproduces ``net_length_mm`` exactly)."""
+        g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
+        pts = pg.sample_arc(a, m, b, g.grid / 2)
+        for p, q in zip(pts, pts[1:]):
+            g.segment(g.occ[layer], p, q, width / 2 + clearance + self.trace / 2 + self.eps, code, alt=g.alt[layer])
+            g.segment(g.vocc, p, q, width / 2 + clearance + self.via_d / 2 + self.eps, code)
+        self.length[net] += float(length)
 
     def _mark_via(self, xy, net, diameter, drill):
         g = self.grid; code = self.code[net]; clearance = self.clearance_for(net)
         for layer in range(self.nl):
-            g.segment(g.occ[layer], xy, xy, diameter / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
-        g.segment(g.vocc, xy, xy, diameter / 2 + clearance + self.via_d / 2 + EPS, code)
+            g.segment(g.occ[layer], xy, xy, diameter / 2 + clearance + self.trace / 2 + self.eps, code, alt=g.alt[layer])
+        g.segment(g.vocc, xy, xy, diameter / 2 + clearance + self.via_d / 2 + self.eps, code)
         g.segment(g.holes, xy, xy, drill / 2 + self.hole_clearance + self.via_drill / 2 + 2 * EPS, -1)
         self.vias[self._key(xy)] = net
+
+    def _tag(self, item):
+        """Record the creating stage of a new board item (KIID string -> stage) and the created / rip-up bookkeeping."""
+        self.item_stage[item.m_Uuid.AsString()] = self.stage
+        if self.created is not None:
+            self.created.append(item)
+        if self.recording_net is not None:
+            self.net_items[self.recording_net].append(item)
 
     def track(self, a, b, net, layer_index, width=None, mark_width=None):
         """Add a straight track (mm endpoints) on a routing layer index; returns the PCB_TRACK or None.
@@ -666,10 +861,24 @@ class Router:
         item.SetLayer(self.layers[layer_index]); item.SetNet(self.nets[net]); self.board.Add(item)
         self._mark_track(a, b, net, layer_index, width if mark_width is None else max(float(mark_width), width))  # mark_width: wider occupancy for off-grid copper
         self.stats['tracks'] += 1
-        if self.created is not None:
-            self.created.append(item)
-        if self.recording_net is not None:
-            self.net_items[self.recording_net].append(item)
+        self._tag(item)
+        return item
+
+    def arc(self, a, m, b, net, layer_index, width=None):
+        """Add a PCB_ARC through the mm points start ``a``, ``m`` (on the arc) and end ``b``; returns the item or None.
+
+        Occupancy is marked along the arc with the track radii; the arc length comes from the created item.
+        """
+        if math.dist(a, b) < 1e-6:
+            return None
+        width = self.width_for(net) if width is None else float(width)
+        pcb = self.pcb
+        item = pcb.PCB_ARC(self.board)
+        item.SetStart(self.point(*a)); item.SetMid(self.point(*m)); item.SetEnd(self.point(*b)); item.SetWidth(pcb.FromMM(width))
+        item.SetLayer(self.layers[layer_index]); item.SetNet(self.nets[net]); self.board.Add(item)
+        self._mark_arc(a, m, b, net, layer_index, width, pcb.ToMM(item.GetLength()))
+        self.stats['arcs'] += 1
+        self._tag(item)
         return item
 
     def via(self, xy, net, diameter=None, drill=None):
@@ -689,10 +898,7 @@ class Router:
         self.board.Add(item)
         self._mark_via(tuple(xy), net, diameter, drill)
         self.stats['vias'] += 1
-        if self.created is not None:
-            self.created.append(item)
-        if self.recording_net is not None:
-            self.net_items[self.recording_net].append(item)
+        self._tag(item)
         return item
 
     def existing_transition(self, xy, net):
@@ -735,12 +941,13 @@ class Router:
                     return False
         return True
 
-    def astar(self, start, end, net, layers=None, max_nodes=None, margin=None, width=None):
+    def astar(self, start, end, net, layers=None, max_nodes=None, margin=None, width=None, moves=None):
         """Grid A* for ``net`` between (x, y, layer_index) cells; see ``Grid.astar``.
 
         ``layers`` are routing indices allowed for layer changes (default:
         ``default_layers``); ``max_nodes`` defaults to the router's budget; the
         net's width/clearance rule sets the dilation (``width`` overrides the width).
+        ``moves`` overrides the grid's neighbourhood (the fanout escapes stay 4-direction).
         """
         layers = self.default_layers(net) if layers is None else tuple(layers)
         max_nodes = self.max_nodes if max_nodes is None else int(max_nodes)
@@ -750,7 +957,7 @@ class Router:
         return g.astar(start, end, self.net_code(net), layers, max_nodes=max_nodes, margin=margin,
                        extra=extra / g.grid, via_extra=via_extra / g.grid,
                        transition=lambda x, y: self.existing_transition(self.to_mm(x, y), net),
-                       allowed=allowed, via_allowed=via_allowed)
+                       allowed=allowed, via_allowed=via_allowed, via_cost=self.style['via_cost_cells'], moves=moves)
 
     def emit(self, path, net, width=None):
         """Realise an A* path as tracks (net rule width, or ``width``) and through vias."""
@@ -912,7 +1119,7 @@ class Router:
                         candidates.append((distance + abs(shift) * 1.4 + (10 if sign != primary else 0), ex, ey))
             routed = False
             for _, ex, ey in sorted(set(candidates)):
-                path = self.astar((sx, sy, side), (ex, ey, side), net, layers=(side,), max_nodes=1500, margin=10, width=escape_width)
+                path = self.astar((sx, sy, side), (ex, ey, side), net, layers=(side,), max_nodes=1500, margin=10, width=escape_width, moves=4)
                 if path is None:
                     continue
                 self.track((x, y), self.to_mm(sx, sy), net, side, escape_width); self.emit(path, net, escape_width); self.via(self.to_mm(ex, ey), net)
@@ -955,8 +1162,8 @@ class Router:
         lane = (tuple(a), tuple(b), net, int(layer), width)
         self._lanes.append(lane)
         self._lane_memory.setdefault(net, []).append(lane) if lane not in self._lane_memory.get(net, []) else None
-        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + EPS, code, alt=g.alt[layer])
-        g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + EPS, code)
+        g.segment(g.occ[layer], a, b, width / 2 + clearance + self.trace / 2 + self.eps, code, alt=g.alt[layer])
+        g.segment(g.vocc, a, b, width / 2 + clearance + self.via_d / 2 + self.eps, code)
 
     def route_net(self, net, ports=None, layers=None, allow_front_fallback=True):
         """Connect the ports of ``net`` with the shortest available connections first (Kruskal over the manhattan
@@ -1118,6 +1325,9 @@ class Router:
             for it in items:
                 if isinstance(it, pcb.PCB_VIA):
                     recs.append(('via', tuple(pcb.ToMM(it.GetPosition())), pcb.ToMM(it.GetWidth(pcb.F_Cu)), pcb.ToMM(it.GetDrillValue())))
+                elif isinstance(it, pcb.PCB_ARC):  # before the track branch (a PCB_ARC is a PCB_TRACK): never serialise an arc as its chord
+                    recs.append(('arc', tuple(pcb.ToMM(it.GetStart())), tuple(pcb.ToMM(it.GetMid())), tuple(pcb.ToMM(it.GetEnd())),
+                                 self.layers.index(it.GetLayer()), pcb.ToMM(it.GetWidth())))
                 else:
                     recs.append(('track', tuple(pcb.ToMM(it.GetStart())), tuple(pcb.ToMM(it.GetEnd())), self.layers.index(it.GetLayer()), pcb.ToMM(it.GetWidth())))
             out[net] = recs
@@ -1135,6 +1345,8 @@ class Router:
             for rec in recs:
                 if rec[0] == 'via':
                     self.via(rec[1], net, rec[2], rec[3])
+                elif rec[0] == 'arc':
+                    self.arc(rec[1], rec[2], rec[3], net, rec[4], rec[5])
                 else:
                     self.track(rec[1], rec[2], net, rec[3], rec[4])
             self.recording_net = None
@@ -1351,6 +1563,11 @@ class Router:
             if isinstance(item, pcb.PCB_VIA):
                 continue
             a, b = item.GetStart(), item.GetEnd()
+            if isinstance(item, pcb.PCB_ARC):  # an arc touches a via only at its ends: test its two chords (a-mid, mid-b)
+                m = item.GetMid()
+                segments[item.GetNetCode()].append((a.x, a.y, m.x, m.y, item.GetWidth() / 2, item.GetLayer()))
+                segments[item.GetNetCode()].append((m.x, m.y, b.x, b.y, item.GetWidth() / 2, item.GetLayer()))
+                continue
             segments[item.GetNetCode()].append((a.x, a.y, b.x, b.y, item.GetWidth() / 2, item.GetLayer()))
         pads = defaultdict(list)
         for pad in self.board.GetPads():
@@ -1372,15 +1589,304 @@ class Router:
         self.stats['pruned_unused_vias'] += removed
         return removed
 
+    # ----- V2.1 geometry: policy, clearance tests and the final beautify stage -------------------------
+    def smooth_policy(self, net):
+        """'none' | 'diagonal' | 'arc' for ``net``: the net rule ``smooth`` wins, then ``style.straight_nets`` (names or prefixes),
+        then power/critical nets and tracks wider than ``max_width_for_arcs_mm`` get diagonals only; arcs need ``style.arcs``."""
+        cfg = self.style
+        rule = self.net_rules.get(net, {}).get('smooth')
+        if rule:
+            if rule not in SMOOTH_POLICIES:
+                raise ValueError(f'net rule smooth of {net!r} must be one of {SMOOTH_POLICIES}')
+            return rule
+        if any(net == pat or net.startswith(pat) for pat in cfg['straight_nets']):
+            return 'none'
+        active = cfg['simplify'] != 'none' or cfg['arcs']
+        if not active:
+            return 'none'
+        if (self.is_power(net) and not cfg['smooth_power']) or (self.is_critical(net) and not cfg['smooth_critical']):
+            return 'diagonal'
+        if self.width_for(net) > float(cfg['max_width_for_arcs_mm']):
+            return 'diagonal'
+        return 'arc' if cfg['arcs'] else 'diagonal'
+
+    def _mask_for(self, net, layer, width, dilate_cells=0):
+        """Cached foreign mask of ``net`` on a routing layer index (see Grid.foreign_mask); the cache holds one net at a time."""
+        cache = getattr(self, '_mask_cache', None)
+        if cache is None or cache[0] != net:
+            cache = self._mask_cache = (net, {})
+        key = (layer, round(float(width), 6), int(dilate_cells))
+        if key not in cache[1]:
+            g = self.grid
+            extra = self.extra_for(net, width)[0] / g.grid
+            cache[1][key] = g.foreign_mask(layer, self.code[net], extra=extra, region=self.region_masks(net)[0], dilate_cells=dilate_cells)
+        return cache[1][key]
+
+    def check_cells(self, net, layer, cells, width):
+        """True when the on-grid octilinear polyline ``cells`` of ``net`` (routing layer index, track ``width``) is as clear as a
+        path of the 8-direction search would be (foreign halos with the net's extra dilation, zone keep-outs, region, corner rule)."""
+        return self.grid.cells_free(self._mask_for(net, layer, width), cells)
+
+    def check_arc(self, net, layer, a, m, b, width):
+        """True when every point of the arc a-m-b (mm) keeps the net's clearance: the arc is sampled at half a cell and the nearest
+        cell of every sample must be clear of the foreign mask dilated by ``style.arc_dilate_cells`` more cells than the search uses,
+        which covers the up to half-diagonal offset of an off-grid point from its cell centre (conservative by about one cell)."""
+        g = self.grid
+        mask = self._mask_for(net, layer, width, dilate_cells=int(self.style['arc_dilate_cells']))
+        return g.samples_free(mask, pg.sample_arc(a, m, b, g.grid / 2))
+
+    def _fillet_chain(self, net, layer, points, width, keep_start, keep_end, exceptions):
+        """Replace the interior corners of the mm polyline ``points`` by tangent arcs where the adaptive radius search finds a clear
+        one; returns [('seg', a, b) | ('arc', a, m, b)]. ``keep_start``/``keep_end`` (mm) stay straight at the chain ends."""
+        cfg = self.style
+        r_min_cfg, r_pref_cfg, r_max = cfg['arc_radius_mm']
+        r_min = max(r_min_cfg or width, self.grid.grid)
+        r_pref = min(r_pref_cfg or 2.0 * width, r_max)
+        min_turn, max_turn = float(cfg['min_turn_deg']), float(cfg['max_turn_deg'])
+        n = len(points)
+        turns = [abs(pg.turn_angle(points[i - 1], points[i], points[i + 1])) for i in range(1, n - 1)]
+        candidate = [min_turn <= t <= max_turn for t in turns]
+        legs = [math.dist(points[i], points[i + 1]) for i in range(n - 1)]
+        prims = []
+        cursor = points[0]
+        for i in range(1, n - 1):
+            p0, p1, p2 = points[i - 1], points[i], points[i + 1]
+            theta = turns[i - 1]
+            if not candidate[i - 1]:
+                prims.append(('seg', cursor, p1)); cursor = p1
+                continue
+            room1 = legs[i - 1] - keep_start if i == 1 else (legs[i - 1] / 2 if candidate[i - 2] else legs[i - 1])
+            room2 = legs[i] - keep_end if i == n - 2 else (legs[i] / 2 if candidate[i] else legs[i])
+            d_max = min(room1, room2)
+            tan_half = math.tan(math.radians(theta) / 2)
+            r_cap = min(r_pref, d_max / tan_half if tan_half > 1e-12 else r_pref)
+            chosen = None
+            if r_cap >= r_min - 1e-9:
+                radii = []
+                r = r_cap
+                for _ in range(int(cfg['arc_steps'])):
+                    radii.append(max(r, r_min)); r *= 0.7
+                    if r < r_min:
+                        break
+                if radii[-1] > r_min + 1e-9:
+                    radii.append(r_min)
+                tested = False
+                for r in radii:
+                    f = pg.fillet_corner(p0, p1, p2, r)
+                    if f is None:
+                        break
+                    a, m, b, d, _ = f
+                    if d > d_max + 1e-9:
+                        continue
+                    tested = True
+                    if self.check_arc(net, layer, a, m, b, width):
+                        chosen = (a, m, b, r)
+                        break
+                reason = None if chosen else ('clearance' if tested else 'leg_too_short')   # 'clearance' only when an arc sample test failed
+            else:
+                reason = 'pad_exit' if (i == 1 and keep_start >= legs[0] - 1e-9) or (i == n - 2 and keep_end >= legs[-1] - 1e-9) else 'leg_too_short'
+            if chosen is None:
+                exceptions.append(dict(net=net, layer=self.names[layer], xy=[round(p1[0], 4), round(p1[1], 4)], turn_deg=round(theta, 1),
+                                       width=width, kind=f'bend_{int(round(theta / 45.0) * 45)}', reason=reason))
+                prims.append(('seg', cursor, p1)); cursor = p1
+                continue
+            a, m, b, r = chosen
+            if math.dist(cursor, a) > 1e-9:
+                prims.append(('seg', cursor, a))
+            prims.append(('arc', a, m, b)); cursor = b
+            self.stats['fillets'] += 1
+        prims.append(('seg', cursor, points[-1]))
+        return [p for p in prims if p[0] == 'arc' or math.dist(p[1], p[2]) > 1e-9]
+
+    def beautify(self):
+        """Final geometric clean-up of the router's own copper (plan ``style``): per chain between pads, vias, junctions and
+        copper of other stages, octilinear string pulling, short-run collapse and on-grid chamfers (policy 'diagonal' or 'arc'),
+        then tangent fillets (policy 'arc'). Every candidate is validated against the current occupancy; a chain whose rewrite
+        fails any check is kept whole. Lengths and stats are adjusted item by item. Returns the stage report.
+
+        Conservatism: the occupancy (occ/vocc/alt) of a rewritten chain's old items is not cleared - the new primitives are only added -
+        so chains of other nets handled later in the pass are also tested against the stale halos of already rewritten copper. This
+        costs smoothing room (more 'clearance' exceptions) but can never admit a violation."""
+        pcb = self.pcb; g = self.grid; cfg = self.style
+        t0 = time.monotonic()
+        stages = set(cfg['stages'])
+        if cfg['simplify'] == 'none' and not cfg['arcs']:
+            return dict(enabled=False)
+        policy = {}
+        items, fixed = [], set()
+        layer_index = {layer: i for i, layer in enumerate(self.layers)}
+        all_items = list(self.board.GetTracks())
+        vias_by_net = defaultdict(list)       # (x, y, ring radius) in board units per net: copper the router's vertices may overlap
+        fixed_by_net_layer = defaultdict(list)  # ((ax, ay), (bx, by), half width) of the non-eligible items per (net, layer index)
+        for it in all_items:
+            if isinstance(it, pcb.PCB_VIA):
+                p = it.GetPosition(); fixed.add((int(p.x), int(p.y)))
+                vias_by_net[it.GetNetname()].append((int(p.x), int(p.y), it.GetWidth(pcb.F_Cu) // 2))  # KiCad 10: via width needs a layer
+                continue
+            a, b = it.GetStart(), it.GetEnd()
+            ka, kb = (int(a.x), int(a.y)), (int(b.x), int(b.y))
+            net = it.GetNetname()
+            idx = layer_index.get(it.GetLayer())
+            if net not in policy:
+                policy[net] = self.smooth_policy(net) if net in self.code else 'none'
+            eligible = (idx is not None and not isinstance(it, pcb.PCB_ARC) and policy[net] != 'none'
+                        and self.item_stage.get(it.m_Uuid.AsString()) in stages)
+            if eligible:
+                items.append(dict(id=it.m_Uuid.AsString(), net=net, layer=idx, a=ka, b=kb, width=pcb.ToMM(it.GetWidth()), item=it,
+                                  half=it.GetWidth() // 2))
+            else:
+                fixed.add(ka); fixed.add(kb)
+                if idx is not None:
+                    half = it.GetWidth() // 2
+                    if isinstance(it, pcb.PCB_ARC):  # an arc is covered by its two chords (as in prune_unused_vias)
+                        m = it.GetMid(); km = (int(m.x), int(m.y))
+                        fixed_by_net_layer[(net, idx)] += [(ka, km, half), (km, kb, half)]
+                    else:
+                        fixed_by_net_layer[(net, idx)].append((ka, kb, half))
+        pads_of = defaultdict(list)
+        for pad in self.board.GetPads():
+            pads_of[pad.GetNetname()].append(pad)
+        endpoints = {(rec['net'], key) for rec in items for key in (rec['a'], rec['b'])}
+        for net, key in endpoints:  # a node inside a pad is an anchor even when two router tracks pass through it (a Kruskal tree node)
+            point = pcb.VECTOR2I(key[0], key[1])
+            if any(pad.HitTest(point) for pad in pads_of.get(net, ())):
+                fixed.add(key)
+        # KiCad connects copper by overlap, not by coincident coordinates: a router vertex on the grid node nearest an exact (off-grid)
+        # via or stub end of its net is connected to it although the coordinates differ (power board fan-out vias and fan legs sit
+        # 0.025-0.06 mm off the 0.25 mm grid). Such a vertex is an anchor as well - as a (net, point) pair, so other nets are not
+        # affected - otherwise the string pulling removes it and the via / stub is left dangling (attempt B of the V2.1 power board).
+        for rec in items:
+            for key in (rec['a'], rec['b']):
+                if key in fixed or (rec['net'], key) in fixed:
+                    continue
+                if pg.connected_by_overlap(key, rec['half'], vias_by_net.get(rec['net'], ()), fixed_by_net_layer.get((rec['net'], rec['layer']), ())):
+                    fixed.add((rec['net'], key))
+        by_id = {rec['id']: rec for rec in items}
+        chains = pg.chains_from_items(items, fixed)
+        counts = Counter(); kept = Counter(); exceptions = self.exceptions
+        before = dict(segments=len(items), length=0.0, bends=Counter()); after = dict(segments=0, arcs=0, length=0.0, bends=Counter())
+        l_short_cfg = cfg['l_short_mm']
+        self.stage = 'beautify'
+        for chain in chains:
+            net, layer, width = chain['net'], chain['layer'], float(chain['width'])
+            pol = policy[net]
+            counts['chains'] += 1; counts[f'policy_{pol}'] += 1
+            cells, ok = [], True
+            for key in chain['points']:
+                mm = (pcb.ToMM(key[0]), pcb.ToMM(key[1]))
+                c = g.to_grid(*mm)
+                back = g.to_mm(*c)
+                if abs(pcb.FromMM(back[0]) - key[0]) > 0 or abs(pcb.FromMM(back[1]) - key[1]) > 0:
+                    ok = False
+                    break
+                cells.append(c)
+            old_mm = [g.to_mm(*c) for c in cells] if ok else [(pcb.ToMM(k[0]), pcb.ToMM(k[1])) for k in chain['points']]
+            old_len = pg.polyline_length(old_mm)
+            before['length'] += old_len
+            for i in range(1, len(old_mm) - 1):
+                before['bends'][pg.classify_bend(pg.turn_angle(old_mm[i - 1], old_mm[i], old_mm[i + 1]))] += 1
+            if not ok:
+                kept['off_grid'] += 1; self._keep_chain(chain, old_mm, after); continue
+            if len(cells) < 3:
+                kept['straight'] += 1; self._keep_chain(chain, old_mm, after); continue
+            # chain ends: a pad exit stays straight as a whole; a via keeps via_d/2 + clearance; other anchors keep corner_keep.port
+            def end_kind(key):
+                mm = pcb.VECTOR2I(key[0], key[1])
+                if any(pad.HitTest(mm) for pad in pads_of.get(net, ())):
+                    return 'pad'
+                if key in fixed and self.vias.get(self._key((pcb.ToMM(key[0]), pcb.ToMM(key[1])))) == net:
+                    return 'via'
+                if pg.connected_by_overlap(key, 0, vias_by_net.get(net, ())):  # chain end inside the ring of an exact (off-grid) via
+                    return 'via'
+                return 'port'
+            kinds = (end_kind(chain['points'][0]), end_kind(chain['points'][-1]))
+            keep_via = cfg['corner_keep_mm']['via']
+            keep_via = self.via_d / 2 + self.clearance_for(net) if keep_via is None else float(keep_via)
+            keep_mm = [keep_via if k == 'via' else float(cfg['corner_keep_mm']['port']) if k == 'port' else None for k in kinds]
+            work = list(cells)
+            keep_cells = [int(math.ceil(k / g.grid - 1e-9)) if k is not None else 0 for k in keep_mm]
+            head = [work[0]] if kinds[0] == 'pad' and len(work) > 2 else []   # the pad exit leg is frozen
+            tail = [work[-1]] if kinds[1] == 'pad' and len(work) > 2 else []
+            core = work[len(head):len(work) - len(tail)]
+            # corner_keep_mm.via: no diagonal of a shortcut / short-run / chamfer candidate may come closer than keep_cells to a via end,
+            # so the via is always left by a straight orthogonal run of at least that length (the fillet stage keeps keep_mm as well)
+            guards = [((cells[0], cells[-1])[k], keep_cells[k]) for k in (0, 1) if kinds[k] == 'via' and keep_cells[k] > 0]
+            is_clear = lambda poly, _n=net, _l=layer, _w=width, _g=guards: pg.diagonals_clear_of(poly, _g) and self.check_cells(_n, _l, poly, _w)
+            if cfg['simplify'] == 'octilinear' and len(core) >= 3:
+                l_short = (l_short_cfg or max(2 * width, 4 * g.grid)) / g.grid
+                core = pg.shortcut(core, is_clear)
+                core = pg.collapse_short_runs(core, l_short, is_clear)
+                if cfg['chamfer']:
+                    core = pg.chamfer(core, is_clear, min_cut=2, keep_start=keep_cells[0] if not head else 0, keep_end=keep_cells[1] if not tail else 0)
+            new_cells = pg.merge_collinear(head + core + tail)
+            new_mm = [g.to_mm(*c) for c in new_cells]
+            if new_cells[0] != cells[0] or new_cells[-1] != cells[-1] or pg.polyline_length(new_mm) > old_len + 1e-6:
+                kept['length_check'] += 1; self._keep_chain(chain, old_mm, after); continue
+            if not all(self.check_cells(net, layer, [p, q], width) for p, q in zip(new_cells, new_cells[1:]) if (p, q) not in zip(cells, cells[1:])):
+                kept['clearance_recheck'] += 1; self._keep_chain(chain, old_mm, after); continue
+            if pol == 'arc' and len(new_mm) >= 3:
+                keep = [math.dist(new_mm[0], new_mm[1]) if kinds[0] == 'pad' else keep_mm[0], math.dist(new_mm[-2], new_mm[-1]) if kinds[1] == 'pad' else keep_mm[1]]
+                prims = self._fillet_chain(net, layer, new_mm, width, keep[0], keep[1], exceptions)
+            else:
+                prims = [('seg', p, q) for p, q in zip(new_mm, new_mm[1:])]
+                for i in range(1, len(new_mm) - 1):
+                    theta = abs(pg.turn_angle(new_mm[i - 1], new_mm[i], new_mm[i + 1]))
+                    if theta >= float(cfg['min_turn_deg']):
+                        exceptions.append(dict(net=net, layer=self.names[layer], xy=[round(new_mm[i][0], 4), round(new_mm[i][1], 4)], turn_deg=round(theta, 1),
+                                               width=width, kind=f'bend_{int(round(theta / 45.0) * 45)}', reason=f'policy_{pol}'))
+            if prims == [('seg', p, q) for p, q in zip(old_mm, old_mm[1:])]:
+                kept['unchanged'] += 1; self._keep_chain(chain, old_mm, after); continue
+            # write back: remove the old items (exact length bookkeeping), create the new ones
+            for edge in chain['edges']:
+                rec = by_id[edge['id']]
+                self.board.Remove(rec['item']); self.item_stage.pop(edge['id'], None)
+                self.stats['tracks'] -= 1
+            self.length[net] -= old_len
+            removed = {edge['id'] for edge in chain['edges']}
+            if net in self.net_items:
+                self.net_items[net] = [it for it in self.net_items[net] if it.m_Uuid.AsString() not in removed]
+            self.recording_net = net if net in self.net_items else None
+            for prim in prims:
+                if prim[0] == 'seg':
+                    self.track(prim[1], prim[2], net, layer, width); after['segments'] += 1
+                else:
+                    self.arc(prim[1], prim[2], prim[3], net, layer, width); after['arcs'] += 1
+            self.recording_net = None
+            after['length'] += sum(math.dist(p[1], p[2]) if p[0] == 'seg' else pg.arc_length(p[1], p[2], p[3]) for p in prims)
+            self._count_bends(prims, after['bends'])
+            counts['rewritten'] += 1
+        self._mask_cache = None
+        by_reason = Counter(e['reason'] for e in exceptions)
+        return dict(enabled=True, simplify=cfg['simplify'], arcs=bool(cfg['arcs']), chains=counts['chains'], rewritten=counts['rewritten'],
+                    kept=sum(kept.values()), kept_reasons=dict(kept), policies={k[7:]: v for k, v in counts.items() if k.startswith('policy_')},
+                    segments_before=before['segments'], segments_after=after['segments'], arcs_after=after['arcs'], fillets=int(self.stats['fillets']),
+                    bends_before=dict(before['bends']), bends_after=dict(after['bends']),
+                    length_before_mm=round(before['length'], 3), length_after_mm=round(after['length'], 3),
+                    exceptions_by_reason=dict(by_reason), exceptions=exceptions[:5000], seconds=round(time.monotonic() - t0, 3))  # the checker joins reasons by position
+
+    def _keep_chain(self, chain, mm, after):
+        after['segments'] += len(chain['edges']); after['length'] += pg.polyline_length(mm)
+        for i in range(1, len(mm) - 1):
+            after['bends'][pg.classify_bend(pg.turn_angle(mm[i - 1], mm[i], mm[i + 1]))] += 1
+
+    @staticmethod
+    def _count_bends(prims, bends):
+        """Bends between consecutive straight primitives (arc joints are tangent by construction)."""
+        for p, q in zip(prims, prims[1:]):
+            if p[0] == 'seg' and q[0] == 'seg':
+                bends[pg.classify_bend(pg.turn_angle(p[1], p[2], q[2]))] += 1
+
     def report(self):
         """Summary dict: counts (vias = created minus pruned, i.e. the vias left on the board), pruned vias, unresolved records and
         per-net track length (mm)."""
         return dict(status='requires-native-DRC', tracks=int(self.stats['tracks']), vias=int(self.stats['vias'] - self.stats['pruned_unused_vias']),
+                    arcs=int(self.stats['arcs']),
                     zones=int(self.stats['zones']), pruned=int(self.stats['pruned_unused_vias']),
                     unresolved=list(self.unresolved),
                     net_length_mm={net: round(value, 3) for net, value in sorted(self.length.items())},
                     grid=dict(nx=self.grid.nx, ny=self.grid.ny, pitch=self.grid.grid, margin_cells=self.grid.margin,
                               layers=list(self.names), directions=list(self.grid.directions)),
+                    style=dict(self.style),
                     stats=dict(self.stats))
 
 
@@ -1410,7 +1916,11 @@ def validate_plan(plan):
     rounds for the connections that stay unresolved (default 0 = off), ``ripup_penalty`` soft-path cost
     per foreign cell (default 40); ``signal_groups`` [[names or prefixes], ...] splits the signal nets into
     independent groups (regions that never meet) routed one after the other, each with its own order trials -
-    nets matching no group form a last group.
+    nets matching no group form a last group; ``style`` {diagonal, bend_penalty_cells, via_cost_cells, heuristic_weight,
+    diagonal_pref_factor, simplify, chamfer, arcs, arc_radius_mm, arc_steps, arc_dilate_cells, min_turn_deg, max_turn_deg,
+    corner_keep_mm, straight_nets, max_width_for_arcs_mm, smooth_power, smooth_critical, stages, l_short_mm, eps} - the V2.1
+    geometry knobs (see ``STYLE_DEFAULTS``; absent = V2 behaviour); ``net_rules[net].smooth`` ('none' | 'diagonal' | 'arc')
+    overrides the per-net smoothing policy.
     """
     if not isinstance(plan, dict):
         raise ValueError('plan must be a dict')
@@ -1441,6 +1951,13 @@ def validate_plan(plan):
     ground = plan.get('ground')
     if ground is not None and (not isinstance(ground, dict) or not ground.get('net') or not ground.get('layers')):
         raise ValueError('plan.ground needs net and layers')
+    if 'style' in plan and plan['style'] is not None:
+        if not isinstance(plan['style'], dict):
+            raise ValueError('plan.style must be a dict')
+        normalise_style(plan['style'])
+    for net, rule in plan.get('net_rules', {}).items():
+        if isinstance(rule, dict) and rule.get('smooth') not in (None, *SMOOTH_POLICIES):
+            raise ValueError(f'net_rules[{net!r}].smooth must be one of {SMOOTH_POLICIES}')
     return dict(plan)
 
 
@@ -1503,7 +2020,8 @@ def run_plan(board, plan):
                     trace=plan.get('trace', 0.2), clearance=plan.get('clearance', 0.2), via=tuple(plan.get('via', (0.6, 0.3))),
                     net_rules=plan.get('net_rules'), board_margin=spec.get('margin', 1.0), origin=tuple(spec.get('origin', (0.0, 0.0))),
                     critical=plan.get('critical', ()), power=list(power), hole_clearance=plan.get('hole_clearance', 0.25),
-                    directions=plan.get('directions'), max_nodes=plan.get('max_nodes', 700000))
+                    directions=plan.get('directions'), max_nodes=plan.get('max_nodes', 700000), style=plan.get('style'))
+    router.stage = 'pre_routed'
     for keepout in plan.get('keepouts', ()):
         layer = keepout.get('layer')
         router.keepout(router.layer_index(layer) if isinstance(layer, str) else layer, *keepout['rect'],
@@ -1533,6 +2051,7 @@ def run_plan(board, plan):
                 if array.get('port'):
                     router.ports[array['net']].append((*router.to_grid(*xy), None, 'VIA_ARRAY', ''))
     fan = plan.get('fanout', {})
+    router.stage = 'fanout'
     skip_refs, skip_nets = set(fan.get('skip_refs', ())), set(fan.get('skip_nets', ()))
     skip_pads = {tuple(p) for p in fan.get('skip_pads', ())}
     inward = {tuple(p) for p in fan.get('inward_pads', ())}
@@ -1555,9 +2074,11 @@ def run_plan(board, plan):
                   exact_lane=lambda r: exact_lanes.get((r['ref'], r['number']), 0.0))
     indices = lambda names: tuple(router.layer_index(n) for n in names) if names else None
     critical_layers = indices(plan.get('critical_layers'))
+    router.stage = 'critical'
     for net in plan.get('critical', ()):
         if net in router.code:
             router.route_net(net, layers=critical_layers)
+    router.stage = 'power'
     for net, item in power.items():
         if net not in router.code:
             continue
@@ -1592,6 +2113,7 @@ def run_plan(board, plan):
     if rest:
         groups.append(rest)
     trial_log, selected = [], []
+    router.stage = 'signal'
     for group_index, members in enumerate(g for g in groups if g):
         def pin(order):  # the plan's signal_pinned nets (names or prefixes) first, in that order, then the rest in the trial's order
             head = list(dict.fromkeys(n for pat in pinned for n in order if n == pat or n.startswith(pat)))
@@ -1650,15 +2172,20 @@ def run_plan(board, plan):
         trial_log.extend(group_log)
         selected.append(group_log[best[1]]['order'] if group_log and best is not None else None)
     ripup_log = []
+    router.stage = 'negotiate'
     if int(plan.get('ripup_rounds', 0)) > 0 and any(u.get('stage') == 'route' for u in router.unresolved):
         ripup_log = router.negotiate(signal_layers if signal_layers else router.default_layers(remaining[0]) if remaining else (0,),
                                      allow_front_fallback=plan.get('front_fallback', True), rounds=int(plan['ripup_rounds']),
                                      penalty=float(plan.get('ripup_penalty', 40.0)), protected=excluded)
     retried = 0
+    router.stage = 'retry'
     if any(u.get('stage') == 'route' for u in router.unresolved):  # connections that became routable while later nets moved
         retried = router.retry_unresolved(signal_layers if signal_layers else tuple(range(router.nl)), allow_front_fallback=plan.get('front_fallback', True))
     if plan.get('prune_vias', True):
         router.prune_unused_vias(exclude_nets=set(power) | ({ground_net} if ground_net else set()))
+    beautify_report = None
+    if router.style['simplify'] != 'none' or router.style['arcs']:  # V2.1 final geometry stage: after pruning, before the ground pours
+        beautify_report = router.beautify()
     if ground:
         margin = spec.get('margin', 1.0); ox, oy = spec.get('origin', (0.0, 0.0))
         polygon = ground.get('polygon') or [(ox + margin, oy + margin), (ox + spec['width'] - margin, oy + margin),
@@ -1673,6 +2200,8 @@ def run_plan(board, plan):
     report.update(stage='routed_candidate', seconds=round(time.monotonic() - start, 3), signal_order_trials=trial_log,
                   signal_order_selected=(selected[0] if len(selected) == 1 else selected) if selected else None, ripup_rounds=ripup_log,
                   retried=retried)
+    if beautify_report is not None:
+        report['beautify'] = beautify_report
     if plan.get('save'):
         report['saved'] = save_and_reload(board, plan['save'])
     if plan.get('strict') and report['unresolved']:

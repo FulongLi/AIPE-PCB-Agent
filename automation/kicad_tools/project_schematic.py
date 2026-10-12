@@ -29,12 +29,15 @@ import json
 import math
 import os
 import re
+import textwrap
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 from typing import Callable
 
 from automation.kicad_tools.native_schematic import Schematic, extract_symbol, parse, pins, quote, uid
+from automation.kicad_tools import schematic_presentation as sp
+from automation.kicad_tools import schematic_wiring as sw
 from automation.setup.detect_kicad import find_kicad_cli
 
 GRID = 1.27
@@ -97,6 +100,7 @@ class ProjectSpec:
     auto_flag_power_nets: bool = False
     fp_lib_table: dict | None = None
     mapping_name: str = 'schematic_mapping.json'
+    presentation: dict | str | None = None  # None/'legacy' = V2 drawing; dict/'wired' = schematic_presentation (V2.1)
 
 
 def num(value: float) -> str:
@@ -199,6 +203,7 @@ def coerce_spec(spec) -> ProjectSpec:
             raise ValueError(f'Net class {c["name"]!r} lacks numeric {missing}')
         c['nets'] = [str(p) for p in c.get('nets', [])]
     spec.net_classes = classes
+    spec.presentation = sp.coerce_presentation(spec.presentation)
     return spec
 
 
@@ -260,6 +265,12 @@ def official_candidates(part: dict, spec: ProjectSpec) -> list[tuple[str, str]]:
         return [('Device', 'L')]
     if kind == 'D' and count == 2:
         return [('Device', diode_variant(part))]
+    if spec.presentation and count == 2 and kind in ('R', 'C'):
+        # wired style only (the legacy drawing keeps its generated glyphs byte for byte): compact Device symbols
+        if kind == 'R':
+            return [('Device', 'R')]
+        polar = ':CP_' in part['footprint'] or 'POLAR' in str(part.get('note', '')).upper() or 'polymer' in str(part.get('value', '')).lower()
+        return [('Device', 'C_Polarized' if polar else 'C')]
     if count == 2 and (kind in ('F', 'FUSE') or (kind == 'passive' and reference_prefix(part['ref']) == 'F')):
         return [('Device', 'Fuse')]
     return []
@@ -389,13 +400,19 @@ def diode_symbol(part: dict, name: str):
     return definition, [(12.7, 10.16)], 'generated:diode'
 
 
-def generic_symbol(part: dict, groups: list, name: str):
-    """V1-style rectangular (or small R/C glyph) multi-unit symbol with every model pin placed and typed."""
+def generic_symbol(part: dict, groups: list, name: str, pin_order: Callable | None = None):
+    """V1-style rectangular (or small R/C glyph) multi-unit symbol with every model pin placed and typed.
+
+    `pin_order(part, number)` (optional) re-sorts the pins *within each side* of a unit (stable, so pin-number order is
+    kept inside equal keys); the wired drawing uses it to make same-rail pins adjacent so they share one bus.
+    """
     bodies, extents = [], []
     for unit, numbers in enumerate(groups, 1):
         numbers = sorted(numbers, key=pin_key)
         small = len(numbers) <= 2
         half = math.ceil(len(numbers) / 2)
+        if pin_order is not None and not small:
+            numbers = sorted(numbers[:half], key=lambda n: pin_order(part, n)) + sorted(numbers[half:], key=lambda n: pin_order(part, n))
         height = max(5.08, (half + 1) * 2.54)
         width = 5.08 if small else 38.1
         extents.append((width, height))
@@ -419,7 +436,7 @@ def generic_symbol(part: dict, groups: list, name: str):
     return _header(name, part) + '\n'.join(bodies) + ')', extents, 'generated:rectangle'
 
 
-def symbol_for(part: dict, spec: ProjectSpec, library: _Library, grouping: Callable):
+def symbol_for(part: dict, spec: ProjectSpec, library: _Library, grouping: Callable, pin_order: Callable | None = None):
     """(symbol name, library definition, per-unit (width, height) extents, source) for a part."""
     name = 'Sym_' + part['ref']
     groups = [list(map(str, g)) for g in grouping(part)]
@@ -439,7 +456,7 @@ def symbol_for(part: dict, spec: ProjectSpec, library: _Library, grouping: Calla
             result = diode_symbol(part, name)
             if result:
                 return (name, *result)
-    return (name, *generic_symbol(part, groups, name))
+    return (name, *generic_symbol(part, groups, name, pin_order))
 
 
 def analyse_connectivity(parts: list, flag_nets=()) -> dict:
@@ -654,6 +671,8 @@ def generate_project(spec) -> dict:
         flag_nets += [n for n in analyse_connectivity(parts, flag_nets)['undriven_power_nets'] if n not in flag_nets]
     spec.flag_nets = flag_nets
     diagnostics = analyse_connectivity(parts, flag_nets)
+    if spec.presentation:
+        return _generate_wired(spec, parts, flag_nets, diagnostics, library, grouping, skipped)
     fallbacks = {}
     for page in spec.pages:
         flow = _Flow(gen, page)
@@ -685,6 +704,7 @@ def generate_project(spec) -> dict:
         files.append(kicad_dir / sheet['file'])
     root.write(kicad_dir / (spec.name + '.kicad_sch'))
     files.append(kicad_dir / (spec.name + '.kicad_sch'))
+    removed_sheets = remove_stale_sheets(kicad_dir, set(spec.pages), files)
     lib_path = kicad_dir / 'libraries' / (spec.library + '.kicad_sym')
     lib_path.write_text('(kicad_symbol_lib (version 20250114) (generator "aipe")\n' + '\n'.join(gen.definitions.values()) + ')\n',
                         encoding='utf-8')
@@ -714,8 +734,241 @@ def generate_project(spec) -> dict:
     return dict(name=spec.name, root=str(kicad_dir / (spec.name + '.kicad_sch')), project=str(pro), mapping=str(mapping_path),
                 files=[str(f) for f in files], sheets=sheets, parts_placed=len(gen.paths), skipped=skipped,
                 continuation_sheets=[s['key'] for s in sheets if s['key'] != s['page']], symbol_fallbacks=fallbacks,
-                flags=flag_nets, diagnostics=diagnostics, library_root=mapping['library_root'])
+                flags=flag_nets, diagnostics=diagnostics, library_root=mapping['library_root'], removed_sheets=removed_sheets)
 
+
+# --- V2.1 wired presentation --------------------------------------------------------------------------------------
+
+def remove_stale_sheets(kicad_dir: Path, pages, written) -> list[str]:
+    """Delete <page>.kicad_sch / <page>_N.kicad_sch files of known pages that this generation did not write.
+
+    A regeneration that needs fewer continuation sheets (or none, in the wired style) must not leave the previous
+    run's sheets beside the project: they are not referenced by the root but confuse reviewers and tools.  Only
+    files whose stem is a page key of the spec are touched; the root sheet and foreign files are never removed.
+    """
+    written = {Path(p).resolve() for p in written}
+    removed = []
+    for path in sorted(Path(kicad_dir).glob('*.kicad_sch')):
+        if path.resolve() in written:
+            continue
+        match = re.fullmatch(r'(.+?)(?:_\d+)?\.kicad_sch', path.name)
+        if match and match.group(1) in pages:
+            path.unlink()
+            removed.append(path.name)
+    return removed
+
+
+def _write_project_files(spec: ProjectSpec, gen: _Generator, root: Schematic, definitions: dict, library: _Library,
+                         mapping_extra: dict, fallbacks: dict, skipped: dict, diagnostics: dict, flag_nets: list) -> dict:
+    """Shared tail of the wired generator: sheet files, library, tables, project, DRU, mapping and summary."""
+    kicad_dir, design_dir = spec.kicad_dir, spec.design_dir
+    (kicad_dir / 'libraries').mkdir(parents=True, exist_ok=True)
+    design_dir.mkdir(parents=True, exist_ok=True)
+    files = []
+    for sheet in gen.sheets:
+        sheet['sch'].write(kicad_dir / sheet['file'])
+        files.append(kicad_dir / sheet['file'])
+    root.write(kicad_dir / (spec.name + '.kicad_sch'))
+    files.append(kicad_dir / (spec.name + '.kicad_sch'))
+    mapping_extra = dict(mapping_extra, removed_sheets=remove_stale_sheets(kicad_dir, set(spec.pages), files))
+    lib_path = kicad_dir / 'libraries' / (spec.library + '.kicad_sym')
+    lib_path.write_text('(kicad_symbol_lib (version 20250114) (generator "aipe")\n' + '\n'.join(definitions.values()) + ')\n',
+                        encoding='utf-8')
+    (kicad_dir / 'sym-lib-table').write_text(
+        f'(sym_lib_table (version 7) (lib (name {quote(spec.library)}) (type "KiCad") (uri "${{KIPRJMOD}}/libraries/{spec.library}.kicad_sym") '
+        f'(options "") (descr {quote(spec.name + " explicit pin mappings")})))\n', encoding='utf-8')
+    files += [lib_path, kicad_dir / 'sym-lib-table']
+    pro = kicad_dir / (spec.name + '.kicad_pro')
+    pro.write_text(json.dumps(project_settings(spec.name, spec.net_classes, spec.design_rules), indent=2) + '\n', encoding='utf-8')
+    files.append(pro)
+    if spec.dru_text:
+        dru = kicad_dir / (spec.name + '.kicad_dru')
+        dru.write_text(normalise_dru(spec.dru_text), encoding='utf-8')
+        files.append(dru)
+    if spec.fp_lib_table:
+        rows = ''.join(f'\n  (lib (name {quote(lib)}) (type "KiCad") (uri {quote(uri)}) (options "") (descr "project footprint library"))'
+                       for lib, uri in spec.fp_lib_table.items())
+        (kicad_dir / 'fp-lib-table').write_text(f'(fp_lib_table (version 7){rows})\n', encoding='utf-8')
+        files.append(kicad_dir / 'fp-lib-table')
+    sheets = [{k: v for k, v in s.items() if k != 'sch'} for s in gen.sheets]
+    mapping = dict(project=spec.name, generator='automation.kicad_tools.project_schematic', root_uuid=root.root_uuid,
+                   paths=gen.paths, placement=gen.placement, sheets=sheets, symbols=gen.symbols, flags=gen.flags,
+                   skipped=skipped, symbol_fallbacks=fallbacks, diagnostics=diagnostics,
+                   library_root=str(library.root) if library.root else None, **mapping_extra)
+    mapping_path = design_dir / spec.mapping_name
+    mapping_path.write_text(json.dumps(mapping, indent=2) + '\n', encoding='utf-8')
+    return dict(name=spec.name, root=str(kicad_dir / (spec.name + '.kicad_sch')), project=str(pro), mapping=str(mapping_path),
+                files=[str(f) for f in files], sheets=sheets, parts_placed=len(gen.paths), skipped=skipped,
+                continuation_sheets=[s['key'] for s in sheets if s['key'] != s['page']], symbol_fallbacks=fallbacks,
+                flags=flag_nets, diagnostics=diagnostics, library_root=mapping['library_root'], **mapping_extra)
+
+
+def _root_pins(root_plan: dict) -> tuple[list, list]:
+    """Sheet pins (with their 5.08 mm stubs) and the global anchor labels of the root sheet."""
+    root_pins, root_labels = [], []
+    for entry, (sx, sy) in zip(root_plan['entries'], root_plan['positions']):
+        key = entry['sheet']['key']
+        for side, items in (('left', entry['left']), ('right', entry['right'])):
+            for index, (net, shape) in enumerate(items):
+                py = snap(sy + 5.08 + 2.54 * index)
+                px = sx if side == 'left' else snap(sx + entry['w'])
+                stub = snap(px - 5.08) if side == 'left' else snap(px + 5.08)
+                root_pins.append(dict(sheet=key, name=net, point=(px, py), side=side, shape=shape, stub=(stub, py)))
+                root_labels.append(dict(name=net, point=(stub, py), angle=180 if side == 'left' else 0))
+    return root_pins, root_labels
+
+
+def _generate_wired(spec: ProjectSpec, parts: list, flag_nets: list, diagnostics: dict, library: _Library,
+                    grouping: Callable, skipped: dict) -> dict:
+    """V2.1 drawing: schematic_presentation plan -> connectivity guard -> KiCad files (one sheet per page)."""
+    presentation = spec.presentation
+    gen = _Generator(spec)
+    fallbacks = {}
+
+    def rail_pin_order(part, number):
+        """Supply pins first, signal pins (pin-number order) in the middle, ground-style rails last on every side.
+
+        Consecutive same-rail pins form one bus; a supply symbol at the top of a side and a ground symbol at its
+        bottom point into free space instead of into the neighbouring signal lanes (TI reference-schematic order).
+        """
+        net = part['nets'].get(number)
+        info = planner.nets.get(net, {}) if net is not None else {}
+        if net is None or info.get('role') != 'rail':
+            return (1, '')
+        return (2, net) if info.get('down') else (0, net)
+
+    def symbol_for_part(part):
+        name, definition, extents, source = symbol_for(part, spec, library, grouping, rail_pin_order)
+        if source.startswith('generated') and (part['kind'] in ('Q', 'L', 'D') or (part['kind'] not in ('R', 'C') and official_candidates(part, spec))):
+            fallbacks[part['ref']] = source
+        gen.definitions[name] = definition
+        gen.symbols[part['ref']] = dict(lib_id=f'{spec.library}:{name}', source=source, units=len(extents))
+        return name, definition, extents, source
+
+    planner = sp.Planner(spec, parts, presentation, symbol_for_part)
+    papers = [p for p in presentation['paper_escalation'] if p in PAPER]
+    papers = papers[papers.index(spec.paper):] if spec.paper in papers else [spec.paper] + papers
+    plans = []
+    for page in spec.pages:
+        page_parts = [p for p in parts if p['page'] == page]
+        is_flag_page = page == spec.flag_page and bool(flag_nets)
+        if not page_parts and not planner.flags_for_page(page, flag_nets, is_flag_page):
+            continue
+        note = spec.page_notes.get(page, '')
+        if is_flag_page:
+            note = (note + ' ' if note else '') + FLAG_NOTE
+        note_lines = textwrap.wrap(note, presentation['note_width']) if note else []
+        header_height = 2.54 + len(note_lines) * presentation['note_size'] * 1.6 + 5.08
+        planned = planner.plan_page(page, page_parts, flag_nets, is_flag_page, papers, PAPER, header_height)
+        paper, positions = planned['paper'], planned['positions']
+        width = PAPER[paper][0]
+        texts = [dict(kind='title', text=spec.pages[page], x=snap(width / 2), y=10.16),
+                 dict(kind='note', text='\n'.join(note_lines), x=6.35, y=15.24)]
+        plan = sp.route_sheet(planner, page, positions, paper, PAPER, texts)
+        plan.title = spec.pages[page]
+        plan.counts['layout_variant'] = planned['variant']
+        plans.append(plan)
+    root = gen.root
+    root.text(spec.comment, 20, 20, 2)
+    if spec.header_lines:
+        root.text('\n'.join(spec.header_lines), 20, 31, 1.5)
+    top = max(63.5, snap(31 + 2.54 * len(spec.header_lines) + 7.62))
+    root_plan = sp.plan_root([dict(key=plan.key, ports=plan.ports) for plan in plans], planner, PAPER, spec.paper, top)
+    root.paper = root_plan['paper']
+    root_pins, root_labels = _root_pins(root_plan)
+    # connectivity guard before any file is written
+    root_wiring = sw.SheetWiring()
+    root_wiring.segments = [sw.Segment(pin['name'], pin['point'], pin['stub']) for pin in root_pins]
+    root_wiring.labels = [dict(kind='global', name=l['name'], point=l['point']) for l in root_labels] +         [dict(kind='sheetpin', name=pin['name'], point=pin['point']) for pin in root_pins]
+    derived = sw.connectivity({**{plan.key: plan.wiring for plan in plans}, '_root': root_wiring}, root_pins, root_labels)
+    guard = sw.compare_with_model(derived, parts)
+    if not guard['identical']:
+        spec.design_dir.mkdir(parents=True, exist_ok=True)
+        report = spec.design_dir / 'connectivity_guard_failure.json'
+        report.write_text(json.dumps(guard, indent=2, default=str), encoding='utf-8')
+        raise ValueError(f'connectivity guard: drawn geometry does not reproduce the model (report {report}): ' + json.dumps(
+            {k: guard[k] for k in ('mismatch_count', 'unnamed', 'multi_named', 'dangling', 'problems')}, default=str)[:1500])
+    # emit sheets
+    label_size = num(presentation['label_size'])
+    for number, plan in enumerate(plans, 2):
+        sheet = gen.new_sheet(plan.key, plan.key, plan.title, '')
+        sch = sheet['sch']
+        sch.items.clear()
+        sch.paper = plan.paper
+        for text in plan.texts:
+            if text['kind'] == 'title':
+                sch.text(text['text'], text['x'], text['y'], presentation['title_size'], bold=True, justify='top')
+            elif text['kind'] == 'note' and text['text']:
+                sch.text(text['text'], text['x'], text['y'], presentation['note_size'])
+            elif text['kind'] == 'heading':
+                sch.text(text['text'], text['x'], text['y'], presentation['heading_size'], bold=True, justify='left bottom')
+        for placed in plan.placed:
+            if placed.kind == 'part':
+                part = placed.part
+                lib_id = gen.symbols[part['ref']]['lib_id']
+                in_bom = bool(part.get('in_bom', part['kind'] not in ('TP', 'H')))
+                props = {k: v for k, v in placed.texts.items() if v}
+                sch.add_symbol(lib_id, placed.definition, part['ref'], part['value'], part['footprint'], placed.x, placed.y, placed.unit,
+                               property_y=placed.property_y, in_bom=in_bom, angle=placed.angle, dnp=bool(part.get('dnp')),
+                               properties_at=props or None)
+                if placed.unit == 1:
+                    gen.paths[part['ref']] = sheet['instance_path'] + '/' + sch.references[part['ref']]
+                gen.placement.setdefault(part['ref'], []).append(dict(sheet=plan.key, page=part['page'], unit=placed.unit,
+                                                                      x=placed.x, y=placed.y, angle=placed.angle))
+            elif placed.kind == 'power':
+                lib_id = f'{spec.library}:{placed.name}'
+                gen.definitions[placed.name] = placed.definition
+                sch.add_symbol(lib_id, placed.definition, placed.ref, placed.net, '', placed.x, placed.y, 1, in_bom=False, on_board=False,
+                               angle=placed.angle, properties_at={k: v for k, v in placed.texts.items() if v} or None, hide_reference=True)
+            else:  # PWR_FLAG
+                gen.definitions[FLAG_SYMBOL] = FLAG_DEFINITION
+                sch.add_symbol(f'{spec.library}:{FLAG_SYMBOL}', FLAG_DEFINITION, placed.ref, 'PWR_FLAG', '', placed.x, placed.y, 1,
+                               in_bom=False, on_board=False, hide_reference=True, hide_value=True)
+                gen.flags.append(dict(net=placed.net, reference=placed.ref, sheet=plan.key, x=placed.x, y=placed.y))
+        for seg in plan.wiring.segments:
+            sch.wire((num(seg.a[0]), num(seg.a[1])), (num(seg.b[0]), num(seg.b[1])))
+        for j in plan.wiring.junctions:
+            sch.junction((num(j[0]), num(j[1])))
+        for label in plan.labels:
+            point = (num(label['point'][0]), num(label['point'][1]))
+            if label['kind'] == 'global':
+                sch.global_label(label['name'], point, label.get('angle', 0), size=label_size)
+            else:
+                sch.hierarchical_label(label['name'], point, label.get('shape', 'bidirectional'), label.get('angle', 0), size=label_size)
+        for p in plan.wiring.no_connects:
+            sch.no_connect((num(p[0]), num(p[1])))
+        sheet['page_number'] = number
+    # root sheet: sheet symbols with pins, stubs and global anchors
+    titles = Counter(s['title'] for s in gen.sheets)
+    for sheet, entry, (sx, sy) in zip(gen.sheets, root_plan['entries'], root_plan['positions']):
+        sheet_name = sheet['title'] if titles[sheet['title']] == 1 else f'{sheet["title"]} [{sheet["key"]}]'
+        pin_lines = []
+        for pin in [p for p in root_pins if p['sheet'] == sheet['key']]:
+            angle = 180 if pin['side'] == 'left' else 0
+            # KiCad draws a sheet pin's name inside the sheet: left edge = angle 180 + justify left, right edge = angle 0 +
+            # justify right (every sheet pin of the KiCad 10 demo projects follows this; the inverse puts the text on the stub)
+            pin_lines.append(f'(pin {quote(pin["name"])} {pin["shape"]} (at {num(pin["point"][0])} {num(pin["point"][1])} {angle}) '
+                             f'(effects (font (size {label_size} {label_size})) (justify {"left" if angle == 180 else "right"})) '
+                             f'(uuid "{uid(sheet["uuid"] + "/pin/" + pin["name"])}"))')
+            root.wire((num(pin['point'][0]), num(pin['point'][1])), (num(pin['stub'][0]), num(pin['stub'][1])))
+            root.global_label(pin['name'], (num(pin['stub'][0]), num(pin['stub'][1])), angle, size=label_size)
+        root.items.append(f'''(sheet (at {num(sx)} {num(sy)}) (size {num(entry['w'])} {num(entry['h'])}) (stroke (width 0.254) (type default))
+            (fill (color 0 0 0 0)) (uuid "{sheet['uuid']}")
+            (property "Sheetname" {quote(sheet_name)} (at {num(sx)} {num(sy - 1.27)} 0) (effects (font (size 1.27 1.27)) (justify left bottom)))
+            (property "Sheetfile" {quote(sheet['file'])} (at {num(sx)} {num(sy + entry['h'] + 1.27)} 0) (effects (font (size 1.0 1.0)) (justify left top)))
+            {chr(10).join(pin_lines)}
+            (instances (project {quote(spec.name)} (path "/{root.root_uuid}" (page "{sheet['page_number']}")))))''')
+    summary = dict(style='wired', schema_version=2,
+                   nets={net: dict(role=info['role'], pages=info['pages'], down=info['down']) for net, info in planner.nets.items()},
+                   groups=planner.groups_by_page,
+                   sheets=[dict(key=plan.key, paper=plan.paper, counts=plan.counts, ports=sorted(plan.ports)) for plan in plans],
+                   exceptions=planner.exceptions, guard=dict(identical=True, pads_checked=guard['pads_checked']),
+                   root=dict(paper=root_plan['paper'], sheet_pins=len(root_pins), global_anchors=len(root_labels)),
+                   name_tags=sum(1 for plan in plans for l in plan.labels if l['kind'] == 'global'),
+                   label_size=presentation['label_size'],
+                   no_connects=guard['no_connects'])
+    return _write_project_files(spec, gen, root, dict(gen.definitions), library, dict(presentation=summary), fallbacks, skipped,
+                                diagnostics, flag_nets)
 
 def demo_spec(kicad_dir: Path, design_dir: Path) -> dict:
     """Small self-contained project exercising every symbol path.

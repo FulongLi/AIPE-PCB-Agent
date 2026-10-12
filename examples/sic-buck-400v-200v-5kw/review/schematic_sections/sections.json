@@ -1,0 +1,297 @@
+{
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED",
+  "generation": "V2.1",
+  "dpi": 200,
+  "renderer": "pymupdf 1.28.2",
+  "note": "clip_mm = (x0, y0, x1, y1) in sheet millimetres of the PDF page; the V2 pages draw every pin with a global label, so the V2 clip covers the rows that hold the same parts",
+  "sections": {
+    "power_gate_driver_hs": {
+      "board": "power",
+      "circuit": "HS isolated gate driver UCC21710-Q1 (U1): PWM input, gate network R17-R23, status pull-ups, DESAT network D3/D4/R24-R26, decoupling C20-C33",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_power.pdf",
+        "page": 4,
+        "pages_in_pdf": 12,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          15,
+          15,
+          405,
+          215
+        ],
+        "png": "power_gate_driver_hs_v2.png",
+        "px": [
+          3071,
+          1575
+        ],
+        "bytes": 151062,
+        "sha256": "8e7f8a6993830ae1e3fa7e5586cfb0e4618a5f01516c787080242c55439e391c"
+      },
+      "v21": {
+        "pdf": "review/schematic_power.pdf",
+        "page": 3,
+        "pages_in_pdf": 7,
+        "paper_mm": [
+          594,
+          420
+        ],
+        "clip_mm": [
+          5,
+          35,
+          275,
+          285
+        ],
+        "png": "power_gate_driver_hs_v21.png",
+        "px": [
+          2127,
+          1970
+        ],
+        "bytes": 138469,
+        "sha256": "2cf4143aa90fbce06ccf765692dc5c32778dd5755da634d34884486d891fe374"
+      }
+    },
+    "power_hs_bias": {
+      "board": "power",
+      "circuit": "HS isolated bias supply UCC14141-Q1 (U2) with L2, R29-R34, C34-C39",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_power.pdf",
+        "page": 5,
+        "pages_in_pdf": 12,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          15,
+          15,
+          405,
+          150
+        ],
+        "png": "power_hs_bias_v2.png",
+        "px": [
+          3071,
+          1064
+        ],
+        "bytes": 131702,
+        "sha256": "4ec7f03e19f2f791497fdef2ea94ace61b96f40d026b35bf489a4fc4236f6558"
+      },
+      "v21": {
+        "pdf": "review/schematic_power.pdf",
+        "page": 3,
+        "pages_in_pdf": 7,
+        "paper_mm": [
+          594,
+          420
+        ],
+        "clip_mm": [
+          275,
+          35,
+          565,
+          265
+        ],
+        "png": "power_hs_bias_v21.png",
+        "px": [
+          2284,
+          1812
+        ],
+        "bytes": 124452,
+        "sha256": "99dcd8334dbd8bc408307bdfa517b5f4a2a05234bb6d8ac535fd52eee766dd5a"
+      }
+    },
+    "power_power_stage": {
+      "board": "power",
+      "circuit": "whole power-stage sheet: terminals J1-J6, precharge RT1, MOV RV1, half bridge Q1/Q2, HF capacitor bank and DC-link capacitors C1-C12, output inductor L1, TMCS1133 current sensor U10, output capacitors C13/C14, bleeders R7-R10 and LED D2 (V2 continuation sheet (2) holds C17-C19, R13-R16 and the H1 stud)",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_power.pdf",
+        "page": 2,
+        "pages_in_pdf": 12,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          5,
+          5,
+          415,
+          292
+        ],
+        "png": "power_power_stage_v2.png",
+        "px": [
+          3229,
+          2261
+        ],
+        "bytes": 211253,
+        "sha256": "57e8b8622a7cc94a9aad629674be323a961f37073c920e937783f19350b82816"
+      },
+      "v21": {
+        "pdf": "review/schematic_power.pdf",
+        "page": 2,
+        "pages_in_pdf": 7,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          5,
+          5,
+          415,
+          292
+        ],
+        "png": "power_power_stage_v21.png",
+        "px": [
+          3229,
+          2261
+        ],
+        "bytes": 300319,
+        "sha256": "8ccfc29de757a809d3a43832a871312d90fd2f102829ab448c7b85b8099c0ec7"
+      }
+    },
+    "control_12v_entry": {
+      "board": "control",
+      "circuit": "12 V entry J1, TVS D1, TPS26400 eFuse U1 with its ILIM / dVdT / monitor network R1-R9, C1-C3",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_control.pdf",
+        "page": 2,
+        "pages_in_pdf": 10,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          15,
+          15,
+          405,
+          130
+        ],
+        "png": "control_12v_entry_v2.png",
+        "px": [
+          3071,
+          906
+        ],
+        "bytes": 109108,
+        "sha256": "1aa599703bd78531bff7b2526e9b0d75e6e76c32fae01cbb08804b1f13e81684"
+      },
+      "v21": {
+        "pdf": "review/schematic_control.pdf",
+        "page": 2,
+        "pages_in_pdf": 9,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          5,
+          38,
+          265,
+          150
+        ],
+        "png": "control_12v_entry_v21.png",
+        "px": [
+          2048,
+          883
+        ],
+        "bytes": 89587,
+        "sha256": "4bf9092b6c8a01f21ab25dd855821881e881d62274756af01f965ebf819a1681"
+      }
+    },
+    "control_supplies": {
+      "board": "control",
+      "circuit": "TPS54302 5 V buck U2/L1, TPS767D301 dual LDO U3 with core-first sequencing Q1, BAT54 D2, TPS3808 supervisor U4, reset header J2",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_control.pdf",
+        "page": 3,
+        "pages_in_pdf": 10,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          15,
+          15,
+          405,
+          250
+        ],
+        "png": "control_supplies_v2.png",
+        "px": [
+          3071,
+          1851
+        ],
+        "bytes": 195952,
+        "sha256": "2462f64280ca9cf71873d0395c59c865cf4ce06325836c6ed5218fddf43ef48b"
+      },
+      "v21": {
+        "pdf": "review/schematic_control.pdf",
+        "page": 3,
+        "pages_in_pdf": 9,
+        "paper_mm": [
+          594,
+          420
+        ],
+        "clip_mm": [
+          5,
+          38,
+          415,
+          335
+        ],
+        "png": "control_supplies_v21.png",
+        "px": [
+          3229,
+          2339
+        ],
+        "bytes": 218705,
+        "sha256": "4b9210e77b19746c9c2b59bad37598f329d3a165e9ee8bd8d37fc0ad61b20429"
+      }
+    },
+    "control_dsp": {
+      "board": "control",
+      "circuit": "TMS320F28335 units U5A-U5D and crystals X1/X2",
+      "v2": {
+        "pdf": "releases/v2/review/schematic_control.pdf",
+        "page": 4,
+        "pages_in_pdf": 10,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          15,
+          15,
+          345,
+          130
+        ],
+        "png": "control_dsp_v2.png",
+        "px": [
+          2599,
+          906
+        ],
+        "bytes": 271685,
+        "sha256": "e72ed8727802f7a459187ead41bf27d7bf0b7048e681242e97fbb04f59c03620"
+      },
+      "v21": {
+        "pdf": "review/schematic_control.pdf",
+        "page": 4,
+        "pages_in_pdf": 9,
+        "paper_mm": [
+          420,
+          297
+        ],
+        "clip_mm": [
+          5,
+          38,
+          200,
+          250
+        ],
+        "png": "control_dsp_v21.png",
+        "px": [
+          1536,
+          1670
+        ],
+        "bytes": 273296,
+        "sha256": "568cbd7ffeda366c5e74fafa8ea79cc4727e051661af143e27c591b0eb2383bf"
+      }
+    }
+  }
+}

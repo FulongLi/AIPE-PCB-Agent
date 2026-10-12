@@ -1,0 +1,253 @@
+{
+  "lens": "SOURCE FACT-CHECK",
+  "verdict": "confirmed-with-corrections",
+  "checked_items": [
+    {
+      "item": "UCC21710-Q1 isolation ratings, package, revision, lifecycle",
+      "status": "verified",
+      "evidence": "Primary: TI datasheet SLUSDH8D 'JANUARY 2019 - REVISED JUNE 2024' (https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf, text extracted from the fetched PDF): VISO 5700 VRMS (60 s); VIOWM 1500 VRMS / 2121 VDC; VIOTM 8000 VPK; VIOSM 12.8 kVPK; VIMP 8000 VPK per IEC 62368-1; CMTI 150 V/ns; 'creepage and clearance distance > 8mm'; 'Reinforced insulation per DIN EN IEC 60747-17 (VDE 0884-17)', UL 1577; material group I. TI product page https://www.ti.com/product/UCC21710-Q1: ACTIVE, SOIC DW 16-pin 10.3 x 10.3 mm, +/-10 A, datasheet Rev. D dated 10 Jun 2024. Agent values (5.7 kVrms, 1.5 kVrms, >8 mm, 150 V/ns, SLUSDH8D June 2024) all match."
+    },
+    {
+      "item": "AMC1311 isolation ratings, CMTI grade, revision",
+      "status": "verified",
+      "evidence": "Primary: SBAS786C 'DECEMBER 2017 - REVISED JUNE 2022' (https://www.ti.com/lit/ds/symlink/amc1311.pdf, extracted text): '7000-VPK reinforced isolation per DIN EN IEC 60747-17 (VDE 0884-17)' (= VIOTM); VIOWM 1500 VRMS / 2120 VDC; VIOSM 12800 VPK; VISO 5000 VRMS; creepage/clearance >= 8.5 mm (DWV package); CMTI AMC1311B 100 kV/us min (150 typ), AMC1311 15 kV/us min. Orderables AMC1311DWV(R), AMC1311BDWV(R). Agent values match; the 100 kV/us figure is correctly attributed to the B grade."
+    },
+    {
+      "item": "TMCS1133 reinforced working voltage, creepage, OC response, orderables, revision",
+      "status": "verified",
+      "evidence": "Primary: SBOSAG0E 'OCTOBER 2023 - REVISED MAY 2026' (https://www.ti.com/lit/ds/symlink/tmcs1133.pdf, extracted text): 'VIOWM Maximum reinforced isolation working voltage ... 950 VRMS 1343 VDC'; basic working voltage 1200 VRMS / 1697 VDC; VIOTM 7071 VPK; VIOSM 10000 VPK; VISO 5000 VRMS; creepage/clearance >= 8 mm; 'Overcurrent detection response: 100ns'; orderables TMCS1133A1AQDVGR ... TMCS1133B1AQDVGR ... C4AQDVGR (no 'B1QDVGR' -> confirms the knowledge-record note). TI product page https://www.ti.com/product/TMCS1133: ACTIVE, SOIC DVG-10, datasheet Rev. E 19 May 2026 - BUT its parametric table shows VIOWM 600 Vrms and creepage/clearance 8.1 mm, which disagrees with the datasheet; datasheet governs, discrepancy to be recorded."
+    },
+    {
+      "item": "RECOM R12P21503D barrier rating (agent: '6.4 kVDC series; reinforced working voltage not found; human review')",
+      "status": "contradicted",
+      "evidence": "Primary: RECOM RxxP2xx series datasheet REV 9-2024 (https://recom-power.com/pdf/Econoline/RxxP2xx.pdf, extracted text): 'Isolation Voltage I/P to O/P tested for 1 second 6.4kVDC, rated for 1 minute 3.2kVAC/60Hz, working voltage 250VACrms', 'Isolation Capacitance 1.5pF min. / 10pF max.', 'Insulation Grade according to 62368-1: basic'; certifications IEC/UL/CSA 62368-1 and 60950-1 (ITE standards, not 61800-5-1/62477-1). The datasheet lists only symmetric R05/R12P2xxS/D variants; R12P21503D is not in it (DigiKey lists it under 'RxxP2xxyyD Series', active, SIP-7, +15 V/-3 V, 6.4 kVDC: https://www.digikey.ie/en/products/detail/recom-power/R12P21503D/7354331). Correction: the family's published insulation grade is BASIC with a 250 VACrms working voltage, i.e. below the 440 VDC reinforced requirement; this is a stronger finding than 'not found' and must block the module from the reinforced barrier role until the yyD datasheet proves otherwise.",
+      "correction": "Treat the R12P2 family as basic-insulation / 250 VACrms per its series datasheet; a module for the SELV-to-HV reinforced barrier must carry a reinforced rating with working voltage >= 440 VDC (or the barrier must be re-partitioned); verify the RxxP2xxyyD datasheet or select another part."
+    },
+    {
+      "item": "Littelfuse KLKD020 ratings, interrupting ratings, I2t, lifecycle",
+      "status": "unverified",
+      "evidence": "Littelfuse product page (via search summary, direct fetch returned HTTP 403): fast-acting midget 10x38 mm, 20 A, 600 VAC and 600 VDC, interrupting 100 kA @ 600 VAC and 50 kA @ 600 VDC (structured data). The agent's second figure '10 kA DC (UL 248-19)' was not found anywhere; melting I2t, UL 248-14/19 listing details and lifecycle status not retrievable; datasheet PDF not obtained (https://littelfuse.com/products/fuses/industrial-power-fuses/midget-10x38mm-fuses/klkd/klkd020.aspx). Current/voltage ratings verified; interrupting-rating split, I2t and status remain unverified.",
+      "correction": "Cite Littelfuse's own 100 kA AC / 50 kA DC @ 600 V; drop or source the 10 kA figure; obtain the KLKD datasheet for melting I2t before asserting that the fuse protects the board copper and connectors."
+    },
+    {
+      "item": "Vishay PR02000202003JA100 (200 kOhm 5 % 2 W, 500 V, metal film 0411)",
+      "status": "verified",
+      "evidence": "Distributor primary data: Farnell listing https://de.farnell.com/en-DE/vishay/pr02000202003ja100/res-200kohm-5-2w-axial/dp/3975451: 200 kOhm, 2 W, +/-5 %, voltage rating 500 V, +/-250 ppm/K, axial metal film; Vishay PR01/PR02/PR03 datasheet snippet (CERN mirror) confirms PR02 = DIN size 0411 and 'defined fusing characteristics'. The Vishay-hosted datasheet (docs/28729) returned 404, so the 'limiting element voltage' wording is only at distributor level - as the agent stated."
+    },
+    {
+      "item": "TDK/EPCOS B32021A3103M289 (Y2, 10 nF)",
+      "status": "verified",
+      "evidence": "Distributor data (TDK PDF URL returned 404, product page 403): Arrow https://www.arrow.com/en/products/b32021a3103m289/tdk.html: 'Cap Film Suppression Y2 0.01uF 1500VDC/300VAC PP 20% (13 X 6 X 12mm) Radial 10mm 110C Automotive Ammo', status active; IBS lists 10 mm pitch, 300 VAC, 1.5 kV DC. Matches the agent's 300 VAC Y2 / 1500 VDC / 10 mm / 110 C values (all marked [S] by the agent, correctly)."
+    },
+    {
+      "item": "Bergquist Sil-Pad 2000 dielectric breakdown and thermal values",
+      "status": "verified",
+      "evidence": "Bergquist datasheet PDS_SP_2000_0410 values reproduced in search summary and distributor pages (https://www.electronicsdatasheets.com/download/4998.pdf, https://ie.farnell.com/bergquist/2015-54/silicone-pad-3-5w-m-k-0-38mm/dp/681118): dielectric breakdown 4000 Vac (ASTM D149), thermal conductivity 3.5 W/m-K (ASTM D5470), thermal impedance 0.38 C-in2/W at 50 psi (0.57 at 10 psi), TO-220 2.02 C/W at 50 psi. TO-247 die-cut part number not confirmed (agent flagged). Caveat: comparing a 4000 Vac breakdown value with a 4 kV 1.2/50 us impulse level is not like-for-like; the pad's acceptance must be stated as the standard's impulse or equivalent AC test, not as 'breakdown >= impulse'."
+    },
+    {
+      "item": "IEC 60664-1 Table F.1 / 61800-5-1 Table 7 impulse voltages (300 V: OVC II 2500, III 4000; 600 V: OVC II 4000, III 6000)",
+      "status": "verified",
+      "evidence": "Secondary reproductions: MEAN WELL/Telerex OVC paper (https://kivi.nl/_Resources/Persistent/c/1/4/2/c142828297cac23640aabcdcce6d266e28eb4ef8/MEAN-WELL-POWER-FORUM-TELEREX-OVC-III-20180614-rev-1.1-FINAL.pdf) lists 1500/2500/4000/6000 V for 300 V and 2500/4000/6000/8000 V for 600 V across OVC I-IV; RECOM/eepower articles confirm the 1.2/50 us basis and 'reinforced takes the next higher level'. Standard text itself not accessed."
+    },
+    {
+      "item": "IEC 60664-1 Table F.2 / 61800-5-1 Table 9 clearances (2.5 kV->1.5 mm, 4 kV->3.0, 6 kV->5.5, 8 kV->8.0; recurring-peak pairs 530 V->0.2, 960->0.5, 1600->1.5, 2600->3.0 mm)",
+      "status": "unverified",
+      "evidence": "No accessible reproduction found in three searches; VDE corrigendum listing only confirms that 61800-5-1 Table 9 impulse clearances are derived from IEC 60664-1:2020 Table F.2; TI SLUAAR5 worked example (8 kV impulse -> 14 mm for reinforced) is consistent with a 12 kV->14 mm step but does not confirm the rows the agent used. Values are not contradicted by anything found, but could not be verified against the standard."
+    },
+    {
+      "item": "IEC 60664-1 Table F.4 / 61800-5-1 Table 10 creepage rows (PWB PD2: 200 V 0.63, 250 1.0, 320 1.6, 400 2.0, 500 2.5, 630 3.2 mm; other insulators PD2 IIIa: 2.0/2.5/3.2/4.0/5.0/6.3 mm; interpolation permitted)",
+      "status": "unverified",
+      "evidence": "Table not reproduced in any retrieved source. Verified sub-items: material group IIIa = 175 <= CTI < 400, IIIb = 100 <= CTI < 175 (https://incompliancemag.com/?p=43009, fedevel forum), pollution degree 2 definition, and that IEC 60664-5 gives smaller PWB creepage values than Table F.4 of Part 1 (EVS-EN 60664-5 abstract) - consistent with the agent's use of Part 1."
+    },
+    {
+      "item": "IEC 61800-5-1 Table 3 DVC limits (A: 25 Vrms/35.4 Vpk/60 VDC; B: 50/71/120; C: 1000/4500/1500)",
+      "status": "unverified",
+      "evidence": "TI SLUAAR5 (https://www.ti.com/document-viewer/lit/html/SLUAAR5/GUID-2E1BC195-872B-45D3-850D-721594ACEA19) confirms Table 3 of IEC 61800-5-1 holds the DVC limits and that 'DVC A and B are contained in the voltage range of ELV' (<= 50 Vac rms, 120 Vdc), consistent with the agent's DVC B limits; the DVC A and DVC C numbers were not found in any retrieved source."
+    },
+    {
+      "item": "IEC 61800-5-1:2007 4.3.11 discharge rule (< 60 V or < 50 uC within 5 s) and 6.5.2 marking (IEC 60417-5036 + time); IEC 62477-1 4.4.9",
+      "status": "unverified",
+      "evidence": "Two targeted searches returned no reproduction of the 61800-5-1 or 62477-1 text (only the free TOC preview of the 2003 edition). Cross-reference IEC 62368-1 '60 V within 2 s' is corroborated by a USPTO filing quoting 62368-1 2nd ed. (https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10911036). Other discharge figures found (IEC 60831: 75 V / 3 min; IEC 60335: 34 V / 1 s) are different standards and were not conflated by the agent."
+    },
+    {
+      "item": "Edition statement 'The 2023 edition of IEC 61800-5-1 renumbers the clauses'",
+      "status": "contradicted",
+      "evidence": "Edition 3 is IEC 61800-5-1:2022 (scope 'up to and including 1,0 kV AC and 1,5 kV DC'), followed by COR1:2023 (https://iteh.es/catalog/standards/iec/0122f383-ecce-41f1-a855-b4087022b771/iec-61800-5-1-cor1-2023) and COR2:2025 (VDE listing). There is no '2023 edition'.",
+      "correction": "Replace '2023 edition' with 'IEC 61800-5-1:2022 (Ed. 3.0) + COR1:2023 (+ COR2:2025)'."
+    },
+    {
+      "item": "Reinforced clearance alternative '1.6 x TOV = 4080 V would interpolate to 6.4 mm'",
+      "status": "contradicted",
+      "evidence": "Not reproducible from the agent's own stated table rows: interpolating 4080 V in the recurring-peak/TOV column between 2.6 kV (3.0 mm) and the 6 kV-impulse row (5.5 mm, ~3.9 kV peak) gives about 5.8 mm, or 3.1 mm if interpolated in the impulse column between 4 kV (3.0 mm) and 6 kV (5.5 mm); no reading yields 6.4 mm. No design impact because the 9.0 mm DRC rule governs, but the figure is unsupported.",
+      "correction": "Show the interpolation arithmetic and the exact Table 9 rows used, or delete the 6.4 mm figure and state only that 1.6 x TOV lies between the 4 kV and 6 kV rows and is covered by the 9.0 mm rule."
+    },
+    {
+      "item": "IPC-2221B Table 6-1 functional spacing (301-500 V: B1 0.25, B2 2.5, B4 0.8 mm; >500 V slopes 0.0025 / 0.005 / 0.00305 mm per V)",
+      "status": "verified",
+      "evidence": "Secondary reproductions: https://pcbsync.com/ipc-2221/ (row values and all three slopes), https://help.altair.com/pollex/topics/pollex/verification/dfe_ipc_material_r.htm and https://blogs.sw.siemens.com/electronic-systems-design/?p=11251 (B1 at 600 V = 0.25 + 100 x 0.0025 = 0.50 mm). One secondary page gives 0.005 mm/V for the coated column - B4 slope to be confirmed in the standard. Siemens notes the current revision is IPC-2221C (Dec 2023); Table 6-1 is a functional-insulation table, not a safety table (pcbsync), as the agent uses it."
+    },
+    {
+      "item": "IPC-2221 current-capacity formula I = k dT^0.44 A^0.725, k = 0.048 external / 0.024 internal, A in mil^2",
+      "status": "verified",
+      "evidence": "Multiple secondary sources (https://www.nextpcb.com/blog/pcb-trace-width-calculator-ipc-2221-guide, https://blog.mbedded.ninja/pcb-design/how-to-calculate-maximum-track-current/, https://www.protoexpress.com/blog/how-to-optimize-your-pcb-trace-using-ipc-2152-standard/) give the same formula and constants, note the data range (0-35 A, <= 3 oz, 10-100 C rise) and that IPC-2152 supersedes it and typically allows 1.5-2x the current - consistent with the agent's 'conservative basis' statement."
+    },
+    {
+      "item": "Knowledge citations KR-ISO-001/002/003/004, KR-SN-001, KR-PR-001, KR-SN-005, KR-TH-002, KR-PCB-006, KR-GD-007, KR-GD-009 (existence, applicability, exclusions, verification method, no instance value copied)",
+      "status": "verified",
+      "evidence": "python -m automation.knowledge.query --get <ID> --json: all records exist in knowledge/rules/engineering_rules.json; statements match the agent's readings (KR-ISO-002: distances 'per applicable standard', DESAT-diode nets carry full bus voltage; KR-ISO-004 evidence '0.030 in slots' = 0.76 mm; KR-PR-001 exclusion 'evaluation fixtures where protection is provided externally' does not apply to this converter; KR-SN-001, KR-ISO-002/004, KR-TH-002 verification = human-review, which the agent carried as human-review items). No numeric limit exists in KR-TH-002 or KR-PCB-006 (the '>= 4 kV AC' pad figure and the IPC sizing are the agent's own additions, marked 'adapted' for KR-PCB-006 but attributed to KR-TH-002 without that qualifier). No reference-instance value was adopted as a design value: CGD15SG00D2's 8 mm creepage / 800 Vpk / Tg >= 170 C are used as a cross-check only (design uses Tg >= 150 C per seed); the 1.0 mm slot coincides with the CGD15SG00D2 instance but is justified independently as a fabrication minimum."
+    },
+    {
+      "item": "SKILL-002 reading ('numeric distances left to the standard')",
+      "status": "verified",
+      "evidence": "knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.json not_applicable: 'Numeric creepage/clearance values (taken from the governing standard)'; .md line 21 and line 68 ('Creepage figures in PRD-09301 Figure 20 were not extracted')."
+    },
+    {
+      "item": "Reference analyses REF-WS-CGD15SG00D2 decision 7 and REF-WS-CGD1700HB2M-UNA decision 6; REF-WS-PRD-04814 not-applicable",
+      "status": "verified",
+      "evidence": "knowledge/references/wolfspeed/cgd15sg00d2/analysis.md lines 83-96: three 1 mm non-plated slots, transformer notches to 8 mm, 4-layer 62.4 mil 1 oz ENIG Tg >= 170 C, '8 mm creepage relates to this board's 800 Vpk basic insulation rating - not a universal value', board 'has not been assessed to a third-party standard'. cgd1700hb2m-una/analysis.md lines 75-83: classes PRIMARY, LOW-SIDE, HIGH-SIDE, LS/HS-DESAT-MIDPOINT, LS/HS-DRAIN; 'distances in PRD-09301 Figure 20 were not extracted numerically'. REF-WS-PRD-04814 record summary: gate-bias supply topology comparison only."
+    },
+    {
+      "item": "PE-PCB-006 / PE-PCB-007 project rules",
+      "status": "verified",
+      "evidence": "docs/pcb-design-rules.md rows: 'PE-PCB-006 | Size high-current copper and vias | human-review | Copper dimensions, via plating assumptions, current/loss and thermal rationale' and 'PE-PCB-007 | Separate control from noisy power structures | human-review | Functional placement and ground-return review'; also automation/verification/pcb_rules.json. Note: the knowledge query tool returns 'unknown id' for PE- IDs, so they are not retrievable through --get."
+    },
+    {
+      "item": "CMP knowledge records vs fetched datasheets (CMP-UCC21710-Q1, CMP-AMC1311, CMP-TMCS1133, CMP-R12P21503D)",
+      "status": "verified",
+      "evidence": "Record values and revisions (SLUSDH8D June 2024; SBAS786C June 2022; SBOSAG0E May 2026; 950 Vrms / 1343 VDC; B1AQDVGR note) match the extracted PDFs exactly. Gap: CMP-R12P21503D records 6.4 kVDC and 1.5-10 pF but omits the series datasheet's 'working voltage 250VACrms' and 'Insulation Grade according to 62368-1 basic' lines, which are decisive for KR-SN-001."
+    },
+    {
+      "item": "Agent's [V] tag = 'read from the text of EN 61800-5-1:2007'",
+      "status": "unverified",
+      "evidence": "No copy of IEC/EN 61800-5-1 exists in the repository knowledge base (none of the query hits is a standards record) and the verifier could not access the text; the [V] claim therefore rests on the agent's assertion alone. Values tagged [V] should be downgraded to [S]/[U] unless the consulted copy is identified."
+    },
+    {
+      "item": "Symbol references IEC 60417-5036 (dangerous voltage), 60417-5019 (PE), 60417-5041 (hot surface), ISO 7010 W012",
+      "status": "unverified",
+      "evidence": "Not checked against the IEC 60417 / ISO 7010 databases in this run; nothing retrieved contradicts them."
+    },
+    {
+      "item": "Candidate part lifecycle status (active / NRND / obsolete)",
+      "status": "unverified",
+      "evidence": "Explicitly confirmed ACTIVE only for UCC21710-Q1 and TMCS1133 (TI pages); AMC1311, KLKD020, PR02, B32021 and Sil-Pad 2000 are listed by distributors/manufacturer pages (B32021 'active' at Arrow; R12P21503D active at DigiKey) but no manufacturer lifecycle statement was obtained for them."
+    }
+  ],
+  "recomputed": [
+    {
+      "name": "Input current (5 kW / 360 V / eta 0.98; 110 %; 400 V; 440 V)",
+      "agent_value": "14.17 / 15.59 / 12.76 / 11.60 A",
+      "verifier_value": "14.17 / 15.59 / 12.76 / 11.60 A",
+      "agrees": true
+    },
+    {
+      "name": "Fuse application margin",
+      "agent_value": "16.0 A >= 15.6 A; ratio 1.41",
+      "verifier_value": "16.0 A >= 15.59 A; ratio 1.41",
+      "agrees": true
+    },
+    {
+      "name": "Switch-node rms (SW-PGND; SW-VOUT) at 360/400/440 V",
+      "agent_value": "268/283/297 Vrms; 179/200/219 Vrms",
+      "verifier_value": "268.3/282.8/296.6 Vrms; 178.9/200.0/219.1 Vrms",
+      "agrees": true
+    },
+    {
+      "name": "Creepage interpolation at 440 V (PWB; IIIa)",
+      "agent_value": "2.2 / 4.4 mm (reinforced 4.4 / 8.8)",
+      "verifier_value": "2.2 / 4.4 mm (x2 = 4.4 / 8.8)",
+      "agrees": true,
+      "note": "Arithmetic agrees; the underlying table rows are unverified."
+    },
+    {
+      "name": "Slot creepage path (gap + 2 x 1.6 mm)",
+      "agent_value": "10.8 / 11.2 mm",
+      "verifier_value": "10.8 / 11.2 mm",
+      "agrees": true
+    },
+    {
+      "name": "IPC-2221B B1/B2/B4 at 480 / 530 / 600 Vpk",
+      "agent_value": "0.25/2.5/0.8; 0.33/2.65/0.89; 0.50/3.0/1.1 mm",
+      "verifier_value": "0.250/2.500/0.800; 0.325/2.650/0.892; 0.500/3.000/1.105 mm",
+      "agrees": true
+    },
+    {
+      "name": "Bleeder R, P, E for 50/100/200 uF (5 s and 60 s from 480 V, P at 440 V)",
+      "agent_value": "5 s: 48/24/12 kOhm, 4.0/8.1/16 W; 60 s: 577/288/144 kOhm, 0.34/0.67/1.34 W; 5.8/11.5/23 J",
+      "verifier_value": "5 s: 48.1/24.0/12.0 kOhm, 4.03/8.05/16.1 W; 60 s: 577/288.5/144.3 kOhm, 0.34/0.67/1.34 W; 5.76/11.52/23.04 J",
+      "agrees": true
+    },
+    {
+      "name": "Output bank bleeder (200 uF, 220 V, 60 s)",
+      "agent_value": "<= 231 kOhm, 0.17 W, 4.8 J",
+      "verifier_value": "230.9 kOhm, 0.173 W, 4.84 J",
+      "agrees": true
+    },
+    {
+      "name": "IPC-2221 width at 20 K, 70 um (12.5 / 25 / 27.5 A, ext / int)",
+      "agent_value": "3.2 / 8.4 mm; 8.4 / 21.7 mm; 9.5 mm ext; 24 K rise at 27.5 A",
+      "verifier_value": "3.2 / 8.4 mm; 8.4 / 21.7 mm; 9.5 mm ext (24.8 mm int); rise 24.2 K by I^2 scaling, 24.8 K with the IPC exponent",
+      "agrees": true,
+      "note": "Immaterial difference in the 27.5 A steady-state rise."
+    },
+    {
+      "name": "Via barrel area / resistance / current (0.5 mm and 0.3 mm, 25 um plating, 1.6 mm)",
+      "agent_value": "0.0412 mm2 (64 mil2), 0.667 mOhm, 1.83 A int / 3.65 A ext; 0.0255 mm2, 1.08 mOhm, 1.29 A; 14 vias, 21 with margin, 0.032 mOhm, 0.02 W",
+      "verifier_value": "0.0412 mm2 (63.9 mil2), 0.667 mOhm, 1.83 / 3.65 A; 0.0255 mm2, 1.078 mOhm, 1.29 A; 13.7 -> 14 vias, 21 vias 0.0318 mOhm, 0.0199 W",
+      "agrees": true
+    },
+    {
+      "name": "Y-capacitor ripple current (4.7 / 10 nF, 2 Vpp, 50 kHz)",
+      "agent_value": "0.85 / 1.81 mA",
+      "verifier_value": "0.85 / 1.81 mA",
+      "agrees": true
+    },
+    {
+      "name": "Device short-circuit I2t (200 A/2 us; 300 A/3 us)",
+      "agent_value": "0.08-0.27 A2s",
+      "verifier_value": "0.08 / 0.27 A2s",
+      "agrees": true,
+      "note": "Fuse melting I2t still unknown, so 'orders of magnitude below' is asserted, not shown."
+    },
+    {
+      "name": "VIN+ to VOUT+ working voltage (360/400/440/480 V)",
+      "agent_value": "160/200/240 V, 280 V transient",
+      "verifier_value": "160/200/240/280 V",
+      "agrees": true
+    },
+    {
+      "name": "Reinforced clearance alternatives (1.6 x TOV 480 V; 2 x 530 V)",
+      "agent_value": "768 V -> 0.2 mm; 1060 V -> <= 1.6 mm; 5.5 mm governs",
+      "verifier_value": "768 V; 1060 V (interpolating the agent's own column gives ~0.7 mm, so '<= 1.6 mm' is a loose but safe bound); 5.5 mm governs",
+      "agrees": true
+    },
+    {
+      "name": "Reinforced clearance for 1.6 x TOV(2550 V) = 4080 V",
+      "agent_value": "6.4 mm",
+      "verifier_value": "~5.8 mm (recurring-peak column, 3.9 kV->5.5 mm to 5.2 kV->8.0 mm) or 3.1 mm (impulse column); 6.4 mm not reproducible",
+      "agrees": false,
+      "note": "Table rows themselves unverified; no design impact since the 9.0 mm rule governs."
+    },
+    {
+      "name": "CGD15SG00D2 cross-check (8 mm vs 6.3 mm; 800 Vpk -> Vrms)",
+      "agent_value": "about 27 % margin; 566 Vrms",
+      "verifier_value": "8/6.3 = 1.27; 800/sqrt2 = 565.7 Vrms",
+      "agrees": true
+    }
+  ],
+  "knowledge_misuse": [
+    "KR-TH-002 is cited as the basis for 'rated insulating pads (>= 4 kV AC breakdown)'; the rule contains no numeric limit (verification: human-review of 'interface voltage rating, creepage at the package edge and thermal resistance'). The 4 kV figure is the agent's own derivation and compares an AC breakdown value with an impulse withstand level; it should be marked 'adapted' and restated as the standard's impulse / equivalent-AC test requirement.",
+    "CMP-R12P21503D / KR-SN-001: the agent reported the module's reinforced working-voltage rating as 'not found', but the cached RECOM RxxP2xx series datasheet (REV 9-2024) states 'working voltage 250VACrms' and 'Insulation Grade according to 62368-1: basic'. Available evidence pointing to non-compliance with the 440 VDC reinforced barrier was not surfaced; the knowledge record itself omits these lines.",
+    "Verification tag [V] ('read from the text of EN 61800-5-1:2007') is applied to Tables 3, 7, 9, 10 and clauses 4.3.11 / 6.5.2, yet no copy of the standard exists in the repository knowledge base and none could be accessed by the verifier; the tag overstates the evidence level unless the consulted copy is identified.",
+    "No reference-instance value was copied as a design value (CGD15SG00D2 8 mm creepage, 800 Vpk and Tg >= 170 C used as cross-check only; CGD1700HB2M-UNA distances never extracted). The 1.0 mm non-plated slot width coincides with the CGD15SG00D2 instance but is justified independently as a fabrication minimum - acceptable, note only."
+  ],
+  "required_changes": [
+    "Bias-module barrier (blocking): per the RECOM RxxP2xx series datasheet REV 9-2024 the family is 'Insulation Grade according to 62368-1: basic' with 'working voltage 250VACrms'. Remove R12P21503D (and, until proven otherwise, the Murata MGJ2 whose datasheet could not be fetched) from the list of parts that may bridge the SELV-to-HV reinforced barrier at 440 VDC, or obtain the RxxP2xxyyD variant datasheet and show a reinforced rating with working voltage >= 440 VDC; otherwise require a module certified for reinforced insulation at >= 440 VDC working voltage (or re-partition the barrier so the module only needs basic insulation). Raise this from 'human review' to a blocking open issue for the bias-supply agent.",
+    "Edition reference: replace 'The 2023 edition of IEC 61800-5-1' with 'IEC 61800-5-1:2022 (Ed. 3.0) + COR1:2023 (+ COR2:2025)'.",
+    "Reinforced-clearance TOV case: either show the interpolation arithmetic and the exact Table 9 rows that yield 6.4 mm or delete the figure; the agent's own quoted rows give about 5.8 mm (recurring-peak column) or 3.1 mm (impulse column). Design rule unaffected (9.0 mm governs).",
+    "Fuse: cite Littelfuse's product-page ratings (100 kA @ 600 VAC, 50 kA @ 600 VDC); remove or source the '10 kA DC (UL 248-19)' figure; obtain the KLKD datasheet melting I2t before claiming the fuse protects the board copper, connectors and capacitors.",
+    "Evidence tags: downgrade the 61800-5-1 Table 3/7/9/10 values and the 4.3.11 / 6.5.2 discharge and marking clauses from [V] to [S]/[U] unless the consulted copy of EN 61800-5-1:2007 is identified and placed on record; the only standards values independently corroborated in this run are the Table F.1 impulse series, IPC-2221B Table 6-1 and the IPC-2221 current formula.",
+    "TMCS1133: record that the TI product-page parametric table shows VIOWM 600 Vrms / 8.1 mm while SBOSAG0E states 950 Vrms / 1343 VDC reinforced and >= 8 mm; datasheet governs, but the sensing agent must confirm with TI before relying on the reinforced rating at 440 VDC.",
+    "Insulating pad: restate the KR-TH-002 requirement as the standard's test for basic insulation at the 4 kV impulse level (impulse or equivalent AC test voltage from 61800-5-1), not as 'AC breakdown >= 4 kV'; mark the 4 kV figure as the agent's derivation ('adapted'), and confirm the TO-247 die-cut Sil-Pad 2000 part number and thickness with Henkel."
+  ],
+  "summary": "Primary-source check of the standards/insulation area. The three TI barrier parts are fully verified against the fetched datasheets (UCC21710-Q1 SLUSDH8D: 5.7 kVrms, 1500 Vrms / 2121 VDC, >8 mm, 150 V/ns, ACTIVE; AMC1311 SBAS786C: 7000 Vpk reinforced, 1500 Vrms / 2120 VDC, >= 8.5 mm, AMC1311B 100 kV/us; TMCS1133 SBOSAG0E: 950 Vrms / 1343 VDC reinforced, >= 8 mm, 100 ns, orderables ...AQDVGR, ACTIVE). The fuse, bleeder resistor, Y2 capacitor and Sil-Pad values are confirmed at manufacturer/distributor level with the limits the agent already declared (KLKD I2t and the 10 kA DC figure not found; Littelfuse shows 50 kA DC). All sixteen calculations reproduce except the non-reconstructible 6.4 mm TOV clearance. All cited knowledge records exist and were read correctly, with no reference-instance value adopted as a design value. Two corrections matter: (1) the RECOM RxxP2xx series datasheet states basic insulation grade and 250 VACrms working voltage, so the R12P2 bias module cannot be assumed to satisfy the 440 VDC reinforced barrier (the agent only wrote 'not found'); (2) '2023 edition' should be IEC 61800-5-1:2022 + COR1:2023. The numeric IEC 61800-5-1 / 60664-1 table values (clearance, creepage, DVC, discharge clause) could not be verified from any accessible text in this run and remain unverified despite the agent's [V] tag; only Table F.1, IPC-2221B Table 6-1 and the IPC-2221 formula were corroborated by secondary sources. Verdict: confirmed with corrections; the derived 9.0 mm / 5.0 mm / 3.0 mm DRC rules are conservative relative to every value found and are not contradicted."
+}

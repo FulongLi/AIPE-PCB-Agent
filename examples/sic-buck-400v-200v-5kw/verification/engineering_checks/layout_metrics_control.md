@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck TMS320F28335 control board (AIPE_SiC_Buck_Control) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-11T02:11:41.539313+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 0.546 s).
+Status: **measured-human-review-required**. Generated 2026-10-12T11:45:12.656283+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 1.015 s).
 
-Board `examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `dead06ed18d85154...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
+Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `52ca6c234357948a...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
 
 ## Board
 
@@ -13,7 +13,7 @@ Board `examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control
 | Copper layers | 4 (F.Cu, In1.Cu, In2.Cu, B.Cu) |
 | Thickness (mm) | 1.600 |
 | Copper thickness (um, stackup text) | F.Cu=35.000; In1.Cu=35.000; In2.Cu=35.000; B.Cu=35.000 |
-| Footprints / tracks / vias / zones / rule areas | 207 / 5995 / 798 / 20 / 0 |
+| Footprints / tracks / vias / zones / rule areas | 207 / 4523 / 798 / 20 / 0 |
 | Nets | 199 |
 | Zones without fill (areas read from the file) | none |
 | Expected (spec) | outline_mm=120, 80; copper_layers=4; copper_um=35; thickness_mm=1.600 |
@@ -27,13 +27,13 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-001 | Minimise MOSFET gate loop | driver output to gate pad distance | n/a | n/a | not measured - spec input missing or reference not found | no gate_loops in the spec |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | HF capacitor to device pin distance | n/a | n/a | not measured - spec input missing or reference not found | no commutation section in the spec |
 | PE-PCB-003 | Minimise HF commutation loop | commutation loop proxies | n/a | n/a | not measured - spec input missing or reference not found | no commutation section in the spec |
-| PE-PCB-004 | Use Kelvin current sensing | ISENSE / ISENSE_REF from the mezzanine (J8 pins 43/45) to the ADC front ends track lengths (mm) and mismatch | ISENSE=122.175; ISENSE_REF=54.550; mismatch=67.625 | n/a | measured - human review required |  |
+| PE-PCB-004 | Use Kelvin current sensing | ISENSE / ISENSE_REF from the mezzanine (J8 pins 43/45) to the ADC front ends track lengths (mm) and mismatch | ISENSE=114.538; ISENSE_REF=51.569; mismatch=62.969 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | Separate sensitive analog and switch-node paths | n/a | n/a | not measured - spec input missing or reference not found | no spec input for this rule |
 | PE-PCB-006 | Justify high-current copper and via capacity | HV net copper | n/a | n/a | not measured - spec input missing or reference not found | no HV net classes in the spec |
 | PE-PCB-007 | Separate control and switching structures | control section (45 parts) to power stage (32 parts) bounding-box distance (mm) | 26.180 | n/a | measured - human review required |  |
 | PE-PCB-007 | Separate control and switching structures | GND_CTRL zone area (mm2) and island count per layer | In1.Cu=area=8376.100; islands=1 | area >= 8000.0 mm2 and required probe points covered | within spec threshold - human review required | V1 ground-plane extent guard generalised |
 | PE-PCB-007 | Separate control and switching structures | board area (mm2), footprints per dm2, courtyard fraction front/back | area=9600.000; per_dm2=215.600; courtyard=front=0.300; back=0.048 | area <= 9600 mm2 | within spec threshold - human review required | HV bbox fraction n/a; power density n/a W/dm2, n/a W/L |
-| PE-PCB-008 | Place decoupling adjacent to supply pins | U5 supply pads ['4', '9', '15', '23', '29', '31', '34', '45', '59', '61', '71', '84', '93', '101', '107', '109', '117', '121', '126', '139', '143', '146', '154', '159', '167', '170'] to nearest decoupling capacitor pad, maximum (mm) | 5.381 | <= 5.0 mm | exceeds spec threshold - human review required | 4->C17.1 3.97; 9->C18.1 4.55; 15->C19.1 3.91; 23->C20.1 3.91; 29->C21.1 3.91; 31->C22.1 4.10; 34->C23.1 4.55; 45->C24.1 4.55; 59->C25.1 4.68; 61->C26.1 4.38; 71->C27.1 4.55; 84->C28.1 4.55; 93->C29.1 5.38; 101->C30.1 3.90; 107->C31.1 5.38; 109->C32.1 3.90; 117->C33.1 3.90; 121->C34.1 4.55; 126->C35.1 3.90; 139->C35.1 5.03; 143->C37.1 4.79; 146->C36.1 3.90; 154->C39.1 3.93; 159->C40.1 4.55; 167->C41.1 4.38; 170->C42.1 4.55 |
+| PE-PCB-008 | Place decoupling adjacent to supply pins | U5 supply pads ['4', '9', '15', '23', '29', '31', '34', '45', '59', '61', '71', '84', '93', '101', '107', '109', '117', '121', '126', '139', '143', '146', '154', '159', '167', '170'] to nearest decoupling capacitor pad, maximum (mm) | 5.381 | <= 5.0 mm | exceeds spec threshold - human review required | 4->C17.1 3.97; 9->C18.1 4.55; 15->C19.1 3.91; 23->C20.1 3.91; 29->C21.1 3.91; 31->C21.1 4.10; 34->C23.1 4.55; 45->C24.1 4.55; 59->C25.1 4.68; 61->C26.1 4.38; 71->C27.1 4.55; 84->C28.1 4.55; 93->C29.1 5.38; 101->C30.1 3.90; 107->C31.1 5.38; 109->C32.1 3.90; 117->C33.1 3.90; 121->C34.1 4.55; 126->C35.1 3.90; 139->C35.1 5.03; 143->C37.1 4.79; 146->C36.1 3.90; 154->C39.1 3.93; 159->C40.1 4.55; 167->C41.1 4.38; 170->C42.1 4.55 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U1 supply pads ['1', '2', '15', '16'] to nearest decoupling capacitor pad, maximum (mm) | 22.763 | n/a | measured - human review required | 1->C1.1 3.73; 2->C1.1 3.78; 15->C5.1 22.36; 16->C5.1 22.76 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U2 supply pads ['3'] to nearest decoupling capacitor pad, maximum (mm) | 2.038 | n/a | measured - human review required | 3->C5.1 2.04 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U3 supply pads ['5', '6', '11', '12', '17', '18', '23', '24'] to nearest decoupling capacitor pad, maximum (mm) | 8.025 | n/a | measured - human review required | 5->C13.1 4.64; 6->C13.1 4.70; 11->C10.1 5.73; 12->C10.1 5.65; 17->C37.1 5.90; 18->C37.1 6.54; 23->C43.1 8.03; 24->C43.1 7.38 |
@@ -67,7 +67,7 @@ Rows: 31 - within spec threshold 2, exceeding 2, measured without threshold 17, 
 | U5 | 15 | 1V9 | C19.1 | 3.908 | yes |
 | U5 | 23 | 1V9 | C20.1 | 3.908 | yes |
 | U5 | 29 | 1V9 | C21.1 | 3.908 | yes |
-| U5 | 31 | 1V9 | C22.1 | 4.095 | yes |
+| U5 | 31 | 1V9 | C21.1 | 4.095 | yes |
 | U5 | 34 | 3V3 | C23.1 | 4.550 | yes |
 | U5 | 45 | 3V3 | C24.1 | 4.550 | yes |
 | U5 | 59 | 1V9 | C25.1 | 4.675 | yes |
@@ -123,7 +123,7 @@ Rows: 31 - within spec threshold 2, exceeding 2, measured without threshold 17, 
 
 | Pair | Nets | Track (mm) | Vias | Mismatch (mm) | Min to SW (mm) |
 | --- | --- | --- | --- | --- | --- |
-| ISENSE / ISENSE_REF from the mezzanine (J8 pins 43/45) to the ADC front ends | ISENSE, ISENSE_REF | ISENSE=122.17; ISENSE_REF=54.55 | ISENSE=5; ISENSE_REF=6 | 67.625 | n/a |
+| ISENSE / ISENSE_REF from the mezzanine (J8 pins 43/45) to the ADC front ends | ISENSE, ISENSE_REF | ISENSE=114.54; ISENSE_REF=51.57 | ISENSE=5; ISENSE_REF=6 | 62.969 | n/a |
 
 ## Control section
 
@@ -157,113 +157,113 @@ DSP bypass capacitors: 26, maximum pad distance 5.381 mm.
 | 12V_PROT | CTRL_PWR | 17.9 | 32 | 11 | 13 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=1381.000 |
 | 1V9 | CTRL_SELV | 50.0 | 61 | 37 | 37 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=797.300 |
 | 1V9_BULK | CTRL_SELV | 14.0 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 3V3 | CTRL_SELV | 121.4 | 195 | 84 | 89 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=5215.000 |
+| 3V3 | CTRL_SELV | 121.4 | 195 | 84 | 89 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=5222.400 |
 | 3V3_BULK | CTRL_SELV | 4.5 | 5 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 5V | CTRL_PWR | 23.7 | 43 | 15 | 16 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=625.300 |
 | 5V_BST | CTRL_SELV | 2.5 | 1 | 0 | 2 | F.Cu |  |
-| 5V_EN | CTRL_SELV | 24.4 | 20 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 5V_FB | CTRL_SELV | 54.1 | 27 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 5V_EN | CTRL_SELV | 22.5 | 18 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 5V_FB | CTRL_SELV | 48.1 | 28 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 5V_SW | CTRL_PWR | 14.3 | 4 | 0 | 3 | F.Cu |  |
-| ADCREFM | CTRL_ANALOG | 8.7 | 16 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADCREFP | CTRL_ANALOG | 8.4 | 16 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADCRESEXT | CTRL_ANALOG | 28.1 | 22 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_I12V | CTRL_ANALOG | 32.4 | 28 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_ISENSE | CTRL_ANALOG | 36.2 | 39 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_ISENSE_REF | CTRL_ANALOG | 46.1 | 54 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_TEMP_CTRL | CTRL_ANALOG | 42.5 | 75 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_TEMP_HS | CTRL_ANALOG | 50.9 | 63 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_V12V | CTRL_ANALOG | 34.5 | 57 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_VIN | CTRL_ANALOG | 40.0 | 46 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ADC_VOUT | CTRL_ANALOG | 139.2 | 134 | 14 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ARM | CTRL_SELV | 98.9 | 101 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BIAS_EN | CTRL_SELV | 58.0 | 37 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BOOT84 | CTRL_SELV | 58.0 | 36 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BOOT85 | CTRL_SELV | 8.5 | 10 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BOOT86 | CTRL_SELV | 11.1 | 17 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BOOT87 | CTRL_SELV | 14.5 | 12 | 0 | 2 | F.Cu |  |
-| CLK30 | CTRL_SELV | 14.6 | 13 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| CLK30_SOURCE | CTRL_SELV | 6.0 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| CORE_OK | CTRL_SELV | 67.3 | 25 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| DSP_TRIP_N | CTRL_SELV | 224.4 | 191 | 21 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_DVDT | CTRL_SELV | 32.2 | 28 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_ILIM | CTRL_SELV | 39.5 | 59 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_OVP | CTRL_SELV | 36.7 | 23 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_RTN | CTRL_PWR | 67.8 | 61 | 15 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_SHDN | CTRL_SELV | 15.3 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EFUSE_UVLO | CTRL_SELV | 41.3 | 13 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EMU0 | CTRL_SELV | 53.0 | 41 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EMU1 | CTRL_SELV | 57.1 | 43 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EPWM1A | CTRL_SELV | 51.3 | 39 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| EPWM1B | CTRL_SELV | 42.9 | 44 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ESTOP_N | CTRL_SELV | 402.5 | 271 | 24 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FAN_TACH | CTRL_SELV | 214.0 | 167 | 8 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FAULT_LATCH_N | CTRL_SELV | 67.7 | 67 | 5 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FAULT_N | CTRL_SELV | 319.7 | 297 | 16 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FB19 | CTRL_SELV | 46.6 | 22 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FLT_12V_N | CTRL_SELV | 151.7 | 105 | 16 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FLT_H_N | CTRL_SELV | 105.4 | 56 | 8 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FLT_L_N | CTRL_SELV | 92.4 | 77 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| G1_N | CTRL_SELV | 19.6 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| G2_N | CTRL_SELV | 9.7 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| G3_N | CTRL_SELV | 13.2 | 11 | 0 | 2 | F.Cu |  |
-| GATE_EN | CTRL_SELV | 86.3 | 45 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADCREFM | CTRL_ANALOG | 8.6 | 14 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADCREFP | CTRL_ANALOG | 8.2 | 13 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADCRESEXT | CTRL_ANALOG | 27.7 | 18 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_I12V | CTRL_ANALOG | 31.1 | 27 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_ISENSE | CTRL_ANALOG | 34.7 | 33 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_ISENSE_REF | CTRL_ANALOG | 42.9 | 49 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_TEMP_CTRL | CTRL_ANALOG | 39.6 | 66 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_TEMP_HS | CTRL_ANALOG | 47.1 | 37 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_V12V | CTRL_ANALOG | 32.9 | 26 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_VIN | CTRL_ANALOG | 37.6 | 34 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ADC_VOUT | CTRL_ANALOG | 131.9 | 99 | 14 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ARM | CTRL_SELV | 93.9 | 80 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BIAS_EN | CTRL_SELV | 55.7 | 24 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BOOT84 | CTRL_SELV | 56.3 | 20 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BOOT85 | CTRL_SELV | 8.2 | 10 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BOOT86 | CTRL_SELV | 11.0 | 18 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BOOT87 | CTRL_SELV | 14.3 | 12 | 0 | 2 | F.Cu |  |
+| CLK30 | CTRL_SELV | 13.8 | 13 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| CLK30_SOURCE | CTRL_SELV | 5.7 | 7 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| CORE_OK | CTRL_SELV | 65.8 | 22 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| DSP_TRIP_N | CTRL_SELV | 207.1 | 99 | 21 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_DVDT | CTRL_SELV | 31.6 | 31 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_ILIM | CTRL_SELV | 34.2 | 13 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_OVP | CTRL_SELV | 33.4 | 21 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_RTN | CTRL_PWR | 63.6 | 54 | 15 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_SHDN | CTRL_SELV | 13.3 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EFUSE_UVLO | CTRL_SELV | 39.4 | 19 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EMU0 | CTRL_SELV | 49.8 | 35 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EMU1 | CTRL_SELV | 52.2 | 32 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EPWM1A | CTRL_SELV | 48.5 | 31 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| EPWM1B | CTRL_SELV | 41.4 | 37 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ESTOP_N | CTRL_SELV | 384.6 | 232 | 24 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FAN_TACH | CTRL_SELV | 205.0 | 128 | 8 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FAULT_LATCH_N | CTRL_SELV | 64.6 | 29 | 5 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FAULT_N | CTRL_SELV | 303.0 | 216 | 16 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FB19 | CTRL_SELV | 44.2 | 22 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FLT_12V_N | CTRL_SELV | 146.1 | 75 | 16 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FLT_H_N | CTRL_SELV | 99.8 | 51 | 8 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FLT_L_N | CTRL_SELV | 89.2 | 71 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| G1_N | CTRL_SELV | 18.3 | 10 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| G2_N | CTRL_SELV | 9.4 | 7 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| G3_N | CTRL_SELV | 12.5 | 9 | 0 | 2 | F.Cu |  |
+| GATE_EN | CTRL_SELV | 81.3 | 42 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | GND_CTRL | CTRL_SELV | 227.5 | 296 | 161 | 188 | F.Cu, In1.Cu, In2.Cu, B.Cu | In1.Cu=8376.100 |
-| I12V_MON | CTRL_SELV | 149.8 | 90 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| IO_EN_N | CTRL_SELV | 38.1 | 16 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISENSE | CTRL_ANALOG | 122.2 | 77 | 5 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISENSE_REF | CTRL_ANALOG | 54.5 | 58 | 6 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| I12V_MON | CTRL_SELV | 140.2 | 39 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| IO_EN_N | CTRL_SELV | 36.4 | 16 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISENSE | CTRL_ANALOG | 114.5 | 69 | 5 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISENSE_REF | CTRL_ANALOG | 51.6 | 31 | 6 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | LED_12V_A | CTRL_SELV | 5.0 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LED_ARMED_A | CTRL_SELV | 18.2 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LED_FAULT | CTRL_SELV | 25.2 | 11 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LED_FAULT_A | CTRL_SELV | 26.5 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LED_RUN | CTRL_SELV | 28.4 | 30 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LED_RUN_A | CTRL_SELV | 24.2 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| MON5 | CTRL_SELV | 21.1 | 9 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LED_ARMED_A | CTRL_SELV | 17.9 | 8 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LED_FAULT | CTRL_SELV | 24.4 | 7 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LED_FAULT_A | CTRL_SELV | 25.3 | 11 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LED_RUN | CTRL_SELV | 27.5 | 24 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LED_RUN_A | CTRL_SELV | 22.4 | 10 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| MON5 | CTRL_SELV | 19.0 | 11 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | MR_N | CTRL_SELV | 11.4 | 4 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OC_N | CTRL_SELV | 204.1 | 187 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OTP_N | CTRL_SELV | 76.7 | 65 | 8 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OTP_REF | CTRL_ANALOG | 29.4 | 25 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OVP_IN_N | CTRL_SELV | 67.9 | 60 | 5 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OVP_IN_REF | CTRL_ANALOG | 20.7 | 13 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OVP_N | CTRL_SELV | 25.5 | 23 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OVP_OUT_N | CTRL_SELV | 68.8 | 46 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OVP_OUT_REF | CTRL_ANALOG | 19.0 | 18 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_H_N | CTRL_SELV | 163.0 | 105 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_H_OK | CTRL_SELV | 23.0 | 44 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_L_N | CTRL_SELV | 228.5 | 243 | 12 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_L_OK | CTRL_SELV | 16.2 | 18 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_S_N | CTRL_SELV | 213.2 | 237 | 15 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_S_OK | CTRL_SELV | 22.6 | 33 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OC_N | CTRL_SELV | 193.5 | 135 | 10 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OTP_N | CTRL_SELV | 70.8 | 52 | 8 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OTP_REF | CTRL_ANALOG | 28.8 | 18 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OVP_IN_N | CTRL_SELV | 66.6 | 52 | 5 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OVP_IN_REF | CTRL_ANALOG | 19.5 | 14 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OVP_N | CTRL_SELV | 24.0 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OVP_OUT_N | CTRL_SELV | 66.0 | 35 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OVP_OUT_REF | CTRL_ANALOG | 18.6 | 20 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_H_N | CTRL_SELV | 153.4 | 62 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_H_OK | CTRL_SELV | 21.8 | 23 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_L_N | CTRL_SELV | 222.2 | 185 | 12 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_L_OK | CTRL_SELV | 15.2 | 11 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_S_N | CTRL_SELV | 201.0 | 123 | 15 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_S_OK | CTRL_SELV | 21.7 | 29 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PWM_H | CTRL_SELV | 15.3 | 9 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_H_G | CTRL_SELV | 11.1 | 11 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_L | CTRL_SELV | 26.7 | 9 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_H_G | CTRL_SELV | 10.7 | 12 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_L | CTRL_SELV | 25.9 | 8 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PWM_L_G | CTRL_SELV | 8.9 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RDY_H | CTRL_SELV | 77.7 | 41 | 3 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RDY_L | CTRL_SELV | 99.2 | 82 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| REF2V5 | CTRL_ANALOG | 33.8 | 25 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| REF3V0 | CTRL_ANALOG | 22.5 | 20 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RELAY_ON | CTRL_SELV | 56.5 | 59 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RDY_H | CTRL_SELV | 75.2 | 32 | 3 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RDY_L | CTRL_SELV | 92.9 | 55 | 9 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| REF2V5 | CTRL_ANALOG | 32.9 | 23 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| REF3V0 | CTRL_ANALOG | 22.1 | 23 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RELAY_ON | CTRL_SELV | 51.9 | 41 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RESET_CT | CTRL_SELV | 7.0 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RESET_N | CTRL_SELV | 57.2 | 58 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| SEQ_BASE | CTRL_SELV | 12.6 | 9 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| SPARE_D1 | CTRL_SELV | 121.0 | 101 | 6 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| SPARE_D2 | CTRL_SELV | 99.6 | 66 | 7 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TCK | CTRL_SELV | 47.1 | 18 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TDI | CTRL_SELV | 37.9 | 48 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TDO | CTRL_SELV | 42.0 | 43 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TEMP_CTRL | CTRL_ANALOG | 30.0 | 15 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TEMP_HS_NTC | CTRL_ANALOG | 39.2 | 29 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TMS | CTRL_SELV | 35.5 | 34 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| TRST | CTRL_SELV | 35.4 | 27 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| UART_RX | CTRL_SELV | 62.2 | 32 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| UART_TX | CTRL_SELV | 74.6 | 44 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| UVLO | CTRL_SELV | 51.7 | 54 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| UVLO_N | CTRL_SELV | 77.2 | 110 | 8 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| UVLO_REF | CTRL_ANALOG | 27.0 | 18 | 4 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| V12V_MON | CTRL_SELV | 167.7 | 82 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN_SENSE | CTRL_ANALOG | 111.5 | 90 | 8 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VOUT_SENSE | CTRL_ANALOG | 55.5 | 40 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| XRS_N | CTRL_SELV | 226.1 | 156 | 21 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RESET_N | CTRL_SELV | 54.2 | 47 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| SEQ_BASE | CTRL_SELV | 12.0 | 11 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| SPARE_D1 | CTRL_SELV | 113.3 | 30 | 6 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| SPARE_D2 | CTRL_SELV | 94.4 | 46 | 7 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TCK | CTRL_SELV | 44.9 | 21 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TDI | CTRL_SELV | 31.0 | 15 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TDO | CTRL_SELV | 39.0 | 38 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TEMP_CTRL | CTRL_ANALOG | 27.6 | 11 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TEMP_HS_NTC | CTRL_ANALOG | 38.3 | 23 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TMS | CTRL_SELV | 33.8 | 25 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| TRST | CTRL_SELV | 33.4 | 28 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| UART_RX | CTRL_SELV | 60.3 | 29 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| UART_TX | CTRL_SELV | 71.9 | 27 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| UVLO | CTRL_SELV | 48.9 | 36 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| UVLO_N | CTRL_SELV | 70.4 | 35 | 8 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| UVLO_REF | CTRL_ANALOG | 26.3 | 20 | 4 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| V12V_MON | CTRL_SELV | 156.5 | 45 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN_SENSE | CTRL_ANALOG | 103.8 | 63 | 8 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_SENSE | CTRL_ANALOG | 52.7 | 39 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| XRS_N | CTRL_SELV | 206.6 | 113 | 21 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | unconnected-(D2-NC-Pad2) | CTRL_SELV | 0.0 | 0 | 0 | 1 | F.Cu |  |
 | unconnected-(J3-Pad6) | CTRL_SELV | 0.0 | 0 | 0 | 1 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | unconnected-(U1-MODE-Pad6) | CTRL_SELV | 0.0 | 0 | 0 | 1 | F.Cu |  |

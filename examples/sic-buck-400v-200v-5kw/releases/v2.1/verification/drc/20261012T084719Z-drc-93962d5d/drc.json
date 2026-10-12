@@ -1,0 +1,100 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-12T16:47:22",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Power.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "走线 [VDD_L] (F.Cu), 长度: 1.6250 mm",
+                    "pos": {
+                        "x": 142.1,
+                        "y": 140.025
+                    },
+                    "uuid": "a9f37fb4-306b-41f3-8901-544835104e28"
+                },
+                {
+                    "description": "走线 [VDD_L] (F.Cu), 长度: 1.1250 mm",
+                    "pos": {
+                        "x": 137.0,
+                        "y": 133.25
+                    },
+                    "uuid": "5e1951f7-95c8-41d9-91aa-3a21a12b49a7"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "B.Cu 上 C54 的焊盘 1 [LS_FB_VDD]",
+                    "pos": {
+                        "x": 141.725,
+                        "y": 133.0
+                    },
+                    "uuid": "7dae8a95-d3ea-4644-a8ed-bf1166cecca4"
+                },
+                {
+                    "description": "走线 [LS_FB_VDD] (F.Cu), 长度: 2.2588 mm",
+                    "pos": {
+                        "x": 138.525,
+                        "y": 139.6088
+                    },
+                    "uuid": "3588e022-26c9-484d-aaa8-7d8b186865eb"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [VDD_L] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 142.1,
+                        "y": 138.4
+                    },
+                    "uuid": "b4ed00a5-41eb-48c3-99d3-d7cde9684570"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        }
+    ]
+}

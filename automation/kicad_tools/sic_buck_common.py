@@ -1,4 +1,4 @@
-"""Shared contract for the V2 SiC buck electrical models (power board and control board).
+"""Shared contract for the SiC buck electrical models (power board and control board; V2 design, V2.1 generation).
 
 This module is the single place where the two board models agree on names: project
 basenames, the mezzanine pin-to-net assignment taken from design/design_decisions.json,
@@ -10,6 +10,8 @@ review, not by this file.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+
 import json
 from pathlib import Path
 
@@ -20,7 +22,10 @@ POWER_NAME = "AIPE_SiC_Buck_Power"
 CONTROL_NAME = "AIPE_SiC_Buck_Control"
 POWER_DIR = EXAMPLE / "kicad/power_board"
 CONTROL_DIR = EXAMPLE / "kicad/control_board"
-BANNER = "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED"
+# Generation label of everything the current generators write (title blocks, silkscreen, models, page notes, evidence
+# writers). The frozen V2 generation lives in releases/v2 and keeps its own label; V1 tooling has its own string.
+GENERATION = "V2.1"
+BANNER = f"AI-GENERATED ENGINEERING PROTOTYPE - {GENERATION} - HUMAN REVIEW REQUIRED"
 BASIS = "400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine"
 
 
@@ -63,12 +68,35 @@ class Circuit:
         self.board = board
         self.parts: list[dict] = []
         self.counters: dict[str, int] = {}
+        # Presentation metadata (V2.1): functional block of each reference, kept out of the part dicts so the
+        # electrical model (design/circuit_<board>.json) is byte-identical with or without block annotations.
+        self.groups: dict[str, str] = {}
+        self.block_titles: dict[str, str] = {}
+        self._blocks: list[str] = []
+
+    @contextmanager
+    def block(self, name: str, title: str | None = None):
+        """Functional block for the schematic presentation: every add() inside is grouped under `name`.
+
+        Nested blocks join with '/'. The group id is '<page>/<name>' on the sheet of the part's page; a title is
+        shown as the group heading (default: the name with underscores as spaces).
+        """
+        self._blocks.append(name)
+        full = "/".join(self._blocks)
+        if title:
+            self.block_titles[full] = title
+        try:
+            yield full
+        finally:
+            self._blocks.pop()
 
     def add(self, prefix, value, footprint, nets, *, page, kind="passive", mpn="", maker="", source="",
             definitions=None, ref=None, note="", dnp=False):
         self.counters[prefix] = self.counters.get(prefix, 0) + 1
         ref = ref or prefix + str(self.counters[prefix])
         assert not any(p["ref"] == ref for p in self.parts), ref
+        if self._blocks:
+            self.groups[ref] = "/".join(self._blocks)
         nets = {str(k): v for k, v in nets.items()}
         definitions = definitions or {n: dict(name=n, type="passive") for n in nets}
         assert set(definitions) == set(nets), (ref, set(definitions) ^ set(nets))

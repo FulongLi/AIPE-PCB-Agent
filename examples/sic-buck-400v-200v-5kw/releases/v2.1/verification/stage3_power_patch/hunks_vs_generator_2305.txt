@@ -1,0 +1,34 @@
+patch_s3_v2.py (with router guards) hunks checked against the repository generate_sic_power_board.py (owner's current text):
+applies      rep  : ROOT = Path(__file__).resolve().parents[2]
+applies      rep  : MAX_NODES = 2500000
+applies      rep  : SIGNAL_ORDER_TRIALS = 4
+applies      rep  : # ---------------------------------------------------------------------------------------------------------------------
+applies      rep  :     'HS1': (99.25, 67.0, 0), 'H1': (38.0, 8.0, 0),
+applies      rep  :     'C1': (79.0, 129.0, 270), 'C2': (72.8, 129.0, 270), 'C3': (66.6, 129.0, 270), 'C4': (60.4, 129.0, 270), 'C5': (54.2,
+applies      rep  :     'J1': (7.5, 112.0, 0), 'J5': (21.0, 112.0, 0), 'J2': (7.5, 129.0, 0), 'J6': (21.0, 129.0, 0), 'RT1': (32.5, 120.5, 9
+NEEDS MERGE  rep  :     'C16': (54.0, 6.5, 0), 'R12': (62.5, 6.5, 0), 'C17': (72.0, 6.5, 0), 'R13': (80.5, 6.5, 0),
+NEEDS MERGE  rep  :     'D3': (64.0, 130.5, 0, 'B'), 'D5': (113.0, 136.0, 0, 'B'), 'R11': (102.0, 133.0, 270, 'B'), 'C15': (106.0, 134.0, 27
+applies      rep  :     'R7': (161.0, 6.0, 90), 'R8': (161.0, 16.0, 90), 'R9': (161.0, 25.0, 90), 'R10': (161.0, 31.0, 90), 'D2': (161.0, 37
+NEEDS MERGE  rep  :     # HV sense ladders on F.Cu above the AMC1311s (VIN ladder row, VOUT ladder row; 3 mm between the rows)
+NEEDS MERGE  rep  :     'hs_island': ('B', [[60.0, 118.0, 104.0, HV_LIMIT_Y]]),
+NEEDS MERGE  rep  :     **{r: 'hs_island' for r in ('R19', 'R20', 'R21', 'R22', 'R23', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'R24', 'R25
+applies      rep  :     ('PE', (38.0, 14.5), 1.0),
+applies      rep  : ('VOUT+', (161.0, 42.0), 1.0), ('PGND', (161.0, 71.0), 1.0),
+applies      block:     # VIN+ : F.Cu column, band under the device row (both HF rows), top band; In2.Cu backbone under the sink (SW strip e
+applies      block:     groups = [
+applies      rep  :         for ix in range(nx):
+applies      rep  :         kind = part['kind']
+applies      rep  :         for g in via_groups():
+applies      rep  :                 if ref.startswith(('TEXT:', 'AREA:', 'VIAS:')) or ref == 'HS1':
+applies      rep  :                 table[(fp.GetReference(), pad.GetNumber())] = dict(bbox=[pcb.ToMM(bb.GetX()), pcb.ToMM(bb.GetY()), pcb.T
+applies      rep  : BARRIER_REFS = ('U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7', 'U10')
+applies      block: def hv_pad_vias(boxes: dict) -> list[dict]:
+applies      block: def hv_chain_tracks(boxes: dict) -> list[dict]:
+applies      rep  :     power = {}
+NEEDS MERGE  rep  :         for layer in area['layers']:
+applies      rep  :              'PE': dict(width=2.0, clearance=5.0),
+applies      rep  :     pad_vias = hv_pad_vias(boxes)
+NEEDS MERGE  rep  :         'prune_vias': True, 'fill': True, 'save': str(save), 'strict': False, 'max_nodes': MAX_NODES,
+applies      rep  :                   pre_routed=dict(tracks=len(tracks), vias=len(vias), hv_pad_vias=len(pad_vias), via_groups=via_groups()
+applies      rep  :     'Only the kicad-cli DRC manifest (schematic parity, severity-all) is verification; the router report is a geometric 
+dry run done

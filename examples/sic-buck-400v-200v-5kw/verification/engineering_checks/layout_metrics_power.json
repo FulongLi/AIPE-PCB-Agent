@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "measured-human-review-required",
-  "generated_utc": "2026-10-11T05:44:44.993007+00:00",
+  "generated_utc": "2026-10-12T10:04:23.470336+00:00",
   "checker": "automation/verification/check_sic_layout.py",
   "spec": {
     "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_spec_power.json",
@@ -11,10 +11,10 @@
   },
   "model_file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\circuit_power.json",
   "distance_backend": "numpy",
-  "runtime_s": 26.016,
+  "runtime_s": 41.094,
   "board": {
     "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
-    "sha256": "b1bb5698194b9aea681cf10ee529eaa77e9510ea0241b889ead7221b86f4f7a2",
+    "sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
     "title": "AIPE SiC buck 400 V -> 200 V / 5 kW - power board (SiC half bridge, drivers, isolators, SELV strip)",
     "pcbnew_version": "10.0.7",
     "outline_mm": [
@@ -95,7 +95,7 @@
       }
     ],
     "footprints": 237,
-    "tracks": 4755,
+    "tracks": 3136,
     "vias": 606,
     "zones": 20,
     "rule_areas": 16,
@@ -129,8 +129,8 @@
     },
     "12V_BIAS_L": {
       "cls": "CTRL_SELV",
-      "track_mm": 37.825,
-      "tracks": 26,
+      "track_mm": 36.7051,
+      "tracks": 15,
       "vias": 2,
       "pads": 7,
       "layers": [
@@ -144,8 +144,8 @@
     },
     "12V_BIAS_S": {
       "cls": "CTRL_SELV",
-      "track_mm": 100.075,
-      "tracks": 96,
+      "track_mm": 96.4225,
+      "tracks": 67,
       "vias": 6,
       "pads": 7,
       "layers": [
@@ -159,8 +159,8 @@
     },
     "12V_PROT": {
       "cls": "CTRL_SELV",
-      "track_mm": 276.629,
-      "tracks": 261,
+      "track_mm": 261.7826,
+      "tracks": 103,
       "vias": 14,
       "pads": 11,
       "layers": [
@@ -174,8 +174,8 @@
     },
     "3V3": {
       "cls": "CTRL_SELV",
-      "track_mm": 433.9199,
-      "tracks": 389,
+      "track_mm": 417.8455,
+      "tracks": 275,
       "vias": 22,
       "pads": 31,
       "layers": [
@@ -185,7 +185,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In2.Cu": 4152.3163
+        "In2.Cu": 4128.5462
       },
       "zone_islands": {
         "In2.Cu": 10
@@ -193,8 +193,8 @@
     },
     "5V_ISO": {
       "cls": "SENSE_ISO",
-      "track_mm": 66.4181,
-      "tracks": 65,
+      "track_mm": 63.6355,
+      "tracks": 45,
       "vias": 7,
       "pads": 7,
       "layers": [
@@ -208,8 +208,8 @@
     },
     "BIAS_EN": {
       "cls": "CTRL_SELV",
-      "track_mm": 147.861,
-      "tracks": 107,
+      "track_mm": 142.4384,
+      "tracks": 51,
       "vias": 10,
       "pads": 2,
       "layers": [
@@ -223,8 +223,8 @@
     },
     "BIAS_EN_F": {
       "cls": "CTRL_SELV",
-      "track_mm": 133.2264,
-      "tracks": 74,
+      "track_mm": 130.5538,
+      "tracks": 45,
       "vias": 9,
       "pads": 6,
       "layers": [
@@ -286,8 +286,8 @@
     },
     "DESAT_H_A": {
       "cls": "DESAT_HS",
-      "track_mm": 37.0625,
-      "tracks": 29,
+      "track_mm": 36.1838,
+      "tracks": 20,
       "vias": 3,
       "pads": 3,
       "layers": [
@@ -301,8 +301,8 @@
     },
     "DESAT_H_OC": {
       "cls": "DESAT_HS",
-      "track_mm": 29.3447,
-      "tracks": 34,
+      "track_mm": 27.4037,
+      "tracks": 20,
       "vias": 3,
       "pads": 5,
       "layers": [
@@ -316,8 +316,8 @@
     },
     "DESAT_L_A": {
       "cls": "DESAT_LS",
-      "track_mm": 44.0,
-      "tracks": 28,
+      "track_mm": 42.6088,
+      "tracks": 26,
       "vias": 6,
       "pads": 3,
       "layers": [
@@ -331,8 +331,8 @@
     },
     "DESAT_L_OC": {
       "cls": "DESAT_LS",
-      "track_mm": 99.0947,
-      "tracks": 107,
+      "track_mm": 94.8369,
+      "tracks": 71,
       "vias": 5,
       "pads": 5,
       "layers": [
@@ -346,8 +346,8 @@
     },
     "FAN_TACH": {
       "cls": "CTRL_SELV",
-      "track_mm": 158.5031,
-      "tracks": 47,
+      "track_mm": 155.122,
+      "tracks": 33,
       "vias": 6,
       "pads": 3,
       "layers": [
@@ -361,8 +361,8 @@
     },
     "FAULT_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 33.3743,
-      "tracks": 31,
+      "track_mm": 32.4956,
+      "tracks": 33,
       "vias": 3,
       "pads": 2,
       "layers": [
@@ -376,8 +376,8 @@
     },
     "FLT_H_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 166.3,
-      "tracks": 198,
+      "track_mm": 154.6533,
+      "tracks": 52,
       "vias": 11,
       "pads": 3,
       "layers": [
@@ -391,8 +391,8 @@
     },
     "FLT_L_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 119.9956,
-      "tracks": 130,
+      "track_mm": 111.1354,
+      "tracks": 40,
       "vias": 6,
       "pads": 3,
       "layers": [
@@ -406,8 +406,8 @@
     },
     "GNDP_H": {
       "cls": "CTRL_SELV",
-      "track_mm": 49.8088,
-      "tracks": 40,
+      "track_mm": 48.8139,
+      "tracks": 28,
       "vias": 3,
       "pads": 19,
       "layers": [
@@ -421,8 +421,8 @@
     },
     "GNDP_L": {
       "cls": "CTRL_SELV",
-      "track_mm": 55.9338,
-      "tracks": 43,
+      "track_mm": 55.0121,
+      "tracks": 33,
       "vias": 4,
       "pads": 19,
       "layers": [
@@ -436,8 +436,8 @@
     },
     "GNDP_S": {
       "cls": "CTRL_SELV",
-      "track_mm": 119.3088,
-      "tracks": 142,
+      "track_mm": 114.9241,
+      "tracks": 101,
       "vias": 9,
       "pads": 19,
       "layers": [
@@ -470,8 +470,8 @@
     },
     "G_H": {
       "cls": "DRV_HS",
-      "track_mm": 26.375,
-      "tracks": 28,
+      "track_mm": 26.3018,
+      "tracks": 27,
       "vias": 0,
       "pads": 7,
       "layers": [
@@ -481,7 +481,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "B.Cu": 77.2106
+        "B.Cu": 78.7539
       },
       "zone_islands": {
         "B.Cu": 1
@@ -489,8 +489,8 @@
     },
     "G_L": {
       "cls": "DRV_LS",
-      "track_mm": 33.125,
-      "tracks": 29,
+      "track_mm": 33.0518,
+      "tracks": 28,
       "vias": 7,
       "pads": 7,
       "layers": [
@@ -500,7 +500,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "B.Cu": 34.4183
+        "B.Cu": 31.629
       },
       "zone_islands": {
         "B.Cu": 2
@@ -568,8 +568,8 @@
     },
     "HS_OUTH": {
       "cls": "DRV_HS",
-      "track_mm": 4.0657,
-      "tracks": 8,
+      "track_mm": 3.9192,
+      "tracks": 6,
       "vias": 1,
       "pads": 2,
       "layers": [
@@ -598,8 +598,8 @@
     },
     "HS_RLIM": {
       "cls": "DRV_HS",
-      "track_mm": 9.4338,
-      "tracks": 14,
+      "track_mm": 8.8997,
+      "tracks": 8,
       "vias": 1,
       "pads": 2,
       "layers": [
@@ -673,8 +673,8 @@
     },
     "ISENSE": {
       "cls": "CTRL_SELV",
-      "track_mm": 83.796,
-      "tracks": 56,
+      "track_mm": 81.0437,
+      "tracks": 30,
       "vias": 7,
       "pads": 3,
       "layers": [
@@ -688,8 +688,8 @@
     },
     "ISENSE_REF": {
       "cls": "CTRL_SELV",
-      "track_mm": 90.1002,
-      "tracks": 94,
+      "track_mm": 86.2926,
+      "tracks": 72,
       "vias": 5,
       "pads": 4,
       "layers": [
@@ -703,8 +703,8 @@
     },
     "ISO_15V": {
       "cls": "SENSE_ISO",
-      "track_mm": 32.575,
-      "tracks": 18,
+      "track_mm": 31.4583,
+      "tracks": 17,
       "vias": 1,
       "pads": 6,
       "layers": [
@@ -748,8 +748,8 @@
     },
     "ISO_RLIM": {
       "cls": "SENSE_ISO",
-      "track_mm": 8.6838,
-      "tracks": 14,
+      "track_mm": 8.1497,
+      "tracks": 8,
       "vias": 1,
       "pads": 2,
       "layers": [
@@ -778,8 +778,8 @@
     },
     "KS_H": {
       "cls": "DRV_HS",
-      "track_mm": 97.702,
-      "tracks": 76,
+      "track_mm": 95.908,
+      "tracks": 62,
       "vias": 11,
       "pads": 17,
       "layers": [
@@ -789,7 +789,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In2.Cu": 501.4123
+        "In2.Cu": 502.1815
       },
       "zone_islands": {
         "In2.Cu": 2
@@ -797,8 +797,8 @@
     },
     "KS_L": {
       "cls": "DRV_LS",
-      "track_mm": 88.202,
-      "tracks": 73,
+      "track_mm": 86.5911,
+      "tracks": 59,
       "vias": 9,
       "pads": 17,
       "layers": [
@@ -808,7 +808,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In2.Cu": 248.2511
+        "In2.Cu": 248.8739
       },
       "zone_islands": {
         "In2.Cu": 1
@@ -816,8 +816,8 @@
     },
     "LS_CLMP": {
       "cls": "DRV_LS",
-      "track_mm": 21.4197,
-      "tracks": 28,
+      "track_mm": 20.7606,
+      "tracks": 25,
       "vias": 3,
       "pads": 2,
       "layers": [
@@ -831,8 +831,8 @@
     },
     "LS_FB_VDD": {
       "cls": "DRV_LS",
-      "track_mm": 72.8088,
-      "tracks": 111,
+      "track_mm": 66.404,
+      "tracks": 50,
       "vias": 4,
       "pads": 4,
       "layers": [
@@ -846,8 +846,8 @@
     },
     "LS_FB_VEE": {
       "cls": "DRV_LS",
-      "track_mm": 44.1588,
-      "tracks": 56,
+      "track_mm": 42.2335,
+      "tracks": 28,
       "vias": 4,
       "pads": 4,
       "layers": [
@@ -861,8 +861,8 @@
     },
     "LS_GK": {
       "cls": "DRV_LS",
-      "track_mm": 13.25,
-      "tracks": 30,
+      "track_mm": 11.7425,
+      "tracks": 18,
       "vias": 2,
       "pads": 2,
       "layers": [
@@ -876,8 +876,8 @@
     },
     "LS_OUTH": {
       "cls": "DRV_LS",
-      "track_mm": 19.6907,
-      "tracks": 19,
+      "track_mm": 18.644,
+      "tracks": 13,
       "vias": 3,
       "pads": 2,
       "layers": [
@@ -891,8 +891,8 @@
     },
     "LS_OUTL": {
       "cls": "DRV_LS",
-      "track_mm": 10.2028,
-      "tracks": 6,
+      "track_mm": 9.6687,
+      "tracks": 8,
       "vias": 1,
       "pads": 2,
       "layers": [
@@ -921,8 +921,8 @@
     },
     "OC_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 75.7058,
-      "tracks": 74,
+      "track_mm": 72.8286,
+      "tracks": 53,
       "vias": 6,
       "pads": 3,
       "layers": [
@@ -984,8 +984,8 @@
     },
     "PG_BIAS_H_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 268.5292,
-      "tracks": 182,
+      "track_mm": 256.9622,
+      "tracks": 92,
       "vias": 4,
       "pads": 3,
       "layers": [
@@ -999,8 +999,8 @@
     },
     "PG_BIAS_L_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 56.411,
-      "tracks": 33,
+      "track_mm": 53.7534,
+      "tracks": 14,
       "vias": 1,
       "pads": 3,
       "layers": [
@@ -1014,8 +1014,8 @@
     },
     "PG_BIAS_S_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 52.4338,
-      "tracks": 24,
+      "track_mm": 49.3154,
+      "tracks": 16,
       "vias": 1,
       "pads": 3,
       "layers": [
@@ -1029,8 +1029,8 @@
     },
     "PWM_H": {
       "cls": "CTRL_SELV",
-      "track_mm": 132.286,
-      "tracks": 127,
+      "track_mm": 124.9313,
+      "tracks": 53,
       "vias": 4,
       "pads": 2,
       "layers": [
@@ -1044,8 +1044,8 @@
     },
     "PWM_H_F": {
       "cls": "CTRL_SELV",
-      "track_mm": 56.9065,
-      "tracks": 31,
+      "track_mm": 55.6919,
+      "tracks": 26,
       "vias": 2,
       "pads": 6,
       "layers": [
@@ -1059,8 +1059,8 @@
     },
     "PWM_L": {
       "cls": "CTRL_SELV",
-      "track_mm": 111.6243,
-      "tracks": 136,
+      "track_mm": 106.7307,
+      "tracks": 91,
       "vias": 7,
       "pads": 2,
       "layers": [
@@ -1074,8 +1074,8 @@
     },
     "PWM_L_F": {
       "cls": "CTRL_SELV",
-      "track_mm": 54.6565,
-      "tracks": 35,
+      "track_mm": 53.6163,
+      "tracks": 34,
       "vias": 6,
       "pads": 6,
       "layers": [
@@ -1089,8 +1089,8 @@
     },
     "RDY_H": {
       "cls": "CTRL_SELV",
-      "track_mm": 127.9928,
-      "tracks": 77,
+      "track_mm": 124.6548,
+      "tracks": 73,
       "vias": 2,
       "pads": 3,
       "layers": [
@@ -1104,8 +1104,8 @@
     },
     "RDY_L": {
       "cls": "CTRL_SELV",
-      "track_mm": 112.2888,
-      "tracks": 101,
+      "track_mm": 107.412,
+      "tracks": 55,
       "vias": 4,
       "pads": 3,
       "layers": [
@@ -1131,8 +1131,8 @@
     },
     "RELAY_ON": {
       "cls": "CTRL_SELV",
-      "track_mm": 203.8502,
-      "tracks": 108,
+      "track_mm": 195.8561,
+      "tracks": 33,
       "vias": 5,
       "pads": 2,
       "layers": [
@@ -1146,8 +1146,8 @@
     },
     "RESET_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 129.2457,
-      "tracks": 144,
+      "track_mm": 123.3965,
+      "tracks": 105,
       "vias": 3,
       "pads": 2,
       "layers": [
@@ -1161,8 +1161,8 @@
     },
     "RESET_N_F": {
       "cls": "CTRL_SELV",
-      "track_mm": 48.1191,
-      "tracks": 43,
+      "track_mm": 46.267,
+      "tracks": 23,
       "vias": 2,
       "pads": 5,
       "layers": [
@@ -1176,8 +1176,8 @@
     },
     "RLY_G": {
       "cls": "CTRL_SELV",
-      "track_mm": 18.125,
-      "tracks": 11,
+      "track_mm": 17.6857,
+      "tracks": 7,
       "vias": 2,
       "pads": 3,
       "layers": [
@@ -1218,8 +1218,8 @@
     },
     "SPARE_D2": {
       "cls": "CTRL_SELV",
-      "track_mm": 46.9833,
-      "tracks": 57,
+      "track_mm": 44.8383,
+      "tracks": 42,
       "vias": 3,
       "pads": 2,
       "layers": [
@@ -1245,7 +1245,7 @@
       ],
       "zone_area_mm2": {
         "F.Cu": 119.9881,
-        "In2.Cu": 3236.596
+        "In2.Cu": 3236.598
       },
       "zone_islands": {
         "F.Cu": 1,
@@ -1254,8 +1254,8 @@
     },
     "VDD_H": {
       "cls": "DRV_HS",
-      "track_mm": 86.3407,
-      "tracks": 68,
+      "track_mm": 83.3106,
+      "tracks": 62,
       "vias": 9,
       "pads": 11,
       "layers": [
@@ -1269,8 +1269,8 @@
     },
     "VDD_L": {
       "cls": "DRV_LS",
-      "track_mm": 80.0907,
-      "tracks": 59,
+      "track_mm": 78.7727,
+      "tracks": 61,
       "vias": 6,
       "pads": 11,
       "layers": [
@@ -1284,8 +1284,8 @@
     },
     "VEE_H": {
       "cls": "DRV_HS",
-      "track_mm": 88.3742,
-      "tracks": 85,
+      "track_mm": 85.7594,
+      "tracks": 61,
       "vias": 9,
       "pads": 24,
       "layers": [
@@ -1299,8 +1299,8 @@
     },
     "VEE_L": {
       "cls": "DRV_LS",
-      "track_mm": 100.1242,
-      "tracks": 148,
+      "track_mm": 94.8392,
+      "tracks": 117,
       "vias": 16,
       "pads": 24,
       "layers": [
@@ -1326,7 +1326,7 @@
       ],
       "zone_area_mm2": {
         "F.Cu": 4530.3977,
-        "In2.Cu": 16939.9505
+        "In2.Cu": 16939.9349
       },
       "zone_islands": {
         "F.Cu": 3,
@@ -1335,8 +1335,8 @@
     },
     "VIN_AMP_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 35.0469,
-      "tracks": 27,
+      "track_mm": 34.5343,
+      "tracks": 22,
       "vias": 4,
       "pads": 4,
       "layers": [
@@ -1350,8 +1350,8 @@
     },
     "VIN_AMP_P": {
       "cls": "CTRL_SELV",
-      "track_mm": 29.0469,
-      "tracks": 30,
+      "track_mm": 28.6076,
+      "tracks": 27,
       "vias": 2,
       "pads": 4,
       "layers": [
@@ -1365,8 +1365,8 @@
     },
     "VIN_DIV": {
       "cls": "SENSE_ISO",
-      "track_mm": 30.2205,
-      "tracks": 27,
+      "track_mm": 29.4883,
+      "tracks": 20,
       "vias": 3,
       "pads": 5,
       "layers": [
@@ -1416,8 +1416,8 @@
     },
     "VIN_OUTN": {
       "cls": "CTRL_SELV",
-      "track_mm": 79.3969,
-      "tracks": 24,
+      "track_mm": 78.6432,
+      "tracks": 23,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1428,8 +1428,8 @@
     },
     "VIN_OUTP": {
       "cls": "CTRL_SELV",
-      "track_mm": 80.905,
-      "tracks": 30,
+      "track_mm": 78.5705,
+      "tracks": 21,
       "vias": 2,
       "pads": 2,
       "layers": [
@@ -1464,8 +1464,8 @@
     },
     "VIN_SENSE": {
       "cls": "CTRL_SELV",
-      "track_mm": 71.6142,
-      "tracks": 89,
+      "track_mm": 68.85,
+      "tracks": 55,
       "vias": 5,
       "pads": 5,
       "layers": [
@@ -1479,8 +1479,8 @@
     },
     "VOC_SET": {
       "cls": "CTRL_SELV",
-      "track_mm": 11.955,
-      "tracks": 12,
+      "track_mm": 11.6406,
+      "tracks": 8,
       "vias": 2,
       "pads": 3,
       "layers": [
@@ -1517,8 +1517,8 @@
     },
     "VOUT_AMP_N": {
       "cls": "CTRL_SELV",
-      "track_mm": 25.5469,
-      "tracks": 16,
+      "track_mm": 25.4005,
+      "tracks": 13,
       "vias": 3,
       "pads": 4,
       "layers": [
@@ -1532,8 +1532,8 @@
     },
     "VOUT_AMP_P": {
       "cls": "CTRL_SELV",
-      "track_mm": 22.2469,
-      "tracks": 24,
+      "track_mm": 21.295,
+      "tracks": 10,
       "vias": 0,
       "pads": 4,
       "layers": [
@@ -1544,8 +1544,8 @@
     },
     "VOUT_DIV": {
       "cls": "SENSE_ISO",
-      "track_mm": 21.1982,
-      "tracks": 19,
+      "track_mm": 20.5392,
+      "tracks": 16,
       "vias": 2,
       "pads": 5,
       "layers": [
@@ -1590,8 +1590,8 @@
     },
     "VOUT_OUTN": {
       "cls": "CTRL_SELV",
-      "track_mm": 63.1469,
-      "tracks": 19,
+      "track_mm": 61.1484,
+      "tracks": 18,
       "vias": 2,
       "pads": 2,
       "layers": [
@@ -1605,7 +1605,7 @@
     },
     "VOUT_OUTP": {
       "cls": "CTRL_SELV",
-      "track_mm": 64.905,
+      "track_mm": 63.7851,
       "tracks": 15,
       "vias": 2,
       "pads": 2,
@@ -1620,8 +1620,8 @@
     },
     "VOUT_SENSE": {
       "cls": "CTRL_SELV",
-      "track_mm": 71.2859,
-      "tracks": 97,
+      "track_mm": 69.1625,
+      "tracks": 77,
       "vias": 8,
       "pads": 5,
       "layers": [
@@ -1911,11 +1911,11 @@
         "total_mm2": 72.2098
       },
       "In2.Cu": {
-        "zone_mm2": 3236.596,
+        "zone_mm2": 3236.598,
         "pad_mm2": 44.5638,
         "track_mm2": 0.0,
         "via_mm2": 27.646,
-        "total_mm2": 3308.8058
+        "total_mm2": 3308.8078
       },
       "B.Cu": {
         "zone_mm2": 0.0,
@@ -1942,7 +1942,7 @@
         "driver_output_to_gate_pad_mm": 14.3526,
         "driver_output_pad": "4",
         "driver_return_to_kelvin_pad_mm": 14.779,
-        "gate_track_mm": 39.9381,
+        "gate_track_mm": 39.7185,
         "gate_vias": 3,
         "gate_layers": [
           "F.Cu",
@@ -1983,7 +1983,7 @@
           ]
         ],
         "gate_kelvin_on_adjacent_layers": true,
-        "gate_track_over_kelvin_pour_fraction": 0.216,
+        "gate_track_over_kelvin_pour_fraction": 0.2148,
         "kelvin_separation": {
           "distinct_nets": true,
           "min_copper_distance_mm": 0.3005,
@@ -2035,7 +2035,7 @@
         "driver_output_to_gate_pad_mm": 14.3596,
         "driver_output_pad": "4",
         "driver_return_to_kelvin_pad_mm": 14.7212,
-        "gate_track_mm": 84.4381,
+        "gate_track_mm": 82.1252,
         "gate_vias": 14,
         "gate_layers": [
           "F.Cu",
@@ -2076,7 +2076,7 @@
           ]
         ],
         "gate_kelvin_on_adjacent_layers": true,
-        "gate_track_over_kelvin_pour_fraction": 0.2635,
+        "gate_track_over_kelvin_pour_fraction": 0.2436,
         "kelvin_separation": {
           "distinct_nets": true,
           "min_copper_distance_mm": 0.3005,
@@ -2227,8 +2227,8 @@
         "per_layer": {
           "F.Cu": {
             "kind": "outer",
-            "items_a": 1038,
-            "items_b": 1720,
+            "items_a": 1019,
+            "items_b": 1619,
             "distance_mm": 9.4864,
             "threshold_mm": 9.0,
             "within": true,
@@ -2236,7 +2236,7 @@
               {
                 "item": "track",
                 "source": "track",
-                "net": "VEE_H",
+                "net": "VEE_L",
                 "layer": "F.Cu",
                 "ref": null
               },
@@ -2275,22 +2275,22 @@
           },
           "In2.Cu": {
             "kind": "inner",
-            "items_a": 633,
-            "items_b": 1285,
+            "items_a": 622,
+            "items_b": 1021,
             "distance_mm": 11.1,
             "threshold_mm": 9.0,
             "within": true,
             "between": [
               {
                 "item": "zone",
-                "source": "zone KS_H",
-                "net": "KS_H",
+                "source": "zone VOUT",
+                "net": "VOUT",
                 "layer": "In2.Cu",
                 "ref": null
               },
               {
-                "item": "zone",
-                "source": "zone 3V3",
+                "item": "track",
+                "source": "track",
                 "net": "3V3",
                 "layer": "In2.Cu",
                 "ref": null
@@ -2299,23 +2299,23 @@
           },
           "B.Cu": {
             "kind": "outer",
-            "items_a": 1044,
-            "items_b": 1519,
-            "distance_mm": 12.025,
+            "items_a": 1043,
+            "items_b": 1366,
+            "distance_mm": 11.9323,
             "threshold_mm": 9.0,
             "within": true,
             "between": [
               {
                 "item": "via",
                 "source": "via",
-                "net": "VEE_H",
+                "net": "PGND",
                 "layer": "B.Cu",
                 "ref": null
               },
               {
-                "item": "via",
-                "source": "via",
-                "net": "GND_CTRL",
+                "item": "track",
+                "source": "track",
+                "net": "GNDP_S",
                 "layer": "B.Cu",
                 "ref": null
               }
@@ -2992,8 +2992,8 @@
         "per_layer": {
           "F.Cu": {
             "kind": "outer",
-            "items_a": 254,
-            "items_b": 378,
+            "items_a": 266,
+            "items_b": 353,
             "distance_mm": 6.2705,
             "threshold_mm": 3.0,
             "within": true,
@@ -3040,8 +3040,8 @@
           },
           "In2.Cu": {
             "kind": "inner",
-            "items_a": 108,
-            "items_b": 213,
+            "items_a": 111,
+            "items_b": 199,
             "distance_mm": 4.8,
             "threshold_mm": 1.0,
             "within": true,
@@ -3064,8 +3064,8 @@
           },
           "B.Cu": {
             "kind": "outer",
-            "items_a": 236,
-            "items_b": 412,
+            "items_a": 230,
+            "items_b": 387,
             "distance_mm": 6.3967,
             "threshold_mm": 3.0,
             "within": true,
@@ -3747,10 +3747,10 @@
         "min_distance_mm": 4.955,
         "nearest": {
           "item": "pad",
-          "source": "pad C2.2",
+          "source": "pad C1.2",
           "net": "PGND",
           "layer": "F.Cu",
-          "ref": "C2"
+          "ref": "C1"
         },
         "items_within_keepout": 6
       },
@@ -4220,8 +4220,8 @@
           "VIN_OUTN"
         ],
         "track_mm": {
-          "VIN_OUTP": 80.905,
-          "VIN_OUTN": 79.3969
+          "VIN_OUTP": 78.5705,
+          "VIN_OUTN": 78.6432
         },
         "vias": {
           "VIN_OUTP": 2,
@@ -4238,7 +4238,7 @@
             "F.Cu"
           ]
         },
-        "mismatch_mm": 1.5081,
+        "mismatch_mm": 0.0726,
         "min_distance_to_sw_mm": 29.1823,
         "present": true
       },
@@ -4249,8 +4249,8 @@
           "VOUT_OUTN"
         ],
         "track_mm": {
-          "VOUT_OUTP": 64.905,
-          "VOUT_OUTN": 63.1469
+          "VOUT_OUTP": 63.7851,
+          "VOUT_OUTN": 61.1484
         },
         "vias": {
           "VOUT_OUTP": 2,
@@ -4270,7 +4270,7 @@
             "B.Cu"
           ]
         },
-        "mismatch_mm": 1.7581,
+        "mismatch_mm": 2.6368,
         "min_distance_to_sw_mm": 36.05,
         "present": true
       },
@@ -4281,8 +4281,8 @@
           "ISENSE_REF"
         ],
         "track_mm": {
-          "ISENSE": 83.796,
-          "ISENSE_REF": 90.1002
+          "ISENSE": 81.0437,
+          "ISENSE_REF": 86.2926
         },
         "vias": {
           "ISENSE": 7,
@@ -4302,7 +4302,7 @@
             "B.Cu"
           ]
         },
-        "mismatch_mm": 6.3042,
+        "mismatch_mm": 5.2489,
         "min_distance_to_sw_mm": 32.3541,
         "present": true
       }
@@ -4693,9 +4693,9 @@
       "requirement": "Minimise MOSFET gate loop",
       "metric": "G_H/HS_OUTH/HS_OUTL/HS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_H layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
       "measured": {
-        "track_mm": 39.94,
+        "track_mm": 39.72,
         "adjacent": true,
-        "over_kelvin_pour": 0.216
+        "over_kelvin_pour": 0.215
       },
       "threshold": null,
       "disposition": "measured - human review required",
@@ -4715,9 +4715,9 @@
       "requirement": "Minimise MOSFET gate loop",
       "metric": "G_L/LS_OUTH/LS_OUTL/LS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_L layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
       "measured": {
-        "track_mm": 84.44,
+        "track_mm": 82.13,
         "adjacent": true,
-        "over_kelvin_pour": 0.264
+        "over_kelvin_pour": 0.244
       },
       "threshold": null,
       "disposition": "measured - human review required",
@@ -4763,7 +4763,7 @@
       "rule": "PE-PCB-003",
       "requirement": "Minimise HF commutation loop",
       "metric": "SW copper area, all layers (mm2; per layer in JSON)",
-      "measured": 3660.2,
+      "measured": 3660.3,
       "threshold": null,
       "disposition": "measured - human review required",
       "note": "switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current"
@@ -4787,9 +4787,9 @@
       "requirement": "Use Kelvin current sensing",
       "metric": "AMC1311 VIN differential output track lengths (mm) and mismatch",
       "measured": {
-        "VIN_OUTP": 80.905,
-        "VIN_OUTN": 79.397,
-        "mismatch": 1.508
+        "VIN_OUTP": 78.571,
+        "VIN_OUTN": 78.643,
+        "mismatch": 0.073
       },
       "threshold": null,
       "disposition": "measured - human review required",
@@ -4800,9 +4800,9 @@
       "requirement": "Use Kelvin current sensing",
       "metric": "AMC1311 VOUT differential output track lengths (mm) and mismatch",
       "measured": {
-        "VOUT_OUTP": 64.905,
-        "VOUT_OUTN": 63.147,
-        "mismatch": 1.758
+        "VOUT_OUTP": 63.785,
+        "VOUT_OUTN": 61.148,
+        "mismatch": 2.637
       },
       "threshold": null,
       "disposition": "measured - human review required",
@@ -4813,9 +4813,9 @@
       "requirement": "Use Kelvin current sensing",
       "metric": "TMCS1133 ISENSE / ISENSE_REF track lengths (mm) and mismatch",
       "measured": {
-        "ISENSE": 83.796,
-        "ISENSE_REF": 90.1,
-        "mismatch": 6.304
+        "ISENSE": 81.044,
+        "ISENSE_REF": 86.293,
+        "mismatch": 5.249
       },
       "threshold": null,
       "disposition": "measured - human review required",
@@ -4891,7 +4891,7 @@
       "measured": {
         "zone_area_mm2": {
           "F.Cu": 4530.4,
-          "In2.Cu": 16940.0
+          "In2.Cu": 16939.9
         },
         "vias": 34,
         "track_mm": 3.1
@@ -5173,7 +5173,7 @@
         "F.Cu": 9.486,
         "In1.Cu": 11.1,
         "In2.Cu": 11.1,
-        "B.Cu": 12.025
+        "B.Cu": 11.932
       },
       "threshold": "all=9.000 mm",
       "disposition": "within spec threshold - human review required",

@@ -55,6 +55,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+from automation.kicad_tools import path_geometry as pg  # noqa: E402
 
 EXAMPLE = ROOT / 'examples/sic-buck-400v-200v-5kw'
 CHECKS_DIR = EXAMPLE / 'verification/engineering_checks'
@@ -675,7 +676,8 @@ class BoardData:
                         if p is not None:
                             prims.setdefault(layer, []).append(p)
         for t in self.tracks:
-            points = [t['a'], t['mid'], t['b']] if t.get('arc') else [t['a'], t['b']]
+            # arcs are densified to 0.05 mm chords (two chords a-mid-b under-estimate the copper by the sagitta, up to 0.06 mm at r 0.8 mm)
+            points = pg.sample_arc(t['a'], t['mid'], t['b'], 0.05) if t.get('arc') else [t['a'], t['b']]
             for a, b in zip(points, points[1:]):
                 prims.setdefault(t['layer'], []).append(make_segment(a, b, t['width'], t['net'], t['layer'], 'track', 'track'))
         for v in self.vias:

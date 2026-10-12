@@ -179,7 +179,7 @@ class NetClassTests(unittest.TestCase):
                 spec, assignment = g.build_spec(board, self.parts[board], Path('x/kicad'), Path('x/design'), exceptions=[])
                 coerced = ps.coerce_spec(spec)
                 self.assertEqual(coerced.name, g.project_name(board))
-                self.assertEqual(coerced.revision, 'V2')
+                self.assertEqual(coerced.revision, common.GENERATION)
                 self.assertEqual(coerced.comment, common.BANNER)
                 self.assertIn(common.BASIS, coerced.title)
                 self.assertEqual(coerced.pages, {str(k): str(v) for k, v in g.board_model(board).PAGES.items()})
@@ -195,6 +195,27 @@ class NetClassTests(unittest.TestCase):
                 self.assertEqual(report['undriven_power_nets'], [])
         self.assertEqual(g.flag_page('power'), power_model.FLAG_PAGE)
         self.assertEqual(g.flag_page('control'), '01_aux_12v')
+
+    def test_presentation_policy_and_style_switch(self):
+        self.assertIsNone(g.presentation_for('control', 'legacy'))
+        with self.assertRaises(ValueError):
+            g.presentation_for('control', 'fancy')
+        circuit = g.build_circuit('control')
+        wired = g.presentation_for('control', 'wired', circuit)
+        self.assertEqual(wired['style'], 'wired')
+        self.assertEqual(wired['supply'], 'auto')
+        self.assertIn('5V_SW', wired['exclude_supply'])
+        self.assertEqual(wired['groups']['U2'], 'buck_5v')
+        self.assertIn('buck_5v', wired['group_titles'])
+        self.assertEqual(circuit.parts, g.build_parts('control'), 'blocks are presentation metadata only')
+        power = g.build_circuit('power')
+        self.assertEqual(power.groups['U1'], 'driver_h')
+        self.assertEqual(power.groups['U3'], 'driver_l')
+        self.assertTrue(power.groups['U2'].startswith('bias_'))
+        legacy, _ = g.build_spec('control', self.parts['control'], Path('x/kicad'), Path('x/design'), exceptions=[], style='legacy')
+        self.assertIsNone(ps.coerce_spec(legacy).presentation)
+        spec, _ = g.build_spec('control', self.parts['control'], Path('x/kicad'), Path('x/design'), exceptions=[], style='wired', circuit=circuit)
+        self.assertEqual(ps.coerce_spec(spec).presentation['groups'], circuit.groups)
 
     def test_merged_bom_carries_a_board_column(self):
         for path in g.BOM_SOURCES.values():
@@ -214,6 +235,36 @@ class NetClassTests(unittest.TestCase):
 
 
 @unittest.skipUnless(kicad_cli() and library_installed(), 'KiCad 10 with its footprint library is required')
+class GenerationLabelTests(unittest.TestCase):
+    """One generation label (sic_buck_common.GENERATION) for everything the V2.1 generators write."""
+
+    def test_banner_is_derived_from_the_generation_label(self):
+        self.assertEqual(common.GENERATION, "V2.1")
+        self.assertEqual(common.BANNER, f"AI-GENERATED ENGINEERING PROTOTYPE - {common.GENERATION} - HUMAN REVIEW REQUIRED")
+        self.assertEqual(g.REVISION, common.GENERATION)
+        self.assertEqual(power_model.COMMENT, common.BANNER)
+        for text in g.NOTICE_TEXT.values():
+            self.assertTrue(text.endswith(common.BANNER + "."), text[-90:])
+        self.assertTrue(any(common.BANNER in line for line in g.header_lines("power", {}, [])))
+
+    def test_board_generators_share_the_label(self):
+        from automation.kicad_tools import generate_sic_control_board as cb
+        from automation.kicad_tools import generate_sic_power_board as pb
+        for module in (cb, pb):
+            self.assertEqual(module.REVISION, common.GENERATION, module.__name__)
+            self.assertEqual(module.BANNER, common.BANNER, module.__name__)
+        silk = [item[0] for item in pb.SILKSCREEN]
+        self.assertIn(common.BANNER, silk)
+        self.assertIn(f"AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD {common.GENERATION}", silk)
+        for cid in ("A", "B"):
+            candidate = json.loads(cb.candidate_path(cid).read_text(encoding="utf-8"))
+            label = f"AIPE SiC BUCK CONTROL {common.GENERATION}"
+            self.assertIn(label, [item["text"] for item in candidate["silkscreen"]], cid)
+            # the placer keeps auto-placed parts off cb.text_box(label), which depends on the character count only: the label must
+            # keep the 26 characters of the V2 label "AIPE SiC BUCK CONTROL - V2" or C49 moves and the control routing changes
+            self.assertEqual(len(label), len("AIPE SiC BUCK CONTROL - V2"))
+
+
 class GenerationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -272,6 +323,32 @@ class GenerationTests(unittest.TestCase):
                 self.assertEqual(manifest['status'], 'passed', manifest.get('details'))
                 self.assertEqual(manifest['finding_count'], 0, manifest.get('details'))
                 self.assertEqual(manifest['tool_exit_code'], 0)
+
+    def test_wired_gates_pass_and_legacy_style_stays_available(self):
+        for board in g.BOARDS:
+            with self.subTest(board=board):
+                gates = g.verify_wired(board, self.root / 'kicad' / f'{board}_board', self.root / 'gates' / board)
+                self.assertTrue(gates['gates']['dru_identical']['passed'], gates['gates']['dru_identical'])
+                self.assertTrue(gates['gates']['net_settings_equal']['passed'])
+                self.assertTrue(gates['gates']['erc_zero']['passed'], gates['gates']['erc_zero'].get('details'))
+                self.assertTrue(gates['gates']['netlist_vs_model']['passed'], gates['gates']['netlist_vs_model'])
+                self.assertTrue(gates['gates']['netlist_vs_v2']['passed'], gates['gates']['netlist_vs_v2'])
+                self.assertEqual(gates['gates']['erc_zero']['finding_types'], {})
+                fill = gates['gates']['paper_fill']
+                self.assertTrue(fill['passed'], fill)
+                self.assertTrue(all(e['fill'] >= fill['min_fill'] for e in fill['escalated']), fill['escalated'])
+                self.assertTrue(gates['passed'])
+                mapping = json.loads((self.root / 'design' / f'schematic_mapping_{board}.json').read_text(encoding='utf-8'))
+                self.assertEqual(mapping['generation']['style'], 'wired')
+                exceptions = mapping['presentation']['exceptions']      # label fallbacks: budgeted and every one listed
+                self.assertLessEqual(len(exceptions), 4, exceptions)
+                self.assertTrue(all(e['reason'] == 'no_wire_path' and e['net'] and e['sheet'] for e in exceptions), exceptions)
+                self.assertTrue(mapping['presentation']['guard']['identical'])
+                self.assertEqual(self.results[board]['continuation_sheets'], [])
+        legacy = self.root / 'legacy'
+        result = g.generate('control', legacy / 'kicad', legacy / 'design', style='legacy')
+        self.assertIn('06_pwm_fault_logic_2', result['continuation_sheets'])
+        self.assertNotIn('presentation', result)
 
     def test_generation_is_deterministic(self):
         again = self.root / 'again'

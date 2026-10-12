@@ -1,0 +1,86 @@
+{
+  "boards": {
+    "power": {
+      "erc": {
+        "manifest": "verification/erc/20261012T094955Z-erc-c574a866/run.json",
+        "status": "passed",
+        "findings": 0,
+        "tool_exit_code": 0,
+        "hashes_valid": true,
+        "report_hash_checked": true
+      },
+      "drc": {
+        "manifest": "verification/drc/20261012T100423Z-drc-8b9e64d1/run.json",
+        "status": "passed",
+        "findings": 0,
+        "tool_exit_code": 0,
+        "hashes_valid": true,
+        "report_hash_checked": true
+      },
+      "exports": {
+        "status": "passed",
+        "commands": 11,
+        "files": 35,
+        "step_models_complete": false
+      },
+      "netlist_check": {
+        "status": "passed",
+        "file": "verification/netlist_check_power.json"
+      },
+      "layout_metrics": {
+        "status": "passed",
+        "file": "verification/engineering_checks/layout_metrics_power.json",
+        "board_hash_recorded": true,
+        "board_hash_matches": true
+      },
+      "components": 237,
+      "purchased_components": 196,
+      "dnp_components": 16,
+      "named_nets": 101
+    },
+    "control": {
+      "erc": {
+        "manifest": "verification/erc/20261012T095007Z-erc-caa10a79/run.json",
+        "status": "passed",
+        "findings": 0,
+        "tool_exit_code": 0,
+        "hashes_valid": true,
+        "report_hash_checked": true
+      },
+      "drc": {
+        "manifest": "verification/drc/20261012T114513Z-drc-3461f467/run.json",
+        "status": "passed",
+        "findings": 0,
+        "tool_exit_code": 0,
+        "hashes_valid": true,
+        "report_hash_checked": true
+      },
+      "exports": {
+        "status": "passed",
+        "commands": 11,
+        "files": 35,
+        "step_models_complete": false
+      },
+      "netlist_check": {
+        "status": "passed",
+        "file": "verification/netlist_check_control.json"
+      },
+      "layout_metrics": {
+        "status": "passed",
+        "file": "verification/engineering_checks/layout_metrics_control.json",
+        "board_hash_recorded": true,
+        "board_hash_matches": true
+      },
+      "components": 207,
+      "purchased_components": 186,
+      "dnp_components": 1,
+      "named_nets": 111
+    }
+  },
+  "simulation_runs": 20,
+  "research_records": 10,
+  "verification_records": 20,
+  "problems": [],
+  "status": "passed",
+  "scope": "CAD connectivity, native check currency and export integrity only; hardware unqualified"
+}

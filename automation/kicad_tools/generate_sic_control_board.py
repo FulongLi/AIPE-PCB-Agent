@@ -1,6 +1,6 @@
-"""Place, route and check the V2 SiC buck CONTROL board (AIPE_SiC_Buck_Control) with pcbnew and the grid router.
+"""Place, route and check the SiC buck CONTROL board (AIPE_SiC_Buck_Control; V2 design, V2.1 generation) with pcbnew and the grid router.
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 Follows automation.kicad_tools.v2_pipeline_smoke.board_stage(): kicad-cli XML netlist of the generated
 schematic, a pcbnew BOARD with the project footprint libraries and the symbol paths of
@@ -11,7 +11,9 @@ one solid GND_CTRL plane, In2.Cu rail islands 12V_PROT / 5V / 1V9 over a 3V3 bac
 In2.Cu pass for INNER_SIGNAL_NETS (BIAS_EN) and for any connection the F.Cu/B.Cu stages leave unresolved
 (islands are keepouts, vias and plated pads obstacles, a pruned DSP escape via is re-created at a fallback port), the
 rip-up negotiation driven through RIPUP_PENALTY_LADDER by LadderRouter (the shared grid_router is used unchanged), zone fill, corridor zones for rail copper outside its
-island, a sliver trim that widens corridor edges next to sub-0.05 mm2 fill fragments (review LR-15),
+island (records sorted by net and rectangle before their distinct priorities are assigned, so the result does not depend on the via order of
+the reloaded board), a sliver trim that widens corridor edges next to sub-0.05 mm2 fill fragments (review LR-15), deterministic zone KIIDs
+before the final fill (KiCad resolves touching zones of equal priority and different nets by KIID order),
 SaveBoard/LoadBoard, then kicad-cli DRC with --schematic-parity --severity-all through
 automation.kicad_tools.run_check and the layout metrics checker automation.verification.check_sic_layout.
 
@@ -41,6 +43,7 @@ import os
 import subprocess
 import sys
 import time
+import uuid
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,6 +53,7 @@ if str(ROOT) not in sys.path:  # re-executed by KiCad's Python with this file as
     sys.path.insert(0, str(ROOT))
 
 from automation.kicad_tools import grid_router as gr  # noqa: E402  (numpy only at import time)
+from automation.kicad_tools import sic_buck_common as common  # noqa: E402
 from automation.setup.detect_kicad import find_kicad_cli, read_config  # noqa: E402
 
 EXAMPLE = ROOT / 'examples/sic-buck-400v-200v-5kw'
@@ -65,8 +69,8 @@ CHECKS_DIR = VERIFICATION_DIR / 'engineering_checks'
 DRC_DIR = VERIFICATION_DIR / 'drc'
 NAME = 'AIPE_SiC_Buck_Control'
 TITLE = 'AIPE SiC buck 400 V -> 200 V / 5 kW - TMS320F28335 control board (SELV mezzanine)'
-BANNER = 'AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED'
-REVISION = 'V2'
+BANNER = common.BANNER  # generation label shared with the schematics, the models and the evidence writers
+REVISION = common.GENERATION
 WIDTH, HEIGHT = 120.0, 80.0
 COPPER_LAYERS = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 ROUTING_LAYERS = ['F.Cu', 'B.Cu']  # In1.Cu is the unbroken GND_CTRL plane, In2.Cu carries only rail islands
@@ -92,6 +96,12 @@ INNER_EDGE_BAND = 3.0  # an In2.Cu signal track keeps this distance from every r
 INNER_CHANNEL_HALF_WIDTH = 0.5  # half width of a port's straight exit channel through the band (0.2 mm track + 0.3 mm clearance per side)
 GROUND = 'GND_CTRL'
 RAILS = ('12V_PROT', '5V', '3V3', '1V9')
+# KiCad fills zones of equal priority and different nets in KIID order (ZONE::HigherPriority: the greater KIID keeps its outline, the
+# other steps back by the zone clearance). The 12V_PROT and 5V islands share the edge x = 21 mm, so with random KIIDs about 6 mm2 of
+# In2.Cu copper changed owner between builds. zone_identity() derives every zone's KIID from this order (first = keeps its outline;
+# 12V_PROT first reproduces the frozen V2 board) and from the zone's net, layer, priority and outline.
+ZONE_TIE_BREAK_ORDER = (*RAILS, GROUND)
+ZONE_IDENTITY_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, 'aipe://sic-buck/control-board/zone')
 CORE_NET, IO_NET = '1V9', '3V3'
 # Stackup (mm) written into the saved board as text (design/pcb_stackup.md section 2); pcbnew exposes no stackup mutation.
 STACKUP = [('F.Cu', 'copper', 0.035), ('dielectric 1', 'prepreg', 0.2), ('In1.Cu', 'copper', 0.035),
@@ -142,6 +152,14 @@ GAP_QFP = 2.7  # the LQFP-176: its far escape row ends 15.875 mm from the centre
 MAX_NODES = 2500000
 SIGNAL_ORDER_TRIALS = 6  # grid_router signal-stage orders tried (plan order, long nets last/first, then seeded perturbations of the best)
 RIPUP_ROUNDS = 240  # grid_router rip-up and re-route rounds for the connections the best order leaves unresolved (round 9 was still gaining at 84/90)
+ROUTING_STYLE = dict(diagonal=False, simplify='octilinear', arcs=True, eps=0.02)  # V2.1 grid_router geometry (plan key 'style'): the V2
+# 4-direction search with the same algorithm, order trials and 240 rip-up rounds, then the final octilinear simplification (string pulling,
+# short-run collapse, on-grid chamfers) and tangent arcs on the signal nets (power/critical nets and tracks above 0.6 mm: diagonals only).
+# eps 0.02 (V2: 0.01) widens every marking halo on this 0.2 mm clearance / 0.125 mm grid board, so routes can differ from the frozen V2 run
+# (B2 scratch build: BOOT84 and EMU0 longer, 798 vias as V2, DRC 0); routing_progress records the eps in use. ROUTING_STYLE_DIAGONAL adds the 8-direction search with
+# bend penalties; it is opt-in (build_control(style=ROUTING_STYLE_DIAGONAL)) because with MAX_NODES 2.5 M and 240 rip-up rounds its control-board
+# run time exceeded 1.5 x the V2 1155 s in the V2.1 scratch builds. build_control(style={}) routes with the V2 geometry; the frozen V2 plan has no 'style'.
+ROUTING_STYLE_DIAGONAL = dict(ROUTING_STYLE, diagonal=True, bend_penalty_cells=[0.6, 2.0])
 RIPUP_PENALTY_LADDER = (1.0, 0.4, 2.5)  # multiples of the plan's ripup_penalty that LadderRouter.negotiate cycles through. The shared
 # grid_router.negotiate() tries one penalty per failing connection since the power-board agent's 2026-10-11 change (the variants never
 # helped the power board); the control board's last connections closed in iteration 4 only through the 2.5x step, and without the
@@ -198,6 +216,11 @@ NOTES = [
     'a DSP escape via the outer stages pruned is re-created at the port when it still fits). Every In2.Cu signal track keeps INNER_EDGE_BAND '
     'from the island polygons except along its own port exit channel: a track hugging an island edge isolates the background strip in which the '
     'corridor notches of that island reach the background (iteration 6, U5.45 3V3).',
+    'Reproducible zone fill (V2.1): the stage-2 corridor records are sorted by net and rectangle before their distinct priorities are '
+    'assigned (the via order of a reloaded board is not reproducible, and overlapping same-net corridors are owned by the higher priority), '
+    'and every zone gets a deterministic KIID (zone_identity: ZONE_TIE_BREAK_ORDER rank, then a uuid5 of net, layer, priority and outline) '
+    'before the final fill, because KiCad resolves touching zones of equal priority and different nets by KIID order (the 12V_PROT and 5V '
+    'islands share the edge x = 21 mm; about 6 mm2 changed owner between builds). Geometry and priorities are unchanged.',
     'The rip-up negotiation runs with the penalty ladder 1x / 0.4x / 2.5x of the plan ripup_penalty (LadderRouter in this generator; '
     'the shared grid_router tries one penalty per failing connection since 2026-10-11): without the ladder the control board stops at '
     '2 unconnected (RDY_H, PG_BIAS_L_N).',
@@ -872,6 +895,29 @@ CORRIDOR_MIN_NECK = 0.5  # a corridor counts as severed when an obstacle's clear
 CORRIDOR_L_OFFSETS = (1.5, -1.5, 2.0, -2.0, 2.5, -2.5, 3.0, -3.0)  # lateral first legs tried for an L-shaped corridor
 
 
+def rail_item_key(item: dict) -> tuple:
+    """Deterministic order of rail items and obstacles (net, rounded position, kind): a reloaded board lists its vias in an order
+    that is not reproducible between runs, so nothing derived from them may follow that order."""
+    return (str(item['net']), tuple(round(float(v), 4) for v in item['xy']), str(item.get('kind') or ''))
+
+
+def corridor_sort_key(record: dict) -> tuple:
+    """Deterministic order of the corridor records: net, rounded rectangle (x0, y0, x1, y1), origin, leg and kind. The distinct
+    zone priorities CORRIDOR_PRIORITY + index follow this order, and with them the fill ownership where same-net corridors overlap."""
+    return (str(record['net']), tuple(round(float(v), 4) for v in polygon_bbox(record['polygon'])),
+            tuple(round(float(v), 4) for v in record['xy']), int(record.get('leg') or 0), str(record.get('kind') or ''))
+
+
+def zone_identity(net: str, layer: str, priority: int, polygon) -> str:
+    """Deterministic KIID string of a zone: the first 32 bits rank the net by ZONE_TIE_BREAK_ORDER (first = greatest = keeps its
+    outline where equal-priority zones of different nets touch), the remaining 96 bits are the uuid5 of net, layer, priority and the
+    rounded outline (distinct zones, distinct KIIDs). Pure; assign_zone_identities() applies it to a board before the final fill."""
+    rank = ZONE_TIE_BREAK_ORDER.index(net) if net in ZONE_TIE_BREAK_ORDER else len(ZONE_TIE_BREAK_ORDER)
+    outline = ';'.join(f'{round(float(x), 4)},{round(float(y), 4)}' for x, y in polygon)
+    digest = uuid.uuid5(ZONE_IDENTITY_NAMESPACE, f'{net}|{layer}|{int(priority)}|{outline}')
+    return f'{len(ZONE_TIE_BREAK_ORDER) - rank:08x}' + str(digest)[8:]
+
+
 def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] | None = None, half_width: float = CORRIDOR_HALF_WIDTH,
                      overshoot: float = CORRIDOR_OVERSHOOT, max_mm: float = CORRIDOR_MAX_MM, via_radius: float = VIA[0] / 2,
                      clearance: float = ZONE_CLEARANCE, half_width_by_net: dict | None = None) -> dict:
@@ -886,7 +932,8 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
     every straight direction is severed, an L-shaped corridor (lateral first leg of CORRIDOR_L_OFFSETS, then toward
     the territory) is tried; its two legs are emitted as two records sharing ``xy`` with ``leg`` 1 and 2. Every corridor
     gets its own zone priority above the islands (KiCad flags intersecting same-net zones of equal priority). Items with
-    no usable corridor within ``max_mm`` are reported as issues.
+    no usable corridor within ``max_mm`` are reported as issues. Items are visited in rail_item_key order and the records are
+    sorted by corridor_sort_key before the priorities are assigned, so the result is the same for every input order.
     """
     polys = {n: p for n, p in islands.items() if p != 'background'}
     corridors, issues = [], []
@@ -936,7 +983,7 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
                     polygon=[[rect[0], rect[1]], [rect[2], rect[1]], [rect[2], rect[3]], [rect[0], rect[3]]], priority=CORRIDOR_PRIORITY, **extra)
 
     directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
-    for item in items:
+    for item in sorted(items, key=rail_item_key):
         net, xy = item['net'], tuple(item['xy'])
         if net not in islands or territory(net, xy):
             continue
@@ -975,11 +1022,12 @@ def island_corridors(items: list[dict], islands: dict, *, obstacles: list[dict] 
         if not l_shapes:
             hit = severed[0][3]
             issues.append(dict(net=net, xy=list(xy), kind=item.get('kind'),
-                               reason='every corridor direction is severed by other-net copper: ' + ', '.join(f"{b['net']}@{b['xy']}" for b in hit)))
+                               reason='every corridor direction is severed by other-net copper: ' + ', '.join(f"{b['net']}@{b['xy']}" for b in sorted(hit, key=rail_item_key))))
             continue
         total, offset, leg1_dir, leg1, corner, d, found, leg2 = min(l_shapes, key=lambda o: (o[0], o[1]))
         corridors.append(record(item, xy, leg1_dir, abs(offset), leg1, shape='L', leg=1))
         corridors.append(record(item, corner, d, found + overshoot, leg2, shape='L', leg=2))
+    corridors.sort(key=corridor_sort_key)  # reproducible priorities and overlap ownership whatever the via order of the reloaded board
     for i, a in enumerate(corridors):
         a['priority'] = CORRIDOR_PRIORITY + i  # distinct priorities: KiCad rejects intersecting same-net zones of equal priority (L legs overlap)
         for b in corridors[i + 1:]:
@@ -1016,7 +1064,7 @@ def uncovered_rail_items(items: list[dict], islands: dict, corridors: list[dict]
     """Rail items that are outside their own territory and not covered by a corridor of their net (expected: none)."""
     polys = {n: p for n, p in islands.items() if p != 'background'}
     result = []
-    for item in items:
+    for item in sorted(items, key=rail_item_key):
         net, xy = item['net'], tuple(item['xy'])
         if net not in islands:
             continue
@@ -1044,7 +1092,7 @@ def island_polygon(candidate: dict, net: str):
 
 
 def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_escapes: dict | None = None, dsp_centre=None,
-                 dsp_signal_nets=(), lanes: dict | None = None, extra: dict | None = None, inpad_vias=None) -> dict:
+                 dsp_signal_nets=(), lanes: dict | None = None, extra: dict | None = None, inpad_vias=None, style=None) -> dict:
     """grid_router plan: pre-routed LQFP escapes with B.Cu exit stubs, pre-routed fine-pitch IC escapes, the candidate's
     pre-routed copper and exposed-pad via arrays (``extra`` = {tracks, vias, skip_pads}), fanout for the rest (DSP and
     pre-routed pads skipped), signals on F.Cu/B.Cu (candidate signal_priority, then the DSP nets), rail islands and the GND plane."""
@@ -1122,6 +1170,7 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
         'signal_first': signal_first,
         'signal_pinned': list(candidate.get('signal_pinned', [])),  # r20 (LR-32): the protection lines routed first in every order trial (direct runs)
         'signal_order_trials': SIGNAL_ORDER_TRIALS, 'ripup_rounds': RIPUP_ROUNDS,
+        **({'style': dict(style)} if style else {}),  # V2.1 geometry (ROUTING_STYLE); absent = the V2 plan
     }
 
 
@@ -1238,6 +1287,46 @@ def kicad_python():
         return None
 
 
+def stored_fill_check(board_path: Path, cli, label: str = 'control') -> dict:
+    """Diagnostic (NOT verification evidence): kicad-cli DRC WITHOUT --refill-zones on a temporary copy of the board directory, i.e.
+    of the zone fills as stored in the file - the copper that the gerber / PDF / render / STEP exports contain. Writes
+    engineering_checks/stored_zone_fill_check_<label>.json and returns the counts. The verification DRC stays run_check (--refill-zones)."""
+    import re
+    import shutil
+    import tempfile
+    board_path = Path(board_path)
+    tmp = Path(tempfile.mkdtemp(prefix='aipe_sf_'))  # short system temp path: the library file names exceed MAX_PATH under long scratch paths
+    record = dict(schema_version=2, status=BANNER, title='Stored zone fills checked without refill (diagnostic, not a verification record)',
+                  generated_utc=datetime.now(timezone.utc).isoformat(), board=str(board_path), board_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
+                  method='copy of the board directory in a temporary folder; kicad-cli pcb drc --format json --severity-all WITHOUT --refill-zones '
+                         '(no schematic parity: copper only); counts of the stored fills. The run_check manifests under verification/drc remain the evidence.')
+    try:
+        copy = tmp / board_path.parent.name
+        shutil.copytree(board_path.parent, copy)
+        report = tmp / 'drc_stored_fills.json'
+        command = [str(cli), 'pcb', 'drc', '--format', 'json', '--severity-all', '--output', str(report), str(copy / board_path.name)]
+        completed = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=900)
+        record['tool_exit_code'] = completed.returncode
+        data = json.loads(report.read_text(encoding='utf-8-sig'))
+        violations = data.get('violations', [])
+        by_type: dict = {}
+        by_rule: dict = {}
+        for v in violations:
+            by_type[v.get('type')] = by_type.get(v.get('type'), 0) + 1
+            m = re.search(r'\((.+?) clearance ', v.get('description', ''))
+            rule = m.group(1) if m else v.get('type')
+            by_rule[rule] = by_rule.get(rule, 0) + 1
+        record.update(violations=len(violations), unconnected_items=len(data.get('unconnected_items', [])), by_type=by_type, by_rule=by_rule,
+                      lib_warnings_note='lib_footprint_issues / lib_footprint_mismatch entries, if any, are copied-path artefacts of the temporary folder')
+    except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as exc:
+        record['error'] = str(exc)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    CHECKS_DIR.mkdir(parents=True, exist_ok=True)
+    (CHECKS_DIR / f'stored_zone_fill_check_{label}.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+    return {k: record.get(k) for k in ('violations', 'unconnected_items', 'by_type', 'by_rule', 'error') if k in record}
+
+
 def read_manifest(path) -> dict:
     """run_check manifest with the DRC category counts and finding details added from KiCad's JSON report."""
     manifest = json.loads(Path(path).read_text(encoding='utf-8'))
@@ -1343,6 +1432,8 @@ class Builder:
             fp.SetFPID(pcb.LIB_ID(lib, name))
             fp.SetReference(part['ref'])
             fp.SetValue(part['value'])
+            if part.get('dnp'):
+                fp.SetDNP(True)  # V2.1: the schematics write (dnp yes) for DNP parts and kicad-cli --schematic-parity compares the attribute
             if part['ref'] not in self.mapping:
                 raise ValueError(f"{part['ref']}: no schematic path in {MAPPING_JSON.name}")
             fp.SetPath(pcb.KIID_PATH(self.mapping[part['ref']]))
@@ -1905,15 +1996,15 @@ def prune_dangling(board, protected_nets=()) -> dict:
         ends = defaultdict(int)
         for t in tracks:
             for pt in (t.GetStart(), t.GetEnd()):
-                ends[(t.GetNetCode(), pt.x, pt.y)] += 1
+                ends[(t.GetNetCode(), pt.x, pt.y, t.GetLayer())] += 1  # V2.1: per layer - a track end on another layer is no connection without a via
         via_keys = {(v.GetNetCode(), v.GetPosition().x, v.GetPosition().y) for v in vias}
         changed = False
-        for t in tracks:  # every net: a track end connects only to another track end, a via or a pad (zones connect vias)
+        for t in tracks:  # every net: a track end connects only to another track end on its layer, a via or a pad (zones connect vias)
             half = t.GetWidth() // 2  # a wide cross piece ending between two same-net pads still overlaps both pads
             layer = t.GetLayer()
             for pt in (t.GetStart(), t.GetEnd()):
                 key = (t.GetNetCode(), pt.x, pt.y)
-                if ends[key] > 1 or key in via_keys or any(pad.IsOnLayer(layer) and pad.HitTest(pt, half) for pad in pads_by_code[t.GetNetCode()]):
+                if ends[(*key, layer)] > 1 or key in via_keys or any(pad.IsOnLayer(layer) and pad.HitTest(pt, half) for pad in pads_by_code[t.GetNetCode()]):
                     continue
                 board.Remove(t)
                 removed['tracks'] += 1
@@ -1943,12 +2034,13 @@ def prune_dangling(board, protected_nets=()) -> dict:
 
 
 def add_zones(board, zones: list[dict], save_path: Path) -> dict:
-    """Add corridor zones with the grid router's zone API, refill every zone and save/reload."""
+    """Add corridor zones with the grid router's zone API, give every zone its deterministic KIID, refill every zone and save/reload."""
     router = gr.Router(board, WIDTH, HEIGHT, ROUTING_LAYERS, grid=GRID, trace=TRACE, clearance=CLEARANCE, via=VIA,
                        net_rules=NET_RULES, board_margin=BOARD_MARGIN, hole_clearance=HOLE_CLEARANCE)
     for zone in zones:
         router.zone(zone['net'], ISLAND_LAYER, [tuple(p) for p in zone['polygon']], priority=zone['priority'], clearance=ZONE_CLEARANCE,
                     min_thickness=ZONE_MIN_THICKNESS)
+    assign_zone_identities(board)  # before the fill: KiCad breaks equal-priority ties between zones by KIID
     router.fill()
     return gr.save_and_reload(board, save_path)
 
@@ -1958,6 +2050,42 @@ def refill_zones(board):
     import pcbnew as pcb
     board.BuildConnectivity()
     pcb.ZONE_FILLER(board).Fill(board.Zones())
+
+
+def zone_outline_mm(board, zone) -> list[list[float]]:
+    """Outer outline of a zone in mm (rounded to 4 decimals)."""
+    import pcbnew as pcb
+    chain = zone.Outline().Outline(0)
+    return [[round(v, 4) for v in pcb.ToMM(chain.CPoint(i))] for i in range(chain.PointCount())]
+
+
+def assign_zone_identities(board) -> list[dict]:
+    """Set every zone's KIID to zone_identity(net, layer, priority, outline) (a no-op for a zone that already carries it); the fill that
+    follows then resolves equal-priority ties the same way in every build. Returns [{net, layer, priority, uuid}]. Needs pcbnew."""
+    import pcbnew as pcb
+    rows, seen = [], set()
+    for zone in board.Zones():
+        layer, priority = board.GetLayerName(zone.GetLayer()), int(zone.GetAssignedPriority())
+        identity = zone_identity(zone.GetNetname(), layer, priority, zone_outline_mm(board, zone))
+        if identity in seen:
+            raise RuntimeError(f'two zones share the identity {identity} ({zone.GetNetname()} {layer} priority {priority})')
+        seen.add(identity)
+        if zone.m_Uuid.AsString() != identity:
+            zone.SetUuid(pcb.KIID(identity))
+        rows.append(dict(net=zone.GetNetname(), layer=layer, priority=priority, uuid=identity))
+    return rows
+
+
+def zone_table(board) -> list[dict]:
+    """Every zone with net, layer, priority, KIID, outline bounding box and filled area (mm2): the record a second build is compared with."""
+    rows = []
+    for zone in board.Zones():
+        layer = zone.GetLayer()
+        bbox = polygon_bbox(zone_outline_mm(board, zone))
+        rows.append(dict(net=zone.GetNetname(), layer=board.GetLayerName(layer), priority=int(zone.GetAssignedPriority()), uuid=zone.m_Uuid.AsString(),
+                         bbox=[round(v, 4) for v in bbox], outline_mm2=round(zone.Outline().Area() / 1e12, 3),
+                         filled_mm2=round(zone.GetFilledPolysList(layer).Area() / 1e12, 3)))
+    return sorted(rows, key=lambda r: (r['layer'], r['net'], r['priority'], r['bbox']))
 
 
 def through_items(board) -> list[dict]:
@@ -2067,7 +2195,7 @@ def component_through_items(components: list[dict], xy, tolerance: float = 1e-3)
     return []
 
 
-def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: dict | None = None, layer: str = ISLAND_LAYER) -> dict:
+def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: dict | None = None, layer: str = ISLAND_LAYER, style=None) -> dict:
     """Route whole ``nets`` and single unresolved F.Cu/B.Cu connections (grid_router 'route' records) as tracks on the island
     layer with a single-layer grid_router pass: every rail island polygon (inflated by INNER_KEEPOUT_MARGIN) is a keepout, so is
     the INNER_EDGE_BAND around it except for each port's straight exit channel (band_keepouts), vias and plated pads are obstacles
@@ -2084,7 +2212,9 @@ def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: d
         return result
     router = gr.Router(board, WIDTH, HEIGHT, [layer], grid=GRID, trace=ROUTER_TRACE, clearance=CLEARANCE, via=VIA,
                        net_rules={net: dict(clearance=INNER_CLEARANCE) for net in wanted}, board_margin=BOARD_MARGIN,
-                       hole_clearance=HOLE_CLEARANCE, max_nodes=MAX_NODES)
+                       hole_clearance=HOLE_CLEARANCE, max_nodes=MAX_NODES, style=style)
+    router.stage = 'signal'  # V2.1: this pass's own tracks are eligible for Router.beautify (style.stages); the registered copper stays fixed
+    start_length = dict(router.length)  # registered copper per net: the inner-layer addition is the difference after beautify
     island_rects = []
     for net, polygon in candidate['islands'].items():
         if polygon == 'background':
@@ -2191,7 +2321,11 @@ def inner_layer_route(board, nets, unresolved, candidate: dict, *, port_hints: d
 
     for net, kind, a, b, extra in connections:
         connect(net, kind, a, b, **extra)
+    if router.style['simplify'] != 'none' or router.style['arcs']:  # V2.1: the final geometry stage of grid_router.run_plan, on this pass's copper
+        result['beautify'] = router.beautify()
     result['tracks'] = int(router.stats['tracks'])
+    result['arcs'] = int(router.stats['arcs'])
+    result['net_length_mm'] = {net: round(router.length[net] - start_length.get(net, 0.0), 3) for net in dict.fromkeys(r['net'] for r in result['routed'])}
     return result
 
 
@@ -2390,6 +2524,17 @@ def checker_metrics(board_path: Path, output_dir: Path, label: str) -> dict:
     return dict(metrics=metrics, json=str(json_path), md=str(md_path))
 
 
+def routing_quality_metrics(board_path, output_dir, label: str, plan: dict | None, report: dict | None) -> dict:
+    """Run automation.verification.check_routing_quality on a board (in-process, needs pcbnew) and write routing_quality_<label>.json/.md;
+    ``plan`` attributes its pre-routed tracks, ``report`` (router report with a ``beautify`` block) explains the remaining sharp corners."""
+    from automation.verification import check_routing_quality as cq
+    doc = cq.extract_board(board_path)
+    m = cq.measure(doc, plan=plan, report=report)
+    json_path, md_path = cq.write_outputs(m, output_dir, label)
+    return dict(json=str(json_path), md=str(md_path), totals=m['totals'], by_attribution=m['by_attribution'],
+                sharp_corners_by_reason=m['sharp_corners']['by_reason'], arcs={k: v for k, v in m['arcs'].items() if k != 'tangency_failures'})
+
+
 def criteria_from(metrics: dict, estimates: dict) -> dict:
     """Flat comparison criteria (lower is better unless listed in COMPARISON_HIGHER_IS_BETTER)."""
     control = metrics.get('control', {})
@@ -2439,11 +2584,12 @@ def score_candidates(criteria: dict) -> dict:
 
 def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool = True, metrics: bool = True,
                   write_outputs: bool = True, metrics_dir: Path | None = None, metrics_label: str = 'control', cli=None,
-                  plan_filter=None) -> dict:
+                  plan_filter=None, style=None) -> dict:
     """Place (and optionally route, zone, check and DRC) one floorplan candidate into ``output_pcb``.
 
     Returns a result dict with the placement, the escape plan, the router report, the rail-island
     checks, the DRC manifest summary and the layout-metrics paths. Needs pcbnew (KiCad's Python).
+    ``style``: grid_router V2.1 ``style`` block (None = ``ROUTING_STYLE``, {} = V2 geometry).
     """
     import pcbnew as pcb
     start = time.monotonic()
@@ -2489,7 +2635,7 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     extra['skip_pads'] += arrays['skip_pads']
     inpad = [] if candidate.get('exposed_pad_vias') else None
     plan = routing_plan(candidate, escapes, output_pcb, ic_refs=ic_refs, ic_escapes=ic_escapes, dsp_centre=centre, dsp_signal_nets=dsp_signal_nets,
-                        lanes=lanes, extra=extra, inpad_vias=inpad)
+                        lanes=lanes, extra=extra, inpad_vias=inpad, style=ROUTING_STYLE if style is None else style)
     result['pre_routed_copper'] = dict(candidate_tracks=len(extra['tracks']) - len(arrays['tracks']), candidate_vias=len(extra['vias']) - len(arrays['vias']),
                                        skip_pads=extra['skip_pads'], exposed_pad_arrays=arrays['records'])
     if plan_filter is not None:  # diagnostics hook (tests, experiments): may restrict or adjust the plan before routing
@@ -2512,15 +2658,23 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     for e in escapes:
         hints.setdefault(e['net'], []).append(list(e['via']))
     leftovers = [u for u in report.get('unresolved', []) if u.get('stage') == 'route'] if INNER_LAYER_FALLBACK else []
-    inner = inner_layer_route(loaded, inner_nets, leftovers, candidate, port_hints=hints)
+    inner = inner_layer_route(loaded, inner_nets, leftovers, candidate, port_hints=hints, style=plan.get('style'))  # same V2.1 style as the plan
     inner['port_hints'] = sum(len(v) for v in hints.values())
     resolved = [r['source'] for r in inner['routed'] if r.get('kind') == 'fallback']
     report['unresolved'] = [u for u in report.get('unresolved', []) if u not in resolved]
     report['inner_layer'] = inner
     report['tracks'] = int(report.get('tracks') or 0) + inner['tracks']
     report['vias'] = int(report.get('vias') or 0) + len(inner['vias_added'])
-    for r in inner['routed']:
-        report.setdefault('net_length_mm', {})[r['net']] = round(report['net_length_mm'].get(r['net'], 0.0) + r['length_mm'], 3)
+    report['arcs'] = int(report.get('arcs') or 0) + int(inner.get('arcs') or 0)
+    for net, added in inner.get('net_length_mm', {}).items():  # after the pass's beautify (the routed records keep the pre-beautify lengths)
+        report.setdefault('net_length_mm', {})[net] = round(report['net_length_mm'].get(net, 0.0) + added, 3)
+    inner_beautify = inner.get('beautify')
+    if inner_beautify and inner_beautify.get('enabled') and (report.get('beautify') or {}).get('enabled'):  # one exception list for the checker's reasons
+        main = report['beautify']
+        main['exceptions'] = list(main.get('exceptions', [])) + list(inner_beautify.get('exceptions', []))
+        for reason, count in inner_beautify.get('exceptions_by_reason', {}).items():
+            main.setdefault('exceptions_by_reason', {})[reason] = main['exceptions_by_reason'].get(reason, 0) + count
+        inner['beautify'] = {k: v for k, v in inner_beautify.items() if k != 'exceptions'}
     pruned = prune_dangling(loaded, protected_nets=set(RAILS) | {GROUND})
     report['pruned_dangling'] = pruned
     inner_copper = bool(inner['routed'] or inner['vias_added'])
@@ -2536,8 +2690,12 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     items = rail_items(board2)
     corridor_result = island_corridors(items, candidate['islands'], obstacles=copper_obstacles(board2), half_width_by_net=CORRIDOR_HALF_WIDTH_BY_NET)
     if corridor_result['corridors']:
-        corridor_result['saved'] = add_zones(board2, corridor_result['corridors'], output_pcb)
+        corridor_result['saved'] = add_zones(board2, corridor_result['corridors'], output_pcb)  # assigns the zone KIIDs before its fill
         corridor_result['sliver_trim'] = trim_fill_slivers(board2, corridor_result['corridors'], output_pcb)  # review LR-15
+    else:  # no corridor: the final fill still has to run on deterministic zone KIIDs
+        assign_zone_identities(board2)
+        refill_zones(board2)
+        corridor_result['saved'] = gr.save_and_reload(board2, output_pcb)
     uncovered = uncovered_rail_items(items, candidate['islands'], corridor_result['corridors'])
     fanout_rail_failures = rail_smd_pads_without_via(board2, report)
     final_board = pcb.LoadBoard(str(output_pcb))
@@ -2550,11 +2708,12 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
                                lanes=lanes, ic_escapes={ref: len(recs) for ref, recs in ic_escapes.items()}),
                   routing_plan=plan, report=report, corridors=corridor_result, board_counts=board_counts,
                   rail_items_without_island_or_corridor=uncovered, rail_fanout_failures=fanout_rail_failures,
-                  rail_zone_outlines=rail_zone_outlines(final_board))
+                  rail_zone_outlines=rail_zone_outlines(final_board), zone_table=zone_table(final_board))
     # ---- metrics and DRC --------------------------------------------------------------------------------------------
     if metrics:
         result['layout_metrics'] = checker_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label)
         result['layout_metrics'].pop('metrics', None) if write_outputs else None
+        result['routing_quality'] = routing_quality_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label, plan, report)  # V2.1 TASK 2
     if drc:
         from automation.kicad_tools.run_check import run_check
         code, manifest_path = run_check('drc', output_pcb, DRC_DIR, cli)
@@ -2563,6 +2722,8 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
                              status=manifest.get('status'), finding_count=manifest.get('finding_count'), violations=manifest.get('violations'),
                              unconnected_items=manifest.get('unconnected_items'), schematic_parity=manifest.get('schematic_parity'),
                              details=manifest.get('details', [])[:200], error=manifest.get('error'))
+        if write_outputs:
+            result['stored_fill_check'] = stored_fill_check(output_pcb, cli, metrics_label)  # diagnostic: the fills as stored (exports) vs the refill DRC
     result['seconds'] = round(time.monotonic() - start, 3)
     if write_outputs:
         write_placement(result, candidate)
@@ -2608,13 +2769,15 @@ def write_routing_outputs(result: dict, candidate: dict):
                     ripup_rounds=report.get('ripup_rounds'), ripup_penalty_ladder=report.get('ripup_penalty_ladder'),
                     shared_router_sha256=report.get('shared_router_sha256'),
                     net_length_mm=report.get('net_length_mm'), grid=report.get('grid'), routing_seconds=report.get('seconds'),
+                    style=report.get('style'), arcs=report.get('arcs'), beautify=report.get('beautify'), routing_quality=result.get('routing_quality'),  # V2.1
                     inner_layer=report.get('inner_layer'),
                     corridor_zones=len(result['corridors']['corridors']), corridor_issues=result['corridors']['issues'],
                     sliver_trim=result['corridors'].get('sliver_trim'),
                     rail_items_without_island_or_corridor=result['rail_items_without_island_or_corridor'],
                     rail_fanout_failures=result['rail_fanout_failures'], rail_zone_outlines=result.get('rail_zone_outlines'),
+                    zone_table=result.get('zone_table'),  # net, layer, priority, deterministic KIID, outline bbox, filled mm2 per zone (reproducibility record)
                     connectivity_unconnected=result.get('connectivity_unconnected'),
-                    drc=result.get('drc'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
+                    drc=result.get('drc'), stored_fill_check=result.get('stored_fill_check'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                     evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
     (VERIFICATION_DIR / 'routing_progress_control.json').write_text(json.dumps(progress, indent=2, default=str) + '\n', encoding='utf-8')
 
@@ -2747,6 +2910,7 @@ def main(argv=None) -> int:
     parser.add_argument('--no-route', action='store_true', help='placement only')
     parser.add_argument('--no-drc', action='store_true', help='skip the kicad-cli DRC (debugging only; never evidence)')
     parser.add_argument('--no-metrics', action='store_true', help='skip the layout metrics checker')
+    parser.add_argument('--no-style', action='store_true', help='route with the V2 geometry (no 8-direction search, simplification or arcs)')
     parser.add_argument('--no-reexec', action='store_true', help='internal: do not re-execute under KiCad Python')
     args = parser.parse_args(argv)
     try:
@@ -2768,7 +2932,8 @@ def main(argv=None) -> int:
         print('kicad-cli not found', file=sys.stderr)
         return 2
     if args.candidate:
-        result = build_control(candidate_path(args.candidate), args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli)
+        result = build_control(candidate_path(args.candidate), args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli,
+                               style={} if args.no_style else None)
         print(summary_line(result) if not args.no_route else f"candidate {result['candidate']}: placed {len(result['placements'])} parts -> {result['board']}", flush=True)
         return 0
     evaluation = evaluate_candidates(('A', 'B'), scratch, cli=cli)
@@ -2776,7 +2941,8 @@ def main(argv=None) -> int:
     print(f"selected candidate {selected} (scores {evaluation['scoring']['scores']})", flush=True)
     final = None
     if not args.no_route:
-        final = build_control(candidate_path(selected), args.output, route=True, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli)
+        final = build_control(candidate_path(selected), args.output, route=True, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli,
+                              style={} if args.no_style else None)
         print(summary_line(final), flush=True)
     else:
         final = None

@@ -1,0 +1,406 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "name": "schematic_pdf",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "pdf",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\review\\schematic.pdf",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "pcb_pdf",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pdf",
+        "--mode-multipage",
+        "--black-and-white",
+        "--include-border-title",
+        "--layers",
+        "F.Cu,In1.Cu,In2.Cu,B.Cu,F.SilkS,F.Fab",
+        "--common-layers",
+        "Edge.Cuts",
+        "--scale",
+        "1.0",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\review\\pcb_layout.pdf",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "gerber",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "gerbers",
+        "--layers",
+        "F.Cu,In1.Cu,In2.Cu,B.Cu,F.SilkS,B.SilkS,F.Fab,Edge.Cuts,F.Paste,B.Paste,F.Mask,B.Mask",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\gerber\\",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "drill",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "drill",
+        "--format",
+        "excellon",
+        "--generate-report",
+        "--report-path",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\drill\\drill-report.rpt",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\drill\\",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "bom",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "bom",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\bom\\bom.csv",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "placement",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pos",
+        "--format",
+        "csv",
+        "--units",
+        "mm",
+        "--side",
+        "both",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\pick_and_place\\positions.csv",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "step",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "step",
+        "--subst-models",
+        "--include-tracks",
+        "--include-zones",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\step\\board.step",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "front",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\review\\pcb_front.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "back",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "bottom",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\review\\pcb_back.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "isometric",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--rotate",
+        "330,0,25",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\review\\pcb_3d.png",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "netlist",
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "netlist",
+        "--format",
+        "kicadxml",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\netlist.xml",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_sch"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "artifacts": {
+    "netlist.xml": {
+      "bytes": 423621,
+      "sha256": "8f74368cf59cf55b6fdc56cd00db7ffb3354465a27c68eaee92c4d1d7e541e6f"
+    },
+    "bom/bom.csv": {
+      "bytes": 12572,
+      "sha256": "2a4235f48c89e26b163417aadce38e38fa7600b3289f66f4a45d599d6b664631"
+    },
+    "drill/AIPE_SiC_Buck_Power.drl": {
+      "bytes": 14036,
+      "sha256": "e1a914357a51d5bf7dfdc1dc8382a68b57bdd7409010d8ac55880299ddf132a9"
+    },
+    "drill/drill-report.rpt": {
+      "bytes": 1234,
+      "sha256": "a043fb889ec7b50bee713161336461c9e792f05031782432655ce7bb826f72cc"
+    },
+    "gerber/AIPE_SiC_Buck_Power-B_Cu.gbl": {
+      "bytes": 225122,
+      "sha256": "51c94d2aa585dd12579244fde5c292dbea5e0ac0f49a0a288e1002e2474aeae7"
+    },
+    "gerber/AIPE_SiC_Buck_Power-B_Mask.gbs": {
+      "bytes": 13025,
+      "sha256": "712ac274b9c10d7ff03c35f54358d080d772560f097620528e53a5c1df86640a"
+    },
+    "gerber/AIPE_SiC_Buck_Power-B_Paste.gbp": {
+      "bytes": 6919,
+      "sha256": "51d75d7f2e9e7f290f65e4c85f3a38ded80ff5642c27eb0f0dec8b1b5959c7aa"
+    },
+    "gerber/AIPE_SiC_Buck_Power-B_Silkscreen.gbo": {
+      "bytes": 7835,
+      "sha256": "8f68f70e70e732e8659cf830660cc6ef74585db730735949dbcceecf65d8cbf5"
+    },
+    "gerber/AIPE_SiC_Buck_Power-Edge_Cuts.gm1": {
+      "bytes": 660,
+      "sha256": "02dfe958f1e1d705c02b1cc189445c9d148454e9e51ec2eff1e31636ffea622e"
+    },
+    "gerber/AIPE_SiC_Buck_Power-F_Cu.gtl": {
+      "bytes": 208159,
+      "sha256": "d1480bce445e41de47fd21a261e62ad0d412fe09718d9c1a434d138066e70b4b"
+    },
+    "gerber/AIPE_SiC_Buck_Power-F_Fab.gbr": {
+      "bytes": 349535,
+      "sha256": "b41fef4e6fe070ab4c9b8cbeb1f725ba4180166267ec1d2907d1f8f6702015d5"
+    },
+    "gerber/AIPE_SiC_Buck_Power-F_Mask.gts": {
+      "bytes": 26662,
+      "sha256": "21ea81770305ec1bce0903630f0bdfa51043574bad942dbba5e5eb4377227742"
+    },
+    "gerber/AIPE_SiC_Buck_Power-F_Paste.gtp": {
+      "bytes": 21621,
+      "sha256": "85af8b7be7954d43ce0d4930e0185ebb2409172c92c0c154008f174ffb287512"
+    },
+    "gerber/AIPE_SiC_Buck_Power-F_Silkscreen.gto": {
+      "bytes": 140103,
+      "sha256": "76ab2f91597e7d8bd5eab25581fa4bbbb6cb561219940bee6ff3f249217f8736"
+    },
+    "gerber/AIPE_SiC_Buck_Power-In1_Cu.g1": {
+      "bytes": 498869,
+      "sha256": "6153bebab38d3098896e97acf5ca577a62a5b95ae0daefb640b0f440ad3e97d7"
+    },
+    "gerber/AIPE_SiC_Buck_Power-In2_Cu.g2": {
+      "bytes": 419840,
+      "sha256": "9f5aa7a0804bc4e9aca2d27d3120a211e5a1e7acda3ee68360c86008c2c9b581"
+    },
+    "gerber/AIPE_SiC_Buck_Power-job.gbrjob": {
+      "bytes": 3889,
+      "sha256": "c7e89332d77e8b817ef2919aedabdabd1096e55aa55cdbf69619a5582242e4bc"
+    },
+    "logs/back.log": {
+      "bytes": 1541,
+      "sha256": "9109c721ee981f8cc4375c3a681a968cf18013ec21a573f19131d2a03cc82d69"
+    },
+    "logs/bom.log": {
+      "bytes": 133,
+      "sha256": "17a953ae553279dbdc4c3f45fd0c8d44161b3e85c45ce39accd926e077722ab7"
+    },
+    "logs/drill.log": {
+      "bytes": 153,
+      "sha256": "47d0a8e2c66a637907f3deda1559a54df18d28912d89a3026f5ecbe011453973"
+    },
+    "logs/front.log": {
+      "bytes": 1541,
+      "sha256": "36fcb9eea2e068221e8c6b92be9a8540aded31ba409bc457888824711fafad94"
+    },
+    "logs/gerber.log": {
+      "bytes": 1774,
+      "sha256": "064c3b737a3870369936d417bcf3ba47d7993c1ec39b6823ee1ea0c717e5f769"
+    },
+    "logs/isometric.log": {
+      "bytes": 1541,
+      "sha256": "27e44056ad7cb6d746ed3961ea431f535e4e1688cb2ae76d9f65480a8a9715fc"
+    },
+    "logs/netlist.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "logs/pcb_pdf.log": {
+      "bytes": 145,
+      "sha256": "ea38fa2d8b1c92d075a15d668312f1da32d92916ba54335f758650d67d7a83c5"
+    },
+    "logs/placement.log": {
+      "bytes": 149,
+      "sha256": "62802cc87523e442dd3863297240c4c272862d0d1360ebc5c507583d4c41fdf1"
+    },
+    "logs/schematic_pdf.log": {
+      "bytes": 141,
+      "sha256": "c1ebbd700c0433ae30f7580a3cd82c219a8a17bbe57872d0970caf9b7ac2cc45"
+    },
+    "logs/step.log": {
+      "bytes": 532,
+      "sha256": "70ef7b042adb4bba911248461e7482ab6237deceaade4bd3a0837a7c432b020a"
+    },
+    "pick_and_place/positions.csv": {
+      "bytes": 15976,
+      "sha256": "da621268eff7503e71fed2db80ca62b431b45b04e41b4002fb82075465fb068e"
+    },
+    "review/pcb_3d.png": {
+      "bytes": 184391,
+      "sha256": "3987908228b6fb8ca51c20d4742c80cc1364fdbb57fcadee637e3298b74ba35a"
+    },
+    "review/pcb_back.png": {
+      "bytes": 68001,
+      "sha256": "7941905a2b9a2ddc404cf24c5f1f2dd75e5589f5994c24b5fd878087a8b372bd"
+    },
+    "review/pcb_front.png": {
+      "bytes": 71562,
+      "sha256": "87f53678d2e50a3a0c92162c2d489b505d862fd4a2e14a2ddff7f2ebc38df669"
+    },
+    "review/pcb_layout.pdf": {
+      "bytes": 1570371,
+      "sha256": "c45cb2bf8883ce6bb8f5b76fcaba4e0d3fbd5809cee7810ce6a2a5fd2a94f2ef"
+    },
+    "review/schematic.pdf": {
+      "bytes": 846053,
+      "sha256": "9f9f7f08c6d4fa769cd62fed75e7e1387e0cac965439989fda8e05b43c5e989c"
+    },
+    "step/board.step": {
+      "bytes": 27350179,
+      "sha256": "83b5881103889fafb274778509a100d31d9908c755fda78f31e0a084b7083170"
+    }
+  },
+  "input_sha256": {
+    "01_power_stage.kicad_sch": "91ba1eb9f677dd701b364050971e8e08973141944b8ed3c935aa75a9cbbc8413",
+    "02_gate_driver_hs.kicad_sch": "1d741b61ecc0b86fe5173546b863f736fbbb5237991edfaa1cbfc797ef6f2ded",
+    "03_gate_driver_ls.kicad_sch": "d214a6fd84b2912ba1edffc1195beeb225646f4dd4374e6b63f8ef5fe5b5ca76",
+    "04_sensing_island.kicad_sch": "ec5d08b6aa6a0340efbe384962d1fd8bc8383997da09e6219b423ffa26fe59b5",
+    "05_selv_strip.kicad_sch": "419b5885a520570c785be2e308957f24d3f567c30af23960e836b126b8c7dc63",
+    "06_mechanical.kicad_sch": "2526f6c074a343d8b46868df98a047d9982edb363916bfaad7217e61fd068983",
+    "AIPE_SiC_Buck_Power.kicad_dru": "be12da285e4bdc943865443d27ee423ab6231131a084970f096f6975e74482ac",
+    "AIPE_SiC_Buck_Power.kicad_pcb": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
+    "AIPE_SiC_Buck_Power.kicad_pro": "f8f5a1d79c55c2695c3b8b353e0a0d66371afe7c2350dc6f5bbfc892a81a6082",
+    "AIPE_SiC_Buck_Power.kicad_sch": "bbe17710b15bb6677f60ce230e3b8ddc2e5d777bd370d92c972809ef45f167a9",
+    "fp-lib-table": "f89813f8b563793a176633fcf4c7cb864cf528230ea65d773b9b321fa7d9df0e",
+    "libraries/AIPE.3dshapes/AMC1311_DWV0008A_Slot.step": "f2b8a4316a21f3498c7a5e3e7f3565298dd341d92701c7a84b4c33af9a2aad98",
+    "libraries/AIPE.3dshapes/AMC1311_DWV0008A_Slot.wrl": "18ea481c71f870fab095e02f8fde3b05b8d5886a8e4f9f946cff450404f15315",
+    "libraries/AIPE.3dshapes/C_Film_41.5x28x37_P37.5x10.2.step": "71a415003ece27dccc388e2ea09c373b101adea74a1be2fcd580240dcdbf6105",
+    "libraries/AIPE.3dshapes/C_Film_41.5x28x37_P37.5x10.2.wrl": "8daea5048879369718026343f337b968eafe1e8b4c05d44e3c9d75e258eecec7",
+    "libraries/AIPE.3dshapes/C_Film_41.5x30x45_P37.5x20.3.step": "9a894c11f855e88c22f056df4d73679c6dc1253e567a6797b72867ca4d8d1588",
+    "libraries/AIPE.3dshapes/C_Film_41.5x30x45_P37.5x20.3.wrl": "c64509e2eb190b9998cf3f6cabdab4db8a8e4b73e404c5a00c14dc3dfa68ad3c",
+    "libraries/AIPE.3dshapes/HS_LAM5DK_100x100_H50.step": "58b9f60736b2d07c97762aa2fe0db64f51dfd99aaf31ae740790f2a40a714a9d",
+    "libraries/AIPE.3dshapes/HS_LAM5DK_100x100_H50.wrl": "709100537dfc49725543031b7fe1feab0f578470d589b0af25e134fbba4190f9",
+    "libraries/AIPE.3dshapes/L_Toroid_HF58x2_D69_H48_P25.4.step": "abc9483a5193ca7b5e24813b8f6733b109b21a657667d2897889ca267ccdda91",
+    "libraries/AIPE.3dshapes/L_Toroid_HF58x2_D69_H48_P25.4.wrl": "a171194fe36b99290b905f7e02f5c6f011ad02ed6c31f13de6ee15c82ce16be9",
+    "libraries/AIPE.3dshapes/PTC_Disc_D20_P10_Envelope.step": "4ecf1bb9fc2ceca7a9a1f10a1ff9a0f924817887446974b534373b9a69cff6c4",
+    "libraries/AIPE.3dshapes/PTC_Disc_D20_P10_Envelope.wrl": "d55da037ed2d98baaf06e7c52eef7560c2f1f58de7cf234d6100076daf8fee7d",
+    "libraries/AIPE.3dshapes/TMCS1133_DVG0010A_HV_Slot.step": "5a1267e070f4f8afe63b5041e03eec1693e646aeeedcd199e6bf959b80e35665",
+    "libraries/AIPE.3dshapes/TMCS1133_DVG0010A_HV_Slot.wrl": "4b0093c3a8078103633c4964a077457149537e3280d1095cde0c0db0a0a7aa3e",
+    "libraries/AIPE.3dshapes/UCC14141_DWN0036A_Slot.step": "7d7f1882a844607a5b94ac84b566265d36cd83dc2510e513106d2e9a0a7b23be",
+    "libraries/AIPE.3dshapes/UCC14141_DWN0036A_Slot.wrl": "a7794c848e728c6730a99cb1e9a6201eb16c0c31adc03831236d3efa392156a9",
+    "libraries/AIPE.3dshapes/UCC21710_DW0016A_Slot.step": "d20eedecaf4bf534b3caed054904379d743145eaf4128e488e0ddc5f770312ee",
+    "libraries/AIPE.3dshapes/UCC21710_DW0016A_Slot.wrl": "4b0093c3a8078103633c4964a077457149537e3280d1095cde0c0db0a0a7aa3e",
+    "libraries/AIPE.kicad_sym": "063a5062ebe4c1c7c774d08b3a29a6f81dd8173e99f291b71c699c1314dd3266",
+    "libraries/AIPE.pretty/AMC1311_DWV0008A_Slot.kicad_mod": "4cde322dd8facaf1deca8a041ce877ed723b831e469e497e27144704109efff8",
+    "libraries/AIPE.pretty/C_Film_41.5x28x37_P37.5x10.2.kicad_mod": "e528959fdf9226d6158587a6fede1ebb38c3a7354be0123ebad4984b5b0c957e",
+    "libraries/AIPE.pretty/C_Film_41.5x30x45_P37.5x20.3.kicad_mod": "25a5d1571c7d555a43e675f0b48bc09fe34340fe1bbc1fc999f6d12b235680fc",
+    "libraries/AIPE.pretty/HS_LAM5DK_100x100_H50.kicad_mod": "a328ba9c8e459c526fd397ab6727d0985768e05a664fd36dd34ef881702ceb76",
+    "libraries/AIPE.pretty/L_Toroid_HF58x2_D69_H48_P25.4.kicad_mod": "8cbf339fe4f4b0071c3049cb1babcb30e11a71e414437f601f6a5da42f9f8b93",
+    "libraries/AIPE.pretty/PTC_Disc_D20_P10_Envelope.kicad_mod": "3d502c6f569ee9007d3213ab6b8d35c3b5805e66e84825a37dd097f7073a4278",
+    "libraries/AIPE.pretty/TMCS1133_DVG0010A_HV_Slot.kicad_mod": "b14f4e1b8930b7aabf8005ecaf56150b65f213d8a4eea3df0396781e9e3563cb",
+    "libraries/AIPE.pretty/UCC14141_DWN0036A_Slot.kicad_mod": "a3f8ab012b19b82659e79d2a58357e0fc7898b7f2f19ee21f49e0d9cb3dee848",
+    "libraries/AIPE.pretty/UCC21710_DW0016A_Slot.kicad_mod": "047dfe41360dc3ea0851efe25ba9e3e22d5e4cca1219592615c3234c53ce2b81",
+    "libraries/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod": "d45eebd5cb9faace255d4ec95a0f9484efde898359507b02e2ba9bbb3ef6d857",
+    "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "e890bdf55fa18fc6df6878eb1b5251a991e1b93985509175eb269d3d002880b4",
+    "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "420c3ac494743fbc47653b6e7d0107d51620e25c77eaf73f083e799807fd1381",
+    "libraries/Capacitor_SMD.pretty/C_1210_3225Metric.kicad_mod": "c0c3dbbbe623e957a8ee6c0a36f432e06b10ff8bd79fc785bd13dea723a1f20c",
+    "libraries/Capacitor_SMD.pretty/C_1812_4532Metric.kicad_mod": "9131ae7bf3d875cd9cadf27760dbdafb5bef422a6db91a0a320cd40d4342baaa",
+    "libraries/Capacitor_SMD.pretty/C_2220_5750Metric.kicad_mod": "73be7966af985ed23cd0a40a5eab9a8061e11e49cfe0218daea3ffb263428d70",
+    "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.5.kicad_mod": "f26e14bf7e967c0e4b59897c79d3be8f59d8ed0cda901d475ee24f5a6202bfec",
+    "libraries/Capacitor_THT.pretty/C_Disc_D12.5mm_W5.0mm_P10.00mm.kicad_mod": "c8ec5467b38dcffd04ec947c835a848b050f51bc52dd1f83e3eef755a184d479",
+    "libraries/Connector_PinHeader_2.54mm.pretty/PinHeader_1x03_P2.54mm_Vertical.kicad_mod": "6a7dba97d6e733fd9d5f12d2d57f2cde29e8393e15b08d8b3e41bf2b430d83ed",
+    "libraries/Connector_PinSocket_2.54mm.pretty/PinSocket_2x25_P2.54mm_Vertical.kicad_mod": "02d5571c41a1fa203a7ef9b4581bd3c2487daa5b0fb2eaf95f6877e1fc5f6a19",
+    "libraries/Diode_SMD.pretty/D_SMA.kicad_mod": "e2d049a54ef961e231eb8e7e769078a3c44feb8475a7bdafba01c6646a5144f3",
+    "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "1594c737edf4922415ffb3768701c033c5cd3288f99bb0e2a6d273f83d843a35",
+    "libraries/Inductor_SMD.pretty/L_CommonMode_Wuerth_WE-SL2.kicad_mod": "d74d1df035ae4d4d786367b215edbd664e58616b7775342cf19d22ba5e0f9727",
+    "libraries/LED_SMD.pretty/LED_0805_2012Metric.kicad_mod": "ce3a8266ee445b343374e2391b3b931a2bbc27f83d4f06af397cbea91df53178",
+    "libraries/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod": "3853c52bba27d3e3e3e18db44a20dfb296eb9e6cd16ebf26fe4a96a2ee8add3b",
+    "libraries/MountingHole.pretty/MountingHole_4.3mm_M4.kicad_mod": "4a3f85dc6973918fc7031ff5c04f47fd58869ea357467f4734e00c1e64e5eb8f",
+    "libraries/MountingHole.pretty/MountingHole_4.3mm_M4_Pad.kicad_mod": "30225fee44921e2411d282f8427c1a99a7738468e8bd32e87572836853bde431",
+    "libraries/Package_SO.pretty/SOIC-16W_7.5x10.3mm_P1.27mm.kicad_mod": "79b58eec6e410d8b5af88b6687f2d1148d1e1605b9aaa57f5b707ab29b853e34",
+    "libraries/Package_SO.pretty/VSSOP-8_3x3mm_P0.65mm.kicad_mod": "f9f7ef914a57e5a53d295cb6a5a566151bda44d1789c8c9e986ec3b65459c56e",
+    "libraries/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod": "7fb2859c6463f3a37966a1a20c31d8bfe7d4e8459d00bb165d5a7488270816c5",
+    "libraries/Package_TO_SOT_THT.pretty/TO-247-4_Vertical.kicad_mod": "00f51dea393e8514a77ea811f4cd6a18add88c9ed8fae01175f303889eb55c27",
+    "libraries/Resistor_SMD.pretty/R_0603_1608Metric.kicad_mod": "03fc7902b2661df01b4d828fdb6eab9eddf974e7130ed2b98892607387a50c4b",
+    "libraries/Resistor_SMD.pretty/R_0805_2012Metric.kicad_mod": "949bbbe025b509557866ddd9fcb0403244571f3ceb4f954c9766ee622d18421c",
+    "libraries/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod": "f45a0f7c60b15463e1126a75a9ff484349ecd1861de62f1cbff41574e03b7643",
+    "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "a3a0a11d7a570eb6e8f456699f29a465e3a45980b89223ea253a94e5779102d9",
+    "libraries/TerminalBlock_Phoenix.pretty/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.kicad_mod": "3e5979c3588fed5d72b8f067cf123c52151009c63e4c4a34fca22441db16c9d0",
+    "libraries/TerminalBlock_Wuerth.pretty/Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR.kicad_mod": "a4a4742fa5299d6b07abd577a0af3cca2a5fe9483701f95388279bc0e22e5257",
+    "libraries/TestPoint.pretty/TestPoint_2Pads_Pitch2.54mm_Drill0.8mm.kicad_mod": "1cf918a1e0e24538a4f5a8896d7d226ab7dec06465eef51544f49adc94ed66cf",
+    "libraries/TestPoint.pretty/TestPoint_Pad_D2.0mm.kicad_mod": "075c8efad44dc51dedc947dbb0c586ddfdca34600187cc8ae1a8385e02c6a155",
+    "libraries/Varistor.pretty/RV_Disc_D21.5mm_W5.4mm_P10mm.kicad_mod": "4cff9b68656d352a4464fcebee9d3d1bf4027c74cd6febfd315b624341132bfd",
+    "sym-lib-table": "3e23ccaa2d3e066fccc13f57afb9b855364742bbf393dd419199b4953dbf1580"
+  }
+}

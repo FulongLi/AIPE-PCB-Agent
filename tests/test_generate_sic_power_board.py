@@ -370,6 +370,38 @@ class PlanTests(unittest.TestCase):
         self.assertAlmostEqual(chain[0]['a'][0], 50.0 + 0.8 - g.CHAIN_TRACK_INSET)
         self.assertAlmostEqual(chain[0]['b'][0], 51.8 - 0.8 + g.CHAIN_TRACK_INSET)
 
+    def test_v21_style_blocks_validate_and_keep_the_v2_search(self):
+        # V2.1: both style blocks validate; the default block is one of them (the generator default is what build_power() routes with);
+        # eps stays at the V2 0.01 on this 0.125 mm grid (eps 0.02 changed the V2 search: KS_L 88 -> 131 mm in the 2026-10-12 attempt B)
+        for block in (g.ROUTING_STYLE_V21, g.ROUTING_STYLE_OCTILINEAR):
+            cfg = gr.normalise_style(block)
+            self.assertEqual(cfg['eps'], gr.EPS)
+            self.assertEqual(cfg['simplify'], 'octilinear')
+            self.assertTrue(cfg['arcs'])
+            self.assertIn('PE', cfg['straight_nets'])
+        self.assertTrue(gr.normalise_style(g.ROUTING_STYLE_V21)['diagonal'])
+        self.assertFalse(gr.normalise_style(g.ROUTING_STYLE_OCTILINEAR)['diagonal'])
+        self.assertIn(g.ROUTING_STYLE, (g.ROUTING_STYLE_V21, g.ROUTING_STYLE_OCTILINEAR))
+        plan = g.routing_plan(Path('x.kicad_pcb'), [], [], [], [], style=g.ROUTING_STYLE)
+        self.assertEqual(plan['style'], g.ROUTING_STYLE)
+        self.assertNotIn('style', g.routing_plan(Path('x.kicad_pcb'), [], [], [], [], style={}))  # {} = the V2 plan
+
+    def test_write_outputs_scratch_directory_keeps_the_example_folders_untouched(self):
+        import tempfile
+        result = dict(board=str(Path(__file__)), placements={}, silkscreen=[], slots=[], rule_areas=[], placement_issues=[], seconds=1.0,
+                      routing_plan={'grid': g.GRID}, report=dict(unresolved=[], status='x', tracks=0, vias=0, zones=0), board_counts={})
+        before = {path: path.stat().st_mtime_ns for path in (g.DESIGN_DIR / 'placement_power.json', g.DESIGN_DIR / 'routing_plan_power.json',
+                                                              g.VERIFICATION_DIR / 'routing_progress_power.json') if path.exists()}
+        with tempfile.TemporaryDirectory() as tmp:
+            g.write_outputs(result, Path(tmp))
+            names = sorted(p.name for p in Path(tmp).iterdir())
+            self.assertEqual(names, ['placement_power.json', 'routing_plan_power.json', 'routing_progress_power.json'])
+            progress = json.loads((Path(tmp) / 'routing_progress_power.json').read_text(encoding='utf-8'))
+            self.assertEqual(progress['stage'], 'routed')
+            self.assertEqual(progress['status'], g.BANNER)
+        for path, stamp in before.items():
+            self.assertEqual(path.stat().st_mtime_ns, stamp, path)
+
     def test_stackup_and_manifest_helpers(self):
         self.assertEqual(g.stackup_text().count('(type "copper")'), 4)
         self.assertAlmostEqual(g.stackup_thickness_mm(), 2.0)

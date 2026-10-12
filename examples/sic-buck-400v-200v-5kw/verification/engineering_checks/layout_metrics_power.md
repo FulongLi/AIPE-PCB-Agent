@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck 400 V -> 200 V / 5 kW power board (AIPE_SiC_Buck_Power) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-11T05:44:44.993007+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 26.016 s).
+Status: **measured-human-review-required**. Generated 2026-10-12T10:04:23.470336+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 41.094 s).
 
-Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `b1bb5698194b9aea...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
+Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `ae4ca86c438f56b8...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
 
 ## Board
 
@@ -13,7 +13,7 @@ Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\
 | Copper layers | 4 (F.Cu, In1.Cu, In2.Cu, B.Cu) |
 | Thickness (mm) | 2.000 |
 | Copper thickness (um, stackup text) | F.Cu=70.000; In1.Cu=70.000; In2.Cu=70.000; B.Cu=70.000 |
-| Footprints / tracks / vias / zones / rule areas | 237 / 4755 / 606 / 20 / 16 |
+| Footprints / tracks / vias / zones / rule areas | 237 / 3136 / 606 / 20 / 16 |
 | Nets | 104 |
 | Zones without fill (areas read from the file) | none |
 | Expected (spec) | outline_mm=240, 180; copper_layers=4; copper_um=70; thickness_mm=2.000 |
@@ -25,18 +25,18 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | Rule | Requirement | Metric | Measured | Threshold | Disposition | Note |
 | --- | --- | --- | --- | --- | --- | --- |
 | PE-PCB-001 | Minimise MOSFET gate loop | U1 output pad 4 to Q1 gate pad 4 | 14.353 | <= 15 mm | within spec threshold - human review required |  |
-| PE-PCB-001 | Minimise MOSFET gate loop | G_H/HS_OUTH/HS_OUTL/HS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_H layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'] | track_mm=39.940; adjacent=yes; over_kelvin_pour=0.216 | n/a | measured - human review required | KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1 |
+| PE-PCB-001 | Minimise MOSFET gate loop | G_H/HS_OUTH/HS_OUTL/HS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_H layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'] | track_mm=39.720; adjacent=yes; over_kelvin_pour=0.215 | n/a | measured - human review required | KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1 |
 | PE-PCB-001 | Minimise MOSFET gate loop | U3 output pad 4 to Q2 gate pad 4 | 14.360 | <= 15 mm | within spec threshold - human review required |  |
-| PE-PCB-001 | Minimise MOSFET gate loop | G_L/LS_OUTH/LS_OUTL/LS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_L layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'] | track_mm=84.440; adjacent=yes; over_kelvin_pour=0.264 | n/a | measured - human review required | KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1 |
+| PE-PCB-001 | Minimise MOSFET gate loop | G_L/LS_OUTH/LS_OUTL/LS_CLMP track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_L layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'] | track_mm=82.130; adjacent=yes; over_kelvin_pour=0.244 | n/a | measured - human review required | KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1 |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q1 drain pad 1 (VIN) to nearest HF capacitor pad of the same net | 8.367 | <= 15.0 mm (row 2; row 1 <= 5.0 mm) | within spec threshold - human review required | nearest C1.1 |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q1 source pad 2 (SW) to nearest HF capacitor pad (any named net) | 13.307 | n/a | measured - human review required | pad net is not a capacitor net (switch node) |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q2 drain pad 1 (SW) to nearest HF capacitor pad (any named net) | 36.083 | n/a | measured - human review required | pad net is not a capacitor net (switch node) |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q2 source pad 2 (PGND) to nearest HF capacitor pad of the same net | 41.165 | <= 15.0 mm (row 2; row 1 <= 5.0 mm) | exceeds spec threshold - human review required | nearest C1.2 |
-| PE-PCB-003 | Minimise HF commutation loop | SW copper area, all layers (mm2; per layer in JSON) | 3660.200 | n/a | measured - human review required | switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current |
+| PE-PCB-003 | Minimise HF commutation loop | SW copper area, all layers (mm2; per layer in JSON) | 3660.300 | n/a | measured - human review required | switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current |
 | PE-PCB-003 | Minimise HF commutation loop | HV ceramic group bounding box (x0, y0, x1, y1 mm) and pin distances (JSON) | 39.100, 122.450, 81.700, 139.950 | n/a | measured - human review required | bounding box of the HF capacitor pads on the named nets |
-| PE-PCB-004 | Use Kelvin current sensing | AMC1311 VIN differential output track lengths (mm) and mismatch | VIN_OUTP=80.905; VIN_OUTN=79.397; mismatch=1.508 | n/a | measured - human review required |  |
-| PE-PCB-004 | Use Kelvin current sensing | AMC1311 VOUT differential output track lengths (mm) and mismatch | VOUT_OUTP=64.905; VOUT_OUTN=63.147; mismatch=1.758 | n/a | measured - human review required |  |
-| PE-PCB-004 | Use Kelvin current sensing | TMCS1133 ISENSE / ISENSE_REF track lengths (mm) and mismatch | ISENSE=83.796; ISENSE_REF=90.100; mismatch=6.304 | n/a | measured - human review required |  |
+| PE-PCB-004 | Use Kelvin current sensing | AMC1311 VIN differential output track lengths (mm) and mismatch | VIN_OUTP=78.571; VIN_OUTN=78.643; mismatch=0.073 | n/a | measured - human review required |  |
+| PE-PCB-004 | Use Kelvin current sensing | AMC1311 VOUT differential output track lengths (mm) and mismatch | VOUT_OUTP=63.785; VOUT_OUTN=61.148; mismatch=2.637 | n/a | measured - human review required |  |
+| PE-PCB-004 | Use Kelvin current sensing | TMCS1133 ISENSE / ISENSE_REF track lengths (mm) and mismatch | ISENSE=81.044; ISENSE_REF=86.293; mismatch=5.249 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | AMC1311 VIN differential output minimum copper distance to SW (mm, any layer) | 29.182 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | AMC1311 VOUT differential output minimum copper distance to SW (mm, any layer) | 36.050 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | TMCS1133 ISENSE / ISENSE_REF minimum copper distance to SW (mm, any layer) | 32.354 | n/a | measured - human review required |  |
@@ -44,7 +44,7 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U7 pads: minimum copper distance to SW (mm, any layer) | 25.150 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U10 pads: minimum copper distance to SW (mm, any layer) | 27.345 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U8 pads: minimum copper distance to SW (mm, any layer) | 42.073 | n/a | measured - human review required |  |
-| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16940.000; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
+| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16939.900; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | VIN_RAW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=422.800; B.Cu=422.800; vias=0; track_mm=51.300 | >= 24 vias per net | exceeds spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | SW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=120.000; In2.Cu=3236.600; vias=25; track_mm=9.600 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | PGND copper (zone area per layer, via count, track length) | zone_area_mm2=B.Cu=9042.000; In1.Cu=28679.700; vias=90; track_mm=22.500 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
@@ -67,7 +67,7 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | KR-PCB-003 | Never tie the device Kelvin source to the power source in the layout | KS_L versus PGND: distinct nets, no bridging part, no copper contact, minimum copper distance (mm) | distinct=yes; bridging=; contact=no; min_mm=0.300 | distinct nets, no part other than the device on both nets, copper distance > 0 on every layer | within spec threshold - human review required | hard constraint; the device itself is the only permitted connection |
 | KR-ISO-001 | No copper crossing an isolation barrier on any layer | HS island to LS island (DRV_HS/DESAT_HS vs DRV_LS/DESAT_LS): minimum copper distance per layer (mm) | F.Cu=6.270; In1.Cu=6.397; In2.Cu=4.800; B.Cu=6.397 | outer=3.000; inner=1.000 mm | within spec threshold - human review required |  |
 | KR-ISO-001 | No copper crossing an isolation barrier on any layer | ISO_BARRIER strip barrier strip copper items per layer | F.Cu=0; In1.Cu=0; In2.Cu=0; B.Cu=0 | no copper on any layer | within spec threshold - human review required | region rule area 'ISO_BARRIER' |
-| KR-ISO-002 | Creepage and clearance per standard for every net-class pair | HV/DRV/DESAT/SENSE_ISO to CTRL_SELV (all layers): minimum copper distance per layer (mm) | F.Cu=9.486; In1.Cu=11.100; In2.Cu=11.100; B.Cu=12.025 | all=9.000 mm | within spec threshold - human review required |  |
+| KR-ISO-002 | Creepage and clearance per standard for every net-class pair | HV/DRV/DESAT/SENSE_ISO to CTRL_SELV (all layers): minimum copper distance per layer (mm) | F.Cu=9.486; In1.Cu=11.100; In2.Cu=11.100; B.Cu=11.932 | all=9.000 mm | within spec threshold - human review required |  |
 | KR-ISO-002 | Creepage and clearance per standard for every net-class pair | HV to PE: minimum copper distance per layer (mm) | F.Cu=5.000; In1.Cu=5.000; In2.Cu=5.000; B.Cu=5.000 | all=5.000 mm | within spec threshold - human review required |  |
 | KR-ISO-002 | Creepage and clearance per standard for every net-class pair | HV functional VIN to PGND (outside the TO-247-4 pin fields): minimum copper distance per layer (mm) | F.Cu=1.950; In1.Cu=1.000; In2.Cu=1.000; B.Cu=3.000 | outer=3.000; inner=1.000 mm | exceeds spec threshold - human review required |  |
 | KR-ISO-002 | Creepage and clearance per standard for every net-class pair | HV functional SW to PGND (outside the TO-247-4 pin fields): minimum copper distance per layer (mm) | F.Cu=6.433; In1.Cu=1.000; In2.Cu=1.450; B.Cu=3.001 | outer=3.000; inner=1.000 mm | within spec threshold - human review required |  |
@@ -89,7 +89,7 @@ Rows: 58 - within spec threshold 27, exceeding 6, measured without threshold 25,
 
 | Pair | F.Cu | In1.Cu | In2.Cu | B.Cu | Threshold | Within |
 | --- | --- | --- | --- | --- | --- | --- |
-| HV/DRV/DESAT/SENSE_ISO to CTRL_SELV (all layers) | 9.486 | 11.100 | 11.100 | 12.025 | F.Cu=9.000; In1.Cu=9.000; In2.Cu=9.000; B.Cu=9.000 | yes |
+| HV/DRV/DESAT/SENSE_ISO to CTRL_SELV (all layers) | 9.486 | 11.100 | 11.100 | 11.932 | F.Cu=9.000; In1.Cu=9.000; In2.Cu=9.000; B.Cu=9.000 | yes |
 | HV to PE | 5.000 | 5.000 | 5.000 | 5.000 | F.Cu=5.000; In1.Cu=5.000; In2.Cu=5.000; B.Cu=5.000 | yes |
 | HV functional VIN to PGND (outside the TO-247-4 pin fields) | 1.950 | 1.000 | 1.000 | 3.000 | F.Cu=3.000; In1.Cu=1.000; In2.Cu=1.000; B.Cu=3.000 | no |
 | HV functional SW to PGND (outside the TO-247-4 pin fields) | 6.433 | 1.000 | 1.450 | 3.001 | F.Cu=3.000; In1.Cu=1.000; In2.Cu=1.000; B.Cu=3.000 | yes |
@@ -133,14 +133,14 @@ HV ceramic group bounding box (mm): 39.10, 122.45, 81.70, 139.95
 
 | MOSFET | Driver | Out->gate (mm) | Return->Kelvin (mm) | Gate track (mm) | Gate vias | Gate layers | Kelvin layers | Adjacent | Over Kelvin pour | KS distinct | KS copper min (mm) | KS copper contact | KS bridging parts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Q1 | U1 | 14.353 | 14.779 | 39.94 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu, In1.Cu, In2.Cu, B.Cu | yes | 0.216 | yes | 0.300 | no |  |
-| Q2 | U3 | 14.360 | 14.721 | 84.44 | 14 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu, In1.Cu, In2.Cu, B.Cu | yes | 0.264 | yes | 0.300 | no |  |
+| Q1 | U1 | 14.353 | 14.779 | 39.72 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu, In1.Cu, In2.Cu, B.Cu | yes | 0.215 | yes | 0.300 | no |  |
+| Q2 | U3 | 14.360 | 14.721 | 82.13 | 14 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu, In1.Cu, In2.Cu, B.Cu | yes | 0.244 | yes | 0.300 | no |  |
 
 ## Heatsink envelope
 
 | Layer | HV items | Min distance (mm) | Items within keep-out | Nearest |
 | --- | --- | --- | --- | --- |
-| F.Cu | 420 | 4.955 | 6 | pad C2.2 |
+| F.Cu | 420 | 4.955 | 6 | pad C1.2 |
 | B.Cu | 337 | 0.000 | 3 | pad R16.1 |
 
 ## Decoupling
@@ -202,9 +202,9 @@ HV ceramic group bounding box (mm): 39.10, 122.45, 81.70, 139.95
 
 | Pair | Nets | Track (mm) | Vias | Mismatch (mm) | Min to SW (mm) |
 | --- | --- | --- | --- | --- | --- |
-| AMC1311 VIN differential output | VIN_OUTP, VIN_OUTN | VIN_OUTP=80.91; VIN_OUTN=79.40 | VIN_OUTP=2; VIN_OUTN=0 | 1.508 | 29.182 |
-| AMC1311 VOUT differential output | VOUT_OUTP, VOUT_OUTN | VOUT_OUTP=64.91; VOUT_OUTN=63.15 | VOUT_OUTP=2; VOUT_OUTN=2 | 1.758 | 36.050 |
-| TMCS1133 ISENSE / ISENSE_REF | ISENSE, ISENSE_REF | ISENSE=83.80; ISENSE_REF=90.10 | ISENSE=7; ISENSE_REF=5 | 6.304 | 32.354 |
+| AMC1311 VIN differential output | VIN_OUTP, VIN_OUTN | VIN_OUTP=78.57; VIN_OUTN=78.64 | VIN_OUTP=2; VIN_OUTN=0 | 0.073 | 29.182 |
+| AMC1311 VOUT differential output | VOUT_OUTP, VOUT_OUTN | VOUT_OUTP=63.79; VOUT_OUTN=61.15 | VOUT_OUTP=2; VOUT_OUTN=2 | 2.637 | 36.050 |
+| TMCS1133 ISENSE / ISENSE_REF | ISENSE, ISENSE_REF | ISENSE=81.04; ISENSE_REF=86.29 | ISENSE=7; ISENSE_REF=5 | 5.249 | 32.354 |
 
 | Part | Found | Min to SW (mm) |
 | --- | --- | --- |
@@ -240,106 +240,106 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | Net | Class | Track (mm) | Tracks | Vias | Pads | Layers | Zone area (mm2) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 12V_BIAS_H | CTRL_SELV | 30.4 | 11 | 4 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 12V_BIAS_L | CTRL_SELV | 37.8 | 26 | 2 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 12V_BIAS_S | CTRL_SELV | 100.1 | 96 | 6 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 12V_PROT | CTRL_SELV | 276.6 | 261 | 14 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 3V3 | CTRL_SELV | 433.9 | 389 | 22 | 31 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=4152.300 |
-| 5V_ISO | SENSE_ISO | 66.4 | 65 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BIAS_EN | CTRL_SELV | 147.9 | 107 | 10 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| BIAS_EN_F | CTRL_SELV | 133.2 | 74 | 9 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 12V_BIAS_L | CTRL_SELV | 36.7 | 15 | 2 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 12V_BIAS_S | CTRL_SELV | 96.4 | 67 | 6 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 12V_PROT | CTRL_SELV | 261.8 | 103 | 14 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 3V3 | CTRL_SELV | 417.8 | 275 | 22 | 31 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=4128.500 |
+| 5V_ISO | SENSE_ISO | 63.6 | 45 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BIAS_EN | CTRL_SELV | 142.4 | 51 | 10 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| BIAS_EN_F | CTRL_SELV | 130.6 | 45 | 9 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | BLD_IN_1 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | BLD_IN_2 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | BLD_OUT_1 | HV_VOUT | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | DAMP_MID | HV_VIN | 25.9 | 5 | 0 | 4 | F.Cu |  |
-| DESAT_H_A | DESAT_HS | 37.1 | 29 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| DESAT_H_OC | DESAT_HS | 29.3 | 34 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| DESAT_L_A | DESAT_LS | 44.0 | 28 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| DESAT_L_OC | DESAT_LS | 99.1 | 107 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FAN_TACH | CTRL_SELV | 158.5 | 47 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FAULT_N | CTRL_SELV | 33.4 | 31 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FLT_H_N | CTRL_SELV | 166.3 | 198 | 11 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| FLT_L_N | CTRL_SELV | 120.0 | 130 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| GNDP_H | CTRL_SELV | 49.8 | 40 | 3 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| GNDP_L | CTRL_SELV | 55.9 | 43 | 4 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| GNDP_S | CTRL_SELV | 119.3 | 142 | 9 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| DESAT_H_A | DESAT_HS | 36.2 | 20 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| DESAT_H_OC | DESAT_HS | 27.4 | 20 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| DESAT_L_A | DESAT_LS | 42.6 | 26 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| DESAT_L_OC | DESAT_LS | 94.8 | 71 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FAN_TACH | CTRL_SELV | 155.1 | 33 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FAULT_N | CTRL_SELV | 32.5 | 33 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FLT_H_N | CTRL_SELV | 154.7 | 52 | 11 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| FLT_L_N | CTRL_SELV | 111.1 | 40 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| GNDP_H | CTRL_SELV | 48.8 | 28 | 3 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| GNDP_L | CTRL_SELV | 55.0 | 33 | 4 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| GNDP_S | CTRL_SELV | 114.9 | 101 | 9 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | GND_CTRL | CTRL_SELV | 153.5 | 140 | 62 | 68 | F.Cu, In1.Cu, In2.Cu, B.Cu | In1.Cu=5866.400 |
-| G_H | DRV_HS | 26.4 | 28 | 0 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=77.200 |
-| G_L | DRV_LS | 33.1 | 29 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=34.400 |
+| G_H | DRV_HS | 26.3 | 27 | 0 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=78.800 |
+| G_L | DRV_LS | 33.1 | 28 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=31.600 |
 | HS_CLMP | DRV_HS | 5.5 | 6 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | HS_FB_VDD | DRV_HS | 13.6 | 8 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | HS_FB_VEE | DRV_HS | 8.3 | 5 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | HS_GK | DRV_HS | 6.6 | 8 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| HS_OUTH | DRV_HS | 4.1 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| HS_OUTH | DRV_HS | 3.9 | 6 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | HS_OUTL | DRV_HS | 4.0 | 4 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| HS_RLIM | DRV_HS | 9.4 | 14 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| HS_RLIM | DRV_HS | 8.9 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | IND_IN_1 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | IND_IN_2 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | IND_IN_3 | HV_VIN | 1.4 | 1 | 0 | 2 | F.Cu |  |
 | IND_OUT_1 | HV_VOUT | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | IND_OUT_2 | HV_VOUT | 1.4 | 1 | 0 | 2 | F.Cu |  |
-| ISENSE | CTRL_SELV | 83.8 | 56 | 7 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISENSE_REF | CTRL_SELV | 90.1 | 94 | 5 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISO_15V | SENSE_ISO | 32.6 | 18 | 1 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISENSE | CTRL_SELV | 81.0 | 30 | 7 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISENSE_REF | CTRL_SELV | 86.3 | 72 | 5 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISO_15V | SENSE_ISO | 31.5 | 17 | 1 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | ISO_FB_VDD | SENSE_ISO | 17.7 | 12 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | ISO_FB_VEE | SENSE_ISO | 13.2 | 8 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISO_RLIM | SENSE_ISO | 8.7 | 14 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISO_RLIM | SENSE_ISO | 8.1 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | K1_LOW | CTRL_SELV | 16.8 | 3 | 0 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| KS_H | DRV_HS | 97.7 | 76 | 11 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=501.400 |
-| KS_L | DRV_LS | 88.2 | 73 | 9 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=248.300 |
-| LS_CLMP | DRV_LS | 21.4 | 28 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LS_FB_VDD | DRV_LS | 72.8 | 111 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LS_FB_VEE | DRV_LS | 44.2 | 56 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LS_GK | DRV_LS | 13.2 | 30 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LS_OUTH | DRV_LS | 19.7 | 19 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| LS_OUTL | DRV_LS | 10.2 | 6 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| KS_H | DRV_HS | 95.9 | 62 | 11 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=502.200 |
+| KS_L | DRV_LS | 86.6 | 59 | 9 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=248.900 |
+| LS_CLMP | DRV_LS | 20.8 | 25 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LS_FB_VDD | DRV_LS | 66.4 | 50 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LS_FB_VEE | DRV_LS | 42.2 | 28 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LS_GK | DRV_LS | 11.7 | 18 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LS_OUTH | DRV_LS | 18.6 | 13 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| LS_OUTL | DRV_LS | 9.7 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | LS_RLIM | DRV_LS | 17.2 | 6 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| OC_N | CTRL_SELV | 75.7 | 74 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| OC_N | CTRL_SELV | 72.8 | 53 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PE | PE | 76.9 | 6 | 0 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PE_REF_MID | HV_PGND | 3.1 | 1 | 0 | 2 | B.Cu |  |
 | PGND | HV_PGND | 22.5 | 20 | 90 | 81 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=9042.000; In1.Cu=28679.700 |
-| PG_BIAS_H_N | CTRL_SELV | 268.5 | 182 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_L_N | CTRL_SELV | 56.4 | 33 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PG_BIAS_S_N | CTRL_SELV | 52.4 | 24 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_H | CTRL_SELV | 132.3 | 127 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_H_F | CTRL_SELV | 56.9 | 31 | 2 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_L | CTRL_SELV | 111.6 | 136 | 7 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| PWM_L_F | CTRL_SELV | 54.7 | 35 | 6 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RDY_H | CTRL_SELV | 128.0 | 77 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RDY_L | CTRL_SELV | 112.3 | 101 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_H_N | CTRL_SELV | 257.0 | 92 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_L_N | CTRL_SELV | 53.8 | 14 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PG_BIAS_S_N | CTRL_SELV | 49.3 | 16 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_H | CTRL_SELV | 124.9 | 53 | 4 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_H_F | CTRL_SELV | 55.7 | 26 | 2 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_L | CTRL_SELV | 106.7 | 91 | 7 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| PWM_L_F | CTRL_SELV | 53.6 | 34 | 6 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RDY_H | CTRL_SELV | 124.7 | 73 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RDY_L | CTRL_SELV | 107.4 | 55 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | REF2V5_PB | CTRL_SELV | 12.4 | 8 | 0 | 3 | F.Cu |  |
-| RELAY_ON | CTRL_SELV | 203.9 | 108 | 5 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RESET_N | CTRL_SELV | 129.2 | 144 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RESET_N_F | CTRL_SELV | 48.1 | 43 | 2 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| RLY_G | CTRL_SELV | 18.1 | 11 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RELAY_ON | CTRL_SELV | 195.9 | 33 | 5 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RESET_N | CTRL_SELV | 123.4 | 105 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RESET_N_F | CTRL_SELV | 46.3 | 23 | 2 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| RLY_G | CTRL_SELV | 17.7 | 7 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | SNUB_MID | HV_SW | 1.5 | 1 | 0 | 2 | F.Cu |  |
 | SPARE_D1 | CTRL_SELV | 12.2 | 4 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| SPARE_D2 | CTRL_SELV | 47.0 | 57 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| SPARE_D2 | CTRL_SELV | 44.8 | 42 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | SW | HV_SW | 9.6 | 2 | 25 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=120.000; In2.Cu=3236.600 |
-| VDD_H | DRV_HS | 86.3 | 68 | 9 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VDD_L | DRV_LS | 80.1 | 59 | 6 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VEE_H | DRV_HS | 88.4 | 85 | 9 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VEE_L | DRV_LS | 100.1 | 148 | 16 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16940.000 |
-| VIN_AMP_N | CTRL_SELV | 35.0 | 27 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN_AMP_P | CTRL_SELV | 29.0 | 30 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN_DIV | SENSE_ISO | 30.2 | 27 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VDD_H | DRV_HS | 83.3 | 62 | 9 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VDD_L | DRV_LS | 78.8 | 61 | 6 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VEE_H | DRV_HS | 85.8 | 61 | 9 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VEE_L | DRV_LS | 94.8 | 117 | 16 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16939.900 |
+| VIN_AMP_N | CTRL_SELV | 34.5 | 22 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN_AMP_P | CTRL_SELV | 28.6 | 27 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN_DIV | SENSE_ISO | 29.5 | 20 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_DIV_T1 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | VIN_DIV_T2 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | VIN_DIV_T3 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
-| VIN_OUTN | CTRL_SELV | 79.4 | 24 | 0 | 2 | F.Cu |  |
-| VIN_OUTP | CTRL_SELV | 80.9 | 30 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN_OUTN | CTRL_SELV | 78.6 | 23 | 0 | 2 | F.Cu |  |
+| VIN_OUTP | CTRL_SELV | 78.6 | 21 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_RAW | HV_VIN | 51.3 | 3 | 0 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=422.800; B.Cu=422.800 |
-| VIN_SENSE | CTRL_SELV | 71.6 | 89 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VOC_SET | CTRL_SELV | 12.0 | 12 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VIN_SENSE | CTRL_SELV | 68.8 | 55 | 5 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOC_SET | CTRL_SELV | 11.6 | 8 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VOUT | HV_VOUT | 6.1 | 2 | 63 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=2218.800; B.Cu=2406.000; In2.Cu=3126.300 |
-| VOUT_AMP_N | CTRL_SELV | 25.5 | 16 | 3 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VOUT_AMP_P | CTRL_SELV | 22.2 | 24 | 0 | 4 | F.Cu |  |
-| VOUT_DIV | SENSE_ISO | 21.2 | 19 | 2 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_AMP_N | CTRL_SELV | 25.4 | 13 | 3 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_AMP_P | CTRL_SELV | 21.3 | 10 | 0 | 4 | F.Cu |  |
+| VOUT_DIV | SENSE_ISO | 20.5 | 16 | 2 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VOUT_DIV_T1 | HV_VOUT | 0.9 | 1 | 0 | 2 | F.Cu |  |
 | VOUT_L | HV_VOUT | 0.0 | 0 | 0 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=422.200 |
-| VOUT_OUTN | CTRL_SELV | 63.1 | 19 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VOUT_OUTP | CTRL_SELV | 64.9 | 15 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VOUT_SENSE | CTRL_SELV | 71.3 | 97 | 8 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_OUTN | CTRL_SELV | 61.1 | 18 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_OUTP | CTRL_SELV | 63.8 | 15 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| VOUT_SENSE | CTRL_SELV | 69.2 | 77 | 8 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 
 ## Notes and limitations
 
