@@ -1,0 +1,33 @@
+* AIPE parasitic overshoot study: ol_400V_25A_Lnom
+Vin in 0 DC 400
+Cin in cinx 3.6e-05 ic=400
+Rcin cinx 0 0.0019
+Lloop in hsn 2.5e-08
+Rloop hsn hsr 2
+Vhs hsr hs_a 0
+Shs hs_a sw ghs 0 SWHS
+Dhs sw hs_a DBODY
+Coss_hs hs_a sw 1.3e-10
+Sls sw ls_a gls 0 SWLS
+Dls dls_a sw DBODY
+Vdls ls_a dls_a 0
+Vls ls_a 0 0
+Coss_ls sw ls_a 1.3e-10
+L1 sw lx 0.000272 ic=21.3270505998
+Rdcr lx out 0.016
+Cout out cx 0.000108 ic=200.000727847
+Resr cx cs 0.004
+Vcout cs 0 0
+Rload out 0 8
+Vghs ghs 0 PWL(0 0 1e-12 0 5e-09 1 1.00958e-05 1 1.01058e-05 0 1.9995e-05 0 2.0005e-05 1 3.00958e-05 1 3.01058e-05 0 3.9995e-05 0 4.0005e-05 1 5.00958e-05 1 5.01058e-05 0 5.9995e-05 0 6.0005e-05 1 7.00958e-05 1
++ 7.01058e-05 0)
+Vgls gls 0 PWL(0 0 1.03458e-05 0 1.03558e-05 1 1.9745e-05 1 1.9755e-05 0 3.03458e-05 0 3.03558e-05 1 3.9745e-05 1 3.9755e-05 0 5.03458e-05 0 5.03558e-05 1 5.9745e-05 1 5.9755e-05 0 7.03458e-05 0 7.03558e-05 1 7.9745e-05 1
++ 7.9755e-05 0)
+Rghs ghs 0 1Meg
+Rgls gls 0 1Meg
+.model SWHS SW(Ron=0.0485 Roff=1e6 Vt=0.5 Vh=0.1)
+.model SWLS SW(Ron=0.0485 Roff=1e6 Vt=0.5 Vh=0.1)
+.model DBODY D(Is=9.93024e-29 N=2 Rs=0.044)
+.options method=gear reltol=0.001 abstol=1e-06 vntol=0.0001
+.tran 2e-10 6e-05 0 2e-09 uic
+.end

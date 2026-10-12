@@ -62,7 +62,8 @@ freeze and GitHub hand-off state.
 - Layout PDFs: [power board](examples/sic-buck-400v-200v-5kw/review/pcb_layout_power.pdf), [control board](examples/sic-buck-400v-200v-5kw/review/pcb_layout_control.pdf)
 - Power board renders: [front](examples/sic-buck-400v-200v-5kw/review/pcb_front_power.png), [back](examples/sic-buck-400v-200v-5kw/review/pcb_back_power.png), [3D](examples/sic-buck-400v-200v-5kw/review/pcb_3d_power.png)
 - Control board renders: [front](examples/sic-buck-400v-200v-5kw/review/pcb_front_control.png), [back](examples/sic-buck-400v-200v-5kw/review/pcb_back_control.png), [3D](examples/sic-buck-400v-200v-5kw/review/pcb_3d_control.png)
-- Frozen V2.1: `python -m automation.scripts.freeze_release --version v2.1` will write `examples/sic-buck-400v-200v-5kw/releases/v2.1/` and `releases/v2.1-review-package.zip` after this README; not on disk when this README was written - see [docs/status-v2.1.md](docs/status-v2.1.md)
+- [Frozen V2.1](examples/sic-buck-400v-200v-5kw/releases/v2.1/README.md) (1015 files, `SHA256SUMS.json`, source commit `4f533ac`)
+- [Portable V2.1 review archive](examples/sic-buck-400v-200v-5kw/releases/v2.1-review-package.zip)
 
 ## V2 status
 

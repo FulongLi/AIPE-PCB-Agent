@@ -1,0 +1,313 @@
+{
+  "label": "AI-GENERATED BEHAVIOURAL SIMULATION - V2 - HUMAN REVIEW REQUIRED",
+  "name": "ol_400V_25A_dt300",
+  "description": "Design point with the 300 ns bring-up dead time (CR-07) instead of the 250 ns target. Open loop (PWL gates, exact edges) at duty 0.5051, the duty at which the exact switched model yields 200.0 V at the final load (ideal D = 0.5000). 2 ms open-loop ramp, metrics over the last 10 cycles of 12 ms. Sources: design/design_decisions.json (schema 3, 2026-10-10) with design/research/{mosfet,capacitors,inductor,gate_driver}.json after their verify_*.json corrections; task-provided values are labelled in simulation_report.md",
+  "ngspice": {
+    "version": "ngspice-46",
+    "library": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\ngspice.dll",
+    "points": 153686,
+    "runtime_s": 1.9382255999989866,
+    "warnings": []
+  },
+  "parameters": {
+    "name": "ol_400V_25A_dt300",
+    "vin": 400.0,
+    "vout_ref": 200.0,
+    "fs": 50000.0,
+    "closed_loop": false,
+    "duty": 0.505083,
+    "dead_time": 3e-07,
+    "L": 0.000272,
+    "L_dcr": 0.016,
+    "Cout": 0.000108,
+    "Cout_esr": 0.004,
+    "Cin": 3.6e-05,
+    "Cin_esr": 0.0019,
+    "L_in": 1e-05,
+    "R_in": 0.05,
+    "Rds_on_hs": 0.0485,
+    "Rds_on_ls": 0.0485,
+    "body_diode_vf": 4.6,
+    "body_diode_rs": 0.044,
+    "body_diode_i_ref": 25.0,
+    "load_R": 8.0,
+    "load_P": null,
+    "load_step": null,
+    "soft_start_ms": 2.0,
+    "t_end": 0.012,
+    "t_step": 1e-07,
+    "metric_cycles": 10,
+    "pwm": "pwl",
+    "gate_edge": 1e-08,
+    "pi": {
+      "kp": 0.0002,
+      "ki": 1.5,
+      "d_min": 0.0,
+      "d_max": 0.95,
+      "fb_filter_hz": 20000.0,
+      "feedforward": true
+    },
+    "parasitics": null,
+    "spice_options": {
+      "method": "gear",
+      "reltol": 0.001,
+      "abstol": 1e-06,
+      "vntol": 0.0001
+    },
+    "output": {
+      "csv_dt": 1e-06,
+      "zoom_cycles": 3,
+      "svg": true
+    },
+    "recovery_band": 0.01,
+    "period": 2e-05,
+    "i_out_nominal": 25.0,
+    "soft_start": 0.002
+  },
+  "metrics": {
+    "window": {
+      "t0": 0.0118,
+      "t1": 0.012,
+      "cycles": 10
+    },
+    "duty": 0.5050830000000001,
+    "vout_mean": 200.03760193808634,
+    "vout_pkpk": 0.1796993009794221,
+    "vout_min": 199.94718696017165,
+    "vout_max": 200.12688626115107,
+    "vin_bus_mean": 399.36835646754037,
+    "vin_bus_pkpk": 3.6113407260256736,
+    "il_mean": 25.00950426788087,
+    "il_pkpk": 7.351358000583453,
+    "il_peak": 28.678949591390566,
+    "il_min": 21.327591590807113,
+    "il_rms": 25.09924927338422,
+    "i_hs_rms": 17.84317819861493,
+    "i_hs_mean": 12.63584150275439,
+    "i_hs_peak": 28.67934567303746,
+    "i_ls_rms": 17.65200391400536,
+    "i_ls_mean": 12.37366276513884,
+    "i_ls_channel_rms": 17.10140007362739,
+    "i_diode_mean": 0.7500987584586447,
+    "i_cin_rms": 12.897352370722704,
+    "i_cin_mean": 2.643098857672565e-05,
+    "i_cout_rms": 2.1195470300263692,
+    "i_load_mean": 25.004700242258693,
+    "i_in_mean": 12.635867933756927,
+    "i_in_rms": 12.640119946327548,
+    "vsw_max": 400.0083859393431,
+    "vsw_min": -4.773405841176346,
+    "p_out": 5001.880767983532,
+    "p_in": 5054.34717350277,
+    "p_loss_total": 52.466405519237924,
+    "efficiency": 0.9896195485355079,
+    "p_cond_hs": 15.441381899035065,
+    "p_cond_ls": 14.184207397195747,
+    "p_diode_deadtime": 3.468983995829602,
+    "p_diode_deadtime_estimate": 3.4513115889675596,
+    "p_l_dcr": 10.079557025399653,
+    "p_cout_esr": 0.017969918449974413,
+    "p_cin_esr": 0.31604922653171447,
+    "p_r_in": 7.988631612877377,
+    "i_cin_rms_formula": 12.598195019319109,
+    "p_loss_modelled_sum": 51.496781075319134,
+    "steady_state": {
+      "vout_cycle_avg_pkpk_V": 0.036120752263826716,
+      "pwm_lsb_V": 0.0,
+      "limit_cycle_suspected": false,
+      "energy_balance_pct": 0.019385197066776258
+    },
+    "startup": {
+      "vout_peak": 212.39145319096616,
+      "target": 200.03760193808634,
+      "overshoot_V": 12.35385125287982,
+      "overshoot_pct": 6.175764522863788,
+      "il_peak": 38.51209049480436,
+      "soft_start_s": 0.002
+    }
+  },
+  "numpy_model": {
+    "method": "exact matrix-exponential periodic steady state (4 intervals per cycle)",
+    "duty": 0.505083,
+    "load_R": 8.0,
+    "ccm": true,
+    "vout_mean": 200.0001687196134,
+    "vout_pkpk": 0.17117106776936453,
+    "il_mean": 25.000021089955222,
+    "il_pkpk": 7.346427197313158,
+    "il_peak": 28.673194086383393,
+    "il_min": 21.326766889070235,
+    "il_rms": 25.089737839370116,
+    "i_hs_rms": 17.832208650022135,
+    "i_ls_rms": 17.64956881939036,
+    "i_ls_channel_rms": 17.099038850473683,
+    "i_diode_mean": 0.7499955986973142,
+    "i_cin_rms": 12.59067060857865,
+    "i_cout_rms": 2.1188062090260202,
+    "i_in_mean": 12.627853299915945,
+    "p_cond_hs": 15.422401768889328,
+    "p_cond_ls": 14.180290786085406,
+    "p_diode_deadtime": 3.4667111910576716,
+    "p_l_dcr": 10.071919117573131,
+    "p_cout_esr": 0.017957359005628865,
+    "p_cin_esr": 0.3011974741100799,
+    "formula_il_pkpk": 7.27819117647059,
+    "x0": [
+      21.326766889070235,
+      200.00094791273614
+    ]
+  },
+  "comparison": [
+    {
+      "metric": "vout_mean",
+      "spice": 200.03760193808634,
+      "numpy": 200.0001687196134,
+      "deviation_pct": 0.0187165934471814
+    },
+    {
+      "metric": "vout_pkpk",
+      "spice": 0.1796993009794221,
+      "numpy": 0.17117106776936453,
+      "deviation_pct": 4.982286621912355
+    },
+    {
+      "metric": "il_mean",
+      "spice": 25.00950426788087,
+      "numpy": 25.000021089955222,
+      "deviation_pct": 0.0379326797026545
+    },
+    {
+      "metric": "il_pkpk",
+      "spice": 7.351358000583453,
+      "numpy": 7.346427197313158,
+      "deviation_pct": 0.0671183847312605
+    },
+    {
+      "metric": "il_peak",
+      "spice": 28.678949591390566,
+      "numpy": 28.673194086383393,
+      "deviation_pct": 0.020072772464180863
+    },
+    {
+      "metric": "il_min",
+      "spice": 21.327591590807113,
+      "numpy": 21.326766889070235,
+      "deviation_pct": 0.003866979655977527
+    },
+    {
+      "metric": "il_rms",
+      "spice": 25.09924927338422,
+      "numpy": 25.089737839370116,
+      "deviation_pct": 0.03790965882146207
+    },
+    {
+      "metric": "i_hs_rms",
+      "spice": 17.84317819861493,
+      "numpy": 17.832208650022135,
+      "deviation_pct": 0.06151536698613061
+    },
+    {
+      "metric": "i_ls_rms",
+      "spice": 17.65200391400536,
+      "numpy": 17.64956881939036,
+      "deviation_pct": 0.013796907108140907
+    },
+    {
+      "metric": "i_cin_rms",
+      "spice": 12.897352370722704,
+      "numpy": 12.59067060857865,
+      "deviation_pct": 2.4357857629528987
+    },
+    {
+      "metric": "i_cout_rms",
+      "spice": 2.1195470300263692,
+      "numpy": 2.1188062090260202,
+      "deviation_pct": 0.03496407539269692
+    },
+    {
+      "metric": "i_in_mean",
+      "spice": 12.635867933756927,
+      "numpy": 12.627853299915945,
+      "deviation_pct": 0.06346790424811083
+    },
+    {
+      "metric": "p_cond_hs",
+      "spice": 15.441381899035065,
+      "numpy": 15.422401768889328,
+      "deviation_pct": 0.12306857537601122
+    },
+    {
+      "metric": "p_cond_ls",
+      "spice": 14.184207397195747,
+      "numpy": 14.180290786085406,
+      "deviation_pct": 0.027620104336537835
+    },
+    {
+      "metric": "p_diode_deadtime",
+      "spice": 3.468983995829602,
+      "numpy": 3.4667111910576716,
+      "deviation_pct": 0.06556083407793376
+    }
+  ],
+  "notes": [
+    "Switches are ideal Ron/Roff elements: no switching, gate or Coss losses in the main run.",
+    "Body diodes: exponential model (N=2) fitted to body_diode_vf at body_diode_i_ref; body_diode_rs 44 mohm keeps the fitted saturation current above the ngspice floor (about 1e-28 A) so that 4.6 V at 25 A is reproduced.",
+    "Metrics are taken over the last metric_cycles periods; the load event must have recovered by then."
+  ],
+  "campaign": {
+    "controller": "open-loop PWL gates",
+    "events": [],
+    "steady_checks": {
+      "vout_ripple_below_2Vpp": true,
+      "vin_bus_ripple_below_2pct": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "il_peak_below_isat_worst_35A": true,
+      "cin_rms_per_part_below_14p5A": true,
+      "cout_rms_per_part_below_23p5A": true
+    },
+    "textbook": {
+      "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+      "dIL_App": 7.27819117647059,
+      "il_peak_A": 28.64379583049399,
+      "il_rms_A": 25.09281516899442,
+      "i_hs_rms_A": 17.83326089968272,
+      "i_ls_rms_A": 17.65288018395763,
+      "i_cin_rms_A": 12.590560430648305,
+      "i_cout_rms_A": 2.1010328174744273,
+      "p_cond_hs_W": 15.4242219243334,
+      "p_cond_ls_W": 15.113772671274454,
+      "p_cond_total_W": 30.537994595607856,
+      "p_deadtime_W": 3.4506486334316993,
+      "p_dcr_W": 10.074389969685065,
+      "vout_ripple_Vpp": 0.19758941230936825,
+      "vin_ripple_Vpp": 3.5269393325779586,
+      "i_in_mean_A_ideal": 12.629449012460746
+    },
+    "textbook_deviation_pct": {
+      "il_pkpk": 1.0052885715533466,
+      "il_peak": 0.1227273127647161,
+      "il_rms": 0.025641221785870482,
+      "i_hs_rms": 0.055611247925974876,
+      "i_cin_rms": 2.436682161721709,
+      "i_cout_rms": 0.8811957813299274,
+      "p_cond_hs": 0.11125342196090227,
+      "p_diode_deadtime": 0.5313598788430718,
+      "p_l_dcr": 0.051289018294277615,
+      "vout_pkpk": -9.054185201955743,
+      "vin_bus_pkpk": 2.3930491990068683
+    }
+  },
+  "files": {
+    "deck": "ol_400V_25A_dt300.cir",
+    "parameters": "parameters.json",
+    "waveforms_csv": "waveforms.csv",
+    "zoom_csv": "waveforms_zoom.csv",
+    "svg_vout": "vout.svg",
+    "svg_il": "il.svg",
+    "svg_zoom_vout": "zoom_vout.svg",
+    "svg_zoom_currents": "zoom_currents.svg",
+    "svg_zoom_capacitors": "zoom_capacitor_currents.svg",
+    "svg_zoom_vsw": "zoom_vsw.svg",
+    "summary": "summary.json"
+  }
+}

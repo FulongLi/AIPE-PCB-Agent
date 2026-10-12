@@ -1,0 +1,1134 @@
+{
+  "schema_version": 1,
+  "id": "B",
+  "title": "Power board floorplan B - heatsink top-left, inductor and films in a row to the right",
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "description": "Fischer LAM 5 D K sink flush with the left board edge (fan and intake off-board, exhaust along +x), device row at y = 129 on the sink's barrier-side face with Q1 at x = 62 and Q2 at x = 90, HF tier around the pins, HS/LS driver islands on B.Cu under the row with U2/U1 and U3/U4 on the barrier line; inductor in the exhaust stream at (158, 92) 20.4 mm from the sink; input film C11 above the inductor, C12/C13/C14 in a right-hand column 16 mm from the inductor; output terminals under the film column; TMCS1133 under the inductor's VOUT_L lead, AMC1311s and the sensing bias module at the right end of the barrier line; input terminals, relay terminals and PTC in the 20 mm band above the sink; mezzanine socket at (176, 163) with the control board overhanging the bottom edge.",
+  "board_mm": [
+    240.0,
+    180.0
+  ],
+  "bands": {
+    "hv_y_max": 140.0,
+    "barrier": [
+      140.0,
+      150.0
+    ],
+    "barrier_line_y": 145.0,
+    "selv_y_min": 150.0
+  },
+  "heatsink": {
+    "ref": "HS1",
+    "airflow_axis": "x",
+    "intake_side": "left",
+    "corridor_mm": 30.0,
+    "fan_mm": 15.0,
+    "max_corridor_part_height_mm": 15.0
+  },
+  "power_path_layers": {
+    "transitions": 3,
+    "plan": [
+      "J1/RT1/J6 F.Cu+In2.Cu VIN top band",
+      "VIN In2.Cu bus under the sink to the HF tier (via array to F.Cu: 1)",
+      "Q1/Q2 PTH; SW F.Cu node -> In2.Cu path -> L1 pad 1 PTH (2)",
+      "VOUT_L F.Cu to U10 (SMD)",
+      "VOUT F.Cu patch -> via array -> In2.Cu bus -> C13/C14 and J3 PTH (3)"
+    ]
+  },
+  "fixed": {
+    "HS1": [
+      51.8,
+      71.0,
+      0,
+      "F"
+    ],
+    "Q1": [
+      62.0,
+      129.0,
+      0,
+      "F"
+    ],
+    "Q2": [
+      90.0,
+      129.0,
+      0,
+      "F"
+    ],
+    "L1": [
+      158.0,
+      92.0,
+      0,
+      "F"
+    ],
+    "C11": [
+      157.8,
+      15.5,
+      0,
+      "F"
+    ],
+    "C12": [
+      193.7,
+      22.0,
+      90,
+      "F"
+    ],
+    "C13": [
+      223.9,
+      24.0,
+      90,
+      "F"
+    ],
+    "C14": [
+      223.9,
+      69.0,
+      90,
+      "F"
+    ],
+    "J1": [
+      24.0,
+      9.4,
+      0,
+      "F"
+    ],
+    "J5": [
+      40.0,
+      9.4,
+      0,
+      "F"
+    ],
+    "J6": [
+      56.0,
+      9.4,
+      0,
+      "F"
+    ],
+    "RT1": [
+      75.0,
+      9.4,
+      0,
+      "F"
+    ],
+    "J2": [
+      96.0,
+      9.4,
+      0,
+      "F"
+    ],
+    "J3": [
+      216.5,
+      100.5,
+      0,
+      "F"
+    ],
+    "J4": [
+      232.0,
+      100.5,
+      0,
+      "F"
+    ],
+    "H1": [
+      115.0,
+      28.0,
+      0,
+      "F"
+    ],
+    "U2": [
+      53.5,
+      145.0,
+      90,
+      "B"
+    ],
+    "U1": [
+      72.0,
+      145.0,
+      270,
+      "B"
+    ],
+    "U3": [
+      100.0,
+      145.0,
+      270,
+      "B"
+    ],
+    "U4": [
+      118.5,
+      145.0,
+      90,
+      "B"
+    ],
+    "U10": [
+      167.0,
+      145.0,
+      270,
+      "F"
+    ],
+    "U7": [
+      189.0,
+      145.0,
+      270,
+      "F"
+    ],
+    "U6": [
+      204.0,
+      145.0,
+      270,
+      "F"
+    ],
+    "U5": [
+      222.5,
+      145.0,
+      90,
+      "F"
+    ],
+    "J7": [
+      176.0,
+      163.0,
+      270,
+      "F"
+    ],
+    "H8": [
+      200.0,
+      163.0,
+      0,
+      "F"
+    ],
+    "H9": [
+      88.0,
+      163.0,
+      0,
+      "F"
+    ],
+    "H10": [
+      200.0,
+      176.0,
+      0,
+      "F"
+    ],
+    "H11": [
+      88.0,
+      176.0,
+      0,
+      "F"
+    ],
+    "H2": [
+      26.0,
+      174.0,
+      0,
+      "F"
+    ],
+    "H3": [
+      234.0,
+      174.0,
+      0,
+      "F"
+    ],
+    "H4": [
+      235.0,
+      125.0,
+      0,
+      "F"
+    ],
+    "H5": [
+      6.0,
+      6.0,
+      0,
+      "F"
+    ],
+    "H6": [
+      66.0,
+      174.0,
+      0,
+      "F"
+    ],
+    "H7": [
+      150.0,
+      175.0,
+      0,
+      "F"
+    ],
+    "C1": [
+      54.8,
+      129.3,
+      180,
+      "F"
+    ],
+    "C2": [
+      54.8,
+      135.5,
+      180,
+      "F"
+    ],
+    "C3": [
+      47.3,
+      129.3,
+      0,
+      "F"
+    ],
+    "C4": [
+      47.3,
+      135.5,
+      0,
+      "F"
+    ],
+    "C7": [
+      39.8,
+      129.3,
+      180,
+      "F"
+    ],
+    "C5": [
+      39.8,
+      135.5,
+      180,
+      "F"
+    ],
+    "C8": [
+      84.0,
+      135.5,
+      180,
+      "F"
+    ],
+    "C9": [
+      108.3,
+      129.3,
+      180,
+      "F"
+    ],
+    "C10": [
+      108.3,
+      135.5,
+      180,
+      "F"
+    ],
+    "C6": [
+      97.63,
+      135.5,
+      180,
+      "F"
+    ]
+  },
+  "regions": {
+    "hs_island_b": {
+      "side": "B",
+      "band": "HV",
+      "rects": [
+        [
+          12.0,
+          127.0,
+          80.5,
+          139.5
+        ]
+      ]
+    },
+    "ls_island_b": {
+      "side": "B",
+      "band": "HV",
+      "rects": [
+        [
+          84.0,
+          127.0,
+          125.5,
+          139.5
+        ],
+        [
+          125.5,
+          127.5,
+          160.0,
+          139.5
+        ]
+      ]
+    },
+    "snubber": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          113.5,
+          123.0,
+          128.0,
+          139.5
+        ]
+      ]
+    },
+    "hv_corridor": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          136.5,
+          30.5,
+          179.0,
+          55.0
+        ]
+      ]
+    },
+    "out_bleeder": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          181.0,
+          44.0,
+          208.3,
+          92.0
+        ]
+      ]
+    },
+    "hv_top": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          103.0,
+          1.0,
+          136.0,
+          20.0
+        ]
+      ]
+    },
+    "sense_hv": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          181.0,
+          100.0,
+          229.5,
+          137.0
+        ],
+        [
+          229.5,
+          109.0,
+          238.5,
+          119.5
+        ],
+        [
+          229.5,
+          130.5,
+          238.5,
+          137.0
+        ],
+        [
+          196.0,
+          92.0,
+          209.5,
+          109.0
+        ]
+      ]
+    },
+    "pe_group": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          108.0,
+          33.0,
+          122.5,
+          116.0
+        ]
+      ]
+    },
+    "damping": {
+      "side": "F",
+      "band": "HV",
+      "rects": [
+        [
+          136.5,
+          30.5,
+          179.0,
+          55.0
+        ]
+      ]
+    },
+    "selv_hs_b": {
+      "side": "B",
+      "band": "SELV",
+      "rects": [
+        [
+          36.0,
+          151.5,
+          81.0,
+          170.0
+        ]
+      ]
+    },
+    "selv_ls_b": {
+      "side": "B",
+      "band": "SELV",
+      "rects": [
+        [
+          83.5,
+          151.5,
+          112.5,
+          179.5
+        ]
+      ]
+    },
+    "selv_f": {
+      "side": "F",
+      "band": "SELV",
+      "rects": [
+        [
+          1.0,
+          151.5,
+          112.5,
+          179.5
+        ]
+      ]
+    },
+    "selv_sense_f": {
+      "side": "F",
+      "band": "SELV",
+      "rects": [
+        [
+          160.0,
+          151.5,
+          239.5,
+          158.2
+        ],
+        [
+          178.5,
+          158.2,
+          239.5,
+          179.5
+        ]
+      ]
+    }
+  },
+  "assign": {
+    "by_ref": {
+      "R17": "selv_hs_b",
+      "C20": "selv_hs_b",
+      "R18": "selv_hs_b",
+      "R19": "hs_island_b",
+      "R20": "hs_island_b",
+      "R21": "hs_island_b",
+      "R22": "hs_island_b",
+      "R23": "hs_island_b",
+      "C21": "hs_island_b",
+      "TP1": "hs_island_b",
+      "C22": "hs_island_b",
+      "C23": "hs_island_b",
+      "C24": "hs_island_b",
+      "C25": "hs_island_b",
+      "C26": "hs_island_b",
+      "C27": "selv_hs_b",
+      "C28": "selv_hs_b",
+      "R24": "hs_island_b",
+      "D3": "hs_island_b",
+      "R25": "hs_island_b",
+      "R26": "hs_island_b",
+      "C29": "hs_island_b",
+      "D4": "hs_island_b",
+      "R27": "selv_hs_b",
+      "R28": "selv_hs_b",
+      "L2": "selv_hs_b",
+      "C30": "selv_hs_b",
+      "C31": "selv_hs_b",
+      "C32": "selv_hs_b",
+      "C33": "selv_hs_b",
+      "R29": "hs_island_b",
+      "R30": "hs_island_b",
+      "C34": "hs_island_b",
+      "R31": "hs_island_b",
+      "R32": "hs_island_b",
+      "C35": "hs_island_b",
+      "R33": "hs_island_b",
+      "C36": "hs_island_b",
+      "C37": "hs_island_b",
+      "C38": "hs_island_b",
+      "C39": "hs_island_b",
+      "R34": "selv_hs_b",
+      "R35": "selv_ls_b",
+      "C40": "selv_ls_b",
+      "R36": "selv_ls_b",
+      "R37": "ls_island_b",
+      "R38": "ls_island_b",
+      "R39": "ls_island_b",
+      "R40": "ls_island_b",
+      "R41": "ls_island_b",
+      "C41": "ls_island_b",
+      "TP2": "ls_island_b",
+      "C42": "ls_island_b",
+      "C43": "ls_island_b",
+      "C44": "ls_island_b",
+      "C45": "ls_island_b",
+      "C46": "ls_island_b",
+      "C47": "selv_ls_b",
+      "C48": "selv_ls_b",
+      "R42": "ls_island_b",
+      "D5": "ls_island_b",
+      "R43": "ls_island_b",
+      "R44": "ls_island_b",
+      "C49": "ls_island_b",
+      "D6": "ls_island_b",
+      "R45": "selv_ls_b",
+      "R46": "selv_ls_b",
+      "L3": "selv_ls_b",
+      "C50": "selv_ls_b",
+      "C51": "selv_ls_b",
+      "C52": "selv_ls_b",
+      "C53": "selv_ls_b",
+      "R47": "ls_island_b",
+      "R48": "ls_island_b",
+      "C54": "ls_island_b",
+      "R49": "ls_island_b",
+      "R50": "ls_island_b",
+      "C55": "ls_island_b",
+      "R51": "ls_island_b",
+      "C56": "ls_island_b",
+      "C57": "ls_island_b",
+      "C58": "ls_island_b",
+      "C59": "ls_island_b",
+      "R52": "selv_ls_b",
+      "L4": "selv_sense_f",
+      "C60": "selv_sense_f",
+      "C61": "selv_sense_f",
+      "C62": "selv_sense_f",
+      "C63": "selv_sense_f",
+      "R53": "sense_hv",
+      "R54": "sense_hv",
+      "C64": "sense_hv",
+      "R55": "sense_hv",
+      "R56": "sense_hv",
+      "C65": "sense_hv",
+      "R57": "sense_hv",
+      "C66": "sense_hv",
+      "C67": "sense_hv",
+      "C68": "sense_hv",
+      "C69": "sense_hv",
+      "R58": "selv_sense_f",
+      "R59": "sense_hv",
+      "R60": "sense_hv",
+      "R61": "sense_hv",
+      "R62": "sense_hv",
+      "R63": "sense_hv",
+      "C70": "sense_hv",
+      "C71": "sense_hv",
+      "C72": "sense_hv",
+      "C73": "selv_sense_f",
+      "R64": "sense_hv",
+      "R65": "sense_hv",
+      "R66": "sense_hv",
+      "C74": "sense_hv",
+      "C75": "sense_hv",
+      "C76": "sense_hv",
+      "C77": "selv_sense_f",
+      "R67": "selv_f",
+      "C78": "selv_f",
+      "R68": "selv_f",
+      "R69": "selv_f",
+      "C79": "selv_f",
+      "R70": "selv_f",
+      "U8": "selv_sense_f",
+      "C80": "selv_sense_f",
+      "R71": "selv_sense_f",
+      "R72": "selv_sense_f",
+      "C81": "selv_sense_f",
+      "R73": "selv_sense_f",
+      "R74": "selv_sense_f",
+      "C82": "selv_sense_f",
+      "R75": "selv_sense_f",
+      "R76": "selv_sense_f",
+      "C83": "selv_sense_f",
+      "R77": "selv_sense_f",
+      "R78": "selv_sense_f",
+      "C84": "selv_sense_f",
+      "U9": "selv_sense_f",
+      "C85": "selv_sense_f",
+      "C86": "selv_sense_f",
+      "R79": "selv_sense_f",
+      "R80": "selv_sense_f",
+      "R81": "selv_sense_f",
+      "C87": "selv_sense_f",
+      "C88": "selv_sense_f",
+      "R82": "selv_f",
+      "R83": "selv_f",
+      "C89": "selv_f",
+      "J8": "selv_f",
+      "R84": "selv_f",
+      "J9": "selv_f",
+      "Q3": "selv_f",
+      "R85": "selv_f",
+      "R86": "selv_f",
+      "D7": "selv_f",
+      "C90": "selv_f",
+      "C91": "selv_f",
+      "R1": "hv_corridor",
+      "R2": "hv_corridor",
+      "R3": "hv_corridor",
+      "R4": "hv_corridor",
+      "R5": "hv_corridor",
+      "R6": "hv_corridor",
+      "D1": "hv_corridor",
+      "C16": "damping",
+      "C17": "damping",
+      "R12": "damping",
+      "R13": "damping",
+      "R7": "out_bleeder",
+      "R8": "out_bleeder",
+      "R9": "out_bleeder",
+      "R10": "out_bleeder",
+      "D2": "out_bleeder",
+      "R11": "snubber",
+      "C15": "snubber",
+      "R14": "pe_group",
+      "R15": "pe_group",
+      "R16": "pe_group",
+      "C18": "pe_group",
+      "C19": "pe_group",
+      "RV1": "hv_top"
+    },
+    "by_net_prefix": {
+      "TP": {
+        "3V3": "selv_f",
+        "GND_CTRL": [
+          "selv_f",
+          "selv_sense_f"
+        ],
+        "PWM_H_F": "selv_f",
+        "PWM_L_F": "selv_f",
+        "FAULT_N": "selv_f",
+        "ISENSE": "selv_sense_f",
+        "VIN_SENSE": "selv_sense_f",
+        "VOUT_SENSE": "selv_sense_f",
+        "SPARE_D1": "selv_f",
+        "SPARE_D2": "selv_f"
+      }
+    },
+    "by_page": {}
+  },
+  "zones": [
+    {
+      "net": "SW",
+      "layer": "F.Cu",
+      "priority": 9,
+      "polygon": [
+        [
+          64.0,
+          126.6
+        ],
+        [
+          92.5,
+          126.6
+        ],
+        [
+          92.5,
+          139.0
+        ],
+        [
+          64.0,
+          139.0
+        ]
+      ],
+      "name": "SW node"
+    },
+    {
+      "net": "SW",
+      "layer": "F.Cu",
+      "priority": 8,
+      "polygon": [
+        [
+          128.0,
+          86.0
+        ],
+        [
+          150.0,
+          86.0
+        ],
+        [
+          150.0,
+          104.0
+        ],
+        [
+          128.0,
+          104.0
+        ]
+      ],
+      "name": "SW at L1 pad 1"
+    },
+    {
+      "net": "VOUT_L",
+      "layer": "F.Cu",
+      "priority": 7,
+      "polygon": [
+        [
+          168.0,
+          86.0
+        ],
+        [
+          180.0,
+          86.0
+        ],
+        [
+          180.0,
+          139.0
+        ],
+        [
+          168.0,
+          139.0
+        ]
+      ],
+      "name": "VOUT_L L1 pad 2 -> U10 IN+"
+    },
+    {
+      "net": "VOUT",
+      "layer": "F.Cu",
+      "priority": 6,
+      "polygon": [
+        [
+          150.0,
+          139.0
+        ],
+        [
+          150.0,
+          128.0
+        ],
+        [
+          181.0,
+          128.0
+        ],
+        [
+          181.0,
+          130.0
+        ],
+        [
+          195.0,
+          130.0
+        ],
+        [
+          195.0,
+          139.0
+        ]
+      ],
+      "name": "VOUT from U10 IN-"
+    },
+    {
+      "net": "VIN",
+      "layer": "F.Cu",
+      "priority": 5,
+      "polygon": [
+        [
+          56.2,
+          126.6
+        ],
+        [
+          66.0,
+          126.6
+        ],
+        [
+          66.0,
+          139.0
+        ],
+        [
+          56.2,
+          139.0
+        ]
+      ],
+      "name": "VIN HF tier"
+    },
+    {
+      "net": "VIN",
+      "layer": "F.Cu",
+      "priority": 4,
+      "polygon": [
+        [
+          49.0,
+          1.0
+        ],
+        [
+          86.5,
+          1.0
+        ],
+        [
+          86.5,
+          15.4
+        ],
+        [
+          49.0,
+          15.4
+        ]
+      ],
+      "name": "VIN J6 / PTC"
+    },
+    {
+      "net": "PGND",
+      "layer": "F.Cu",
+      "priority": 3,
+      "polygon": [
+        [
+          94.0,
+          126.6
+        ],
+        [
+          106.8,
+          126.6
+        ],
+        [
+          106.8,
+          139.0
+        ],
+        [
+          94.0,
+          139.0
+        ]
+      ],
+      "name": "PGND HF tier"
+    },
+    {
+      "net": "PGND",
+      "layer": "F.Cu",
+      "priority": 2,
+      "polygon": [
+        [
+          89.0,
+          1.0
+        ],
+        [
+          103.0,
+          1.0
+        ],
+        [
+          103.0,
+          15.4
+        ],
+        [
+          89.0,
+          15.4
+        ]
+      ],
+      "name": "PGND J2"
+    },
+    {
+      "net": "PGND",
+      "layer": "F.Cu",
+      "priority": 1,
+      "polygon": [
+        [
+          226.0,
+          93.5
+        ],
+        [
+          239.0,
+          93.5
+        ],
+        [
+          239.0,
+          107.5
+        ],
+        [
+          226.0,
+          107.5
+        ]
+      ],
+      "name": "PGND J4"
+    },
+    {
+      "net": "PGND",
+      "layer": "In1.Cu",
+      "priority": 1,
+      "polygon": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          239.0,
+          1.0
+        ],
+        [
+          239.0,
+          139.0
+        ],
+        [
+          1.0,
+          139.0
+        ]
+      ],
+      "name": "PGND return plane"
+    },
+    {
+      "net": "GND_CTRL",
+      "layer": "In1.Cu",
+      "priority": 2,
+      "polygon": [
+        [
+          1.0,
+          151.0
+        ],
+        [
+          239.0,
+          151.0
+        ],
+        [
+          239.0,
+          179.0
+        ],
+        [
+          1.0,
+          179.0
+        ]
+      ],
+      "name": "GND_CTRL SELV strip"
+    },
+    {
+      "net": "VIN",
+      "layer": "In2.Cu",
+      "priority": 3,
+      "polygon": [
+        [
+          41.0,
+          1.0
+        ],
+        [
+          208.5,
+          1.0
+        ],
+        [
+          208.5,
+          48.0
+        ],
+        [
+          179.0,
+          48.0
+        ],
+        [
+          179.0,
+          22.0
+        ],
+        [
+          61.0,
+          22.0
+        ],
+        [
+          61.0,
+          139.0
+        ],
+        [
+          41.0,
+          139.0
+        ]
+      ],
+      "name": "VIN bus"
+    },
+    {
+      "net": "SW",
+      "layer": "In2.Cu",
+      "priority": 4,
+      "polygon": [
+        [
+          62.0,
+          139.0
+        ],
+        [
+          62.0,
+          122.0
+        ],
+        [
+          100.0,
+          122.0
+        ],
+        [
+          100.0,
+          110.0
+        ],
+        [
+          120.0,
+          86.0
+        ],
+        [
+          150.0,
+          86.0
+        ],
+        [
+          150.0,
+          100.0
+        ],
+        [
+          128.0,
+          118.0
+        ],
+        [
+          128.0,
+          139.0
+        ]
+      ],
+      "name": "SW path to L1"
+    },
+    {
+      "net": "VOUT",
+      "layer": "In2.Cu",
+      "priority": 2,
+      "polygon": [
+        [
+          181.0,
+          139.0
+        ],
+        [
+          181.0,
+          130.0
+        ],
+        [
+          196.0,
+          130.0
+        ],
+        [
+          196.0,
+          38.0
+        ],
+        [
+          238.5,
+          38.0
+        ],
+        [
+          238.5,
+          139.0
+        ]
+      ],
+      "name": "VOUT bus"
+    }
+  ],
+  "silkscreen": [
+    {
+      "text": "AIPE SiC BUCK POWER V2 - AI PROTOTYPE - REVIEW REQUIRED",
+      "xy": [
+        118.5,
+        178.6
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "DC-LINK LIVE - 60 s DISCHARGE",
+      "xy": [
+        62.0,
+        18.5
+      ],
+      "size": 1.2
+    },
+    {
+      "text": "PE",
+      "xy": [
+        115.0,
+        21.5
+      ],
+      "size": 0.8
+    },
+    {
+      "text": "SELV STRIP",
+      "xy": [
+        145.0,
+        151.0
+      ],
+      "size": 0.8
+    }
+  ],
+  "comparison_notes": [
+    "Shortest commutation-to-driver geometry of the three: drivers 11.4 mm from the gate pads, HF caps 4.5-14.8 mm from the pins.",
+    "All four films, the inductor and the sink keep the CR-23 spacings (films >= 20 mm from the sink, >= 15 mm from the inductor; inductor 20.4 mm from the sink) on the 240 x 180 mm outline; the price is a long VIN bus (input films at the top right, reaching the HF tier on In2.Cu under the sink) and a VOUT return along the bottom band.",
+    "Intake corridor and fan allowance lie off the board edge (architecture.md section 9 option); nothing tall sits in the exhaust corridor except the inductor.",
+    "Device row: TO-247-4 pads 7.5 mm below the heatsink courtyard so that the pad copper keeps the 5 mm HV keep-out to the PE-bonded sink (baseline lead row 3-5 mm from the face: formed leads / spacer are a mechanical review item).",
+    "Barrier parts straddle the barrier line with HV pins toward the HV area; U1/U3 get board-level Edge.Cuts slots (official SOIC footprint has none), the five custom AIPE footprints carry their 1.2 mm NPTH slots (e >= 3 mm).",
+    "Mezzanine socket J7 at 270 deg (pins increasing toward -x) so that the control board (J8 at (28, 76) rotated 90 deg) mates when mounted rotated 180 deg about z; the two in-strip M3 holes follow the 112 mm pattern, the other two are spares at the bottom edge (review item).",
+    "Amendment 2026-10-11: C6 and C8 moved from y = 137.0 to 135.5 mm (the row of C2/C4/C5/C10) because the slotted AIPE UCC21710_DW0016A_Slot footprint introduced for the structural DRC fix occupies both sides (NPTH slot) with a 17.9 x 12.8 mm courtyard reaching y = 138.6 mm, which overlapped the two capacitors at their original position; the comparison in review/floorplan_candidates_power.md was scored before this change and the live power board is placed from design/placement_power.json, not from this candidate."
+  ]
+}

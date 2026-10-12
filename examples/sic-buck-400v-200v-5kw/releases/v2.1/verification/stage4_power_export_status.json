@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED",
+  "stage": "stage4_export_and_measure",
+  "written_utc": "2026-10-10T16:11:18.174054+00:00",
+  "done": false,
+  "summary": "The power board was exported and measured exactly as the Stage-3 router left it (board sha256 246385bd...): routing incomplete, DRC not zero. Nothing is released. While this stage was finishing (2026-10-11 00:06 local) a sibling generator run started rewriting the repository board file, so the exported bundle no longer matches the file on disk and must be regenerated after that run's DRC.",
+  "exported_board": {
+    "sha256": "246385bde4b444d6c0a468878e3f9cb26b2eadbadb61894a31d806bd42483725",
+    "bytes": 3113085,
+    "tracks": 3305,
+    "vias": 563,
+    "zones_copper": 21,
+    "rule_areas": 12,
+    "footprints": 237,
+    "router_unresolved": 161,
+    "router_unresolved_nets": 50
+  },
+  "board_on_disk_now": {
+    "sha256": "4265c2e381ede2cd400859ea15fe471d51bc391d15dd9f60b4b3a40027a0e70d",
+    "bytes": 904198,
+    "note": "placement snapshot written 2026-10-11 00:06:24 by 'python -m automation.kicad_tools.generate_sic_power_board --trials 1' (sibling run, PID 27092, started 00:06:21); it will be replaced by that run's routed board, DRC and metrics"
+  },
+  "drc_of_exported_board": {
+    "manifest": "examples/sic-buck-400v-200v-5kw/verification/drc/20261010T154954Z-drc-48a5e8dc/run.json",
+    "violations": 373,
+    "unconnected_items": 161,
+    "schematic_parity": 0,
+    "tool_exit_code": 5,
+    "by_type": {
+      "clearance": 165,
+      "via_dangling": 140,
+      "track_dangling": 27,
+      "solder_mask_bridge": 16,
+      "shorting_items": 8,
+      "items_not_allowed": 5,
+      "silk_edge_clearance": 4,
+      "hole_clearance": 3,
+      "zones_intersect": 2,
+      "tracks_crossing": 1,
+      "isolated_copper": 1,
+      "hole_to_hole": 1
+    },
+    "clearance_by_rule": {
+      "HV functional clearance (outer layers)": 98,
+      "HV side to CTRL_SELV (all layers)": 44,
+      "HV side to PE": 12,
+      "Same reference island": 4,
+      "DRV_HS": 2,
+      "DRV_LS": 2,
+      "HV functional clearance (inner layers)": 2,
+      "CTRL_SELV": 1
+    }
+  },
+  "export": {
+    "manifest": "examples/sic-buck-400v-200v-5kw/manufacturing/power_board/export-manifest.json",
+    "manifest_sha256": "80b4f84bfab093fc7e8f61326690b8c2675f2bfef0b80a5c91e0198cb0f58041",
+    "status": "passed",
+    "commands": [
+      [
+        "schematic_pdf",
+        0
+      ],
+      [
+        "pcb_pdf",
+        0
+      ],
+      [
+        "gerber",
+        0
+      ],
+      [
+        "drill",
+        0
+      ],
+      [
+        "bom",
+        0
+      ],
+      [
+        "placement",
+        0
+      ],
+      [
+        "step",
+        0
+      ],
+      [
+        "front",
+        0
+      ],
+      [
+        "back",
+        0
+      ],
+      [
+        "isometric",
+        0
+      ],
+      [
+        "netlist",
+        0
+      ]
+    ],
+    "artifacts": 35,
+    "input_files_hashed": 72,
+    "input_board_sha256": "246385bde4b444d6c0a468878e3f9cb26b2eadbadb61894a31d806bd42483725",
+    "layers": "F.Cu,In1.Cu,In2.Cu,B.Cu,F.SilkS,B.SilkS,F.Fab,Edge.Cuts",
+    "pdf_scale": "0.9",
+    "pdf_pages": 6,
+    "pdf_sheet": "A3 420 x 297 mm, board clears the title block",
+    "step_bytes": 30702122,
+    "step_missing_models": {
+      "refs": [
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "model": "${KICAD10_3DMODEL_DIR}/Inductor_SMD.3dshapes/L_CommonMode_Wuerth_WE-SL2.step",
+      "reason": "not in the KiCad 10.0.7 3D bundle; project libraries frozen"
+    },
+    "custom_aipe_models_resolved": 8,
+    "review_copies": {
+      "pcb_front_power.png": "179091ecf97c1e999f73083a1e8fbf9e341cb0a39c0858db8265b16e9c5ddfdb",
+      "pcb_back_power.png": "af159dd1e19d59bb64f960f740a938565d504820df5e4eb965680cada358a3f9",
+      "pcb_3d_power.png": "9de8c2f5cddca8f3f240c0edd58c95eea623709b2834e62fa24c03fe16e1217b",
+      "pcb_layout_power.pdf": "2c6a4067185c1cc0d3b0ab6375ce7800f98c9b679bb2a61ca1a1569779c67179"
+    },
+    "drill": {
+      "plated": 711,
+      "non_plated": 24,
+      "npth_slots_1p2mm": 6,
+      "edge_cuts_cutouts_U1_U3": 2
+    },
+    "bom_lines": 213,
+    "bom_dnp_flags": 0,
+    "positions_rows": 212,
+    "positions_top": 166,
+    "positions_bottom": 46
+  },
+  "netlist_check": {
+    "file": "examples/sic-buck-400v-200v-5kw/verification/netlist_check_power.json",
+    "status": "passed",
+    "exact_match": true,
+    "pads_compared": 648,
+    "board_sha256": "246385bde4b444d6c0a468878e3f9cb26b2eadbadb61894a31d806bd42483725"
+  },
+  "layout_metrics": {
+    "json": "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_metrics_power.json",
+    "md": "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_metrics_power.md",
+    "board_sha256": "246385bde4b444d6c0a468878e3f9cb26b2eadbadb61894a31d806bd42483725",
+    "generated_utc": "2026-10-10T16:00:16.430867+00:00",
+    "summary": {
+      "rows": 58,
+      "within_threshold": 17,
+      "exceeding_threshold": 16,
+      "measured_only": 25,
+      "not_measured": 0
+    },
+    "spec": "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/layout_spec_power.json",
+    "spec_change": "isolation.barrier_keepouts: the nine ISO_BARRIER_1..9 segment names (absent from the board, 9 rows not measured) replaced by the board's single rule area ISO_BARRIER",
+    "headline": {
+      "driver_output_to_gate_pad_mm": {
+        "U1->Q1": 14.36,
+        "U3->Q2": 14.647,
+        "max": 15
+      },
+      "Q1_drain_to_nearest_VIN_hf_cap_mm": 8.013,
+      "Q2_source_to_nearest_PGND_hf_cap_mm": 41.453,
+      "layer_transition_vias": {
+        "VIN": 51,
+        "PGND": 36,
+        "VOUT": 65,
+        "SW": 18,
+        "VOUT_L": 2,
+        "VIN_RAW": 0,
+        "min": 24
+      },
+      "hv_to_selv_min_mm": {
+        "F.Cu": 8.925,
+        "In1.Cu": 10.425,
+        "In2.Cu": 10.425,
+        "B.Cu": 10.725,
+        "rule": 9.0
+      },
+      "hv_to_pe_min_mm": 0.3,
+      "hv_functional_outer_min_mm": {
+        "VIN-PGND": 0.0,
+        "SW-PGND": 7.3,
+        "VIN-SW": 0.7,
+        "VOUT-PGND": 0.0,
+        "rule": 3.0
+      },
+      "hs_ls_island_min_mm": {
+        "F.Cu": 1.44,
+        "In1.Cu": 1.54,
+        "In2.Cu": 0.3,
+        "B.Cu": 0.402,
+        "rule_outer": 3.0,
+        "rule_inner": 1.0
+      },
+      "hv_copper_to_HS1_courtyard_outer_mm": 4.975,
+      "iso_barrier_copper_items_per_layer": 0,
+      "slot_extension_mm": {
+        "U1": 3.025,
+        "U3": 3.025,
+        "U2": 3.0,
+        "U4": 3.0,
+        "U5": 3.0,
+        "U6": 2.995,
+        "U7": 2.995,
+        "U10": 3.005
+      },
+      "surface_path_mm": {
+        "U1": 9.443,
+        "U3": 9.443,
+        "U2": 10.08,
+        "U4": 10.08,
+        "U5": 10.08,
+        "U6": 10.894,
+        "U7": 10.894,
+        "U10": 9.807
+      },
+      "kelvin_vs_power_source": "distinct nets, no bridging part, no contact, 0.3 mm",
+      "control_to_power_bbox_mm": 13.06,
+      "board_area_mm2": 43162.8,
+      "hv_bbox_fraction": 0.7715,
+      "power_density_W_per_dm2": 1158.4
+    }
+  },
+  "visual_review": {
+    "images": [
+      "examples/sic-buck-400v-200v-5kw/review/pcb_front_power.png",
+      "examples/sic-buck-400v-200v-5kw/review/pcb_back_power.png",
+      "examples/sic-buck-400v-200v-5kw/review/pcb_3d_power.png",
+      "examples/sic-buck-400v-200v-5kw/review/pcb_layout_power.pdf"
+    ],
+    "placement_seen": "HS1 100x100 centred (99.25,67) with air flow to the right; Q1/Q2 at (87,126)/(115,126), 28.0 mm pitch, in front of its lower face; C1-C10 in two rows (y 126.5/131.5) beside Q1 only (x 40-82); C11/C12 on the left edge (intake side), C13/C14 top right and L1 at (204.5,95) in the exhaust stream; J1/J2/J5/J6 + RT1 lower-left, J3/J4 at x 161 right of the sink; RV1 and bleeder/indicator chains along the top HV edge and the left column; PE stud H1 at (38,8); eight barrier parts on one line y=145 with SELV pads toward the strip; J7 socket at y 160 in the SELV strip; no ratsnest in the renders",
+    "flags": [
+      "C1-C10 beside Q1 only: Q2 source pad 41.5 mm from the nearest PGND HF capacitor pad (baseline <= 15 mm)",
+      "U1/U3 drivers and U2/U4/U5 bias modules on F.Cu on the barrier line, not on B.Cu under the device row (baseline placement rule); 46 parts on B.Cu (gate resistors, rail decoupling, DESAT diodes, sensing passives)",
+      "gate tracks 0.4 mm (G_H 25.8 mm B.Cu; G_L 88 mm, 0.4/1.0 mm on both outer layers) instead of 1.0 mm B.Cu; KS_H/KS_L In2.Cu pours 758/485 mm2 present",
+      "RV1 (23 mm tall) 8.3 mm and RT1 (22 mm) 11.4 mm from the HS1 courtyard inside the intake corridor (baseline: parts <= 15 mm tall only)",
+      "courtyard-to-courtyard HS1-L1 19.4, HS1-C11/C12 19.0, HS1-C13 19.9 mm (body-to-body 20.3-21.3 mm vs the 20 mm rule); L1-C13/C14 15.2 mm",
+      "nearest HV copper to the HS1 courtyard 4.975 mm (J3.1 pad; rule 5.0 mm)",
+      "PE spine on F.Cu 1.45 mm from the VIN via group beside H1 (rule 5.0 mm)",
+      "VIN In2.Cu pour (22,354 mm2) spans the whole HV area incl. under the heatsink (inner layer, allowed) and the VOUT region",
+      "ISO_BARRIER band copper-free on all four layers; no HV-class copper below y=150, no SELV-class copper above y=140",
+      "U1/U3 board-level slots are closed Edge.Cuts rectangles 15.5 x 1.2 mm (present in the profile gerber); the checker reports their 0.05 mm line width as the slot width (checker limitation)"
+    ]
+  },
+  "open_issues_structural": [
+    "12 x 9 mm rule at Default-class unconnected-(U1/U3-APWM-Pad16) and unconnected-(U10-NC-Pad5) pads (.kicad_dru / project owner)",
+    "2 x 3 mm rule at the 0805 indicator LEDs D1/D2 (footprint pitch 1.875 mm)",
+    "4 x silk_edge_clearance: SOIC-16W silkscreen of U1/U3 over the board-level slot",
+    "AMC1311 footprint slot 5 um short of the 3 mm extension (library)"
+  ],
+  "control_board_note": "manufacturing/control_board and review/pcb_*_control.* are from board 119d37df (18:50); current control board 68c3558f (DRC 0 violations / 1 unconnected BIAS_EN) not re-exported in this stage"
+}

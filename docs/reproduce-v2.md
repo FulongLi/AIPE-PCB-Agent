@@ -328,4 +328,5 @@ python -m automation.scripts.freeze_release --version v2.1
 fails; it writes `releases/v2.1/` (`README.md` with the V2.1 label, `SHA256SUMS.json` with the
 source commit, every example folder without the full-length waveforms) and
 `releases/v2.1-review-package.zip`, and refuses to run when the snapshot already exists. The V2.1
-freeze runs after this section was written; `docs/status-v2.1.md` records its result.
+freeze was run on 2026-10-12 from commit `4f533ac` (1015 files); running the command again fails on
+purpose, and a later reviewed generation gets its own snapshot (`docs/status-v2.1.md`).

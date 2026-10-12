@@ -1,0 +1,4874 @@
+{
+  "schema_version": 1,
+  "status": "AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED",
+  "title": "V2 vs V2.1 comparison - schematic readability and PCB routing quality (TASK 8)",
+  "generated_utc": "2026-10-12T13:00:01+00:00",
+  "markdown": "review/v2_v21_comparison.md",
+  "scope": "CAD evidence only (native KiCad ERC/DRC manifests, generator gates, geometry checkers, readability metrics); no electrical, thermal, EMI or hardware qualification; the V2 open engineering issues (verification/known_issues.md) stay open - V2.1 changed presentation and routing geometry only",
+  "before": "releases/v2 (frozen V2 release, read-only)",
+  "after": "working tree of branch feat/sic-buck-v2.1-quality at HEAD 7f93a61",
+  "schematics": {
+    "boards": {
+      "power": {
+        "readability_source": "verification/engineering_checks/schematic_readability_power.json",
+        "totals": {
+          "V2": {
+            "symbols": 237,
+            "power_symbols": 15,
+            "wires": 648,
+            "junctions": 0,
+            "global_labels": 663,
+            "global_labels_on_pin_stubs": 648,
+            "name_tags": 15,
+            "hierarchical_labels": 0,
+            "local_labels": 0,
+            "no_connects": 3,
+            "sheet_pins": 0,
+            "crossings": 0,
+            "four_way_junctions": 0,
+            "text_overlaps": 0,
+            "off_grid_points": 0,
+            "isolated_symbols": 0,
+            "dangling_wire_ends": 0,
+            "connected_pins": 648,
+            "wired_pins": 0,
+            "labelled_pins": 648,
+            "wire_length_mm": 1645.92,
+            "wired_pin_share": 0.0,
+            "single_global_labels": 0,
+            "sheets": 12,
+            "continuation_sheets": 5,
+            "papers": [
+              "A3"
+            ]
+          },
+          "V2.1": {
+            "symbols": 237,
+            "power_symbols": 230,
+            "wires": 1231,
+            "junctions": 302,
+            "global_labels": 126,
+            "global_labels_on_pin_stubs": 7,
+            "name_tags": 119,
+            "hierarchical_labels": 71,
+            "local_labels": 0,
+            "no_connects": 3,
+            "sheet_pins": 64,
+            "crossings": 2,
+            "four_way_junctions": 1,
+            "text_overlaps": 3,
+            "off_grid_points": 0,
+            "isolated_symbols": 0,
+            "dangling_wire_ends": 0,
+            "connected_pins": 648,
+            "wired_pins": 581,
+            "labelled_pins": 67,
+            "wire_length_mm": 7708.9,
+            "wired_pin_share": 0.8966,
+            "single_global_labels": 40,
+            "sheets": 7,
+            "continuation_sheets": 0,
+            "papers": [
+              "A2",
+              "A3"
+            ]
+          }
+        },
+        "delta": {
+          "symbols": 0,
+          "power_symbols": 215,
+          "wires": 583,
+          "junctions": 302,
+          "global_labels": -537,
+          "global_labels_on_pin_stubs": -641,
+          "name_tags": 104,
+          "hierarchical_labels": 71,
+          "local_labels": 0,
+          "no_connects": 0,
+          "sheet_pins": 64,
+          "crossings": 2,
+          "four_way_junctions": 1,
+          "text_overlaps": 3,
+          "off_grid_points": 0,
+          "isolated_symbols": 0,
+          "dangling_wire_ends": 0,
+          "connected_pins": 0,
+          "wired_pins": 581,
+          "labelled_pins": -581,
+          "wire_length_mm": 6062.98,
+          "wired_pin_share": 0.8966,
+          "single_global_labels": 40,
+          "sheets": -5,
+          "continuation_sheets": -5
+        },
+        "pages": {
+          "01_power_stage": {
+            "V2": {
+              "files": [
+                "01_power_stage.kicad_sch",
+                "01_power_stage_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.804,
+                0.136
+              ],
+              "wires": 104,
+              "global_labels_on_pin_stubs": 104,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "01_power_stage.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.807
+              ],
+              "wires": 180,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 11,
+              "junctions": 44,
+              "power_symbols": 40,
+              "crossings": 1,
+              "text_overlaps": 1,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.9231,
+              "sheets": 1
+            }
+          },
+          "02_gate_driver_hs": {
+            "V2": {
+              "files": [
+                "02_gate_driver_hs.kicad_sch",
+                "02_gate_driver_hs_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.639,
+                0.398
+              ],
+              "wires": 137,
+              "global_labels_on_pin_stubs": 137,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "02_gate_driver_hs.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.538
+              ],
+              "wires": 250,
+              "global_labels_on_pin_stubs": 2,
+              "hierarchical_labels": 9,
+              "junctions": 70,
+              "power_symbols": 49,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.9343,
+              "sheets": 1
+            }
+          },
+          "03_gate_driver_ls": {
+            "V2": {
+              "files": [
+                "03_gate_driver_ls.kicad_sch",
+                "03_gate_driver_ls_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.639,
+                0.398
+              ],
+              "wires": 137,
+              "global_labels_on_pin_stubs": 137,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "03_gate_driver_ls.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.535
+              ],
+              "wires": 250,
+              "global_labels_on_pin_stubs": 2,
+              "hierarchical_labels": 10,
+              "junctions": 70,
+              "power_symbols": 48,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.927,
+              "sheets": 1
+            }
+          },
+          "04_sensing_island": {
+            "V2": {
+              "files": [
+                "04_sensing_island.kicad_sch",
+                "04_sensing_island_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.783,
+                0.032
+              ],
+              "wires": 120,
+              "global_labels_on_pin_stubs": 120,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "04_sensing_island.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.406
+              ],
+              "wires": 218,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 7,
+              "junctions": 63,
+              "power_symbols": 47,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.95,
+              "sheets": 1
+            }
+          },
+          "05_selv_strip": {
+            "V2": {
+              "files": [
+                "05_selv_strip.kicad_sch",
+                "05_selv_strip_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.707,
+                0.578
+              ],
+              "wires": 139,
+              "global_labels_on_pin_stubs": 139,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 15,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "05_selv_strip.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.526
+              ],
+              "wires": 258,
+              "global_labels_on_pin_stubs": 3,
+              "hierarchical_labels": 26,
+              "junctions": 55,
+              "power_symbols": 43,
+              "crossings": 1,
+              "text_overlaps": 2,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.8129,
+              "sheets": 1
+            }
+          },
+          "06_mechanical": {
+            "V2": {
+              "files": [
+                "06_mechanical.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.333
+              ],
+              "wires": 11,
+              "global_labels_on_pin_stubs": 11,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "06_mechanical.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.221
+              ],
+              "wires": 11,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 8,
+              "junctions": 0,
+              "power_symbols": 3,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.2727,
+              "sheets": 1
+            }
+          },
+          "root": {
+            "V2": {
+              "files": [
+                "AIPE_SiC_Buck_Power.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.508
+              ],
+              "wires": 0,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": null,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "AIPE_SiC_Buck_Power.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.366
+              ],
+              "wires": 64,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": null,
+              "sheets": 1
+            }
+          }
+        },
+        "planner": {
+          "name_tags": 62,
+          "exceptions": [
+            {
+              "sheet": "05_selv_strip",
+              "net": "VIN_AMP_N",
+              "reason": "no_wire_path",
+              "at": [
+                [
+                  34.29,
+                  167.64
+                ],
+                [
+                  63.5,
+                  177.8
+                ]
+              ]
+            }
+          ],
+          "root": {
+            "paper": "A3",
+            "sheet_pins": 64,
+            "global_anchors": 64
+          },
+          "sheets": {
+            "01_power_stage": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 2,
+              "layout_variant": "beside",
+              "paper": "A3",
+              "paper_fill": 0.559
+            },
+            "02_gate_driver_hs": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 1,
+              "layout_variant": "below",
+              "paper": "A2",
+              "paper_fill": 0.458
+            },
+            "03_gate_driver_ls": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 1,
+              "layout_variant": "below",
+              "paper": "A2",
+              "paper_fill": 0.458
+            },
+            "04_sensing_island": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "below",
+              "paper": "A2",
+              "paper_fill": 0.399
+            },
+            "05_selv_strip": {
+              "label_fallbacks": 1,
+              "loop_tags": 0,
+              "label_pairs": 4,
+              "layout_variant": "auto",
+              "paper": "A2",
+              "paper_fill": 0.335
+            },
+            "06_mechanical": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.197
+            }
+          },
+          "totals": {
+            "label_fallbacks": 1,
+            "loop_tags": 0,
+            "label_pairs": 8
+          }
+        },
+        "sheets_v2": [
+          {
+            "file": "01_power_stage.kicad_sch",
+            "paper": "A3",
+            "title": "Input, half bridge, inductor, output, bleeders",
+            "rev": "V2"
+          },
+          {
+            "file": "01_power_stage_2.kicad_sch",
+            "paper": "A3",
+            "title": "Input, half bridge, inductor, output, bleeders (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "02_gate_driver_hs.kicad_sch",
+            "paper": "A3",
+            "title": "High-side isolated gate driver and bias",
+            "rev": "V2"
+          },
+          {
+            "file": "02_gate_driver_hs_2.kicad_sch",
+            "paper": "A3",
+            "title": "High-side isolated gate driver and bias (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "03_gate_driver_ls.kicad_sch",
+            "paper": "A3",
+            "title": "Low-side isolated gate driver and bias",
+            "rev": "V2"
+          },
+          {
+            "file": "03_gate_driver_ls_2.kicad_sch",
+            "paper": "A3",
+            "title": "Low-side isolated gate driver and bias (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "04_sensing_island.kicad_sch",
+            "paper": "A3",
+            "title": "Isolated voltage sensing island and its bias module",
+            "rev": "V2"
+          },
+          {
+            "file": "04_sensing_island_2.kicad_sch",
+            "paper": "A3",
+            "title": "Isolated voltage sensing island and its bias module (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "05_selv_strip.kicad_sch",
+            "paper": "A3",
+            "title": "SELV strip: mezzanine, conditioning, relay and fan interface",
+            "rev": "V2"
+          },
+          {
+            "file": "05_selv_strip_2.kicad_sch",
+            "paper": "A3",
+            "title": "SELV strip: mezzanine, conditioning, relay and fan interface (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "06_mechanical.kicad_sch",
+            "paper": "A3",
+            "title": "Heatsink envelope, terminals, mounting, test points",
+            "rev": "V2"
+          },
+          {
+            "file": "AIPE_SiC_Buck_Power.kicad_sch",
+            "paper": "A3",
+            "title": "AIPE V2 SiC buck power board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine",
+            "rev": "V2"
+          }
+        ],
+        "sheets_v21": [
+          {
+            "file": "01_power_stage.kicad_sch",
+            "paper": "A3",
+            "title": "Input, half bridge, inductor, output, bleeders",
+            "rev": "V2.1"
+          },
+          {
+            "file": "02_gate_driver_hs.kicad_sch",
+            "paper": "A2",
+            "title": "High-side isolated gate driver and bias",
+            "rev": "V2.1"
+          },
+          {
+            "file": "03_gate_driver_ls.kicad_sch",
+            "paper": "A2",
+            "title": "Low-side isolated gate driver and bias",
+            "rev": "V2.1"
+          },
+          {
+            "file": "04_sensing_island.kicad_sch",
+            "paper": "A2",
+            "title": "Isolated voltage sensing island and its bias module",
+            "rev": "V2.1"
+          },
+          {
+            "file": "05_selv_strip.kicad_sch",
+            "paper": "A2",
+            "title": "SELV strip: mezzanine, conditioning, relay and fan interface",
+            "rev": "V2.1"
+          },
+          {
+            "file": "06_mechanical.kicad_sch",
+            "paper": "A3",
+            "title": "Heatsink envelope, terminals, mounting, test points",
+            "rev": "V2.1"
+          },
+          {
+            "file": "AIPE_SiC_Buck_Power.kicad_sch",
+            "paper": "A3",
+            "title": "AIPE V2 SiC buck power board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine",
+            "rev": "V2.1"
+          }
+        ],
+        "gates": {
+          "source": "verification/schematic_gates/power/schematic_gates.json",
+          "passed": true,
+          "gates": {
+            "dru_identical": {
+              "passed": true,
+              "identical_to_legacy_generation": true,
+              "identical_to_v2_release": false,
+              "bytes_new": 17460,
+              "bytes_v2": 17458
+            },
+            "net_settings_equal": {
+              "passed": true,
+              "equal_to_legacy_generation": true,
+              "equal_to_v2_release": true,
+              "classes": 13,
+              "classes_v2": 13
+            },
+            "erc_zero": {
+              "passed": true,
+              "findings": 0,
+              "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\power\\erc\\20261012T094957Z-erc-c1123cae\\run.json",
+              "finding_types": {},
+              "erc_nonfootprint_findings": 0
+            },
+            "netlist_vs_model": {
+              "passed": true,
+              "export_exit": 0,
+              "refs": 237,
+              "duplicates": [],
+              "exact": true,
+              "pads": 648,
+              "mismatch_count": 0,
+              "net_names_equal": true,
+              "extra_names": [],
+              "missing_names": []
+            },
+            "netlist_vs_v2": {
+              "passed": true,
+              "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\manufacturing\\power_board\\netlist.xml",
+              "exact": true,
+              "pads": 648,
+              "mismatch_count": 0,
+              "net_names_equal": true,
+              "extra_names": [],
+              "missing_names": []
+            },
+            "paper_fill": {
+              "passed": true,
+              "min_fill": 0.25,
+              "base_paper": "A3",
+              "escalated": [
+                {
+                  "sheet": "02_gate_driver_hs.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.538
+                },
+                {
+                  "sheet": "03_gate_driver_ls.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.535
+                },
+                {
+                  "sheet": "04_sensing_island.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.406
+                },
+                {
+                  "sheet": "05_selv_strip.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.526
+                }
+              ],
+              "text_overlaps": 3,
+              "name_tags": 119,
+              "note": "name_tags are single global labels: KiCad's default-ignored single_global_label check would report one warning per tag"
+            }
+          }
+        },
+        "netlist_check": {
+          "source": "verification/netlist_check_power.json",
+          "status": "passed",
+          "exact_match": true,
+          "model": {
+            "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\circuit_power.json",
+            "sha256": "c95e734fbc1cfa53d80c7aa296dac4b32e38a191b47d886549b230e008f0aba3",
+            "parts": 237,
+            "dnp_parts": 16,
+            "mapped_pins": 648,
+            "named_nets": 101
+          },
+          "schematic_netlist": {
+            "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\power_board\\netlist.xml",
+            "sha256": "8f74368cf59cf55b6fdc56cd00db7ffb3354465a27c68eaee92c4d1d7e541e6f",
+            "exists": true,
+            "components": 237,
+            "nodes": 651,
+            "named_nodes": 648,
+            "named_nets": 101,
+            "tool": "Eeschema 10.0.7",
+            "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_sch"
+          }
+        }
+      },
+      "control": {
+        "readability_source": "verification/engineering_checks/schematic_readability_control.json",
+        "totals": {
+          "V2": {
+            "symbols": 210,
+            "power_symbols": 3,
+            "wires": 667,
+            "junctions": 0,
+            "global_labels": 670,
+            "global_labels_on_pin_stubs": 667,
+            "name_tags": 3,
+            "hierarchical_labels": 0,
+            "local_labels": 0,
+            "no_connects": 88,
+            "sheet_pins": 0,
+            "crossings": 0,
+            "four_way_junctions": 0,
+            "text_overlaps": 0,
+            "off_grid_points": 0,
+            "isolated_symbols": 0,
+            "dangling_wire_ends": 0,
+            "connected_pins": 667,
+            "wired_pins": 0,
+            "labelled_pins": 667,
+            "wire_length_mm": 1694.18,
+            "wired_pin_share": 0.0,
+            "single_global_labels": 0,
+            "sheets": 10,
+            "continuation_sheets": 1,
+            "papers": [
+              "A3"
+            ]
+          },
+          "V2.1": {
+            "symbols": 210,
+            "power_symbols": 182,
+            "wires": 1307,
+            "junctions": 263,
+            "global_labels": 207,
+            "global_labels_on_pin_stubs": 7,
+            "name_tags": 200,
+            "hierarchical_labels": 162,
+            "local_labels": 0,
+            "no_connects": 88,
+            "sheet_pins": 143,
+            "crossings": 5,
+            "four_way_junctions": 0,
+            "text_overlaps": 3,
+            "off_grid_points": 0,
+            "isolated_symbols": 0,
+            "dangling_wire_ends": 0,
+            "connected_pins": 667,
+            "wired_pins": 505,
+            "labelled_pins": 162,
+            "wire_length_mm": 7711.44,
+            "wired_pin_share": 0.7571,
+            "single_global_labels": 18,
+            "sheets": 9,
+            "continuation_sheets": 0,
+            "papers": [
+              "A2",
+              "A3"
+            ]
+          }
+        },
+        "delta": {
+          "symbols": 0,
+          "power_symbols": 179,
+          "wires": 640,
+          "junctions": 263,
+          "global_labels": -463,
+          "global_labels_on_pin_stubs": -660,
+          "name_tags": 197,
+          "hierarchical_labels": 162,
+          "local_labels": 0,
+          "no_connects": 0,
+          "sheet_pins": 143,
+          "crossings": 5,
+          "four_way_junctions": 0,
+          "text_overlaps": 3,
+          "off_grid_points": 0,
+          "isolated_symbols": 0,
+          "dangling_wire_ends": 0,
+          "connected_pins": 0,
+          "wired_pins": 505,
+          "labelled_pins": -505,
+          "wire_length_mm": 6017.26,
+          "wired_pin_share": 0.7571,
+          "single_global_labels": 18,
+          "sheets": -1,
+          "continuation_sheets": -1
+        },
+        "pages": {
+          "01_aux_12v": {
+            "V2": {
+              "files": [
+                "01_aux_12v.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.345
+              ],
+              "wires": 42,
+              "global_labels_on_pin_stubs": 42,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 3,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "01_aux_12v.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.345
+              ],
+              "wires": 82,
+              "global_labels_on_pin_stubs": 2,
+              "hierarchical_labels": 4,
+              "junctions": 15,
+              "power_symbols": 16,
+              "crossings": 0,
+              "text_overlaps": 2,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.7857,
+              "sheets": 1
+            }
+          },
+          "02_supplies": {
+            "V2": {
+              "files": [
+                "02_supplies.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.825
+              ],
+              "wires": 93,
+              "global_labels_on_pin_stubs": 93,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "02_supplies.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.65
+              ],
+              "wires": 155,
+              "global_labels_on_pin_stubs": 2,
+              "hierarchical_labels": 3,
+              "junctions": 35,
+              "power_symbols": 40,
+              "crossings": 0,
+              "text_overlaps": 1,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.9247,
+              "sheets": 1
+            }
+          },
+          "03_dsp": {
+            "V2": {
+              "files": [
+                "03_dsp.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.276
+              ],
+              "wires": 115,
+              "global_labels_on_pin_stubs": 115,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "03_dsp.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.305
+              ],
+              "wires": 171,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 52,
+              "junctions": 54,
+              "power_symbols": 9,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.5478,
+              "sheets": 1
+            }
+          },
+          "04_dsp_decoupling": {
+            "V2": {
+              "files": [
+                "04_dsp_decoupling.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.538
+              ],
+              "wires": 66,
+              "global_labels_on_pin_stubs": 66,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "04_dsp_decoupling.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.329
+              ],
+              "wires": 129,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 3,
+              "junctions": 56,
+              "power_symbols": 7,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.9545,
+              "sheets": 1
+            }
+          },
+          "05_clock_debug": {
+            "V2": {
+              "files": [
+                "05_clock_debug.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.407
+              ],
+              "wires": 49,
+              "global_labels_on_pin_stubs": 49,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "05_clock_debug.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.662
+              ],
+              "wires": 81,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 14,
+              "junctions": 12,
+              "power_symbols": 22,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.8776,
+              "sheets": 1
+            }
+          },
+          "06_pwm_fault_logic": {
+            "V2": {
+              "files": [
+                "06_pwm_fault_logic.kicad_sch",
+                "06_pwm_fault_logic_2.kicad_sch"
+              ],
+              "papers": [
+                "A3",
+                "A3"
+              ],
+              "paper_fill": [
+                0.77,
+                0.264
+              ],
+              "wires": 162,
+              "global_labels_on_pin_stubs": 162,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 2
+            },
+            "V2.1": {
+              "files": [
+                "06_pwm_fault_logic.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.68
+              ],
+              "wires": 314,
+              "global_labels_on_pin_stubs": 3,
+              "hierarchical_labels": 35,
+              "junctions": 47,
+              "power_symbols": 49,
+              "crossings": 5,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.7346,
+              "sheets": 1
+            }
+          },
+          "07_adc_frontend": {
+            "V2": {
+              "files": [
+                "07_adc_frontend.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.49
+              ],
+              "wires": 56,
+              "global_labels_on_pin_stubs": 56,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "07_adc_frontend.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.517
+              ],
+              "wires": 76,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 17,
+              "junctions": 14,
+              "power_symbols": 23,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.8393,
+              "sheets": 1
+            }
+          },
+          "08_interconnect": {
+            "V2": {
+              "files": [
+                "08_interconnect.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.848
+              ],
+              "wires": 84,
+              "global_labels_on_pin_stubs": 84,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.0,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "08_interconnect.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.581
+              ],
+              "wires": 156,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 34,
+              "junctions": 30,
+              "power_symbols": 16,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": 0.6071,
+              "sheets": 1
+            }
+          },
+          "root": {
+            "V2": {
+              "files": [
+                "AIPE_SiC_Buck_Control.kicad_sch"
+              ],
+              "papers": [
+                "A3"
+              ],
+              "paper_fill": [
+                0.371
+              ],
+              "wires": 0,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": null,
+              "sheets": 1
+            },
+            "V2.1": {
+              "files": [
+                "AIPE_SiC_Buck_Control.kicad_sch"
+              ],
+              "papers": [
+                "A2"
+              ],
+              "paper_fill": [
+                0.628
+              ],
+              "wires": 143,
+              "global_labels_on_pin_stubs": 0,
+              "hierarchical_labels": 0,
+              "junctions": 0,
+              "power_symbols": 0,
+              "crossings": 0,
+              "text_overlaps": 0,
+              "isolated_symbols": 0,
+              "wired_pin_share": null,
+              "sheets": 1
+            }
+          }
+        },
+        "planner": {
+          "name_tags": 64,
+          "exceptions": [],
+          "root": {
+            "paper": "A2",
+            "sheet_pins": 143,
+            "global_anchors": 143
+          },
+          "sheets": {
+            "01_aux_12v": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.3
+            },
+            "02_supplies": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 3,
+              "layout_variant": "below",
+              "paper": "A2",
+              "paper_fill": 0.436
+            },
+            "03_dsp": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.384
+            },
+            "04_dsp_decoupling": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.367
+            },
+            "05_clock_debug": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 0,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.446
+            },
+            "06_pwm_fault_logic": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 1,
+              "layout_variant": "beside",
+              "paper": "A2",
+              "paper_fill": 0.527
+            },
+            "07_adc_frontend": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 2,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.552
+            },
+            "08_interconnect": {
+              "label_fallbacks": 0,
+              "loop_tags": 0,
+              "label_pairs": 1,
+              "layout_variant": "auto",
+              "paper": "A3",
+              "paper_fill": 0.305
+            }
+          },
+          "totals": {
+            "label_fallbacks": 0,
+            "loop_tags": 0,
+            "label_pairs": 7
+          }
+        },
+        "sheets_v2": [
+          {
+            "file": "01_aux_12v.kicad_sch",
+            "paper": "A3",
+            "title": "12 V entry, TVS and TPS26400 eFuse",
+            "rev": "V2"
+          },
+          {
+            "file": "02_supplies.kicad_sch",
+            "paper": "A3",
+            "title": "5 V buck, dual LDO, supervisor and reset",
+            "rev": "V2"
+          },
+          {
+            "file": "03_dsp.kicad_sch",
+            "paper": "A3",
+            "title": "TMS320F28335 - all 176 pins",
+            "rev": "V2"
+          },
+          {
+            "file": "04_dsp_decoupling.kicad_sch",
+            "paper": "A3",
+            "title": "DSP per-pin bypass and ADC reference",
+            "rev": "V2"
+          },
+          {
+            "file": "05_clock_debug.kicad_sch",
+            "paper": "A3",
+            "title": "Oscillator, boot straps, JTAG, UART",
+            "rev": "V2"
+          },
+          {
+            "file": "06_pwm_fault_logic.kicad_sch",
+            "paper": "A3",
+            "title": "PWM gating, fault latch, combiners, comparators",
+            "rev": "V2"
+          },
+          {
+            "file": "06_pwm_fault_logic_2.kicad_sch",
+            "paper": "A3",
+            "title": "PWM gating, fault latch, combiners, comparators (2)",
+            "rev": "V2"
+          },
+          {
+            "file": "07_adc_frontend.kicad_sch",
+            "paper": "A3",
+            "title": "ADC conditioning, NTC readout, monitors",
+            "rev": "V2"
+          },
+          {
+            "file": "08_interconnect.kicad_sch",
+            "paper": "A3",
+            "title": "Mezzanine header, connectors, LEDs, test points, mounting",
+            "rev": "V2"
+          },
+          {
+            "file": "AIPE_SiC_Buck_Control.kicad_sch",
+            "paper": "A3",
+            "title": "AIPE V2 SiC buck control board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine",
+            "rev": "V2"
+          }
+        ],
+        "sheets_v21": [
+          {
+            "file": "01_aux_12v.kicad_sch",
+            "paper": "A3",
+            "title": "12 V entry, TVS and TPS26400 eFuse",
+            "rev": "V2.1"
+          },
+          {
+            "file": "02_supplies.kicad_sch",
+            "paper": "A2",
+            "title": "5 V buck, dual LDO, supervisor and reset",
+            "rev": "V2.1"
+          },
+          {
+            "file": "03_dsp.kicad_sch",
+            "paper": "A3",
+            "title": "TMS320F28335 - all 176 pins",
+            "rev": "V2.1"
+          },
+          {
+            "file": "04_dsp_decoupling.kicad_sch",
+            "paper": "A3",
+            "title": "DSP per-pin bypass and ADC reference",
+            "rev": "V2.1"
+          },
+          {
+            "file": "05_clock_debug.kicad_sch",
+            "paper": "A3",
+            "title": "Oscillator, boot straps, JTAG, UART",
+            "rev": "V2.1"
+          },
+          {
+            "file": "06_pwm_fault_logic.kicad_sch",
+            "paper": "A2",
+            "title": "PWM gating, fault latch, combiners, comparators",
+            "rev": "V2.1"
+          },
+          {
+            "file": "07_adc_frontend.kicad_sch",
+            "paper": "A3",
+            "title": "ADC conditioning, NTC readout, monitors",
+            "rev": "V2.1"
+          },
+          {
+            "file": "08_interconnect.kicad_sch",
+            "paper": "A3",
+            "title": "Mezzanine header, connectors, LEDs, test points, mounting",
+            "rev": "V2.1"
+          },
+          {
+            "file": "AIPE_SiC_Buck_Control.kicad_sch",
+            "paper": "A2",
+            "title": "AIPE V2 SiC buck control board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine",
+            "rev": "V2.1"
+          }
+        ],
+        "gates": {
+          "source": "verification/schematic_gates/control/schematic_gates.json",
+          "passed": true,
+          "gates": {
+            "dru_identical": {
+              "passed": true,
+              "identical_to_legacy_generation": true,
+              "identical_to_v2_release": false,
+              "bytes_new": 8439,
+              "bytes_v2": 7924
+            },
+            "net_settings_equal": {
+              "passed": true,
+              "equal_to_legacy_generation": true,
+              "equal_to_v2_release": true,
+              "classes": 11,
+              "classes_v2": 11
+            },
+            "erc_zero": {
+              "passed": true,
+              "findings": 0,
+              "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\control\\erc\\20261012T095008Z-erc-d5803a1d\\run.json",
+              "finding_types": {},
+              "erc_nonfootprint_findings": 0
+            },
+            "netlist_vs_model": {
+              "passed": true,
+              "export_exit": 0,
+              "refs": 207,
+              "duplicates": [],
+              "exact": true,
+              "pads": 667,
+              "mismatch_count": 0,
+              "net_names_equal": true,
+              "extra_names": [],
+              "missing_names": []
+            },
+            "netlist_vs_v2": {
+              "passed": true,
+              "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\manufacturing\\control_board\\netlist.xml",
+              "exact": true,
+              "pads": 667,
+              "mismatch_count": 0,
+              "net_names_equal": true,
+              "extra_names": [],
+              "missing_names": []
+            },
+            "paper_fill": {
+              "passed": true,
+              "min_fill": 0.25,
+              "base_paper": "A3",
+              "escalated": [
+                {
+                  "sheet": "02_supplies.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.65
+                },
+                {
+                  "sheet": "06_pwm_fault_logic.kicad_sch",
+                  "paper": "A2",
+                  "fill": 0.68
+                }
+              ],
+              "text_overlaps": 3,
+              "name_tags": 200,
+              "note": "name_tags are single global labels: KiCad's default-ignored single_global_label check would report one warning per tag"
+            }
+          }
+        },
+        "netlist_check": {
+          "source": "verification/netlist_check_control.json",
+          "status": "passed",
+          "exact_match": true,
+          "model": {
+            "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\circuit_control.json",
+            "sha256": "c5c0cdd4ed70f38e848a78598ef80d88437674773d4ce387f4dc3ca0b27ffac8",
+            "parts": 207,
+            "dnp_parts": 1,
+            "mapped_pins": 667,
+            "named_nets": 111
+          },
+          "schematic_netlist": {
+            "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\manufacturing\\control_board\\netlist.xml",
+            "sha256": "4f3e726ab67fa8b267f9a45058bf023af5b62227df75bab79943a1c84eb68b00",
+            "exists": true,
+            "components": 207,
+            "nodes": 755,
+            "named_nodes": 667,
+            "named_nets": 111,
+            "tool": "Eeschema 10.0.7",
+            "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_sch"
+          }
+        }
+      }
+    },
+    "sections": {
+      "source": "review/schematic_sections/sections.json",
+      "status": "AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED",
+      "generation": "V2.1",
+      "dpi": 200,
+      "renderer": "pymupdf 1.28.2",
+      "sections": {
+        "power_gate_driver_hs": {
+          "board": "power",
+          "circuit": "HS isolated gate driver UCC21710-Q1 (U1): PWM input, gate network R17-R23, status pull-ups, DESAT network D3/D4/R24-R26, decoupling C20-C33",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_power.pdf",
+            "page": 4,
+            "pages_in_pdf": 12,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              15,
+              15,
+              405,
+              215
+            ],
+            "png": "power_gate_driver_hs_v2.png",
+            "px": [
+              3071,
+              1575
+            ],
+            "bytes": 151062,
+            "sha256": "8e7f8a6993830ae1e3fa7e5586cfb0e4618a5f01516c787080242c55439e391c"
+          },
+          "v21": {
+            "pdf": "review/schematic_power.pdf",
+            "page": 3,
+            "pages_in_pdf": 7,
+            "paper_mm": [
+              594,
+              420
+            ],
+            "clip_mm": [
+              5,
+              35,
+              275,
+              285
+            ],
+            "png": "power_gate_driver_hs_v21.png",
+            "px": [
+              2127,
+              1970
+            ],
+            "bytes": 138469,
+            "sha256": "2cf4143aa90fbce06ccf765692dc5c32778dd5755da634d34884486d891fe374"
+          }
+        },
+        "power_hs_bias": {
+          "board": "power",
+          "circuit": "HS isolated bias supply UCC14141-Q1 (U2) with L2, R29-R34, C34-C39",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_power.pdf",
+            "page": 5,
+            "pages_in_pdf": 12,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              15,
+              15,
+              405,
+              150
+            ],
+            "png": "power_hs_bias_v2.png",
+            "px": [
+              3071,
+              1064
+            ],
+            "bytes": 131702,
+            "sha256": "4ec7f03e19f2f791497fdef2ea94ace61b96f40d026b35bf489a4fc4236f6558"
+          },
+          "v21": {
+            "pdf": "review/schematic_power.pdf",
+            "page": 3,
+            "pages_in_pdf": 7,
+            "paper_mm": [
+              594,
+              420
+            ],
+            "clip_mm": [
+              275,
+              35,
+              565,
+              265
+            ],
+            "png": "power_hs_bias_v21.png",
+            "px": [
+              2284,
+              1812
+            ],
+            "bytes": 124452,
+            "sha256": "99dcd8334dbd8bc408307bdfa517b5f4a2a05234bb6d8ac535fd52eee766dd5a"
+          }
+        },
+        "power_power_stage": {
+          "board": "power",
+          "circuit": "whole power-stage sheet: terminals J1-J6, precharge RT1, MOV RV1, half bridge Q1/Q2, HF capacitor bank and DC-link capacitors C1-C12, output inductor L1, TMCS1133 current sensor U10, output capacitors C13/C14, bleeders R7-R10 and LED D2 (V2 continuation sheet (2) holds C17-C19, R13-R16 and the H1 stud)",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_power.pdf",
+            "page": 2,
+            "pages_in_pdf": 12,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              5,
+              5,
+              415,
+              292
+            ],
+            "png": "power_power_stage_v2.png",
+            "px": [
+              3229,
+              2261
+            ],
+            "bytes": 211253,
+            "sha256": "57e8b8622a7cc94a9aad629674be323a961f37073c920e937783f19350b82816"
+          },
+          "v21": {
+            "pdf": "review/schematic_power.pdf",
+            "page": 2,
+            "pages_in_pdf": 7,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              5,
+              5,
+              415,
+              292
+            ],
+            "png": "power_power_stage_v21.png",
+            "px": [
+              3229,
+              2261
+            ],
+            "bytes": 300319,
+            "sha256": "8ccfc29de757a809d3a43832a871312d90fd2f102829ab448c7b85b8099c0ec7"
+          }
+        },
+        "control_12v_entry": {
+          "board": "control",
+          "circuit": "12 V entry J1, TVS D1, TPS26400 eFuse U1 with its ILIM / dVdT / monitor network R1-R9, C1-C3",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_control.pdf",
+            "page": 2,
+            "pages_in_pdf": 10,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              15,
+              15,
+              405,
+              130
+            ],
+            "png": "control_12v_entry_v2.png",
+            "px": [
+              3071,
+              906
+            ],
+            "bytes": 109108,
+            "sha256": "1aa599703bd78531bff7b2526e9b0d75e6e76c32fae01cbb08804b1f13e81684"
+          },
+          "v21": {
+            "pdf": "review/schematic_control.pdf",
+            "page": 2,
+            "pages_in_pdf": 9,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              5,
+              38,
+              265,
+              150
+            ],
+            "png": "control_12v_entry_v21.png",
+            "px": [
+              2048,
+              883
+            ],
+            "bytes": 89587,
+            "sha256": "4bf9092b6c8a01f21ab25dd855821881e881d62274756af01f965ebf819a1681"
+          }
+        },
+        "control_supplies": {
+          "board": "control",
+          "circuit": "TPS54302 5 V buck U2/L1, TPS767D301 dual LDO U3 with core-first sequencing Q1, BAT54 D2, TPS3808 supervisor U4, reset header J2",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_control.pdf",
+            "page": 3,
+            "pages_in_pdf": 10,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              15,
+              15,
+              405,
+              250
+            ],
+            "png": "control_supplies_v2.png",
+            "px": [
+              3071,
+              1851
+            ],
+            "bytes": 195952,
+            "sha256": "2462f64280ca9cf71873d0395c59c865cf4ce06325836c6ed5218fddf43ef48b"
+          },
+          "v21": {
+            "pdf": "review/schematic_control.pdf",
+            "page": 3,
+            "pages_in_pdf": 9,
+            "paper_mm": [
+              594,
+              420
+            ],
+            "clip_mm": [
+              5,
+              38,
+              415,
+              335
+            ],
+            "png": "control_supplies_v21.png",
+            "px": [
+              3229,
+              2339
+            ],
+            "bytes": 218705,
+            "sha256": "4b9210e77b19746c9c2b59bad37598f329d3a165e9ee8bd8d37fc0ad61b20429"
+          }
+        },
+        "control_dsp": {
+          "board": "control",
+          "circuit": "TMS320F28335 units U5A-U5D and crystals X1/X2",
+          "v2": {
+            "pdf": "releases/v2/review/schematic_control.pdf",
+            "page": 4,
+            "pages_in_pdf": 10,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              15,
+              15,
+              345,
+              130
+            ],
+            "png": "control_dsp_v2.png",
+            "px": [
+              2599,
+              906
+            ],
+            "bytes": 271685,
+            "sha256": "e72ed8727802f7a459187ead41bf27d7bf0b7048e681242e97fbb04f59c03620"
+          },
+          "v21": {
+            "pdf": "review/schematic_control.pdf",
+            "page": 4,
+            "pages_in_pdf": 9,
+            "paper_mm": [
+              420,
+              297
+            ],
+            "clip_mm": [
+              5,
+              38,
+              200,
+              250
+            ],
+            "png": "control_dsp_v21.png",
+            "px": [
+              1536,
+              1670
+            ],
+            "bytes": 273296,
+            "sha256": "568cbd7ffeda366c5e74fafa8ea79cc4727e051661af143e27c591b0eb2383bf"
+          }
+        }
+      }
+    },
+    "pdfs": {
+      "releases/v2/review/schematic_power.pdf": {
+        "pages": 12,
+        "papers_mm": [
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ]
+        ]
+      },
+      "review/schematic_power.pdf": {
+        "pages": 7,
+        "papers_mm": [
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            420,
+            297
+          ]
+        ]
+      },
+      "releases/v2/review/schematic_control.pdf": {
+        "pages": 10,
+        "papers_mm": [
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ]
+        ]
+      },
+      "review/schematic_control.pdf": {
+        "pages": 9,
+        "papers_mm": [
+          [
+            594,
+            420
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            594,
+            420
+          ],
+          [
+            420,
+            297
+          ],
+          [
+            420,
+            297
+          ]
+        ]
+      }
+    }
+  },
+  "boards": {
+    "power": {
+      "board_v2": {
+        "file": "releases/v2/kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb",
+        "sha256": "b1bb5698194b9aea681cf10ee529eaa77e9510ea0241b889ead7221b86f4f7a2",
+        "routing_seconds": 523.657,
+        "tracks": 4755,
+        "vias": 606,
+        "unresolved_count": 0
+      },
+      "board_v21": {
+        "file": "kicad/power_board/AIPE_SiC_Buck_Power.kicad_pcb",
+        "sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
+        "routing_seconds": 769.25,
+        "tracks_incl_arcs": 3136,
+        "arcs": 145,
+        "vias": 606,
+        "unresolved": []
+      },
+      "style": {
+        "diagonal": false,
+        "bend_penalty_cells": [
+          0.0,
+          0.0
+        ],
+        "via_cost_cells": 8,
+        "heuristic_weight": 1.0,
+        "diagonal_pref_factor": 1.075,
+        "simplify": "octilinear",
+        "chamfer": true,
+        "arcs": true,
+        "arc_radius_mm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "arc_steps": 5,
+        "arc_dilate_cells": 2,
+        "min_turn_deg": 5.0,
+        "max_turn_deg": 170.0,
+        "corner_keep_mm": {
+          "via": null,
+          "port": 0.0
+        },
+        "straight_nets": [
+          "PE"
+        ],
+        "max_width_for_arcs_mm": 0.6,
+        "smooth_power": false,
+        "smooth_critical": false,
+        "stages": [
+          "signal",
+          "negotiate",
+          "retry",
+          "critical"
+        ],
+        "l_short_mm": null,
+        "eps": 0.01
+      },
+      "beautify": {
+        "enabled": true,
+        "simplify": "octilinear",
+        "arcs": true,
+        "chains": 944,
+        "rewritten": 221,
+        "kept": 723,
+        "kept_reasons": {
+          "unchanged": 125,
+          "straight": 596,
+          "clearance_recheck": 2
+        },
+        "policies": {
+          "arc": 944
+        },
+        "segments_before": 4339,
+        "segments_after": 2575,
+        "arcs_after": 145,
+        "fillets": 145,
+        "bends_before": {
+          "90": 3395
+        },
+        "bends_after": {
+          "90": 917,
+          "45": 571
+        },
+        "length_before_mm": 5081.125,
+        "length_after_mm": 4882.181,
+        "exceptions_by_reason": {
+          "pad_exit": 277,
+          "clearance": 451,
+          "leg_too_short": 752
+        },
+        "seconds": 4.875
+      },
+      "totals": {
+        "source": "verification/engineering_checks/routing_quality_power_compare.json",
+        "v2": {
+          "segments": 4755,
+          "arcs": 0,
+          "vias": 606,
+          "length_mm": 5744.589,
+          "arc_length_mm": 0,
+          "joints": 3727,
+          "bends_90": 3609,
+          "bends_45": 6,
+          "bends_other": 109,
+          "direction_changes": 3724,
+          "stair_runs": 382,
+          "zigzag_runs": 12,
+          "short_run_segments": 2721,
+          "short_segments": 2914,
+          "short_segment_runs": 448,
+          "arc_joints": 0,
+          "arc_joints_discontinuous": 0,
+          "chains": 1028,
+          "degree2_joints": 3972,
+          "degree2_bends_90": 3739,
+          "bends_per_100mm": 64.83,
+          "efficiency": 0.7759
+        },
+        "v21": {
+          "segments": 2991,
+          "arcs": 145,
+          "vias": 606,
+          "length_mm": 5545.646,
+          "arc_length_mm": 56.422,
+          "joints": 2107,
+          "bends_90": 1121,
+          "bends_45": 583,
+          "bends_other": 110,
+          "direction_changes": 1814,
+          "stair_runs": 124,
+          "zigzag_runs": 26,
+          "short_run_segments": 835,
+          "short_segments": 1225,
+          "short_segment_runs": 165,
+          "arc_joints": 287,
+          "arc_joints_discontinuous": 0,
+          "chains": 1029,
+          "degree2_joints": 2065,
+          "degree2_bends_90": 1251,
+          "bends_per_100mm": 32.71,
+          "efficiency": 0.8061
+        },
+        "delta": {
+          "segments": {
+            "before": 4755,
+            "after": 2991,
+            "delta": -1764,
+            "ratio": 0.629
+          },
+          "arcs": {
+            "before": 0,
+            "after": 145,
+            "delta": 145,
+            "ratio": null
+          },
+          "vias": {
+            "before": 606,
+            "after": 606,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          "length_mm": {
+            "before": 5744.589,
+            "after": 5545.646,
+            "delta": -198.943,
+            "ratio": 0.9654
+          },
+          "arc_length_mm": {
+            "before": 0,
+            "after": 56.422,
+            "delta": 56.422,
+            "ratio": null
+          },
+          "joints": {
+            "before": 3727,
+            "after": 2107,
+            "delta": -1620,
+            "ratio": 0.5653
+          },
+          "bends_90": {
+            "before": 3609,
+            "after": 1121,
+            "delta": -2488,
+            "ratio": 0.3106
+          },
+          "bends_45": {
+            "before": 6,
+            "after": 583,
+            "delta": 577,
+            "ratio": 97.1667
+          },
+          "bends_other": {
+            "before": 109,
+            "after": 110,
+            "delta": 1,
+            "ratio": 1.0092
+          },
+          "direction_changes": {
+            "before": 3724,
+            "after": 1814,
+            "delta": -1910,
+            "ratio": 0.4871
+          },
+          "stair_runs": {
+            "before": 382,
+            "after": 124,
+            "delta": -258,
+            "ratio": 0.3246
+          },
+          "zigzag_runs": {
+            "before": 12,
+            "after": 26,
+            "delta": 14,
+            "ratio": 2.1667
+          },
+          "short_run_segments": {
+            "before": 2721,
+            "after": 835,
+            "delta": -1886,
+            "ratio": 0.3069
+          },
+          "short_segments": {
+            "before": 2914,
+            "after": 1225,
+            "delta": -1689,
+            "ratio": 0.4204
+          },
+          "short_segment_runs": {
+            "before": 448,
+            "after": 165,
+            "delta": -283,
+            "ratio": 0.3683
+          },
+          "arc_joints": {
+            "before": 0,
+            "after": 287,
+            "delta": 287,
+            "ratio": null
+          },
+          "arc_joints_discontinuous": {
+            "before": 0,
+            "after": 0,
+            "delta": 0,
+            "ratio": null
+          },
+          "chains": {
+            "before": 1028,
+            "after": 1029,
+            "delta": 1,
+            "ratio": 1.001
+          },
+          "degree2_joints": {
+            "before": 3972,
+            "after": 2065,
+            "delta": -1907,
+            "ratio": 0.5199
+          },
+          "degree2_bends_90": {
+            "before": 3739,
+            "after": 1251,
+            "delta": -2488,
+            "ratio": 0.3346
+          },
+          "bends_per_100mm": {
+            "before": 64.83,
+            "after": 32.71,
+            "delta": -32.12,
+            "ratio": 0.5046
+          },
+          "efficiency": {
+            "before": 0.7759,
+            "after": 0.8061,
+            "delta": 0.0302
+          }
+        }
+      },
+      "by_layer": {
+        "v2": {
+          "B.Cu": {
+            "segments": 1824,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 2177.593,
+            "arc_length_mm": 0,
+            "joints": 1532,
+            "bends_90": 1471,
+            "bends_45": 4,
+            "bends_other": 56,
+            "direction_changes": 1531,
+            "stair_runs": 150,
+            "zigzag_runs": 10,
+            "short_run_segments": 1143,
+            "short_segments": 1178,
+            "short_segment_runs": 176,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 292,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 70.31,
+            "efficiency": 0.7759
+          },
+          "F.Cu": {
+            "segments": 1765,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 1988.622,
+            "arc_length_mm": 0,
+            "joints": 1211,
+            "bends_90": 1154,
+            "bends_45": 2,
+            "bends_other": 53,
+            "direction_changes": 1209,
+            "stair_runs": 121,
+            "zigzag_runs": 1,
+            "short_run_segments": 823,
+            "short_segments": 940,
+            "short_segment_runs": 149,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 554,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 60.8,
+            "efficiency": 0.7759
+          },
+          "In2.Cu": {
+            "segments": 1166,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 1578.375,
+            "arc_length_mm": 0,
+            "joints": 984,
+            "bends_90": 984,
+            "bends_45": 0,
+            "bends_other": 0,
+            "direction_changes": 984,
+            "stair_runs": 111,
+            "zigzag_runs": 1,
+            "short_run_segments": 755,
+            "short_segments": 796,
+            "short_segment_runs": 123,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 182,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 62.34,
+            "efficiency": 0.7759
+          }
+        },
+        "v21": {
+          "B.Cu": {
+            "segments": 1091,
+            "arcs": 66,
+            "vias": 0,
+            "length_mm": 2089.562,
+            "arc_length_mm": 25.823,
+            "joints": 865,
+            "bends_90": 472,
+            "bends_45": 202,
+            "bends_other": 56,
+            "direction_changes": 730,
+            "stair_runs": 54,
+            "zigzag_runs": 9,
+            "short_run_segments": 373,
+            "short_segments": 471,
+            "short_segment_runs": 60,
+            "arc_joints": 132,
+            "arc_joints_discontinuous": 0,
+            "chains": 292,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 34.94,
+            "efficiency": 0.8061
+          },
+          "F.Cu": {
+            "segments": 1257,
+            "arcs": 49,
+            "vias": 0,
+            "length_mm": 1932.525,
+            "arc_length_mm": 18.857,
+            "joints": 751,
+            "bends_90": 433,
+            "bends_45": 167,
+            "bends_other": 54,
+            "direction_changes": 654,
+            "stair_runs": 39,
+            "zigzag_runs": 9,
+            "short_run_segments": 277,
+            "short_segments": 491,
+            "short_segment_runs": 66,
+            "arc_joints": 95,
+            "arc_joints_discontinuous": 0,
+            "chains": 555,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 33.84,
+            "efficiency": 0.8061
+          },
+          "In2.Cu": {
+            "segments": 643,
+            "arcs": 30,
+            "vias": 0,
+            "length_mm": 1523.559,
+            "arc_length_mm": 11.742,
+            "joints": 491,
+            "bends_90": 216,
+            "bends_45": 214,
+            "bends_other": 0,
+            "direction_changes": 430,
+            "stair_runs": 31,
+            "zigzag_runs": 8,
+            "short_run_segments": 185,
+            "short_segments": 263,
+            "short_segment_runs": 39,
+            "arc_joints": 60,
+            "arc_joints_discontinuous": 0,
+            "chains": 182,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 28.22,
+            "efficiency": 0.8061
+          }
+        }
+      },
+      "by_attribution": {
+        "v2": {
+          "pad_link": {
+            "segments": 741,
+            "arcs": 0,
+            "length_mm": 1355.37,
+            "bends_90": 285,
+            "bends_45": 3,
+            "bends_other": 65,
+            "direction_changes": 353,
+            "stair_runs": 0,
+            "zigzag_runs": 0,
+            "short_segments": 132
+          },
+          "router": {
+            "segments": 4014,
+            "arcs": 0,
+            "length_mm": 4389.219,
+            "bends_90": 3324,
+            "bends_45": 3,
+            "bends_other": 44,
+            "direction_changes": 3371,
+            "stair_runs": 382,
+            "zigzag_runs": 12,
+            "short_segments": 2782
+          }
+        },
+        "v21": {
+          "pad_link": {
+            "segments": 742,
+            "arcs": 1,
+            "length_mm": 1361.931,
+            "bends_90": 266,
+            "bends_45": 22,
+            "bends_other": 65,
+            "direction_changes": 353,
+            "stair_runs": 0,
+            "zigzag_runs": 0,
+            "short_segments": 132
+          },
+          "router": {
+            "segments": 2249,
+            "arcs": 144,
+            "length_mm": 4183.715,
+            "bends_90": 855,
+            "bends_45": 561,
+            "bends_other": 45,
+            "direction_changes": 1461,
+            "stair_runs": 124,
+            "zigzag_runs": 26,
+            "short_segments": 1093
+          }
+        }
+      },
+      "remaining_90_by_reason": {
+        "v2": {
+          "pad_link": 285,
+          "unexplained": 3324
+        },
+        "v21": {
+          "pad_exit": 252,
+          "clearance": 43,
+          "leg_too_short": 614,
+          "unexplained": 141,
+          "pad_link": 71
+        }
+      },
+      "beautify_exceptions_by_reason": {
+        "pad_exit": 277,
+        "clearance": 451,
+        "leg_too_short": 752
+      },
+      "arcs": {
+        "count": 145,
+        "radius_mm": {
+          "min": 0.3044,
+          "median": 0.5004,
+          "max": 0.6965
+        },
+        "joints": 287,
+        "discontinuous": 0,
+        "tangency_failures": []
+      },
+      "worst_cases": {
+        "v2": {
+          "short_runs": [
+            {
+              "net": "12V_PROT",
+              "layer": "In2.Cu",
+              "kind": "stair",
+              "segments": 38,
+              "length_mm": 6.375,
+              "from_mm": [
+                167.25,
+                173.375
+              ],
+              "to_mm": [
+                170.875,
+                176.125
+              ]
+            },
+            {
+              "net": "FLT_L_N",
+              "layer": "In2.Cu",
+              "kind": "stair",
+              "segments": 37,
+              "length_mm": 6.0,
+              "from_mm": [
+                166.625,
+                174.75
+              ],
+              "to_mm": [
+                169.875,
+                177.5
+              ]
+            },
+            {
+              "net": "PWM_H",
+              "layer": "In2.Cu",
+              "kind": "stair",
+              "segments": 26,
+              "length_mm": 5.625,
+              "from_mm": [
+                168.0,
+                173.0
+              ],
+              "to_mm": [
+                171.25,
+                175.375
+              ]
+            },
+            {
+              "net": "GNDP_S",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 25,
+              "length_mm": 4.875,
+              "from_mm": [
+                160.25,
+                151.625
+              ],
+              "to_mm": [
+                161.375,
+                152.625
+              ]
+            },
+            {
+              "net": "12V_PROT",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 23,
+              "length_mm": 4.625,
+              "from_mm": [
+                147.25,
+                162.125
+              ],
+              "to_mm": [
+                149.625,
+                164.375
+              ]
+            },
+            {
+              "net": "BIAS_EN",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 22,
+              "length_mm": 3.25,
+              "from_mm": [
+                212.25,
+                164.0
+              ],
+              "to_mm": [
+                213.625,
+                162.125
+              ]
+            },
+            {
+              "net": "FLT_H_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 21,
+              "length_mm": 3.75,
+              "from_mm": [
+                159.75,
+                174.5
+              ],
+              "to_mm": [
+                161.625,
+                176.375
+              ]
+            },
+            {
+              "net": "PWM_L",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 19,
+              "length_mm": 3.5,
+              "from_mm": [
+                159.5,
+                172.0
+              ],
+              "to_mm": [
+                161.25,
+                173.75
+              ]
+            },
+            {
+              "net": "RDY_L",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 18,
+              "length_mm": 3.875,
+              "from_mm": [
+                173.75,
+                165.5
+              ],
+              "to_mm": [
+                175.375,
+                167.75
+              ]
+            },
+            {
+              "net": "VEE_H",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 18,
+              "length_mm": 3.875,
+              "from_mm": [
+                75.5,
+                138.375
+              ],
+              "to_mm": [
+                77.625,
+                138.375
+              ]
+            }
+          ],
+          "low_efficiency": [
+            {
+              "net": "VIN_OUTN",
+              "layer": "F.Cu",
+              "from_mm": [
+                180.365,
+                150.855
+              ],
+              "to_mm": [
+                181.125,
+                167.0
+              ],
+              "span_mm": 16.163,
+              "routed_mm": 79.397,
+              "efficiency": 0.204
+            },
+            {
+              "net": "PG_BIAS_H_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                155.625,
+                173.375
+              ],
+              "to_mm": [
+                172.875,
+                152.75
+              ],
+              "span_mm": 26.888,
+              "routed_mm": 127.375,
+              "efficiency": 0.211
+            },
+            {
+              "net": "VIN_OUTP",
+              "layer": "In2.Cu",
+              "from_mm": [
+                181.625,
+                153.25
+              ],
+              "to_mm": [
+                176.625,
+                169.5
+              ],
+              "span_mm": 17.002,
+              "routed_mm": 78.5,
+              "efficiency": 0.217
+            },
+            {
+              "net": "VIN_SENSE",
+              "layer": "B.Cu",
+              "from_mm": [
+                173.875,
+                170.375
+              ],
+              "to_mm": [
+                173.875,
+                174.0
+              ],
+              "span_mm": 3.625,
+              "routed_mm": 14.125,
+              "efficiency": 0.257
+            },
+            {
+              "net": "VOUT_OUTN",
+              "layer": "In2.Cu",
+              "from_mm": [
+                187.375,
+                171.0
+              ],
+              "to_mm": [
+                194.375,
+                152.375
+              ],
+              "span_mm": 19.897,
+              "routed_mm": 61.625,
+              "efficiency": 0.323
+            },
+            {
+              "net": "VOUT_OUTP",
+              "layer": "B.Cu",
+              "from_mm": [
+                182.875,
+                169.5
+              ],
+              "to_mm": [
+                195.625,
+                153.25
+              ],
+              "span_mm": 20.655,
+              "routed_mm": 62.5,
+              "efficiency": 0.33
+            },
+            {
+              "net": "12V_BIAS_S",
+              "layer": "F.Cu",
+              "from_mm": [
+                157.875,
+                155.375
+              ],
+              "to_mm": [
+                157.875,
+                171.25
+              ],
+              "span_mm": 15.875,
+              "routed_mm": 35.625,
+              "efficiency": 0.446
+            },
+            {
+              "net": "BIAS_EN",
+              "layer": "B.Cu",
+              "from_mm": [
+                108.5,
+                159.375
+              ],
+              "to_mm": [
+                112.0,
+                155.0
+              ],
+              "span_mm": 5.603,
+              "routed_mm": 12.375,
+              "efficiency": 0.453
+            },
+            {
+              "net": "VIN_RAW",
+              "layer": "B.Cu",
+              "from_mm": [
+                12.0,
+                115.335
+              ],
+              "to_mm": [
+                35.5,
+                115.5
+              ],
+              "span_mm": 23.501,
+              "routed_mm": 51.335,
+              "efficiency": 0.458
+            },
+            {
+              "net": "LS_FB_VEE",
+              "layer": "In2.Cu",
+              "from_mm": [
+                139.875,
+                128.5
+              ],
+              "to_mm": [
+                147.75,
+                134.5
+              ],
+              "span_mm": 9.9,
+              "routed_mm": 21.125,
+              "efficiency": 0.469
+            }
+          ]
+        },
+        "v21": {
+          "short_runs": [
+            {
+              "net": "GNDP_S",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 17,
+              "length_mm": 3.552,
+              "from_mm": [
+                160.625,
+                150.75
+              ],
+              "to_mm": [
+                161.375,
+                152.625
+              ]
+            },
+            {
+              "net": "RESET_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 17,
+              "length_mm": 3.052,
+              "from_mm": [
+                159.0,
+                172.625
+              ],
+              "to_mm": [
+                161.0,
+                173.75
+              ]
+            },
+            {
+              "net": "VEE_L",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 17,
+              "length_mm": 3.957,
+              "from_mm": [
+                140.75,
+                138.375
+              ],
+              "to_mm": [
+                143.25,
+                138.375
+              ]
+            },
+            {
+              "net": "OC_N",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 14,
+              "length_mm": 2.75,
+              "from_mm": [
+                211.875,
+                163.375
+              ],
+              "to_mm": [
+                213.0,
+                161.75
+              ]
+            },
+            {
+              "net": "PG_BIAS_H_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 13,
+              "length_mm": 1.625,
+              "from_mm": [
+                163.875,
+                175.125
+              ],
+              "to_mm": [
+                164.625,
+                176.0
+              ]
+            },
+            {
+              "net": "PWM_L",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 13,
+              "length_mm": 1.625,
+              "from_mm": [
+                163.5,
+                175.75
+              ],
+              "to_mm": [
+                164.25,
+                176.625
+              ]
+            },
+            {
+              "net": "RDY_H",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 12,
+              "length_mm": 2.729,
+              "from_mm": [
+                159.625,
+                172.0
+              ],
+              "to_mm": [
+                161.375,
+                173.125
+              ]
+            },
+            {
+              "net": "PG_BIAS_H_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 11,
+              "length_mm": 1.375,
+              "from_mm": [
+                161.75,
+                174.375
+              ],
+              "to_mm": [
+                162.375,
+                175.125
+              ]
+            },
+            {
+              "net": "VIN_AMP_P",
+              "layer": "F.Cu",
+              "kind": "zigzag",
+              "segments": 11,
+              "length_mm": 2.405,
+              "from_mm": [
+                160.25,
+                171.625
+              ],
+              "to_mm": [
+                161.375,
+                173.125
+              ]
+            },
+            {
+              "net": "PWM_L",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 10,
+              "length_mm": 1.375,
+              "from_mm": [
+                161.25,
+                175.125
+              ],
+              "to_mm": [
+                162.0,
+                175.75
+              ]
+            }
+          ],
+          "low_efficiency": [
+            {
+              "net": "VIN_OUTN",
+              "layer": "F.Cu",
+              "from_mm": [
+                180.365,
+                150.855
+              ],
+              "to_mm": [
+                181.125,
+                167.0
+              ],
+              "span_mm": 16.163,
+              "routed_mm": 78.643,
+              "efficiency": 0.206
+            },
+            {
+              "net": "VIN_OUTP",
+              "layer": "In2.Cu",
+              "from_mm": [
+                176.625,
+                169.5
+              ],
+              "to_mm": [
+                181.625,
+                153.25
+              ],
+              "span_mm": 17.002,
+              "routed_mm": 76.166,
+              "efficiency": 0.223
+            },
+            {
+              "net": "PG_BIAS_H_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                155.625,
+                173.375
+              ],
+              "to_mm": [
+                172.875,
+                152.75
+              ],
+              "span_mm": 26.888,
+              "routed_mm": 120.119,
+              "efficiency": 0.224
+            },
+            {
+              "net": "VIN_SENSE",
+              "layer": "B.Cu",
+              "from_mm": [
+                173.875,
+                170.375
+              ],
+              "to_mm": [
+                173.875,
+                174.0
+              ],
+              "span_mm": 3.625,
+              "routed_mm": 13.594,
+              "efficiency": 0.267
+            },
+            {
+              "net": "VOUT_OUTN",
+              "layer": "In2.Cu",
+              "from_mm": [
+                187.375,
+                171.0
+              ],
+              "to_mm": [
+                194.375,
+                152.375
+              ],
+              "span_mm": 19.897,
+              "routed_mm": 59.626,
+              "efficiency": 0.334
+            },
+            {
+              "net": "VOUT_OUTP",
+              "layer": "B.Cu",
+              "from_mm": [
+                182.875,
+                169.5
+              ],
+              "to_mm": [
+                195.625,
+                153.25
+              ],
+              "span_mm": 20.655,
+              "routed_mm": 61.38,
+              "efficiency": 0.337
+            },
+            {
+              "net": "VIN_RAW",
+              "layer": "B.Cu",
+              "from_mm": [
+                12.0,
+                115.335
+              ],
+              "to_mm": [
+                35.5,
+                115.5
+              ],
+              "span_mm": 23.501,
+              "routed_mm": 51.335,
+              "efficiency": 0.458
+            },
+            {
+              "net": "12V_BIAS_S",
+              "layer": "F.Cu",
+              "from_mm": [
+                157.875,
+                155.375
+              ],
+              "to_mm": [
+                157.875,
+                171.25
+              ],
+              "span_mm": 15.875,
+              "routed_mm": 34.557,
+              "efficiency": 0.459
+            },
+            {
+              "net": "LS_FB_VEE",
+              "layer": "In2.Cu",
+              "from_mm": [
+                139.875,
+                128.5
+              ],
+              "to_mm": [
+                147.75,
+                134.5
+              ],
+              "span_mm": 9.9,
+              "routed_mm": 20.32,
+              "efficiency": 0.487
+            },
+            {
+              "net": "BIAS_EN",
+              "layer": "B.Cu",
+              "from_mm": [
+                108.5,
+                159.375
+              ],
+              "to_mm": [
+                112.0,
+                155.0
+              ],
+              "span_mm": 5.603,
+              "routed_mm": 10.889,
+              "efficiency": 0.515
+            }
+          ]
+        }
+      },
+      "per_net": {
+        "nets_compared": 100,
+        "nets_longer_after": [],
+        "nets_with_more_vias": [],
+        "nets_with_changed_min_width": []
+      },
+      "erc_v2": {
+        "run_id": "20261010T165532Z-erc-02a2619f",
+        "manifest": "releases/v2/verification/erc/20261010T165532Z-erc-02a2619f/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Power.kicad_sch",
+        "source_sha256": "2bd65b021c8fb3b4bf06339bfd57ccf8d3fe0daee1d29a4377b4d21b81f55cc9",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-11T00:55:33",
+        "sheets": 12,
+        "violations": 0,
+        "sheet_paths": [
+          "/",
+          "/Input, half bridge, inductor, output, bleeders/",
+          "/Input, half bridge, inductor, output, bleeders (2)/",
+          "/High-side isolated gate driver and bias/",
+          "/High-side isolated gate driver and bias (2)/",
+          "/Low-side isolated gate driver and bias/",
+          "/Low-side isolated gate driver and bias (2)/",
+          "/Isolated voltage sensing island and its bias module/",
+          "/Isolated voltage sensing island and its bias module (2)/",
+          "/SELV strip: mezzanine, conditioning, relay and fan interface/",
+          "/SELV strip: mezzanine, conditioning, relay and fan interface (2)/",
+          "/Heatsink envelope, terminals, mounting, test points/"
+        ]
+      },
+      "drc_v2": {
+        "run_id": "20261011T054445Z-drc-d0914d79",
+        "manifest": "releases/v2/verification/drc/20261011T054445Z-drc-d0914d79/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Power.kicad_pcb",
+        "source_sha256": "b1bb5698194b9aea681cf10ee529eaa77e9510ea0241b889ead7221b86f4f7a2",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations",
+          "--schematic-parity",
+          "--refill-zones"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-11T13:44:49",
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "violation_types": [],
+        "unconnected_types": []
+      },
+      "drc_v21": {
+        "run_id": "20261012T100423Z-drc-8b9e64d1",
+        "manifest": "verification/drc/20261012T100423Z-drc-8b9e64d1/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Power.kicad_pcb",
+        "source_sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations",
+          "--schematic-parity",
+          "--refill-zones"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-12T18:04:26",
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "violation_types": [],
+        "unconnected_types": []
+      },
+      "stored_fill_check": {
+        "source": "verification/engineering_checks/stored_zone_fill_check_power.json",
+        "board_sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
+        "violations": 0,
+        "unconnected_items": 0,
+        "generated_utc": "2026-10-12T10:04:26.889262+00:00"
+      },
+      "checker_parameters": {
+        "short_mm": 0.5,
+        "l_short_mm": 1.0,
+        "straight_tol_deg": 5.0,
+        "tangent_tol_deg": 1.0,
+        "min_turn_deg": 40.0,
+        "quantum_nm": 1000,
+        "efficiency_min_span_mm": 2.0
+      },
+      "erc_v21": {
+        "run_id": "20261012T094955Z-erc-c574a866",
+        "manifest": "verification/erc/20261012T094955Z-erc-c574a866/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Power.kicad_sch",
+        "source_sha256": "bbe17710b15bb6677f60ce230e3b8ddc2e5d777bd370d92c972809ef45f167a9",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-12T17:49:55",
+        "sheets": 7,
+        "violations": 0,
+        "sheet_paths": [
+          "/",
+          "/Input, half bridge, inductor, output, bleeders/",
+          "/High-side isolated gate driver and bias/",
+          "/Low-side isolated gate driver and bias/",
+          "/Isolated voltage sensing island and its bias module/",
+          "/SELV strip: mezzanine, conditioning, relay and fan interface/",
+          "/Heatsink envelope, terminals, mounting, test points/"
+        ]
+      },
+      "eight_direction_attempt": {
+        "drc": {
+          "run_id": "20261012T084719Z-drc-93962d5d",
+          "manifest": "verification/drc/20261012T084719Z-drc-93962d5d/run.json",
+          "status": "failed",
+          "tool_exit_code": 5,
+          "source_file": "AIPE_SiC_Buck_Power.kicad_pcb",
+          "source_sha256": "2c88529876da721235d947569eeddd73f882e8e7caa518074b05c796ce7a18b6",
+          "flags": [
+            "--severity-all",
+            "--exit-code-violations",
+            "--schematic-parity",
+            "--refill-zones"
+          ],
+          "kicad_version": "10.0.7",
+          "date": "2026-10-12T16:47:22",
+          "violations": 1,
+          "unconnected_items": 2,
+          "schematic_parity": 0,
+          "violation_types": [
+            "via_dangling"
+          ],
+          "unconnected_types": [
+            "unconnected_items"
+          ]
+        },
+        "narrative_source": "verification/routing_iterations_power.md section 16.3 (row A)",
+        "routing_seconds": 1605,
+        "tracks": 1868,
+        "vias": 602,
+        "unresolved": [
+          "LS_FB_VDD",
+          "VDD_L"
+        ],
+        "bends_90": 73,
+        "efficiency": 0.887,
+        "nets_longer": 10,
+        "nets_with_a_regression": 25
+      }
+    },
+    "control": {
+      "board_v2": {
+        "file": "releases/v2/kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb",
+        "sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+        "routing_seconds": 1155.406,
+        "tracks": 5995,
+        "vias": 798,
+        "unresolved_count": 0
+      },
+      "board_v21": {
+        "file": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_pcb",
+        "sha256": "52ca6c234357948a1119db0082ffd5ddcb706a852d9778787f74450ea1183428",
+        "routing_seconds": 1217.641,
+        "tracks_incl_arcs": 4523,
+        "arcs": 261,
+        "vias": 798,
+        "unresolved": []
+      },
+      "style": {
+        "diagonal": false,
+        "bend_penalty_cells": [
+          0.0,
+          0.0
+        ],
+        "via_cost_cells": 8,
+        "heuristic_weight": 1.0,
+        "diagonal_pref_factor": 1.075,
+        "simplify": "octilinear",
+        "chamfer": true,
+        "arcs": true,
+        "arc_radius_mm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "arc_steps": 5,
+        "arc_dilate_cells": 2,
+        "min_turn_deg": 5.0,
+        "max_turn_deg": 170.0,
+        "corner_keep_mm": {
+          "via": null,
+          "port": 0.0
+        },
+        "straight_nets": [],
+        "max_width_for_arcs_mm": 0.6,
+        "smooth_power": false,
+        "smooth_critical": false,
+        "stages": [
+          "signal",
+          "negotiate",
+          "retry",
+          "critical"
+        ],
+        "l_short_mm": null,
+        "eps": 0.02
+      },
+      "beautify": {
+        "enabled": true,
+        "simplify": "octilinear",
+        "arcs": true,
+        "chains": 1173,
+        "rewritten": 325,
+        "kept": 848,
+        "kept_reasons": {
+          "unchanged": 35,
+          "straight": 813
+        },
+        "policies": {
+          "arc": 1173
+        },
+        "segments_before": 4688,
+        "segments_after": 3047,
+        "arcs_after": 249,
+        "fillets": 249,
+        "bends_before": {
+          "90": 3515
+        },
+        "bends_after": {
+          "90": 834,
+          "45": 791
+        },
+        "length_before_mm": 6037.875,
+        "length_after_mm": 5692.592,
+        "exceptions_by_reason": {
+          "clearance": 740,
+          "pad_exit": 129,
+          "leg_too_short": 775
+        },
+        "seconds": 2.0
+      },
+      "totals": {
+        "source": "verification/engineering_checks/routing_quality_control_compare.json",
+        "v2": {
+          "segments": 5995,
+          "arcs": 0,
+          "vias": 798,
+          "length_mm": 7055.216,
+          "arc_length_mm": 0,
+          "joints": 4094,
+          "bends_90": 4069,
+          "bends_45": 0,
+          "bends_other": 12,
+          "direction_changes": 4081,
+          "stair_runs": 435,
+          "zigzag_runs": 31,
+          "short_run_segments": 2957,
+          "short_segments": 3677,
+          "short_segment_runs": 518,
+          "arc_joints": 0,
+          "arc_joints_discontinuous": 0,
+          "chains": 1901,
+          "degree2_joints": 4691,
+          "degree2_bends_90": 4184,
+          "bends_per_100mm": 57.84,
+          "efficiency": 0.7802
+        },
+        "v21": {
+          "segments": 4262,
+          "arcs": 261,
+          "vias": 798,
+          "length_mm": 6700.663,
+          "arc_length_mm": 78.968,
+          "joints": 2619,
+          "bends_90": 1233,
+          "bends_45": 839,
+          "bends_other": 15,
+          "direction_changes": 2087,
+          "stair_runs": 144,
+          "zigzag_runs": 41,
+          "short_run_segments": 1023,
+          "short_segments": 1937,
+          "short_segment_runs": 204,
+          "arc_joints": 519,
+          "arc_joints_discontinuous": 0,
+          "chains": 1904,
+          "degree2_joints": 2696,
+          "degree2_bends_90": 1339,
+          "bends_per_100mm": 31.15,
+          "efficiency": 0.8272
+        },
+        "delta": {
+          "segments": {
+            "before": 5995,
+            "after": 4262,
+            "delta": -1733,
+            "ratio": 0.7109
+          },
+          "arcs": {
+            "before": 0,
+            "after": 261,
+            "delta": 261,
+            "ratio": null
+          },
+          "vias": {
+            "before": 798,
+            "after": 798,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          "length_mm": {
+            "before": 7055.216,
+            "after": 6700.663,
+            "delta": -354.553,
+            "ratio": 0.9497
+          },
+          "arc_length_mm": {
+            "before": 0,
+            "after": 78.968,
+            "delta": 78.968,
+            "ratio": null
+          },
+          "joints": {
+            "before": 4094,
+            "after": 2619,
+            "delta": -1475,
+            "ratio": 0.6397
+          },
+          "bends_90": {
+            "before": 4069,
+            "after": 1233,
+            "delta": -2836,
+            "ratio": 0.303
+          },
+          "bends_45": {
+            "before": 0,
+            "after": 839,
+            "delta": 839,
+            "ratio": null
+          },
+          "bends_other": {
+            "before": 12,
+            "after": 15,
+            "delta": 3,
+            "ratio": 1.25
+          },
+          "direction_changes": {
+            "before": 4081,
+            "after": 2087,
+            "delta": -1994,
+            "ratio": 0.5114
+          },
+          "stair_runs": {
+            "before": 435,
+            "after": 144,
+            "delta": -291,
+            "ratio": 0.331
+          },
+          "zigzag_runs": {
+            "before": 31,
+            "after": 41,
+            "delta": 10,
+            "ratio": 1.3226
+          },
+          "short_run_segments": {
+            "before": 2957,
+            "after": 1023,
+            "delta": -1934,
+            "ratio": 0.346
+          },
+          "short_segments": {
+            "before": 3677,
+            "after": 1937,
+            "delta": -1740,
+            "ratio": 0.5268
+          },
+          "short_segment_runs": {
+            "before": 518,
+            "after": 204,
+            "delta": -314,
+            "ratio": 0.3938
+          },
+          "arc_joints": {
+            "before": 0,
+            "after": 519,
+            "delta": 519,
+            "ratio": null
+          },
+          "arc_joints_discontinuous": {
+            "before": 0,
+            "after": 0,
+            "delta": 0,
+            "ratio": null
+          },
+          "chains": {
+            "before": 1901,
+            "after": 1904,
+            "delta": 3,
+            "ratio": 1.0016
+          },
+          "degree2_joints": {
+            "before": 4691,
+            "after": 2696,
+            "delta": -1995,
+            "ratio": 0.5747
+          },
+          "degree2_bends_90": {
+            "before": 4184,
+            "after": 1339,
+            "delta": -2845,
+            "ratio": 0.32
+          },
+          "bends_per_100mm": {
+            "before": 57.84,
+            "after": 31.15,
+            "delta": -26.69,
+            "ratio": 0.5386
+          },
+          "efficiency": {
+            "before": 0.7802,
+            "after": 0.8272,
+            "delta": 0.047
+          }
+        }
+      },
+      "by_layer": {
+        "v2": {
+          "B.Cu": {
+            "segments": 2861,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 3506.25,
+            "arc_length_mm": 0,
+            "joints": 2252,
+            "bends_90": 2252,
+            "bends_45": 0,
+            "bends_other": 0,
+            "direction_changes": 2252,
+            "stair_runs": 250,
+            "zigzag_runs": 21,
+            "short_run_segments": 1676,
+            "short_segments": 1888,
+            "short_segment_runs": 299,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 609,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 64.23,
+            "efficiency": 0.7802
+          },
+          "F.Cu": {
+            "segments": 3004,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 3429.091,
+            "arc_length_mm": 0,
+            "joints": 1715,
+            "bends_90": 1691,
+            "bends_45": 0,
+            "bends_other": 12,
+            "direction_changes": 1703,
+            "stair_runs": 177,
+            "zigzag_runs": 6,
+            "short_run_segments": 1176,
+            "short_segments": 1690,
+            "short_segment_runs": 206,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 1289,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 49.66,
+            "efficiency": 0.7802
+          },
+          "In2.Cu": {
+            "segments": 130,
+            "arcs": 0,
+            "vias": 0,
+            "length_mm": 119.875,
+            "arc_length_mm": 0,
+            "joints": 127,
+            "bends_90": 126,
+            "bends_45": 0,
+            "bends_other": 0,
+            "direction_changes": 126,
+            "stair_runs": 8,
+            "zigzag_runs": 4,
+            "short_run_segments": 105,
+            "short_segments": 99,
+            "short_segment_runs": 13,
+            "arc_joints": 0,
+            "arc_joints_discontinuous": 0,
+            "chains": 3,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 105.11,
+            "efficiency": 0.7802
+          }
+        },
+        "v21": {
+          "B.Cu": {
+            "segments": 1865,
+            "arcs": 138,
+            "vias": 0,
+            "length_mm": 3305.423,
+            "arc_length_mm": 41.94,
+            "joints": 1393,
+            "bends_90": 634,
+            "bends_45": 478,
+            "bends_other": 0,
+            "direction_changes": 1112,
+            "stair_runs": 80,
+            "zigzag_runs": 23,
+            "short_run_segments": 560,
+            "short_segments": 870,
+            "short_segment_runs": 106,
+            "arc_joints": 276,
+            "arc_joints_discontinuous": 0,
+            "chains": 610,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 33.64,
+            "efficiency": 0.8272
+          },
+          "F.Cu": {
+            "segments": 2357,
+            "arcs": 111,
+            "vias": 0,
+            "length_mm": 3284.635,
+            "arc_length_mm": 33.551,
+            "joints": 1177,
+            "bends_90": 590,
+            "bends_45": 345,
+            "bends_other": 15,
+            "direction_changes": 950,
+            "stair_runs": 64,
+            "zigzag_runs": 16,
+            "short_run_segments": 452,
+            "short_segments": 1051,
+            "short_segment_runs": 94,
+            "arc_joints": 220,
+            "arc_joints_discontinuous": 0,
+            "chains": 1291,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 28.92,
+            "efficiency": 0.8272
+          },
+          "In2.Cu": {
+            "segments": 40,
+            "arcs": 12,
+            "vias": 0,
+            "length_mm": 110.605,
+            "arc_length_mm": 3.477,
+            "joints": 49,
+            "bends_90": 9,
+            "bends_45": 16,
+            "bends_other": 0,
+            "direction_changes": 25,
+            "stair_runs": 0,
+            "zigzag_runs": 2,
+            "short_run_segments": 11,
+            "short_segments": 16,
+            "short_segment_runs": 4,
+            "arc_joints": 23,
+            "arc_joints_discontinuous": 0,
+            "chains": 3,
+            "degree2_joints": 0,
+            "degree2_bends_90": 0,
+            "bends_per_100mm": 22.6,
+            "efficiency": 0.8272
+          }
+        }
+      },
+      "by_attribution": {
+        "v2": {
+          "pad_link": {
+            "segments": 1105,
+            "arcs": 0,
+            "length_mm": 996.666,
+            "bends_90": 96,
+            "bends_45": 0,
+            "bends_other": 12,
+            "direction_changes": 108,
+            "stair_runs": 0,
+            "zigzag_runs": 0,
+            "short_segments": 459
+          },
+          "router": {
+            "segments": 4890,
+            "arcs": 0,
+            "length_mm": 6058.55,
+            "bends_90": 3973,
+            "bends_45": 0,
+            "bends_other": 0,
+            "direction_changes": 3973,
+            "stair_runs": 435,
+            "zigzag_runs": 31,
+            "short_segments": 3218
+          }
+        },
+        "v21": {
+          "pad_link": {
+            "segments": 981,
+            "arcs": 2,
+            "length_mm": 769.792,
+            "bends_90": 84,
+            "bends_45": 15,
+            "bends_other": 15,
+            "direction_changes": 114,
+            "stair_runs": 0,
+            "zigzag_runs": 0,
+            "short_segments": 459
+          },
+          "pre_routed": {
+            "segments": 142,
+            "arcs": 0,
+            "length_mm": 258.751,
+            "bends_90": 3,
+            "bends_45": 0,
+            "bends_other": 0,
+            "direction_changes": 3,
+            "stair_runs": 0,
+            "zigzag_runs": 0,
+            "short_segments": 1
+          },
+          "router": {
+            "segments": 3139,
+            "arcs": 259,
+            "length_mm": 5672.119,
+            "bends_90": 1146,
+            "bends_45": 824,
+            "bends_other": 0,
+            "direction_changes": 1970,
+            "stair_runs": 144,
+            "zigzag_runs": 41,
+            "short_segments": 1477
+          }
+        }
+      },
+      "remaining_90_by_reason": {
+        "v2": {
+          "pad_link": 96,
+          "unexplained": 3973
+        },
+        "v21": {
+          "pre_routed": 3,
+          "unexplained": 341,
+          "pad_link": 52,
+          "clearance": 51,
+          "leg_too_short": 723,
+          "pad_exit": 63
+        }
+      },
+      "beautify_exceptions_by_reason": {
+        "clearance": 740,
+        "pad_exit": 129,
+        "leg_too_short": 775
+      },
+      "arcs": {
+        "count": 261,
+        "radius_mm": {
+          "min": 0.1962,
+          "median": 0.3968,
+          "max": 0.8001
+        },
+        "joints": 519,
+        "discontinuous": 0,
+        "tangency_failures": []
+      },
+      "worst_cases": {
+        "v2": {
+          "short_runs": [
+            {
+              "net": "ADC_TEMP_HS",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 23,
+              "length_mm": 3.625,
+              "from_mm": [
+                79.0,
+                48.75
+              ],
+              "to_mm": [
+                80.375,
+                46.5
+              ]
+            },
+            {
+              "net": "PG_BIAS_L_N",
+              "layer": "In2.Cu",
+              "kind": "zigzag",
+              "segments": 22,
+              "length_mm": 4.125,
+              "from_mm": [
+                83.25,
+                58.5
+              ],
+              "to_mm": [
+                83.375,
+                60.75
+              ]
+            },
+            {
+              "net": "PG_BIAS_S_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 21,
+              "length_mm": 3.625,
+              "from_mm": [
+                98.375,
+                70.0
+              ],
+              "to_mm": [
+                100.25,
+                68.25
+              ]
+            },
+            {
+              "net": "ADC_ISENSE_REF",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 18,
+              "length_mm": 2.25,
+              "from_mm": [
+                78.75,
+                48.25
+              ],
+              "to_mm": [
+                79.875,
+                47.125
+              ]
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "kind": "zigzag",
+              "segments": 18,
+              "length_mm": 5.5,
+              "from_mm": [
+                60.25,
+                51.5
+              ],
+              "to_mm": [
+                61.25,
+                49.75
+              ]
+            },
+            {
+              "net": "VIN_SENSE",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 18,
+              "length_mm": 2.375,
+              "from_mm": [
+                103.0,
+                54.125
+              ],
+              "to_mm": [
+                104.25,
+                53.0
+              ]
+            },
+            {
+              "net": "BIAS_EN",
+              "layer": "In2.Cu",
+              "kind": "zigzag",
+              "segments": 17,
+              "length_mm": 3.875,
+              "from_mm": [
+                38.125,
+                71.375
+              ],
+              "to_mm": [
+                38.125,
+                69.25
+              ]
+            },
+            {
+              "net": "ADC_VOUT",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 16,
+              "length_mm": 4.0,
+              "from_mm": [
+                45.75,
+                36.5
+              ],
+              "to_mm": [
+                44.125,
+                38.375
+              ]
+            },
+            {
+              "net": "ARM",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 16,
+              "length_mm": 3.5,
+              "from_mm": [
+                49.875,
+                67.625
+              ],
+              "to_mm": [
+                50.875,
+                65.125
+              ]
+            },
+            {
+              "net": "EFUSE_ILIM",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 16,
+              "length_mm": 2.25,
+              "from_mm": [
+                26.0,
+                15.125
+              ],
+              "to_mm": [
+                27.25,
+                14.125
+              ]
+            }
+          ],
+          "low_efficiency": [
+            {
+              "net": "FAN_TACH",
+              "layer": "B.Cu",
+              "from_mm": [
+                78.375,
+                30.25
+              ],
+              "to_mm": [
+                92.125,
+                25.5
+              ],
+              "span_mm": 14.547,
+              "routed_mm": 83.0,
+              "efficiency": 0.175
+            },
+            {
+              "net": "FAULT_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                67.25,
+                35.25
+              ],
+              "to_mm": [
+                97.125,
+                28.0
+              ],
+              "span_mm": 30.742,
+              "routed_mm": 102.125,
+              "efficiency": 0.301
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "from_mm": [
+                60.25,
+                51.5
+              ],
+              "to_mm": [
+                61.25,
+                49.75
+              ],
+              "span_mm": 2.016,
+              "routed_mm": 5.5,
+              "efficiency": 0.366
+            },
+            {
+              "net": "ADC_TEMP_CTRL",
+              "layer": "B.Cu",
+              "from_mm": [
+                76.25,
+                42.25
+              ],
+              "to_mm": [
+                84.625,
+                38.5
+              ],
+              "span_mm": 9.176,
+              "routed_mm": 23.875,
+              "efficiency": 0.384
+            },
+            {
+              "net": "PG_BIAS_S_OK",
+              "layer": "F.Cu",
+              "from_mm": [
+                64.625,
+                64.5
+              ],
+              "to_mm": [
+                66.625,
+                63.25
+              ],
+              "span_mm": 2.358,
+              "routed_mm": 6.0,
+              "efficiency": 0.393
+            },
+            {
+              "net": "UVLO_REF",
+              "layer": "F.Cu",
+              "from_mm": [
+                97.0,
+                63.875
+              ],
+              "to_mm": [
+                94.375,
+                65.125
+              ],
+              "span_mm": 2.907,
+              "routed_mm": 6.875,
+              "efficiency": 0.423
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "from_mm": [
+                16.875,
+                21.75
+              ],
+              "to_mm": [
+                20.75,
+                20.0
+              ],
+              "span_mm": 4.252,
+              "routed_mm": 9.625,
+              "efficiency": 0.442
+            },
+            {
+              "net": "FLT_L_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                40.0,
+                53.125
+              ],
+              "to_mm": [
+                45.875,
+                49.0
+              ],
+              "span_mm": 7.179,
+              "routed_mm": 16.0,
+              "efficiency": 0.449
+            },
+            {
+              "net": "ADCRESEXT",
+              "layer": "F.Cu",
+              "from_mm": [
+                83.125,
+                35.5
+              ],
+              "to_mm": [
+                85.25,
+                37.875
+              ],
+              "span_mm": 3.187,
+              "routed_mm": 7.0,
+              "efficiency": 0.455
+            },
+            {
+              "net": "G3_N",
+              "layer": "F.Cu",
+              "from_mm": [
+                74.75,
+                58.125
+              ],
+              "to_mm": [
+                76.625,
+                63.875
+              ],
+              "span_mm": 6.048,
+              "routed_mm": 13.125,
+              "efficiency": 0.461
+            }
+          ]
+        },
+        "v21": {
+          "short_runs": [
+            {
+              "net": "ADC_ISENSE_REF",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 18,
+              "length_mm": 2.25,
+              "from_mm": [
+                78.75,
+                48.25
+              ],
+              "to_mm": [
+                79.875,
+                47.125
+              ]
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "kind": "zigzag",
+              "segments": 18,
+              "length_mm": 5.5,
+              "from_mm": [
+                60.25,
+                51.5
+              ],
+              "to_mm": [
+                61.25,
+                49.75
+              ]
+            },
+            {
+              "net": "PG_BIAS_S_OK",
+              "layer": "B.Cu",
+              "kind": "zigzag",
+              "segments": 14,
+              "length_mm": 3.457,
+              "from_mm": [
+                73.375,
+                65.625
+              ],
+              "to_mm": [
+                75.625,
+                65.875
+              ]
+            },
+            {
+              "net": "OC_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 13,
+              "length_mm": 1.75,
+              "from_mm": [
+                34.0,
+                67.875
+              ],
+              "to_mm": [
+                35.0,
+                68.625
+              ]
+            },
+            {
+              "net": "PG_BIAS_S_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 12,
+              "length_mm": 3.612,
+              "from_mm": [
+                53.875,
+                67.875
+              ],
+              "to_mm": [
+                55.875,
+                65.75
+              ]
+            },
+            {
+              "net": "VOUT_SENSE",
+              "layer": "F.Cu",
+              "kind": "stair",
+              "segments": 12,
+              "length_mm": 2.229,
+              "from_mm": [
+                102.75,
+                53.625
+              ],
+              "to_mm": [
+                103.875,
+                52.375
+              ]
+            },
+            {
+              "net": "ARM",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 11,
+              "length_mm": 2.677,
+              "from_mm": [
+                34.5,
+                67.625
+              ],
+              "to_mm": [
+                36.625,
+                68.25
+              ]
+            },
+            {
+              "net": "ARM",
+              "layer": "F.Cu",
+              "kind": "zigzag",
+              "segments": 11,
+              "length_mm": 2.457,
+              "from_mm": [
+                49.875,
+                67.625
+              ],
+              "to_mm": [
+                50.875,
+                65.875
+              ]
+            },
+            {
+              "net": "ISENSE",
+              "layer": "F.Cu",
+              "kind": "zigzag",
+              "segments": 11,
+              "length_mm": 2.957,
+              "from_mm": [
+                89.625,
+                70.125
+              ],
+              "to_mm": [
+                91.125,
+                68.375
+              ]
+            },
+            {
+              "net": "RESET_N",
+              "layer": "B.Cu",
+              "kind": "stair",
+              "segments": 11,
+              "length_mm": 2.104,
+              "from_mm": [
+                54.0,
+                41.875
+              ],
+              "to_mm": [
+                55.375,
+                41.0
+              ]
+            }
+          ],
+          "low_efficiency": [
+            {
+              "net": "FAN_TACH",
+              "layer": "B.Cu",
+              "from_mm": [
+                78.375,
+                30.25
+              ],
+              "to_mm": [
+                92.125,
+                25.5
+              ],
+              "span_mm": 14.547,
+              "routed_mm": 79.102,
+              "efficiency": 0.184
+            },
+            {
+              "net": "FAULT_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                67.25,
+                35.25
+              ],
+              "to_mm": [
+                97.125,
+                28.0
+              ],
+              "span_mm": 30.742,
+              "routed_mm": 89.276,
+              "efficiency": 0.344
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "from_mm": [
+                60.25,
+                51.5
+              ],
+              "to_mm": [
+                61.25,
+                49.75
+              ],
+              "span_mm": 2.016,
+              "routed_mm": 5.5,
+              "efficiency": 0.366
+            },
+            {
+              "net": "UVLO_REF",
+              "layer": "F.Cu",
+              "from_mm": [
+                97.0,
+                63.875
+              ],
+              "to_mm": [
+                94.375,
+                65.125
+              ],
+              "span_mm": 2.907,
+              "routed_mm": 6.875,
+              "efficiency": 0.423
+            },
+            {
+              "net": "ADC_TEMP_CTRL",
+              "layer": "B.Cu",
+              "from_mm": [
+                76.25,
+                42.25
+              ],
+              "to_mm": [
+                84.625,
+                38.5
+              ],
+              "span_mm": 9.176,
+              "routed_mm": 21.532,
+              "efficiency": 0.426
+            },
+            {
+              "net": "PG_BIAS_S_OK",
+              "layer": "F.Cu",
+              "from_mm": [
+                64.625,
+                64.5
+              ],
+              "to_mm": [
+                66.625,
+                63.25
+              ],
+              "span_mm": 2.358,
+              "routed_mm": 5.414,
+              "efficiency": 0.436
+            },
+            {
+              "net": "GND_CTRL",
+              "layer": "F.Cu",
+              "from_mm": [
+                16.875,
+                21.75
+              ],
+              "to_mm": [
+                20.75,
+                20.0
+              ],
+              "span_mm": 4.252,
+              "routed_mm": 9.625,
+              "efficiency": 0.442
+            },
+            {
+              "net": "ADCRESEXT",
+              "layer": "F.Cu",
+              "from_mm": [
+                83.125,
+                35.5
+              ],
+              "to_mm": [
+                85.25,
+                37.875
+              ],
+              "span_mm": 3.187,
+              "routed_mm": 6.927,
+              "efficiency": 0.46
+            },
+            {
+              "net": "FLT_L_N",
+              "layer": "B.Cu",
+              "from_mm": [
+                40.0,
+                53.125
+              ],
+              "to_mm": [
+                45.875,
+                49.0
+              ],
+              "span_mm": 7.179,
+              "routed_mm": 15.414,
+              "efficiency": 0.466
+            },
+            {
+              "net": "G3_N",
+              "layer": "F.Cu",
+              "from_mm": [
+                74.75,
+                58.125
+              ],
+              "to_mm": [
+                76.625,
+                63.875
+              ],
+              "span_mm": 6.048,
+              "routed_mm": 12.466,
+              "efficiency": 0.485
+            }
+          ]
+        }
+      },
+      "per_net": {
+        "nets_compared": 111,
+        "nets_longer_after": [],
+        "nets_with_more_vias": [],
+        "nets_with_changed_min_width": []
+      },
+      "erc_v2": {
+        "run_id": "20261010T071810Z-erc-b207ac59",
+        "manifest": "releases/v2/verification/erc/20261010T071810Z-erc-b207ac59/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Control.kicad_sch",
+        "source_sha256": "b3a08ddc99227c0568a7f3085518287afbfc0d88e6592f397cec78945a1465e4",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-10T15:18:10",
+        "sheets": 10,
+        "violations": 0,
+        "sheet_paths": [
+          "/",
+          "/12 V entry, TVS and TPS26400 eFuse/",
+          "/5 V buck, dual LDO, supervisor and reset/",
+          "/TMS320F28335 - all 176 pins/",
+          "/DSP per-pin bypass and ADC reference/",
+          "/Oscillator, boot straps, JTAG, UART/",
+          "/PWM gating, fault latch, combiners, comparators/",
+          "/PWM gating, fault latch, combiners, comparators (2)/",
+          "/ADC conditioning, NTC readout, monitors/",
+          "/Mezzanine header, connectors, LEDs, test points, mounting/"
+        ]
+      },
+      "drc_v2": {
+        "run_id": "20261011T051246Z-drc-f801ed3c",
+        "manifest": "releases/v2/verification/drc/20261011T051246Z-drc-f801ed3c/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Control.kicad_pcb",
+        "source_sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations",
+          "--schematic-parity",
+          "--refill-zones"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-11T13:12:58",
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "violation_types": [],
+        "unconnected_types": []
+      },
+      "drc_v21": {
+        "run_id": "20261012T114513Z-drc-3461f467",
+        "manifest": "verification/drc/20261012T114513Z-drc-3461f467/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Control.kicad_pcb",
+        "source_sha256": "52ca6c234357948a1119db0082ffd5ddcb706a852d9778787f74450ea1183428",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations",
+          "--schematic-parity",
+          "--refill-zones"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-12T19:45:25",
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0,
+        "violation_types": [],
+        "unconnected_types": []
+      },
+      "stored_fill_check": {
+        "source": "verification/engineering_checks/stored_zone_fill_check_control.json",
+        "board_sha256": "52ca6c234357948a1119db0082ffd5ddcb706a852d9778787f74450ea1183428",
+        "violations": 0,
+        "unconnected_items": 0,
+        "generated_utc": "2026-10-12T11:45:25.439651+00:00"
+      },
+      "checker_parameters": {
+        "short_mm": 0.5,
+        "l_short_mm": 1.0,
+        "straight_tol_deg": 5.0,
+        "tangent_tol_deg": 1.0,
+        "min_turn_deg": 40.0,
+        "quantum_nm": 1000,
+        "efficiency_min_span_mm": 2.0
+      },
+      "erc_v21": {
+        "run_id": "20261012T095007Z-erc-caa10a79",
+        "manifest": "verification/erc/20261012T095007Z-erc-caa10a79/run.json",
+        "status": "passed",
+        "tool_exit_code": 0,
+        "source_file": "AIPE_SiC_Buck_Control.kicad_sch",
+        "source_sha256": "142db6d24cc19a648a9e4fbc868e45a9417268084d2907774f8a76fa09405970",
+        "flags": [
+          "--severity-all",
+          "--exit-code-violations"
+        ],
+        "kicad_version": "10.0.7",
+        "date": "2026-10-12T17:50:07",
+        "sheets": 9,
+        "violations": 0,
+        "sheet_paths": [
+          "/",
+          "/12 V entry, TVS and TPS26400 eFuse/",
+          "/5 V buck, dual LDO, supervisor and reset/",
+          "/TMS320F28335 - all 176 pins/",
+          "/DSP per-pin bypass and ADC reference/",
+          "/Oscillator, boot straps, JTAG, UART/",
+          "/PWM gating, fault latch, combiners, comparators/",
+          "/ADC conditioning, NTC readout, monitors/",
+          "/Mezzanine header, connectors, LEDs, test points, mounting/"
+        ]
+      },
+      "eight_direction_attempt": {
+        "narrative_source": "scratchpad/v21/progress_router.md (Control scratch builds A; Final) - scratch build, no repository manifest",
+        "routing_seconds": 4205,
+        "unresolved": [
+          "ESTOP_N"
+        ],
+        "vias": 864,
+        "vias_v2": 798,
+        "drc_violations": 1,
+        "drc_unconnected": 1
+      }
+    }
+  },
+  "validation": {
+    "source": "verification/v21_validation.json",
+    "generated_utc": "2026-10-12T11:04:46Z",
+    "updated_utc": "2026-10-12T12:07:52Z",
+    "updated_scope": "Control-board evidence chain re-derived after the determinism rebuild (board 52ca6c234357948a, DRC manifest 20261012T114513Z-drc-3461f467): items 1-4, 6-9, R and V updated for the control board, new item D; power rows and power data unchanged (power board ae4ca86c untouched).",
+    "items": [
+      {
+        "item": 1,
+        "verdict": "PASS"
+      },
+      {
+        "item": 2,
+        "verdict": "PASS"
+      },
+      {
+        "item": 3,
+        "verdict": "PASS"
+      },
+      {
+        "item": 4,
+        "verdict": "PASS"
+      },
+      {
+        "item": 5,
+        "verdict": "PASS (pre-existing per-layer note, open point 1)"
+      },
+      {
+        "item": 6,
+        "verdict": "PASS (open point 2 unchanged)"
+      },
+      {
+        "item": 7,
+        "verdict": "PASS"
+      },
+      {
+        "item": 8,
+        "verdict": "PASS"
+      },
+      {
+        "item": 9,
+        "verdict": "PASS"
+      },
+      {
+        "item": "L",
+        "verdict": "PASS with 2 documented leftovers (open points 4, 5)"
+      },
+      {
+        "item": "R",
+        "verdict": "PASS (open point 8 closed by item D)"
+      },
+      {
+        "item": "D",
+        "verdict": "PASS (open point 8 closed; info point 12)"
+      },
+      {
+        "item": "V",
+        "verdict": "PASS"
+      }
+    ],
+    "open_points": [
+      {
+        "id": 1,
+        "severity": "minor",
+        "area": "HV spacing (item 5)"
+      },
+      {
+        "id": 2,
+        "severity": "minor",
+        "area": "Sense pairs (item 6)"
+      },
+      {
+        "id": 3,
+        "severity": "info",
+        "area": "Routing quality counters"
+      },
+      {
+        "id": 4,
+        "severity": "info",
+        "area": "Label (item L)"
+      },
+      {
+        "id": 5,
+        "severity": "info",
+        "area": "Label / evidence hygiene (item L)"
+      },
+      {
+        "id": 6,
+        "severity": "info",
+        "area": "Label (by design)"
+      },
+      {
+        "id": 7,
+        "severity": "info",
+        "area": "Rule file provenance (item 2)"
+      },
+      {
+        "id": 8,
+        "severity": "info",
+        "area": "Generator determinism (items R, D) - CLOSED"
+      },
+      {
+        "id": 9,
+        "severity": "info",
+        "area": "Evidence hygiene"
+      },
+      {
+        "id": 10,
+        "severity": "info",
+        "area": "Pre-existing exceptions (unchanged from V2)"
+      },
+      {
+        "id": 11,
+        "severity": "info",
+        "area": "Remaining sharp corners"
+      },
+      {
+        "id": 12,
+        "severity": "info",
+        "area": "Plan record cosmetics (item D)"
+      }
+    ]
+  },
+  "unit_tests": {
+    "source": "C:/Users/ZHONGN~1/AppData/Local/Temp/claude/d--Cursor-Workspace-AIPE-PCB-Agent/d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8/scratchpad/fullsuite5.log",
+    "ran": 342,
+    "seconds": 125.872,
+    "result": "OK (skipped=2)"
+  },
+  "images": {
+    "crops": {
+      "count": 36,
+      "areas": [
+        "dsp_fanout (control)",
+        "hs_island (power)",
+        "j8_header (control)",
+        "ls_island (power)",
+        "protection_logic (control)",
+        "selv_mid (power)",
+        "selv_socket (power)",
+        "sensing_island (power)",
+        "signal_corridor (control)"
+      ],
+      "files": [
+        "review/crops/control/dsp_fanout_v21_bottom.png",
+        "review/crops/control/dsp_fanout_v21_top.png",
+        "review/crops/control/dsp_fanout_v2_bottom.png",
+        "review/crops/control/dsp_fanout_v2_top.png",
+        "review/crops/control/j8_header_v21_bottom.png",
+        "review/crops/control/j8_header_v21_top.png",
+        "review/crops/control/j8_header_v2_bottom.png",
+        "review/crops/control/j8_header_v2_top.png",
+        "review/crops/control/protection_logic_v21_bottom.png",
+        "review/crops/control/protection_logic_v21_top.png",
+        "review/crops/control/protection_logic_v2_bottom.png",
+        "review/crops/control/protection_logic_v2_top.png",
+        "review/crops/control/signal_corridor_v21_bottom.png",
+        "review/crops/control/signal_corridor_v21_top.png",
+        "review/crops/control/signal_corridor_v2_bottom.png",
+        "review/crops/control/signal_corridor_v2_top.png",
+        "review/crops/power/hs_island_v21_bottom.png",
+        "review/crops/power/hs_island_v21_top.png",
+        "review/crops/power/hs_island_v2_bottom.png",
+        "review/crops/power/hs_island_v2_top.png",
+        "review/crops/power/ls_island_v21_bottom.png",
+        "review/crops/power/ls_island_v21_top.png",
+        "review/crops/power/ls_island_v2_bottom.png",
+        "review/crops/power/ls_island_v2_top.png",
+        "review/crops/power/selv_mid_v21_bottom.png",
+        "review/crops/power/selv_mid_v21_top.png",
+        "review/crops/power/selv_mid_v2_bottom.png",
+        "review/crops/power/selv_mid_v2_top.png",
+        "review/crops/power/selv_socket_v21_bottom.png",
+        "review/crops/power/selv_socket_v21_top.png",
+        "review/crops/power/selv_socket_v2_bottom.png",
+        "review/crops/power/selv_socket_v2_top.png",
+        "review/crops/power/sensing_island_v21_bottom.png",
+        "review/crops/power/sensing_island_v21_top.png",
+        "review/crops/power/sensing_island_v2_bottom.png",
+        "review/crops/power/sensing_island_v2_top.png"
+      ]
+    },
+    "renders": [
+      "review/pcb_3d_control.png",
+      "review/pcb_3d_power.png",
+      "review/pcb_back_control.png",
+      "review/pcb_back_power.png",
+      "review/pcb_front_control.png",
+      "review/pcb_front_power.png"
+    ],
+    "layout_pdfs": [
+      "review/pcb_layout_control.pdf",
+      "review/pcb_layout_power.pdf"
+    ],
+    "v2_renders": [
+      "releases/v2/review/pcb_3d_control.png",
+      "releases/v2/review/pcb_3d_power.png",
+      "releases/v2/review/pcb_back_control.png",
+      "releases/v2/review/pcb_back_power.png",
+      "releases/v2/review/pcb_front_control.png",
+      "releases/v2/review/pcb_front_power.png"
+    ],
+    "schematic_sections": [
+      "review/schematic_sections/control_12v_entry_v2.png",
+      "review/schematic_sections/control_12v_entry_v21.png",
+      "review/schematic_sections/control_dsp_v2.png",
+      "review/schematic_sections/control_dsp_v21.png",
+      "review/schematic_sections/control_supplies_v2.png",
+      "review/schematic_sections/control_supplies_v21.png",
+      "review/schematic_sections/power_gate_driver_hs_v2.png",
+      "review/schematic_sections/power_gate_driver_hs_v21.png",
+      "review/schematic_sections/power_hs_bias_v2.png",
+      "review/schematic_sections/power_hs_bias_v21.png",
+      "review/schematic_sections/power_power_stage_v2.png",
+      "review/schematic_sections/power_power_stage_v21.png"
+    ]
+  },
+  "code": {
+    "generic": [
+      "automation/kicad_tools/grid_router.py",
+      "automation/kicad_tools/path_geometry.py",
+      "automation/verification/check_routing_quality.py",
+      "automation/kicad_tools/project_schematic.py",
+      "automation/kicad_tools/schematic_presentation.py",
+      "automation/kicad_tools/schematic_wiring.py",
+      "automation/kicad_tools/schematic_metrics.py",
+      "automation/kicad_tools/native_schematic.py",
+      "automation/kicad_tools/generate_sic_schematics.py",
+      "automation/kicad_tools/sic_buck_common.py",
+      "automation/scripts/freeze_release.py"
+    ],
+    "board_specific": [
+      "automation/kicad_tools/generate_sic_power_board.py",
+      "automation/kicad_tools/generate_sic_control_board.py"
+    ]
+  },
+  "release": {
+    "frozen": false,
+    "command": "python -m automation.scripts.freeze_release --version v2.1",
+    "target": "releases/v2.1 + releases/v2.1-review-package.zip (to be created after this report)",
+    "pr": {
+      "title": "AIPE-PCB-Agent V2.1 — Schematic & Routing Quality Upgrade",
+      "head": "MrCoconut616/AIPE-PCB-Agent:feat/sic-buck-v2.1-quality",
+      "base": "FulongLi/AIPE-PCB-Agent:main",
+      "stacked_on": "none: FulongLi/AIPE-PCB-Agent#3 (V2, feat/sic-buck-5kw-v2 tip 9d33d7b) was merged into upstream main on 2026-10-11 (merge commit 3aaec38d; gh pr view 3 -R FulongLi/AIPE-PCB-Agent), so this PR carries the V2.1 delta only (git diff 9d33d7b..feat/sic-buck-v2.1-quality)",
+      "auto_merge": false
+    }
+  },
+  "sources_sha256": {
+    "C:/Users/ZHONGN~1/AppData/Local/Temp/claude/d--Cursor-Workspace-AIPE-PCB-Agent/d8f6e3bc-7921-4cf9-b1d3-9695bd7c8da8/scratchpad/fullsuite5.log": "f495e7d1ed7892d6110382874f16d4726e80eb809dcfd0bbf59866ecd9c6fa0c",
+    "kicad/control_board/01_aux_12v.kicad_sch": "4e16c2bfd569d1f743d286519b951dab2daa014b95d47cc130d4d1c17946406f",
+    "kicad/control_board/02_supplies.kicad_sch": "9586b1763d0d3d969aec2f772e5dc7788b84c6bf9025ca1d8d4129108ec7611f",
+    "kicad/control_board/03_dsp.kicad_sch": "1f8f4a3ece0901e21a7bcbe39d2f5d150ba95f5b20a739d1e40bc7bd808cd01c",
+    "kicad/control_board/04_dsp_decoupling.kicad_sch": "054081e7286344364538e89a667ab414adda4bc924930114f8384ce0266197a9",
+    "kicad/control_board/05_clock_debug.kicad_sch": "dbe8e89f37e5d045ba50b5af4fb41429bc6786d300f057e2a712e6257f04a39d",
+    "kicad/control_board/06_pwm_fault_logic.kicad_sch": "f2f08049cd98fb05afff1136b661cd4412dd0c5509b3c9dd4d54bc90ac3df907",
+    "kicad/control_board/07_adc_frontend.kicad_sch": "b8e78af206ae68cd7392cc648276e78dab24964739a61f826d7e1d8bf1c801fe",
+    "kicad/control_board/08_interconnect.kicad_sch": "75146fd8d1f32aa8fbde06092dd8ca5729e352870b776ce02a0f3ed83aab82e8",
+    "kicad/control_board/AIPE_SiC_Buck_Control.kicad_sch": "142db6d24cc19a648a9e4fbc868e45a9417268084d2907774f8a76fa09405970",
+    "kicad/power_board/01_power_stage.kicad_sch": "91ba1eb9f677dd701b364050971e8e08973141944b8ed3c935aa75a9cbbc8413",
+    "kicad/power_board/02_gate_driver_hs.kicad_sch": "1d741b61ecc0b86fe5173546b863f736fbbb5237991edfaa1cbfc797ef6f2ded",
+    "kicad/power_board/03_gate_driver_ls.kicad_sch": "d214a6fd84b2912ba1edffc1195beeb225646f4dd4374e6b63f8ef5fe5b5ca76",
+    "kicad/power_board/04_sensing_island.kicad_sch": "ec5d08b6aa6a0340efbe384962d1fd8bc8383997da09e6219b423ffa26fe59b5",
+    "kicad/power_board/05_selv_strip.kicad_sch": "419b5885a520570c785be2e308957f24d3f567c30af23960e836b126b8c7dc63",
+    "kicad/power_board/06_mechanical.kicad_sch": "2526f6c074a343d8b46868df98a047d9982edb363916bfaad7217e61fd068983",
+    "kicad/power_board/AIPE_SiC_Buck_Power.kicad_sch": "bbe17710b15bb6677f60ce230e3b8ddc2e5d777bd370d92c972809ef45f167a9",
+    "releases/v2/kicad/control_board/01_aux_12v.kicad_sch": "613a0b5577ffca83df589414d960aa7aaba2c6c75a085885255a2eda352c9019",
+    "releases/v2/kicad/control_board/02_supplies.kicad_sch": "f26739c18952bf5fecbe5ecc40304c0899a0cbe4117babef0b6d593c05a838d0",
+    "releases/v2/kicad/control_board/03_dsp.kicad_sch": "7f0f8d5c96f7971f996f40923090c54f11c82c97cced8a3a1511a1fe94fe9c9b",
+    "releases/v2/kicad/control_board/04_dsp_decoupling.kicad_sch": "d79134358200ec5bd4c148f58268beed830cc829438758eade265118afc370f8",
+    "releases/v2/kicad/control_board/05_clock_debug.kicad_sch": "06cae3b65763026738e566fd06bd7a418dc28221b403ae509014ea0ce02c649c",
+    "releases/v2/kicad/control_board/06_pwm_fault_logic.kicad_sch": "7a41a9744d20e52dafad4502a7eb592db8a554a6abf830b0528503ee4c2c5b98",
+    "releases/v2/kicad/control_board/06_pwm_fault_logic_2.kicad_sch": "6385fc073c6f354d9371530cb026f89715a83146d578e54d42451c7dc6157578",
+    "releases/v2/kicad/control_board/07_adc_frontend.kicad_sch": "c252561d4ab98a12530731bda31d788e23e2342fea9158c6494757b353c3f6cc",
+    "releases/v2/kicad/control_board/08_interconnect.kicad_sch": "a7ac6555eadd7d904a02fd6922d803bda7f7d2ff44d0118580b153a08eea8211",
+    "releases/v2/kicad/control_board/AIPE_SiC_Buck_Control.kicad_sch": "b3a08ddc99227c0568a7f3085518287afbfc0d88e6592f397cec78945a1465e4",
+    "releases/v2/kicad/power_board/01_power_stage.kicad_sch": "e2799cf672e7dd5f28d71fbe311d403009c98156864e531722bc2a265a7f080d",
+    "releases/v2/kicad/power_board/01_power_stage_2.kicad_sch": "3ea6c10de1e13954b7cfa066ec95dec860aa1eeedf3f8c98b4e270109452dd67",
+    "releases/v2/kicad/power_board/02_gate_driver_hs.kicad_sch": "67029921f2befe454cd7bc2c5964814cb446426328f9db026bf33bd6c2c16d11",
+    "releases/v2/kicad/power_board/02_gate_driver_hs_2.kicad_sch": "65df716f9dfbad98d64f3f691fe4442a556da77d6d1a7eb247246547e881cee0",
+    "releases/v2/kicad/power_board/03_gate_driver_ls.kicad_sch": "f2e793da347edfb34a780043440cd82c77e87cfe5858197246b3157b9f487595",
+    "releases/v2/kicad/power_board/03_gate_driver_ls_2.kicad_sch": "b22b6bef11afb1912370d8bc418752330bdbc1df1815c482dfadbb0b26db4d80",
+    "releases/v2/kicad/power_board/04_sensing_island.kicad_sch": "fdfd9f4008ba62e08aa35733d429ac0c580971b5e16b3dedbab89ded4a2a8420",
+    "releases/v2/kicad/power_board/04_sensing_island_2.kicad_sch": "b4f0029d0f85251e41e7c5e38609832c5f6b2d882e6bfee1a057c5586e97e6c7",
+    "releases/v2/kicad/power_board/05_selv_strip.kicad_sch": "d7486364039881157c3b7745c8885bf181d6dae58c2397048367c6242633fb22",
+    "releases/v2/kicad/power_board/05_selv_strip_2.kicad_sch": "2eab6ee42794fe912255297d6f1f5d5ae055a2deb1bd207672a54a652237adb7",
+    "releases/v2/kicad/power_board/06_mechanical.kicad_sch": "09a78f147f4a94621940cdbce1bdcf5dd70745a63486792cd4c22d7ff1e5126d",
+    "releases/v2/kicad/power_board/AIPE_SiC_Buck_Power.kicad_sch": "2bd65b021c8fb3b4bf06339bfd57ccf8d3fe0daee1d29a4377b4d21b81f55cc9",
+    "releases/v2/review/schematic_control.pdf": "f745686240dfa8462d38eff0b6203797b460062bec695a715879af92ef31989a",
+    "releases/v2/review/schematic_power.pdf": "612ee9dcebfc5ee2df1dc3c874ad0d04e7cca344f9051a01e012f71c0fe96654",
+    "releases/v2/verification/drc/20261011T051246Z-drc-f801ed3c/drc.json": "a94d7318e71a0542a0d9ee55309f806514e3b4d5e28532320892f83356a74f9a",
+    "releases/v2/verification/drc/20261011T051246Z-drc-f801ed3c/run.json": "3278007dc3ec923aec66318e0cc230ecb2cb676c5b5e831d8bcca831e3316806",
+    "releases/v2/verification/drc/20261011T054445Z-drc-d0914d79/drc.json": "f4707d298b6e9506d92a7655c4d6f68e45423915470174bd2fbdfe028717a6b2",
+    "releases/v2/verification/drc/20261011T054445Z-drc-d0914d79/run.json": "8ba85308262459e4f9766288c7f3804108d019a2fe149da38d6c87b697812c49",
+    "releases/v2/verification/erc/20261010T071810Z-erc-b207ac59/erc.json": "fceb85d8fd9eed59c0c53b1d8aa6fb83fc3c5e4c975c9dc761ab6fc38b08ffe9",
+    "releases/v2/verification/erc/20261010T071810Z-erc-b207ac59/run.json": "9940c2da8b2c987e0fae7dd982f12a182373d1665d2fbc9b7720a13b301a49fb",
+    "releases/v2/verification/erc/20261010T165532Z-erc-02a2619f/erc.json": "3e09cbf920fe6ed63ae4911b74683bdce97e27775fd739b25353296c95f5e7ac",
+    "releases/v2/verification/erc/20261010T165532Z-erc-02a2619f/run.json": "39521d006379483cd3b73b9fc1de2a1f4e5083d308b3170f2a013e6c0af7bccb",
+    "releases/v2/verification/routing_progress_control.json": "be661505ad8491970c61c9c5675ff1934d07c3730a79b8d369dfbe1d33ab3ab1",
+    "releases/v2/verification/routing_progress_power.json": "7701ea8552c19c62c7dbae38a71cc8665cb45c3c14e7da7a624f35b0fba84384",
+    "releases/v2/verification/verification-summary.json": "91ae09104b94934c455b8f1070f4dcc7b3affa018ef2433c5267b6365cd13768",
+    "review/schematic_control.pdf": "aad9592ad9ffff56b944846eace2d859050d01e56054b5dc8da9976804bbbc51",
+    "review/schematic_power.pdf": "0a3c6004a0b469c0cfff53093cd92bb4babcf8a8f0a18b5f32158edc209f140c",
+    "review/schematic_sections/sections.json": "8d1bc031b196fa352a34d96c296703e1e187480e4f17ab6c12a4e013b1499830",
+    "verification/drc/20261012T084719Z-drc-93962d5d/drc.json": "cb1fe3e6b5b2ee60e0b5fa925da10b1d285dc6f6b9568d35f43e02a8aee892c8",
+    "verification/drc/20261012T084719Z-drc-93962d5d/run.json": "34e3c991b54966b314b44cb1a4a65be744f1cb0b56607e2c6ec1e7538906f60e",
+    "verification/drc/20261012T100423Z-drc-8b9e64d1/drc.json": "986f798dd72ca89041e88c0b7624d9dd29c3bdb32b4492e889d2502b46948012",
+    "verification/drc/20261012T100423Z-drc-8b9e64d1/run.json": "6a0c5f927d021093584babad8ca5576d1b3cea0fdca63cc9a74e010acdf63466",
+    "verification/drc/20261012T114513Z-drc-3461f467/drc.json": "6dbdb9dfb8b93415573a642408a49a139e5857159d4e1a737e6ff5ed3ca42896",
+    "verification/drc/20261012T114513Z-drc-3461f467/run.json": "b962b4689a2a047d0c7e5f9552acb749ade30c187eb32944c19de5420182cb22",
+    "verification/engineering_checks/control_regeneration_check.json": "25ec2bf9c159788b6a8704b4a8c0f55fa16f8920658c9d34d32ac62cffc699a3",
+    "verification/engineering_checks/routing_quality_control.json": "8d85ca0d310b4d471e79a17d17e1754b027f29b7203d8cf060e124c41bb94beb",
+    "verification/engineering_checks/routing_quality_control_compare.json": "e2c15ca6481de995962e9407fc6600010dcfac00305e249b972bea400d76075d",
+    "verification/engineering_checks/routing_quality_control_v2.json": "1a9c0243d10d8e84951f374f171bfb96513aa0850ba086c0305236e27a23ce5d",
+    "verification/engineering_checks/routing_quality_power.json": "66db83a1e0cf9084d6baf90731be3d8baf0fe455017f0a10f0c9f4263b0921df",
+    "verification/engineering_checks/routing_quality_power_compare.json": "ef0e4ac336773eeadc78efdd2c69b17909a9e2efb792d0960b9088a1de73df24",
+    "verification/engineering_checks/routing_quality_power_v2.json": "fd78bff44c2cdeb231340105edc3122b2dfcde14843325064499709d17c74d26",
+    "verification/engineering_checks/schematic_readability_control.json": "aa9930789c39f0323b972ddefb8294910727bec14c07d6d3b5af4fe17094eb2a",
+    "verification/engineering_checks/schematic_readability_power.json": "62eda750d6a1e83b2327e300c4e02c16ace62d0ef5d18d3b1a6d61f9810aa5b0",
+    "verification/engineering_checks/stored_zone_fill_check_control.json": "70c970553bbcf4d2161612b233491b2dd321717e822488808ca6b3c80acc457e",
+    "verification/engineering_checks/stored_zone_fill_check_power.json": "245255580dc7998e15077bc19772d109434aa7e1e964f713f249e191d825e9fa",
+    "verification/erc/20261012T094955Z-erc-c574a866/erc.json": "575e923fef82aa22eae75e7494a5e3c1c5c7dd3d9f828d625e870d3c15208d0b",
+    "verification/erc/20261012T094955Z-erc-c574a866/run.json": "7734379c2817ca8b99ef01cd326240d5fba053d67a1691c6c54c645b77d31b59",
+    "verification/erc/20261012T095007Z-erc-caa10a79/erc.json": "62a5ea70ecaaedb82a13f46ff7f4e282d25cabe437b3cd1a009d0575204e6f85",
+    "verification/erc/20261012T095007Z-erc-caa10a79/run.json": "342ca55801ef64ad1d30e79dcdfc5ab0a06131b743209362c5512b0560b75d85",
+    "verification/netlist_check_control.json": "a939ef134a7660fc51832250617c96d9e378c1a3c2825601b8c173692e473ea4",
+    "verification/netlist_check_power.json": "4846f4d8aa12c0a95dfb10e493ac3bca9df1c3ecff91e793c9fce4559e895e08",
+    "verification/routing_iterations_control.md": "e1a8fd74159e000bbefdb2bb79552e1ef50853c8957e82e92d7e828b778db8b1",
+    "verification/routing_iterations_power.md": "15a840df5f83ace1eb2a765e19c3763def87cf0ed6c45a6d9a06bf2b0c10d313",
+    "verification/routing_progress_control.json": "97ed5f36fe55f3b7dc504f2070f5e6427fa4399abe5cd64f7a4d8a0b4fca6557",
+    "verification/routing_progress_power.json": "45775d96c58e0dbad87bc3d7852c74bc8b64c373ab4b7d85dd4b24da0f4b5ce9",
+    "verification/schematic_gates/control/schematic_gates.json": "01c46c44c3fa148b57262df5b843c956bb92e2f84c222d7375620ae30e9894c6",
+    "verification/schematic_gates/power/schematic_gates.json": "0dbfa5bc1049fe0d681c9a590c33d94ffcd4a4ed43acd2a4a234e3d99634b7fb",
+    "verification/v21_validation.json": "e9da62a64bc79800fde0df2310374e1810b199f94b9d3eeb7ba08da3f4cb2c84",
+    "verification/v21_validation.md": "94069faaff8e26df2579c36c72b7ce2310ab938e8338cf98f7dfd8dc1c9bc4fb"
+  }
+}

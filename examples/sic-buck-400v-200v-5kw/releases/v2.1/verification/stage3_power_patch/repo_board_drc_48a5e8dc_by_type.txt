@@ -1,0 +1,150 @@
+violations 373, unconnected 161, parity 0
+
+=== via_dangling / -: 140 (warning) ===
+  - need/actual [] @ {'x': 49.25, 'y': 6.25}
+      VIA [VIN] @(49.250,6.250) d=1.20 drill=0.60
+  - need/actual [] @ {'x': 47.0, 'y': 4.0}
+      VIA [VIN] @(47.000,4.000) d=1.20 drill=0.60
+  ... 138 more
+
+=== clearance / HV functional clearance (outer layers): 98 (error) ===
+  - need/actual ['3.0000', '2.0250'] @ {'x': 112.0, 'y': 6.5}
+      VIA [VIN] @(112.000,6.500) d=0.80 drill=0.40
+      PAD R3.2 [PGND] F @(108.963,6.500) size 1.23x3.35
+  - need/actual ['3.0000', '1.7000'] @ {'x': 86.0, 'y': 6.5}
+      VIA [VIN] @(86.000,6.500) d=0.80 drill=0.40
+      VIA [PGND] @(83.500,6.500) d=0.80 drill=0.40
+  ... 96 more
+
+=== clearance / HV side to CTRL_SELV (all layers): 44 (error) ===
+  - need/actual ['9.0000', '8.9250'] @ {'x': 94.095, 'y': 140.35}
+      TRACK [HS_OUTL] F.Cu (94.095,140.350)-(94.125,140.375) w=0.40
+      TRACK [PWM_L_F] F.Cu (94.125,149.625)-(94.125,151.375) w=0.25
+  - need/actual ['9.0000', '8.8167'] @ {'x': 100.445, 'y': 149.65}
+      PAD U1.16 [unconnected-(U1-APWM-Pad16)] F @(100.445,149.650) size 2.05x0.60
+      TRACK [HS_OUTH] F.Cu (96.625,140.375)-(96.625,138.625) w=0.40
+  ... 42 more
+
+=== track_dangling / -: 27 (warning) ===
+  - need/actual [] @ {'x': 109.375, 'y': 149.975}
+      TRACK [12V_BIAS_H] F.Cu (109.375,149.975)-(109.375,151.500) w=0.25
+  - need/actual [] @ {'x': 113.275, 'y': 152.399999}
+      TRACK [GNDP_H] F.Cu (113.275,152.400)-(113.250,152.375) w=0.25
+  ... 25 more
+
+=== solder_mask_bridge / -: 16 (error) ===
+  - need/actual [] @ {'x': 125.9625, 'y': 6.5}
+      TRACK [IND_IN_3] F.Cu (125.963,6.500)-(130.438,6.500) w=0.60
+      PAD D1.1 [PGND] F @(128.562,6.500) size 0.97x1.40
+  - need/actual [] @ {'x': 59.5375, 'y': 6.5}
+      TRACK [DAMP_MID] F.Cu (59.538,6.500)-(74.550,6.500) w=0.60
+      PAD C17.1 [VIN] F @(69.450,6.500) size 1.80x5.40
+  ... 14 more
+
+=== clearance / HV side to PE: 12 (error) ===
+  - need/actual ['5.0000', '1.4516'] @ {'x': 38.0, 'y': 8.0}
+      TRACK [PE] F.Cu (38.000,8.000)-(44.500,8.000) w=2.00
+      VIA [VIN] @(47.000,6.250) d=1.20 drill=0.60
+  - need/actual ['5.0000', '1.4516'] @ {'x': 44.5, 'y': 8.0}
+      TRACK [PE] F.Cu (44.500,8.000)-(44.500,55.500) w=2.00
+      VIA [VIN] @(47.000,6.250) d=1.20 drill=0.60
+  ... 10 more
+
+=== shorting_items / -: 8 (error) ===
+  - need/actual [] @ {'x': 59.5375, 'y': 6.5}
+      TRACK [DAMP_MID] F.Cu (59.538,6.500)-(74.550,6.500) w=0.60
+      PAD R12.2 [PGND] F @(65.463,6.500) size 1.23x3.35
+  - need/actual [] @ {'x': 161.0, 'y': 26.4625}
+      PAD R9.1 [VOUT] F @(161.000,26.462) size 1.12x1.75
+      TRACK [IND_OUT_1] F.Cu (161.000,23.538)-(161.000,32.462) w=0.60
+  ... 6 more
+
+=== items_not_allowed / -: 5 (error) ===
+  - need/actual [] @ {'x': 38.9625, 'y': 38.5}
+      TRACK [PE] F.Cu (38.962,38.500)-(44.500,38.500) w=1.00
+  - need/actual [] @ {'x': 42.0, 'y': 20.0}
+      TRACK [PE] F.Cu (42.000,20.000)-(44.500,20.000) w=1.00
+  ... 3 more
+
+=== clearance / Same reference island (SW island, PGND island): 4 (error) ===
+  - need/actual ['0.3000', '0.2544'] @ {'x': 116.5, 'y': 131.0}
+      VIA [SW] @(116.500,131.000) d=1.20 drill=0.60
+      PAD C35.2 [VEE_H] F @(117.775,130.500) size 0.90x0.95
+  - need/actual ['0.3000', '0.0552'] @ {'x': 179.5375, 'y': 133.5}
+      PAD R65.2 [VOUT_DIV] F @(179.537,133.500) size 1.12x1.75
+      VIA [PGND] @(178.750,134.500) d=0.60 drill=0.30
+  ... 2 more
+
+=== silk_edge_clearance / -: 4 (warning) ===
+  - need/actual [] @ {'x': 122.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(122.23,144.38)-(137.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(124.68,141.08)-(124.80,148.92)
+  - need/actual [] @ {'x': 122.255, 'y': 144.4}
+      SHAPE Edge.Cuts Line bbox=(122.23,144.38)-(137.77,144.43)
+      SHAPE of U3 F.Silkscreen Line bbox=(135.20,141.08)-(135.32,148.92)
+  ... 2 more
+
+=== hole_clearance / -: 3 (error) ===
+  - need/actual ['0.2500', '0.0000'] @ {'x': 112.4625, 'y': 131.0}
+      PAD R20.2 [G_H] B @(112.463,131.000) size 1.12x1.75
+      VIA [SW] @(112.500,130.000) d=0.80 drill=0.40
+  - need/actual ['0.2500', '0.0000'] @ {'x': 116.225, 'y': 130.5}
+      PAD C35.1 [HS_FB_VEE] F @(116.225,130.500) size 0.90x0.95
+      VIA [SW] @(116.500,131.000) d=1.20 drill=0.60
+  ... 1 more
+
+=== clearance / DRV_LS: 2 (error) ===
+  - need/actual ['0.3000', '0.2500'] @ {'x': 149.025, 'y': 140.025}
+      TRACK [VDD_L] F.Cu (149.025,140.025)-(149.675,140.025) w=0.40
+      TRACK [VEE_L] F.Cu (147.725,140.025)-(148.375,140.025) w=0.40
+  - need/actual ['0.3000', '0.2500'] @ {'x': 150.325, 'y': 140.025}
+      TRACK [VEE_L] F.Cu (150.325,140.025)-(155.525,140.025) w=0.40
+      TRACK [VDD_L] F.Cu (149.025,140.025)-(149.675,140.025) w=0.40
+
+=== clearance / HV functional clearance (inner layers): 2 (error) ===
+  - need/actual ['1.0000', '0.8333'] @ {'x': 120.08, 'y': 126.0}
+      PAD Q2.2 [PGND] THT @(120.080,126.000) size 1.91x4.50
+      VIA [VEE_H] @(118.875,129.000) d=0.60 drill=0.30
+  - need/actual ['1.0000', '0.8333'] @ {'x': 120.08, 'y': 126.0}
+      PAD Q2.2 [PGND] THT @(120.080,126.000) size 1.91x4.50
+      VIA [VEE_H] @(118.875,129.000) d=0.60 drill=0.30
+
+=== clearance / DRV_HS: 2 (error) ===
+  - need/actual ['0.3000', '0.2500'] @ {'x': 108.725, 'y': 140.025}
+      TRACK [VEE_H] F.Cu (108.725,140.025)-(109.375,140.025) w=0.40
+      TRACK [VDD_H] F.Cu (110.025,140.025)-(110.675,140.025) w=0.40
+  - need/actual ['0.3000', '0.2500'] @ {'x': 110.025, 'y': 140.025}
+      TRACK [VDD_H] F.Cu (110.025,140.025)-(110.675,140.025) w=0.40
+      TRACK [VEE_H] F.Cu (111.325,140.025)-(116.525,140.025) w=0.40
+
+=== zones_intersect / -: 2 (error) ===
+  - need/actual [] @ {'x': 43.4, 'y': 1.2}
+      ZONE  [PGND] B.Cu prio=1 bbox=(43.4,1.2)-(238.8,11.4)
+      ZONE  [PGND] B.Cu prio=1 bbox=(155.2,11.4)-(199.5,92.0)
+  - need/actual [] @ {'x': 43.4, 'y': 1.2}
+      ZONE  [PGND] B.Cu prio=1 bbox=(43.4,1.2)-(238.8,11.4)
+      ZONE  [PGND] B.Cu prio=1 bbox=(1.2,1.2)-(43.4,139.9)
+
+=== tracks_crossing / -: 1 (error) ===
+  - need/actual [] @ {'x': 162.0, 'y': 76.5375}
+      TRACK [VIN_DIV_T1] F.Cu (162.000,76.537)-(162.000,87.463) w=0.60
+      TRACK [VIN_DIV_T2] F.Cu (162.000,84.537)-(162.000,95.463) w=0.60
+
+=== clearance / CTRL_SELV: 1 (error) ===
+  - need/actual ['0.2500', '0.2250'] @ {'x': 145.775, 'y': 149.975}
+      TRACK [PG_BIAS_L_N] F.Cu (145.775,149.975)-(145.775,152.400) w=0.25
+      TRACK [GNDP_L] F.Cu (145.125,151.500)-(145.000,151.500) w=0.60
+
+=== isolated_copper / -: 1 (warning) ===
+  - need/actual [] @ {'x': 218.5, 'y': 63.5}
+      ZONE  [PGND] B.Cu prio=1 bbox=(218.5,63.5)-(238.8,139.9)
+
+=== hole_to_hole / -: 1 (warning) ===
+  - need/actual ['0.2500', '0.0000'] @ {'x': 51.375, 'y': 6.25}
+      VIA [VIN] @(51.375,6.250) d=1.20 drill=0.60
+      VIA [VIN] @(51.500,6.500) d=1.20 drill=0.60
+
+=== unconnected (161) ===
+  3V3:13, VEE_L:9, VDD_H:8, GNDP_H:7, GNDP_S:7, PGND:6, 12V_BIAS_H:5, BIAS_EN_F:5, 12V_BIAS_S:5, 12V_BIAS_L:5, GNDP_L:5, VDD_L:5, VOUT_SENSE:4, VEE_H:4, G_H:4, VIN_DIV:4, LS_FB_VEE:3, DESAT_H_OC:3, KS_H:3, HS_FB_VDD:3, LS_FB_VDD:3, VIN_AMP_P:3, HS_FB_VEE:3, ISO_FB_VEE:3, DESAT_L_OC:3, G_L:3, VOUT:2, FLT_L_N:2, RDY_H:2, RDY_L:2, PG_BIAS_H_N:2, PG_BIAS_L_N:2, VOUT_DIV:2, DESAT_L_A:2, VIN_RAW:1, RELAY_ON:1, PG_BIAS_S_N:1, FAULT_N:1, SPARE_D1:1, SPARE_D2:1, VIN_SENSE:1, LS_RLIM:1, KS_L:1, DESAT_H_A:1, ISO_RLIM:1, 5V_ISO:1, LS_OUTH:1, LS_OUTL:1, LS_CLMP:1, HS_OUTH:1, HS_OUTL:1, HS_CLMP:1, HS_GK:1
+  - PAD RT1.1 [VIN_RAW] THT @(32.500,125.500) size 2.60x2.60 | ZONE  [VIN_RAW] B.Cu prio=2 bbox=(1.2,105.0)-(37.0,118.5)
+  - PAD R54.2 [PGND] B @(155.825,130.000) size 0.80x0.95 | PAD C72.2 [PGND] B @(155.775,127.500) size 0.90x0.95

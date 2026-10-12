@@ -1,0 +1,77 @@
+{
+  "controller": "cascade",
+  "events": [],
+  "steady_checks": {
+    "vout_ripple_below_2Vpp": true,
+    "vin_bus_ripple_below_2pct": true,
+    "il_peak_below_oc_trip_37p5A": true,
+    "il_peak_below_isat_worst_35A": true,
+    "cin_rms_per_part_below_14p5A": true,
+    "cout_rms_per_part_below_23p5A": true
+  },
+  "textbook": {
+    "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+    "dIL_App": 7.261507442964843,
+    "il_peak_A": 28.630705360555382,
+    "il_rms_A": 25.087680366094823,
+    "i_hs_rms_A": 17.84962442618263,
+    "i_ls_rms_A": 17.62902759642641,
+    "i_cin_rms_A": 12.587677202391376,
+    "i_cout_rms_A": 2.096216638459112,
+    "p_cond_hs_W": 15.452540969555114,
+    "p_cond_ls_W": 15.072956778784853,
+    "p_cond_total_W": 30.525497748339966,
+    "p_deadtime_W": 2.87499443849339,
+    "p_dcr_W": 10.070267298421435,
+    "vout_ripple_Vpp": 0.19713647984049004,
+    "vin_ripple_Vpp": 3.5260769406764685,
+    "i_in_mean_A_ideal": 12.65541286581248
+  },
+  "controller_gains": {
+    "structure": "outer voltage PI (V -> A) -> i_ref clamp -> inner average-current PI (A -> duty) with Vref/Vin feedforward -> duty clamp [0, 0.85] -> module comparator PWM; inductor current = i(Vld) + i(Vcout) filtered by a first-order 10 kHz low-pass (stand-in for the ePWM CTR=ZERO average sampling); output voltage through the module 20 kHz feedback filter",
+    "kpv_A_per_V": 1.2325,
+    "kiv_A_per_V_s": 3097.7,
+    "outer_zero_Hz": 400.0,
+    "kpi_per_A": 0.01709,
+    "kii_per_A_s": 85.91,
+    "inner_zero_Hz": 800.0,
+    "iref_min_A": -10.0,
+    "iref_max_A": 35.0,
+    "d_min": 0.0,
+    "d_max": 0.85,
+    "fb_filter_hz": 20000.0,
+    "i_filter_hz": 10000.0,
+    "feedforward": true,
+    "design_basis": "kpi = 2 pi 4 kHz L / Vin(400 V) for an inner crossover of about 4 kHz (fs/12.5); kpv tuned by bisection on the small-signal loop gain (plant 1/(sC) || R, closed inner loop, 20 kHz filter, T/2 PWM delay) for an outer crossover of 2.3 kHz (middle of the 2.0-2.5 kHz band of design_decisions.json assumptions_accepted.voltage_loop_crossover_Hz); analytical margins are recomputed by the driver and stored in results/loop_gain_analysis.json",
+    "firmware_status": "NO FIRMWARE EXISTS (assumptions register A-34: hardware/firmware contract only). These gains are a behavioural stand-in for the TMS320F28335 implementation and must not be copied into firmware without a discrete-time redesign (sampling, one-sample delay, ADC scaling, anti-windup, current-reference clamp coordinated with the 37.5 A OC trip).",
+    "iref_max_basis": "35 A: below the TMCS1133 OC trip (37.5 A, design_decisions sensing.current.oc_threshold_A) and the vendor-style I_sat 37.3 A; added assumption",
+    "iref_min_basis": "-10 A: synchronous operation continues at no load (baseline magnetics no_load_ccm_reverse_current_A -2.8 to -3.4 A); added assumption"
+  },
+  "startup": {
+    "soft_start_s": 0.02,
+    "vout_peak_V": 200.4067044262728,
+    "overshoot_V": 0.4067044262727961,
+    "overshoot_pct": 0.20335221313639806,
+    "il_peak_A": 29.678106880358037,
+    "t_99pct_s": 0.01983020361600025,
+    "vout_cycle_avg_pkpk_last_50T_V": 0.005035576671360786,
+    "checks": {
+      "vout_peak_below_ovp_230V": true,
+      "il_peak_below_oc_trip_37p5A": true,
+      "overshoot_within_1pct_static_band": true
+    }
+  },
+  "textbook_deviation_pct": {
+    "il_pkpk": 1.274750045493744,
+    "il_peak": 0.12212543723381734,
+    "il_rms": 0.007037779345096094,
+    "i_hs_rms": -0.1114562681789359,
+    "i_cin_rms": 2.413010760488207,
+    "i_cout_rms": 1.1002906847642207,
+    "p_cond_hs": -0.22278831136070842,
+    "p_diode_deadtime": -1.7762127295636523,
+    "p_l_dcr": 0.014076053993568058,
+    "vout_pkpk": -11.63516503280547,
+    "vin_bus_pkpk": 2.628160437107163
+  }
+}
