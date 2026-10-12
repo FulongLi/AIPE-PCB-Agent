@@ -159,6 +159,12 @@ SIGNAL_ORDER = ['KS_H', 'KS_L', 'G_H', 'G_L', 'VDD_', 'VEE_', 'ISO_15V', '5V_ISO
 SIGNAL_ORDER_TRIALS = 4  # plan order, short nets first, long nets first, then a seeded perturbation of the best - the best is kept
 SIGNAL_PINNED = ['KS_H', 'KS_L', 'G_H', 'G_L', 'VDD_H', 'VEE_H', 'VDD_L', 'VEE_L', 'ISO_15V', '5V_ISO']  # routed first in every order trial: the Kelvin and gate nets and the island rails (0.35 mm) - the nets whose pads the 0.25 mm feedback nets would otherwise seal inside the packed regions
 RIPUP_ROUNDS = 30  # grid_router rip-up negotiation after the best order trial (stage 5: direct routing of connections that became free, lane release; 7 of 20 rounds kept in b5)
+ROUTING_STYLE_V21 = dict(diagonal=True, bend_penalty_cells=[0.6, 2.0], simplify='octilinear', arcs=True, straight_nets=['PE'], eps=0.02)  # V2.1 grid_router
+# geometry (plan key 'style'): 8-direction A* with bend penalties, final octilinear simplification and tangent arcs on the signal nets (zone/power
+# nets and tracks above 0.6 mm: diagonals only); eps 0.02 (V2: 0.01) closes the orthogonal marking margin of the 0.25 mm grid against off-grid
+# copper (loss up to 0.0175 mm for 0.45-0.6 mm halos), as the control board does. The power board keeps the V2 geometry until the integration phase validates this block
+# (78 region rules, 84 keep-outs): ROUTING_STYLE below is what build_power uses by default; --style v21 / build_power(style=ROUTING_STYLE_V21) opts in.
+ROUTING_STYLE = None
 FINE_PITCH_MM = 1.0  # pad rows below this pitch escape with exact straight stubs (no via at the row) and 0.25 mm escapes
 BARRIER_ROW_PITCH_MM = 1.5  # barrier packages: the 1.27 mm rows (SOIC-16W / SOIC-8W / TMCS) escape through exact stubs too - a port at the pad end is sealed by the first track that runs along the row
 STUB_ROW_REFS = ()  # (r14: short stubs on the strip SOIC-8 rows were sealed by their row neighbours' escapes; U8 / U9 escape inward instead, INWARD_REFS)
@@ -1684,7 +1690,7 @@ def inward_escape_pads(boxes: dict, refs=INWARD_REFS) -> list[list]:
 
 
 def routing_plan(save: Path, extra_tracks, extra_vias, skip_pads, keepouts, net_rules=None, exact_stub_pads=(), trials=None, ripup=None,
-                 direct_nets=(), inward_pads=(), exact_via_pads=(), direct_lane=0.0, exact_lane_pads=()) -> dict:
+                 direct_nets=(), inward_pads=(), exact_via_pads=(), direct_lane=0.0, exact_lane_pads=(), style=None) -> dict:
     # grid_router zones: one plan entry per polygon, each with its own priority / clearance (the first polygon of a net is the
     # base entry, the others become 'NET#i' entries resolved by the zone stage below); post-route zones are added after routing
     plan_power, counters = {}, {}
@@ -1717,6 +1723,7 @@ def routing_plan(save: Path, extra_tracks, extra_vias, skip_pads, keepouts, net_
         'prune_vias': True, 'fill': True, 'save': str(save), 'strict': False, 'max_nodes': MAX_NODES,
         'signal_order_trials': SIGNAL_ORDER_TRIALS if trials is None else int(trials),
         'ripup_rounds': RIPUP_ROUNDS if ripup is None else int(ripup),
+        **({'style': dict(style)} if style else {}),  # V2.1 geometry; absent = the V2 plan
     }
 
 
@@ -1771,7 +1778,9 @@ def router_keepouts(boxes: dict, areas: list[dict]) -> list[dict]:
     return keepouts
 
 
-def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=None, trials=None, ripup=None) -> dict:
+def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=None, trials=None, ripup=None, style=None) -> dict:
+    """Place, route, zone, check and DRC the power board into ``output_pcb``. ``style``: grid_router V2.1 ``style`` block
+    (None = ``ROUTING_STYLE``, {} = V2 geometry, ``ROUTING_STYLE_V21`` = the recommended V2.1 block)."""
     import pcbnew as pcb
     start = time.monotonic()
     parts = load_parts()
@@ -1849,7 +1858,7 @@ def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=Non
     # adds vias where it needs them inside the net's region; plane nets (GND_CTRL, PGND) keep the via escape that reaches their pour
     plan = routing_plan(output_pcb, tracks, vias, skip_pads, keepouts, net_rules=net_rules, exact_stub_pads=exact_pads, trials=trials, ripup=ripup,
                         direct_nets=sorted(regions), inward_pads=inward_escape_pads(boxes), exact_via_pads=exact_vias, direct_lane=DIRECT_LANE_MM,
-                        exact_lane_pads=exact_lanes)
+                        exact_lane_pads=exact_lanes, style=ROUTING_STYLE if style is None else style)
     # grid_router power entries named 'NET#i' must map to the real net: expand them into separate zone calls after run_plan
     extra_zone_entries = {k: v for k, v in plan['power'].items() if '#' in k}
     plan['power'] = {k: v for k, v in plan['power'].items() if '#' not in k}
@@ -1886,6 +1895,7 @@ def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=Non
         m = cl.run_check(output_pcb, spec, model, backend=None, spec_path=SPEC_JSON, model_path=MODEL_JSON)
         json_path, md_path = cl.write_outputs(m, CHECKS_DIR, 'power')
         result['layout_metrics'] = dict(json=str(json_path), md=str(md_path), summary=m.get('summary'))
+        result['routing_quality'] = routing_quality_metrics(output_pcb, CHECKS_DIR, 'power', plan, report)  # V2.1 TASK 2 (plan still carries pre_routed)
     if drc:
         from automation.kicad_tools.run_check import run_check
         code, manifest_path = run_check('drc', output_pcb, DRC_DIR, cli)
@@ -1897,6 +1907,17 @@ def build_power(output_pcb: Path, *, route=True, drc=True, metrics=True, cli=Non
     result['seconds'] = round(time.monotonic() - start, 3)
     write_outputs(result)
     return result
+
+
+def routing_quality_metrics(board_path, output_dir, label: str, plan: dict | None, report: dict | None) -> dict:
+    """Run automation.verification.check_routing_quality on a board (in-process, needs pcbnew) and write routing_quality_<label>.json/.md;
+    ``plan`` attributes its pre-routed tracks, ``report`` (router report with a ``beautify`` block) explains the remaining sharp corners."""
+    from automation.verification import check_routing_quality as cq
+    doc = cq.extract_board(board_path)
+    m = cq.measure(doc, plan=plan, report=report)
+    json_path, md_path = cq.write_outputs(m, output_dir, label)
+    return dict(json=str(json_path), md=str(md_path), totals=m['totals'], by_attribution=m['by_attribution'],
+                sharp_corners_by_reason=m['sharp_corners']['by_reason'], arcs={k: v for k, v in m['arcs'].items() if k != 'tangency_failures'})
 
 
 def write_outputs(result: dict):
@@ -1922,6 +1943,7 @@ def write_outputs(result: dict):
                         signal_order_trials=report.get('signal_order_trials'), signal_order_selected=report.get('signal_order_selected'),
                         chain_issues=result.get('chain_issues'), escape_issues=result.get('escape_issues'),
                         net_length_mm=report.get('net_length_mm'), grid=report.get('grid'), routing_seconds=report.get('seconds'),
+                        style=report.get('style'), arcs=report.get('arcs'), beautify=report.get('beautify'), routing_quality=result.get('routing_quality'),  # V2.1
                         rule_aware_refill=report.get('rule_aware_refill'), stored_fill_check=result.get('stored_fill_check'),
                         drc=result.get('drc'), layout_metrics=result.get('layout_metrics'), seconds=result['seconds'],
                         evidence_note='Only the kicad-cli DRC manifest listed under drc counts as verification; the router figures are geometric proposals.')
@@ -1937,6 +1959,8 @@ def main(argv=None) -> int:
     parser.add_argument('--no-reexec', action='store_true')
     parser.add_argument('--trials', type=int, default=None, help=f'signal routing-order trials (default {SIGNAL_ORDER_TRIALS})')
     parser.add_argument('--ripup', type=int, default=None, help=f'rip-up negotiation rounds (default {RIPUP_ROUNDS})')
+    parser.add_argument('--style', choices=['default', 'v21', 'none'], default='default',
+                        help='grid_router geometry: default = ROUTING_STYLE, v21 = ROUTING_STYLE_V21 (8-direction search, simplification, arcs), none = V2')
     args = parser.parse_args(argv)
     try:
         import pcbnew  # noqa: F401
@@ -1952,7 +1976,9 @@ def main(argv=None) -> int:
         completed = subprocess.run([str(python), str(Path(__file__).resolve()), *passthrough, '--no-reexec'], cwd=str(ROOT))
         return completed.returncode
     cli = find_kicad_cli()
-    result = build_power(args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli, trials=args.trials, ripup=args.ripup)
+    style = {'default': None, 'v21': ROUTING_STYLE_V21, 'none': {}}[args.style]
+    result = build_power(args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli, trials=args.trials, ripup=args.ripup,
+                         style=style)
     report = result.get('report', {})
     drc = result.get('drc') or {}
     counts = result.get('board_counts') or {}

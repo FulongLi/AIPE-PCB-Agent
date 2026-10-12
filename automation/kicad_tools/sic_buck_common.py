@@ -10,6 +10,8 @@ review, not by this file.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+
 import json
 from pathlib import Path
 
@@ -63,12 +65,35 @@ class Circuit:
         self.board = board
         self.parts: list[dict] = []
         self.counters: dict[str, int] = {}
+        # Presentation metadata (V2.1): functional block of each reference, kept out of the part dicts so the
+        # electrical model (design/circuit_<board>.json) is byte-identical with or without block annotations.
+        self.groups: dict[str, str] = {}
+        self.block_titles: dict[str, str] = {}
+        self._blocks: list[str] = []
+
+    @contextmanager
+    def block(self, name: str, title: str | None = None):
+        """Functional block for the schematic presentation: every add() inside is grouped under `name`.
+
+        Nested blocks join with '/'. The group id is '<page>/<name>' on the sheet of the part's page; a title is
+        shown as the group heading (default: the name with underscores as spaces).
+        """
+        self._blocks.append(name)
+        full = "/".join(self._blocks)
+        if title:
+            self.block_titles[full] = title
+        try:
+            yield full
+        finally:
+            self._blocks.pop()
 
     def add(self, prefix, value, footprint, nets, *, page, kind="passive", mpn="", maker="", source="",
             definitions=None, ref=None, note="", dnp=False):
         self.counters[prefix] = self.counters.get(prefix, 0) + 1
         ref = ref or prefix + str(self.counters[prefix])
         assert not any(p["ref"] == ref for p in self.parts), ref
+        if self._blocks:
+            self.groups[ref] = "/".join(self._blocks)
         nets = {str(k): v for k, v in nets.items()}
         definitions = definitions or {n: dict(name=n, type="passive") for n in nets}
         assert set(definitions) == set(nets), (ref, set(definitions) ^ set(nets))

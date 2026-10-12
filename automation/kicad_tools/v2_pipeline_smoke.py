@@ -306,8 +306,12 @@ def zone_coverage(pads: dict) -> list[str]:
     return missing
 
 
-def routing_plan(pads: dict, save) -> dict:
-    """grid_router plan for the placed board; `pads` maps (ref, pad) to [(x, y)] in mm, `save` is the board path."""
+V21_STYLE = dict(diagonal=True, simplify='octilinear', arcs=True, eps=0.02)  # the V2.1 router geometry (grid_router plan key ``style``)
+
+
+def routing_plan(pads: dict, save, style=None) -> dict:
+    """grid_router plan for the placed board; `pads` maps (ref, pad) to [(x, y)] in mm, `save` is the board path; ``style``
+    (optional dict) is the grid_router V2.1 ``style`` block - absent = the V2 plan byte for byte."""
     (qx, qy), = pads[('Q1', '4')]
     stub = [(round(qx + dx, 4), round(qy + dy, 4)) for dx, dy in KS_H_STUB]
     keepouts = [dict(layer='F.Cu', rect=list(HEATSINK_BASE), net=None, vias=True)]
@@ -331,6 +335,7 @@ def routing_plan(pads: dict, save) -> dict:
         'ground': {'net': GROUND, 'layers': ['In1.Cu', 'In2.Cu'], 'clearance': 0.5,
                    'holes': {'In1.Cu': [list(map(list, h)) for h in GROUND_HOLES], 'In2.Cu': [list(map(list, h)) for h in GROUND_HOLES]}},
         'prune_vias': True, 'fill': True, 'save': str(save), 'strict': False,
+        **({'style': dict(style)} if style else {}),
     }
 
 
@@ -483,7 +488,8 @@ def board_stage(kicad_dir, design_dir, result_path=None) -> dict:
     coverage = zone_coverage(pads)
     if coverage:
         raise ValueError('zone polygons do not reach their pads: ' + '; '.join(coverage))
-    plan = routing_plan(pads, path)
+    style_path = design_dir / 'routing_style.json'  # written by run_board_stage when the V2.1 style is requested
+    plan = routing_plan(pads, path, style=json.loads(style_path.read_text(encoding='utf-8')) if style_path.is_file() else None)
     report = gr.run_plan(loaded, plan)
     if inject_stackup(path):  # pcbnew round-trips the stackup; this only guards a future format change
         report['stackup_reinjected'] = True
@@ -527,8 +533,15 @@ def kicad_python():
         return None
 
 
-def run_board_stage(kicad_dir, design_dir, result_path) -> dict:
-    """Run board_stage in this process when pcbnew imports, else under KiCad's Python as a subprocess."""
+def run_board_stage(kicad_dir, design_dir, result_path, style=None) -> dict:
+    """Run board_stage in this process when pcbnew imports, else under KiCad's Python as a subprocess. ``style`` (optional grid_router
+    ``style`` dict) is handed over through design/routing_style.json."""
+    style_path = Path(design_dir) / 'routing_style.json'
+    if style:
+        style_path.parent.mkdir(parents=True, exist_ok=True)
+        style_path.write_text(json.dumps(dict(style), indent=2) + '\n', encoding='utf-8')
+    elif style_path.is_file():
+        style_path.unlink()
     try:
         import pcbnew  # noqa: F401
         return board_stage(kicad_dir, design_dir, result_path)
@@ -609,13 +622,14 @@ def run_simulation(out_dir: Path, python=None) -> dict:
     return result
 
 
-def run(output, *, skip_simulation=False, cli=None) -> dict:
+def run(output, *, skip_simulation=False, cli=None, style=None) -> dict:
     """Execute the whole smoke into `output` and return the summary (also written as smoke-summary.json).
 
     Steps: model validation -> libraries -> schematic/project -> ERC -> board (pcbnew) -> DRC with
     parity -> exports -> simulation. A failing step is recorded with its error and later steps that
     depend on it are skipped; `status` is 'passed' only when every executed step passed and none was
-    skipped for lack of a tool.
+    skipped for lack of a tool. ``style`` (optional) is the grid_router V2.1 ``style`` block for the board stage
+    (``V21_STYLE``: 8-direction search, octilinear simplification, arcs).
     """
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -707,7 +721,7 @@ def run(output, *, skip_simulation=False, cli=None) -> dict:
         if steps['model']['status'] == 'passed' and step('libraries', libraries)['status'] == 'passed' \
                 and step('schematic', schematic)['status'] == 'passed':
             step('erc', check, 'erc', steps['schematic']['root'])
-            if step('board', run_board_stage, kicad_dir, design_dir, design_dir / 'board_stage.json')['status'] == 'passed':
+            if step('board', run_board_stage, kicad_dir, design_dir, design_dir / 'board_stage.json', style)['status'] == 'passed':
                 step('drc', check, 'drc', steps['board']['board'])
                 step('exports', exports)
     if skip_simulation:
@@ -759,6 +773,7 @@ def main(argv=None) -> int:
     parser.add_argument('--output', type=Path, help='scratch directory receiving kicad/, design/, checks/, exports/, simulation/')
     parser.add_argument('--evidence', type=Path, help='write the compact evidence JSON here (e.g. examples/.../v2-pipeline-smoke.json)')
     parser.add_argument('--skip-simulation', action='store_true', help='leave out the ngspice step')
+    parser.add_argument('--v21-style', action='store_true', help='route the board with the V2.1 grid_router style (8-direction search, simplification, arcs)')
     parser.add_argument('--board-stage', nargs=3, metavar=('KICAD_DIR', 'DESIGN_DIR', 'RESULT_JSON'),
                         help='internal: run only the pcbnew board stage (needs KiCad Python)')
     args = parser.parse_args(argv)
@@ -767,7 +782,7 @@ def main(argv=None) -> int:
         return 0
     if args.output is None:
         parser.error('--output is required')
-    summary = run(args.output, skip_simulation=args.skip_simulation)
+    summary = run(args.output, skip_simulation=args.skip_simulation, style=V21_STYLE if args.v21_style else None)
     if args.evidence:
         args.evidence.parent.mkdir(parents=True, exist_ok=True)
         args.evidence.write_text(json.dumps(evidence_summary(summary), indent=2, default=str) + '\n', encoding='utf-8')

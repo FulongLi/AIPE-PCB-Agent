@@ -140,6 +140,72 @@ class GridTests(unittest.TestCase):
         self.assertTrue(all(n[2] == 1 for n in path))
         self.assertEqual(gr.compress_path(path)[1], [])
 
+    # ----- V2.1: 8-direction search (opt-in) ------------------------------------------------------------
+    @staticmethod
+    def diagonal_steps_legal(g, path):
+        return all(not (abs(a[0] - b[0]) == 1 and abs(a[1] - b[1]) == 1) or
+                   (int(g.occ[a[2], a[1], b[0]]) in (0, 7) and int(g.occ[a[2], b[1], a[0]]) in (0, 7)) for a, b in zip(path, path[1:]))
+
+    def test_astar_eight_directions_shortens_the_detour_and_keeps_the_corner_rule(self):
+        g = self.grid()
+        g.occ[0, 2:9, 10] = -1
+        legacy = g.astar((2, 5, 0), (18, 5, 0), 7, (0,))
+        self.assertEqual(len(legacy), 25)  # the grid default is still 4-direction
+        path = g.astar((2, 5, 0), (18, 5, 0), 7, (0,), moves=8)
+        self.assertEqual((path[0], path[-1]), ((2, 5, 0), (18, 5, 0)))
+        self.assertEqual(len(path), 17)
+        self.assertTrue(self.diagonal_steps_legal(g, path))
+        segments, vias = gr.compress_path(path)
+        self.assertEqual(vias, [])
+        self.assertTrue(any(abs(x1 - x0) == abs(y1 - y0) and x1 != x0 for x0, y0, x1, y1, _ in segments))  # diagonal runs merged
+        eight = gr.Grid(21, 11, 2, grid=0.25, margin_cells=1, moves=8, bend=(0.6, 2.0))
+        eight.occ[0, 2:9, 10] = -1
+        self.assertEqual(len(eight.astar((2, 5, 0), (18, 5, 0), 7, (0,))), 17)
+        self.assertEqual(len(eight.astar((2, 5, 0), (18, 5, 0), 7, (0,), moves=4)), 25)
+        with self.assertRaises(ValueError):
+            gr.Grid(21, 11, 2, moves=6)
+
+    def test_astar_eight_directions_never_cuts_a_corner(self):
+        g = gr.Grid(11, 11, 1, grid=0.25, margin_cells=1)
+        g.occ[0, 5, 1:5] = -1
+        g.occ[0, 4, 5:10] = -1  # the only way through is the diagonal between two blocked cells
+        self.assertIsNone(g.astar((5, 8, 0), (5, 2, 0), 7, (0,)))
+        self.assertIsNone(g.astar((5, 8, 0), (5, 2, 0), 7, (0,), moves=8))
+        g.occ[0, 4, 5] = 0  # open one orthogonal neighbour: the diagonal is still refused, the orthogonal route passes
+        path = g.astar((5, 8, 0), (5, 2, 0), 7, (0,), moves=8)
+        self.assertIsNotNone(path)
+        self.assertTrue(self.diagonal_steps_legal(g, path))
+
+    def test_bend_penalty_prefers_fewer_turns(self):
+        g = gr.Grid(31, 31, 1, grid=0.25, margin_cells=1)
+        start, end = (3, 3, 0), (27, 15, 0)
+        plain = g.astar(start, end, 7, (0,), moves=8)
+        bent = g.astar(start, end, 7, (0,), moves=8, bend=(0.6, 2.0))
+        turns = lambda p: sum(1 for a, b, c in zip(p, p[1:], p[2:]) if (b[0] - a[0], b[1] - a[1]) != (c[0] - b[0], c[1] - b[1]))
+        self.assertLessEqual(turns(bent), turns(plain))
+        self.assertLessEqual(turns(bent), 2)
+        self.assertAlmostEqual(gr.pg.polyline_length([(x, y) for x, y, _ in bent]), gr.pg.octile(24, 12), places=9)  # still the shortest
+        self.assertTrue(self.diagonal_steps_legal(g, bent))
+
+    def test_foreign_mask_and_cells_free_follow_the_search_rules(self):
+        g = gr.Grid(21, 11, 1, grid=0.25, margin_cells=1)
+        g.occ[0, 5, 10] = 3
+        mask = g.foreign_mask(0, 7)
+        self.assertTrue(mask[5, 10] and mask[0, 0] and not mask[5, 9])
+        self.assertTrue(g.cells_free(mask, [(2, 5), (9, 5)]))
+        self.assertFalse(g.cells_free(mask, [(2, 5), (12, 5)]))
+        self.assertFalse(g.cells_free(mask, [(9, 4), (11, 6)]))  # the diagonal through (10, 5)
+        g.occ[0, 4, 10] = 3
+        self.assertFalse(g.cells_free(g.foreign_mask(0, 7), [(9, 5), (10, 4)]))  # corner rule: (10, 5) and (9, 4)... one blocked neighbour suffices
+        self.assertFalse(g.cells_free(mask, [(2, 5), (5, 7)]))  # not octilinear
+        dilated = g.foreign_mask(0, 7, extra=1)
+        self.assertTrue(dilated[5, 9] and dilated[6, 10])
+        self.assertTrue(g.samples_free(mask, [(2.0, 1.0), (2.1, 1.05)]))
+        self.assertFalse(g.samples_free(mask, [(2.5, 1.25)]))  # cell (10, 5) is foreign
+        region = [np.zeros((11, 21), dtype=bool)]
+        region[0][:, :12] = True
+        self.assertTrue(g.foreign_mask(0, 7, region=region)[5, 15])
+
 
 class PlanTests(unittest.TestCase):
     def plan(self):
@@ -165,6 +231,38 @@ class PlanTests(unittest.TestCase):
             with self.subTest(label):
                 with self.assertRaises(ValueError):
                     gr.validate_plan(plan)
+
+    def test_style_defaults_reproduce_v2_and_are_validated(self):
+        cfg = gr.normalise_style(None)
+        self.assertFalse(cfg['diagonal']); self.assertFalse(cfg['arcs']); self.assertEqual(cfg['simplify'], 'none')
+        self.assertEqual(cfg['bend_penalty_cells'], [0.0, 0.0]); self.assertEqual(cfg['via_cost_cells'], 8); self.assertEqual(cfg['eps'], gr.EPS)
+        self.assertEqual(gr.normalise_style({'diagonal': True})['bend_penalty_cells'], [0.6, 2.0])
+        self.assertEqual(gr.normalise_style({'diagonal': True, 'bend_penalty_cells': [0, 1]})['bend_penalty_cells'], [0.0, 1.0])
+        self.assertEqual(gr.normalise_style({'corner_keep_mm': {'via': 0.5}})['corner_keep_mm'], {'via': 0.5, 'port': 0.0})
+        self.assertIn('style', gr.PLAN_KEYS)
+        plan = dict(self.plan(), style={'diagonal': True, 'simplify': 'octilinear', 'arcs': True})
+        self.assertEqual(gr.validate_plan(plan), plan)
+        self.assertEqual(gr.validate_plan(dict(self.plan(), net_rules={'A': {'smooth': 'arc'}}))['net_rules']['A']['smooth'], 'arc')
+        bad = {
+            'unknown style key': {'diagonals': True},
+            'simplify enum': {'simplify': 'spline'},
+            'negative bend': {'bend_penalty_cells': [-1, 0]},
+            'bend length': {'bend_penalty_cells': [1]},
+            'radii order': {'arc_radius_mm': [1.0, 0.5, 0.25]},
+            'stage name': {'stages': ['signal', 'zones']},
+            'eps too small': {'eps': 0.001},
+            'heuristic weight': {'heuristic_weight': 0.9},
+            'corner keep key': {'corner_keep_mm': {'pad': 1.0}},
+            'turn range': {'min_turn_deg': 0},
+        }
+        for label, style in bad.items():
+            with self.subTest(label):
+                with self.assertRaises(ValueError):
+                    gr.validate_plan(dict(self.plan(), style=style))
+        with self.assertRaises(ValueError):
+            gr.validate_plan(dict(self.plan(), style=[]))
+        with self.assertRaises(ValueError):
+            gr.validate_plan(dict(self.plan(), net_rules={'A': {'smooth': 'bezier'}}))
 
 
 # ----- synthetic KiCad board ------------------------------------------------------------------
@@ -236,8 +334,12 @@ RULES = {'min_clearance': 0.15, 'min_track_width': 0.15, 'min_via_diameter': 0.5
          'min_hole_clearance': 0.25, 'min_hole_to_hole': 0.25, 'min_copper_edge_clearance': 0.5, 'min_via_annular_width': 0.1}
 
 
-def synthetic_scenario(out_dir):
-    """Build, route, save, reload and DRC the synthetic board; returns a JSON-serialisable summary."""
+STYLED = {'diagonal': True, 'simplify': 'octilinear', 'arcs': True, 'eps': 0.02}  # the V2.1 geometry on the synthetic board
+
+
+def synthetic_scenario(out_dir, style=None):
+    """Build, route, save, reload and DRC the synthetic board; returns a JSON-serialisable summary. ``style`` (optional) is the
+    plan ``style`` block (V2.1 geometry); the V2 scenario passes none."""
     import pcbnew as pcb
     out_dir = Path(out_dir); out_dir.mkdir(parents=True, exist_ok=True)
     cli = find_kicad_cli()
@@ -283,12 +385,16 @@ def synthetic_scenario(out_dir):
         'board': {'design_settings': {'rules': RULES}},
     }, indent=2) + '\n', encoding='utf-8')
     plan = dict(SYNTHETIC_PLAN, save=str(out_dir / f'{name}.kicad_pcb'))
+    if style:
+        plan['style'] = dict(style)
     report = gr.run_plan(board, plan)
     loaded = pcb.LoadBoard(plan['save'])
     widths = {}
+    arcs = 0
     for item in loaded.GetTracks():
         if not isinstance(item, pcb.PCB_VIA):
             widths.setdefault(item.GetNetname(), set()).add(round(pcb.ToMM(item.GetWidth()), 3))
+            arcs += isinstance(item, pcb.PCB_ARC)
     by_layer = {loaded.GetLayerName(l): sum(1 for t in loaded.GetTracks() if not isinstance(t, pcb.PCB_VIA) and t.GetLayer() == l)
                 for l in loaded.GetEnabledLayers().CuStack()}
     back_pads = sum(1 for fp in loaded.GetFootprints() for pad in fp.Pads() if pad.IsOnLayer(pcb.B_Cu) and not pad.IsOnLayer(pcb.F_Cu))
@@ -297,7 +403,7 @@ def synthetic_scenario(out_dir):
     reregistered = dict(vias=len(again.vias), net_length_mm={k: round(v, 3) for k, v in sorted(again.length.items())},
                         ports=len(again.ports), blocked_cells=int((again.grid.occ != 0).sum()))
     summary = dict(report=report, track_widths={k: sorted(v) for k, v in sorted(widths.items())}, tracks_by_layer=by_layer,
-                   back_side_pads=back_pads, reregistered=reregistered, out_dir=str(out_dir))
+                   back_side_pads=back_pads, reregistered=reregistered, out_dir=str(out_dir), arcs_on_board=arcs)
     if cli:
         summary['drc'] = native_drc(cli, plan['save'], out_dir / 'drc.json')
     return summary
@@ -336,9 +442,41 @@ class SyntheticBoardTests(unittest.TestCase):
         self.assertEqual((summary['drc']['violations'], summary['drc']['unconnected']), (0, 0), msg=summary['drc']['details'])
         self.assertEqual(summary['drc']['exit_code'], 0)
 
+    def test_synthetic_board_with_v21_style_passes_native_drc(self):
+        """The same board with the V2.1 geometry (8-direction search, octilinear simplification, arcs): still zero unresolved,
+        exact length re-registration with arcs on the board, native DRC 0 / 0."""
+        python = kicad_python()
+        if python is None:
+            self.skipTest('KiCad Python with pcbnew unavailable')
+        with tempfile.TemporaryDirectory(prefix='aipe grid router styled ') as folder:
+            result = subprocess.run([str(python), str(Path(__file__).resolve()), '--synthetic-styled', folder], cwd=str(ROOT),
+                                    capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=600)
+            self.assertEqual(result.returncode, 0, msg=result.stdout[-4000:] + result.stderr[-4000:])
+            summary = json.loads(result.stdout.strip().splitlines()[-1])
+        report = summary['report']
+        self.assertEqual(report['unresolved'], [])
+        self.assertEqual(report['style']['diagonal'], True)
+        beautify = report['beautify']
+        self.assertTrue(beautify['enabled'])
+        self.assertGreater(beautify['chains'], 0)
+        self.assertLessEqual(beautify['length_after_mm'], beautify['length_before_mm'] + 1e-6)
+        self.assertEqual(beautify['kept'] + beautify['rewritten'], beautify['chains'])
+        self.assertEqual(report['arcs'], summary['arcs_on_board'])
+        self.assertGreaterEqual(report['arcs'], 1)
+        self.assertEqual(summary['track_widths']['VBUS'], [1.0])
+        self.assertEqual(summary['track_widths']['GATE'], [0.3])
+        self.assertEqual(summary['reregistered']['vias'], report['vias'])
+        self.assertEqual(summary['reregistered']['net_length_mm'], report['net_length_mm'])  # arcs re-register by their true length
+        if 'drc' not in summary:
+            self.skipTest('kicad-cli unavailable; routing checked without native DRC')
+        self.assertEqual((summary['drc']['violations'], summary['drc']['unconnected']), (0, 0), msg=summary['drc']['details'])
+        self.assertEqual(summary['drc']['exit_code'], 0)
+
 
 if __name__ == '__main__':
     if len(sys.argv) >= 3 and sys.argv[1] == '--synthetic':
         print(json.dumps(synthetic_scenario(sys.argv[2])))
+    elif len(sys.argv) >= 3 and sys.argv[1] == '--synthetic-styled':
+        print(json.dumps(synthetic_scenario(sys.argv[2], style=STYLED)))
     else:
         unittest.main()

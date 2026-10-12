@@ -318,200 +318,220 @@ def build() -> Circuit:
 
     # ---- 01 12 V entry, TVS and eFuse ------------------------------------------------------------------------
     p = "01_aux_12v"
-    c.add("J", "12 V in", "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal", {1: "12V_IN", 2: GND}, page=p, kind="J",
-          mpn="1715022", maker="Phoenix Contact", source="https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-2-508-1715022",
-          note="J_12V: external regulated 12 V +/-10 %, 2.5 A recommended; pin 1 +12 V, pin 2 return")
-    c.add("D", "SMBJ15CA", "Diode_SMD:D_SMB", {1: "12V_IN", 2: GND}, page=p, kind="D", mpn="SMBJ15CA", maker="Littelfuse",
-          source="https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj/smbj15ca", definitions=pin_defs("1:A1:passive 2:A2:passive"),
-          note="bidirectional TVS 15 V standoff, V_BR 16.7-18.5 V > eFuse OVP 15.2 V max, V_C 24.4 V < 45 V abs max (distributor data, unverified)")
-    _ic(c, "TPS26400PWPR", {1: "12V_IN", 2: "12V_IN", 3: "EFUSE_UVLO", 5: "EFUSE_OVP", 6: None, 7: "EFUSE_SHDN", 8: "EFUSE_RTN", 9: GND, 10: "I12V_MON",
-                            11: "EFUSE_ILIM", 12: "EFUSE_DVDT", 14: "FLT_12V_N", 15: "12V_PROT", 16: "12V_PROT", 17: "EFUSE_RTN"}, p,
-        note="eFuse, MODE open = circuit breaker with 4 ms timeout and 540 ms auto-retry (CR-18); RTN separate from GND (A-C3); PowerPad on RTN")
-    _cap(c, "100n/50V/0603", "12V_IN", GND, p, note="C(IN) local bypass (A-C2)")
-    c.resistor("107k", "12V_IN", "EFUSE_UVLO", p, note="ladder R1: UVLO 10.02 V rising / 9.26 V falling")
-    c.resistor("4.42k", "EFUSE_UVLO", "EFUSE_OVP", p, note="ladder R2: OVP 14.45 V rising / 13.36 V falling")
-    c.resistor("10k", "EFUSE_OVP", "EFUSE_RTN", p, note="ladder R3 to RTN")
-    c.resistor("6.04k", "EFUSE_ILIM", "EFUSE_RTN", p, note="R_ILIM: I_CB = 12/6.04 - 0.03 = 1.96 A (CR-02); I_OL about 1.99 A")
-    _cap(c, "100n/50V/0603", "EFUSE_DVDT", "EFUSE_RTN", p, note="C_dVdT: 8.9-12.2 ms output ramp at 12 V (verified dVdT relation)")
-    c.resistor("14.7k", "I12V_MON", "EFUSE_RTN", p, note="R_IMON: 3.0 V at 2.4 A with 85 uA/A; no capacitor on IMON (datasheet)")
-    c.resistor("100k", "12V_IN", "EFUSE_SHDN", p, note="SHDN enable pull-up (A-C1)")
-    _pullup(c, "FLT_12V_N", p, note="RFLTb 10 k (10-100 k allowed); FLT_12V_N -> GPIO16 and latched fault group")
-    _cap(c, "100u/25V/elec", "12V_PROT", GND, p, note="protected-rail bulk 100 uF (baseline); EEE-FK1E101P 25 V")
-    c.resistor("150k", "12V_PROT", "V12V_MON", p, note="V12 monitor divider top: 0.1812 ratio, 3.0 V at 16.55 V")
-    c.resistor("33.2k", "V12V_MON", GND, p, note="V12 monitor divider bottom")
+    with c.block("efuse_12v", "12 V entry, TVS and TPS26400 eFuse"):
+        c.add("J", "12 V in", "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal", {1: "12V_IN", 2: GND}, page=p, kind="J",
+              mpn="1715022", maker="Phoenix Contact", source="https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-2-508-1715022",
+              note="J_12V: external regulated 12 V +/-10 %, 2.5 A recommended; pin 1 +12 V, pin 2 return")
+        c.add("D", "SMBJ15CA", "Diode_SMD:D_SMB", {1: "12V_IN", 2: GND}, page=p, kind="D", mpn="SMBJ15CA", maker="Littelfuse",
+              source="https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj/smbj15ca", definitions=pin_defs("1:A1:passive 2:A2:passive"),
+              note="bidirectional TVS 15 V standoff, V_BR 16.7-18.5 V > eFuse OVP 15.2 V max, V_C 24.4 V < 45 V abs max (distributor data, unverified)")
+        _ic(c, "TPS26400PWPR", {1: "12V_IN", 2: "12V_IN", 3: "EFUSE_UVLO", 5: "EFUSE_OVP", 6: None, 7: "EFUSE_SHDN", 8: "EFUSE_RTN", 9: GND, 10: "I12V_MON",
+                                11: "EFUSE_ILIM", 12: "EFUSE_DVDT", 14: "FLT_12V_N", 15: "12V_PROT", 16: "12V_PROT", 17: "EFUSE_RTN"}, p,
+            note="eFuse, MODE open = circuit breaker with 4 ms timeout and 540 ms auto-retry (CR-18); RTN separate from GND (A-C3); PowerPad on RTN")
+        _cap(c, "100n/50V/0603", "12V_IN", GND, p, note="C(IN) local bypass (A-C2)")
+        c.resistor("107k", "12V_IN", "EFUSE_UVLO", p, note="ladder R1: UVLO 10.02 V rising / 9.26 V falling")
+        c.resistor("4.42k", "EFUSE_UVLO", "EFUSE_OVP", p, note="ladder R2: OVP 14.45 V rising / 13.36 V falling")
+        c.resistor("10k", "EFUSE_OVP", "EFUSE_RTN", p, note="ladder R3 to RTN")
+        c.resistor("6.04k", "EFUSE_ILIM", "EFUSE_RTN", p, note="R_ILIM: I_CB = 12/6.04 - 0.03 = 1.96 A (CR-02); I_OL about 1.99 A")
+        _cap(c, "100n/50V/0603", "EFUSE_DVDT", "EFUSE_RTN", p, note="C_dVdT: 8.9-12.2 ms output ramp at 12 V (verified dVdT relation)")
+        c.resistor("14.7k", "I12V_MON", "EFUSE_RTN", p, note="R_IMON: 3.0 V at 2.4 A with 85 uA/A; no capacitor on IMON (datasheet)")
+        c.resistor("100k", "12V_IN", "EFUSE_SHDN", p, note="SHDN enable pull-up (A-C1)")
+        _pullup(c, "FLT_12V_N", p, note="RFLTb 10 k (10-100 k allowed); FLT_12V_N -> GPIO16 and latched fault group")
+        _cap(c, "100u/25V/elec", "12V_PROT", GND, p, note="protected-rail bulk 100 uF (baseline); EEE-FK1E101P 25 V")
+        c.resistor("150k", "12V_PROT", "V12V_MON", p, note="V12 monitor divider top: 0.1812 ratio, 3.0 V at 16.55 V")
+        c.resistor("33.2k", "V12V_MON", GND, p, note="V12 monitor divider bottom")
 
     # ---- 02 5 V buck, dual LDO, supervisor -------------------------------------------------------------------
     p = "02_supplies"
-    _ic(c, "TPS54302DDCR", {1: GND, 2: "5V_SW", 3: "12V_PROT", 4: "5V_FB", 5: "5V_EN", 6: "5V_BST"}, p,
-        note="12V_PROT -> 5 V, 400 kHz, I_5V 0.54 A; VFB 0.596 V; EN 1.23 V rising")
-    _cap(c, "10u/25V/1210", "12V_PROT", GND, p, note="buck input decoupling >= 10 uF ceramic (A-C4; the baseline's 10 uF)")
-    _cap(c, "100n/50V/0603", "12V_PROT", GND, p, note="buck input HF bypass (A-C4)")
-    c.resistor("100k", "12V_PROT", "5V_EN", p, note="EN divider top: start about 7.4 V")
-    c.resistor("20k", "5V_EN", GND, p, note="EN divider bottom")
-    _cap(c, "100n/50V/0603", "5V_BST", "5V_SW", p, note="BOOT capacitor 0.1 uF (SLVSDG6C 7.2.3.2)")
-    c.add("L", "10uH", "Inductor_SMD:L_Coilcraft_MSS1048-XXX", {1: "5V_SW", 2: "5V"}, page=p, kind="L", mpn="MSS1048-103MLC", maker="Coilcraft",
-          source="https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/mss-mos/mss1048/mss1048-103/",
-          note="10 uH shielded (baseline, V1); ripple about 0.6 A pp at 12 V in")
-    for _ in range(2):
-        _cap(c, "22u/25V/1210", "5V", GND, p, note="5 V output ceramic (2 x 22 uF)")
-    _cap(c, "220u/16V/radial", "5V", GND, p, note="5 V bulk / hold-up: power-down reset margin 1.1 ms >> 8 us (verified)")
-    c.resistor("100k", "5V", "5V_FB", p, note="FB divider top: 0.596 V x 113.3/13.3 = 5.08 V")
-    c.resistor("13.3k", "5V_FB", GND, p, note="FB divider bottom")
-    _cap(c, "56p/50V/0603", "5V", "5V_FB", p, note="feed-forward across the 100 k (A-C16)")
-    _ic(c, "TPS767D301PWPR", {3: GND, 4: GND, 5: "5V", 6: "5V", 9: GND, 10: "IO_EN_N", 11: "5V", 12: "5V", 17: "3V3", 18: "3V3", 22: "XRS_N",
-                              23: "1V9", 24: "1V9", 25: "FB19", 28: "CORE_OK", 29: GND}, p,
-        note="dual LDO: 1 = 1.9 V adjustable core (always enabled), 2 = 3.3 V fixed enabled after core RESET1 (core-first); P_LDO 1.39 W; "
-             "commercial part ACTIVE, -EP NRND, TLV752 named alternative (baseline)")
-    c.resistor("18.2k", "1V9", "FB19", p, note="1V9 set point: 1.1834 V x (1 + 18.2/30.1) = 1.899 V")
-    c.resistor("30.1k", "FB19", GND, p, note="1V9 divider bottom (40 uA divider current per SLVS209H)")
-    c.resistor("10k", "5V", "CORE_OK", p, note="1RESET_N open-drain pull-up")
-    c.resistor("10k", "5V", "IO_EN_N", p, note="2EN_N pull-up: 3.3 V regulator off until the core is good")
-    c.resistor("10k", "CORE_OK", "SEQ_BASE", p, note="sequencer base resistor")
-    c.resistor("100k", "SEQ_BASE", GND, p, note="sequencer base pull-down")
-    _ic(c, "MMBT3904,215", {1: "SEQ_BASE", 2: GND, 3: "IO_EN_N"}, p, prefix="Q", symbol="Transistor_BJT:Q_NPN_BEC",
-        note="core-first sequencer: CORE_OK high -> 2EN_N low -> 3.3 V enabled (V1 pattern)")
-    _ic(c, "BAT54,215", {1: "XRS_N", 3: "CORE_OK"}, p, prefix="D", note="core failure (1RESET_N low) asserts XRS_N (V1 pattern); anode XRS_N, cathode CORE_OK")
-    for rail in ("1V9", "3V3"):
-        c.resistor("0.1", rail, rail + "_BULK", p, package="0805", note=f"explicit ESR for the {rail} polymer output capacitor (A-C15)", **R_SHUNT_0R1)
-        _cap(c, "100u/6.3V/polymer", rail + "_BULK", GND, p, note=f"{rail} LDO output bulk, low-ESR polymer behind 0.1 ohm (A-C15)")
-    _cap(c, "100n/50V/0603", "5V", GND, p, note="LDO input HF bypass")
-    _cap(c, "22u/25V/1210", "5V", GND, p, note="LDO input bulk (V1 pattern)")
-    _ic(c, "TPS3808G01DBVR", {1: "XRS_N", 2: GND, 3: "MR_N", 4: "RESET_CT", 5: "MON5", 6: "3V3"}, p,
-        note="5 V supervisor: SENSE 101 k / 10 k -> 4.4955 V (CR-18); CT 10 nF -> 57.6 ms; RESET open drain to XRS_N")
-    c.resistor("101k", "5V", "MON5", p, note="supervisor divider top (CR-18: 105 k would trip at 4.66 V)")
-    c.resistor("10k", "MON5", GND, p, note="supervisor divider bottom")
-    _cap(c, "10n/50V/0603", "RESET_CT", GND, p, note="reset delay capacitor: t_D = (10 nF / 175) + 0.5 ms = 57.6 ms (SBVS050N Eq. 1)")
-    _cap(c, "100n/50V/0603", "3V3", GND, p, note="TPS3808 VDD bypass")
-    _pullup(c, "XRS_N", p, note="XRS_N wired-OR pull-up (TPS3808 RESET, LDO 2RESET, DSP XRS, BAT54 from CORE_OK)")
-    c.header(2, {1: "MR_N", 2: GND}, p, note="J_RESET: manual reset through the supervisor MR pin (A-C9)")
+    with c.block("buck_5v", "TPS54302 5 V buck"):
+        _ic(c, "TPS54302DDCR", {1: GND, 2: "5V_SW", 3: "12V_PROT", 4: "5V_FB", 5: "5V_EN", 6: "5V_BST"}, p,
+            note="12V_PROT -> 5 V, 400 kHz, I_5V 0.54 A; VFB 0.596 V; EN 1.23 V rising")
+        _cap(c, "10u/25V/1210", "12V_PROT", GND, p, note="buck input decoupling >= 10 uF ceramic (A-C4; the baseline's 10 uF)")
+        _cap(c, "100n/50V/0603", "12V_PROT", GND, p, note="buck input HF bypass (A-C4)")
+        c.resistor("100k", "12V_PROT", "5V_EN", p, note="EN divider top: start about 7.4 V")
+        c.resistor("20k", "5V_EN", GND, p, note="EN divider bottom")
+        _cap(c, "100n/50V/0603", "5V_BST", "5V_SW", p, note="BOOT capacitor 0.1 uF (SLVSDG6C 7.2.3.2)")
+        c.add("L", "10uH", "Inductor_SMD:L_Coilcraft_MSS1048-XXX", {1: "5V_SW", 2: "5V"}, page=p, kind="L", mpn="MSS1048-103MLC", maker="Coilcraft",
+              source="https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/mss-mos/mss1048/mss1048-103/",
+              note="10 uH shielded (baseline, V1); ripple about 0.6 A pp at 12 V in")
+        for _ in range(2):
+            _cap(c, "22u/25V/1210", "5V", GND, p, note="5 V output ceramic (2 x 22 uF)")
+        _cap(c, "220u/16V/radial", "5V", GND, p, note="5 V bulk / hold-up: power-down reset margin 1.1 ms >> 8 us (verified)")
+        c.resistor("100k", "5V", "5V_FB", p, note="FB divider top: 0.596 V x 113.3/13.3 = 5.08 V")
+        c.resistor("13.3k", "5V_FB", GND, p, note="FB divider bottom")
+        _cap(c, "56p/50V/0603", "5V", "5V_FB", p, note="feed-forward across the 100 k (A-C16)")
+    with c.block("ldo_dual", "TPS767D301 dual LDO, core-first sequencing"):
+        _ic(c, "TPS767D301PWPR", {3: GND, 4: GND, 5: "5V", 6: "5V", 9: GND, 10: "IO_EN_N", 11: "5V", 12: "5V", 17: "3V3", 18: "3V3", 22: "XRS_N",
+                                  23: "1V9", 24: "1V9", 25: "FB19", 28: "CORE_OK", 29: GND}, p,
+            note="dual LDO: 1 = 1.9 V adjustable core (always enabled), 2 = 3.3 V fixed enabled after core RESET1 (core-first); P_LDO 1.39 W; "
+                 "commercial part ACTIVE, -EP NRND, TLV752 named alternative (baseline)")
+        c.resistor("18.2k", "1V9", "FB19", p, note="1V9 set point: 1.1834 V x (1 + 18.2/30.1) = 1.899 V")
+        c.resistor("30.1k", "FB19", GND, p, note="1V9 divider bottom (40 uA divider current per SLVS209H)")
+        c.resistor("10k", "5V", "CORE_OK", p, note="1RESET_N open-drain pull-up")
+        c.resistor("10k", "5V", "IO_EN_N", p, note="2EN_N pull-up: 3.3 V regulator off until the core is good")
+        c.resistor("10k", "CORE_OK", "SEQ_BASE", p, note="sequencer base resistor")
+        c.resistor("100k", "SEQ_BASE", GND, p, note="sequencer base pull-down")
+        _ic(c, "MMBT3904,215", {1: "SEQ_BASE", 2: GND, 3: "IO_EN_N"}, p, prefix="Q", symbol="Transistor_BJT:Q_NPN_BEC",
+            note="core-first sequencer: CORE_OK high -> 2EN_N low -> 3.3 V enabled (V1 pattern)")
+        _ic(c, "BAT54,215", {1: "XRS_N", 3: "CORE_OK"}, p, prefix="D", note="core failure (1RESET_N low) asserts XRS_N (V1 pattern); anode XRS_N, cathode CORE_OK")
+        for rail in ("1V9", "3V3"):
+            c.resistor("0.1", rail, rail + "_BULK", p, package="0805", note=f"explicit ESR for the {rail} polymer output capacitor (A-C15)", **R_SHUNT_0R1)
+            _cap(c, "100u/6.3V/polymer", rail + "_BULK", GND, p, note=f"{rail} LDO output bulk, low-ESR polymer behind 0.1 ohm (A-C15)")
+        _cap(c, "100n/50V/0603", "5V", GND, p, note="LDO input HF bypass")
+        _cap(c, "22u/25V/1210", "5V", GND, p, note="LDO input bulk (V1 pattern)")
+    with c.block("supervisor", "TPS3808 5 V supervisor and reset"):
+        _ic(c, "TPS3808G01DBVR", {1: "XRS_N", 2: GND, 3: "MR_N", 4: "RESET_CT", 5: "MON5", 6: "3V3"}, p,
+            note="5 V supervisor: SENSE 101 k / 10 k -> 4.4955 V (CR-18); CT 10 nF -> 57.6 ms; RESET open drain to XRS_N")
+        c.resistor("101k", "5V", "MON5", p, note="supervisor divider top (CR-18: 105 k would trip at 4.66 V)")
+        c.resistor("10k", "MON5", GND, p, note="supervisor divider bottom")
+        _cap(c, "10n/50V/0603", "RESET_CT", GND, p, note="reset delay capacitor: t_D = (10 nF / 175) + 0.5 ms = 57.6 ms (SBVS050N Eq. 1)")
+        _cap(c, "100n/50V/0603", "3V3", GND, p, note="TPS3808 VDD bypass")
+        _pullup(c, "XRS_N", p, note="XRS_N wired-OR pull-up (TPS3808 RESET, LDO 2RESET, DSP XRS, BAT54 from CORE_OK)")
+        c.header(2, {1: "MR_N", 2: GND}, p, note="J_RESET: manual reset through the supervisor MR pin (A-C9)")
 
     # ---- 03 DSP -------------------------------------------------------------------------------------------
-    defs, nets = dsp_pins()
-    c.add("U", "TMS320F28335PGFA", "Package_QFP:LQFP-176_24x24mm_P0.5mm", nets, page="03_dsp", kind="DSP", mpn="TMS320F28335PGFA", maker=TI,
-          source="https://www.ti.com/lit/ds/symlink/tms320f28335.pdf", definitions=defs,
-          note="150 MHz; ePWM1A/1B on GPIO0/1; TZ1 = FAULT_N (GPIO12), TZ2 = OC_N (GPIO13); ADC 0-3 V; pin map per design_decisions.json controller.dsp_pin_map")
+    with c.block("dsp", "TMS320F28335PGFA"):
+        defs, nets = dsp_pins()
+        c.add("U", "TMS320F28335PGFA", "Package_QFP:LQFP-176_24x24mm_P0.5mm", nets, page="03_dsp", kind="DSP", mpn="TMS320F28335PGFA", maker=TI,
+              source="https://www.ti.com/lit/ds/symlink/tms320f28335.pdf", definitions=defs,
+              note="150 MHz; ePWM1A/1B on GPIO0/1; TZ1 = FAULT_N (GPIO12), TZ2 = OC_N (GPIO13); ADC 0-3 V; pin map per design_decisions.json controller.dsp_pin_map")
 
     # ---- 04 DSP decoupling --------------------------------------------------------------------------------
     p = "04_dsp_decoupling"
-    for n, net in nets.items():
-        if defs[n]["name"].startswith("VDD"):
-            cap = _cap(c, "100n/50V/0603", net, GND, p, note=f"DSP pin {n} {defs[n]['name']}; place at the pin")
-            cap["near_dsp_pin"] = n
-    for net in ("1V9", "1V9", "3V3", "3V3"):
-        _cap(c, "2.2u/25V/0805", net, GND, p, note=f"{net} rail bulk ceramic at the DSP")
-    for net in ("ADCREFM", "ADCREFP"):
-        _cap(c, "2.2u/25V/0805", net, GND, p, note="ADC reference low-ESR bypass (SPRS439Q)")
-    c.resistor("22k", "ADCRESEXT", GND, p, note="ADC external current bias resistor, 22 k to analog ground (SPRS439Q pin table)")
+    with c.block("dsp_decoupling", "DSP per-pin bypass and ADC reference"):
+        for n, net in nets.items():
+            if defs[n]["name"].startswith("VDD"):
+                cap = _cap(c, "100n/50V/0603", net, GND, p, note=f"DSP pin {n} {defs[n]['name']}; place at the pin")
+                cap["near_dsp_pin"] = n
+        for net in ("1V9", "1V9", "3V3", "3V3"):
+            _cap(c, "2.2u/25V/0805", net, GND, p, note=f"{net} rail bulk ceramic at the DSP")
+        for net in ("ADCREFM", "ADCREFP"):
+            _cap(c, "2.2u/25V/0805", net, GND, p, note="ADC reference low-ESR bypass (SPRS439Q)")
+        c.resistor("22k", "ADCRESEXT", GND, p, note="ADC external current bias resistor, 22 k to analog ground (SPRS439Q pin table)")
 
     # ---- 05 clock, boot, JTAG, UART -----------------------------------------------------------------------
     p = "05_clock_debug"
-    _ic(c, "ASV-30.000MHZ-EJ-T", {1: "3V3", 2: GND, 3: "CLK30_SOURCE", 4: "3V3"}, p, prefix="Y",
-        note="30 MHz 3.3 V HCMOS oscillator on XCLKIN (X1 grounded, X2 open); tri-state pin high = oscillating")
-    _cap(c, "100n/50V/0603", "3V3", GND, p, note="oscillator Vdd bypass")
-    c.resistor("33", "CLK30_SOURCE", "CLK30", p, note="clock series termination")
-    for net in ("BOOT84", "BOOT85", "BOOT86", "BOOT87", "EMU0", "EMU1", "TMS", "TDI"):
-        c.resistor("4.7k", "3V3", net, p, note="boot strap / JTAG pull-up (1111 = jump to flash)")
-    c.resistor("2.2k", "TRST", GND, p, note="TRST pull-down (JTAG inactive without an emulator)")
-    c.resistor("10k", "TCK", GND, p, note="TCK pull-down")
-    c.header(14, {1: "TMS", 2: "TRST", 3: "TDI", 4: GND, 5: "3V3", 6: None, 7: "TDO", 8: GND, 9: "TCK", 10: GND, 11: "TCK", 12: GND, 13: "EMU0", 14: "EMU1"}, p,
-             note="J_JTAG: TI 14-pin, key pin 6 absent; TCK_RET tied to TCK; pin 4 TDIS to ground", rows=2)
-    c.header(3, {1: GND, 2: "BOOT84", 3: "3V3"}, p, note="J_BOOT: jumper 1-2 = SCI-A boot, 2-3 or open = flash")
-    c.header(3, {1: "UART_TX", 2: "UART_RX", 3: GND}, p, note="J_UART: SCI-A, 3.3 V levels only")
-    _pullup(c, "UART_RX", p, note="SCI-A RX idle high")
+    with c.block("clock", "30 MHz oscillator"):
+        _ic(c, "ASV-30.000MHZ-EJ-T", {1: "3V3", 2: GND, 3: "CLK30_SOURCE", 4: "3V3"}, p, prefix="Y",
+            note="30 MHz 3.3 V HCMOS oscillator on XCLKIN (X1 grounded, X2 open); tri-state pin high = oscillating")
+        _cap(c, "100n/50V/0603", "3V3", GND, p, note="oscillator Vdd bypass")
+        c.resistor("33", "CLK30_SOURCE", "CLK30", p, note="clock series termination")
+    with c.block("boot_jtag", "Boot straps and JTAG"):
+        for net in ("BOOT84", "BOOT85", "BOOT86", "BOOT87", "EMU0", "EMU1", "TMS", "TDI"):
+            c.resistor("4.7k", "3V3", net, p, note="boot strap / JTAG pull-up (1111 = jump to flash)")
+        c.resistor("2.2k", "TRST", GND, p, note="TRST pull-down (JTAG inactive without an emulator)")
+        c.resistor("10k", "TCK", GND, p, note="TCK pull-down")
+        c.header(14, {1: "TMS", 2: "TRST", 3: "TDI", 4: GND, 5: "3V3", 6: None, 7: "TDO", 8: GND, 9: "TCK", 10: GND, 11: "TCK", 12: GND, 13: "EMU0", 14: "EMU1"}, p,
+                 note="J_JTAG: TI 14-pin, key pin 6 absent; TCK_RET tied to TCK; pin 4 TDIS to ground", rows=2)
+        c.header(3, {1: GND, 2: "BOOT84", 3: "3V3"}, p, note="J_BOOT: jumper 1-2 = SCI-A boot, 2-3 or open = flash")
+    with c.block("uart", "SCI-A UART header"):
+        c.header(3, {1: "UART_TX", 2: "UART_RX", 3: GND}, p, note="J_UART: SCI-A, 3.3 V levels only")
+        _pullup(c, "UART_RX", p, note="SCI-A RX idle high")
 
     # ---- 06 PWM gating, latch, combiners, comparators -----------------------------------------------------
     p = "06_pwm_fault_logic"
-    _ic(c, "SN74LVC2G08DCTR", {1: "EPWM1A", 2: "GATE_EN", 7: "PWM_H_G", 5: "EPWM1B", 6: "GATE_EN", 3: "PWM_L_G", 4: GND, 8: "3V3"}, p,
-        note="PWM gating: PWM_H = ePWM1A AND GATE_EN, PWM_L = ePWM1B AND GATE_EN (tpd 4.7 ns max)")
-    c.resistor("33", "PWM_H_G", "PWM_H", p, note="series to the mezzanine (RC with 100 ohm + 100 pF on the power board: tau 13.3 ns)")
-    c.resistor("33", "PWM_L_G", "PWM_L", p, note="series to the mezzanine")
-    for net in ("EPWM1A", "EPWM1B", "ARM"):
-        c.resistor("10k", net, GND, p, note="pull-down: GPIO0-11 have no reset pull-ups (SPRS439Q)")
-    _ic(c, "SN74LVC1G74DCTR", {1: "ARM", 2: "3V3", 3: None, 4: GND, 5: "FAULT_N", 6: "FAULT_LATCH_N", 7: "3V3", 8: "3V3"}, p,
-        note="fault latch: D = 1, CLK = ARM, CLR_N = FAULT_LATCH_N, Q = ARMED = FAULT_N (TZ1, mezzanine 35, LED); SSOP-8 DCT (CR-19)")
-    _ic(c, "SN74LV21APWR", {1: "FLT_H_N", 2: "FLT_L_N", 4: "OC_N", 5: "OVP_IN_N", 6: "G1_N", 7: GND,
-                            9: "OVP_OUT_N", 10: "OTP_N", 12: "FLT_12V_N", 13: "XRS_N", 8: "G2_N", 14: "3V3"}, p,
-        note="latched group g1 (FLT_H_N, FLT_L_N, OC_N, OVP_IN_N) and g2 (OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N)")
-    _ic(c, "SN74LV21APWR", {1: "ESTOP_N", 2: "DSP_TRIP_N", 4: "PG_BIAS_H_OK", 5: "PG_BIAS_L_OK", 6: "G3_N", 7: GND,
-                            9: "G1_N", 10: "G2_N", 12: "G3_N", 13: "PG_BIAS_S_OK", 8: "FAULT_LATCH_N", 14: "3V3"}, p,
-        note="latched group g3 (ESTOP_N, DSP_TRIP_N, PG_BIAS_H_OK, PG_BIAS_L_OK) and g4 = g1 AND g2 AND g3 AND PG_BIAS_S_OK -> FAULT_LATCH_N")
-    _ic(c, "SN74LV21APWR", {1: "UVLO_N", 2: "RDY_H", 4: "RDY_L", 5: "FAULT_N", 6: "GATE_EN", 7: GND,
-                            9: "OVP_IN_N", 10: "OVP_OUT_N", 12: "3V3", 13: "3V3", 8: "OVP_N", 14: "3V3"}, p,
-        note="run-permit g5 (UVLO_N, RDY_H, RDY_L, ARMED) -> GATE_EN; spare gate g6 = OVP_IN_N AND OVP_OUT_N -> OVP_N (GPIO11), unused inputs to 3V3")
-    _ic(c, "SN74LV04APWR", {1: "UVLO", 2: "UVLO_N", 3: "PG_BIAS_H_N", 4: "PG_BIAS_H_OK", 5: "PG_BIAS_L_N", 6: "PG_BIAS_L_OK", 7: GND,
-                            9: "PG_BIAS_S_N", 8: "PG_BIAS_S_OK", 11: GND, 10: None, 13: GND, 12: None, 14: "3V3"}, p,
-        note="polarity restoration (A-C6, A-C7): UVLO flag -> UVLO_N; raw PG (low = good) -> PG_*_OK (high = good); gates 5/6 unused")
-    for net in ("FLT_H_N", "FLT_L_N", "RDY_H", "RDY_L", "OC_N", "PG_BIAS_H_N", "PG_BIAS_L_N", "PG_BIAS_S_N"):
-        _pullup(c, net, p, note="open-drain line from the power board")
-    _pullup(c, "DSP_TRIP_N", p, note="GPIO6 software kill, high = run (no reset pull-up on GPIO0-11)")
-    c.resistor("10k", "ESTOP_N", GND, p, note="E-stop pull-down: open loop = fault")
-    c.header(2, {1: "3V3", 2: "ESTOP_N"}, p, note="J_ESTOP: normally-closed E-stop loop between 3V3 and ESTOP_N")
-    _ic(c, "REF3125AIDBZR", {1: "3V3", 2: "REF2V5", 3: GND}, p, note="2.5 V reference for the OVP / UVLO thresholds (0.2 %, 20 ppm/K)")
-    _cap(c, "1u/50V/0805", "3V3", GND, p, note="REF3125 supply bypass (A-C5)")
-    _cap(c, "1u/50V/0805", "REF2V5", GND, p, note="REF2V5 output capacitor (A-C5)")
-    c.resistor("1k", "REF2V5", "OVP_IN_REF", p, note="OVP_IN threshold 2.5 x 11/12 = 2.2917 V = 459.9 V")
-    c.resistor("11k", "OVP_IN_REF", GND, p)
-    _cap(c, "100n/50V/0603", "OVP_IN_REF", GND, p, note="threshold node bypass")
-    c.resistor("953", "REF2V5", "OVP_OUT_REF", p, note="OVP_OUT threshold 2.5 x 10/10.953 = 2.2825 V = 229.8 V (CR-04)")
-    c.resistor("10k", "OVP_OUT_REF", GND, p)
-    _cap(c, "100n/50V/0603", "OVP_OUT_REF", GND, p, note="threshold node bypass")
-    c.resistor("1k", "REF2V5", "UVLO_REF", p, note="UVLO threshold 2.5 x 1.91/2.91 = 1.641 V = 329 V centre")
-    c.resistor("1.91k", "UVLO_REF", GND, p)
-    c.resistor("21.5k", "UVLO", "UVLO_REF", p, note="hysteresis from the open-collector output: 336 V on / 319.5 V off with the 10 k pull-up (A-C6)")
-    _cap(c, "100n/50V/0603", "UVLO_REF", GND, p, note="DNP: footprint kept for simulation-tuning of the hysteresis node (A-C12)", dnp=True)
-    _ic(c, "TLV1702AIDGKR", {1: "OVP_IN_N", 2: "VIN_SENSE", 3: "OVP_IN_REF", 4: GND, 5: "OVP_OUT_REF", 6: "VOUT_SENSE", 7: "OVP_OUT_N", 8: "3V3"}, p,
-        note="OVP comparators: OVP_IN_N high while VIN_SENSE < 2.2917 V; OVP_OUT_N high while VOUT_SENSE < 2.2825 V (tpd 560 ns)")
-    _ic(c, "TLV1702AIDGKR", {1: "UVLO", 2: "VIN_SENSE", 3: "UVLO_REF", 4: GND, 5: "TEMP_HS_NTC", 6: "OTP_REF", 7: "OTP_N", 8: "3V3"}, p,
-        note="UVLO flag (high = under-voltage, inverted to UVLO_N) and OTP_N (high while the NTC voltage is above 0.708 V = below 100 C)")
-    for net in ("OVP_IN_N", "OVP_OUT_N", "UVLO", "OTP_N"):
-        _pullup(c, net, p, note="comparator open-collector pull-up")
-    for _ in range(2):
-        _cap(c, "100n/50V/0603", "3V3", GND, p, note="TLV1702 supply bypass")
-    for _ in range(3):
-        _cap(c, "100n/50V/0603", "3V3", GND, p, note="SN74LV21A supply bypass")
-    for part in ("SN74LVC1G74", "SN74LVC2G08", "SN74LV04A"):
-        _cap(c, "100n/50V/0603", "3V3", GND, p, note=f"{part} supply bypass")
+    with c.block("pwm_gating", "PWM gating (SN74LVC2G08)"):
+        _ic(c, "SN74LVC2G08DCTR", {1: "EPWM1A", 2: "GATE_EN", 7: "PWM_H_G", 5: "EPWM1B", 6: "GATE_EN", 3: "PWM_L_G", 4: GND, 8: "3V3"}, p,
+            note="PWM gating: PWM_H = ePWM1A AND GATE_EN, PWM_L = ePWM1B AND GATE_EN (tpd 4.7 ns max)")
+        c.resistor("33", "PWM_H_G", "PWM_H", p, note="series to the mezzanine (RC with 100 ohm + 100 pF on the power board: tau 13.3 ns)")
+        c.resistor("33", "PWM_L_G", "PWM_L", p, note="series to the mezzanine")
+        for net in ("EPWM1A", "EPWM1B", "ARM"):
+            c.resistor("10k", net, GND, p, note="pull-down: GPIO0-11 have no reset pull-ups (SPRS439Q)")
+    with c.block("fault_latch", "Fault latch (SN74LVC1G74)"):
+        _ic(c, "SN74LVC1G74DCTR", {1: "ARM", 2: "3V3", 3: None, 4: GND, 5: "FAULT_N", 6: "FAULT_LATCH_N", 7: "3V3", 8: "3V3"}, p,
+            note="fault latch: D = 1, CLK = ARM, CLR_N = FAULT_LATCH_N, Q = ARMED = FAULT_N (TZ1, mezzanine 35, LED); SSOP-8 DCT (CR-19)")
+    with c.block("combiners", "Fault combiners, polarity restoration, pull-ups, E-stop"):
+        _ic(c, "SN74LV21APWR", {1: "FLT_H_N", 2: "FLT_L_N", 4: "OC_N", 5: "OVP_IN_N", 6: "G1_N", 7: GND,
+                                9: "OVP_OUT_N", 10: "OTP_N", 12: "FLT_12V_N", 13: "XRS_N", 8: "G2_N", 14: "3V3"}, p,
+            note="latched group g1 (FLT_H_N, FLT_L_N, OC_N, OVP_IN_N) and g2 (OVP_OUT_N, OTP_N, FLT_12V_N, XRS_N)")
+        _ic(c, "SN74LV21APWR", {1: "ESTOP_N", 2: "DSP_TRIP_N", 4: "PG_BIAS_H_OK", 5: "PG_BIAS_L_OK", 6: "G3_N", 7: GND,
+                                9: "G1_N", 10: "G2_N", 12: "G3_N", 13: "PG_BIAS_S_OK", 8: "FAULT_LATCH_N", 14: "3V3"}, p,
+            note="latched group g3 (ESTOP_N, DSP_TRIP_N, PG_BIAS_H_OK, PG_BIAS_L_OK) and g4 = g1 AND g2 AND g3 AND PG_BIAS_S_OK -> FAULT_LATCH_N")
+        _ic(c, "SN74LV21APWR", {1: "UVLO_N", 2: "RDY_H", 4: "RDY_L", 5: "FAULT_N", 6: "GATE_EN", 7: GND,
+                                9: "OVP_IN_N", 10: "OVP_OUT_N", 12: "3V3", 13: "3V3", 8: "OVP_N", 14: "3V3"}, p,
+            note="run-permit g5 (UVLO_N, RDY_H, RDY_L, ARMED) -> GATE_EN; spare gate g6 = OVP_IN_N AND OVP_OUT_N -> OVP_N (GPIO11), unused inputs to 3V3")
+        _ic(c, "SN74LV04APWR", {1: "UVLO", 2: "UVLO_N", 3: "PG_BIAS_H_N", 4: "PG_BIAS_H_OK", 5: "PG_BIAS_L_N", 6: "PG_BIAS_L_OK", 7: GND,
+                                9: "PG_BIAS_S_N", 8: "PG_BIAS_S_OK", 11: GND, 10: None, 13: GND, 12: None, 14: "3V3"}, p,
+            note="polarity restoration (A-C6, A-C7): UVLO flag -> UVLO_N; raw PG (low = good) -> PG_*_OK (high = good); gates 5/6 unused")
+        for net in ("FLT_H_N", "FLT_L_N", "RDY_H", "RDY_L", "OC_N", "PG_BIAS_H_N", "PG_BIAS_L_N", "PG_BIAS_S_N"):
+            _pullup(c, net, p, note="open-drain line from the power board")
+        _pullup(c, "DSP_TRIP_N", p, note="GPIO6 software kill, high = run (no reset pull-up on GPIO0-11)")
+        c.resistor("10k", "ESTOP_N", GND, p, note="E-stop pull-down: open loop = fault")
+        c.header(2, {1: "3V3", 2: "ESTOP_N"}, p, note="J_ESTOP: normally-closed E-stop loop between 3V3 and ESTOP_N")
+    with c.block("thresholds", "REF3125 reference and OVP / UVLO thresholds"):
+        _ic(c, "REF3125AIDBZR", {1: "3V3", 2: "REF2V5", 3: GND}, p, note="2.5 V reference for the OVP / UVLO thresholds (0.2 %, 20 ppm/K)")
+        _cap(c, "1u/50V/0805", "3V3", GND, p, note="REF3125 supply bypass (A-C5)")
+        _cap(c, "1u/50V/0805", "REF2V5", GND, p, note="REF2V5 output capacitor (A-C5)")
+        c.resistor("1k", "REF2V5", "OVP_IN_REF", p, note="OVP_IN threshold 2.5 x 11/12 = 2.2917 V = 459.9 V")
+        c.resistor("11k", "OVP_IN_REF", GND, p)
+        _cap(c, "100n/50V/0603", "OVP_IN_REF", GND, p, note="threshold node bypass")
+        c.resistor("953", "REF2V5", "OVP_OUT_REF", p, note="OVP_OUT threshold 2.5 x 10/10.953 = 2.2825 V = 229.8 V (CR-04)")
+        c.resistor("10k", "OVP_OUT_REF", GND, p)
+        _cap(c, "100n/50V/0603", "OVP_OUT_REF", GND, p, note="threshold node bypass")
+        c.resistor("1k", "REF2V5", "UVLO_REF", p, note="UVLO threshold 2.5 x 1.91/2.91 = 1.641 V = 329 V centre")
+        c.resistor("1.91k", "UVLO_REF", GND, p)
+        c.resistor("21.5k", "UVLO", "UVLO_REF", p, note="hysteresis from the open-collector output: 336 V on / 319.5 V off with the 10 k pull-up (A-C6)")
+        _cap(c, "100n/50V/0603", "UVLO_REF", GND, p, note="DNP: footprint kept for simulation-tuning of the hysteresis node (A-C12)", dnp=True)
+    with c.block("comparators", "TLV1702 comparators"):
+        _ic(c, "TLV1702AIDGKR", {1: "OVP_IN_N", 2: "VIN_SENSE", 3: "OVP_IN_REF", 4: GND, 5: "OVP_OUT_REF", 6: "VOUT_SENSE", 7: "OVP_OUT_N", 8: "3V3"}, p,
+            note="OVP comparators: OVP_IN_N high while VIN_SENSE < 2.2917 V; OVP_OUT_N high while VOUT_SENSE < 2.2825 V (tpd 560 ns)")
+        _ic(c, "TLV1702AIDGKR", {1: "UVLO", 2: "VIN_SENSE", 3: "UVLO_REF", 4: GND, 5: "TEMP_HS_NTC", 6: "OTP_REF", 7: "OTP_N", 8: "3V3"}, p,
+            note="UVLO flag (high = under-voltage, inverted to UVLO_N) and OTP_N (high while the NTC voltage is above 0.708 V = below 100 C)")
+        for net in ("OVP_IN_N", "OVP_OUT_N", "UVLO", "OTP_N"):
+            _pullup(c, net, p, note="comparator open-collector pull-up")
+    with c.block("logic_decoupling", "Logic supply bypass"):
+        for _ in range(2):
+            _cap(c, "100n/50V/0603", "3V3", GND, p, note="TLV1702 supply bypass")
+        for _ in range(3):
+            _cap(c, "100n/50V/0603", "3V3", GND, p, note="SN74LV21A supply bypass")
+        for part in ("SN74LVC1G74", "SN74LVC2G08", "SN74LV04A"):
+            _cap(c, "100n/50V/0603", "3V3", GND, p, note=f"{part} supply bypass")
 
     # ---- 07 ADC front ends, NTC, monitors -----------------------------------------------------------------
     p = "07_adc_frontend"
-    _ic(c, "REF3130AIDBZR", {1: "3V3", 2: "REF3V0", 3: GND}, p, note="3.00 V NTC pull-up / OTP reference; VIN min 3.05 V < 3.234 V (3V3 - 2 %)")
-    _cap(c, "1u/50V/0805", "3V3", GND, p, note="REF3130 supply bypass (A-C5)")
-    _cap(c, "1u/50V/0805", "REF3V0", GND, p, note="REF3V0 output capacitor (A-C5)")
-    c.header(2, {1: "TEMP_HS_NTC", 2: GND}, p, note="J_NTC: Vishay NTCALUG01A103F heatsink lug NTC (10 k, B 3984 K), SELV lead (CR-01)")
-    c.resistor("2.2k", "REF3V0", "TEMP_HS_NTC", p, note="NTC pull-up: 2.46 V at 25 C, 0.88 V at 90 C, 0.71 V at 100 C, 0.57 V at 110 C")
-    _cap(c, "100n/50V/0603", "TEMP_HS_NTC", GND, p, note="NTC line filter (baseline)")
-    c.resistor("32.4k", "REF3V0", "OTP_REF", p, note="OTP threshold 3.0 x 10/42.4 = 0.7075 V = 100 C hardware trip (ratiometric to REF3V0)")
-    c.resistor("10k", "OTP_REF", GND, p)
-    _cap(c, "100n/50V/0603", "OTP_REF", GND, p, note="threshold node bypass")
-    _ic(c, "LM61CIM3/NOPB", {1: "3V3", 2: "TEMP_CTRL", 3: GND}, p, note="control-board ambient sensor, 600 mV + 10 mV/K (V1 pattern)")
-    _cap(c, "100n/50V/0603", "3V3", GND, p, note="LM61 supply bypass")
-    for source, adc, note in (("VIN_SENSE", "ADC_VIN", "VIN_SENSE -> ADCINA0 (0.0049834 V/V, 2.392 V at 480 V)"),
-                              ("ISENSE", "ADC_ISENSE", "ISENSE -> ADCINA1 (0.33 V + 0.05 V/A)"),
-                              ("TEMP_HS_NTC", "ADC_TEMP_HS", "heatsink NTC -> ADCINA2"),
-                              ("TEMP_CTRL", "ADC_TEMP_CTRL", "LM61 -> ADCINA3"),
-                              ("ISENSE_REF", "ADC_ISENSE_REF", "TMCS1133 VREF -> ADCINA4"),
-                              ("I12V_MON", "ADC_I12V", "eFuse IMON -> ADCINB0"),
-                              ("VOUT_SENSE", "ADC_VOUT", "VOUT_SENSE -> ADCINB1 (0.0099338 V/V)"),
-                              ("V12V_MON", "ADC_V12V", "12 V monitor -> ADCINB3")):
-        _adc_rc(c, source, adc, p, note)
+    with c.block("ntc_otp", "REF3130, heatsink NTC, OTP threshold, LM61"):
+        _ic(c, "REF3130AIDBZR", {1: "3V3", 2: "REF3V0", 3: GND}, p, note="3.00 V NTC pull-up / OTP reference; VIN min 3.05 V < 3.234 V (3V3 - 2 %)")
+        _cap(c, "1u/50V/0805", "3V3", GND, p, note="REF3130 supply bypass (A-C5)")
+        _cap(c, "1u/50V/0805", "REF3V0", GND, p, note="REF3V0 output capacitor (A-C5)")
+        c.header(2, {1: "TEMP_HS_NTC", 2: GND}, p, note="J_NTC: Vishay NTCALUG01A103F heatsink lug NTC (10 k, B 3984 K), SELV lead (CR-01)")
+        c.resistor("2.2k", "REF3V0", "TEMP_HS_NTC", p, note="NTC pull-up: 2.46 V at 25 C, 0.88 V at 90 C, 0.71 V at 100 C, 0.57 V at 110 C")
+        _cap(c, "100n/50V/0603", "TEMP_HS_NTC", GND, p, note="NTC line filter (baseline)")
+        c.resistor("32.4k", "REF3V0", "OTP_REF", p, note="OTP threshold 3.0 x 10/42.4 = 0.7075 V = 100 C hardware trip (ratiometric to REF3V0)")
+        c.resistor("10k", "OTP_REF", GND, p)
+        _cap(c, "100n/50V/0603", "OTP_REF", GND, p, note="threshold node bypass")
+        _ic(c, "LM61CIM3/NOPB", {1: "3V3", 2: "TEMP_CTRL", 3: GND}, p, note="control-board ambient sensor, 600 mV + 10 mV/K (V1 pattern)")
+        _cap(c, "100n/50V/0603", "3V3", GND, p, note="LM61 supply bypass")
+    with c.block("adc_rc", "ADC anti-alias RC networks"):
+        for source, adc, note in (("VIN_SENSE", "ADC_VIN", "VIN_SENSE -> ADCINA0 (0.0049834 V/V, 2.392 V at 480 V)"),
+                                  ("ISENSE", "ADC_ISENSE", "ISENSE -> ADCINA1 (0.33 V + 0.05 V/A)"),
+                                  ("TEMP_HS_NTC", "ADC_TEMP_HS", "heatsink NTC -> ADCINA2"),
+                                  ("TEMP_CTRL", "ADC_TEMP_CTRL", "LM61 -> ADCINA3"),
+                                  ("ISENSE_REF", "ADC_ISENSE_REF", "TMCS1133 VREF -> ADCINA4"),
+                                  ("I12V_MON", "ADC_I12V", "eFuse IMON -> ADCINB0"),
+                                  ("VOUT_SENSE", "ADC_VOUT", "VOUT_SENSE -> ADCINB1 (0.0099338 V/V)"),
+                                  ("V12V_MON", "ADC_V12V", "12 V monitor -> ADCINB3")):
+            _adc_rc(c, source, adc, p, note)
 
     # ---- 08 interconnect, LEDs, test points, mounting -----------------------------------------------------
     p = "08_interconnect"
-    c.header(50, {pin: mezzanine_net(str(pin)) for pin in range(1, 51)}, p, rows=2, mpn="TSW-125-07-G-D",
-             note="J_MEZZ: 2 x 25 header to the power-board SSW-125-01-G-D socket; nets per design_decisions.json interconnect.pin_assignment")
-    _pullup(c, "FAN_TACH", p, note="fan tachometer pull-up (A-C8)")
-    c.resistor("4.7k", "12V_PROT", "LED_12V_A", p, note="12V_OK LED, about 2.1 mA")
-    _led(c, "red", "LED_12V_A", GND, p, "12V_OK: protected 12 V present")
-    c.resistor("1.5k", "FAULT_N", "LED_ARMED_A", p, note="ARMED LED from the latch Q, about 0.9 mA")
-    _led(c, "green", "LED_ARMED_A", GND, p, "ARMED: latch set, no fault")
-    c.resistor("1.5k", "LED_RUN", "LED_RUN_A", p, note="RUN LED (GPIO21)")
-    _led(c, "green", "LED_RUN_A", GND, p, "RUN (firmware)")
-    c.resistor("1.5k", "LED_FAULT", "LED_FAULT_A", p, note="FAULT LED (GPIO22)")
-    _led(c, "red", "LED_FAULT_A", GND, p, "FAULT (firmware)")
-    for net in ("3V3", "1V9", "5V", "12V_PROT", GND, GND, "PWM_H", "PWM_L", "FAULT_N", "ARM", "FAULT_LATCH_N", "GATE_EN", "XRS_N",
-                "VIN_SENSE", "VOUT_SENSE", "ISENSE"):
-        c.add("TP", net, "TestPoint:TestPoint_Pad_D2.0mm", {1: net}, page=p, kind="TP",
-              note="bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate")
+    with c.block("mezzanine", "Mezzanine header to the power board"):
+        c.header(50, {pin: mezzanine_net(str(pin)) for pin in range(1, 51)}, p, rows=2, mpn="TSW-125-07-G-D",
+                 note="J_MEZZ: 2 x 25 header to the power-board SSW-125-01-G-D socket; nets per design_decisions.json interconnect.pin_assignment")
+        _pullup(c, "FAN_TACH", p, note="fan tachometer pull-up (A-C8)")
+    with c.block("leds", "Indicator LEDs"):
+        c.resistor("4.7k", "12V_PROT", "LED_12V_A", p, note="12V_OK LED, about 2.1 mA")
+        _led(c, "red", "LED_12V_A", GND, p, "12V_OK: protected 12 V present")
+        c.resistor("1.5k", "FAULT_N", "LED_ARMED_A", p, note="ARMED LED from the latch Q, about 0.9 mA")
+        _led(c, "green", "LED_ARMED_A", GND, p, "ARMED: latch set, no fault")
+        c.resistor("1.5k", "LED_RUN", "LED_RUN_A", p, note="RUN LED (GPIO21)")
+        _led(c, "green", "LED_RUN_A", GND, p, "RUN (firmware)")
+        c.resistor("1.5k", "LED_FAULT", "LED_FAULT_A", p, note="FAULT LED (GPIO22)")
+        _led(c, "red", "LED_FAULT_A", GND, p, "FAULT (firmware)")
+    with c.block("testpoints", "Test points"):
+        for net in ("3V3", "1V9", "5V", "12V_PROT", GND, GND, "PWM_H", "PWM_L", "FAULT_N", "ARM", "FAULT_LATCH_N", "GATE_EN", "XRS_N",
+                    "VIN_SENSE", "VOUT_SENSE", "ISENSE"):
+            c.add("TP", net, "TestPoint:TestPoint_Pad_D2.0mm", {1: net}, page=p, kind="TP",
+                  note="bare PCB test point; ARMED is the FAULT_N net (latch Q), so ARM, FAULT_LATCH_N and GATE_EN are probed instead of a duplicate")
     for _ in range(4):
         c.add("H", "M3", "MountingHole:MountingHole_3.2mm_M3", {}, page=p, kind="H",
               note="M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)")

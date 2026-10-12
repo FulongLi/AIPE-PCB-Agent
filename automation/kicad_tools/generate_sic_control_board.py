@@ -142,6 +142,14 @@ GAP_QFP = 2.7  # the LQFP-176: its far escape row ends 15.875 mm from the centre
 MAX_NODES = 2500000
 SIGNAL_ORDER_TRIALS = 6  # grid_router signal-stage orders tried (plan order, long nets last/first, then seeded perturbations of the best)
 RIPUP_ROUNDS = 240  # grid_router rip-up and re-route rounds for the connections the best order leaves unresolved (round 9 was still gaining at 84/90)
+ROUTING_STYLE = dict(diagonal=False, simplify='octilinear', arcs=True, eps=0.02)  # V2.1 grid_router geometry (plan key 'style'): the V2
+# 4-direction search with the same algorithm, order trials and 240 rip-up rounds, then the final octilinear simplification (string pulling,
+# short-run collapse, on-grid chamfers) and tangent arcs on the signal nets (power/critical nets and tracks above 0.6 mm: diagonals only).
+# eps 0.02 (V2: 0.01) widens every marking halo on this 0.2 mm clearance / 0.125 mm grid board, so routes can differ from the frozen V2 run
+# (B2 scratch build: BOOT84 and EMU0 longer, 798 vias as V2, DRC 0); routing_progress records the eps in use. ROUTING_STYLE_DIAGONAL adds the 8-direction search with
+# bend penalties; it is opt-in (build_control(style=ROUTING_STYLE_DIAGONAL)) because with MAX_NODES 2.5 M and 240 rip-up rounds its control-board
+# run time exceeded 1.5 x the V2 1155 s in the V2.1 scratch builds. build_control(style={}) routes with the V2 geometry; the frozen V2 plan has no 'style'.
+ROUTING_STYLE_DIAGONAL = dict(ROUTING_STYLE, diagonal=True, bend_penalty_cells=[0.6, 2.0])
 RIPUP_PENALTY_LADDER = (1.0, 0.4, 2.5)  # multiples of the plan's ripup_penalty that LadderRouter.negotiate cycles through. The shared
 # grid_router.negotiate() tries one penalty per failing connection since the power-board agent's 2026-10-11 change (the variants never
 # helped the power board); the control board's last connections closed in iteration 4 only through the 2.5x step, and without the
@@ -1044,7 +1052,7 @@ def island_polygon(candidate: dict, net: str):
 
 
 def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_escapes: dict | None = None, dsp_centre=None,
-                 dsp_signal_nets=(), lanes: dict | None = None, extra: dict | None = None, inpad_vias=None) -> dict:
+                 dsp_signal_nets=(), lanes: dict | None = None, extra: dict | None = None, inpad_vias=None, style=None) -> dict:
     """grid_router plan: pre-routed LQFP escapes with B.Cu exit stubs, pre-routed fine-pitch IC escapes, the candidate's
     pre-routed copper and exposed-pad via arrays (``extra`` = {tracks, vias, skip_pads}), fanout for the rest (DSP and
     pre-routed pads skipped), signals on F.Cu/B.Cu (candidate signal_priority, then the DSP nets), rail islands and the GND plane."""
@@ -1122,6 +1130,7 @@ def routing_plan(candidate: dict, escapes: list[dict], save, *, ic_refs=(), ic_e
         'signal_first': signal_first,
         'signal_pinned': list(candidate.get('signal_pinned', [])),  # r20 (LR-32): the protection lines routed first in every order trial (direct runs)
         'signal_order_trials': SIGNAL_ORDER_TRIALS, 'ripup_rounds': RIPUP_ROUNDS,
+        **({'style': dict(style)} if style else {}),  # V2.1 geometry (ROUTING_STYLE); absent = the V2 plan
     }
 
 
@@ -1905,15 +1914,15 @@ def prune_dangling(board, protected_nets=()) -> dict:
         ends = defaultdict(int)
         for t in tracks:
             for pt in (t.GetStart(), t.GetEnd()):
-                ends[(t.GetNetCode(), pt.x, pt.y)] += 1
+                ends[(t.GetNetCode(), pt.x, pt.y, t.GetLayer())] += 1  # V2.1: per layer - a track end on another layer is no connection without a via
         via_keys = {(v.GetNetCode(), v.GetPosition().x, v.GetPosition().y) for v in vias}
         changed = False
-        for t in tracks:  # every net: a track end connects only to another track end, a via or a pad (zones connect vias)
+        for t in tracks:  # every net: a track end connects only to another track end on its layer, a via or a pad (zones connect vias)
             half = t.GetWidth() // 2  # a wide cross piece ending between two same-net pads still overlaps both pads
             layer = t.GetLayer()
             for pt in (t.GetStart(), t.GetEnd()):
                 key = (t.GetNetCode(), pt.x, pt.y)
-                if ends[key] > 1 or key in via_keys or any(pad.IsOnLayer(layer) and pad.HitTest(pt, half) for pad in pads_by_code[t.GetNetCode()]):
+                if ends[(*key, layer)] > 1 or key in via_keys or any(pad.IsOnLayer(layer) and pad.HitTest(pt, half) for pad in pads_by_code[t.GetNetCode()]):
                     continue
                 board.Remove(t)
                 removed['tracks'] += 1
@@ -2390,6 +2399,17 @@ def checker_metrics(board_path: Path, output_dir: Path, label: str) -> dict:
     return dict(metrics=metrics, json=str(json_path), md=str(md_path))
 
 
+def routing_quality_metrics(board_path, output_dir, label: str, plan: dict | None, report: dict | None) -> dict:
+    """Run automation.verification.check_routing_quality on a board (in-process, needs pcbnew) and write routing_quality_<label>.json/.md;
+    ``plan`` attributes its pre-routed tracks, ``report`` (router report with a ``beautify`` block) explains the remaining sharp corners."""
+    from automation.verification import check_routing_quality as cq
+    doc = cq.extract_board(board_path)
+    m = cq.measure(doc, plan=plan, report=report)
+    json_path, md_path = cq.write_outputs(m, output_dir, label)
+    return dict(json=str(json_path), md=str(md_path), totals=m['totals'], by_attribution=m['by_attribution'],
+                sharp_corners_by_reason=m['sharp_corners']['by_reason'], arcs={k: v for k, v in m['arcs'].items() if k != 'tangency_failures'})
+
+
 def criteria_from(metrics: dict, estimates: dict) -> dict:
     """Flat comparison criteria (lower is better unless listed in COMPARISON_HIGHER_IS_BETTER)."""
     control = metrics.get('control', {})
@@ -2439,11 +2459,12 @@ def score_candidates(criteria: dict) -> dict:
 
 def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool = True, metrics: bool = True,
                   write_outputs: bool = True, metrics_dir: Path | None = None, metrics_label: str = 'control', cli=None,
-                  plan_filter=None) -> dict:
+                  plan_filter=None, style=None) -> dict:
     """Place (and optionally route, zone, check and DRC) one floorplan candidate into ``output_pcb``.
 
     Returns a result dict with the placement, the escape plan, the router report, the rail-island
     checks, the DRC manifest summary and the layout-metrics paths. Needs pcbnew (KiCad's Python).
+    ``style``: grid_router V2.1 ``style`` block (None = ``ROUTING_STYLE``, {} = V2 geometry).
     """
     import pcbnew as pcb
     start = time.monotonic()
@@ -2489,7 +2510,7 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     extra['skip_pads'] += arrays['skip_pads']
     inpad = [] if candidate.get('exposed_pad_vias') else None
     plan = routing_plan(candidate, escapes, output_pcb, ic_refs=ic_refs, ic_escapes=ic_escapes, dsp_centre=centre, dsp_signal_nets=dsp_signal_nets,
-                        lanes=lanes, extra=extra, inpad_vias=inpad)
+                        lanes=lanes, extra=extra, inpad_vias=inpad, style=ROUTING_STYLE if style is None else style)
     result['pre_routed_copper'] = dict(candidate_tracks=len(extra['tracks']) - len(arrays['tracks']), candidate_vias=len(extra['vias']) - len(arrays['vias']),
                                        skip_pads=extra['skip_pads'], exposed_pad_arrays=arrays['records'])
     if plan_filter is not None:  # diagnostics hook (tests, experiments): may restrict or adjust the plan before routing
@@ -2555,6 +2576,7 @@ def build_control(candidate_json, output_pcb, *, route: bool = True, drc: bool =
     if metrics:
         result['layout_metrics'] = checker_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label)
         result['layout_metrics'].pop('metrics', None) if write_outputs else None
+        result['routing_quality'] = routing_quality_metrics(output_pcb, metrics_dir or CHECKS_DIR, metrics_label, plan, report)  # V2.1 TASK 2
     if drc:
         from automation.kicad_tools.run_check import run_check
         code, manifest_path = run_check('drc', output_pcb, DRC_DIR, cli)
@@ -2608,6 +2630,7 @@ def write_routing_outputs(result: dict, candidate: dict):
                     ripup_rounds=report.get('ripup_rounds'), ripup_penalty_ladder=report.get('ripup_penalty_ladder'),
                     shared_router_sha256=report.get('shared_router_sha256'),
                     net_length_mm=report.get('net_length_mm'), grid=report.get('grid'), routing_seconds=report.get('seconds'),
+                    style=report.get('style'), arcs=report.get('arcs'), beautify=report.get('beautify'), routing_quality=result.get('routing_quality'),  # V2.1
                     inner_layer=report.get('inner_layer'),
                     corridor_zones=len(result['corridors']['corridors']), corridor_issues=result['corridors']['issues'],
                     sliver_trim=result['corridors'].get('sliver_trim'),
@@ -2747,6 +2770,7 @@ def main(argv=None) -> int:
     parser.add_argument('--no-route', action='store_true', help='placement only')
     parser.add_argument('--no-drc', action='store_true', help='skip the kicad-cli DRC (debugging only; never evidence)')
     parser.add_argument('--no-metrics', action='store_true', help='skip the layout metrics checker')
+    parser.add_argument('--no-style', action='store_true', help='route with the V2 geometry (no 8-direction search, simplification or arcs)')
     parser.add_argument('--no-reexec', action='store_true', help='internal: do not re-execute under KiCad Python')
     args = parser.parse_args(argv)
     try:
@@ -2768,7 +2792,8 @@ def main(argv=None) -> int:
         print('kicad-cli not found', file=sys.stderr)
         return 2
     if args.candidate:
-        result = build_control(candidate_path(args.candidate), args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli)
+        result = build_control(candidate_path(args.candidate), args.output, route=not args.no_route, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli,
+                               style={} if args.no_style else None)
         print(summary_line(result) if not args.no_route else f"candidate {result['candidate']}: placed {len(result['placements'])} parts -> {result['board']}", flush=True)
         return 0
     evaluation = evaluate_candidates(('A', 'B'), scratch, cli=cli)
@@ -2776,7 +2801,8 @@ def main(argv=None) -> int:
     print(f"selected candidate {selected} (scores {evaluation['scoring']['scores']})", flush=True)
     final = None
     if not args.no_route:
-        final = build_control(candidate_path(selected), args.output, route=True, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli)
+        final = build_control(candidate_path(selected), args.output, route=True, drc=not args.no_drc, metrics=not args.no_metrics, cli=cli,
+                              style={} if args.no_style else None)
         print(summary_line(final), flush=True)
     else:
         final = None
