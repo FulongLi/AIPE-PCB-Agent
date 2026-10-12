@@ -1,6 +1,6 @@
-"""Electrical model of the V2 SiC buck CONTROL BOARD (board = "control").
+"""Electrical model of the SiC buck CONTROL BOARD (board = "control"; V2 design, V2.1 generation).
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 Scope
 -----

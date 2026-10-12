@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck 400 V -> 200 V / 5 kW power board (AIPE_SiC_Buck_Power) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-12T09:03:08.168306+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 39.75 s).
+Status: **measured-human-review-required**. Generated 2026-10-12T10:04:23.470336+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 41.094 s).
 
-Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `dcd148fbdf65253a...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
+Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `ae4ca86c438f56b8...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
 
 ## Board
 
@@ -32,7 +32,7 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q1 source pad 2 (SW) to nearest HF capacitor pad (any named net) | 13.307 | n/a | measured - human review required | pad net is not a capacitor net (switch node) |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q2 drain pad 1 (SW) to nearest HF capacitor pad (any named net) | 36.083 | n/a | measured - human review required | pad net is not a capacitor net (switch node) |
 | PE-PCB-002 | Place HF DC-link capacitors close to the half bridge | Q2 source pad 2 (PGND) to nearest HF capacitor pad of the same net | 41.165 | <= 15.0 mm (row 2; row 1 <= 5.0 mm) | exceeds spec threshold - human review required | nearest C1.2 |
-| PE-PCB-003 | Minimise HF commutation loop | SW copper area, all layers (mm2; per layer in JSON) | 3660.200 | n/a | measured - human review required | switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current |
+| PE-PCB-003 | Minimise HF commutation loop | SW copper area, all layers (mm2; per layer in JSON) | 3660.300 | n/a | measured - human review required | switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current |
 | PE-PCB-003 | Minimise HF commutation loop | HV ceramic group bounding box (x0, y0, x1, y1 mm) and pin distances (JSON) | 39.100, 122.450, 81.700, 139.950 | n/a | measured - human review required | bounding box of the HF capacitor pads on the named nets |
 | PE-PCB-004 | Use Kelvin current sensing | AMC1311 VIN differential output track lengths (mm) and mismatch | VIN_OUTP=78.571; VIN_OUTN=78.643; mismatch=0.073 | n/a | measured - human review required |  |
 | PE-PCB-004 | Use Kelvin current sensing | AMC1311 VOUT differential output track lengths (mm) and mismatch | VOUT_OUTP=63.785; VOUT_OUTN=61.148; mismatch=2.637 | n/a | measured - human review required |  |
@@ -44,7 +44,7 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U7 pads: minimum copper distance to SW (mm, any layer) | 25.150 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U10 pads: minimum copper distance to SW (mm, any layer) | 27.345 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U8 pads: minimum copper distance to SW (mm, any layer) | 42.073 | n/a | measured - human review required |  |
-| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16940.000; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
+| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16939.900; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | VIN_RAW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=422.800; B.Cu=422.800; vias=0; track_mm=51.300 | >= 24 vias per net | exceeds spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | SW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=120.000; In2.Cu=3236.600; vias=25; track_mm=9.600 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | PGND copper (zone area per layer, via count, track length) | zone_area_mm2=B.Cu=9042.000; In1.Cu=28679.700; vias=90; track_mm=22.500 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
@@ -140,7 +140,7 @@ HV ceramic group bounding box (mm): 39.10, 122.45, 81.70, 139.95
 
 | Layer | HV items | Min distance (mm) | Items within keep-out | Nearest |
 | --- | --- | --- | --- | --- |
-| F.Cu | 420 | 4.955 | 6 | pad C6.2 |
+| F.Cu | 420 | 4.955 | 6 | pad C1.2 |
 | B.Cu | 337 | 0.000 | 3 | pad R16.1 |
 
 ## Decoupling
@@ -284,8 +284,8 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | ISO_FB_VEE | SENSE_ISO | 13.2 | 8 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | ISO_RLIM | SENSE_ISO | 8.1 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | K1_LOW | CTRL_SELV | 16.8 | 3 | 0 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| KS_H | DRV_HS | 95.9 | 62 | 11 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=502.100 |
-| KS_L | DRV_LS | 86.6 | 59 | 9 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=249.000 |
+| KS_H | DRV_HS | 95.9 | 62 | 11 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=502.200 |
+| KS_L | DRV_LS | 86.6 | 59 | 9 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=248.900 |
 | LS_CLMP | DRV_LS | 20.8 | 25 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | LS_FB_VDD | DRV_LS | 66.4 | 50 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | LS_FB_VEE | DRV_LS | 42.2 | 28 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
@@ -319,7 +319,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | VDD_L | DRV_LS | 78.8 | 61 | 6 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VEE_H | DRV_HS | 85.8 | 61 | 9 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VEE_L | DRV_LS | 94.8 | 117 | 16 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16940.000 |
+| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16939.900 |
 | VIN_AMP_N | CTRL_SELV | 34.5 | 22 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_AMP_P | CTRL_SELV | 28.6 | 27 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_DIV | SENSE_ISO | 29.5 | 20 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |

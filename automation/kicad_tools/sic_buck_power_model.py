@@ -1,6 +1,6 @@
-"""Power-board electrical model of the V2 SiC synchronous buck (board = "power").
+"""Power-board electrical model of the SiC synchronous buck (board = "power"; V2 design, V2.1 generation).
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 400 V (360-440 V) -> 200 V, 5 kW, 25 A, 50 kHz non-isolated SiC synchronous buck; Wolfspeed
 C4MS025120K half bridge, UCC21710-Q1 isolated drivers, UCC14141-Q1 isolated bias modules,

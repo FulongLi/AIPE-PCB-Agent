@@ -1,52 +1,104 @@
 {
  "schema_version": 1,
- "title": "V2.1 independent validation (TASK 7) - repository state read-only, only this report written",
- "generated_utc": "2026-10-12T09:29:15Z",
- "scope": "CAD evidence only: native KiCad ERC/DRC currency, netlist equivalence, connectivity, zone fills, layout metrics and documents. No electrical, thermal or EMI qualification.",
+ "title": "V2.1 independent validation (TASK 7 rows + label consistency + refresh reproducibility) - repository read-only except this report pair",
+ "generated_utc": "2026-10-12T11:04:46Z",
+ "banner": "AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED",
+ "scope": "CAD evidence only: native KiCad ERC/DRC currency, netlist equivalence, connectivity, zone fills, layout metrics, documents, generation label. No electrical, thermal or EMI qualification.",
  "repository": "D:/Cursor Workspace/AIPE-PCB-Agent",
  "branch": "feat/sic-buck-v2.1-quality",
- "head": "fa8c482 (working tree with the V2.1 stage outputs)",
+ "head": "070e934 + uncommitted label refresh / full regeneration (no commits, no checkouts)",
  "kicad": "10.0.7 (kicad-cli + bundled Python)",
+ "validator_scratch": "scratchpad/v21/rv_refresh/ (scripts, logs, JSON results, re-run manifests); project copies in C:/Users/ZHONGN~1/AppData/Local/Temp/aipe_v21_rv/",
  "boards": {
   "power": {
-   "pcb_sha256": "dcd148fbdf65253a65f991cdfabeb6c0c78827c1248957b8e17a47995437307a",
-   "root_sch_sha256": "9097ea7fc5a2393457a4aaf803ceebd4feafabfb10881d1b90a6f272959058f2",
-   "v2_pcb_sha256": "b1bb5698194b9aea681cf10ee529eaa77e9510ea0241b889ead7221b86f4f7a2",
-   "erc_manifest": "verification/erc/20261012T075113Z-erc-df18ce6e",
-   "drc_manifest": "verification/drc/20261012T090308Z-drc-8fd50803"
+   "pcb_sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
+   "root_sch_sha256": "bbe17710b15bb6677f60ce230e3b8ddc2e5d777bd370d92c972809ef45f167a9",
+   "v2_pcb_sha256_prefix": "b1bb5698194b9aea",
+   "pre_refresh_070e934_pcb_sha256_prefix": "dcd148fbdf65253a",
+   "erc_manifest": "verification/erc/20261012T094955Z-erc-c574a866",
+   "drc_manifest": "verification/drc/20261012T100423Z-drc-8b9e64d1"
   },
   "control": {
-   "pcb_sha256": "4bbf1ee8e30922346b1b956421c3a06892a5b7b12bc307199d26388c92fcad8b",
-   "root_sch_sha256": "5911a31736034d0c4d198d1c24f1154ef9bb4ad2921b51ee8862a316e557e28c",
-   "v2_pcb_sha256": "dead06ed18d851542f76d7175ec4a1cfff3fa2ee4a69203e33f15d1d008f1288",
-   "erc_manifest": "verification/erc/20261012T075120Z-erc-7a14cacb",
-   "drc_manifest": "verification/drc/20261012T084327Z-drc-7f07f983"
+   "pcb_sha256": "a3f3604a516c6778fc838dfe7623fd9e09925fc8e6f9dc699673395447c48ac1",
+   "root_sch_sha256": "142db6d24cc19a648a9e4fbc868e45a9417268084d2907774f8a76fa09405970",
+   "v2_pcb_sha256_prefix": "dead06ed18d85154",
+   "pre_refresh_070e934_pcb_sha256_prefix": "4bbf1ee8e3092234",
+   "erc_manifest": "verification/erc/20261012T095007Z-erc-caa10a79",
+   "drc_manifest": "verification/drc/20261012T103755Z-drc-0a4fa5cf"
   }
  },
  "independent_reruns": {
-  "location": "C:/Users/ZHONGN~1/AppData/Local/Temp/aipe_v21_val (project copies) and scratchpad/v21/val (manifests, scripts, JSON results)",
   "drc": {
-   "power": "20261012T091715Z-drc-b5eaf378 passed 0/0/0",
-   "control": "20261012T091733Z-drc-0acea6bf passed 0/0/0"
+   "power": "20261012T105009Z-drc-7e93cc59 passed 0/0/0",
+   "control": "20261012T105028Z-drc-3121f6b1 passed 0/0/0"
   },
   "erc": {
-   "power": "20261012T091719Z-erc-07d2b350 0 findings",
-   "control": "20261012T091743Z-erc-780082cf 0 findings"
+   "power": "20261012T105012Z-erc-640ff20b 0 findings",
+   "control": "20261012T105039Z-erc-a76c9e85 0 findings"
   },
   "no_refill_drc": {
    "power": "copper-only 0/0; with --schematic-parity 0/0/0",
    "control": "copper-only 0/0; with --schematic-parity 0/0/0"
   },
-  "netlist_fresh_export": "kicad-cli sch export netlist --format kicadxml: pad maps exact vs V2 for both boards",
-  "layout_metrics_rerun": "check_sic_layout.py on both current boards: identical rule tables and sections to the stored files",
+  "netlist_fresh_export": {
+   "power": {
+    "pads": 651,
+    "pad_map_exact_vs_v2": true,
+    "partition_equal": true,
+    "named_net_set_equal": true,
+    "fresh_eq_manufacturing_padmap": true
+   },
+   "control": {
+    "pads": 755,
+    "pad_map_exact_vs_v2": true,
+    "partition_equal": true,
+    "named_net_set_equal": true,
+    "fresh_eq_manufacturing_padmap": true
+   }
+  },
+  "layout_metrics_rerun_differences_to_stored": {
+   "power": [
+    "/model_file",
+    "/runtime_s"
+   ],
+   "control": [
+    "/model_file",
+    "/runtime_s"
+   ]
+  },
+  "routing_quality_rerun": {
+   "power": {
+    "totals_equal_committed_070e934": true,
+    "nets_equal_committed": true,
+    "by_layer_equal_committed": true,
+    "vs_v2": {
+     "nets_longer_after": 0,
+     "nets_with_more_vias": 0,
+     "nets_with_changed_min_width": 0,
+     "narrower": []
+    }
+   },
+   "control": {
+    "totals_equal_committed_070e934": true,
+    "nets_equal_committed": true,
+    "by_layer_equal_committed": true,
+    "vs_v2": {
+     "nets_longer_after": 0,
+     "nets_with_more_vias": 0,
+     "nets_with_changed_min_width": 0,
+     "narrower": []
+    }
+   }
+  },
   "pernet_pcbnew": {
    "power": {
-    "nets": 100,
-    "shorter": 66,
-    "equal": 34,
     "longer": [],
     "more_vias": [],
     "narrower": [],
+    "shorter": 66,
+    "equal": 34,
+    "only_v2": [],
+    "only_v21": [],
     "totals_v2": {
      "length": 5744.594,
      "vias": 606,
@@ -58,15 +110,2242 @@
      "vias": 606,
      "segs": 2991,
      "arcs": 145
+    },
+    "nets_v2": {
+     "KS_H": {
+      "length_mm": 97.702,
+      "vias": 11,
+      "segments": 76,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VEE_H": {
+      "length_mm": 88.374,
+      "vias": 9,
+      "segments": 85,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "BLD_OUT_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PGND": {
+      "length_mm": 22.477,
+      "vias": 90,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "3V3": {
+      "length_mm": 433.92,
+      "vias": 22,
+      "segments": 389,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GND_CTRL": {
+      "length_mm": 153.494,
+      "vias": 62,
+      "segments": 140,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN_DIV_T2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_DIV_T3": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "DESAT_L_OC": {
+      "length_mm": 99.095,
+      "vias": 5,
+      "segments": 107,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "KS_L": {
+      "length_mm": 88.202,
+      "vias": 9,
+      "segments": 73,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_SENSE": {
+      "length_mm": 71.614,
+      "vias": 5,
+      "segments": 89,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_AMP_N": {
+      "length_mm": 35.047,
+      "vias": 4,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_AMP_P": {
+      "length_mm": 29.047,
+      "vias": 2,
+      "segments": 30,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT_AMP_P": {
+      "length_mm": 22.247,
+      "vias": 0,
+      "segments": 24,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOUT_AMP_N": {
+      "length_mm": 25.547,
+      "vias": 3,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_SENSE": {
+      "length_mm": 71.286,
+      "vias": 8,
+      "segments": 97,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VDD_H": {
+      "length_mm": 86.341,
+      "vias": 9,
+      "segments": 68,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN": {
+      "length_mm": 3.125,
+      "vias": 34,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "12V_PROT": {
+      "length_mm": 276.629,
+      "vias": 14,
+      "segments": 261,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GNDP_S": {
+      "length_mm": 119.309,
+      "vias": 9,
+      "segments": 142,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "12V_BIAS_S": {
+      "length_mm": 100.075,
+      "vias": 6,
+      "segments": 96,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "DAMP_MID": {
+      "length_mm": 25.875,
+      "vias": 0,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "K1_LOW": {
+      "length_mm": 16.75,
+      "vias": 0,
+      "segments": 3,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PWM_H_F": {
+      "length_mm": 56.907,
+      "vias": 2,
+      "segments": 31,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SPARE_D2": {
+      "length_mm": 46.983,
+      "vias": 3,
+      "segments": 57,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SW": {
+      "length_mm": 9.623,
+      "vias": 25,
+      "segments": 2,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "G_L": {
+      "length_mm": 33.125,
+      "vias": 7,
+      "segments": 29,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_OUTP": {
+      "length_mm": 64.905,
+      "vias": 2,
+      "segments": 15,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SPARE_D1": {
+      "length_mm": 12.245,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L_F": {
+      "length_mm": 54.657,
+      "vias": 6,
+      "segments": 35,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "DESAT_H_OC": {
+      "length_mm": 29.345,
+      "vias": 3,
+      "segments": 34,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "GNDP_L": {
+      "length_mm": 55.934,
+      "vias": 4,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "12V_BIAS_L": {
+      "length_mm": 37.825,
+      "vias": 2,
+      "segments": 26,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GNDP_H": {
+      "length_mm": 49.809,
+      "vias": 3,
+      "segments": 40,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "12V_BIAS_H": {
+      "length_mm": 30.45,
+      "vias": 4,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "5V_ISO": {
+      "length_mm": 66.418,
+      "vias": 7,
+      "segments": 65,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN_DIV": {
+      "length_mm": 30.22,
+      "vias": 3,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN_OUTN": {
+      "length_mm": 79.397,
+      "vias": 0,
+      "segments": 24,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_OUTP": {
+      "length_mm": 80.905,
+      "vias": 2,
+      "segments": 30,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "REF2V5_PB": {
+      "length_mm": 12.375,
+      "vias": 0,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOC_SET": {
+      "length_mm": 11.955,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "ISENSE_REF": {
+      "length_mm": 90.1,
+      "vias": 5,
+      "segments": 94,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PG_BIAS_S_N": {
+      "length_mm": 52.434,
+      "vias": 1,
+      "segments": 24,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT": {
+      "length_mm": 6.125,
+      "vias": 63,
+      "segments": 2,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "ISENSE": {
+      "length_mm": 83.796,
+      "vias": 7,
+      "segments": 56,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "OC_N": {
+      "length_mm": 75.706,
+      "vias": 6,
+      "segments": 74,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SNUB_MID": {
+      "length_mm": 1.475,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VDD_L": {
+      "length_mm": 80.091,
+      "vias": 6,
+      "segments": 59,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VEE_L": {
+      "length_mm": 100.124,
+      "vias": 16,
+      "segments": 148,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_DIV": {
+      "length_mm": 21.198,
+      "vias": 2,
+      "segments": 19,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT_OUTN": {
+      "length_mm": 63.147,
+      "vias": 2,
+      "segments": 19,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "IND_IN_3": {
+      "length_mm": 1.45,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "FLT_H_N": {
+      "length_mm": 166.3,
+      "vias": 11,
+      "segments": 198,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RELAY_ON": {
+      "length_mm": 203.85,
+      "vias": 5,
+      "segments": 108,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RLY_G": {
+      "length_mm": 18.125,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_RAW": {
+      "length_mm": 51.335,
+      "vias": 0,
+      "segments": 3,
+      "arcs": 0,
+      "min_width_mm": 2.0,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "RESET_N_F": {
+      "length_mm": 48.119,
+      "vias": 2,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_DIV_T1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "FAULT_N": {
+      "length_mm": 33.374,
+      "vias": 3,
+      "segments": 31,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RDY_H": {
+      "length_mm": 127.993,
+      "vias": 2,
+      "segments": 77,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BIAS_EN_F": {
+      "length_mm": 133.226,
+      "vias": 9,
+      "segments": 74,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "ISO_15V": {
+      "length_mm": 32.575,
+      "vias": 1,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_RLIM": {
+      "length_mm": 8.684,
+      "vias": 1,
+      "segments": 14,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_FB_VEE": {
+      "length_mm": 13.159,
+      "vias": 1,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_FB_VDD": {
+      "length_mm": 17.684,
+      "vias": 1,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_H_N": {
+      "length_mm": 268.529,
+      "vias": 4,
+      "segments": 182,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_DIV_T1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "FAN_TACH": {
+      "length_mm": 158.503,
+      "vias": 6,
+      "segments": 47,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "DESAT_H_A": {
+      "length_mm": 37.062,
+      "vias": 3,
+      "segments": 29,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PE": {
+      "length_mm": 76.912,
+      "vias": 0,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 1.0,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "HS_OUTH": {
+      "length_mm": 4.066,
+      "vias": 1,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_OUTL": {
+      "length_mm": 3.953,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "HS_CLMP": {
+      "length_mm": 5.545,
+      "vias": 1,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BLD_IN_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "BLD_IN_2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PWM_L": {
+      "length_mm": 111.624,
+      "vias": 7,
+      "segments": 136,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "IND_IN_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IND_OUT_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IND_OUT_2": {
+      "length_mm": 1.45,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_L_N": {
+      "length_mm": 56.411,
+      "vias": 1,
+      "segments": 33,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BIAS_EN": {
+      "length_mm": 147.861,
+      "vias": 10,
+      "segments": 107,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RESET_N": {
+      "length_mm": 129.246,
+      "vias": 3,
+      "segments": 144,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PWM_H": {
+      "length_mm": 132.286,
+      "vias": 4,
+      "segments": 127,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "FLT_L_N": {
+      "length_mm": 119.996,
+      "vias": 6,
+      "segments": 130,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RDY_L": {
+      "length_mm": 112.289,
+      "vias": 4,
+      "segments": 101,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "G_H": {
+      "length_mm": 26.375,
+      "vias": 0,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "IND_IN_2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "DESAT_L_A": {
+      "length_mm": 44.0,
+      "vias": 6,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_OUTH": {
+      "length_mm": 19.691,
+      "vias": 3,
+      "segments": 19,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LS_OUTL": {
+      "length_mm": 10.203,
+      "vias": 1,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LS_CLMP": {
+      "length_mm": 21.42,
+      "vias": 3,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_RLIM": {
+      "length_mm": 17.184,
+      "vias": 3,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_FB_VEE": {
+      "length_mm": 44.159,
+      "vias": 4,
+      "segments": 56,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_FB_VDD": {
+      "length_mm": 72.809,
+      "vias": 4,
+      "segments": 111,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "HS_RLIM": {
+      "length_mm": 9.434,
+      "vias": 1,
+      "segments": 14,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_FB_VEE": {
+      "length_mm": 8.284,
+      "vias": 1,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_FB_VDD": {
+      "length_mm": 13.559,
+      "vias": 1,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LS_GK": {
+      "length_mm": 13.25,
+      "vias": 2,
+      "segments": 30,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_GK": {
+      "length_mm": 6.625,
+      "vias": 2,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PE_REF_MID": {
+      "length_mm": 3.064,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu"
+      ]
+     }
+    },
+    "nets_v21": {
+     "3V3": {
+      "length_mm": 417.845,
+      "vias": 22,
+      "segments": 263,
+      "arcs": 12,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GND_CTRL": {
+      "length_mm": 153.494,
+      "vias": 62,
+      "segments": 140,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN": {
+      "length_mm": 3.125,
+      "vias": 34,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PGND": {
+      "length_mm": 22.477,
+      "vias": 90,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BLD_IN_2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_AMP_P": {
+      "length_mm": 28.608,
+      "vias": 2,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RESET_N_F": {
+      "length_mm": 46.267,
+      "vias": 2,
+      "segments": 22,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SNUB_MID": {
+      "length_mm": 1.475,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "12V_PROT": {
+      "length_mm": 261.783,
+      "vias": 14,
+      "segments": 96,
+      "arcs": 7,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_DIV_T1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_DIV_T2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "DESAT_H_A": {
+      "length_mm": 36.184,
+      "vias": 3,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT": {
+      "length_mm": 6.125,
+      "vias": 63,
+      "segments": 2,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "BLD_OUT_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOUT_DIV_T1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_S_N": {
+      "length_mm": 49.315,
+      "vias": 1,
+      "segments": 14,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VDD_L": {
+      "length_mm": 78.773,
+      "vias": 6,
+      "segments": 61,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VEE_L": {
+      "length_mm": 94.839,
+      "vias": 16,
+      "segments": 113,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PG_BIAS_H_N": {
+      "length_mm": 256.962,
+      "vias": 4,
+      "segments": 85,
+      "arcs": 7,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "ISENSE_REF": {
+      "length_mm": 86.293,
+      "vias": 5,
+      "segments": 72,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PE": {
+      "length_mm": 76.912,
+      "vias": 0,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 1.0,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "DESAT_H_OC": {
+      "length_mm": 27.404,
+      "vias": 3,
+      "segments": 18,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "KS_H": {
+      "length_mm": 95.908,
+      "vias": 11,
+      "segments": 60,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SPARE_D2": {
+      "length_mm": 44.838,
+      "vias": 3,
+      "segments": 41,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "REF2V5_PB": {
+      "length_mm": 12.375,
+      "vias": 0,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOC_SET": {
+      "length_mm": 11.641,
+      "vias": 2,
+      "segments": 7,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "12V_BIAS_S": {
+      "length_mm": 96.423,
+      "vias": 6,
+      "segments": 64,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GNDP_S": {
+      "length_mm": 114.924,
+      "vias": 9,
+      "segments": 98,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_OUTN": {
+      "length_mm": 78.643,
+      "vias": 0,
+      "segments": 22,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_AMP_N": {
+      "length_mm": 34.534,
+      "vias": 4,
+      "segments": 22,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SPARE_D1": {
+      "length_mm": 12.245,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "IND_IN_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IND_IN_2": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "RELAY_ON": {
+      "length_mm": 195.856,
+      "vias": 5,
+      "segments": 29,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "BIAS_EN": {
+      "length_mm": 142.438,
+      "vias": 10,
+      "segments": 44,
+      "arcs": 7,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RESET_N": {
+      "length_mm": 123.397,
+      "vias": 3,
+      "segments": 102,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PWM_H": {
+      "length_mm": 124.931,
+      "vias": 4,
+      "segments": 47,
+      "arcs": 6,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PWM_L": {
+      "length_mm": 106.731,
+      "vias": 7,
+      "segments": 87,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "FLT_H_N": {
+      "length_mm": 154.653,
+      "vias": 11,
+      "segments": 45,
+      "arcs": 7,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "FLT_L_N": {
+      "length_mm": 111.135,
+      "vias": 6,
+      "segments": 36,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RDY_H": {
+      "length_mm": 124.655,
+      "vias": 2,
+      "segments": 71,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RDY_L": {
+      "length_mm": 107.412,
+      "vias": 4,
+      "segments": 46,
+      "arcs": 9,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "OC_N": {
+      "length_mm": 72.829,
+      "vias": 6,
+      "segments": 52,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "FAN_TACH": {
+      "length_mm": 155.122,
+      "vias": 6,
+      "segments": 29,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PG_BIAS_L_N": {
+      "length_mm": 53.753,
+      "vias": 1,
+      "segments": 13,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAULT_N": {
+      "length_mm": 32.496,
+      "vias": 3,
+      "segments": 33,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "ISENSE": {
+      "length_mm": 81.044,
+      "vias": 7,
+      "segments": 28,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_SENSE": {
+      "length_mm": 68.85,
+      "vias": 5,
+      "segments": 52,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_SENSE": {
+      "length_mm": 69.162,
+      "vias": 8,
+      "segments": 77,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "BLD_IN_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "K1_LOW": {
+      "length_mm": 16.75,
+      "vias": 0,
+      "segments": 3,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VDD_H": {
+      "length_mm": 83.311,
+      "vias": 9,
+      "segments": 57,
+      "arcs": 5,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "12V_BIAS_L": {
+      "length_mm": 36.705,
+      "vias": 2,
+      "segments": 14,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GNDP_L": {
+      "length_mm": 55.012,
+      "vias": 4,
+      "segments": 31,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_AMP_P": {
+      "length_mm": 21.295,
+      "vias": 0,
+      "segments": 10,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VEE_H": {
+      "length_mm": 85.759,
+      "vias": 9,
+      "segments": 58,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "KS_L": {
+      "length_mm": 86.591,
+      "vias": 9,
+      "segments": 59,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_OUTP": {
+      "length_mm": 78.571,
+      "vias": 2,
+      "segments": 18,
+      "arcs": 3,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PWM_H_F": {
+      "length_mm": 55.692,
+      "vias": 2,
+      "segments": 24,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "IND_IN_3": {
+      "length_mm": 1.45,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOUT_AMP_N": {
+      "length_mm": 25.4,
+      "vias": 3,
+      "segments": 13,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "BIAS_EN_F": {
+      "length_mm": 130.554,
+      "vias": 9,
+      "segments": 43,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SW": {
+      "length_mm": 9.623,
+      "vias": 25,
+      "segments": 2,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "DESAT_L_OC": {
+      "length_mm": 94.837,
+      "vias": 5,
+      "segments": 67,
+      "arcs": 4,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_RAW": {
+      "length_mm": 51.335,
+      "vias": 0,
+      "segments": 3,
+      "arcs": 0,
+      "min_width_mm": 2.0,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "DAMP_MID": {
+      "length_mm": 25.875,
+      "vias": 0,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VOUT_DIV": {
+      "length_mm": 20.539,
+      "vias": 2,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT_OUTN": {
+      "length_mm": 61.148,
+      "vias": 2,
+      "segments": 17,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "G_L": {
+      "length_mm": 33.052,
+      "vias": 7,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "IND_OUT_1": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IND_OUT_2": {
+      "length_mm": 1.45,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "RLY_G": {
+      "length_mm": 17.686,
+      "vias": 2,
+      "segments": 7,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "HS_OUTH": {
+      "length_mm": 3.919,
+      "vias": 1,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_OUTL": {
+      "length_mm": 3.953,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "HS_CLMP": {
+      "length_mm": 5.545,
+      "vias": 1,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L_F": {
+      "length_mm": 53.616,
+      "vias": 6,
+      "segments": 33,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_OUTH": {
+      "length_mm": 18.644,
+      "vias": 3,
+      "segments": 12,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LS_OUTL": {
+      "length_mm": 9.669,
+      "vias": 1,
+      "segments": 7,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LS_CLMP": {
+      "length_mm": 20.761,
+      "vias": 3,
+      "segments": 25,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VOUT_OUTP": {
+      "length_mm": 63.785,
+      "vias": 2,
+      "segments": 14,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "12V_BIAS_H": {
+      "length_mm": 30.45,
+      "vias": 4,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "GNDP_H": {
+      "length_mm": 48.814,
+      "vias": 3,
+      "segments": 26,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "VIN_DIV_T3": {
+      "length_mm": 0.95,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "VIN_DIV": {
+      "length_mm": 29.488,
+      "vias": 3,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G_H": {
+      "length_mm": 26.302,
+      "vias": 0,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.35,
+      "layers": [
+       "B.Cu"
+      ]
+     },
+     "5V_ISO": {
+      "length_mm": 63.635,
+      "vias": 7,
+      "segments": 43,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_15V": {
+      "length_mm": 31.458,
+      "vias": 1,
+      "segments": 16,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_RLIM": {
+      "length_mm": 8.15,
+      "vias": 1,
+      "segments": 7,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_FB_VEE": {
+      "length_mm": 13.159,
+      "vias": 1,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISO_FB_VDD": {
+      "length_mm": 17.684,
+      "vias": 1,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_RLIM": {
+      "length_mm": 8.9,
+      "vias": 1,
+      "segments": 7,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_FB_VEE": {
+      "length_mm": 8.284,
+      "vias": 1,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_FB_VDD": {
+      "length_mm": 13.559,
+      "vias": 1,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "DESAT_L_A": {
+      "length_mm": 42.609,
+      "vias": 6,
+      "segments": 26,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_RLIM": {
+      "length_mm": 17.184,
+      "vias": 3,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_FB_VEE": {
+      "length_mm": 42.233,
+      "vias": 4,
+      "segments": 27,
+      "arcs": 1,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_FB_VDD": {
+      "length_mm": 66.404,
+      "vias": 4,
+      "segments": 45,
+      "arcs": 5,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "LS_GK": {
+      "length_mm": 11.743,
+      "vias": 2,
+      "segments": 16,
+      "arcs": 2,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "HS_GK": {
+      "length_mm": 6.625,
+      "vias": 2,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PE_REF_MID": {
+      "length_mm": 3.064,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu"
+      ]
+     }
     }
    },
    "control": {
-    "nets": 111,
-    "shorter": 96,
-    "equal": 15,
     "longer": [],
     "more_vias": [],
     "narrower": [],
+    "shorter": 96,
+    "equal": 15,
+    "only_v2": [],
+    "only_v21": [],
     "totals_v2": {
      "length": 7055.22,
      "vias": 798,
@@ -78,1024 +2357,3139 @@
      "vias": 798,
      "segs": 4262,
      "arcs": 261
+    },
+    "nets_v2": {
+     "ADC_VIN": {
+      "length_mm": 40.025,
+      "vias": 2,
+      "segments": 46,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "GND_CTRL": {
+      "length_mm": 227.538,
+      "vias": 161,
+      "segments": 296,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "3V3": {
+      "length_mm": 121.357,
+      "vias": 84,
+      "segments": 195,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "FLT_L_N": {
+      "length_mm": 92.402,
+      "vias": 10,
+      "segments": 77,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISENSE": {
+      "length_mm": 122.175,
+      "vias": 5,
+      "segments": 77,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "12V_PROT": {
+      "length_mm": 17.862,
+      "vias": 11,
+      "segments": 32,
+      "arcs": 0,
+      "min_width_mm": 0.4,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_S_N": {
+      "length_mm": 213.177,
+      "vias": 15,
+      "segments": 237,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT84": {
+      "length_mm": 57.975,
+      "vias": 4,
+      "segments": 36,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TMS": {
+      "length_mm": 35.475,
+      "vias": 2,
+      "segments": 34,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TRST": {
+      "length_mm": 35.375,
+      "vias": 1,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TDI": {
+      "length_mm": 37.875,
+      "vias": 1,
+      "segments": 48,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TDO": {
+      "length_mm": 42.05,
+      "vias": 1,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TCK": {
+      "length_mm": 47.1,
+      "vias": 1,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EMU0": {
+      "length_mm": 52.975,
+      "vias": 3,
+      "segments": 41,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EMU1": {
+      "length_mm": 57.125,
+      "vias": 3,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TEMP_CTRL": {
+      "length_mm": 30.005,
+      "vias": 2,
+      "segments": 15,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_TEMP_CTRL": {
+      "length_mm": 42.5,
+      "vias": 4,
+      "segments": 75,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "V12V_MON": {
+      "length_mm": 167.65,
+      "vias": 3,
+      "segments": 82,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "12V_IN": {
+      "length_mm": 33.876,
+      "vias": 0,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.5,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "EFUSE_UVLO": {
+      "length_mm": 41.26,
+      "vias": 3,
+      "segments": 13,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO_REF": {
+      "length_mm": 26.977,
+      "vias": 4,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FLT_H_N": {
+      "length_mm": 105.427,
+      "vias": 8,
+      "segments": 56,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OC_N": {
+      "length_mm": 204.137,
+      "vias": 10,
+      "segments": 187,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_IN_N": {
+      "length_mm": 67.907,
+      "vias": 5,
+      "segments": 60,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G1_N": {
+      "length_mm": 19.603,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G2_N": {
+      "length_mm": 9.704,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_OUT_N": {
+      "length_mm": 68.806,
+      "vias": 9,
+      "segments": 46,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "OTP_N": {
+      "length_mm": 76.704,
+      "vias": 8,
+      "segments": 65,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FLT_12V_N": {
+      "length_mm": 151.663,
+      "vias": 16,
+      "segments": 105,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "XRS_N": {
+      "length_mm": 226.11,
+      "vias": 21,
+      "segments": 156,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN_SENSE": {
+      "length_mm": 111.528,
+      "vias": 8,
+      "segments": 90,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V": {
+      "length_mm": 23.745,
+      "vias": 15,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.4,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IO_EN_N": {
+      "length_mm": 38.125,
+      "vias": 3,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "1V9": {
+      "length_mm": 50.003,
+      "vias": 37,
+      "segments": 61,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FB19": {
+      "length_mm": 46.628,
+      "vias": 3,
+      "segments": 22,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "CORE_OK": {
+      "length_mm": 67.315,
+      "vias": 4,
+      "segments": 25,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L_G": {
+      "length_mm": 8.871,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L": {
+      "length_mm": 26.675,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_DVDT": {
+      "length_mm": 32.206,
+      "vias": 2,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_RTN": {
+      "length_mm": 67.835,
+      "vias": 15,
+      "segments": 61,
+      "arcs": 0,
+      "min_width_mm": 0.4,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_VOUT": {
+      "length_mm": 139.25,
+      "vias": 14,
+      "segments": 134,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "REF3V0": {
+      "length_mm": 22.48,
+      "vias": 4,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OTP_REF": {
+      "length_mm": 29.427,
+      "vias": 4,
+      "segments": 25,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "MON5": {
+      "length_mm": 21.113,
+      "vias": 3,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO": {
+      "length_mm": 51.679,
+      "vias": 4,
+      "segments": 54,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_V12V": {
+      "length_mm": 34.5,
+      "vias": 6,
+      "segments": 57,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ARM": {
+      "length_mm": 98.906,
+      "vias": 10,
+      "segments": 101,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAULT_N": {
+      "length_mm": 319.684,
+      "vias": 16,
+      "segments": 297,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAULT_LATCH_N": {
+      "length_mm": 67.747,
+      "vias": 5,
+      "segments": 67,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "DSP_TRIP_N": {
+      "length_mm": 224.402,
+      "vias": 21,
+      "segments": 191,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V_FB": {
+      "length_mm": 54.052,
+      "vias": 4,
+      "segments": 27,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "REF2V5": {
+      "length_mm": 33.78,
+      "vias": 5,
+      "segments": 25,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_OUT_REF": {
+      "length_mm": 19.028,
+      "vias": 4,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCREFP": {
+      "length_mm": 8.375,
+      "vias": 2,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ESTOP_N": {
+      "length_mm": 402.527,
+      "vias": 24,
+      "segments": 271,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_H_OK": {
+      "length_mm": 23.025,
+      "vias": 2,
+      "segments": 44,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_L_OK": {
+      "length_mm": 16.204,
+      "vias": 2,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G3_N": {
+      "length_mm": 13.204,
+      "vias": 0,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_S_OK": {
+      "length_mm": 22.603,
+      "vias": 4,
+      "segments": 33,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SEQ_BASE": {
+      "length_mm": 12.555,
+      "vias": 3,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_ARMED_A": {
+      "length_mm": 18.238,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_RUN": {
+      "length_mm": 28.35,
+      "vias": 2,
+      "segments": 30,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_RUN_A": {
+      "length_mm": 24.238,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_IN_REF": {
+      "length_mm": 20.677,
+      "vias": 4,
+      "segments": 13,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT_SENSE": {
+      "length_mm": 55.477,
+      "vias": 2,
+      "segments": 40,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EPWM1A": {
+      "length_mm": 51.281,
+      "vias": 4,
+      "segments": 39,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "GATE_EN": {
+      "length_mm": 86.318,
+      "vias": 2,
+      "segments": 45,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EPWM1B": {
+      "length_mm": 42.931,
+      "vias": 2,
+      "segments": 44,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_H_G": {
+      "length_mm": 11.121,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "3V3_BULK": {
+      "length_mm": 4.463,
+      "vias": 2,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_I12V": {
+      "length_mm": 32.4,
+      "vias": 2,
+      "segments": 28,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_OVP": {
+      "length_mm": 36.656,
+      "vias": 4,
+      "segments": 23,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_SHDN": {
+      "length_mm": 15.325,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "I12V_MON": {
+      "length_mm": 149.75,
+      "vias": 2,
+      "segments": 90,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_ILIM": {
+      "length_mm": 39.46,
+      "vias": 2,
+      "segments": 59,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO_N": {
+      "length_mm": 77.153,
+      "vias": 8,
+      "segments": 110,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_H_N": {
+      "length_mm": 163.028,
+      "vias": 9,
+      "segments": 105,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_L_N": {
+      "length_mm": 228.528,
+      "vias": 12,
+      "segments": 243,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PWM_H": {
+      "length_mm": 15.3,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "CLK30_SOURCE": {
+      "length_mm": 5.965,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "CLK30": {
+      "length_mm": 14.6,
+      "vias": 2,
+      "segments": 13,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAN_TACH": {
+      "length_mm": 214.0,
+      "vias": 8,
+      "segments": 167,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "1V9_BULK": {
+      "length_mm": 13.963,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT87": {
+      "length_mm": 14.5,
+      "vias": 0,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "5V_EN": {
+      "length_mm": 24.363,
+      "vias": 3,
+      "segments": 20,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "MR_N": {
+      "length_mm": 11.427,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RESET_CT": {
+      "length_mm": 6.952,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_FAULT": {
+      "length_mm": 25.25,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_FAULT_A": {
+      "length_mm": 26.488,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_ISENSE": {
+      "length_mm": 36.25,
+      "vias": 6,
+      "segments": 39,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCREFM": {
+      "length_mm": 8.725,
+      "vias": 2,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UART_TX": {
+      "length_mm": 74.575,
+      "vias": 4,
+      "segments": 44,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RELAY_ON": {
+      "length_mm": 56.45,
+      "vias": 3,
+      "segments": 59,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RESET_N": {
+      "length_mm": 57.175,
+      "vias": 2,
+      "segments": 58,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BIAS_EN": {
+      "length_mm": 57.95,
+      "vias": 1,
+      "segments": 37,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "RDY_H": {
+      "length_mm": 77.677,
+      "vias": 3,
+      "segments": 41,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RDY_L": {
+      "length_mm": 99.237,
+      "vias": 9,
+      "segments": 82,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_N": {
+      "length_mm": 25.502,
+      "vias": 2,
+      "segments": 23,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_ISENSE_REF": {
+      "length_mm": 46.15,
+      "vias": 4,
+      "segments": 54,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_TEMP_HS": {
+      "length_mm": 50.9,
+      "vias": 4,
+      "segments": 63,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCRESEXT": {
+      "length_mm": 28.1,
+      "vias": 4,
+      "segments": 22,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SPARE_D1": {
+      "length_mm": 121.05,
+      "vias": 6,
+      "segments": 101,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SPARE_D2": {
+      "length_mm": 99.575,
+      "vias": 7,
+      "segments": 66,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UART_RX": {
+      "length_mm": 62.225,
+      "vias": 4,
+      "segments": 32,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT85": {
+      "length_mm": 8.5,
+      "vias": 2,
+      "segments": 10,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT86": {
+      "length_mm": 11.1,
+      "vias": 2,
+      "segments": 17,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_12V_A": {
+      "length_mm": 4.987,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TEMP_HS_NTC": {
+      "length_mm": 39.153,
+      "vias": 5,
+      "segments": 29,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISENSE_REF": {
+      "length_mm": 54.55,
+      "vias": 6,
+      "segments": 58,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V_BST": {
+      "length_mm": 2.55,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.3,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "5V_SW": {
+      "length_mm": 14.35,
+      "vias": 0,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.5,
+      "layers": [
+       "F.Cu"
+      ]
+     }
+    },
+    "nets_v21": {
+     "PWM_H": {
+      "length_mm": 15.3,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ARM": {
+      "length_mm": 93.948,
+      "vias": 10,
+      "segments": 77,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "3V3": {
+      "length_mm": 121.357,
+      "vias": 84,
+      "segments": 195,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "GND_CTRL": {
+      "length_mm": 227.538,
+      "vias": 161,
+      "segments": 296,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAULT_N": {
+      "length_mm": 303.045,
+      "vias": 16,
+      "segments": 210,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAULT_LATCH_N": {
+      "length_mm": 64.564,
+      "vias": 5,
+      "segments": 27,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "REF3V0": {
+      "length_mm": 22.097,
+      "vias": 4,
+      "segments": 22,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OTP_REF": {
+      "length_mm": 28.824,
+      "vias": 4,
+      "segments": 17,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_FAULT_A": {
+      "length_mm": 25.282,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TMS": {
+      "length_mm": 33.791,
+      "vias": 2,
+      "segments": 25,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TRST": {
+      "length_mm": 33.381,
+      "vias": 1,
+      "segments": 27,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TDI": {
+      "length_mm": 31.014,
+      "vias": 1,
+      "segments": 12,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TDO": {
+      "length_mm": 38.975,
+      "vias": 1,
+      "segments": 38,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TCK": {
+      "length_mm": 44.869,
+      "vias": 1,
+      "segments": 19,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EMU0": {
+      "length_mm": 49.753,
+      "vias": 3,
+      "segments": 35,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EMU1": {
+      "length_mm": 52.223,
+      "vias": 3,
+      "segments": 28,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "V12V_MON": {
+      "length_mm": 156.503,
+      "vias": 3,
+      "segments": 35,
+      "arcs": 10,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_H_N": {
+      "length_mm": 153.423,
+      "vias": 9,
+      "segments": 57,
+      "arcs": 5,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO_REF": {
+      "length_mm": 26.3,
+      "vias": 4,
+      "segments": 19,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "I12V_MON": {
+      "length_mm": 140.201,
+      "vias": 2,
+      "segments": 33,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_I12V": {
+      "length_mm": 31.065,
+      "vias": 2,
+      "segments": 26,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V": {
+      "length_mm": 23.745,
+      "vias": 15,
+      "segments": 43,
+      "arcs": 0,
+      "min_width_mm": 0.4,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "IO_EN_N": {
+      "length_mm": 36.368,
+      "vias": 3,
+      "segments": 16,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "XRS_N": {
+      "length_mm": 206.594,
+      "vias": 21,
+      "segments": 102,
+      "arcs": 11,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "1V9": {
+      "length_mm": 50.003,
+      "vias": 37,
+      "segments": 61,
+      "arcs": 0,
+      "min_width_mm": 0.25,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FB19": {
+      "length_mm": 44.233,
+      "vias": 3,
+      "segments": 19,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "CORE_OK": {
+      "length_mm": 65.834,
+      "vias": 4,
+      "segments": 21,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V_EN": {
+      "length_mm": 22.515,
+      "vias": 3,
+      "segments": 17,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO_N": {
+      "length_mm": 70.447,
+      "vias": 8,
+      "segments": 32,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RDY_H": {
+      "length_mm": 75.234,
+      "vias": 3,
+      "segments": 30,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RDY_L": {
+      "length_mm": 92.893,
+      "vias": 9,
+      "segments": 52,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "GATE_EN": {
+      "length_mm": 81.304,
+      "vias": 2,
+      "segments": 40,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_N": {
+      "length_mm": 24.003,
+      "vias": 2,
+      "segments": 10,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_IN_N": {
+      "length_mm": 66.589,
+      "vias": 5,
+      "segments": 52,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_OUT_N": {
+      "length_mm": 65.955,
+      "vias": 9,
+      "segments": 31,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "ADC_V12V": {
+      "length_mm": 32.889,
+      "vias": 6,
+      "segments": 26,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "12V_IN": {
+      "length_mm": 33.876,
+      "vias": 0,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.5,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "CLK30_SOURCE": {
+      "length_mm": 5.745,
+      "vias": 2,
+      "segments": 7,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UVLO": {
+      "length_mm": 48.919,
+      "vias": 4,
+      "segments": 33,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_UVLO": {
+      "length_mm": 39.361,
+      "vias": 3,
+      "segments": 15,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_OVP": {
+      "length_mm": 33.438,
+      "vias": 4,
+      "segments": 17,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_SHDN": {
+      "length_mm": 13.314,
+      "vias": 2,
+      "segments": 10,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_RTN": {
+      "length_mm": 63.558,
+      "vias": 15,
+      "segments": 51,
+      "arcs": 3,
+      "min_width_mm": 0.4,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_ILIM": {
+      "length_mm": 34.244,
+      "vias": 2,
+      "segments": 12,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EFUSE_DVDT": {
+      "length_mm": 31.62,
+      "vias": 2,
+      "segments": 31,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FLT_12V_N": {
+      "length_mm": 146.12,
+      "vias": 16,
+      "segments": 72,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "12V_PROT": {
+      "length_mm": 17.862,
+      "vias": 11,
+      "segments": 32,
+      "arcs": 0,
+      "min_width_mm": 0.4,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "FLT_H_N": {
+      "length_mm": 99.832,
+      "vias": 8,
+      "segments": 45,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_ARMED_A": {
+      "length_mm": 17.871,
+      "vias": 2,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VIN_SENSE": {
+      "length_mm": 103.835,
+      "vias": 8,
+      "segments": 58,
+      "arcs": 5,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TEMP_CTRL": {
+      "length_mm": 27.589,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V_FB": {
+      "length_mm": 48.052,
+      "vias": 4,
+      "segments": 24,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_OUT_REF": {
+      "length_mm": 18.571,
+      "vias": 4,
+      "segments": 19,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_VIN": {
+      "length_mm": 37.557,
+      "vias": 2,
+      "segments": 31,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "5V_BST": {
+      "length_mm": 2.55,
+      "vias": 0,
+      "segments": 1,
+      "arcs": 0,
+      "min_width_mm": 0.3,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "5V_SW": {
+      "length_mm": 14.35,
+      "vias": 0,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.5,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "BOOT84": {
+      "length_mm": 56.312,
+      "vias": 4,
+      "segments": 17,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RESET_CT": {
+      "length_mm": 6.952,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "DSP_TRIP_N": {
+      "length_mm": 207.078,
+      "vias": 21,
+      "segments": 86,
+      "arcs": 13,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "TEMP_HS_NTC": {
+      "length_mm": 38.313,
+      "vias": 5,
+      "segments": 21,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OVP_IN_REF": {
+      "length_mm": 19.505,
+      "vias": 4,
+      "segments": 14,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L_G": {
+      "length_mm": 8.871,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_L": {
+      "length_mm": 25.87,
+      "vias": 2,
+      "segments": 8,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "VOUT_SENSE": {
+      "length_mm": 52.66,
+      "vias": 2,
+      "segments": 37,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UART_TX": {
+      "length_mm": 71.943,
+      "vias": 4,
+      "segments": 23,
+      "arcs": 4,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "UART_RX": {
+      "length_mm": 60.27,
+      "vias": 4,
+      "segments": 26,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT87": {
+      "length_mm": 14.28,
+      "vias": 0,
+      "segments": 12,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "ADC_ISENSE": {
+      "length_mm": 34.695,
+      "vias": 6,
+      "segments": 32,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_H_OK": {
+      "length_mm": 21.763,
+      "vias": 2,
+      "segments": 22,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_L_N": {
+      "length_mm": 222.201,
+      "vias": 12,
+      "segments": 179,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "PG_BIAS_L_OK": {
+      "length_mm": 15.235,
+      "vias": 2,
+      "segments": 10,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_S_OK": {
+      "length_mm": 21.724,
+      "vias": 4,
+      "segments": 29,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PG_BIAS_S_N": {
+      "length_mm": 200.983,
+      "vias": 15,
+      "segments": 115,
+      "arcs": 8,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "1V9_BULK": {
+      "length_mm": 13.963,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_VOUT": {
+      "length_mm": 131.915,
+      "vias": 14,
+      "segments": 93,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "MON5": {
+      "length_mm": 19.045,
+      "vias": 3,
+      "segments": 10,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "3V3_BULK": {
+      "length_mm": 4.463,
+      "vias": 2,
+      "segments": 5,
+      "arcs": 0,
+      "min_width_mm": 0.6,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT85": {
+      "length_mm": 8.199,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OC_N": {
+      "length_mm": 193.499,
+      "vias": 10,
+      "segments": 120,
+      "arcs": 15,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "REF2V5": {
+      "length_mm": 32.884,
+      "vias": 5,
+      "segments": 22,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "CLK30": {
+      "length_mm": 13.76,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_TEMP_CTRL": {
+      "length_mm": 39.627,
+      "vias": 4,
+      "segments": 65,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_12V_A": {
+      "length_mm": 4.987,
+      "vias": 2,
+      "segments": 6,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISENSE_REF": {
+      "length_mm": 51.569,
+      "vias": 6,
+      "segments": 28,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_ISENSE_REF": {
+      "length_mm": 42.877,
+      "vias": 4,
+      "segments": 46,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FAN_TACH": {
+      "length_mm": 205.045,
+      "vias": 8,
+      "segments": 122,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ISENSE": {
+      "length_mm": 114.538,
+      "vias": 5,
+      "segments": 63,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "FLT_L_N": {
+      "length_mm": 89.219,
+      "vias": 10,
+      "segments": 69,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_FAULT": {
+      "length_mm": 24.371,
+      "vias": 2,
+      "segments": 7,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADC_TEMP_HS": {
+      "length_mm": 47.08,
+      "vias": 4,
+      "segments": 32,
+      "arcs": 5,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCRESEXT": {
+      "length_mm": 27.661,
+      "vias": 4,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCREFP": {
+      "length_mm": 8.229,
+      "vias": 2,
+      "segments": 13,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ESTOP_N": {
+      "length_mm": 384.604,
+      "vias": 24,
+      "segments": 215,
+      "arcs": 17,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_RUN_A": {
+      "length_mm": 22.407,
+      "vias": 2,
+      "segments": 10,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BOOT86": {
+      "length_mm": 10.954,
+      "vias": 2,
+      "segments": 18,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SEQ_BASE": {
+      "length_mm": 12.025,
+      "vias": 3,
+      "segments": 10,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EPWM1B": {
+      "length_mm": 41.415,
+      "vias": 2,
+      "segments": 34,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G3_N": {
+      "length_mm": 12.545,
+      "vias": 0,
+      "segments": 9,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu"
+      ]
+     },
+     "G1_N": {
+      "length_mm": 18.268,
+      "vias": 2,
+      "segments": 9,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "G2_N": {
+      "length_mm": 9.412,
+      "vias": 2,
+      "segments": 7,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "EPWM1A": {
+      "length_mm": 48.52,
+      "vias": 4,
+      "segments": 28,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "ADCREFM": {
+      "length_mm": 8.579,
+      "vias": 2,
+      "segments": 14,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "PWM_H_G": {
+      "length_mm": 10.737,
+      "vias": 2,
+      "segments": 11,
+      "arcs": 1,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "OTP_N": {
+      "length_mm": 70.817,
+      "vias": 8,
+      "segments": 46,
+      "arcs": 6,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "MR_N": {
+      "length_mm": 11.427,
+      "vias": 1,
+      "segments": 4,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "LED_RUN": {
+      "length_mm": 27.51,
+      "vias": 2,
+      "segments": 22,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RELAY_ON": {
+      "length_mm": 51.876,
+      "vias": 3,
+      "segments": 39,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "RESET_N": {
+      "length_mm": 54.246,
+      "vias": 2,
+      "segments": 47,
+      "arcs": 0,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "BIAS_EN": {
+      "length_mm": 55.683,
+      "vias": 1,
+      "segments": 19,
+      "arcs": 5,
+      "min_width_mm": 0.2,
+      "layers": [
+       "F.Cu",
+       "In2.Cu"
+      ]
+     },
+     "SPARE_D1": {
+      "length_mm": 113.319,
+      "vias": 6,
+      "segments": 27,
+      "arcs": 3,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     },
+     "SPARE_D2": {
+      "length_mm": 94.415,
+      "vias": 7,
+      "segments": 44,
+      "arcs": 2,
+      "min_width_mm": 0.2,
+      "layers": [
+       "B.Cu",
+       "F.Cu"
+      ]
+     }
     }
+   }
+  },
+  "zones_vs_committed_070e934": {
+   "power": {
+    "zones_current": 20,
+    "zones_committed": 20,
+    "zone_multiset_equal_(net,layers,bbox)": true,
+    "zones_with_different_priority": 0,
+    "all_filled_current": true,
+    "empty_fill_layers_current": 0,
+    "fill_area_diffs_gt_0.05mm2 (net, layer, committed, current)": [
+     [
+      "KS_H",
+      "In2.Cu",
+      502.098,
+      502.181
+     ],
+     [
+      "KS_L",
+      "In2.Cu",
+      248.955,
+      248.874
+     ]
+    ],
+    "n_area_diffs": 2,
+    "tracks_per_layer_current": {
+     "B.Cu": 1091,
+     "B.Cu/arc": 66,
+     "F.Cu": 1257,
+     "F.Cu/arc": 49,
+     "In2.Cu": 643,
+     "In2.Cu/arc": 30,
+     "via": 606
+    },
+    "tracks_per_layer_equal_committed": true,
+    "unconnected_count_current": 0,
+    "footprints_current": 237,
+    "footprints_committed": 237,
+    "footprint_positions_equal": true
+   },
+   "control": {
+    "zones_current": 20,
+    "zones_committed": 20,
+    "zone_multiset_equal_(net,layers,bbox)": true,
+    "zones_with_different_priority": 14,
+    "all_filled_current": true,
+    "empty_fill_layers_current": 0,
+    "fill_area_diffs_gt_0.05mm2 (net, layer, committed, current)": [
+     [
+      "5V",
+      "In2.Cu",
+      631.446,
+      625.28
+     ],
+     [
+      "12V_PROT",
+      "In2.Cu",
+      1375.0,
+      1381.029
+     ]
+    ],
+    "n_area_diffs": 2,
+    "tracks_per_layer_current": {
+     "B.Cu": 1865,
+     "B.Cu/arc": 138,
+     "F.Cu": 2357,
+     "F.Cu/arc": 111,
+     "In2.Cu": 40,
+     "In2.Cu/arc": 12,
+     "via": 798
+    },
+    "tracks_per_layer_equal_committed": true,
+    "unconnected_count_current": 0,
+    "footprints_current": 207,
+    "footprints_committed": 207,
+    "footprint_positions_equal": true
    }
   }
  },
  "quality_totals": {
   "power": {
-   "segments": [
-    4755,
-    2991
-   ],
-   "arcs": [
-    0,
-    145
-   ],
-   "vias": [
-    606,
-    606
-   ],
-   "length_mm": [
-    5744.589,
-    5545.646
-   ],
-   "bends_90": [
-    3609,
-    1121
-   ],
-   "bends_45": [
-    6,
-    583
-   ],
-   "bends_other": [
-    109,
-    110
-   ],
-   "direction_changes": [
-    3724,
-    1814
-   ],
-   "stair_runs": [
-    382,
-    124
-   ],
-   "zigzag_runs": [
-    12,
-    26
-   ],
-   "short_segments": [
-    2914,
-    1225
-   ],
-   "arc_joints": [
-    0,
-    287
-   ],
-   "arc_joints_discontinuous": [
-    0,
-    0
-   ],
-   "degree2_bends_90": [
-    3739,
-    1251
-   ],
-   "bends_per_100mm": [
-    64.83,
-    32.71
-   ],
-   "efficiency": [
-    0.7759,
-    0.8061
-   ]
+   "v2": {
+    "segments": 4755,
+    "arcs": 0,
+    "vias": 606,
+    "length_mm": 5744.589
+   },
+   "v21": {
+    "segments": 2991,
+    "arcs": 145,
+    "vias": 606,
+    "length_mm": 5545.646,
+    "bends_90": 1121,
+    "bends_45": 583,
+    "bends_other": 110,
+    "direction_changes": 1814,
+    "stair_runs": 124,
+    "zigzag_runs": 26,
+    "short_segments": 1225,
+    "arc_joints": 287,
+    "arc_joints_discontinuous": 0,
+    "efficiency": 0.8061
+   }
   },
   "control": {
-   "segments": [
-    5995,
-    4262
-   ],
-   "arcs": [
-    0,
-    261
-   ],
-   "vias": [
-    798,
-    798
-   ],
-   "length_mm": [
-    7055.216,
-    6700.663
-   ],
-   "bends_90": [
-    4069,
-    1233
-   ],
-   "bends_45": [
-    0,
-    839
-   ],
-   "bends_other": [
-    12,
-    15
-   ],
-   "direction_changes": [
-    4081,
-    2087
-   ],
-   "stair_runs": [
-    435,
-    144
-   ],
-   "zigzag_runs": [
-    31,
-    41
-   ],
-   "short_segments": [
-    3677,
-    1937
-   ],
-   "arc_joints": [
-    0,
-    519
-   ],
-   "arc_joints_discontinuous": [
-    0,
-    0
-   ],
-   "degree2_bends_90": [
-    4184,
-    1339
-   ],
-   "bends_per_100mm": [
-    57.84,
-    31.15
-   ],
-   "efficiency": [
-    0.7802,
-    0.8272
-   ]
+   "v2": {
+    "segments": 5995,
+    "arcs": 0,
+    "vias": 798,
+    "length_mm": 7055.216
+   },
+   "v21": {
+    "segments": 4262,
+    "arcs": 261,
+    "vias": 798,
+    "length_mm": 6700.663,
+    "bends_90": 1233,
+    "bends_45": 839,
+    "bends_other": 15,
+    "direction_changes": 2087,
+    "stair_runs": 144,
+    "zigzag_runs": 41,
+    "short_segments": 1937,
+    "arc_joints": 519,
+    "arc_joints_discontinuous": 0,
+    "efficiency": 0.8272
+   }
   }
  },
  "critical_nets": {
-  "power": [
-   [
-    "G_H",
-    26.375,
-    26.302,
-    -0.073,
-    0,
-    0,
-    0.35,
-    0.35,
-    12,
-    9,
-    0
+  "power": {
+   "columns": [
+    "net",
+    "length_v2_mm",
+    "length_v21_mm",
+    "delta_mm",
+    "vias_v2",
+    "vias_v21",
+    "min_width_v2_mm",
+    "min_width_v21_mm"
    ],
-   [
-    "G_L",
-    33.125,
-    33.052,
-    -0.073,
-    7,
-    7,
-    0.35,
-    0.35,
-    15,
-    12,
-    0
-   ],
-   [
-    "KS_H",
-    97.702,
-    95.908,
-    -1.794,
-    11,
-    11,
-    0.25,
-    0.25,
-    44,
-    19,
-    2
-   ],
-   [
-    "KS_L",
-    88.202,
-    86.591,
-    -1.611,
-    9,
-    9,
-    0.25,
-    0.25,
-    43,
-    20,
-    0
-   ],
-   [
-    "SW",
-    9.623,
-    9.623,
-    0,
-    25,
-    25,
-    0.6,
-    0.6,
-    0,
-    0,
-    0
-   ],
-   [
-    "VIN",
-    3.125,
-    3.125,
-    0,
-    34,
-    34,
-    0.6,
-    0.6,
-    0,
-    0,
-    0
-   ],
-   [
-    "VOUT",
-    6.125,
-    6.125,
-    0,
-    63,
-    63,
-    0.6,
-    0.6,
-    0,
-    0,
-    0
-   ],
-   [
-    "PGND",
-    22.477,
-    22.477,
-    0,
-    90,
-    90,
-    0.25,
-    0.25,
-    0,
-    0,
-    0
-   ],
-   [
-    "DESAT_H_A",
-    37.062,
-    36.184,
-    -0.878,
-    3,
-    3,
-    0.25,
-    0.25,
-    23,
-    6,
-    0
-   ],
-   [
-    "DESAT_H_OC",
-    29.345,
-    27.404,
-    -1.941,
-    3,
-    3,
-    0.25,
-    0.25,
-    26,
-    6,
-    2
-   ],
-   [
-    "DESAT_L_A",
-    44.0,
-    42.609,
-    -1.391,
-    6,
-    6,
-    0.25,
-    0.25,
-    20,
-    10,
-    0
-   ],
-   [
-    "DESAT_L_OC",
-    99.095,
-    94.837,
-    -4.258,
-    5,
-    5,
-    0.25,
-    0.25,
-    68,
-    8,
-    4
-   ],
-   [
-    "HS_OUTH",
-    4.066,
-    3.919,
-    -0.147,
-    1,
-    1,
-    0.25,
-    0.25,
-    4,
-    0,
-    0
-   ],
-   [
-    "HS_OUTL",
-    3.953,
-    3.953,
-    0,
-    1,
-    1,
-    0.25,
-    0.25,
-    1,
-    1,
-    0
-   ],
-   [
-    "HS_CLMP",
-    5.545,
-    5.545,
-    0,
-    1,
-    1,
-    0.25,
-    0.25,
-    2,
-    2,
-    0
-   ],
-   [
-    "HS_GK",
-    6.625,
-    6.625,
-    0,
-    2,
-    2,
-    0.25,
-    0.25,
-    3,
-    3,
-    0
-   ],
-   [
-    "LS_OUTH",
-    19.691,
-    18.644,
-    -1.047,
-    3,
-    3,
-    0.25,
-    0.25,
-    15,
-    2,
-    1
-   ],
-   [
-    "LS_OUTL",
-    10.203,
-    9.669,
-    -0.534,
-    1,
-    1,
-    0.25,
-    0.25,
-    3,
-    2,
-    1
-   ],
-   [
-    "LS_CLMP",
-    21.42,
-    20.761,
-    -0.659,
-    3,
-    3,
-    0.25,
-    0.25,
-    23,
-    14,
-    0
-   ],
-   [
-    "LS_GK",
-    13.25,
-    11.743,
-    -1.507,
-    2,
-    2,
-    0.25,
-    0.25,
-    27,
-    7,
-    2
-   ],
-   [
-    "VIN_OUTP",
-    80.905,
-    78.571,
-    -2.334,
-    2,
-    2,
-    0.25,
-    0.25,
-    28,
-    8,
-    3
-   ],
-   [
-    "VIN_OUTN",
-    79.397,
-    78.643,
-    -0.754,
-    0,
-    0,
-    0.25,
-    0.25,
-    21,
-    13,
-    1
-   ],
-   [
-    "VOUT_OUTP",
-    64.905,
-    63.785,
-    -1.12,
-    2,
-    2,
-    0.25,
-    0.25,
-    13,
-    6,
-    1
-   ],
-   [
-    "VOUT_OUTN",
-    63.147,
-    61.148,
-    -1.999,
-    2,
-    2,
-    0.25,
-    0.25,
-    16,
-    8,
-    1
-   ],
-   [
-    "ISENSE",
-    83.796,
-    81.044,
-    -2.752,
-    7,
-    7,
-    0.25,
-    0.25,
-    46,
-    8,
-    2
-   ],
-   [
-    "ISENSE_REF",
-    90.1,
-    86.293,
-    -3.807,
-    5,
-    5,
-    0.25,
-    0.25,
-    69,
-    32,
-    0
-   ],
-   [
-    "VIN_SENSE",
-    71.614,
-    68.85,
-    -2.764,
-    5,
-    5,
-    0.25,
-    0.25,
-    81,
-    30,
-    3
-   ],
-   [
-    "VOUT_SENSE",
-    71.286,
-    69.162,
-    -2.124,
-    8,
-    8,
-    0.25,
-    0.25,
-    84,
-    46,
-    0
-   ],
-   [
-    "VIN_AMP_P",
-    29.047,
-    28.608,
-    -0.439,
-    2,
-    2,
-    0.25,
-    0.25,
-    23,
-    16,
-    0
-   ],
-   [
-    "VIN_AMP_N",
-    35.047,
-    34.534,
-    -0.513,
-    4,
-    4,
-    0.25,
-    0.25,
-    22,
-    11,
-    0
-   ],
-   [
-    "VOUT_AMP_P",
-    22.247,
-    21.295,
-    -0.952,
-    0,
-    0,
-    0.25,
-    0.25,
-    20,
-    3,
-    0
-   ],
-   [
-    "VOUT_AMP_N",
-    25.547,
-    25.4,
-    -0.147,
-    3,
-    3,
-    0.25,
-    0.25,
-    10,
-    5,
-    0
-   ],
-   [
-    "VDD_H",
-    86.341,
-    83.311,
-    -3.03,
-    9,
-    9,
-    0.25,
-    0.25,
-    45,
-    18,
-    5
-   ],
-   [
-    "VEE_H",
-    88.374,
-    85.759,
-    -2.615,
-    9,
-    9,
-    0.25,
-    0.25,
-    55,
-    14,
-    3
-   ],
-   [
-    "VDD_L",
-    80.091,
-    78.773,
-    -1.318,
-    6,
-    6,
-    0.25,
-    0.25,
-    33,
-    23,
-    0
-   ],
-   [
-    "VEE_L",
-    100.124,
-    94.839,
-    -5.285,
-    16,
-    16,
-    0.25,
-    0.25,
-    105,
-    47,
-    4
-   ],
-   [
-    "PWM_H",
-    132.286,
-    124.931,
-    -7.355,
-    4,
-    4,
-    0.25,
-    0.25,
-    121,
-    6,
-    6
-   ],
-   [
-    "PWM_L",
-    111.624,
-    106.731,
-    -4.893,
-    7,
-    7,
-    0.25,
-    0.25,
-    125,
-    60,
-    4
-   ],
-   [
-    "FLT_H_N",
-    166.3,
-    154.653,
-    -11.647,
-    11,
-    11,
-    0.25,
-    0.25,
-    182,
-    13,
-    7
-   ],
-   [
-    "FLT_L_N",
-    119.996,
-    111.135,
-    -8.861,
-    6,
-    6,
-    0.25,
-    0.25,
-    120,
-    9,
-    4
-   ],
-   [
-    "RDY_H",
-    127.993,
-    124.655,
-    -3.338,
-    2,
-    2,
-    0.25,
-    0.25,
-    71,
-    52,
-    2
-   ],
-   [
-    "RDY_L",
-    112.289,
-    107.412,
-    -4.877,
-    4,
-    4,
-    0.25,
-    0.25,
-    89,
-    16,
-    9
-   ],
-   [
-    "PE",
-    76.912,
-    76.912,
-    0,
-    0,
-    0,
-    1.0,
-    1.0,
-    1,
-    1,
-    0
+   "rows": [
+    [
+     "G_H",
+     26.375,
+     26.302,
+     -0.073,
+     0,
+     0,
+     0.35,
+     0.35
+    ],
+    [
+     "G_L",
+     33.125,
+     33.052,
+     -0.073,
+     7,
+     7,
+     0.35,
+     0.35
+    ],
+    [
+     "KS_H",
+     97.702,
+     95.908,
+     -1.794,
+     11,
+     11,
+     0.25,
+     0.25
+    ],
+    [
+     "KS_L",
+     88.202,
+     86.591,
+     -1.611,
+     9,
+     9,
+     0.25,
+     0.25
+    ],
+    [
+     "SW",
+     9.623,
+     9.623,
+     0.0,
+     25,
+     25,
+     0.6,
+     0.6
+    ],
+    [
+     "VIN",
+     3.125,
+     3.125,
+     0.0,
+     34,
+     34,
+     0.6,
+     0.6
+    ],
+    [
+     "VOUT",
+     6.125,
+     6.125,
+     0.0,
+     63,
+     63,
+     0.6,
+     0.6
+    ],
+    [
+     "PGND",
+     22.477,
+     22.477,
+     0.0,
+     90,
+     90,
+     0.25,
+     0.25
+    ],
+    [
+     "DESAT_H_A",
+     37.062,
+     36.184,
+     -0.878,
+     3,
+     3,
+     0.25,
+     0.25
+    ],
+    [
+     "DESAT_H_OC",
+     29.345,
+     27.404,
+     -1.941,
+     3,
+     3,
+     0.25,
+     0.25
+    ],
+    [
+     "DESAT_L_A",
+     44.0,
+     42.609,
+     -1.391,
+     6,
+     6,
+     0.25,
+     0.25
+    ],
+    [
+     "DESAT_L_OC",
+     99.095,
+     94.837,
+     -4.258,
+     5,
+     5,
+     0.25,
+     0.25
+    ],
+    [
+     "HS_OUTH",
+     4.066,
+     3.919,
+     -0.147,
+     1,
+     1,
+     0.25,
+     0.25
+    ],
+    [
+     "HS_OUTL",
+     3.953,
+     3.953,
+     0.0,
+     1,
+     1,
+     0.25,
+     0.25
+    ],
+    [
+     "HS_CLMP",
+     5.545,
+     5.545,
+     0.0,
+     1,
+     1,
+     0.25,
+     0.25
+    ],
+    [
+     "HS_GK",
+     6.625,
+     6.625,
+     0.0,
+     2,
+     2,
+     0.25,
+     0.25
+    ],
+    [
+     "LS_OUTH",
+     19.691,
+     18.644,
+     -1.047,
+     3,
+     3,
+     0.25,
+     0.25
+    ],
+    [
+     "LS_OUTL",
+     10.203,
+     9.669,
+     -0.534,
+     1,
+     1,
+     0.25,
+     0.25
+    ],
+    [
+     "LS_CLMP",
+     21.42,
+     20.761,
+     -0.659,
+     3,
+     3,
+     0.25,
+     0.25
+    ],
+    [
+     "LS_GK",
+     13.25,
+     11.743,
+     -1.507,
+     2,
+     2,
+     0.25,
+     0.25
+    ],
+    [
+     "VIN_OUTP",
+     80.905,
+     78.571,
+     -2.334,
+     2,
+     2,
+     0.25,
+     0.25
+    ],
+    [
+     "VIN_OUTN",
+     79.397,
+     78.643,
+     -0.754,
+     0,
+     0,
+     0.25,
+     0.25
+    ],
+    [
+     "VOUT_OUTP",
+     64.905,
+     63.785,
+     -1.12,
+     2,
+     2,
+     0.25,
+     0.25
+    ],
+    [
+     "VOUT_OUTN",
+     63.147,
+     61.148,
+     -1.999,
+     2,
+     2,
+     0.25,
+     0.25
+    ],
+    [
+     "ISENSE",
+     83.796,
+     81.044,
+     -2.752,
+     7,
+     7,
+     0.25,
+     0.25
+    ],
+    [
+     "ISENSE_REF",
+     90.1,
+     86.293,
+     -3.807,
+     5,
+     5,
+     0.25,
+     0.25
+    ],
+    [
+     "VDD_H",
+     86.341,
+     83.311,
+     -3.03,
+     9,
+     9,
+     0.25,
+     0.25
+    ],
+    [
+     "VEE_H",
+     88.374,
+     85.759,
+     -2.615,
+     9,
+     9,
+     0.25,
+     0.25
+    ],
+    [
+     "VDD_L",
+     80.091,
+     78.773,
+     -1.318,
+     6,
+     6,
+     0.25,
+     0.25
+    ],
+    [
+     "VEE_L",
+     100.124,
+     94.839,
+     -5.285,
+     16,
+     16,
+     0.25,
+     0.25
+    ],
+    [
+     "PWM_H",
+     132.286,
+     124.931,
+     -7.355,
+     4,
+     4,
+     0.25,
+     0.25
+    ],
+    [
+     "PWM_L",
+     111.624,
+     106.731,
+     -4.893,
+     7,
+     7,
+     0.25,
+     0.25
+    ],
+    [
+     "FLT_H_N",
+     166.3,
+     154.653,
+     -11.647,
+     11,
+     11,
+     0.25,
+     0.25
+    ],
+    [
+     "FLT_L_N",
+     119.996,
+     111.135,
+     -8.861,
+     6,
+     6,
+     0.25,
+     0.25
+    ],
+    [
+     "PE",
+     76.912,
+     76.912,
+     0.0,
+     0,
+     0,
+     1.0,
+     1.0
+    ]
    ]
-  ],
-  "control": [
-   [
-    "FAULT_N",
-    319.684,
-    303.045,
-    -16.639,
-    16,
-    16,
-    0.2,
-    0.2,
-    140,
-    23,
-    6
+  },
+  "control": {
+   "columns": [
+    "net",
+    "length_v2_mm",
+    "length_v21_mm",
+    "delta_mm",
+    "vias_v2",
+    "vias_v21",
+    "min_width_v2_mm",
+    "min_width_v21_mm"
    ],
-   [
-    "OC_N",
-    204.137,
-    193.499,
-    -10.638,
-    10,
-    10,
-    0.2,
-    0.2,
-    129,
-    30,
-    15
-   ],
-   [
-    "DSP_TRIP_N",
-    224.402,
-    207.078,
-    -17.324,
-    21,
-    21,
-    0.2,
-    0.2,
-    166,
-    22,
-    13
-   ],
-   [
-    "VIN_SENSE",
-    111.528,
-    103.835,
-    -7.693,
-    8,
-    8,
-    0.2,
-    0.2,
-    74,
-    16,
-    5
-   ],
-   [
-    "VOUT_SENSE",
-    55.477,
-    52.66,
-    -2.817,
-    2,
-    2,
-    0.2,
-    0.2,
-    31,
-    18,
-    2
-   ],
-   [
-    "ISENSE",
-    122.175,
-    114.538,
-    -7.637,
-    5,
-    5,
-    0.2,
-    0.2,
-    64,
-    26,
-    6
-   ],
-   [
-    "ISENSE_REF",
-    54.55,
-    51.569,
-    -2.981,
-    6,
-    6,
-    0.2,
-    0.2,
-    50,
-    10,
-    3
-   ],
-   [
-    "EPWM1A",
-    51.281,
-    48.52,
-    -2.761,
-    4,
-    4,
-    0.2,
-    0.2,
-    29,
-    6,
-    3
-   ],
-   [
-    "EPWM1B",
-    42.931,
-    41.415,
-    -1.516,
-    2,
-    2,
-    0.2,
-    0.2,
-    37,
-    17,
-    3
-   ],
-   [
-    "PWM_H",
-    15.3,
-    15.3,
-    0,
-    2,
-    2,
-    0.2,
-    0.2,
-    4,
-    4,
-    0
-   ],
-   [
-    "PWM_L",
-    26.675,
-    25.87,
-    -0.805,
-    2,
-    2,
-    0.2,
-    0.2,
-    4,
-    1,
-    0
-   ],
-   [
-    "ADCREFP",
-    8.375,
-    8.229,
-    -0.146,
-    2,
-    2,
-    0.2,
-    0.2,
-    12,
-    7,
-    0
-   ],
-   [
-    "ADCREFM",
-    8.725,
-    8.579,
-    -0.146,
-    2,
-    2,
-    0.2,
-    0.2,
-    12,
-    8,
-    0
-   ],
-   [
-    "ADCRESEXT",
-    28.1,
-    27.661,
-    -0.439,
-    4,
-    4,
-    0.2,
-    0.2,
-    16,
-    8,
-    0
-   ],
-   [
-    "ESTOP_N",
-    402.527,
-    384.604,
-    -17.923,
-    24,
-    24,
-    0.2,
-    0.2,
-    154,
-    44,
-    17
-   ],
-   [
-    "RESET_N",
-    57.175,
-    54.246,
-    -2.929,
-    2,
-    2,
-    0.2,
-    0.2,
-    54,
-    35,
-    0
-   ],
-   [
-    "CLK30",
-    14.6,
-    13.76,
-    -0.84,
-    2,
-    2,
-    0.2,
-    0.2,
-    9,
-    3,
-    2
-   ],
-   [
-    "3V3",
-    121.357,
-    121.357,
-    0,
-    84,
-    84,
-    0.25,
-    0.25,
-    35,
-    35,
-    0
-   ],
-   [
-    "1V9",
-    50.003,
-    50.003,
-    0,
-    37,
-    37,
-    0.25,
-    0.25,
-    3,
-    3,
-    0
-   ],
-   [
-    "12V",
-    "not in compare (not routed by router / zone-only?)"
-   ],
-   [
-    "5V",
-    23.745,
-    23.745,
-    0,
-    15,
-    15,
-    0.4,
-    0.4,
-    13,
-    13,
-    0
-   ],
-   [
-    "ADC_VIN",
-    40.025,
-    37.557,
-    -2.468,
-    2,
-    2,
-    0.2,
-    0.2,
-    39,
-    16,
-    3
-   ],
-   [
-    "ADC_VOUT",
-    139.25,
-    131.915,
-    -7.335,
-    14,
-    14,
-    0.2,
-    0.2,
-    116,
-    45,
-    6
-   ],
-   [
-    "ADC_ISENSE",
-    36.25,
-    34.695,
-    -1.555,
-    6,
-    6,
-    0.2,
-    0.2,
-    29,
-    12,
-    1
-   ],
-   [
-    "ADC_V12V",
-    34.5,
-    32.889,
-    -1.611,
-    6,
-    6,
-    0.2,
-    0.2,
-    47,
-    8,
-    0
+   "rows": [
+    [
+     "FAULT_N",
+     319.684,
+     303.045,
+     -16.639,
+     16,
+     16,
+     0.2,
+     0.2
+    ],
+    [
+     "OC_N",
+     204.137,
+     193.499,
+     -10.638,
+     10,
+     10,
+     0.2,
+     0.2
+    ],
+    [
+     "DSP_TRIP_N",
+     224.402,
+     207.078,
+     -17.324,
+     21,
+     21,
+     0.2,
+     0.2
+    ],
+    [
+     "VIN_SENSE",
+     111.528,
+     103.835,
+     -7.693,
+     8,
+     8,
+     0.2,
+     0.2
+    ],
+    [
+     "VOUT_SENSE",
+     55.477,
+     52.66,
+     -2.817,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "ISENSE",
+     122.175,
+     114.538,
+     -7.637,
+     5,
+     5,
+     0.2,
+     0.2
+    ],
+    [
+     "ISENSE_REF",
+     54.55,
+     51.569,
+     -2.981,
+     6,
+     6,
+     0.2,
+     0.2
+    ],
+    [
+     "EPWM1A",
+     51.281,
+     48.52,
+     -2.761,
+     4,
+     4,
+     0.2,
+     0.2
+    ],
+    [
+     "EPWM1B",
+     42.931,
+     41.415,
+     -1.516,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "PWM_H",
+     15.3,
+     15.3,
+     0.0,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "PWM_L",
+     26.675,
+     25.87,
+     -0.805,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "ADCREFP",
+     8.375,
+     8.229,
+     -0.146,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "ADCREFM",
+     8.725,
+     8.579,
+     -0.146,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "ESTOP_N",
+     402.527,
+     384.604,
+     -17.923,
+     24,
+     24,
+     0.2,
+     0.2
+    ],
+    [
+     "RESET_N",
+     57.175,
+     54.246,
+     -2.929,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "CLK30",
+     14.6,
+     13.76,
+     -0.84,
+     2,
+     2,
+     0.2,
+     0.2
+    ],
+    [
+     "3V3",
+     121.357,
+     121.357,
+     0.0,
+     84,
+     84,
+     0.25,
+     0.25
+    ],
+    [
+     "1V9",
+     50.003,
+     50.003,
+     0.0,
+     37,
+     37,
+     0.25,
+     0.25
+    ],
+    [
+     "5V",
+     23.745,
+     23.745,
+     0.0,
+     15,
+     15,
+     0.4,
+     0.4
+    ]
    ]
-  ]
+  }
  },
  "hv_isolation_pairs": [
   {
@@ -1414,7 +5808,7 @@
    "verdict": "same"
   }
  ],
- "layout_rows_changed": {
+ "layout_rows_changed_vs_v2": {
   "power": [
    {
     "rule": "PE-PCB-001",
@@ -1452,6 +5846,17 @@
     "disp_v2": "measured - human review required",
     "disp_v21": "measured - human review required",
     "verdict": "changed",
+    "disposition_changed": false
+   },
+   {
+    "rule": "PE-PCB-003",
+    "metric": "SW copper area, all layers (mm2; per layer in JSON)",
+    "v2": 3660.2,
+    "v21": 3660.3,
+    "threshold": null,
+    "disp_v2": "measured - human review required",
+    "disp_v21": "measured - human review required",
+    "verdict": "changed(measured-only)",
     "disposition_changed": false
    },
    {
@@ -1508,6 +5913,31 @@
     "threshold": null,
     "disp_v2": "measured - human review required",
     "disp_v21": "measured - human review required",
+    "verdict": "changed",
+    "disposition_changed": false
+   },
+   {
+    "rule": "PE-PCB-006",
+    "metric": "VIN copper (zone area per layer, via count, track length)",
+    "v2": {
+     "zone_area_mm2": {
+      "F.Cu": 4530.4,
+      "In2.Cu": 16940.0
+     },
+     "vias": 34,
+     "track_mm": 3.1
+    },
+    "v21": {
+     "zone_area_mm2": {
+      "F.Cu": 4530.4,
+      "In2.Cu": 16939.9
+     },
+     "vias": 34,
+     "track_mm": 3.1
+    },
+    "threshold": ">= 24 vias per net",
+    "disp_v2": "within spec threshold - human review required",
+    "disp_v21": "within spec threshold - human review required",
     "verdict": "changed",
     "disposition_changed": false
    },
@@ -1635,6 +6065,132 @@
    ]
   ]
  },
+ "layout_rows_worse_than_v2": {
+  "power": [],
+  "control": []
+ },
+ "label_grep": {
+  "files_scanned": 72,
+  "old_banner_hits": [
+   [
+    "examples/sic-buck-400v-200v-5kw/manufacturing/README.md",
+    3,
+    "two boards)  **AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED**  Gene"
+   ],
+   [
+    "examples/sic-buck-400v-200v-5kw/verification/engineering_checks/stored_zone_fill_check.json",
+    3,
+    ",   \"status\": \"AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED\",   \"ti"
+   ]
+  ],
+  "new_banner_occurrences": 63,
+  "titleblock_fields_with_bare_V2": [
+   [
+    "AIPE_SiC_Buck_Control.kicad_sch",
+    "title",
+    "AIPE V2 SiC buck control board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchro"
+   ],
+   [
+    "AIPE_SiC_Buck_Power.kicad_sch",
+    "title",
+    "AIPE V2 SiC buck power board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchrono"
+   ]
+  ],
+  "silkscreen": [
+   [
+    "AIPE_SiC_Buck_Control.kicad_pcb",
+    "AI-GENERATED PROTOTYPE"
+   ],
+   [
+    "AIPE_SiC_Buck_Control.kicad_pcb",
+    "AIPE SiC BUCK CONTROL V2.1"
+   ],
+   [
+    "AIPE_SiC_Buck_Power.kicad_pcb",
+    "AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"
+   ],
+   [
+    "AIPE_SiC_Buck_Power.kicad_pcb",
+    "AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD V2.1"
+   ]
+  ],
+  "pdf_text": {
+   "examples/sic-buck-400v-200v-5kw/manufacturing/control_board/review/pcb_layout.pdf": {
+    "pages": 6,
+    "old_hits": 0,
+    "new_hits": 6,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/manufacturing/control_board/review/schematic.pdf": {
+    "pages": 9,
+    "old_hits": 0,
+    "new_hits": 11,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/manufacturing/power_board/review/pcb_layout.pdf": {
+    "pages": 6,
+    "old_hits": 0,
+    "new_hits": 7,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/manufacturing/power_board/review/schematic.pdf": {
+    "pages": 7,
+    "old_hits": 0,
+    "new_hits": 9,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/review/pcb_layout_control.pdf": {
+    "pages": 6,
+    "old_hits": 0,
+    "new_hits": 6,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/review/pcb_layout_power.pdf": {
+    "pages": 6,
+    "old_hits": 0,
+    "new_hits": 7,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/review/schematic_control.pdf": {
+    "pages": 9,
+    "old_hits": 0,
+    "new_hits": 11,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   },
+   "examples/sic-buck-400v-200v-5kw/review/schematic_power.pdf": {
+    "pages": 7,
+    "old_hits": 0,
+    "new_hits": 9,
+    "rev_strings": [
+     "Rev: V2.1"
+    ]
+   }
+  }
+ },
+ "crops": {
+  "committed_set_reproduced": true,
+  "v2_crops_pixel_identical": true,
+  "v21_crops_size_changes": [],
+  "v21_max_pixel_diff_fraction": 0.00044013684254559144
+ },
+ "unit_tests": {
+  "source": "scratchpad/v21/refresh/full_tests.log (recorded by the refresh, not re-run)",
+  "result": "Ran 340 tests in 119.981s - OK (skipped=2)"
+ },
  "verify_sic_buck": {
   "exit_code": 0,
   "status": "passed",
@@ -1643,72 +6199,86 @@
  "items": [
   {
    "item": 1,
-   "check": "Native KiCad ERC - latest manifest per board: 0 findings, --severity-all, source hashes = current .kicad_sch files",
-   "evidence": "verification/erc/20261012T075113Z-erc-df18ce6e/run.json (power); verification/erc/20261012T075120Z-erc-7a14cacb/run.json (control); independent re-run on project copies: scratchpad/v21/val/erc_power/20261012T091719Z-erc-07d2b350, erc_control/20261012T091743Z-erc-780082cf",
-   "result": "power: status passed, finding_count 0 over 7 sheets, tool exit 0, command `kicad-cli sch erc --format json --severity-all --exit-code-violations`; source_sha256 9097ea7f... = current AIPE_SiC_Buck_Power.kicad_sch, all 6 sub-sheet dependency hashes = current files (sha256sum). control: passed, 0 findings over 9 sheets, tool exit 0; source 5911a317... = current, all 8 sub-sheets match. ERC ignored-check list identical to the frozen V2 runs (single_global_label, four_way_junction, simulation_model_issue, footprint_filter). Re-run on full project copies in C:/Users/ZHONGN~1/AppData/Local/Temp/aipe_v21_val/: 0 findings both boards; no footprint_link_issues artefact arose because the whole project folder (libraries, lib tables) was copied.",
+   "check": "Native KiCad ERC - latest manifest per board: 0 findings, --severity-all, source and dependency hashes = current files; re-run on project copies",
+   "evidence": "verification/erc/20261012T094955Z-erc-c574a866/run.json (power), verification/erc/20261012T095007Z-erc-caa10a79/run.json (control); scratchpad/v21/rv_refresh/manifests.json; re-run: rv_refresh/erc_power/20261012T105012Z-erc-640ff20b, erc_control/20261012T105039Z-erc-a76c9e85; schematic gates verification/schematic_gates/<board>/schematic_gates.json",
+   "result": "power: passed, 0 findings over 7 sheets, tool exit 0, --severity-all --exit-code-violations; source_sha256 bbe17710... = disk, 51/51 dependency hashes = disk, report hash valid. control: passed, 0 findings over 9 sheets, source 142db6d2... = disk, 41/41 dependencies = disk, report hash valid. Both are the latest ERC manifest of their board (the 20261012T0658/0751 runs are superseded history). Re-run with run_check on whole-folder copies in C:/Users/ZHONGN~1/AppData/Local/Temp/aipe_v21_rv/: 0 findings both boards (7 / 9 sheets). All six schematic gates (dru_identical, net_settings_equal, erc_zero, netlist_vs_model, netlist_vs_v2, paper_fill) passed for both boards.",
    "verdict": "PASS"
   },
   {
    "item": 2,
-   "check": "Native KiCad DRC - latest manifest per board: 0 violations / 0 unconnected / 0 parity, --schematic-parity --severity-all in the command, source hash = current .kicad_pcb; re-run on copies",
-   "evidence": "verification/drc/20261012T090308Z-drc-8fd50803/run.json (power, latest); verification/drc/20261012T084327Z-drc-7f07f983/run.json (control, latest); re-run: scratchpad/v21/val/drc_power/20261012T091715Z-drc-b5eaf378/run.json, drc_control/20261012T091733Z-drc-0acea6bf/run.json; rule diffs: releases/v2/kicad/*/ vs kicad/*/ (.kicad_dru, .kicad_pro)",
-   "result": "power: passed 0/0/0, tool exit 0, command `pcb drc --format json --severity-all --exit-code-violations --output ... --schematic-parity --refill-zones`, source_sha256 dcd148fb... = current PCB. control: passed 0/0/0, source 4bbf1ee8... = current PCB. Both are the latest manifest for their board (20261012T084719Z-drc-93962d5d is the FAILED power attempt A on a superseded board 2c885298..., 1 violation + 2 unconnected, kept as history; 20261012T081528Z-drc-6094e0f4 is the superseded control run 10). Re-run with run_check on short-path copies: power 0/0/0, control 0/0/0, tool exit 0; copy hashes unchanged by the runs; no lib_footprint_issues warning appeared (full project folders copied). Rules not weakened: power .kicad_dru byte-identical to V2; both .kicad_pro files identical to V2 after flattening (net classes, clearances, severities: 0 differing keys); DRC ignored-check lists identical to the V2 runs. Control .kicad_dru differs from V2 only by additional \"OR NetClass == PGND_LV\" alternatives inside 6 existing HV conditions (adds a class, removes nothing); PGND_LV is a power-board class (IND_IN_3/IND_OUT_2) and is not defined in the control .kicad_pro, so the control rule semantics are unchanged (see open point 5).",
+   "check": "Native KiCad DRC - latest manifest per board: 0 violations / 0 unconnected / 0 parity with --schematic-parity --severity-all, source + dependency hashes = disk; run_check re-run on copies; rules not weakened; verify_sic_buck",
+   "evidence": "verification/drc/20261012T100423Z-drc-8b9e64d1/run.json (power), verification/drc/20261012T103755Z-drc-0a4fa5cf/run.json (control); re-run rv_refresh/drc_power/20261012T105009Z-drc-7e93cc59, drc_control/20261012T105028Z-drc-3121f6b1 (rerun_checks.log); rule diffs releases/v2/kicad/*/ vs kicad/*/; `python -m automation.scripts.verify_sic_buck`",
+   "result": "power: passed 0/0/0, tool exit 0, flags --severity-all --exit-code-violations --schematic-parity --refill-zones; source ae4ca86c... = disk, 51/51 dependencies = disk, report hash valid. control: passed 0/0/0, source a3f3604a... = disk, 41/41 dependencies = disk. Both are the latest manifest of their board; 20261012T101142Z-drc-88c7c9c4 (first control refresh build, superseded), 20261012T090308Z-drc-8fd50803 / 20261012T084327Z-drc-7f07f983 (pre-refresh boards) and 20261012T084719Z-drc-93962d5d (FAILED power attempt A) remain as history. My run_check re-run on whole-folder copies: power 0/0/0, control 0/0/0, copy hashes unchanged by the runs. Rules: both .kicad_pro byte-identical to V2; power .kicad_dru differs from V2 only in the banner header line; control .kicad_dru = V2 rules + the additional PGND_LV net-class conditions (pre-existing, open point 7) + banner header - nothing relaxed. verify_sic_buck: exit 0, status passed, problems [] (it rewrote verification-summary.json with identical content; the diff to HEAD is only the four manifest paths of the refresh runs).",
    "verdict": "PASS"
   },
   {
    "item": 3,
    "check": "Schematic/netlist equivalence vs V2 - (ref,pad)->net maps and net-name sets of design/netlist_<board>.xml, manufacturing netlist, schematic_gates netlist and a fresh kicad-cli export vs releases/v2/manufacturing/<board>/netlist.xml; netlist_check_<board>.json exact",
-   "evidence": "scratchpad/v21/val/netlist_equiv.py / netlist_equiv.json; scratchpad/v21/val/netlist_fresh_<board>.xml (kicad-cli sch export netlist on the copies); verification/netlist_check_power.json, netlist_check_control.json",
-   "result": "power: 651 pads (648 named, 101 named nets, 237 components) - pad map exact, net partition equal, named-net set equal and component set equal to V2 for design, manufacturing, gates and the fresh export; design map == manufacturing map. control: 755 pads (667 named, 111 named nets, 207 components) - all four sources exact vs V2. netlist_check_power.json exact_match True (board sha dcd148fb...), netlist_check_control.json exact_match True (board sha 4bbf1ee8...): model = schematic = board, 648 / 667 pads, 0 problems.",
+   "evidence": "rv_refresh/netlist_equiv.json (val/netlist_equiv.py re-run), rv_refresh/netlist_fresh_<board>.xml + netlist_fresh_vs_v2.json; verification/netlist_check_<board>.json",
+   "result": "power: 651 pads (648 named, 237 components) - design, manufacturing, gates and the fresh export: pad map exact, partition equal, named-net set equal, component set equal to V2; design map == manufacturing map; netlist_check_power.json exact_match True (board ae4ca86c..., 648 pads, 0 problems). control: 755 pads (667 named, 207 components) - all four sources exact vs V2; netlist_check_control.json exact_match True (board a3f3604a..., 667 pads, 0 problems).",
    "verdict": "PASS"
   },
   {
    "item": 4,
-   "check": "PCB connectivity and copper zones - router unresolved 0, pcbnew GetConnectivity().GetUnconnectedCount 0, stored zone fills rule-aware (no-refill DRC 0/0 on copies), zone fill state",
-   "evidence": "verification/routing_progress_<board>.json; scratchpad/v21/val/kicad_conn.py / kicad_conn.json (KiCad 10.0.7 Python); verification/engineering_checks/stored_zone_fill_check_<board>.json; scratchpad/v21/val/norefill_<board>.json, norefill_parity_<board>.json",
-   "result": "routing_progress unresolved [] for both boards. pcbnew (board loaded from disk, BuildConnectivity): power unconnected 0, control unconnected 0. Item counts match the progress JSON: power 2991 straight + 145 arcs = 3136 tracks, 606 vias, 20 copper zones + 16 rule areas; control 4262 + 261 = 4523 tracks, 798 vias, 20 copper zones. Every copper zone IsFilled with a non-empty fill polygon on each of its layers (unfilled 0/0, empty-layer fills 0/0). stored_zone_fill_check_power/control.json: 0 violations / 0 unconnected (board hashes current). My no-refill DRC on the copies (--severity-all, WITHOUT --refill-zones): copper-only 0/0 and with --schematic-parity 0/0/0 for both boards -> the stored fills are the rule-aware fills. DNP attribute present on the board: power 16 footprints, control ['C54'] (parity 0).",
+   "check": "PCB connectivity and copper zones - router unresolved 0, pcbnew unconnected 0, stored fills rule-aware (no-refill DRC 0/0 on copies), zone fill state",
+   "evidence": "verification/routing_progress_<board>.json; rv_refresh/kicad_conn.log (KiCad 10.0.7 Python); rv_refresh/zones_vs_committed.json; verification/engineering_checks/stored_zone_fill_check_<board>.json; rv_refresh/norefill_<board>.json, norefill_parity_<board>.json",
+   "result": "routing_progress unresolved [] both boards. pcbnew: power unconnected 0, 2991 straight + 145 arcs = 3136 tracks, 606 vias, 20 copper zones + 16 rule areas, all filled, 0 empty fill layers; control unconnected 0, 4262 + 261 = 4523 tracks, 798 vias, 20 copper zones, all filled. stored_zone_fill_check_power/control.json: 0 violations, board hashes current, status carries the V2.1 banner. No-refill DRC on the copies (--severity-all, without --refill-zones): copper-only 0/0 and with --schematic-parity 0/0/0 (power), 0/0 and 0/0/0 (control) -> the stored fills are the rule-aware fills. DNP on the boards: power 16 footprints, control C54.",
    "verdict": "PASS"
   },
   {
    "item": 5,
-   "check": "High-voltage spacing - KR-ISO rows, HV-to-SELV / HV-to-PE / barrier metrics of layout_metrics_power.json vs releases/v2 (no row may be worse); checker re-run",
-   "evidence": "scratchpad/v21/val/metrics_compare.py / metrics_compare.json; verification/engineering_checks/layout_metrics_power.json vs releases/v2/verification/engineering_checks/layout_metrics_power.json; checker re-run scratchpad/v21/val/metrics/layout_metrics_power.json",
-   "result": "Rule table 58 rows in both (27 within / 6 exceeding / 25 measured-only, same as V2); 0 rows with a worse row value; all 17 KR-ISO rows have identical row values and dispositions except KR-ISO-002 \"HV/DRV/DESAT/SENSE_ISO to CTRL_SELV\" whose B.Cu per-layer distance is 12.025 -> 11.932 mm (threshold 9.0 mm, within; the governing row minimum 9.486 mm on F.Cu is unchanged; In1/In2 11.1 unchanged). HV to PE 5.0005 mm on all four layers (unchanged); ISO_BARRIER strip copper-free on all layers (unchanged); U1..U10 barrier slots g/e/path unchanged; HS-LS island 6.27/6.40/4.80/6.40 mm unchanged; functional VIN-PGND, SW-PGND, VIN-SW, VOUT-PGND distances unchanged to 0.1 um. Pre-existing exceptions identical to V2: KR-ISO-002 VIN<->PGND and VOUT<->PGND F.Cu 1.95 mm (< 3.0 outer), KR-TH-002 HS1 HV copper 4.955 (F.Cu) / 0.0 mm (B.Cu, pad R16.1 PE_REF_MID) (< 5.0) - only the reported tie pad changed C2.2 -> C6.2 at the same 4.955 mm. Re-running check_sic_layout.py on the current boards reproduces the stored files exactly (0 differing rows; isolation, gate_loops, sensing and commutation sections identical; control 31 rows also identical).",
-   "verdict": "PASS with one per-layer note (regression list #1)"
+   "check": "High-voltage spacing - KR-ISO rows, HV-to-SELV / HV-to-PE / barrier metrics of layout_metrics_power.json vs releases/v2 (no row may be worse); independent checker re-run",
+   "evidence": "rv_refresh/metrics_compare.json (val/metrics_compare.py); rv_refresh/metrics/layout_metrics_<board>.json (check_sic_layout.py re-run) + metrics_rerun_compare.json; committed 070e934 metrics in rv_refresh/committed/",
+   "result": "Power rule table 58 rows (27 within / 6 exceeding / 25 measured-only, same as V2); rows worse than V2: 0; control 31 rows, worse 0. KR-ISO rows identical to V2 except KR-ISO-002 HV/DRV/DESAT/SENSE_ISO to CTRL_SELV B.Cu 12.025 -> 11.932 mm (threshold 9.0, within; row minimum 9.486 mm on F.Cu unchanged) - the same value as before the refresh. HV to PE 5.0005 mm all layers, ISO_BARRIER strip copper-free, HS-LS island 6.27/6.40/4.80/6.40 mm, barrier slots unchanged. My checker re-run equals the stored files except model_file path spelling and runtime_s. Stored vs committed 070e934: every rule row has the same value and disposition; only fill-derived areas (SW In2.Cu 3660.2 -> 3660.3 mm2, VIN In2.Cu 16940.0 -> 16939.9) and nearest-item tie-breaks (HS1 F.Cu C6.2 -> C1.2 at the same 4.955 mm) differ.",
+   "verdict": "PASS (pre-existing per-layer note, open point 1)"
   },
   {
    "item": 6,
-   "check": "Critical power and gate loops - PE-PCB-001..005 / KR-PCB rows V2 vs V2.1 and per-net length / vias / min width of G_H, G_L, KS_H, KS_L, SW, VIN, VOUT, PGND, DESAT_*, sense pairs (routing_quality_<board>_compare.json plus an independent pcbnew re-measurement)",
-   "evidence": "scratchpad/v21/val/rq_compare.py / rq_compare.json (compare files; before-board hashes b1bb5698... / dead06ed... = sha256 of releases/v2 boards); scratchpad/v21/val/pernet_measure.py / pernet_measure.json (pcbnew on V2 and V2.1 boards); metrics_compare.json gate_loops / sensing / decoupling",
-   "result": "Layout metrics: only PE-PCB-001, PE-PCB-004 and KR-ISO-002 (B.Cu) rows changed; PE-PCB-002 (commutation), PE-PCB-003, PE-PCB-005, PE-PCB-006 and all decoupling max distances (U1 7.60, U3 9.48, U2 9.37, U4 13.91 ... U10 15.51 mm) are identical (placement unchanged). PE-PCB-001: Q1 gate-net track 39.94 -> 39.72 mm, Q2 84.44 -> 82.13 mm; driver-output-to-gate-pad 14.35 / 14.36 mm, return-to-kelvin 14.78 / 14.72 mm, gate vias 3 / 14, kelvin min copper distance 0.3005 mm, gate/kelvin adjacent layers - all unchanged. PE-PCB-004 sense pairs: VIN_OUTP/N 80.91/79.40 -> 78.57/78.64 mm (mismatch 1.51 -> 0.07), VOUT_OUTP/N 64.91/63.15 -> 63.79/61.15 mm (mismatch 1.76 -> 2.64, see regression #2), ISENSE/ISENSE_REF 83.80/90.10 -> 81.04/86.29 mm (mismatch 6.30 -> 5.25); via counts unchanged; control PE-PCB-004 ISENSE/ISENSE_REF 122.2/54.6 -> 114.5/51.6 mm. Independent pcbnew re-measurement of every net: power 66 shorter, 34 equal, 0 longer, 0 with more vias, 0 with a smaller minimum width (100 nets; total 5744.594 -> 5545.648 mm, vias 606 = 606); control 96 shorter, 15 equal, 0 longer, 0 more vias, 0 narrower (111 nets; 7055.22 -> 6700.668 mm, vias 798 = 798) - identical to the compare files. Critical nets (V2 -> V2.1 mm, vias): G_H 26.375 -> 26.302 (0), G_L 33.125 -> 33.052 (7), KS_H 97.70 -> 95.91 (11), KS_L 88.20 -> 86.59 (9), SW 9.623 = (25), VIN 3.125 = (34), VOUT 6.125 = (63), PGND 22.477 = (90), PE 76.912 = (0), DESAT_H_A 37.06 -> 36.18, DESAT_H_OC 29.35 -> 27.40, DESAT_L_A 44.00 -> 42.61, DESAT_L_OC 99.10 -> 94.84, HS_OUTH 4.07 -> 3.92, HS_OUTL/HS_CLMP/HS_GK unchanged, LS_OUTH 19.69 -> 18.64, LS_GK 13.25 -> 11.74, VDD_H/VEE_H/VDD_L/VEE_L 86.3/88.4/80.1/100.1 -> 83.3/85.8/78.8/94.8; min widths unchanged (0.35 gate, 0.6 power, 0.25 signal, 1.0 PE).",
-   "verdict": "PASS (no per-net regression; one measured-only pair-mismatch note, regression list #2)"
+   "check": "Critical power and gate loops - PE-PCB / KR-PCB rows V2 vs V2.1 and per-net length / vias / min width (routing-quality re-measurement + pcbnew per-net)",
+   "evidence": "rv_refresh/rq_rerun.json + rq/ (check_routing_quality on both boards and the V2 boards, KiCad Python); rv_refresh/committed/routing_quality_<board>.json (git show 070e934); rv_refresh/pernet_measure.log; metrics_compare.json changed rows",
+   "result": "Routing-quality totals of the delivered boards: power 2991 seg / 145 arcs / 606 vias / 5545.646 mm / efficiency 0.8061; control 4262 / 261 / 798 / 6700.663 mm / 0.8272 - equal to the committed 070e934 totals (True/True), to the on-disk files and to the generator's own totals; by_layer and per-net tables identical to 070e934 (True/True). Versus V2 (before boards b1bb5698194b9aea... / dead06ed18d85154...): nets longer 0/0, more vias 0/0, changed min width 0/0 (my compare and the on-disk _compare files agree). pcbnew per-net: power 100 nets - 66 shorter, 34 equal, 0 longer; control 111 nets - 96 shorter, 15 equal, 0 longer; via counts and widths never worse. Layout rows changed vs V2 (power 8, control 1) are the pre-refresh ones: PE-PCB-001 gate tracks 39.94 -> 39.72 / 84.44 -> 82.13 mm, PE-PCB-004 VIN pair mismatch 1.508 -> 0.073, VOUT pair 1.758 -> 2.637 (open point 2), ISENSE 6.304 -> 5.249, control ISENSE 122.2 -> 114.5 mm; commutation, decoupling max distances and placement identical.",
+   "verdict": "PASS (open point 2 unchanged)"
   },
   {
    "item": 7,
    "check": "No new unrouted connections - DRC unconnected_items 0 and router unresolved 0 for both boards",
-   "evidence": "DRC manifests of item 2 + re-runs; routing_progress_<board>.json unresolved; pcbnew ratsnest (item 4)",
-   "result": "power: DRC unconnected 0 (repo manifest and re-run), router unresolved [] (0), ratsnest 0. control: DRC unconnected 0 (repo and re-run), unresolved [] (0), connectivity_unconnected 0 in the progress JSON, ratsnest 0.",
+   "evidence": "DRC manifests of item 2 and the re-runs; routing_progress_<board>.json; pcbnew ratsnest (item 4)",
+   "result": "power: DRC unconnected 0 (repository manifest, run_check re-run, no-refill runs), router unresolved [], ratsnest 0. control: the same, 0 / [] / 0.",
    "verdict": "PASS"
   },
   {
    "item": 8,
-   "check": "PDFs regenerated - schematic and layout PDFs newer than the V2 ones, page counts",
-   "evidence": "scratchpad/v21/val/docs_images.py / docs_images.json (pymupdf page counts, mtimes, sha256 vs releases/v2/review and releases/v2/manufacturing/*/review)",
-   "result": "review/schematic_power.pdf: 7 pages (V2 12), 2026-10-12 15:51:14 (V2 2026-10-11 13:45:42), newer True, bytes differ True; review/schematic_control.pdf: 9 pages (V2 10), 2026-10-12 15:51:21 (V2 2026-10-11 13:45:43), newer True, bytes differ True; review/pcb_layout_power.pdf: 6 pages (V2 6), 2026-10-12 17:04:02 (V2 2026-10-11 13:45:42), newer True, bytes differ True; review/pcb_layout_control.pdf: 6 pages (V2 6), 2026-10-12 16:47:57 (V2 2026-10-11 13:45:43), newer True, bytes differ True. Schematic page sizes: A3 (1191x842 pt) and A2 (1684x1191 pt) sheets (V2: A3 only) - power 7 pages = root + 6 sheets (V2 12 incl. 5 continuation sheets), control 9 = root + 8 (V2 10). Layout PDFs 6 pages each (= V2). The manufacturing/<board>/review copies have the same byte sizes as the review/ files and are also newer than V2.",
+   "check": "PDFs regenerated - schematic and layout PDFs newer than V2, page counts, label text",
+   "evidence": "rv_refresh/docs_images.json (pymupdf); rv_refresh/label_grep.json (PDF text)",
+   "result": "review/schematic_power.pdf 7 pages (V2 12), 2026-10-12 17:49:56; review/schematic_control.pdf 9 pages (V2 10), 17:50:07; review/pcb_layout_power.pdf 6 pages, 18:06:44; review/pcb_layout_control.pdf 6 pages, 18:39:19 - all newer than the V2 files (2026-10-11 13:45) and byte-different; the manufacturing/<board>/review copies have the same sizes. PDF text: 'Rev: V2.1' in all 8 PDFs, 0 occurrences of the old 'PROTOTYPE - V2 -' banner, 6-11 occurrences of the V2.1 banner per PDF.",
    "verdict": "PASS"
   },
   {
    "item": 9,
-   "check": "2D/3D review images regenerated - 6 renders + crops exist, sizes",
-   "evidence": "docs_images.json; review/pcb_{front,back,3d}_{power,control}.png; review/crops/power (20 files), review/crops/control (16 files); manufacturing/<board>/export-manifest.json",
-   "result": "6 renders present, all 1176x872 px, 68-329 kB, mtimes 2026-10-12 16:47 (control) / 17:04 (power), each newer than and byte-different from its V2 counterpart (6/6 newer, 6/6 differ). Crops: power 20 files (10 v2 + 10 v21; 5 areas x top/bottom), control 16 files (8 + 8; 4 areas x top/bottom); 2400 px long side (2400x1920 ... 2401x495), smallest 57162 bytes, none below 20 kB. Export manifests: power and control status passed, 11/11 commands, 35 artefacts each, input hashes = current board/schematic files (verified by verify_sic_buck).",
+   "check": "2D/3D review images regenerated - 6 renders + crops exist, sizes; crop framing unchanged vs commit 070e934",
+   "evidence": "rv_refresh/docs_images.json; rv_refresh/crops_compare.json (pymupdf + numpy pixel diff against git show 070e934:review/crops/**)",
+   "result": "6 renders present, 1176x872, mtimes 2026-10-12 18:06 (power) / 18:39 (control), each newer than and different from V2. Crops: 36 files = the committed set (18 *_v2_* + 18 *_v21_*), none missing or extra. *_v2_* crops byte-identical to 070e934 (18/18, pixel difference 0). *_v21_* crops: all 18 have the committed pixel sizes (2400 px long side), maximum 0.044 % differing pixels (re-poured fill edges), all newer than the committed files. Export manifests passed 11/11 commands, 35 artefacts each, input hashes current (verify_sic_buck).",
    "verdict": "PASS"
+  },
+  {
+   "item": "L",
+   "check": "Label consistency - every remaining 'PROTOTYPE - V2 -' occurrence in the generated V2.1 artefacts (title blocks, silkscreen, progress/metrics/fill/quality/netlist JSON, circuit JSON, BOM CSV, manufacturing files, PDFs)",
+   "evidence": "rv_refresh/label_grep.json (72 text files + 8 PDFs); grep of automation/ for the old literal",
+   "result": "Old banner hits: 2 - manufacturing/README.md:3, verification/engineering_checks/stored_zone_fill_check.json:3. Both are V2-stage files that no V2.1 generator rewrites (README committed in 99dfc01 and unchanged; the suffix-less stored_zone_fill_check.json is a 2026-10-11 diagnostic superseded by the per-board files). Everything regenerated carries the V2.1 banner (63 occurrences): 16 title blocks rev 'V2.1' with the banner comment, both .kicad_dru headers, NOTICE.md, routing_progress_*, layout_metrics_*, stored_zone_fill_check_<board>, routing_quality_*, netlist_check_*, export manifests, all 8 PDFs. Silkscreen: power 'AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD V2.1' + full banner; control 'AIPE SiC BUCK CONTROL V2.1' (26 characters, same length as the V2 label so the placer's text box is unchanged) + 'AI-GENERATED PROTOTYPE' / 'HUMAN REVIEW REQUIRED' as in V2. Still 'V2' by design: the title fields 'AIPE V2 SiC buck power/control board - ...' (design generation) and the V2 design-stage tools (calculate_sic_buck, compare_v1_v2, optimisation_report_sic*, generate_sic_power_floorplan) whose outputs were not regenerated.",
+   "verdict": "PASS with 2 documented leftovers (open points 4, 5)"
+  },
+  {
+   "item": "R",
+   "check": "Refresh reproducibility - does the label-only regeneration reproduce the committed V2.1 boards?",
+   "evidence": "rv_refresh/rq_rerun.json, zones_vs_committed.json (committed boards from git show 070e934), crops_compare.json; progress_refresh.md",
+   "result": "Routing: totals, by_layer and per-net tables of both boards identical to 070e934; tracks per layer and footprint positions/rotations identical (power 237, control 207 footprints). Differences to the committed boards: the silkscreen/banner text, and copper fills - power 0 zone-priority differences and <= 0.08 mm2 filler noise (KS_H/KS_L In2.Cu); control: the 20 zones are the same multiset (net, layers, outline) but 14 of them carry a different priority number (stage-2 corridor order follows GetTracks() of the reloaded board), so In2.Cu overlap ownership shifts: 5V 631.4 -> 625.3 mm2, 12V_PROT 1375.0 -> 1381.0 mm2. DRC, no-refill DRC and the stored-fill check are clean on the delivered board, so no electrical consequence was found; the ordering dependence is open point 8. The first control rebuild with the 28-character label moved C49 and changed the routing (DRC still 0/0/0, superseded manifest 20261012T101142Z-drc-88c7c9c4); the delivered board is the rebuild with the 26-character label. Unit tests recorded by the refresh (refresh/full_tests.log): Ran 340 tests, OK (skipped=2) - not re-run here.",
+   "verdict": "PASS (open point 8)"
   },
   {
    "item": "V",
    "check": "PYTHONIOENCODING=utf-8 python -m automation.scripts.verify_sic_buck",
-   "evidence": "verification/verification-summary.json (rewritten by the script; previous copy in scratchpad/v21/val/verification-summary.before.json)",
-   "result": "exit 0, status \"passed\", problems []. Both boards: erc passed (0 findings, hashes_valid, report hash checked), drc passed (0, hashes_valid), exports passed 11 commands / 35 files, netlist_check passed, layout_metrics passed (board hash matches). Side effect: the script rewrote verification-summary.json - the only differences to the previous file are the manifest paths now pointing at the V2.1 runs and report_hash_checked true for the control ERC. step_models_complete is false for both boards - identical to V2 (6 missing-3D-model lines per step.log in V2 and V2.1), pre-existing, not a regression.",
+   "evidence": "verification/verification-summary.json (rewritten identically by the run)",
+   "result": "exit 0, status passed, problems []; both boards erc/drc/exports/netlist_check/layout_metrics passed; manifests referenced are the refresh runs (c574a866 / 8b9e64d1, caa10a79 / 0a4fa5cf).",
    "verdict": "PASS"
   }
  ],
@@ -1717,50 +6287,68 @@
    "id": 1,
    "severity": "minor",
    "area": "HV spacing (item 5)",
-   "text": "KR-ISO-002 HV/DRV/DESAT/SENSE_ISO to CTRL_SELV: B.Cu per-layer minimum copper distance 12.025 -> 11.932 mm (between a PGND via and a GNDP_S track; threshold 9.0 mm, still within by 2.93 mm). The row minimum (9.486 mm on F.Cu) and disposition are unchanged; In1.Cu/In2.Cu 11.1 mm unchanged."
+   "text": "KR-ISO-002 HV/DRV/DESAT/SENSE_ISO to CTRL_SELV: B.Cu per-layer minimum copper distance 12.025 (V2) -> 11.932 mm (threshold 9.0 mm, within by 2.93 mm); row minimum 9.486 mm on F.Cu and disposition unchanged. Unchanged by the refresh."
   },
   {
    "id": 2,
    "severity": "minor",
    "area": "Sense pairs (item 6)",
-   "text": "PE-PCB-004 AMC1311 VOUT differential pair: VOUT_OUTP 64.905 -> 63.785 mm and VOUT_OUTN 63.147 -> 61.148 mm are both shorter, but the pair mismatch grew 1.758 -> 2.637 mm (measured-only row, no threshold). VIN pair mismatch 1.508 -> 0.073 mm and ISENSE pair 6.304 -> 5.249 mm improved."
+   "text": "PE-PCB-004 AMC1311 VOUT pair: both nets shorter than V2 but the mismatch grew 1.758 -> 2.637 mm (measured-only row, no threshold). VIN pair 1.508 -> 0.073 and ISENSE pair 6.304 -> 5.249 improved. Unchanged by the refresh."
   },
   {
    "id": 3,
    "severity": "info",
    "area": "Routing quality counters",
-   "text": "zigzag_runs counter increased (power 12 -> 26, control 31 -> 41) while stair runs, bends_90, direction changes, short segments and length all fell; the implementers attribute the rise to chamfer pairs of collapsed stairs - not independently verified here."
+   "text": "zigzag_runs 12 -> 26 (power) and 31 -> 41 (control) vs V2 while stair runs, 90-degree bends, direction changes, short segments and length fell; attributed by the implementers to chamfer pairs of collapsed stairs, not independently verified."
   },
   {
    "id": 4,
    "severity": "info",
-   "area": "Labels",
-   "text": "generate_sic_control_board.py still carries BANNER/REVISION \"V2\": verification/routing_progress_control.json and engineering_checks/stored_zone_fill_check_control.json say \"... - V2 - ...\" while the power files say V2.1."
+   "area": "Label (item L)",
+   "text": "examples/sic-buck-400v-200v-5kw/manufacturing/README.md still reads 'Manufacturing-file review bundle (V2, two boards)' with the V2 banner (hand-written V2-stage document, committed 99dfc01, not produced by any V2.1 generator). Should be updated or stated as a V2-stage record."
   },
   {
    "id": 5,
    "severity": "info",
-   "area": "Rule file provenance",
-   "text": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_dru references net class PGND_LV (6 conditions) which the control .kicad_pro does not define; the committed HEAD file and releases/v2 do not contain it (generator template shared with the power board since commit ea8e874). Harmless for DRC (never matches), but it will appear as a diff in the PR and should be stated in the known-issues register."
+   "area": "Label / evidence hygiene (item L)",
+   "text": "verification/engineering_checks/stored_zone_fill_check.json (no board suffix, generated 2026-10-11, V2 banner) is a stale diagnostic superseded by stored_zone_fill_check_power/control.json; remove or regenerate."
   },
   {
    "id": 6,
    "severity": "info",
-   "area": "Pre-existing exceptions (unchanged from V2)",
-   "text": "Power: PE-PCB-002 Q2 source pad to nearest PGND HF capacitor 41.165 mm (<= 15); PE-PCB-006 VIN_RAW / VOUT_L 0 stitching vias (>= 24); KR-ISO-002 VIN<->PGND and VOUT<->PGND F.Cu 1.95 mm (outer >= 3.0); KR-TH-002 HS1 HV copper 4.955 / 0.0 mm (>= 5.0). Control: PE-PCB-008 U5 bypass max 5.381 mm (<= 5.0). All identical values and dispositions in V2 and V2.1 - placement/pour items outside the routing scope; they remain documented, not fixed."
+   "area": "Label (by design)",
+   "text": "Title fields 'AIPE V2 SiC buck power/control board - ...' in both root sheets name the design generation and stay V2 (rev is V2.1); the V2 design-stage tools calculate_sic_buck.py, compare_v1_v2.py, optimisation_report_sic*.py and generate_sic_power_floorplan.py keep the V2 banner literal because their outputs were not regenerated."
   },
   {
    "id": 7,
    "severity": "info",
-   "area": "Remaining sharp corners",
-   "text": "90-degree bends remaining: power 1121 (leg_too_short 614, pad_exit 252, unexplained 141, pad_link 71, clearance 43), control 1233 (leg_too_short 723, unexplained 341, pad_exit 63, pad_link 52, clearance 51, pre_routed 3). The \"unexplained\" buckets (141 / 341) have no exception record from the beautify stage."
+   "area": "Rule file provenance (item 2)",
+   "text": "kicad/control_board/AIPE_SiC_Buck_Control.kicad_dru references net class PGND_LV (6 conditions) which the control .kicad_pro does not define; releases/v2 does not contain it. Only additional conditions (never matching) - nothing relaxed; pre-existing, still worth a known-issues entry."
   },
   {
    "id": 8,
    "severity": "info",
+   "area": "Generator determinism (item R)",
+   "text": "generate_sic_control_board: the stage-2 corridor zones get priority CORRIDOR_PRIORITY + index in GetTracks() order of the reloaded board, so a rebuild from identical inputs yields 14 different zone priorities and shifted In2.Cu overlap ownership (5V -6.2 mm2, 12V_PROT +6.0 mm2) without any routing change. Suggested fix (not applied): sort the corridors by (net, x, y) before assigning priorities."
+  },
+  {
+   "id": 9,
+   "severity": "info",
    "area": "Evidence hygiene",
-   "text": "verification/drc/20261012T084719Z-drc-93962d5d (power 8-direction attempt A, FAILED 1 violation / 2 unconnected, board 2c885298...) and 20261012T081528Z-drc-6094e0f4 (control run 10, passed) remain in verification/drc as history; they are not the latest manifest for their board, so verify_sic_buck ignores them. Running verify_sic_buck (as requested) rewrote verification/verification-summary.json."
+   "text": "Superseded manifests kept as history: 20261012T101142Z-drc-88c7c9c4 (first refresh control build, C49 moved, passed), 20261012T090308Z-drc-8fd50803 / 20261012T084327Z-drc-7f07f983 (pre-refresh boards), 20261012T084719Z-drc-93962d5d (FAILED power attempt A), 20261012T081528Z-drc-6094e0f4, and the 20261012T0658/0751 ERC runs; the refresh manifests are untracked until committed. verify_sic_buck (run as required) rewrote verification-summary.json with identical content."
+  },
+  {
+   "id": 10,
+   "severity": "info",
+   "area": "Pre-existing exceptions (unchanged from V2)",
+   "text": "Power: PE-PCB-002 Q2 source pad to nearest PGND HF capacitor 41.165 mm (<= 15); PE-PCB-006 VIN_RAW / VOUT_L 0 stitching vias (>= 24); KR-ISO-002 VIN<->PGND and VOUT<->PGND F.Cu 1.95 mm (outer >= 3.0); KR-TH-002 HS1 HV copper 4.955 / 0.0 mm (>= 5.0). Control: PE-PCB-008 U5 bypass max 5.381 mm (<= 5.0). Identical values and dispositions in V2, pre-refresh V2.1 and the refreshed boards."
+  },
+  {
+   "id": 11,
+   "severity": "info",
+   "area": "Remaining sharp corners",
+   "text": "90-degree bends: power 1121, control 1233 (identical to the pre-refresh boards)."
   }
  ],
- "overall": "All nine TASK 7 checks verified independently with my own commands; no electrical regression found (no net longer, no net with more vias or a smaller width, no layout rule row worse); two minor measured notes (#1, #2) and six informational open points listed."
+ "overall": "All nine TASK 7 checks, the label-consistency check and the refresh-reproducibility check verified with my own commands on the refreshed working tree: ERC/DRC 0 with current hashes (repository manifests and re-runs on copies), netlists exact vs V2, connectivity and stored fills clean, no layout rule row worse than V2, routing identical to the committed V2.1 boards and never worse than V2 per net, documents and images regenerated with the V2.1 label. No electrical regression found. Two minor measured notes (1, 2) unchanged from the pre-refresh validation; two label leftovers in V2-stage files (4, 5) and the control generator zone-priority ordering dependence (8) are the new open points."
 }

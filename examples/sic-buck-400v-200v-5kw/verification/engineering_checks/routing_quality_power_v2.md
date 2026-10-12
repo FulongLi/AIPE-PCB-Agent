@@ -1,7 +1,7 @@
 # Routing quality
 
 Status: measured - human review required
-Board: `examples\sic-buck-400v-200v-5kw\releases\v2\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 b1bb5698194b, pcbnew 10.0.7)
+Board: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\releases\v2\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 b1bb5698194b, pcbnew 10.0.7)
 Parameters: {"short_mm": 0.5, "l_short_mm": 1.0, "straight_tol_deg": 5.0, "tangent_tol_deg": 1.0, "min_turn_deg": 40.0, "quantum_nm": 1000, "efficiency_min_span_mm": 2.0}
 
 | scope | segments | arcs | vias | length mm | bends 90 | bends 45 | other | stair runs | zigzag runs | short segs | bends/100 mm | efficiency |

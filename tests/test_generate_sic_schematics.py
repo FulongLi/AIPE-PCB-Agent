@@ -179,7 +179,7 @@ class NetClassTests(unittest.TestCase):
                 spec, assignment = g.build_spec(board, self.parts[board], Path('x/kicad'), Path('x/design'), exceptions=[])
                 coerced = ps.coerce_spec(spec)
                 self.assertEqual(coerced.name, g.project_name(board))
-                self.assertEqual(coerced.revision, 'V2.1')
+                self.assertEqual(coerced.revision, common.GENERATION)
                 self.assertEqual(coerced.comment, common.BANNER)
                 self.assertIn(common.BASIS, coerced.title)
                 self.assertEqual(coerced.pages, {str(k): str(v) for k, v in g.board_model(board).PAGES.items()})
@@ -235,6 +235,36 @@ class NetClassTests(unittest.TestCase):
 
 
 @unittest.skipUnless(kicad_cli() and library_installed(), 'KiCad 10 with its footprint library is required')
+class GenerationLabelTests(unittest.TestCase):
+    """One generation label (sic_buck_common.GENERATION) for everything the V2.1 generators write."""
+
+    def test_banner_is_derived_from_the_generation_label(self):
+        self.assertEqual(common.GENERATION, "V2.1")
+        self.assertEqual(common.BANNER, f"AI-GENERATED ENGINEERING PROTOTYPE - {common.GENERATION} - HUMAN REVIEW REQUIRED")
+        self.assertEqual(g.REVISION, common.GENERATION)
+        self.assertEqual(power_model.COMMENT, common.BANNER)
+        for text in g.NOTICE_TEXT.values():
+            self.assertTrue(text.endswith(common.BANNER + "."), text[-90:])
+        self.assertTrue(any(common.BANNER in line for line in g.header_lines("power", {}, [])))
+
+    def test_board_generators_share_the_label(self):
+        from automation.kicad_tools import generate_sic_control_board as cb
+        from automation.kicad_tools import generate_sic_power_board as pb
+        for module in (cb, pb):
+            self.assertEqual(module.REVISION, common.GENERATION, module.__name__)
+            self.assertEqual(module.BANNER, common.BANNER, module.__name__)
+        silk = [item[0] for item in pb.SILKSCREEN]
+        self.assertIn(common.BANNER, silk)
+        self.assertIn(f"AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD {common.GENERATION}", silk)
+        for cid in ("A", "B"):
+            candidate = json.loads(cb.candidate_path(cid).read_text(encoding="utf-8"))
+            label = f"AIPE SiC BUCK CONTROL {common.GENERATION}"
+            self.assertIn(label, [item["text"] for item in candidate["silkscreen"]], cid)
+            # the placer keeps auto-placed parts off cb.text_box(label), which depends on the character count only: the label must
+            # keep the 26 characters of the V2 label "AIPE SiC BUCK CONTROL - V2" or C49 moves and the control routing changes
+            self.assertEqual(len(label), len("AIPE SiC BUCK CONTROL - V2"))
+
+
 class GenerationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

@@ -1,6 +1,6 @@
-"""Place, pour, route and check the V2 SiC buck POWER board (AIPE_SiC_Buck_Power) with pcbnew and the grid router.
+"""Place, pour, route and check the SiC buck POWER board (AIPE_SiC_Buck_Power; V2 design, V2.1 generation) with pcbnew and the grid router.
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 Follows automation.kicad_tools.v2_pipeline_smoke.board_stage() and generate_sic_control_board.py: kicad-cli XML
 netlist of the generated schematic, a pcbnew BOARD with the project footprint libraries and the symbol paths of
@@ -52,6 +52,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from automation.kicad_tools import grid_router as gr  # noqa: E402
+from automation.kicad_tools import sic_buck_common as common  # noqa: E402
 from automation.setup.detect_kicad import find_kicad_cli, read_config  # noqa: E402
 
 EXAMPLE = ROOT / 'examples/sic-buck-400v-200v-5kw'
@@ -65,8 +66,8 @@ CHECKS_DIR = VERIFICATION_DIR / 'engineering_checks'
 DRC_DIR = VERIFICATION_DIR / 'drc'
 NAME = 'AIPE_SiC_Buck_Power'
 TITLE = 'AIPE SiC buck 400 V -> 200 V / 5 kW - power board (SiC half bridge, drivers, isolators, SELV strip)'
-BANNER = 'AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED'
-REVISION = 'V2.1'
+BANNER = common.BANNER  # generation label shared with the schematics, the models and the evidence writers
+REVISION = common.GENERATION
 WIDTH, HEIGHT = 240.0, 180.0
 COPPER_LAYERS = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 ROUTING_LAYERS = ['F.Cu', 'In2.Cu', 'B.Cu']  # In2.Cu only inside the driver islands (zone keep-outs elsewhere); In1.Cu is never routed
@@ -356,8 +357,8 @@ ASSIGN_BY_REF = {
     **{r: 'selv_left' for r in ('R84', 'Q3', 'R85', 'R86', 'D7', 'C90', 'C91', 'TP3', 'TP4', 'TP5')},
 }
 SILKSCREEN = [
-    ('AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD V2', (120.0, 121.2), 1.0),
-    ('AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED', (120.0, 118.9), 0.9),
+    (f'AIPE SiC BUCK 400V -> 200V / 5kW - POWER BOARD {REVISION}', (120.0, 121.2), 1.0),
+    (BANNER, (120.0, 118.9), 0.9),
     ('DANGER - 400 V DC - HAZARDOUS - DC LINK LIVE: DISCHARGE 60 s AFTER SWITCH-OFF', (99.0, 14.0), 1.0),
     ('ISO BARRIER 10 mm - NO COPPER', (30.0, 145.0), 0.9), ('HV SIDE', (228.0, 136.0), 1.0), ('SELV SIDE', (228.0, 153.5), 1.0),
     ('VIN+', (9.0, 103.0), 1.0), ('RELAY', (9.0, 138.0), 1.0), ('PGND', (23.0, 103.0), 1.0), ('RELAY', (23.0, 138.0), 1.0), ('VOUT+', (162.2, 42.0), 1.0),

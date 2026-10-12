@@ -1,7 +1,7 @@
 # Routing quality
 
 Status: measured - human review required
-Board: `examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 dcd148fbdf65, pcbnew 10.0.7)
+Board: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 ae4ca86c438f, pcbnew 10.0.7)
 Parameters: {"short_mm": 0.5, "l_short_mm": 1.0, "straight_tol_deg": 5.0, "tangent_tol_deg": 1.0, "min_turn_deg": 40.0, "quantum_nm": 1000, "efficiency_min_span_mm": 2.0}
 
 | scope | segments | arcs | vias | length mm | bends 90 | bends 45 | other | stair runs | zigzag runs | short segs | bends/100 mm | efficiency |
@@ -52,6 +52,33 @@ count 145, joints 287, discontinuous joints 0, radius mm {'min': 0.3044, 'median
 | FAULT_N | 33 | 0 | 3 | 32.5 | 24 | 4 | 1 | 3 | 1 | 20 | 89.24 | 0.8644 |
 | VDD_L | 61 | 0 | 6 | 78.8 | 23 | 12 | 2 | 3 | 0 | 21 | 46.97 | 0.833 |
 
-DRC: passed findings {'violations': 0, 'unconnected_items': 0, 'schematic_parity': 0} same board bytes: True (examples\sic-buck-400v-200v-5kw\verification\drc\20261012T090308Z-drc-8fd50803\run.json)
+DRC: passed findings {'violations': 0, 'unconnected_items': 0, 'schematic_parity': 0} same board bytes: True (D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\drc\20261012T100423Z-drc-8b9e64d1\run.json)
+
+Baseline: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\routing_quality_power_v2.json`
+
+| metric | baseline | this | delta |
+|---|---|---|---|
+| segments | 4755 | 2991 | -1764 |
+| arcs | 0 | 145 | 145 |
+| vias | 606 | 606 | 0 |
+| length_mm | 5744.589 | 5545.646 | -198.943 |
+| arc_length_mm | 0 | 56.422 | 56.422 |
+| joints | 3727 | 2107 | -1620 |
+| bends_90 | 3609 | 1121 | -2488 |
+| bends_45 | 6 | 583 | 577 |
+| bends_other | 109 | 110 | 1 |
+| direction_changes | 3724 | 1814 | -1910 |
+| stair_runs | 382 | 124 | -258 |
+| zigzag_runs | 12 | 26 | 14 |
+| short_run_segments | 2721 | 835 | -1886 |
+| short_segments | 2914 | 1225 | -1689 |
+| short_segment_runs | 448 | 165 | -283 |
+| arc_joints | 0 | 287 | 287 |
+| arc_joints_discontinuous | 0 | 0 | 0 |
+| chains | 1028 | 1029 | 1 |
+| degree2_joints | 3972 | 2065 | -1907 |
+| degree2_bends_90 | 3739 | 1251 | -2488 |
+| bends_per_100mm | 64.83 | 32.71 | -32.12 |
+| efficiency | 0.7759 | 0.8061 | 0.0302 |
 
 Notes: geometry only: no inductance, EMI or current-capacity claim; bends are measured at joints of two straight items; arc joints are judged by tangency; chain anchors (not counted as joints): via centres and pad hits of the same net, junctions, width changes; degree2_joints / degree2_bends_90 count every node where exactly two straight items of one net and layer meet, anchors included (the degree-2 probe figure); attribution 'pre_routed' needs --plan (pre_routed tracks); 'pad_link' = an item ending inside a pad of its net; everything else is 'router'

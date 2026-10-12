@@ -1,4 +1,4 @@
-"""Shared contract for the V2 SiC buck electrical models (power board and control board).
+"""Shared contract for the SiC buck electrical models (power board and control board; V2 design, V2.1 generation).
 
 This module is the single place where the two board models agree on names: project
 basenames, the mezzanine pin-to-net assignment taken from design/design_decisions.json,
@@ -22,7 +22,10 @@ POWER_NAME = "AIPE_SiC_Buck_Power"
 CONTROL_NAME = "AIPE_SiC_Buck_Control"
 POWER_DIR = EXAMPLE / "kicad/power_board"
 CONTROL_DIR = EXAMPLE / "kicad/control_board"
-BANNER = "AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED"
+# Generation label of everything the current generators write (title blocks, silkscreen, models, page notes, evidence
+# writers). The frozen V2 generation lives in releases/v2 and keeps its own label; V1 tooling has its own string.
+GENERATION = "V2.1"
+BANNER = f"AI-GENERATED ENGINEERING PROTOTYPE - {GENERATION} - HUMAN REVIEW REQUIRED"
 BASIS = "400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine"
 
 

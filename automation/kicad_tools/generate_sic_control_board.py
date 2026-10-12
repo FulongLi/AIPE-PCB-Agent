@@ -1,6 +1,6 @@
-"""Place, route and check the V2 SiC buck CONTROL board (AIPE_SiC_Buck_Control) with pcbnew and the grid router.
+"""Place, route and check the SiC buck CONTROL board (AIPE_SiC_Buck_Control; V2 design, V2.1 generation) with pcbnew and the grid router.
 
-AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED
+AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED (label: sic_buck_common.GENERATION)
 
 Follows automation.kicad_tools.v2_pipeline_smoke.board_stage(): kicad-cli XML netlist of the generated
 schematic, a pcbnew BOARD with the project footprint libraries and the symbol paths of
@@ -50,6 +50,7 @@ if str(ROOT) not in sys.path:  # re-executed by KiCad's Python with this file as
     sys.path.insert(0, str(ROOT))
 
 from automation.kicad_tools import grid_router as gr  # noqa: E402  (numpy only at import time)
+from automation.kicad_tools import sic_buck_common as common  # noqa: E402
 from automation.setup.detect_kicad import find_kicad_cli, read_config  # noqa: E402
 
 EXAMPLE = ROOT / 'examples/sic-buck-400v-200v-5kw'
@@ -65,8 +66,8 @@ CHECKS_DIR = VERIFICATION_DIR / 'engineering_checks'
 DRC_DIR = VERIFICATION_DIR / 'drc'
 NAME = 'AIPE_SiC_Buck_Control'
 TITLE = 'AIPE SiC buck 400 V -> 200 V / 5 kW - TMS320F28335 control board (SELV mezzanine)'
-BANNER = 'AI-GENERATED ENGINEERING PROTOTYPE - V2 - HUMAN REVIEW REQUIRED'
-REVISION = 'V2'
+BANNER = common.BANNER  # generation label shared with the schematics, the models and the evidence writers
+REVISION = common.GENERATION
 WIDTH, HEIGHT = 120.0, 80.0
 COPPER_LAYERS = ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']
 ROUTING_LAYERS = ['F.Cu', 'B.Cu']  # In1.Cu is the unbroken GND_CTRL plane, In2.Cu carries only rail islands

@@ -2,8 +2,8 @@
 
 Status: measured - human review required
 
-Before: `examples\sic-buck-400v-200v-5kw\releases\v2\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 b1bb5698194b)
-After: `examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 dcd148fbdf65)
+Before: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\releases\v2\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 b1bb5698194b)
+After: `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 ae4ca86c438f)
 
 | metric | before | after | delta | ratio |
 |---|---|---|---|---|

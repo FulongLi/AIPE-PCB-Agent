@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck TMS320F28335 control board (AIPE_SiC_Buck_Control) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-12T08:43:26.921141+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 1.016 s).
+Status: **measured-human-review-required**. Generated 2026-10-12T10:37:54.506561+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 1.0 s).
 
-Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `4bbf1ee8e3092234...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
+Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\control_board\AIPE_SiC_Buck_Control.kicad_pcb` (sha256 `a3f3604a516c6778...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_control.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_control.json`.
 
 ## Board
 
@@ -33,7 +33,7 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-007 | Separate control and switching structures | control section (45 parts) to power stage (32 parts) bounding-box distance (mm) | 26.180 | n/a | measured - human review required |  |
 | PE-PCB-007 | Separate control and switching structures | GND_CTRL zone area (mm2) and island count per layer | In1.Cu=area=8376.100; islands=1 | area >= 8000.0 mm2 and required probe points covered | within spec threshold - human review required | V1 ground-plane extent guard generalised |
 | PE-PCB-007 | Separate control and switching structures | board area (mm2), footprints per dm2, courtyard fraction front/back | area=9600.000; per_dm2=215.600; courtyard=front=0.300; back=0.048 | area <= 9600 mm2 | within spec threshold - human review required | HV bbox fraction n/a; power density n/a W/dm2, n/a W/L |
-| PE-PCB-008 | Place decoupling adjacent to supply pins | U5 supply pads ['4', '9', '15', '23', '29', '31', '34', '45', '59', '61', '71', '84', '93', '101', '107', '109', '117', '121', '126', '139', '143', '146', '154', '159', '167', '170'] to nearest decoupling capacitor pad, maximum (mm) | 5.381 | <= 5.0 mm | exceeds spec threshold - human review required | 4->C17.1 3.97; 9->C18.1 4.55; 15->C19.1 3.91; 23->C20.1 3.91; 29->C21.1 3.91; 31->C22.1 4.10; 34->C23.1 4.55; 45->C24.1 4.55; 59->C25.1 4.68; 61->C26.1 4.38; 71->C27.1 4.55; 84->C28.1 4.55; 93->C29.1 5.38; 101->C30.1 3.90; 107->C31.1 5.38; 109->C32.1 3.90; 117->C33.1 3.90; 121->C34.1 4.55; 126->C35.1 3.90; 139->C35.1 5.03; 143->C37.1 4.79; 146->C36.1 3.90; 154->C39.1 3.93; 159->C40.1 4.55; 167->C41.1 4.38; 170->C42.1 4.55 |
+| PE-PCB-008 | Place decoupling adjacent to supply pins | U5 supply pads ['4', '9', '15', '23', '29', '31', '34', '45', '59', '61', '71', '84', '93', '101', '107', '109', '117', '121', '126', '139', '143', '146', '154', '159', '167', '170'] to nearest decoupling capacitor pad, maximum (mm) | 5.381 | <= 5.0 mm | exceeds spec threshold - human review required | 4->C17.1 3.97; 9->C18.1 4.55; 15->C19.1 3.91; 23->C20.1 3.91; 29->C21.1 3.91; 31->C21.1 4.10; 34->C23.1 4.55; 45->C24.1 4.55; 59->C25.1 4.68; 61->C26.1 4.38; 71->C27.1 4.55; 84->C28.1 4.55; 93->C29.1 5.38; 101->C30.1 3.90; 107->C31.1 5.38; 109->C32.1 3.90; 117->C33.1 3.90; 121->C34.1 4.55; 126->C35.1 3.90; 139->C35.1 5.03; 143->C37.1 4.79; 146->C36.1 3.90; 154->C39.1 3.93; 159->C40.1 4.55; 167->C41.1 4.38; 170->C42.1 4.55 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U1 supply pads ['1', '2', '15', '16'] to nearest decoupling capacitor pad, maximum (mm) | 22.763 | n/a | measured - human review required | 1->C1.1 3.73; 2->C1.1 3.78; 15->C5.1 22.36; 16->C5.1 22.76 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U2 supply pads ['3'] to nearest decoupling capacitor pad, maximum (mm) | 2.038 | n/a | measured - human review required | 3->C5.1 2.04 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U3 supply pads ['5', '6', '11', '12', '17', '18', '23', '24'] to nearest decoupling capacitor pad, maximum (mm) | 8.025 | n/a | measured - human review required | 5->C13.1 4.64; 6->C13.1 4.70; 11->C10.1 5.73; 12->C10.1 5.65; 17->C37.1 5.90; 18->C37.1 6.54; 23->C43.1 8.03; 24->C43.1 7.38 |
@@ -67,7 +67,7 @@ Rows: 31 - within spec threshold 2, exceeding 2, measured without threshold 17, 
 | U5 | 15 | 1V9 | C19.1 | 3.908 | yes |
 | U5 | 23 | 1V9 | C20.1 | 3.908 | yes |
 | U5 | 29 | 1V9 | C21.1 | 3.908 | yes |
-| U5 | 31 | 1V9 | C22.1 | 4.095 | yes |
+| U5 | 31 | 1V9 | C21.1 | 4.095 | yes |
 | U5 | 34 | 3V3 | C23.1 | 4.550 | yes |
 | U5 | 45 | 3V3 | C24.1 | 4.550 | yes |
 | U5 | 59 | 1V9 | C25.1 | 4.675 | yes |
@@ -154,12 +154,12 @@ DSP bypass capacitors: 26, maximum pad distance 5.381 mm.
 | Net | Class | Track (mm) | Tracks | Vias | Pads | Layers | Zone area (mm2) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 12V_IN | CTRL_PWR | 33.9 | 12 | 0 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 12V_PROT | CTRL_PWR | 17.9 | 32 | 11 | 13 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=1375.000 |
+| 12V_PROT | CTRL_PWR | 17.9 | 32 | 11 | 13 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=1381.000 |
 | 1V9 | CTRL_SELV | 50.0 | 61 | 37 | 37 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=797.300 |
 | 1V9_BULK | CTRL_SELV | 14.0 | 6 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 3V3 | CTRL_SELV | 121.4 | 195 | 84 | 89 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=5222.400 |
 | 3V3_BULK | CTRL_SELV | 4.5 | 5 | 2 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 5V | CTRL_PWR | 23.7 | 43 | 15 | 16 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=631.400 |
+| 5V | CTRL_PWR | 23.7 | 43 | 15 | 16 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=625.300 |
 | 5V_BST | CTRL_SELV | 2.5 | 1 | 0 | 2 | F.Cu |  |
 | 5V_EN | CTRL_SELV | 22.5 | 18 | 3 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 5V_FB | CTRL_SELV | 48.1 | 28 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
