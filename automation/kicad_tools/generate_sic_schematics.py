@@ -206,7 +206,7 @@ def project_name(board: str) -> str:
 
 
 def project_title(board: str) -> str:
-    return f"AIPE V2 SiC buck {board} board - {common.BASIS}"
+    return f"SiC buck 400V / 200V / 5kW - {board} board"
 
 
 def kicad_dir(board: str) -> Path:
@@ -677,6 +677,24 @@ def compare_pad_maps(a: dict, b: dict) -> dict:
                 extra_names=sorted(set(b.values()) - set(a.values()))[:50], missing_names=sorted(set(a.values()) - set(b.values()))[:50])
 
 
+def approved_release_map(board: str, baseline: dict, refs: set) -> tuple[dict, set]:
+    """Explicit V2.2 ECO allowance; never derive permission from the current model itself."""
+    expected, expected_refs = dict(baseline), set(refs)
+    if common.GENERATION == "V2.2":
+        if board == "power":
+            if expected.get(("R82", "1")) != "3V3":
+                raise ValueError("Unexpected release R82 connectivity")
+            expected[("R82", "1")] = "REF2V5_PB"
+        elif board == "control":
+            for ref in ("C76", "C77", "C78", "C79"):
+                if ref in expected_refs:
+                    raise ValueError(f"Unexpected release component {ref}")
+                expected_refs.add(ref)
+                expected[(ref, "1")] = "3V3"
+                expected[(ref, "2")] = "GND_CTRL"
+    return expected, expected_refs
+
+
 def verify_wired(board: str, kicad_target: Path | None = None, out_dir: Path | None = None, cli=None,
                  release: Path | None = None) -> dict:
     """V2.1 acceptance gates of a generated project; returns a dict with `passed` and one entry per gate.
@@ -737,7 +755,12 @@ def verify_wired(board: str, kicad_target: Path | None = None, out_dir: Path | N
     gates["netlist_vs_model"] = dict(passed=vs_model["exact"] and vs_model["net_names_equal"] and not duplicates
                                      and refs == {p["ref"] for p in model_parts}, export_exit=export["exit_code"],
                                      refs=len(refs), duplicates=duplicates[:10], **vs_model)
-    gates["netlist_vs_v2"] = dict(passed=vs_v2["exact"] and vs_v2["net_names_equal"] and refs == v2_refs, source=str(v2_xml), **vs_v2)
+    expected_release, expected_refs = approved_release_map(board, v2_map, v2_refs)
+    vs_eco = compare_pad_maps(expected_release, drawn)
+    gates["release_connectivity"] = dict(passed=vs_eco["exact"] and vs_eco["net_names_equal"] and refs == expected_refs,
+                                          source=str(v2_xml), revision=common.GENERATION, raw_difference=vs_v2,
+                                          allowed_changes="V2.2: power R82.1 3V3 -> REF2V5_PB; control C76-C79 added across 3V3/GND_CTRL",
+                                          **vs_eco)
     from automation.kicad_tools import schematic_metrics as sm
     presentation = presentation_for(board, "wired") or {}
     min_fill = float(presentation.get("min_fill", 0.25))
@@ -816,7 +839,8 @@ def write_readability_report(board: str, kicad_target: Path | None = None, relea
     out_dir = Path(out_dir or common.EXAMPLE / "verification/engineering_checks")
     out_dir.mkdir(parents=True, exist_ok=True)
     mapping = Path(mapping or DESIGN_DIR / f"schematic_mapping_{board}.json")
-    result = sm.compare_projects(release, kicad_target, before_root=project_name(board), after_root=project_name(board), mapping=mapping)
+    result = sm.compare_projects(release, kicad_target, before_root=project_name(board), after_root=project_name(board),
+                                 mapping=mapping, labels=('V2', REVISION))
     result["board"] = board
     result["before"]["label"] = "V2 frozen release (releases/v2)"
     result["after"]["label"] = f"{REVISION} wired generation"
@@ -856,7 +880,7 @@ def main(argv=None) -> int:
     parser.add_argument("--pdf", action="store_true", help="export review/schematic_<board>.pdf")
     parser.add_argument("--bom", action="store_true", help="write components/bom.csv from the two board BOMs")
     parser.add_argument("--style", choices=STYLES, default=None, help=f"drawing style (default {SCHEMATIC_STYLE})")
-    parser.add_argument("--gates", action="store_true", help="run the V2.1 gates (DRU identity, net_settings, ERC 0, netlist vs model and V2)")
+    parser.add_argument("--gates", action="store_true", help="check drawing independence, ERC, model connectivity and explicit release ECO allowance")
     parser.add_argument("--readability", action="store_true",
                         help="write verification/engineering_checks/schematic_readability_<board>.{json,md} (V2 release vs this generation)")
     args = parser.parse_args(argv)

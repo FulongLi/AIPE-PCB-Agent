@@ -1,19 +1,19 @@
-# Schematic readability - power board (V2 -> V2.1)
+# Schematic readability - power board (V2 -> V2.2)
 
 `V2`: D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\releases\v2\kicad\power_board  
-`V2.1`: D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board
+`V2.2`: D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board
 
 ## Totals (all sheets, root included)
 
-| metric | V2 | V2.1 | delta |
+| metric | V2 | V2.2 | delta |
 |---|---:|---:|---:|
 | sheets | 12 | 7 | -5 |
 | continuation_sheets | 5 | 0 | -5 |
 | papers | A3 | A2 / A3 | - |
 | symbols | 237 | 237 | 0 |
 | power_symbols | 15 | 230 | 215 |
-| wires | 648 | 1231 | 583 |
-| wire_length_mm | 1645.9 | 7708.9 | 6063.0 |
+| wires | 648 | 1232 | 584 |
+| wire_length_mm | 1645.9 | 7716.5 | 6070.6 |
 | junctions | 0 | 302 | 302 |
 | four_way_junctions | 0 | 1 | 1 |
 | global_labels | 663 | 126 | -537 |
@@ -36,9 +36,9 @@
 
 ## Per page
 
-| page | V2 sheets / paper / fill | V2.1 paper / fill | wires V2 -> V2.1 | stub labels | hier labels | junctions | power symbols | crossings | text overlaps | isolated | wired pin share |
+| page | V2 sheets / paper / fill | V2.2 paper / fill | wires V2 -> V2.2 | stub labels | hier labels | junctions | power symbols | crossings | text overlaps | isolated | wired pin share |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 01_power_stage | 2 / A3 / A3 / 0.804 / 0.136 | A3 / 0.807 | 104 -> 180 | 104 -> 0 | 0 -> 11 | 0 -> 44 | 0 -> 40 | 0 -> 1 | 0 -> 1 | 0 -> 0 | 0.000 -> 0.923 |
+| 01_power_stage | 2 / A3 / A3 / 0.804 / 0.136 | A2 / 0.557 | 104 -> 181 | 104 -> 0 | 0 -> 11 | 0 -> 44 | 0 -> 40 | 0 -> 1 | 0 -> 1 | 0 -> 0 | 0.000 -> 0.923 |
 | 02_gate_driver_hs | 2 / A3 / A3 / 0.639 / 0.398 | A2 / 0.538 | 137 -> 250 | 137 -> 2 | 0 -> 9 | 0 -> 70 | 0 -> 49 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0.000 -> 0.934 |
 | 03_gate_driver_ls | 2 / A3 / A3 / 0.639 / 0.398 | A2 / 0.535 | 137 -> 250 | 137 -> 2 | 0 -> 10 | 0 -> 70 | 0 -> 48 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0.000 -> 0.927 |
 | 04_sensing_island | 2 / A3 / A3 / 0.783 / 0.032 | A2 / 0.406 | 120 -> 218 | 120 -> 0 | 0 -> 7 | 0 -> 63 | 0 -> 47 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0.000 -> 0.950 |
@@ -46,22 +46,22 @@
 | 06_mechanical | 1 / A3 / 0.333 | A3 / 0.221 | 11 -> 11 | 11 -> 0 | 0 -> 8 | 0 -> 0 | 0 -> 3 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0.000 -> 0.273 |
 | root | 1 / A3 / 0.508 | A3 / 0.366 | 0 -> 64 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0 -> 0 | 0 -> 0 | - -> - |
 
-## Planner counts (V2.1)
+## Planner counts (V2.2)
 
 | sheet | paper | fill | label fallbacks | loop tags | tag pairs | layout variant |
 |---|---|---:|---:|---:|---:|---|
-| 01_power_stage | A3 | 0.559 | 0 | 0 | 2 | beside |
-| 02_gate_driver_hs | A2 | 0.458 | 0 | 0 | 1 | below |
-| 03_gate_driver_ls | A2 | 0.458 | 0 | 0 | 1 | below |
-| 04_sensing_island | A2 | 0.399 | 0 | 0 | 0 | below |
-| 05_selv_strip | A2 | 0.335 | 1 | 0 | 4 | auto |
-| 06_mechanical | A3 | 0.197 | 0 | 0 | 0 | auto |
+| 01_power_stage | A2 | 0.306 | 0 | 0 | 2 | auto |
+| 02_gate_driver_hs | A2 | 0.483 | 0 | 0 | 1 | below |
+| 03_gate_driver_ls | A2 | 0.483 | 0 | 0 | 1 | below |
+| 04_sensing_island | A2 | 0.420 | 0 | 0 | 0 | below |
+| 05_selv_strip | A2 | 0.353 | 1 | 0 | 4 | auto |
+| 06_mechanical | A3 | 0.213 | 0 | 0 | 0 | auto |
 | total | | | 1 | 0 | 8 | |
 
 Name tags (single global labels naming local nets): 62; root sheet: {'paper': 'A3', 'sheet_pins': 64, 'global_anchors': 64}.
 
 Label fallbacks (no wire path found, drawn as a tag pair):
-- 05_selv_strip: VIN_AMP_N at [[34.29, 167.64], [63.5, 177.8]]
+- 05_selv_strip: VIN_AMP_N at [[48.26, 167.64], [77.47, 177.8]]
 
 ## single_global_label / four_way_junction dependency
 

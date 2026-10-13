@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "status": "measured-human-review-required",
-  "generated_utc": "2026-10-12T11:45:12.656283+00:00",
+  "generated_utc": "2026-10-13T03:12:47.098303+00:00",
   "checker": "automation/verification/check_sic_layout.py",
   "spec": {
-    "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_spec_control.json",
+    "file": "examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_spec_control.json",
     "sha256": "4feb54edf284feb963f4694041b62d6ac28dd9c58ae3dc9c883944fc8b6217e2",
     "board": "control",
     "title": "AIPE SiC buck TMS320F28335 control board (AIPE_SiC_Buck_Control) - layout metrics spec"
   },
-  "model_file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\circuit_control.json",
+  "model_file": "examples\\sic-buck-400v-200v-5kw\\design\\circuit_control.json",
   "distance_backend": "numpy",
-  "runtime_s": 1.015,
+  "runtime_s": 0.562,
   "board": {
-    "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
-    "sha256": "52ca6c234357948a1119db0082ffd5ddcb706a852d9778787f74450ea1183428",
-    "title": "AIPE SiC buck 400 V -> 200 V / 5 kW - TMS320F28335 control board (SELV mezzanine)",
+    "file": "examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
+    "sha256": "6a1d9dbc5183a0fd79fc0c7b2937a4348b7f116fb12dd0ee7fb89a8b30cc94ef",
+    "title": "SiC buck 400V / 200V / 5kW - control board",
     "pcbnew_version": "10.0.7",
     "outline_mm": [
       120.0,
@@ -94,9 +94,9 @@
         "thickness_um": 35.0
       }
     ],
-    "footprints": 207,
-    "tracks": 4523,
-    "vias": 798,
+    "footprints": 211,
+    "tracks": 4548,
+    "vias": 805,
     "zones": 20,
     "rule_areas": 0,
     "unfilled_zones": [],
@@ -182,10 +182,10 @@
     },
     "3V3": {
       "cls": "CTRL_SELV",
-      "track_mm": 121.3574,
-      "tracks": 195,
-      "vias": 84,
-      "pads": 89,
+      "track_mm": 131.5536,
+      "tracks": 212,
+      "vias": 87,
+      "pads": 93,
       "layers": [
         "F.Cu",
         "In1.Cu",
@@ -193,7 +193,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In2.Cu": 5222.4294
+        "In2.Cu": 5218.4831
       },
       "zone_islands": {
         "In2.Cu": 6
@@ -928,10 +928,10 @@
     },
     "GND_CTRL": {
       "cls": "CTRL_SELV",
-      "track_mm": 227.5381,
-      "tracks": 296,
-      "vias": 161,
-      "pads": 188,
+      "track_mm": 231.147,
+      "tracks": 304,
+      "vias": 165,
+      "pads": 192,
       "layers": [
         "F.Cu",
         "In1.Cu",
@@ -939,7 +939,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In1.Cu": 8376.0743
+        "In1.Cu": 8373.1291
       },
       "zone_islands": {
         "In1.Cu": 1
@@ -3172,12 +3172,12 @@
           {
             "pad": "6",
             "net": "3V3",
-            "distance_mm": 26.5037,
-            "capacitor": "C16.1",
+            "distance_mm": 1.5117,
+            "capacitor": "C76.1",
             "same_net": true
           }
         ],
-        "max_distance_mm": 26.5037
+        "max_distance_mm": 1.5117
       },
       {
         "ic": "U6",
@@ -3200,8 +3200,8 @@
           {
             "pad": "2",
             "net": "3V3",
-            "distance_mm": 6.9578,
-            "capacitor": "C58.1",
+            "distance_mm": 3.0647,
+            "capacitor": "C78.1",
             "same_net": true
           },
           {
@@ -3219,7 +3219,7 @@
             "same_net": true
           }
         ],
-        "max_distance_mm": 6.9578
+        "max_distance_mm": 3.589
       },
       {
         "ic": "U8",
@@ -3228,12 +3228,12 @@
           {
             "pad": "14",
             "net": "3V3",
-            "distance_mm": 10.3926,
-            "capacitor": "C23.1",
+            "distance_mm": 1.002,
+            "capacitor": "C77.1",
             "same_net": true
           }
         ],
-        "max_distance_mm": 10.3926
+        "max_distance_mm": 1.002
       },
       {
         "ic": "U9",
@@ -3256,26 +3256,26 @@
           {
             "pad": "12",
             "net": "3V3",
-            "distance_mm": 7.2028,
-            "capacitor": "C58.1",
+            "distance_mm": 4.4109,
+            "capacitor": "C78.1",
             "same_net": true
           },
           {
             "pad": "13",
             "net": "3V3",
-            "distance_mm": 6.8773,
-            "capacitor": "C58.1",
+            "distance_mm": 4.0256,
+            "capacitor": "C78.1",
             "same_net": true
           },
           {
             "pad": "14",
             "net": "3V3",
-            "distance_mm": 6.6,
-            "capacitor": "C58.1",
+            "distance_mm": 3.7149,
+            "capacitor": "C78.1",
             "same_net": true
           }
         ],
-        "max_distance_mm": 7.2028
+        "max_distance_mm": 4.4109
       },
       {
         "ic": "U11",
@@ -3284,12 +3284,12 @@
           {
             "pad": "14",
             "net": "3V3",
-            "distance_mm": 9.5876,
-            "capacitor": "C60.1",
+            "distance_mm": 4.2628,
+            "capacitor": "C79.1",
             "same_net": true
           }
         ],
-        "max_distance_mm": 9.5876
+        "max_distance_mm": 4.2628
       },
       {
         "ic": "U12",
@@ -3643,7 +3643,7 @@
       "net": "GND_CTRL",
       "per_layer": {
         "In1.Cu": {
-          "area_mm2": 8376.0743,
+          "area_mm2": 8373.1291,
           "islands": 1,
           "zones": 1,
           "probes": {
@@ -3686,15 +3686,15 @@
   "compactness": {
     "board_area_mm2": 9600.0,
     "board_area_dm2": 0.96,
-    "footprints": 207,
-    "footprints_per_dm2": 215.625,
+    "footprints": 211,
+    "footprints_per_dm2": 219.7917,
     "courtyard_area_mm2": {
       "front": 2883.9745,
-      "back": 456.2617
+      "back": 473.3717
     },
     "courtyard_fraction": {
       "front": 0.3004,
-      "back": 0.0475
+      "back": 0.0493
     },
     "hv_nets": [],
     "hv_bbox_mm": null,
@@ -3788,7 +3788,7 @@
       "metric": "GND_CTRL zone area (mm2) and island count per layer",
       "measured": {
         "In1.Cu": {
-          "area": 8376.1,
+          "area": 8373.1,
           "islands": 1
         }
       },
@@ -3802,10 +3802,10 @@
       "metric": "board area (mm2), footprints per dm2, courtyard fraction front/back",
       "measured": {
         "area": 9600.0,
-        "per_dm2": 215.6,
+        "per_dm2": 219.8,
         "courtyard": {
           "front": 0.3,
-          "back": 0.048
+          "back": 0.049
         }
       },
       "threshold": "area <= 9600 mm2",
@@ -3852,10 +3852,10 @@
       "rule": "PE-PCB-008",
       "requirement": "Place decoupling adjacent to supply pins",
       "metric": "U4 supply pads ['6'] to nearest decoupling capacitor pad, maximum (mm)",
-      "measured": 26.504,
+      "measured": 1.512,
       "threshold": null,
       "disposition": "measured - human review required",
-      "note": "6->C16.1 26.50"
+      "note": "6->C76.1 1.51"
     },
     {
       "rule": "PE-PCB-008",
@@ -3870,19 +3870,19 @@
       "rule": "PE-PCB-008",
       "requirement": "Place decoupling adjacent to supply pins",
       "metric": "U7 supply pads ['2', '7', '8'] to nearest decoupling capacitor pad, maximum (mm)",
-      "measured": 6.958,
+      "measured": 3.589,
       "threshold": null,
       "disposition": "measured - human review required",
-      "note": "2->C58.1 6.96; 7->C58.1 3.59; 8->C58.1 3.53"
+      "note": "2->C78.1 3.06; 7->C58.1 3.59; 8->C58.1 3.53"
     },
     {
       "rule": "PE-PCB-008",
       "requirement": "Place decoupling adjacent to supply pins",
       "metric": "U8 supply pads ['14'] to nearest decoupling capacitor pad, maximum (mm)",
-      "measured": 10.393,
+      "measured": 1.002,
       "threshold": null,
       "disposition": "measured - human review required",
-      "note": "14->C23.1 10.39"
+      "note": "14->C77.1 1.00"
     },
     {
       "rule": "PE-PCB-008",
@@ -3897,19 +3897,19 @@
       "rule": "PE-PCB-008",
       "requirement": "Place decoupling adjacent to supply pins",
       "metric": "U10 supply pads ['12', '13', '14'] to nearest decoupling capacitor pad, maximum (mm)",
-      "measured": 7.203,
+      "measured": 4.411,
       "threshold": null,
       "disposition": "measured - human review required",
-      "note": "12->C58.1 7.20; 13->C58.1 6.88; 14->C58.1 6.60"
+      "note": "12->C78.1 4.41; 13->C78.1 4.03; 14->C78.1 3.71"
     },
     {
       "rule": "PE-PCB-008",
       "requirement": "Place decoupling adjacent to supply pins",
       "metric": "U11 supply pads ['14'] to nearest decoupling capacitor pad, maximum (mm)",
-      "measured": 9.588,
+      "measured": 4.263,
       "threshold": null,
       "disposition": "measured - human review required",
-      "note": "14->C60.1 9.59"
+      "note": "14->C79.1 4.26"
     },
     {
       "rule": "PE-PCB-008",

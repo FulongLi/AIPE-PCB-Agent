@@ -2,6 +2,16 @@
 
 AI-assisted power-electronics PCB engineering with reproducible KiCad automation.
 
+> **V2.2 independent engineering review and circuit corrections — human review required**
+
+The active branch `feat/sic-buck-v2.2-engineering` corrects the current-sensor reference and isolated-sensing RLIM sizing, adds four local control-board bypasses, and repairs drawing margins and plot framing. A shorter gate-clamp candidate was rejected after its return-path geometry worsened. The original ratings and two-board architecture are retained. This revision includes actual CAD changes and explicitly differs electrically from V2/V2.1.
+
+- [V2.2 design review and remaining blockers](examples/sic-buck-400v-200v-5kw/review/v22/design_review_report.md)
+- [Independent Stage A review and prioritised issue register](examples/sic-buck-400v-200v-5kw/review/v22/stage_a_independent_review.md)
+- [Measured comparison](examples/sic-buck-400v-200v-5kw/review/v22/comparison.md), [validation evidence](examples/sic-buck-400v-200v-5kw/review/v22/validation.json), [exact remaining ECOs](examples/sic-buck-400v-200v-5kw/review/v22/remaining_engineering_ecos.md)
+
+V2 and V2.1 below are historical milestones; the active CAD/PDF paths now contain V2.2. Their frozen release directories retain the original files. No fabrication, energisation or automatic merge is approved.
+
 > **AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED**
 
 V2.1 (branch `feat/sic-buck-v2.1-quality`) is a presentation and routing-geometry revision of the

@@ -129,7 +129,7 @@ baseline range 4.5-5.2 V (+0.5..+1.2 V); this RC model spans the stated Q_gd and
 | VDD-COM 2 x 4.7 uF: effective / droop | 6.1 uF / 20 mV |  |  |
 | COM-VEE 4.7 uF droop | 41 | mV | baseline ~41 mV |
 | Bias per gate channel (Wolfspeed / TI form) | 0.32 / 0.43 | W | gate + quiescent 0.112 W + DESAT 0.07 W + misc 0.015 W; budget 0.32 W |
-| Sensing module load (2 x AMC1311 IDD1 max + misc) | 20.0 mA = 0.30 W at 15 V |  | 0.4 W budget; RLIM dissipates 0.20 W; RLIM <= 470 ohm (human review) |
+| Sensing module load (2 x AMC1311 IDD1 max + misc) | 20.4 mA = 0.31 W at 15 V |  | 0.4 W budget; RLIM dissipates 0.20 W; RLIM <= 215 ohm (human review) |
 | Utilisation of the 1.5 W rating (HS / LS / sensing) | 21 / 21 / 27 | % | 1.5 W valid 10.8-13.2 V, TA <= 85 degC; SOA curve not read |
 | Module input power, 0.48 W + 1.92 P_out, three modules | 3.44 | W | 0.29 A at 12 V; 0.38 A at 10.8 V with 20 % margin; baseline budget 0.55 A |
 | Gate loop Z0 / zeta_on / zeta_off | 1.97 ohm / 3.8 / 1.6 |  | overdamped; V_GS extremes about +15.7 / -4.6 V vs -10/+23 V |
@@ -633,6 +633,6 @@ Open items found while reproducing the baseline:
 - Aux 12 V: the pull-in total (1.76 A at 10.8 V) exceeds an assumed -10 % circuit-breaker minimum (1.76 A) with zero margin for the 50 ms relay operate time; stagger fan start and relay pull-in or move the fan upstream of the eFuse (baseline fallback).
 - Mezzanine 12 V pins carry 0.43-0.49 A each (fan, relay coil and bias modules all sit on the power board), above the architecture's 0.4 A per-pin target but 6x below the 3 A WR-PHD rating.
 - Dead-time loss with V_SD at the actual current is 3.1-3.6 W (250 ns) / 3.8-4.3 W (300 ns) versus the 2.9-3.2 W flat-4.6 V figures of the baseline loss table (body-diode slope 0.07 ohm is an unverified assumption).
-- Sensing bias module: sourcing about 20 mA into the 5 V COM output through RLIM needs RLIM <= about 470 ohm and dissipates about 0.2 W in RLIM plus the internal FET (continuous, outside the RLIM pin's 16 %-run-time qualification) - feasibility of the COM-VEE 5.0 V configuration remains the baseline's open item.
+- V2.2 E22-02: TI SLUSF10B Eq.9 dual-positive RLIM limit is 5 V / 20.4 mA - 30 ohm = 215 ohm (typical internal resistance). Fitted 160 ohm, 0.66 W 1206 replaces 1 k placeholder; conservative resistor + internal FET steady loss about 0.204 W. Startup, stability, continuous-load regulator qualification and temperature remain open.
 - Bounded-worst efficiency is 98.27 % converter-only, 98.12 % with the aux electronics (baseline convention) and 97.96 % as a full system with relay hold and fan - at or just below the 98.0 % target and 0.5 % above the 97.5 % floor; the k_RG factor (1.3-2.0) is the largest single uncertainty and must be measured by double-pulse test.
 - The twentieth verification report (assumptions-register fact-check, verify_assumptions_register_and_requirements_se_factcheck.json) was recovered after the first run of this script; its required changes concern the register text (ADC LSB, inrush charge-time range, CTI class bound, the 0.51 A maximum rating of a candidate fan that is not the baseline part) and change no input of this script.

@@ -862,8 +862,8 @@ def _generate_wired(spec: ProjectSpec, parts: list, flag_nets: list, diagnostics
         planned = planner.plan_page(page, page_parts, flag_nets, is_flag_page, papers, PAPER, header_height)
         paper, positions = planned['paper'], planned['positions']
         width = PAPER[paper][0]
-        texts = [dict(kind='title', text=spec.pages[page], x=snap(width / 2), y=10.16),
-                 dict(kind='note', text='\n'.join(note_lines), x=6.35, y=15.24)]
+        texts = [dict(kind='title', text=spec.pages[page], x=snap(width / 2), y=15.24),
+                 dict(kind='note', text='\n'.join(note_lines), x=20.32, y=22.86)]
         plan = sp.route_sheet(planner, page, positions, paper, PAPER, texts)
         plan.title = spec.pages[page]
         plan.counts['layout_variant'] = planned['variant']

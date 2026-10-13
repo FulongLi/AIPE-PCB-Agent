@@ -72,7 +72,7 @@ NETS (all names are KiCad global labels; HV = hazardous, > 60 V DC against PGND 
     FAN_TACH                 fan header pin 3, 10 k pull-up to 3V3.
     FAULT_N, SPARE_D1, SPARE_D2   mezzanine lines terminated on test points only.
     ISENSE                   TMCS1133 VOUT (0.33 V + 50 mV/A).
-    ISENSE_REF               0.1 x 3V3 ratiometric zero-current reference (added, A-P1).
+    ISENSE_REF               0.3296 V from REF3125; fixed zero-current reference (V2.2 E22-01).
     VIN_SENSE, VOUT_SENSE    OPA2320 difference-amplifier outputs (gain 1.5).
     VIN_OUTP/VIN_OUTN, VOUT_OUTP/VOUT_OUTN   AMC1311 differential outputs.
     VIN_AMP_P/VIN_AMP_N, VOUT_AMP_P/VOUT_AMP_N   op-amp summing nodes.
@@ -137,8 +137,8 @@ CUSTOM FOOTPRINTS (AIPE library, see CUSTOM_FOOTPRINTS):
   UCC21710_DW0016A_Slot             KiCad SOIC-16W_7.5x10.3mm_P1.27mm land pattern with a 1.2 x 16.6 mm slot.
 
 ADDED ASSUMPTIONS (not in the baseline; labelled in the part notes):
-  A-P1  ISENSE_REF is generated as 0.1 x 3V3 (9.09 k / 1.00 k 0.1 %, 100 nF) because the
-        TMCS1133 has no VREF pin (SBOSAG0E pin table); the C2A zero-current output is 0.1 x VS.
+  A-P1  Superseded by V2.2 E22-01: ISENSE_REF derives from REF3125 with 6.65 k / 1.01 k.
+        TMCS1133 has no VREF pin and C2A's zero-current output is fixed 0.33 V, NOT 0.1 x VS.
   A-P2  Sensing module VDD-VEE divider top 80.6 k (14.94 V) - the baseline states 15 V but no
         resistor; nearest E96 value, VDD is unloaded.
   A-P3  Each bias module's primary ground is GNDP_x after the choke (not GND_CTRL directly):
@@ -257,7 +257,7 @@ EXTRA_CAPS = {
 
 # Thin-film 0.1 % resistors (Vishay TNPW e3): value -> ordering code.  Format per the TNPW datasheet
 # (value code, B = 0.1 %, E = 25 ppm/K); exact suffix availability is unverified.
-TNPW_CODES = {"1k": "1K00", "2.32k": "2K32", "9.09k": "9K09", "9.76k": "9K76", "10k": "10K0", "15k": "15K0", "16.2k": "16K2",
+TNPW_CODES = {"1k": "1K00", "1.01k": "1K01", "6.65k": "6K65", "2.32k": "2K32", "9.09k": "9K09", "9.76k": "9K76", "10k": "10K0", "15k": "15K0", "16.2k": "16K2",
               "80.6k": "80K6", "107k": "107K", "750k": "750K"}
 
 FET_PINS = pin_defs("1:D:passive 2:S:passive 3:KS:passive 4:G:input")
@@ -475,13 +475,20 @@ def bias_module(c: Circuit, tag: str, page: str, *, vdd, vee, com, r_top_vdd, r_
               source=TI_DS.format("ucc14141-q1"), definitions=ucc14141_pins("passive" if vee in FLAG_NETS else "power_out"), ref=ref,
               note=note + "; reinforced isolated bias module, pinout SLUSF10B Table 6-1 (fetched-datasheet); PG active-low good")
         thin_film(c, r_top_vdd, vdd, fb_vdd, page, note=f"FBVDD top: VDD-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
-        thin_film(c, "16.2k", fb_vdd, vee, page, note="FBVDD bottom (VEEA single-point return)")
+        thin_film(c, "16.2k", fb_vdd, vee, page, note="FBVDD bottom; VEEA quiet-star layout remains E22-03 OPEN")
         capx(c, "330p/50V/0603", fb_vdd, vee, page, note="330 pF C0G across the FBVDD bottom resistor (SLUSF10B)")
         thin_film(c, r_top_com, com, fb_vee, page, note="FBVEE top: COM-VEE = 2.5 V x (R_top + 16.2 k)/16.2 k")
-        thin_film(c, "16.2k", fb_vee, vee, page, note="FBVEE bottom (VEEA single-point return)")
+        thin_film(c, "16.2k", fb_vee, vee, page, note="FBVEE bottom; VEEA quiet-star layout remains E22-03 OPEN")
         capx(c, "330p/50V/0603", fb_vee, vee, page, note="330 pF C0G across the FBVEE bottom resistor (SLUSF10B)")
-        c.resistor("1k", rlim, com, page, package="0805", note="RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW "
-                   "(COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)")
+        if tag == "S":
+            c.resistor("160", rlim, com, page, package="1206", mpn="ERJP08F1600V", maker="Panasonic",
+                       source="https://industrial.panasonic.com/sa/products/pt/small-and-high-power-chip-resistors/models/ERJP08F1600V",
+                       note="V2.2 E22-02: 160 ohm 1% 0.66 W; two AMC1311B maximum 19.4 mA + 1 mA allowance; "
+                       "SLUSF10B Eq.9. 60 ohm internal switch stress assumption is NOT a guaranteed limit. "
+                       "Startup, load regulation and hot resistor temperature require bench validation.")
+        else:
+            c.resistor("1k", rlim, com, page, package="0805", note="Gate-bias RLIM per SLUSF10B Eq.10-12; 1 k placeholder, HUMAN REVIEW "
+                       "(capacitor charge imbalance, quiescent current and the RLIM pin 0.125 A rms rating)")
         for _ in range(2):
             capx(c, "4.7u/25V/1206", vdd, vee, page, note="UCC14141 VDD-VEE output capacitor (baseline bias_supply.output_caps)")
         capx(c, "100n/50V/0603", vdd, vee, page, note="A-P4: 100 nF VDD-VEE next to the IC pins (SLUSF10B pin table)")
@@ -688,8 +695,8 @@ def selv_strip(c: Circuit):
         c.resistor("10k", "3V3", "OC_N", page, note="OC_N open-drain pull-up 10 k (task baseline); OC_N -> TZ2 and the fault latch on the control board")
         capx(c, "100n/50V/0603", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS decoupling 100 nF at pins 9/10")
         capx(c, "1u/50V/0805", "3V3", "GND_CTRL", page, note="A-P10: TMCS1133 VS bulk 1 uF")
-        thin_film(c, "9.09k", "3V3", "ISENSE_REF", page, note="A-P1: ISENSE_REF = 3V3 x 1.00 k / 10.09 k = 0.327 V ratiometric zero-current reference (TMCS1133 has no VREF pin)")
-        thin_film(c, "1k", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF divider bottom")
+        thin_film(c, "6.65k", "REF2V5_PB", "ISENSE_REF", page, note="V2.2 E22-01: 2.5 V x 1.01 k / 7.66 k = 0.329634 V; TMCS1133 Cxx zero output is fixed 0.33 V, NOT ratiometric to VS (SBOSAG0E 8.3.5); calibrate actual zero current")
+        thin_film(c, "1.01k", "ISENSE_REF", "GND_CTRL", page, note="V2.2 E22-01: 0.1% divider bottom; independent reference and sensor errors remain")
         capx(c, "100n/50V/0603", "ISENSE_REF", "GND_CTRL", page, note="A-P1: ISENSE_REF filter")
     with c.block("relay_fan", "Relay coil drive, fan header, 12 V bulk"):
         # Fan, relay coil, 12 V bulk.

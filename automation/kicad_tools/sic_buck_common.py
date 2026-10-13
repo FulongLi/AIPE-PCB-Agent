@@ -24,7 +24,7 @@ POWER_DIR = EXAMPLE / "kicad/power_board"
 CONTROL_DIR = EXAMPLE / "kicad/control_board"
 # Generation label of everything the current generators write (title blocks, silkscreen, models, page notes, evidence
 # writers). The frozen V2 generation lives in releases/v2 and keeps its own label; V1 tooling has its own string.
-GENERATION = "V2.1"
+GENERATION = "V2.2"
 BANNER = f"AI-GENERATED ENGINEERING PROTOTYPE - {GENERATION} - HUMAN REVIEW REQUIRED"
 BASIS = "400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine"
 

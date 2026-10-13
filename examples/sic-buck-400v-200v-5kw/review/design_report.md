@@ -1,5 +1,10 @@
 # AIPE 400 V to 200 V / 5 kW SiC synchronous buck - V2 design review, V2.1 addendum
 
+> **Superseded for the active design by the [V2.2 independent review](v22/design_review_report.md).**
+> This document retains the V2/V2.1 reasoning as history. V2.2 found and corrected the sensor-reference
+> law and sense-bias RLIM sizing; historical circuit assumptions here are not current requirements.
+> Active CAD/output links now resolve to V2.2. Original V2/V2.1 files remain in their frozen releases.
+
 **AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED**
 
 V2 is a CAD-complete two-board prototype: a routed 240 x 180 mm SiC power board and a routed 120 x 80 mm TMS320F28335 control board, both at zero native KiCad findings. Zero findings is a connectivity and rule statement, not engineering validation. No part was purchased, no board was fabricated, nothing was energised and no firmware exists. This report was written on 2026-10-11 from the files on branch `feat/sic-buck-5kw-v2` (last commit 99dfc01) and extended on 2026-10-12 for V2.1 (branch `feat/sic-buck-v2.1-quality`, HEAD 7f93a61, `git log` read in this session). V2.1 is a drawing and routing generation of the same design: wired schematics and boards re-routed with the upgraded router, the electrical design, placement and rules unchanged, the netlists identical to the frozen V2. The addendum below states what changed; sections 7, 8 and 12 quote the V2.1 boards and keep the V2 figures as "(V2: ...)"; sections 1-6, 9-11 and 13 describe the design and are unchanged. Every number names the file it was read from; paths are relative to this directory. The V2 release snapshot is `../releases/v2` (read-only); the V2.1 snapshot is described in section 12. Open review items LR-22, LR-24, LR-26, LR-27, LR-32 and LR-33 stay open (section 9); the authoritative open-items register is [known_issues.md](../verification/known_issues.md) (49 rows V2-01..V2-49 in four groups, all still open, plus 18 rows V2.1-01..V2.1-18 of the V2.1 round).

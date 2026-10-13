@@ -327,7 +327,7 @@
       "trip_overshoot_worst": "with L 175 uH: di/dt 2.5 A/us at 440 V, 1.4 A overshoot, worst peak ~42.6 A (soft roll-off core, CR-05)",
       "outputs_to_control": [
         "ISENSE (0-3 V)",
-        "ISENSE_REF (VREF out)",
+        "ISENSE_REF (independent REF3125 divider; 0.329634 V, V2.2)",
         "OC_N"
       ],
       "footprint": "custom DVG-16 with fused bar pads for IN+/IN- (25 A) and 8 individual SELV pins (TI drawing)"
@@ -1032,5 +1032,30 @@
     "Knowledge-base maintenance: CMP-TMCS1133 orderable variants; stale cache paths in three component records; SKILL-006 TI instance values unsupported by datasheets; C3M0030090K obsolete; CB-PR-002 APWM polarity (88 % at 0.6 V, 10 % at 4.5 V); PE-PCB-* rules not retrievable through query.py; query.py console encoding",
     "Pad resistance (1.4 K/W design) rests on the exposed-tab area read from the package table; measure the case-to-sink drop on the first assembly; the 125 C preference is not met at the hottest max-R corner",
     "Signalling across the mezzanine is single-ended by adaptation of the KR-GD-008 exclusion (stacked boards, <= 100 mm segment); the assumptions and gate-driver records asked for RS-422 (CB-GD-003) when boards are separated - documented deviation for review"
-  ]
+  ],
+  "v22_engineering_overrides": {
+    "review": "review/v22/stage_a_independent_review.md",
+    "current_reference": {
+      "R82": "6.65k from REF2V5_PB",
+      "R83": "1.01k to GND_CTRL",
+      "voltage_V": 0.32963446475195823,
+      "basis": "TI TMCS1133 SBOSAG0E 8.3.5 fixed 0.33 V zero output; no VS ratiometry"
+    },
+    "sense_bias_R57": {
+      "ohm": 160,
+      "mpn": "ERJP08F1600V",
+      "package": "1206",
+      "rated_W_at_70C": 0.66,
+      "required_A": 0.0204,
+      "basis": "UCC14141 SLUSF10B Eq.9 dual-positive configuration",
+      "open": "startup, hot derating, COM regulator continuous-load qualification"
+    },
+    "control_local_bypass": [
+      "C76 at U4",
+      "C77 at U8",
+      "C78 at U10",
+      "C79 at U11"
+    ],
+    "release_state": "Human review required; fabrication/energisation blocked by unresolved E22 issues"
+  }
 }

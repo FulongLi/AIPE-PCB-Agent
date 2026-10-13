@@ -1,4 +1,18 @@
-# Known issues and review limits - V2 design, V2.1 drawing generation
+# Known issues and review limits - V2.2 current, V2/V2.1 history
+
+**Current status (2026-10-13):** the [V2.2 independent register](../review/v22/stage_a_independent_review.md)
+and [V2.2 dispositions](../review/v22/design_review_report.md) supersede the historical status below.
+V2.2 corrects the fixed current-sensor reference law, changes sense-bias R57 to a sized 1206 resistor,
+and adds four control-logic bypasses. [Current evidence](../review/v22/validation.json) binds the final CAD
+to native ERC/DRC, netlist equality, exports and preserved frozen releases. Quiet VEEA feedback,
+insulation exceptions, mechanical support, commutation/gate-loop geometry and current/thermal capability
+remain open. No fabrication or energisation approval is implied.
+
+The V2/V2.1 narrative below is retained as history. Its active-file links may now resolve to V2.2;
+use `../releases/v2.1/` for the original files and quoted V2.1 hashes. In particular, the old 3V3-ratiometric
+current-reference assumption and 1 k sense-bias RLIM are superseded, not validated by their old CAD checks.
+
+## Historical V2/V2.1 register
 
 **AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED**
 

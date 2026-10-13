@@ -1,0 +1,420 @@
+Command: python -m unittest discover -s tests -v
+Environment: existing Python 3.10 + KiCad 10.0.7 CLI; no new software installed.
+
+test_anchors_are_per_net_and_degree2_probe_is_reported (test_check_routing_quality.MeasureTests) ... ok
+test_compare_and_writers (test_check_routing_quality.MeasureTests) ... ok
+test_degenerate_documents (test_check_routing_quality.MeasureTests) ... ok
+test_diagonals_and_tangent_arcs_are_not_bends (test_check_routing_quality.MeasureTests) ... ok
+test_meander_is_a_zigzag_run_and_efficiency_drops (test_check_routing_quality.MeasureTests) ... ok
+test_pre_routed_attribution_and_report_reasons (test_check_routing_quality.MeasureTests) ... ok
+test_staircase_is_counted_as_90_degree_bends_and_a_stair_run (test_check_routing_quality.MeasureTests) ... ok
+test_vias_pads_and_junctions_split_chains_and_zone_nets_are_flagged (test_check_routing_quality.MeasureTests) ... ok
+test_bbox_helpers (test_check_sic_layout.GeometryTests) ... ok
+test_edges_min_distance_matches_brute_force_and_chunks (test_check_sic_layout.GeometryTests) ... ok
+test_group_min_distance_prunes_like_brute_force (test_check_sic_layout.GeometryTests) ... ok
+test_point_in_polygon_with_hole_and_area (test_check_sic_layout.GeometryTests) ... ok
+test_primitive_distances_numpy_backend (test_check_sic_layout.GeometryTests) ... ok
+test_segment_distances (test_check_sic_layout.GeometryTests) ... ok
+test_shapely_backend_agrees_with_numpy (test_check_sic_layout.GeometryTests) ... ok
+test_slot_surface_path_formula (test_check_sic_layout.GeometryTests) ... ok
+test_stackup_parsing (test_check_sic_layout.GeometryTests) ... ok
+test_default_specs_load_and_reference_baseline_thresholds (test_check_sic_layout.SpecTests) ... ok
+test_markdown_and_json_helpers (test_check_sic_layout.SpecTests) ... ok
+test_net_classes_groups_and_thresholds (test_check_sic_layout.SpecTests) ... ok
+test_rule_rows_follow_spec_thresholds_only (test_check_sic_layout.SpecTests) ... ok
+test_spec_loading_defaults_and_validation (test_check_sic_layout.SpecTests) ... ok
+test_barrier_strips_slot_and_surface_path (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_board_summary_and_outputs (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_commutation_proxies (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_gate_loop_and_kelvin_separation (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_heatsink_decoupling_control_and_compactness (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_isolation_pairs (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_net_lengths_vias_and_layers (test_check_sic_layout.SyntheticBoardTests) ... ok
+test_cli_measures_v1_board_with_minimal_spec (test_check_sic_layout.V1BoardTests) ... ok
+test_board_geometry_helpers (test_compare_v1_v2.HelperTests) ... ok
+test_clip_cuts_at_a_clause_boundary (test_compare_v1_v2.HelperTests) ... ok
+test_count_test_functions (test_compare_v1_v2.HelperTests) ... ok
+test_csv_summary_counts_rows_columns_and_distinct_values (test_compare_v1_v2.HelperTests) ... ok
+test_density_and_cost_formulas (test_compare_v1_v2.HelperTests) ... ok
+test_dig_tolerates_missing_keys_and_lists (test_compare_v1_v2.HelperTests) ... ok
+test_formatting_of_metrics_pairs_ranges_and_dimensions (test_compare_v1_v2.HelperTests) ... ok
+test_latest_runs_picks_the_newest_per_source (test_compare_v1_v2.HelperTests) ... ok
+test_markdown_issue_rows_and_word_count (test_compare_v1_v2.HelperTests) ... ok
+test_metric_container_helpers (test_compare_v1_v2.HelperTests) ... ok
+test_verification_level_buckets (test_compare_v1_v2.HelperTests) ... ok
+test_collects_the_frozen_v1_metrics_from_this_checkout (test_compare_v1_v2.RepositoryTests) ... ok
+test_report_against_this_checkout_writes_to_a_temporary_directory (test_compare_v1_v2.RepositoryTests) ... ok
+test_design_phase_tree_reports_design_metrics_and_pending_pcb_metrics (test_compare_v1_v2.SmokeTests) ... ok
+test_empty_tree_never_raises_and_marks_everything_pending (test_compare_v1_v2.SmokeTests) ... ok
+test_main_writes_both_files_to_the_requested_directory (test_compare_v1_v2.SmokeTests) ... ok
+test_list_at_the_same_indent_as_its_key (test_compare_v1_v2.YamlParserTests) ... ok
+test_nested_mappings_scalars_lists_and_comments (test_compare_v1_v2.YamlParserTests) ... ok
+test_scalar_coercion (test_compare_v1_v2.YamlParserTests) ... ok
+test_freeze_copies_manifest_and_archive_and_refuses_twice (test_freeze_release.FreezeReleaseTests) ... ok
+test_freeze_refuses_failed_verification_and_unknown_version (test_freeze_release.FreezeReleaseTests) ... ok
+test_readme_carries_version_label_and_notes (test_freeze_release.FreezeReleaseTests) ... ok
+test_candidate_validation_rejects_bad_geometry (test_generate_sic_control_board.CandidateTests) ... ok
+test_candidates_load_validate_and_cover_the_model (test_generate_sic_control_board.CandidateTests) ... ok
+test_blocked_corridor_is_reported (test_generate_sic_control_board.CorridorTests) ... ok
+test_items_in_their_own_territory_need_nothing (test_generate_sic_control_board.CorridorTests) ... ok
+test_l_shaped_corridor_around_a_foreign_via (test_generate_sic_control_board.CorridorTests) ... ok
+test_notch_and_finger_corridors (test_generate_sic_control_board.CorridorTests) ... ok
+test_records_do_not_depend_on_the_input_order (test_generate_sic_control_board.CorridorTests) ... ok
+test_alternation_and_rail_preferences (test_generate_sic_control_board.EscapePlanTests) ... ok
+test_off_grid_lateral_is_rejected (test_generate_sic_control_board.EscapePlanTests) ... ok
+test_parity_conflict_is_flagged_and_runs_split_at_unconnected_pins (test_generate_sic_control_board.EscapePlanTests) ... ok
+test_recorded_drc_manifest_matches_the_board_and_the_recorded_state (test_generate_sic_control_board.EvidenceTests) ... ok
+test_inner_layer_nets_are_excluded_from_the_outer_stages_without_a_lane_stub (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_rectilinear_rectangles_cover_every_candidate_island_exactly (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_rectilinear_rectangles_of_an_l_shape (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_sliver_edge_matching_and_widening (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_waypoints_fall_back_to_the_direct_pair (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_waypoints_form_a_z_that_turns_where_the_fewest_through_items_lie (test_generate_sic_control_board.InnerLayerPassTests) ... ok
+test_coincident_copper_groups (test_generate_sic_control_board.IslandBandTests) ... ok
+test_directed_z_for_a_horizontal_exit (test_generate_sic_control_board.IslandBandTests) ... ok
+test_port_channels_leave_the_nearest_island_side_straight (test_generate_sic_control_board.IslandBandTests) ... ok
+test_rect_minus (test_generate_sic_control_board.IslandBandTests) ... ok
+test_ladder_router_only_overrides_the_negotiation (test_generate_sic_control_board.LadderNegotiationTests) ... ok
+test_restarts_at_the_first_multiple_after_progress_and_stops_after_a_fruitless_cycle (test_generate_sic_control_board.LadderNegotiationTests) ... ok
+test_stops_at_zero_and_within_the_round_budget (test_generate_sic_control_board.LadderNegotiationTests) ... ok
+test_dnp_parts_carry_the_footprint_attribute (test_generate_sic_control_board.PlacementTests) ... ok
+test_every_part_is_placed_with_the_expected_sides_and_stack (test_generate_sic_control_board.PlacementTests) ... ok
+test_candidate_scoring (test_generate_sic_control_board.PlanAndHelperTests) ... ok
+test_default_routing_style_validates_and_the_v2_geometry_is_opt_in (test_generate_sic_control_board.PlanAndHelperTests) ... ok
+test_read_manifest_adds_counts (test_generate_sic_control_board.PlanAndHelperTests) ... ok
+test_routing_plan_validates_and_carries_the_escapes (test_generate_sic_control_board.PlanAndHelperTests) ... ok
+test_stackup_text_and_geometry_helpers (test_generate_sic_control_board.PlanAndHelperTests) ... ok
+test_zone_identity_is_deterministic_distinct_and_ranks_the_touching_islands (test_generate_sic_control_board.ZoneIdentityTests) ... ok
+test_3v3_is_routed_and_its_in2_pour_is_a_post_route_zone (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_barrier_coarse_rows_escape_through_stubs_with_vias_other_coarse_rows_are_left_to_the_fanout (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_connector_pins_all_escape_south_with_links_for_same_net_columns (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_connector_port_boxes_follow_the_stubs (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_escape_obstacles_cover_the_barrier_fans (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_fine_pitch_rows_get_bars_with_one_via_and_fans_for_singles (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_grid_soft_conflicts_record_the_newer_owner_for_the_rip_up (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_plan_pins_the_kelvin_gate_and_rail_nets_first_in_every_trial (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_selv_side_fine_rows_fan_out_including_the_plane_pads (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_vssop_columns_fan_out_along_the_pad_axis (test_generate_sic_power_board.EscapePlanTests) ... ok
+test_barrier_parts_sit_on_the_barrier_line_with_separated_courtyards (test_generate_sic_power_board.FloorplanTests) ... ok
+test_every_model_part_has_exactly_one_placement_source (test_generate_sic_power_board.FloorplanTests) ... ok
+test_hv_zone_polygons_stay_in_the_hv_area_and_selv_pours_in_the_strip (test_generate_sic_power_board.FloorplanTests) ... ok
+test_iso_barrier_polygon_notches_round_the_pad_rows (test_generate_sic_power_board.FloorplanTests) ... ok
+test_via_groups_and_rule_areas (test_generate_sic_power_board.FloorplanTests) ... ok
+test_pe_pre_route_and_chain_stubs (test_generate_sic_power_board.PlanTests) ... ok
+test_routing_plan_validates_and_confines_every_net (test_generate_sic_power_board.PlanTests) ... ok
+test_stackup_and_manifest_helpers (test_generate_sic_power_board.PlanTests) ... ok
+test_v21_style_blocks_validate_and_keep_the_v2_search (test_generate_sic_power_board.PlanTests) ... ok
+test_write_outputs_scratch_directory_keeps_the_example_folders_untouched (test_generate_sic_power_board.PlanTests) ... ok
+test_region_rects_keep_three_millimetres_from_the_foreign_through_pads (test_generate_sic_power_board.RoutingRegionTests) ... ok
+test_regions_cover_islands_and_strip_and_keep_the_wall (test_generate_sic_power_board.RoutingRegionTests) ... ok
+test_band_violation_logic (test_generate_sic_power_floorplan.CandidateTests) ... ok
+test_candidate_validation_rejects_bad_geometry (test_generate_sic_power_floorplan.CandidateTests) ... ok
+test_candidates_load_and_cover_the_model (test_generate_sic_power_floorplan.CandidateTests) ... ok
+test_recorded_floorplan_evidence_matches_the_board (test_generate_sic_power_floorplan.EvidenceTests) ... ok
+test_barrier_segments (test_generate_sic_power_floorplan.GeometryTests) ... ok
+test_circle_box_distance (test_generate_sic_power_floorplan.GeometryTests) ... ok
+test_heatsink_corridors (test_generate_sic_power_floorplan.GeometryTests) ... ok
+test_slot_geometry_and_surface_path (test_generate_sic_power_floorplan.GeometryTests) ... ok
+test_stackup (test_generate_sic_power_floorplan.GeometryTests) ... ok
+test_project_patterns_in_order (test_generate_sic_power_floorplan.NetClassTests) ... ok
+test_spacing_gaps (test_generate_sic_power_floorplan.NetClassTests) ... ok
+test_zone_of_every_model_part (test_generate_sic_power_floorplan.NetClassTests) ... ok
+test_place_candidate_b_in_a_temporary_directory (test_generate_sic_power_floorplan.PcbnewPlacementTests) ... ok
+test_routing_plan_skeleton_validates (test_generate_sic_power_floorplan.PlanAndScoringTests) ... ok
+test_scoring (test_generate_sic_power_floorplan.PlanAndScoringTests) ... ok
+test_banner_is_derived_from_the_generation_label (test_generate_sic_schematics.GenerationLabelTests) ... ok
+test_board_generators_share_the_label (test_generate_sic_schematics.GenerationLabelTests) ... ok
+test_generated_files_parse_and_mapping_records_the_generation (test_generate_sic_schematics.GenerationTests) ... ok
+test_generation_is_deterministic (test_generate_sic_schematics.GenerationTests) ... ok
+test_native_erc_has_zero_findings (test_generate_sic_schematics.GenerationTests) ... ok
+test_wired_gates_pass_and_legacy_style_stays_available (test_generate_sic_schematics.GenerationTests) ... ok
+test_control_board_is_entirely_selv (test_generate_sic_schematics.NetClassTests) ... ok
+test_design_rules_text_orders_rules_and_parses (test_generate_sic_schematics.NetClassTests) ... ok
+test_merged_bom_carries_a_board_column (test_generate_sic_schematics.NetClassTests) ... ok
+test_pad_records_account_for_rotation (test_generate_sic_schematics.NetClassTests) ... ok
+test_pin_field_exceptions_come_from_pad_geometry (test_generate_sic_schematics.NetClassTests) ... ok
+test_power_board_nets_each_belong_to_exactly_one_baseline_class (test_generate_sic_schematics.NetClassTests) ... ok
+test_presentation_policy_and_style_switch (test_generate_sic_schematics.NetClassTests) ... ok
+test_required_clearance_follows_the_baseline_rules (test_generate_sic_schematics.NetClassTests) ... ok
+test_specs_coerce_for_both_boards (test_generate_sic_schematics.NetClassTests) ... ok
+test_wildcard_match_is_anchored_and_case_sensitive (test_generate_sic_schematics.NetClassTests) ... ok
+test_arrays_are_sized_from_the_board_and_framed (test_grid_router.GridTests) ... ok
+test_astar_any_layer_endpoints (test_grid_router.GridTests) ... ok
+test_astar_changes_layer_only_when_allowed (test_grid_router.GridTests) ... ok
+test_astar_detours_around_a_wall (test_grid_router.GridTests) ... ok
+test_astar_dilation_closes_narrow_gaps (test_grid_router.GridTests) ... ok
+test_astar_eight_directions_never_cuts_a_corner (test_grid_router.GridTests) ... ok
+test_astar_eight_directions_shortens_the_detour_and_keeps_the_corner_rule (test_grid_router.GridTests) ... ok
+test_astar_own_code_is_passable_and_limits_apply (test_grid_router.GridTests) ... ok
+test_bend_penalty_prefers_fewer_turns (test_grid_router.GridTests) ... ok
+test_dilate_is_conservative (test_grid_router.GridTests) ... ok
+test_foreign_mask_and_cells_free_follow_the_search_rules (test_grid_router.GridTests) ... ok
+test_merge_marks_conflicts_as_blocked (test_grid_router.GridTests) ... ok
+test_invalid_plans_are_rejected (test_grid_router.PlanTests) ... ok
+test_style_defaults_reproduce_v2_and_are_validated (test_grid_router.PlanTests) ... ok
+test_valid_plan_is_copied (test_grid_router.PlanTests) ... ok
+test_compress_path_merges_runs_and_places_vias (test_grid_router.ShapeTests) ... ok
+test_default_directions_alternate_on_inner_layers (test_grid_router.ShapeTests) ... ok
+test_grid_shape_matches_v1_board_and_scales (test_grid_router.ShapeTests) ... ok
+test_sort_keys (test_grid_router.ShapeTests) ... ok
+test_synthetic_board_routes_cleanly_and_passes_native_drc (test_grid_router.SyntheticBoardTests) ... ok
+test_synthetic_board_with_v21_style_passes_native_drc (test_grid_router.SyntheticBoardTests)
+The same board with the V2.1 geometry (8-direction search, octilinear simplification, arcs): still zero unresolved, ... ok
+test_html_error_page_is_not_accepted_as_pdf (test_knowledge.AcquisitionTests) ... ok
+test_member_classification (test_knowledge.AcquisitionTests) ... ok
+test_network_error_on_refresh_keeps_cached_copy (test_knowledge.AcquisitionTests) ... ok
+test_zip_member_path_traversal_is_rejected (test_knowledge.AcquisitionTests) ... ok
+test_calculations_pass_and_netlist_checks_never_fail (test_knowledge.EvidenceCheckTests) ... ok
+test_desat_values_match_wolfspeed (test_knowledge.EvidenceCheckTests) ... ok
+test_stored_results_reproduce (test_knowledge.EvidenceCheckTests) ... ok
+test_analytically_checked_requires_a_cited_check (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_cached_files_match_recorded_checksums (test_knowledge.KnowledgeBaseValidationTests) ... skipped 'reference cache not present; run automation.knowledge.acquire'
+test_committed_knowledge_validates (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_conflicts_are_preserved (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_every_reference_document_is_traceable (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_hard_constraint_limit_needs_non_instance_basis (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_hardware_validation_cannot_be_claimed_in_v0 (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_multi_source_claim_needs_two_references (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_part_numbers_confirmed_or_explicitly_skipped (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_single_reference_observation_cannot_be_hard_constraint (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_skill_documents_contain_required_sections (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_unknown_evidence_source_is_rejected (test_knowledge.KnowledgeBaseValidationTests) ... ok
+test_allegro_netlist (test_knowledge.ParserTests) ... ok
+test_odb_connectivity (test_knowledge.ParserTests) ... ok
+test_buck_example_unchanged_against_main (test_knowledge.RepositoryBoundaryTests) ... ok
+test_frozen_buck_v1_matches_its_manifest (test_knowledge.RepositoryBoundaryTests) ... ok
+test_no_raw_third_party_files_are_tracked (test_knowledge.RepositoryBoundaryTests) ... ok
+test_reference_cache_is_git_ignored (test_knowledge.RepositoryBoundaryTests) ... ok
+test_current_sensing_question (test_knowledge.RetrievalTests) ... ok
+test_dc_link_question (test_knowledge.RetrievalTests) ... ok
+test_demo_file_is_current (test_knowledge.RetrievalTests) ... ok
+test_get_and_related (test_knowledge.RetrievalTests) ... ok
+test_hits_carry_traceability (test_knowledge.RetrievalTests) ... ok
+test_layout_question (test_knowledge.RetrievalTests) ... ok
+test_cross_check_with_jsonschema_when_installed (test_knowledge.SchemaValidatorTests) ... skipped 'optional jsonschema/referencing not installed'
+test_each_constraint_is_enforced (test_knowledge.SchemaValidatorTests) ... ok
+test_unsupported_keyword_is_an_error_not_ignored (test_knowledge.SchemaValidatorTests) ... ok
+test_valid_instance (test_knowledge.SchemaValidatorTests) ... ok
+test_label_of_another_net_on_a_wire_interior_merges_in_kicad_and_fails_the_guard (test_native_schematic_fixture.AdversarialLabelTests) ... ok
+test_erc_with_severity_all_is_clean (test_native_schematic_fixture.NativeFixtureTests) ... ok
+test_netlist_names_follow_the_drawing (test_native_schematic_fixture.NativeFixtureTests) ... ok
+test_fillet_corner_matches_the_verified_construction (test_path_geometry.ArcTests) ... ok
+test_fillet_on_the_other_side_and_sampling (test_path_geometry.ArcTests) ... ok
+test_arcs_are_ordinary_edges (test_path_geometry.ChainTests) ... ok
+test_chains_split_at_junctions_layers_fixed_points_and_width_changes (test_path_geometry.ChainTests) ... ok
+test_connected_by_overlap_binds_router_vertices_to_off_grid_vias_and_stub_ends (test_path_geometry.ChainTests) ... ok
+test_diagonals_clear_of_via_guards (test_path_geometry.ChainTests) ... ok
+test_fixed_accepts_net_point_pairs (test_path_geometry.ChainTests) ... ok
+test_interior_first_item_does_not_split_the_chain (test_path_geometry.ChainTests) ... ok
+test_chamfer_cuts_sharp_corners_on_grid (test_path_geometry.PolylineTests) ... ok
+test_collapse_short_runs (test_path_geometry.PolylineTests) ... ok
+test_merge_collinear (test_path_geometry.PolylineTests) ... ok
+test_octilinear_candidates (test_path_geometry.PolylineTests) ... ok
+test_short_runs_find_zigzags_and_stairs (test_path_geometry.PolylineTests) ... ok
+test_shortcut_replaces_a_staircase_and_respects_the_clearance_test (test_path_geometry.PolylineTests) ... ok
+test_turn_angle_and_classification (test_path_geometry.PolylineTests) ... ok
+test_octants_and_turn_classes (test_path_geometry.SearchSupportTests) ... ok
+test_octile_is_the_8_direction_distance (test_path_geometry.SearchSupportTests) ... ok
+test_film_capacitor_two_and_four_pins (test_project_footprints.GeneratorTests) ... ok
+test_heatsink_envelope_has_only_mounting_holes_and_a_rule_area (test_project_footprints.GeneratorTests) ... ok
+test_make_footprint_is_deterministic_and_infers_type (test_project_footprints.GeneratorTests) ... ok
+test_pad_helpers (test_project_footprints.GeneratorTests) ... ok
+test_toroid_has_two_leads_and_optional_centre_hole (test_project_footprints.GeneratorTests) ... ok
+test_footprints_the_v2_design_relies_on_exist_with_expected_pad_counts (test_project_footprints.InstalledLibraryTests) ... ok
+test_footprint_lookup_and_pads_from_a_library_root (test_project_footprints.LibraryParsingTests) ... ok
+test_pads_in_text_handles_slots_and_rejects_non_footprints (test_project_footprints.LibraryParsingTests) ... ok
+test_root_discovery_honours_environment_and_absence (test_project_footprints.LibraryParsingTests) ... ok
+test_validate_pad_mapping_reports_each_kind_of_mismatch (test_project_footprints.LibraryParsingTests) ... ok
+test_prepared_official_and_custom_footprints_load_in_pcbnew (test_project_footprints.PcbnewTests) ... ok
+test_board_filter_and_custom_requirements (test_project_footprints.PrepareLibrariesTests) ... ok
+test_builds_a_complete_reproducible_project_library (test_project_footprints.PrepareLibrariesTests) ... ok
+test_replace_model_appends_when_the_footprint_has_none (test_project_footprints.PrepareLibrariesTests) ... ok
+test_strict_mode_rejects_mismatches_before_writing (test_project_footprints.PrepareLibrariesTests) ... ok
+test_custom_grouping_must_partition_pins (test_project_schematic.GenerationTests) ... ok
+test_full_page_overflows_onto_continuation_sheets (test_project_schematic.GenerationTests) ... ok
+test_generated_project_parses_and_maps_every_part (test_project_schematic.GenerationTests) ... ok
+test_multi_unit_symbol_and_skipped_parts (test_project_schematic.GenerationTests) ... ok
+test_outputs_are_deterministic (test_project_schematic.GenerationTests) ... ok
+test_without_kicad_everything_is_generated_and_reported (test_project_schematic.GenerationTests) ... ok
+test_connectivity_pre_check_mirrors_kicad_matrix (test_project_schematic.HelperTests) ... ok
+test_default_unit_grouping_partitions_and_chunks (test_project_schematic.HelperTests) ... ok
+test_fet_roles_and_candidates (test_project_schematic.HelperTests) ... ok
+test_generated_symbols_carry_every_pin_with_its_type (test_project_schematic.HelperTests) ... ok
+test_grid_and_number_formatting (test_project_schematic.HelperTests) ... ok
+test_pin_name_normalisation (test_project_schematic.HelperTests) ... ok
+test_project_settings_and_dru (test_project_schematic.HelperTests) ... ok
+test_spec_validation (test_project_schematic.HelperTests) ... ok
+test_demo_project_has_zero_erc_findings (test_project_schematic.NativeErcTests) ... ok
+test_compare_projects_folds_continuation_sheets_and_writes_markdown (test_schematic_metrics.MetricsTests) ... ok
+test_legacy_sheets_are_all_stub_labels_and_wired_sheets_are_not (test_schematic_metrics.MetricsTests) ... ok
+test_sheet_pin_names_count_as_text_and_fill_is_reported (test_schematic_metrics.MetricsTests) ... ok
+test_text_boxes_and_crossings (test_schematic_metrics.MetricsTests) ... ok
+test_angle_for_orients_two_pin_symbols (test_schematic_presentation.PolicyTests) ... ok
+test_auto_groups_attach_satellites_to_their_anchor (test_schematic_presentation.PolicyTests) ... ok
+test_coerce_presentation (test_schematic_presentation.PolicyTests) ... ok
+test_port_shapes_follow_the_driving_pins (test_schematic_presentation.PolicyTests) ... ok
+test_rails_are_flag_nets_plus_power_out_minus_excluded (test_schematic_presentation.PolicyTests) ... ok
+test_far_apart_cross_net_components_repeat_the_hierarchical_label (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_first_fit_columns_never_grow_under_a_neighbour (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_hanging_parts_with_long_values_do_not_overlap (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_item_less_lanes_stay_on_their_pin_rows (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_labels_keep_their_angle_shape_and_justification (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_lone_test_points_form_a_grid_with_their_own_labels (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_page_planner_tries_the_extras_variants_and_records_the_choice (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_power_glyphs_point_away_from_the_wire_and_rails_are_ordered (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_stale_continuation_sheets_are_removed_but_foreign_files_kept (test_schematic_presentation.V21ReviewFixesTests) ... ok
+test_dnp_flag_and_no_connect_are_emitted (test_schematic_presentation.WiredGenerationTests) ... ok
+test_every_unconnected_pin_gets_a_no_connect_marker_whatever_its_placement (test_schematic_presentation.WiredGenerationTests) ... ok
+test_explicit_groups_and_titles_drive_the_headings (test_schematic_presentation.WiredGenerationTests) ... ok
+test_guard_rejects_a_plan_that_does_not_reproduce_the_model (test_schematic_presentation.WiredGenerationTests) ... ok
+test_include_supply_promotes_a_passive_net_to_a_rail (test_schematic_presentation.WiredGenerationTests) ... ok
+test_long_detour_becomes_a_name_tag_pair (test_schematic_presentation.WiredGenerationTests) ... ok
+test_packing_fill_and_free_lane_columns (test_schematic_presentation.WiredGenerationTests) ... ok
+test_rail_pins_are_grouped_per_side_so_alternating_supplies_share_one_bus (test_schematic_presentation.WiredGenerationTests) ... ok
+test_wired_output_is_deterministic_and_legacy_path_is_untouched (test_schematic_presentation.WiredGenerationTests) ... ok
+test_wired_project_is_connected_named_and_free_of_pin_stub_labels (test_schematic_presentation.WiredGenerationTests) ... ok
+test_geometry_reproduces_the_model_through_labels_power_values_and_sheet_pins (test_schematic_wiring.ConnectivityTests) ... ok
+test_label_of_another_net_on_a_wire_interior_is_a_problem_and_merges_the_nets (test_schematic_wiring.ConnectivityTests) ... ok
+test_missing_anchor_and_missing_junction_are_detected (test_schematic_wiring.ConnectivityTests) ... ok
+test_power_pin_on_a_wire_interior_does_not_connect (test_schematic_wiring.ConnectivityTests) ... ok
+test_two_global_names_on_one_net_are_reported (test_schematic_wiring.ConnectivityTests) ... ok
+test_unconnected_pins_need_a_no_connect_marker_and_nothing_else (test_schematic_wiring.ConnectivityTests) ... ok
+test_detours_around_blocked_bodies_and_respects_pin_direction (test_schematic_wiring.GridRouterTests) ... ok
+test_other_nets_are_crossed_straight_but_never_overlapped_or_touched (test_schematic_wiring.GridRouterTests) ... ok
+test_straight_and_l_candidates_come_first (test_schematic_wiring.GridRouterTests) ... ok
+test_collinear_corners_merge_and_other_net_contacts_are_problems (test_schematic_wiring.NormaliseTests) ... ok
+test_crossings_count_perpendicular_pairs_of_different_nets (test_schematic_wiring.NormaliseTests) ... ok
+test_t_join_splits_the_spine_and_adds_one_junction (test_schematic_wiring.NormaliseTests) ... ok
+test_trim_dangling_removes_only_free_stubs (test_schematic_wiring.NormaliseTests) ... ok
+test_exit_zero_without_report_cannot_pass (test_setup.CheckTests) ... ok
+test_old_success_cannot_mask_a_failed_second_run (test_setup.CheckTests) ... ok
+test_report_findings_cannot_pass_even_with_zero_process_exit (test_setup.CheckTests) ... ok
+test_violations_remain_failure (test_setup.CheckTests) ... ok
+test_explicit_path_with_spaces (test_setup.DetectionTests) ... ok
+test_invalid_explicit_path_does_not_fall_back_to_other_kicad (test_setup.DetectionTests) ... ok
+test_bom_rows_have_the_required_columns (test_sic_buck_control_model.ControlModelTests) ... ok
+test_builds_a_control_board_of_the_expected_size (test_sic_buck_control_model.ControlModelTests) ... ok
+test_connectivity_precheck_is_clean (test_sic_buck_control_model.ControlModelTests) ... ok
+test_dsp_follows_the_baseline_pin_map (test_sic_buck_control_model.ControlModelTests) ... ok
+test_fault_logic_values_and_polarities_follow_the_baseline (test_sic_buck_control_model.ControlModelTests) ... ok
+test_mezzanine_header_uses_the_shared_pin_assignment (test_sic_buck_control_model.ControlModelTests) ... ok
+test_pad_mapping_validates_against_installed_footprints (test_sic_buck_control_model.ControlModelTests) ... ok
+test_references_are_unique_and_pins_match_nets (test_sic_buck_control_model.ControlModelTests) ... ok
+test_baseline_values_are_honoured (test_sic_buck_power_model.ModelTests) ... ok
+test_builds_deterministically_within_the_expected_size (test_sic_buck_power_model.ModelTests) ... ok
+test_custom_footprints_load_in_pcbnew (test_sic_buck_power_model.ModelTests) ... ok
+test_custom_footprints_parse_with_the_expected_pads (test_sic_buck_power_model.ModelTests) ... ok
+test_erc_precheck_is_clean_with_the_declared_flag_nets (test_sic_buck_power_model.ModelTests) ... ok
+test_every_ic_and_transistor_has_a_recorded_pinout_source (test_sic_buck_power_model.ModelTests) ... ok
+test_kelvin_source_nets_are_never_joined_to_power_source_nets (test_sic_buck_power_model.ModelTests) ... ok
+test_mezzanine_socket_uses_the_shared_pin_assignment (test_sic_buck_power_model.ModelTests) ... ok
+test_pad_mapping_validates_against_the_installed_library (test_sic_buck_power_model.ModelTests) ... ok
+test_written_circuit_json_matches_the_module (test_sic_buck_power_model.ModelTests) ... ok
+test_current_zero_reference_is_independent_of_3v3 (test_sic_v22_engineering.EngineeringCorrections) ... ok
+test_explicit_connectivity_allowance_rejects_unrelated_change (test_sic_v22_engineering.EngineeringCorrections) ... ok
+test_sense_midrail_uses_dual_positive_equation_and_rated_part (test_sic_v22_engineering.EngineeringCorrections) ... ok
+test_compare_table (test_simulation.AnalysisTests) ... ok
+test_window_metrics_from_synthetic_waveforms (test_simulation.AnalysisTests) ... ok
+test_window_stats_time_weighting (test_simulation.AnalysisTests) ... ok
+test_closed_loop_deck_has_comparator_and_pi (test_simulation.DeckTests) ... ok
+test_gate_pwl_timing (test_simulation.DeckTests) ... ok
+test_open_loop_deck_uses_pwl_gates_and_models (test_simulation.DeckTests) ... ok
+test_parasitic_deck_uses_initial_conditions (test_simulation.DeckTests) ... ok
+test_closed_loop_regulates_and_reports_load_step (test_simulation.NgSpiceTests) ... ok
+test_error_deck_raises_and_runner_recovers (test_simulation.NgSpiceTests) ... ok
+test_open_loop_buck_agrees_with_numpy_model (test_simulation.NgSpiceTests) ... ok
+test_rc_transient_matches_analytic (test_simulation.NgSpiceTests) ... ok
+test_closed_loop_duty_solution_hits_reference (test_simulation.NumpyModelTests) ... ok
+test_example_parameters_resolve (test_simulation.NumpyModelTests) ... ok
+test_ideal_elements_reproduce_formula_closely (test_simulation.NumpyModelTests) ... ok
+test_metric_identities (test_simulation.NumpyModelTests) ... ok
+test_ripple_matches_textbook_formula_within_5_percent (test_simulation.NumpyModelTests) ... ok
+test_library_override_must_exist (test_simulation.RunnerHelperTests) ... ok
+test_message_classification (test_simulation.RunnerHelperTests) ... ok
+test_normalise_deck_adds_title_and_end (test_simulation.RunnerHelperTests) ... ok
+test_resampler (test_simulation.RunnerHelperTests) ... ok
+test_smoke_passes_with_the_v21_router_style (test_v2_pipeline_smoke.EndToEndTests)
+wrote C:\Users\ZHONGN~1\AppData\Local\Temp\tmpmaohzwwp\review-out\v1_v2_comparison.json
+wrote C:\Users\ZHONGN~1\AppData\Local\Temp\tmpmaohzwwp\review-out\v1_v2_comparison.md
+pending V2 metrics: 37
+model: passed (0.015 s)
+libraries: passed (0.016 s)
+schematic: passed (0.078 s)
+erc: passed (0.234 s)
+board: passed (0.75 s)
+drc: passed (0.531 s)
+schematic_pdf: exit 0
+pcb_pdf: exit 0
+gerber: exit 0
+drill: exit 0
+bom: exit 0
+placement: exit 0
+step: exit 0
+front: exit 0
+back: exit 0
+isometric: exit 0
+netlist: exit 0
+exports: passed (3.328 s)
+smoke passed in 5.297 s -> C:\Users\Zhongnan Qian\AppData\Local\Temp\aipe v2 smoke styled c4bzwe9j\smoke-summary.json
+The same pipeline with the V2.1 geometry enabled (8-direction search, octilinear simplification, arcs): the board routes ... ok
+model: passed (0.0 s)
+libraries: passed (0.015 s)
+schematic: passed (0.094 s)
+erc: passed (0.25 s)
+board: passed (0.625 s)
+drc: passed (0.547 s)
+schematic_pdf: exit 0
+pcb_pdf: exit 0
+gerber: exit 0
+drill: exit 0
+bom: exit 0
+placement: exit 0
+step: exit 0
+front: exit 0
+back: exit 0
+isometric: exit 0
+netlist: exit 0
+exports: passed (3.422 s)
+smoke passed in 5.297 s -> C:\Users\Zhongnan Qian\AppData\Local\Temp\aipe v2 smoke uj7ta3dq\smoke-summary.json
+test_smoke_passes_with_zero_erc_and_drc_findings (test_v2_pipeline_smoke.EndToEndTests) ... ok
+test_module_versions_and_evidence_layout (test_v2_pipeline_smoke.ModelTests) ... ok
+test_parts_follow_the_shared_format_and_split_by_board (test_v2_pipeline_smoke.ModelTests) ... ok
+test_pin_field_rules_come_from_pad_geometry (test_v2_pipeline_smoke.ModelTests) ... ok
+test_routing_plan_is_valid_and_keeps_hv_on_zones (test_v2_pipeline_smoke.ModelTests) ... ok
+test_schematic_spec_validates_and_is_erc_consistent_before_kicad (test_v2_pipeline_smoke.ModelTests) ... ok
+test_stackup_text_and_injection (test_v2_pipeline_smoke.ModelTests) ... ok
+test_zone_polygons_cover_the_placed_pads (test_v2_pipeline_smoke.ModelTests) ... ok
+test_check_exports_validates_manifest_and_artifacts (test_verify_sic_buck.VerifySicBuckTests) ... ok
+test_check_netlist_and_metrics (test_verify_sic_buck.VerifySicBuckTests) ... ok
+test_check_run_detects_changed_source_and_dependency (test_verify_sic_buck.VerifySicBuckTests) ... ok
+test_check_run_rejects_findings_and_missing_runs (test_verify_sic_buck.VerifySicBuckTests) ... ok
+test_latest_run_selects_newest_manifest_for_the_named_source (test_verify_sic_buck.VerifySicBuckTests) ... ok
+
+----------------------------------------------------------------------
+Ran 345 tests in 78.475s
+
+OK (skipped=2)
+
+Follow-up after report revision-label correction:
+python -m unittest discover -s tests -p test_generate_sic_schematics.py -v
+test_banner_is_derived_from_the_generation_label (test_generate_sic_schematics.GenerationLabelTests) ... ok
+test_board_generators_share_the_label (test_generate_sic_schematics.GenerationLabelTests) ... ok
+test_generated_files_parse_and_mapping_records_the_generation (test_generate_sic_schematics.GenerationTests) ... ok
+test_generation_is_deterministic (test_generate_sic_schematics.GenerationTests) ... ok
+test_native_erc_has_zero_findings (test_generate_sic_schematics.GenerationTests) ... ok
+test_wired_gates_pass_and_legacy_style_stays_available (test_generate_sic_schematics.GenerationTests) ... ok
+test_control_board_is_entirely_selv (test_generate_sic_schematics.NetClassTests) ... ok
+test_design_rules_text_orders_rules_and_parses (test_generate_sic_schematics.NetClassTests) ... ok
+test_merged_bom_carries_a_board_column (test_generate_sic_schematics.NetClassTests) ... ok
+test_pad_records_account_for_rotation (test_generate_sic_schematics.NetClassTests) ... ok
+test_pin_field_exceptions_come_from_pad_geometry (test_generate_sic_schematics.NetClassTests) ... ok
+test_power_board_nets_each_belong_to_exactly_one_baseline_class (test_generate_sic_schematics.NetClassTests) ... ok
+test_presentation_policy_and_style_switch (test_generate_sic_schematics.NetClassTests) ... ok
+test_required_clearance_follows_the_baseline_rules (test_generate_sic_schematics.NetClassTests) ... ok
+test_specs_coerce_for_both_boards (test_generate_sic_schematics.NetClassTests) ... ok
+test_wildcard_match_is_anchored_and_case_sensitive (test_generate_sic_schematics.NetClassTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 22.265s
+
+OK

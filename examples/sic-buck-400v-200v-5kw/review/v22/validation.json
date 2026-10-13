@@ -1,0 +1,250 @@
+{
+  "generated_utc": "2026-10-13T03:26:54.154814+00:00",
+  "scope": "CAD and analytical evidence only; human review required",
+  "frozen": {
+    "v2": {
+      "files": 868,
+      "manifest_sha256": "c144c7b28a265bbc4050e19b2f2c84dd7787baf23461dd115a4979e9a1f49681",
+      "errors": []
+    },
+    "v2.1": {
+      "files": 1015,
+      "manifest_sha256": "9e12318dd547dc2ee2a89fb432db764f9994933887cfd027a817c999630ee54c",
+      "errors": []
+    }
+  },
+  "boards": {
+    "power": {
+      "sha256": "b1df56e945624b0aca8e3538523a66945d4fcbd41a9734ebb645cc9e60158730",
+      "footprints": 237,
+      "drc": {
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      },
+      "schematic_model_board_exact": true,
+      "metrics": "verification\\engineering_checks\\layout_metrics_power.json",
+      "stored_fill_diagnostic": {
+        "schema_version": 2,
+        "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED",
+        "title": "Stored zone fills checked without refill (diagnostic, not a verification record)",
+        "generated_utc": "2026-10-13T03:19:18.413338+00:00",
+        "board": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
+        "board_sha256": "b1df56e945624b0aca8e3538523a66945d4fcbd41a9734ebb645cc9e60158730",
+        "method": "copy of the board directory in a temporary folder; kicad-cli pcb drc --format json --severity-all WITHOUT --refill-zones (no schematic parity: copper only); counts of the stored fills. The run_check manifests under verification/drc remain the evidence.",
+        "tool_exit_code": 0,
+        "violations": 0,
+        "unconnected_items": 0,
+        "by_type": {},
+        "by_rule": {},
+        "lib_warnings_note": "lib_footprint_issues / lib_footprint_mismatch entries, if any, are copied-path artefacts of the temporary folder"
+      },
+      "drc_manifest": "verification\\drc\\20261013T031652Z-drc-1e1fb73b\\run.json"
+    },
+    "control": {
+      "sha256": "6a1d9dbc5183a0fd79fc0c7b2937a4348b7f116fb12dd0ee7fb89a8b30cc94ef",
+      "footprints": 211,
+      "drc": {
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      },
+      "schematic_model_board_exact": true,
+      "metrics": "verification\\engineering_checks\\layout_metrics_control.json",
+      "stored_fill_diagnostic": {
+        "schema_version": 2,
+        "status": "AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED",
+        "title": "Stored zone fills checked without refill (diagnostic, not a verification record)",
+        "generated_utc": "2026-10-13T03:19:21.201961+00:00",
+        "board": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\control_board\\AIPE_SiC_Buck_Control.kicad_pcb",
+        "board_sha256": "6a1d9dbc5183a0fd79fc0c7b2937a4348b7f116fb12dd0ee7fb89a8b30cc94ef",
+        "method": "copy of the board directory in a temporary folder; kicad-cli pcb drc --format json --severity-all WITHOUT --refill-zones (no schematic parity: copper only); counts of the stored fills. The run_check manifests under verification/drc remain the evidence.",
+        "tool_exit_code": 0,
+        "violations": 0,
+        "unconnected_items": 0,
+        "by_type": {},
+        "by_rule": {},
+        "lib_warnings_note": "lib_footprint_issues / lib_footprint_mismatch entries, if any, are copied-path artefacts of the temporary folder"
+      },
+      "drc_manifest": "verification\\drc\\20261013T031237Z-drc-2a82689c\\run.json"
+    }
+  },
+  "calculations": {
+    "evidence": "Analytical calculations; no hardware measurement",
+    "current_reference": {
+      "before_V": 0.3270564915758176,
+      "after_V": 0.32963446475195823,
+      "fixed_sensor_zero_V": 0.33,
+      "before_supply_5pct_error_A": 0.3270564915758176,
+      "new_nominal_reference_error_A": -0.0073107049608356345,
+      "reference_load_A": 0.00032637075718015666,
+      "divider_output_impedance_ohm": 876.8276762402089,
+      "caveat": "Sensor offset/gain, REF3125 errors, divider tolerance and ADC error require calibration"
+    },
+    "sense_bias": {
+      "required_A": 0.0204,
+      "typical_Rint_ohm": 30,
+      "equation9_Rlim_max_ohm": 215.09803921568627,
+      "old_eq9_capacity_A": 0.0048543689320388345,
+      "new_eq9_capacity_A": 0.02631578947368421,
+      "stress_capacity_A": 0.022269855595667867,
+      "stress_note": "60 ohm internal resistance is an engineering assumption, not a datasheet maximum",
+      "normal_combined_resistor_switch_loss_W": 0.20400000000000001,
+      "resistor_rating_W_at_70C": 0.66,
+      "ambient_derated_resistor_rating_W_at_100C": 0.4270588235294118,
+      "caveat": "Normal-operation loss bound does not qualify startup pulses, regulator stability or continuous operation"
+    }
+  },
+  "comparison": [
+    {
+      "metric": "Q1 gate_track_mm",
+      "before": 39.7185,
+      "after": 39.7185,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Q1 gate_vias",
+      "before": 3,
+      "after": 3,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Q1 gate_track_over_kelvin_pour_fraction",
+      "before": 0.2148,
+      "after": 0.2148,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Q2 gate_track_mm",
+      "before": 82.1252,
+      "after": 82.1252,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Q2 gate_vias",
+      "before": 14,
+      "after": 14,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Q2 gate_track_over_kelvin_pour_fraction",
+      "before": 0.2436,
+      "after": 0.2436,
+      "limitation": "Summed gate-net geometry/projection; not a closed-loop inductance extraction"
+    },
+    {
+      "metric": "Control U4 maximum supply-pad to nearest bypass-pad distance",
+      "unit": "mm",
+      "before": 26.5037,
+      "after": 1.5117,
+      "limitation": "Geometric distance, not measured supply-loop inductance"
+    },
+    {
+      "metric": "Control U8 maximum supply-pad to nearest bypass-pad distance",
+      "unit": "mm",
+      "before": 10.3926,
+      "after": 1.002,
+      "limitation": "Geometric distance, not measured supply-loop inductance"
+    },
+    {
+      "metric": "Control U10 maximum supply-pad to nearest bypass-pad distance",
+      "unit": "mm",
+      "before": 7.2028,
+      "after": 4.4109,
+      "limitation": "Geometric distance, not measured supply-loop inductance"
+    },
+    {
+      "metric": "Control U11 maximum supply-pad to nearest bypass-pad distance",
+      "unit": "mm",
+      "before": 9.5876,
+      "after": 4.2628,
+      "limitation": "Geometric distance, not measured supply-loop inductance"
+    }
+  ],
+  "aggregate_verification": {
+    "boards": {
+      "power": {
+        "erc": {
+          "manifest": "verification/erc/20261013T030835Z-erc-0251a909/run.json",
+          "status": "passed",
+          "findings": 0,
+          "tool_exit_code": 0,
+          "hashes_valid": true,
+          "report_hash_checked": true
+        },
+        "drc": {
+          "manifest": "verification/drc/20261013T031652Z-drc-1e1fb73b/run.json",
+          "status": "passed",
+          "findings": 0,
+          "tool_exit_code": 0,
+          "hashes_valid": true,
+          "report_hash_checked": true
+        },
+        "exports": {
+          "status": "passed",
+          "commands": 11,
+          "files": 35,
+          "step_models_complete": false
+        },
+        "netlist_check": {
+          "status": "passed",
+          "file": "verification/netlist_check_power.json"
+        },
+        "layout_metrics": {
+          "status": "passed",
+          "file": "verification/engineering_checks/layout_metrics_power.json",
+          "board_hash_recorded": true,
+          "board_hash_matches": true
+        },
+        "components": 237,
+        "purchased_components": 196,
+        "dnp_components": 16,
+        "named_nets": 101
+      },
+      "control": {
+        "erc": {
+          "manifest": "verification/erc/20261013T030842Z-erc-365fb3dc/run.json",
+          "status": "passed",
+          "findings": 0,
+          "tool_exit_code": 0,
+          "hashes_valid": true,
+          "report_hash_checked": true
+        },
+        "drc": {
+          "manifest": "verification/drc/20261013T031237Z-drc-2a82689c/run.json",
+          "status": "passed",
+          "findings": 0,
+          "tool_exit_code": 0,
+          "hashes_valid": true,
+          "report_hash_checked": true
+        },
+        "exports": {
+          "status": "passed",
+          "commands": 11,
+          "files": 35,
+          "step_models_complete": false
+        },
+        "netlist_check": {
+          "status": "passed",
+          "file": "verification/netlist_check_control.json"
+        },
+        "layout_metrics": {
+          "status": "passed",
+          "file": "verification/engineering_checks/layout_metrics_control.json",
+          "board_hash_recorded": true,
+          "board_hash_matches": true
+        },
+        "components": 211,
+        "purchased_components": 190,
+        "dnp_components": 1,
+        "named_nets": 111
+      }
+    },
+    "simulation_runs": 20,
+    "research_records": 10,
+    "verification_records": 20,
+    "problems": [],
+    "status": "passed",
+    "scope": "CAD connectivity, native check currency and export integrity only; hardware unqualified"
+  }
+}

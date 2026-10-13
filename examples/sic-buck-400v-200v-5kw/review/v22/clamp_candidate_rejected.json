@@ -1,0 +1,203 @@
+{
+  "disposition": "REJECTED - not part of accepted V2.2 layout",
+  "reason": "Shorter connection but lower aggregate gate-track projection over the Kelvin pour; no extracted/bench evidence establishing a net loop improvement.",
+  "clamp_route": {
+    "before": {
+      "length_mm": 20.760642509900784,
+      "vias": 3
+    },
+    "after": {
+      "length_mm": 18.98005989231671,
+      "vias": 3
+    },
+    "scope": "Connection geometry only; no measured inductance or clamp transient validation"
+  },
+  "gate_before": {
+    "mosfet": "Q2",
+    "driver": "U3",
+    "gate_nets": [
+      "G_L",
+      "LS_OUTH",
+      "LS_OUTL",
+      "LS_CLMP"
+    ],
+    "kelvin_net": "KS_L",
+    "power_source_net": "PGND",
+    "driver_output_to_gate_pad_mm": 14.3596,
+    "driver_output_pad": "4",
+    "driver_return_to_kelvin_pad_mm": 14.7212,
+    "gate_track_mm": 82.1252,
+    "gate_vias": 14,
+    "gate_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "kelvin_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "adjacent_layer_pairs": [
+      [
+        "B.Cu",
+        "In2.Cu"
+      ],
+      [
+        "F.Cu",
+        "In1.Cu"
+      ],
+      [
+        "In1.Cu",
+        "F.Cu"
+      ],
+      [
+        "In1.Cu",
+        "In2.Cu"
+      ],
+      [
+        "In2.Cu",
+        "B.Cu"
+      ],
+      [
+        "In2.Cu",
+        "In1.Cu"
+      ]
+    ],
+    "gate_kelvin_on_adjacent_layers": true,
+    "gate_track_over_kelvin_pour_fraction": 0.2436,
+    "kelvin_separation": {
+      "distinct_nets": true,
+      "min_copper_distance_mm": 0.3005,
+      "per_layer": {
+        "F.Cu": {
+          "distance_mm": 0.635,
+          "between": [
+            "pad Q2.3",
+            "pad Q2.2"
+          ]
+        },
+        "In1.Cu": {
+          "distance_mm": 0.3005,
+          "between": [
+            "via",
+            "zone PGND"
+          ]
+        },
+        "In2.Cu": {
+          "distance_mm": 0.3007,
+          "between": [
+            "zone KS_L",
+            "pad Q2.2"
+          ]
+        },
+        "B.Cu": {
+          "distance_mm": 0.635,
+          "between": [
+            "pad Q2.3",
+            "pad Q2.2"
+          ]
+        }
+      },
+      "copper_contact": false,
+      "bridging_parts": []
+    }
+  },
+  "gate_candidate": {
+    "mosfet": "Q2",
+    "driver": "U3",
+    "gate_nets": [
+      "G_L",
+      "LS_OUTH",
+      "LS_OUTL",
+      "LS_CLMP"
+    ],
+    "kelvin_net": "KS_L",
+    "power_source_net": "PGND",
+    "driver_output_to_gate_pad_mm": 14.3596,
+    "driver_output_pad": "4",
+    "driver_return_to_kelvin_pad_mm": 14.7212,
+    "gate_track_mm": 80.3446,
+    "gate_vias": 14,
+    "gate_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "kelvin_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "adjacent_layer_pairs": [
+      [
+        "B.Cu",
+        "In2.Cu"
+      ],
+      [
+        "F.Cu",
+        "In1.Cu"
+      ],
+      [
+        "In1.Cu",
+        "F.Cu"
+      ],
+      [
+        "In1.Cu",
+        "In2.Cu"
+      ],
+      [
+        "In2.Cu",
+        "B.Cu"
+      ],
+      [
+        "In2.Cu",
+        "In1.Cu"
+      ]
+    ],
+    "gate_kelvin_on_adjacent_layers": true,
+    "gate_track_over_kelvin_pour_fraction": 0.2211,
+    "kelvin_separation": {
+      "distinct_nets": true,
+      "min_copper_distance_mm": 0.3005,
+      "per_layer": {
+        "F.Cu": {
+          "distance_mm": 0.635,
+          "between": [
+            "pad Q2.3",
+            "pad Q2.2"
+          ]
+        },
+        "In1.Cu": {
+          "distance_mm": 0.3005,
+          "between": [
+            "via",
+            "zone PGND"
+          ]
+        },
+        "In2.Cu": {
+          "distance_mm": 0.3007,
+          "between": [
+            "zone KS_L",
+            "pad Q2.2"
+          ]
+        },
+        "B.Cu": {
+          "distance_mm": 0.635,
+          "between": [
+            "pad Q2.3",
+            "pad Q2.2"
+          ]
+        }
+      },
+      "copper_contact": false,
+      "bridging_parts": []
+    }
+  },
+  "candidate_board_sha256": "472d57c0f0c9d093f0d252c8e8873a03c2a6ebcd9dc22b6fa477098092ea9bf8",
+  "native_drc": "verification/drc/20261013T031237Z-drc-da17ab0f/run.json"
+}

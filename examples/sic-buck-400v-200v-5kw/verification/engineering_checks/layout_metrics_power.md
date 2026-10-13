@@ -1,8 +1,8 @@
 # Layout metrics - AIPE SiC buck 400 V -> 200 V / 5 kW power board (AIPE_SiC_Buck_Power) - layout metrics spec
 
-Status: **measured-human-review-required**. Generated 2026-10-12T10:04:23.470336+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 41.094 s).
+Status: **measured-human-review-required**. Generated 2026-10-13T03:17:21.090220+00:00 by `automation/verification/check_sic_layout.py` (pcbnew 10.0.7, distance backend numpy, 25.313 s).
 
-Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `ae4ca86c438f56b8...`), spec `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
+Board `examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_pcb` (sha256 `b1df56e945624b0a...`), spec `examples\sic-buck-400v-200v-5kw\verification\engineering_checks\layout_spec_power.json`, model `examples\sic-buck-400v-200v-5kw\design\circuit_power.json`.
 
 ## Board
 
@@ -13,7 +13,7 @@ Board `D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\
 | Copper layers | 4 (F.Cu, In1.Cu, In2.Cu, B.Cu) |
 | Thickness (mm) | 2.000 |
 | Copper thickness (um, stackup text) | F.Cu=70.000; In1.Cu=70.000; In2.Cu=70.000; B.Cu=70.000 |
-| Footprints / tracks / vias / zones / rule areas | 237 / 3136 / 606 / 20 / 16 |
+| Footprints / tracks / vias / zones / rule areas | 237 / 3149 / 606 / 20 / 16 |
 | Nets | 104 |
 | Zones without fill (areas read from the file) | none |
 | Expected (spec) | outline_mm=240, 180; copper_layers=4; copper_um=70; thickness_mm=2.000 |
@@ -44,14 +44,14 @@ Dispositions follow the spec thresholds only; every row needs engineering accept
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U7 pads: minimum copper distance to SW (mm, any layer) | 25.150 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U10 pads: minimum copper distance to SW (mm, any layer) | 27.345 | n/a | measured - human review required |  |
 | PE-PCB-005 | Separate sensitive analog and switch-node paths | U8 pads: minimum copper distance to SW (mm, any layer) | 42.073 | n/a | measured - human review required |  |
-| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16939.900; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
+| PE-PCB-006 | Justify high-current copper and via capacity | VIN copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=4530.400; In2.Cu=16942.300; vias=34; track_mm=3.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | VIN_RAW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=422.800; B.Cu=422.800; vias=0; track_mm=51.300 | >= 24 vias per net | exceeds spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | SW copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=120.000; In2.Cu=3236.600; vias=25; track_mm=9.600 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
-| PE-PCB-006 | Justify high-current copper and via capacity | PGND copper (zone area per layer, via count, track length) | zone_area_mm2=B.Cu=9042.000; In1.Cu=28679.700; vias=90; track_mm=22.500 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
+| PE-PCB-006 | Justify high-current copper and via capacity | PGND copper (zone area per layer, via count, track length) | zone_area_mm2=B.Cu=9042.000; In1.Cu=28680.900; vias=90; track_mm=22.500 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | VOUT copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=2218.800; B.Cu=2406.000; In2.Cu=3126.300; vias=63; track_mm=6.100 | >= 24 vias per net | within spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-006 | Justify high-current copper and via capacity | VOUT_L copper (zone area per layer, via count, track length) | zone_area_mm2=F.Cu=422.200; vias=0; track_mm=0.000 | >= 24 vias per net | exceeds spec threshold - human review required | Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths. |
 | PE-PCB-007 | Separate control and switching structures | control section (86 parts) to power stage (131 parts) bounding-box distance (mm) | 12.307 | >= 9.0 mm | within spec threshold - human review required |  |
-| PE-PCB-007 | Separate control and switching structures | GND_CTRL zone area (mm2) and island count per layer | In1.Cu=area=5866.400; islands=1 | n/a | measured - human review required | V1 ground-plane extent guard generalised |
+| PE-PCB-007 | Separate control and switching structures | GND_CTRL zone area (mm2) and island count per layer | In1.Cu=area=5865.200; islands=1 | n/a | measured - human review required | V1 ground-plane extent guard generalised |
 | PE-PCB-007 | Separate control and switching structures | board area (mm2), footprints per dm2, courtyard fraction front/back | area=43200.000; per_dm2=54.900; courtyard=front=0.594; back=0.010 | area <= 43200 mm2 | within spec threshold - human review required | HV bbox fraction 0.770; power density 1157.4 W/dm2, 1607.5 W/L |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U1 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm) | 7.597 | <= 15 mm | within spec threshold - human review required | 5->C37.1 6.86; 8->C37.2 7.60 |
 | PE-PCB-008 | Place decoupling adjacent to supply pins | U3 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm) | 9.477 | <= 15 mm | within spec threshold - human review required | 5->C56.1 4.66; 8->C56.2 9.48 |
@@ -219,7 +219,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 
 | Ground layer | Area (mm2) | Islands | Zones | Required probes covered | Forbidden probes copper-free |
 | --- | --- | --- | --- | --- | --- |
-| In1.Cu | 5866.4 | 1 | 1 | 0/0 | 0/0 |
+| In1.Cu | 5865.2 | 1 | 1 | 0/0 | 0/0 |
 
 ## Compactness
 
@@ -243,8 +243,8 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | 12V_BIAS_L | CTRL_SELV | 36.7 | 15 | 2 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 12V_BIAS_S | CTRL_SELV | 96.4 | 67 | 6 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | 12V_PROT | CTRL_SELV | 261.8 | 103 | 14 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| 3V3 | CTRL_SELV | 417.8 | 275 | 22 | 31 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=4128.500 |
-| 5V_ISO | SENSE_ISO | 63.6 | 45 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| 3V3 | CTRL_SELV | 413.3 | 270 | 21 | 30 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=4127.400 |
+| 5V_ISO | SENSE_ISO | 68.8 | 50 | 6 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | BIAS_EN | CTRL_SELV | 142.4 | 51 | 10 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | BIAS_EN_F | CTRL_SELV | 130.6 | 45 | 9 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | BLD_IN_1 | HV_VIN | 0.9 | 1 | 0 | 2 | F.Cu |  |
@@ -262,7 +262,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | GNDP_H | CTRL_SELV | 48.8 | 28 | 3 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | GNDP_L | CTRL_SELV | 55.0 | 33 | 4 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | GNDP_S | CTRL_SELV | 114.9 | 101 | 9 | 19 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| GND_CTRL | CTRL_SELV | 153.5 | 140 | 62 | 68 | F.Cu, In1.Cu, In2.Cu, B.Cu | In1.Cu=5866.400 |
+| GND_CTRL | CTRL_SELV | 153.5 | 140 | 62 | 68 | F.Cu, In1.Cu, In2.Cu, B.Cu | In1.Cu=5865.200 |
 | G_H | DRV_HS | 26.3 | 27 | 0 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=78.800 |
 | G_L | DRV_LS | 33.1 | 28 | 7 | 7 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=31.600 |
 | HS_CLMP | DRV_HS | 5.5 | 6 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
@@ -282,7 +282,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | ISO_15V | SENSE_ISO | 31.5 | 17 | 1 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | ISO_FB_VDD | SENSE_ISO | 17.7 | 12 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | ISO_FB_VEE | SENSE_ISO | 13.2 | 8 | 1 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| ISO_RLIM | SENSE_ISO | 8.1 | 8 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
+| ISO_RLIM | SENSE_ISO | 9.8 | 5 | 1 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | K1_LOW | CTRL_SELV | 16.8 | 3 | 0 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | KS_H | DRV_HS | 95.9 | 62 | 11 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=502.200 |
 | KS_L | DRV_LS | 86.6 | 59 | 9 | 17 | F.Cu, In1.Cu, In2.Cu, B.Cu | In2.Cu=248.900 |
@@ -296,7 +296,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | OC_N | CTRL_SELV | 72.8 | 53 | 6 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PE | PE | 76.9 | 6 | 0 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PE_REF_MID | HV_PGND | 3.1 | 1 | 0 | 2 | B.Cu |  |
-| PGND | HV_PGND | 22.5 | 20 | 90 | 81 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=9042.000; In1.Cu=28679.700 |
+| PGND | HV_PGND | 22.5 | 20 | 90 | 81 | F.Cu, In1.Cu, In2.Cu, B.Cu | B.Cu=9042.000; In1.Cu=28680.900 |
 | PG_BIAS_H_N | CTRL_SELV | 257.0 | 92 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PG_BIAS_L_N | CTRL_SELV | 53.8 | 14 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | PG_BIAS_S_N | CTRL_SELV | 49.3 | 16 | 1 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
@@ -306,7 +306,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | PWM_L_F | CTRL_SELV | 53.6 | 34 | 6 | 6 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RDY_H | CTRL_SELV | 124.7 | 73 | 2 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RDY_L | CTRL_SELV | 107.4 | 55 | 4 | 3 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| REF2V5_PB | CTRL_SELV | 12.4 | 8 | 0 | 3 | F.Cu |  |
+| REF2V5_PB | CTRL_SELV | 59.3 | 24 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RELAY_ON | CTRL_SELV | 195.9 | 33 | 5 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RESET_N | CTRL_SELV | 123.4 | 105 | 3 | 2 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | RESET_N_F | CTRL_SELV | 46.3 | 23 | 2 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
@@ -319,7 +319,7 @@ Control parts: 86, power parts: 131, bounding-box separation 12.307 mm.
 | VDD_L | DRV_LS | 78.8 | 61 | 6 | 11 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VEE_H | DRV_HS | 85.8 | 61 | 9 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VEE_L | DRV_LS | 94.8 | 117 | 16 | 24 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
-| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16939.900 |
+| VIN | HV_VIN | 3.1 | 1 | 34 | 33 | F.Cu, In1.Cu, In2.Cu, B.Cu | F.Cu=4530.400; In2.Cu=16942.300 |
 | VIN_AMP_N | CTRL_SELV | 34.5 | 22 | 4 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_AMP_P | CTRL_SELV | 28.6 | 27 | 2 | 4 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |
 | VIN_DIV | SENSE_ISO | 29.5 | 20 | 3 | 5 | F.Cu, In1.Cu, In2.Cu, B.Cu |  |

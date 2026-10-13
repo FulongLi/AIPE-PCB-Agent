@@ -2,16 +2,16 @@
 <export version="E">
   <design>
     <source>D:\Cursor Workspace\AIPE-PCB-Agent\examples\sic-buck-400v-200v-5kw\kicad\power_board\AIPE_SiC_Buck_Power.kicad_sch</source>
-    <date>2026-10-12T20:09:48</date>
+    <date>2026-10-13T11:23:53</date>
     <tool>Eeschema 10.0.7</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title>AIPE V2 SiC buck power board - 400 V (360-440 V) to 200 V / 25 A / 5 kW / 50 kHz synchronous buck; Wolfspeed C4MS025120K; TMS320F28335 control board on a stacked SELV mezzanine</title>
+        <title>SiC buck 400V / 200V / 5kW - power board</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>AIPE_SiC_Buck_Power.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -26,10 +26,10 @@
       <title_block>
         <title>Input, half bridge, inductor, output, bleeders</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>01_power_stage.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -44,10 +44,10 @@
       <title_block>
         <title>High-side isolated gate driver and bias</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>02_gate_driver_hs.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -62,10 +62,10 @@
       <title_block>
         <title>Low-side isolated gate driver and bias</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>03_gate_driver_ls.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -80,10 +80,10 @@
       <title_block>
         <title>Isolated voltage sensing island and its bias module</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>04_sensing_island.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -98,10 +98,10 @@
       <title_block>
         <title>SELV strip: mezzanine, conditioning, relay and fan interface</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>05_selv_strip.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -116,10 +116,10 @@
       <title_block>
         <title>Heatsink envelope, terminals, mounting, test points</title>
         <company/>
-        <rev>V2.1</rev>
+        <rev>V2.2</rev>
         <date/>
         <source>06_mechanical.kicad_sch</source>
-        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.1 - HUMAN REVIEW REQUIRED"/>
+        <comment number="1" value="AI-GENERATED ENGINEERING PROTOTYPE - V2.2 - HUMAN REVIEW REQUIRED"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -4081,10 +4081,10 @@
       </units>
     </comp>
     <comp ref="R57">
-      <value>1k</value>
-      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <value>160</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
       <fields>
-        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
@@ -5292,7 +5292,7 @@
       </units>
     </comp>
     <comp ref="R82">
-      <value>9.09k</value>
+      <value>6.65k</value>
       <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
       <fields>
         <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
@@ -5316,7 +5316,7 @@
       </units>
     </comp>
     <comp ref="R83">
-      <value>1k</value>
+      <value>1.01k</value>
       <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
       <fields>
         <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
@@ -10052,7 +10052,6 @@
       <node ref="R52" pin="1" pintype="passive"/>
       <node ref="R58" pin="1" pintype="passive"/>
       <node ref="R81" pin="1" pintype="passive"/>
-      <node ref="R82" pin="1" pintype="passive"/>
       <node ref="R84" pin="1" pintype="passive"/>
       <node ref="TP3" pin="1" pintype="passive"/>
       <node ref="U1" pin="15" pinfunction="VCC_15" pintype="power_in"/>
@@ -10630,6 +10629,7 @@
     <net code="68" name="REF2V5_PB" class="CTRL_SELV">
       <node ref="C86" pin="1" pintype="passive"/>
       <node ref="R79" pin="1" pintype="passive"/>
+      <node ref="R82" pin="1" pintype="passive"/>
       <node ref="U9" pin="2" pinfunction="OUT_2" pintype="power_out"/>
     </net>
     <net code="69" name="RELAY_ON" class="CTRL_SELV">
