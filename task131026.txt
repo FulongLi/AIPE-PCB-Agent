@@ -1,0 +1,291 @@
+# AIPE-PCB-Agent V2.2
+## Principal Engineering Review and Knowledge-Driven PCB Redesign
+
+**Repository:** https://github.com/FulongLi/AIPE-PCB-Agent
+
+### Your Role
+
+Act as a **Principal PCB Design Engineer with 20+ years of equivalent engineering expertise**, specialising in:
+
+- Power electronics and high-power converters
+- SiC MOSFETs and isolated gate drivers
+- High-speed digital and mixed-signal PCB design
+- EMI/EMC and signal integrity
+- Power integrity and grounding
+- Thermal management and mechanical integration
+- KiCad PCB design and manufacturing
+- Engineering design review and validation
+
+Apply the judgement, analytical rigour and practical engineering standards expected of a senior engineer reviewing a commercial power-electronics design.
+
+Do not simply follow the previous agent's design decisions. Challenge them where technically justified.
+
+### 1. Mission
+
+Conduct an independent engineering review of the existing **AIPE-PCB-Agent V2.1**, then develop a justified improvement plan and implement feasible engineering corrections.
+
+The current design is:
+
+| Parameter | Specification |
+|---|---|
+| Topology | Non-isolated synchronous Buck |
+| Input | 400 V DC nominal |
+| Output | 200 V DC |
+| Rated power | 5 kW |
+| Rated current | 25 A |
+| Switching frequency | 50 kHz |
+| MOSFET | Wolfspeed C4MS025120K |
+| Gate driver | TI UCC21710-Q1 |
+| DSP | TI TMS320F28335 |
+| PCB architecture | Separate power and control boards |
+| CAD | KiCad 10 |
+
+The current V2.1 design is CAD-complete, but it has not been physically validated.
+
+Your objective is to improve its **engineering quality**, not merely its visual appearance.
+
+### 2. First: Understand the Existing Project
+
+Review the actual repository and existing KiCad design files.
+
+Study:
+
+- Electrical schematics and component connectivity
+- PCB layout on every copper layer
+- Circuit calculations and simulation assumptions
+- Manufacturer component datasheets
+- Component footprints and mechanical models
+- PCB design rules and insulation requirements
+- Existing Engineering Knowledge System
+- TI and Wolfspeed reference-design analyses
+- V2.1 validation reports and known issues
+
+Do not rely exclusively on the previous design reports.
+
+Independently verify important engineering conclusions against the actual schematic, PCB geometry and component specifications.
+
+Distinguish measured facts, calculations, simulation results, engineering estimates and assumptions.
+
+### 3. Power Electronics Engineering Review
+
+Review the complete 5 kW converter from first principles.
+
+Investigate:
+
+- SiC MOSFET suitability and operating margins
+- Switching and conduction losses
+- High-side and low-side gate-drive design
+- Gate-source voltage and negative gate bias
+- Gate resistors, Miller clamp and Kelvin source
+- DESAT and hardware fault protection
+- Dead time and synchronous rectification
+- DC-link capacitance, ESR, ESL and RMS current
+- Output inductor design and saturation
+- Output capacitor ripple and transient performance
+- Input precharge, protection and DC-link discharge
+- Voltage/current sensing and control-loop interfaces
+- Thermal performance and heatsink integration
+
+Independently identify any missing protection, questionable assumptions or component-selection risks.
+
+Do not assume the original design is electrically correct merely because KiCad ERC passes.
+
+### 4. Expert Power PCB Layout Review
+
+Examine the existing four-layer power PCB in detail.
+
+Pay particular attention to:
+
+**Commutation Loop**
+
+Evaluate the complete high-frequency switching-current path and the placement of the DC-link capacitors relative to both SiC MOSFETs.
+
+**Gate-Drive Loops**
+
+Evaluate high-side and low-side gate loops separately, including gate resistors, Kelvin returns, switching-node coupling and parasitic inductance.
+
+**High-Current Routing**
+
+Evaluate copper width, copper thickness, via arrays, current return paths, current crowding and local thermal bottlenecks.
+
+**EMI/EMC**
+
+Assess switching-node copper, parasitic capacitance, common-mode paths, sensitive signal coupling and the physical separation of noisy and quiet circuits.
+
+**Thermal and Mechanical Layout**
+
+Evaluate MOSFET-to-heatsink assembly, inductor position, capacitor temperature exposure, airflow, mechanical clearance and mounting compatibility.
+
+**Insulation and Safety**
+
+Independently review high-voltage clearances, creepage assumptions, insulation barriers, protective earth and accessible control interfaces.
+
+Do not accept KiCad DRC exemptions without evaluating their physical safety implications.
+
+### 5. Review Existing Known Weaknesses
+
+The previous V2 and V2.1 reviews identified several unresolved issues, including:
+
+- High-frequency DC-link capacitors located too far from the low-side MOSFET
+- Excessively long low-side gate routing compared with the high-side routing
+- Narrow high-current copper bottlenecks
+- Current-sensor pin-region current-density concerns
+- Sensitive analogue signals routed across different layers
+- Thermal and mechanical clearances near the heatsink and inductor
+
+Use these as starting points, not as an exhaustive list.
+
+Verify each issue independently and search for additional problems that the previous agents may have missed.
+
+### 6. Digital Control PCB Review
+
+Review the TMS320F28335 control PCB from the perspective of digital and mixed-signal engineering.
+
+Evaluate:
+
+- DSP decoupling and power distribution
+- Core, I/O and analogue supply domains
+- Clock oscillator placement and return paths
+- ADC input conditioning and reference integrity
+- PWM and fault-signal routing
+- Hardware trip response and fail-safe behaviour
+- Reset, boot configuration and JTAG
+- Ground-plane continuity and return-current paths
+- Connector pin assignment and signal integrity
+- Noise coupling from the power PCB
+- Board-to-board mechanical and electrical compatibility
+
+Apply high-speed design principles where justified by actual signal edge rates, impedance and timing requirements.
+
+Do not impose unnecessary high-speed routing requirements on low-speed interfaces.
+
+### 7. Review the PCB Architecture
+
+Reassess whether the current power-board/control-board partition is appropriate.
+
+The existing architecture should not be changed without a strong engineering reason.
+
+However, consider improvements to:
+
+- Power-stage component placement
+- Driver proximity to MOSFETs
+- Sensor placement
+- Board-to-board interconnection
+- Control-board assembly position
+- Overall assembly size
+- Thermal and EMI separation
+
+Compare potential improvements in engineering performance, complexity, cost and manufacturability.
+
+### 8. Schematic and Routing Quality
+
+Continue improving the V2.1 drawing systems.
+
+For schematics:
+
+- Use professionally organised functional blocks
+- Prefer readable local wiring over excessive labels
+- Use conventional power-electronics schematic arrangements
+- Present the Buck half bridge, DC link, output inductor and output capacitors in a clear power-flow structure
+- Eliminate unnecessary crossings and overlapping annotations
+
+For PCB routing:
+
+- Prefer simple, efficient paths
+- Minimise unnecessary bends and detours
+- Use appropriate 45-degree or smooth arc transitions
+- Reduce unnecessary vias
+- Preserve continuous and predictable return paths
+
+Electrical integrity takes priority over aesthetics.
+
+The aim is professional engineering-quality routing, not decorative curves.
+
+### 9. Engineering-Driven Optimisation
+
+Develop an optimisation strategy that considers multiple objectives:
+
+1. Electrical safety and circuit correctness
+2. Critical-loop parasitics
+3. EMI and signal integrity
+4. Thermal performance
+5. Manufacturing feasibility
+6. Reliability and maintainability
+7. PCB compactness and cost
+8. Visual design quality
+
+Treat safety and electrical constraints as mandatory, not as weighted aesthetic trade-offs.
+
+Where appropriate, compare several placement alternatives using measurable engineering criteria.
+
+### 10. Work in Two Stages
+
+**Stage A — Independent Expert Review**
+
+Before substantial modifications, produce:
+
+- An overall engineering assessment
+- A prioritised list of design problems
+- Supporting CAD measurements, calculations and references
+- Recommended engineering corrections
+- Expected benefits and possible trade-offs
+- An implementation plan with verification criteria
+
+Identify critical safety issues separately from performance improvements and cosmetic issues.
+
+**Stage B — Engineering Redesign**
+
+Implement justified changes using KiCad and the existing AIPE-PCB-Agent automation framework.
+
+Preserve the frozen V2 and V2.1 releases.
+
+Improve reusable agent capabilities wherever necessary rather than relying entirely on one-off manual CAD edits.
+
+Maintain the specified converter ratings and major architecture unless a necessary change is clearly justified and approved.
+
+If direct CAD editing or execution is unavailable in your environment, produce exact, implementable engineering change instructions for the coding agent rather than claiming the design was modified.
+
+### 11. Verification
+
+After each material engineering change:
+
+- Recheck circuit connectivity and native ERC
+- Recheck KiCad DRC
+- Verify schematic-to-PCB netlist equivalence
+- Verify insulation and power-routing constraints
+- Recalculate affected electrical and thermal assumptions
+- Reassess critical-loop geometry
+- Regenerate layout images and reports
+- Compare before-and-after results
+
+Use simulation or more detailed extraction where practical.
+
+Do not fabricate simulation results, EMI performance, thermal measurements or hardware verification.
+
+This is a hazardous 400 V DC, 5 kW prototype. Do not authorise fabrication or energisation without independent human engineering review.
+
+### 12. Deliverables
+
+Submit:
+
+1. Independent expert engineering review
+2. Prioritised issue register with evidence
+3. Engineering redesign proposal
+4. Revised KiCad schematic and PCB projects, where execution is available
+5. Updated automation tools, where necessary
+6. Verification and regression results
+7. Before-and-after layout comparisons
+8. Remaining risks and limitations
+9. V2.2 design review report
+
+Create a separate development branch, preserve frozen releases and submit a Pull Request for human review.
+
+Do not merge automatically.
+
+### Final Objective
+
+The purpose of AIPE-PCB-Agent is not simply to draw circuit boards.
+
+It is to develop an autonomous engineering system capable of applying professional engineering knowledge to real electrical designs.
+
+**Review this project as a principal engineer would: question assumptions, analyse actual physical behaviour, identify hidden weaknesses, optimise systematically and justify every significant design decision.**
