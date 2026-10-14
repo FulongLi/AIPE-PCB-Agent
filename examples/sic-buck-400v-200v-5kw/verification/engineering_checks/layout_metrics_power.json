@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "status": "measured-human-review-required",
-  "generated_utc": "2026-10-12T10:04:23.470336+00:00",
+  "generated_utc": "2026-10-13T03:17:21.090220+00:00",
   "checker": "automation/verification/check_sic_layout.py",
   "spec": {
-    "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_spec_power.json",
+    "file": "examples\\sic-buck-400v-200v-5kw\\verification\\engineering_checks\\layout_spec_power.json",
     "sha256": "2a41c0791d11d043177bdbb6d9d1b249a46158dcd86298ac0383a693d72e4ec3",
     "board": "power",
     "title": "AIPE SiC buck 400 V -> 200 V / 5 kW power board (AIPE_SiC_Buck_Power) - layout metrics spec"
   },
-  "model_file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\design\\circuit_power.json",
+  "model_file": "examples\\sic-buck-400v-200v-5kw\\design\\circuit_power.json",
   "distance_backend": "numpy",
-  "runtime_s": 41.094,
+  "runtime_s": 25.313,
   "board": {
-    "file": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
-    "sha256": "ae4ca86c438f56b8cb23c3f93b8e415aea73a509a604c69a0f28f04ea5519b56",
-    "title": "AIPE SiC buck 400 V -> 200 V / 5 kW - power board (SiC half bridge, drivers, isolators, SELV strip)",
+    "file": "examples\\sic-buck-400v-200v-5kw\\kicad\\power_board\\AIPE_SiC_Buck_Power.kicad_pcb",
+    "sha256": "b1df56e945624b0aca8e3538523a66945d4fcbd41a9734ebb645cc9e60158730",
+    "title": "SiC buck 400V / 200V / 5kW - power board",
     "pcbnew_version": "10.0.7",
     "outline_mm": [
       240.0,
@@ -95,7 +95,7 @@
       }
     ],
     "footprints": 237,
-    "tracks": 3136,
+    "tracks": 3149,
     "vias": 606,
     "zones": 20,
     "rule_areas": 16,
@@ -174,10 +174,10 @@
     },
     "3V3": {
       "cls": "CTRL_SELV",
-      "track_mm": 417.8455,
-      "tracks": 275,
-      "vias": 22,
-      "pads": 31,
+      "track_mm": 413.2634,
+      "tracks": 270,
+      "vias": 21,
+      "pads": 30,
       "layers": [
         "F.Cu",
         "In1.Cu",
@@ -185,7 +185,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In2.Cu": 4128.5462
+        "In2.Cu": 4127.4068
       },
       "zone_islands": {
         "In2.Cu": 10
@@ -193,9 +193,9 @@
     },
     "5V_ISO": {
       "cls": "SENSE_ISO",
-      "track_mm": 63.6355,
-      "tracks": 45,
-      "vias": 7,
+      "track_mm": 68.7729,
+      "tracks": 50,
+      "vias": 6,
       "pads": 7,
       "layers": [
         "F.Cu",
@@ -462,7 +462,7 @@
         "B.Cu"
       ],
       "zone_area_mm2": {
-        "In1.Cu": 5866.4435
+        "In1.Cu": 5865.1541
       },
       "zone_islands": {
         "In1.Cu": 1
@@ -748,8 +748,8 @@
     },
     "ISO_RLIM": {
       "cls": "SENSE_ISO",
-      "track_mm": 8.1497,
-      "tracks": 8,
+      "track_mm": 9.7731,
+      "tracks": 5,
       "vias": 1,
       "pads": 2,
       "layers": [
@@ -975,7 +975,7 @@
       ],
       "zone_area_mm2": {
         "B.Cu": 9041.9575,
-        "In1.Cu": 28679.7339
+        "In1.Cu": 28680.8733
       },
       "zone_islands": {
         "B.Cu": 6,
@@ -1119,12 +1119,15 @@
     },
     "REF2V5_PB": {
       "cls": "CTRL_SELV",
-      "track_mm": 12.375,
-      "tracks": 8,
-      "vias": 0,
-      "pads": 3,
+      "track_mm": 59.3008,
+      "tracks": 24,
+      "vias": 2,
+      "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
@@ -1326,7 +1329,7 @@
       ],
       "zone_area_mm2": {
         "F.Cu": 4530.3977,
-        "In2.Cu": 16939.9349
+        "In2.Cu": 16942.3258
       },
       "zone_islands": {
         "F.Cu": 3,
@@ -2227,8 +2230,8 @@
         "per_layer": {
           "F.Cu": {
             "kind": "outer",
-            "items_a": 1019,
-            "items_b": 1619,
+            "items_a": 1018,
+            "items_b": 1627,
             "distance_mm": 9.4864,
             "threshold_mm": 9.0,
             "within": true,
@@ -2251,8 +2254,8 @@
           },
           "In1.Cu": {
             "kind": "inner",
-            "items_a": 430,
-            "items_b": 319,
+            "items_a": 429,
+            "items_b": 320,
             "distance_mm": 11.1,
             "threshold_mm": 9.0,
             "within": true,
@@ -2275,8 +2278,8 @@
           },
           "In2.Cu": {
             "kind": "inner",
-            "items_a": 622,
-            "items_b": 1021,
+            "items_a": 621,
+            "items_b": 1022,
             "distance_mm": 11.1,
             "threshold_mm": 9.0,
             "within": true,
@@ -2299,8 +2302,8 @@
           },
           "B.Cu": {
             "kind": "outer",
-            "items_a": 1043,
-            "items_b": 1366,
+            "items_a": 1037,
+            "items_b": 1371,
             "distance_mm": 11.9323,
             "threshold_mm": 9.0,
             "within": true,
@@ -4609,7 +4612,7 @@
       "net": "GND_CTRL",
       "per_layer": {
         "In1.Cu": {
-          "area_mm2": 5866.4435,
+          "area_mm2": 5865.1541,
           "islands": 1,
           "zones": 1,
           "probes": {
@@ -4627,11 +4630,11 @@
     "footprints_per_dm2": 54.8611,
     "courtyard_area_mm2": {
       "front": 25667.5561,
-      "back": 421.7327
+      "back": 425.6387
     },
     "courtyard_fraction": {
       "front": 0.5942,
-      "back": 0.0098
+      "back": 0.0099
     },
     "hv_nets": [
       "BLD_IN_1",
@@ -4891,7 +4894,7 @@
       "measured": {
         "zone_area_mm2": {
           "F.Cu": 4530.4,
-          "In2.Cu": 16939.9
+          "In2.Cu": 16942.3
         },
         "vias": 34,
         "track_mm": 3.1
@@ -4939,7 +4942,7 @@
       "measured": {
         "zone_area_mm2": {
           "B.Cu": 9042.0,
-          "In1.Cu": 28679.7
+          "In1.Cu": 28680.9
         },
         "vias": 90,
         "track_mm": 22.5
@@ -4995,7 +4998,7 @@
       "metric": "GND_CTRL zone area (mm2) and island count per layer",
       "measured": {
         "In1.Cu": {
-          "area": 5866.4,
+          "area": 5865.2,
           "islands": 1
         }
       },

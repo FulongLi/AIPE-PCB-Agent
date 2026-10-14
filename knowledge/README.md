@@ -10,6 +10,8 @@ use: Markdown for reasoning, JSON for machine use, and evidence pointers for
 every claim. The workflow that produces and checks it is described in
 [docs/knowledge-system.md](../docs/knowledge-system.md).
 
+The [V2.2 independent-review lessons](lessons/v22-independent-review.md) add sensor-reference, isolated-bias sizing and CAD evidence checks derived from the live converter review and primary datasheets.
+
 ## Contents (V0)
 
 | Area | Location | Count |

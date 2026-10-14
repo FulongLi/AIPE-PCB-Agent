@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-13T10:50:17",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": [],
+    "source": "AIPE_SiC_Buck_Power.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "间距违规 (规则 'HV functional clearance (outer layers)' 间距 3.0000 mm; 实际 0.9750 mm)",
+            "items": [
+                {
+                    "description": "走线 [5V_ISO] (B.Cu), 长度: 2.8750 mm",
+                    "pos": {
+                        "x": 168.125,
+                        "y": 133.5
+                    },
+                    "uuid": "9f910db2-0436-411a-8303-686bdf862add"
+                },
+                {
+                    "description": "过孔 [VIN] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 169.0,
+                        "y": 132.0
+                    },
+                    "uuid": "b605a812-bb1f-40ed-9060-f7bd4de83291"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "间距违规 (规则 'HV functional clearance (outer layers)' 间距 3.0000 mm; 实际 1.2116 mm)",
+            "items": [
+                {
+                    "description": "走线 [5V_ISO] (B.Cu), 长度: 2.8284 mm",
+                    "pos": {
+                        "x": 166.125,
+                        "y": 135.5
+                    },
+                    "uuid": "8f0ac4b8-f090-4892-94d4-517cb4a24947"
+                },
+                {
+                    "description": "过孔 [VIN] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 169.0,
+                        "y": 132.0
+                    },
+                    "uuid": "b605a812-bb1f-40ed-9060-f7bd4de83291"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "间距违规 (规则 'HV functional clearance (outer layers)' 间距 3.0000 mm; 实际 1.9750 mm)",
+            "items": [
+                {
+                    "description": "走线 [5V_ISO] (B.Cu), 长度: 0.0375 mm",
+                    "pos": {
+                        "x": 171.0,
+                        "y": 133.5
+                    },
+                    "uuid": "70ab4b19-aa0e-4dec-8949-c178888fe9e8"
+                },
+                {
+                    "description": "过孔 [VIN] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 169.0,
+                        "y": 132.0
+                    },
+                    "uuid": "b605a812-bb1f-40ed-9060-f7bd4de83291"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "间距违规 (网络类 'SENSE_ISO' 间距 0.3000 mm; 实际 0.1500 mm)",
+            "items": [
+                {
+                    "description": "B.Cu 上 R57 的焊盘 1 [ISO_RLIM]",
+                    "pos": {
+                        "x": 171.0,
+                        "y": 136.4625
+                    },
+                    "uuid": "5f308bbf-5d46-416e-8049-2a142a1be5b8"
+                },
+                {
+                    "description": "走线 [5V_ISO] (B.Cu), 长度: 3.8750 mm",
+                    "pos": {
+                        "x": 168.5,
+                        "y": 135.625
+                    },
+                    "uuid": "677f0162-fd06-42d5-bb87-aac65b0bde09"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "间距违规 (规则 'HV functional clearance (outer layers)' 间距 3.0000 mm; 实际 1.1915 mm)",
+            "items": [
+                {
+                    "description": "B.Cu 上 R57 的焊盘 2 [5V_ISO]",
+                    "pos": {
+                        "x": 171.0,
+                        "y": 133.5375
+                    },
+                    "uuid": "56b71583-4e17-4d9d-89be-4f01d5d45ad1"
+                },
+                {
+                    "description": "过孔 [VIN] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 169.0,
+                        "y": 132.0
+                    },
+                    "uuid": "b605a812-bb1f-40ed-9060-f7bd4de83291"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+                {
+                    "description": "过孔 [5V_ISO] (F.Cu - B.Cu)",
+                    "pos": {
+                        "x": 164.75,
+                        "y": 133.5
+                    },
+                    "uuid": "0cded3cc-5512-4d78-ac9a-0208a525e3ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+        }
+    ]
+}

@@ -1,0 +1,305 @@
+{
+  "local_bypasses": [
+    {
+      "ref": "C76",
+      "target": "U4",
+      "centre_mm": [
+        16.5,
+        48.5
+      ],
+      "rotation": 270,
+      "supply_pad_mm": [
+        16.5,
+        47.725
+      ],
+      "existing_vcc_via_mm": [
+        15.5,
+        48.0
+      ],
+      "ground_pad_mm": [
+        16.5,
+        49.275
+      ],
+      "ground_via_mm": [
+        17.375,
+        49.25
+      ]
+    },
+    {
+      "ref": "C77",
+      "target": "U8",
+      "centre_mm": [
+        68.75,
+        57.5
+      ],
+      "rotation": 180,
+      "supply_pad_mm": [
+        69.525,
+        57.5
+      ],
+      "existing_vcc_via_mm": [
+        71.75,
+        58.0
+      ],
+      "ground_pad_mm": [
+        67.975,
+        57.5
+      ],
+      "ground_via_mm": [
+        67.125,
+        57.5
+      ]
+    },
+    {
+      "ref": "C78",
+      "target": "U10",
+      "centre_mm": [
+        54.75,
+        57.75
+      ],
+      "rotation": 180,
+      "supply_pad_mm": [
+        55.525,
+        57.75
+      ],
+      "existing_vcc_via_mm": [
+        57.0,
+        59.75
+      ],
+      "ground_pad_mm": [
+        53.975,
+        57.75
+      ],
+      "ground_via_mm": [
+        53.125,
+        57.75
+      ]
+    },
+    {
+      "ref": "C79",
+      "target": "U11",
+      "centre_mm": [
+        60.125,
+        70.5
+      ],
+      "rotation": 180,
+      "supply_pad_mm": [
+        60.9,
+        70.5
+      ],
+      "existing_vcc_via_mm": [
+        62.625,
+        68.5
+      ],
+      "ground_pad_mm": [
+        59.35,
+        70.5
+      ],
+      "ground_via_mm": [
+        58.75,
+        69.875
+      ]
+    }
+  ],
+  "routing": {
+    "status": "requires-native-DRC",
+    "tracks": 25,
+    "vias": 7,
+    "arcs": 0,
+    "zones": 0,
+    "pruned": 0,
+    "unresolved": [],
+    "net_length_mm": {
+      "12V_IN": 33.876,
+      "12V_PROT": 17.862,
+      "1V9": 50.003,
+      "1V9_BULK": 13.963,
+      "3V3": 131.554,
+      "3V3_BULK": 4.463,
+      "5V": 23.745,
+      "5V_BST": 2.55,
+      "5V_EN": 22.515,
+      "5V_FB": 48.052,
+      "5V_SW": 14.35,
+      "ADCREFM": 8.579,
+      "ADCREFP": 8.229,
+      "ADCRESEXT": 27.661,
+      "ADC_I12V": 31.065,
+      "ADC_ISENSE": 34.695,
+      "ADC_ISENSE_REF": 42.877,
+      "ADC_TEMP_CTRL": 39.627,
+      "ADC_TEMP_HS": 47.08,
+      "ADC_V12V": 32.889,
+      "ADC_VIN": 37.557,
+      "ADC_VOUT": 131.915,
+      "ARM": 93.948,
+      "BIAS_EN": 55.683,
+      "BOOT84": 56.312,
+      "BOOT85": 8.199,
+      "BOOT86": 10.954,
+      "BOOT87": 14.28,
+      "CLK30": 13.76,
+      "CLK30_SOURCE": 5.745,
+      "CORE_OK": 65.834,
+      "DSP_TRIP_N": 207.078,
+      "EFUSE_DVDT": 31.62,
+      "EFUSE_ILIM": 34.244,
+      "EFUSE_OVP": 33.438,
+      "EFUSE_RTN": 63.558,
+      "EFUSE_SHDN": 13.314,
+      "EFUSE_UVLO": 39.361,
+      "EMU0": 49.753,
+      "EMU1": 52.223,
+      "EPWM1A": 48.52,
+      "EPWM1B": 41.415,
+      "ESTOP_N": 384.604,
+      "FAN_TACH": 205.045,
+      "FAULT_LATCH_N": 64.564,
+      "FAULT_N": 303.045,
+      "FB19": 44.233,
+      "FLT_12V_N": 146.12,
+      "FLT_H_N": 99.832,
+      "FLT_L_N": 89.219,
+      "G1_N": 18.268,
+      "G2_N": 9.412,
+      "G3_N": 12.545,
+      "GATE_EN": 81.304,
+      "GND_CTRL": 231.147,
+      "I12V_MON": 140.201,
+      "IO_EN_N": 36.368,
+      "ISENSE": 114.538,
+      "ISENSE_REF": 51.569,
+      "LED_12V_A": 4.988,
+      "LED_ARMED_A": 17.871,
+      "LED_FAULT": 24.371,
+      "LED_FAULT_A": 25.282,
+      "LED_RUN": 27.51,
+      "LED_RUN_A": 22.407,
+      "MON5": 19.045,
+      "MR_N": 11.427,
+      "OC_N": 193.499,
+      "OTP_N": 70.817,
+      "OTP_REF": 28.824,
+      "OVP_IN_N": 66.589,
+      "OVP_IN_REF": 19.505,
+      "OVP_N": 24.003,
+      "OVP_OUT_N": 65.955,
+      "OVP_OUT_REF": 18.571,
+      "PG_BIAS_H_N": 153.423,
+      "PG_BIAS_H_OK": 21.763,
+      "PG_BIAS_L_N": 222.201,
+      "PG_BIAS_L_OK": 15.235,
+      "PG_BIAS_S_N": 200.983,
+      "PG_BIAS_S_OK": 21.724,
+      "PWM_H": 15.3,
+      "PWM_H_G": 10.737,
+      "PWM_L": 25.87,
+      "PWM_L_G": 8.871,
+      "RDY_H": 75.234,
+      "RDY_L": 92.893,
+      "REF2V5": 32.884,
+      "REF3V0": 22.097,
+      "RELAY_ON": 51.876,
+      "RESET_CT": 6.952,
+      "RESET_N": 54.246,
+      "SEQ_BASE": 12.025,
+      "SPARE_D1": 113.319,
+      "SPARE_D2": 94.415,
+      "TCK": 44.869,
+      "TDI": 31.014,
+      "TDO": 38.975,
+      "TEMP_CTRL": 27.589,
+      "TEMP_HS_NTC": 38.313,
+      "TMS": 33.791,
+      "TRST": 33.381,
+      "UART_RX": 60.27,
+      "UART_TX": 71.943,
+      "UVLO": 48.919,
+      "UVLO_N": 70.447,
+      "UVLO_REF": 26.3,
+      "V12V_MON": 156.503,
+      "VIN_SENSE": 103.835,
+      "VOUT_SENSE": 52.66,
+      "XRS_N": 206.594
+    },
+    "grid": {
+      "nx": 961,
+      "ny": 641,
+      "pitch": 0.125,
+      "margin_cells": 8,
+      "layers": [
+        "F.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "directions": [
+        null,
+        "h",
+        null
+      ]
+    },
+    "style": {
+      "diagonal": true,
+      "bend_penalty_cells": [
+        0.6,
+        2.0
+      ],
+      "via_cost_cells": 8,
+      "heuristic_weight": 1.0,
+      "diagonal_pref_factor": 1.075,
+      "simplify": "none",
+      "chamfer": true,
+      "arcs": false,
+      "arc_radius_mm": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "arc_steps": 5,
+      "arc_dilate_cells": 2,
+      "min_turn_deg": 5.0,
+      "max_turn_deg": 170.0,
+      "corner_keep_mm": {
+        "via": null,
+        "port": 0.0
+      },
+      "straight_nets": [],
+      "max_width_for_arcs_mm": 0.6,
+      "smooth_power": false,
+      "smooth_critical": false,
+      "stages": [
+        "signal",
+        "negotiate",
+        "retry",
+        "critical"
+      ],
+      "l_short_mm": null,
+      "eps": 0.01
+    },
+    "stats": {
+      "tracks": 25,
+      "vias": 7,
+      "pruned_unused_vias": 0,
+      "arcs": 0,
+      "zones": 0
+    }
+  },
+  "refill": {
+    "filled": true,
+    "python": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\python.exe",
+    "zones": 5,
+    "changed_areas_mm2": {
+      "3V3/In2.Cu": [
+        5222.4,
+        5218.5
+      ],
+      "GND_CTRL/In1.Cu": [
+        8376.1,
+        8373.1
+      ]
+    }
+  },
+  "baseline_sha256": "52ca6c234357948a1119db0082ffd5ddcb706a852d9778787f74450ea1183428",
+  "output_sha256": "6a1d9dbc5183a0fd79fc0c7b2937a4348b7f116fb12dd0ee7fb89a8b30cc94ef",
+  "native_verification": "verification\\drc\\20261013T031237Z-drc-2a82689c\\run.json"
+}

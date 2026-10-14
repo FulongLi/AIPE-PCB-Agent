@@ -1,0 +1,560 @@
+{
+  "label": "V2.2 regression of unchanged behavioural power-stage model; no hardware/parasitic validation",
+  "date": "2026-10-13",
+  "ngspice": "ngspice-46",
+  "library": "D:\\EngineeringTools\\KiCad\\10.0\\bin\\ngspice.dll",
+  "manifest": "models/campaign_manifest.json",
+  "runs": {
+    "ol_400V_25A_Lnom": {
+      "controller": "open-loop PWL gates",
+      "points": 154287,
+      "runtime_s": 0.8739243999998507,
+      "warnings": [],
+      "metrics": {
+        "duty": 0.5050399999999998,
+        "vout_mean": 200.03739011142773,
+        "vout_pkpk": 0.17968561738044286,
+        "vout_min": 199.94697860941505,
+        "vout_max": 200.1266642267955,
+        "vin_bus_mean": 399.3684108732897,
+        "vin_bus_pkpk": 3.611342213566161,
+        "il_mean": 25.00947526442371,
+        "il_pkpk": 7.350738989763499,
+        "il_peak": 28.678613449506198,
+        "il_min": 21.3278744597427,
+        "il_rms": 25.09921782326238,
+        "i_hs_rms": 17.84238797413661,
+        "i_hs_peak": 28.679009531188058,
+        "i_ls_rms": 17.652757919476084,
+        "i_ls_channel_rms": 17.195071506322872,
+        "i_diode_mean": 0.6250822381135048,
+        "i_cin_rms": 12.897326449544353,
+        "i_cout_rms": 2.1195168575989753,
+        "i_load_mean": 25.00467376392645,
+        "i_in_mean": 12.634777935094723,
+        "i_in_rms": 12.639030295578793,
+        "p_out": 5001.870174649473,
+        "p_in": 5053.9111740378885,
+        "p_loss_total": 52.04099938841591,
+        "efficiency": 0.9897028266630897,
+        "p_cond_hs": 15.440014218051315,
+        "p_cond_ls": 14.340018479216502,
+        "p_diode_deadtime": 2.890969267344076,
+        "p_diode_deadtime_estimate": 2.876089655408726,
+        "p_l_dcr": 10.07953176543315,
+        "p_cout_esr": 0.01796940683858494,
+        "p_cin_esr": 0.31604795613762104,
+        "p_r_in": 7.987254340627928,
+        "p_loss_modelled_sum": 51.071805433649175,
+        "steady_state": {
+          "vout_cycle_avg_pkpk_V": 0.0361014182865631,
+          "pwm_lsb_V": 0.0,
+          "limit_cycle_suspected": false,
+          "energy_balance_pct": 0.019376631558308245
+        },
+        "startup": {
+          "vout_peak": 212.38697696846202,
+          "target": 200.03739011142773,
+          "overshoot_V": 12.349586857034296,
+          "overshoot_pct": 6.173639263217317,
+          "il_peak": 38.50902416598833,
+          "soft_start_s": 0.002
+        },
+        "load_step": null
+      },
+      "comparison": [
+        {
+          "metric": "vout_mean",
+          "spice": 200.03739011142773,
+          "numpy": 199.99996249255912,
+          "deviation_pct": 0.018713812943838837
+        },
+        {
+          "metric": "vout_pkpk",
+          "spice": 0.17968561738044286,
+          "numpy": 0.1711694960129364,
+          "deviation_pct": 4.9752564363821214
+        },
+        {
+          "metric": "il_mean",
+          "spice": 25.00947526442371,
+          "numpy": 24.999995311566316,
+          "deviation_pct": 0.037919818540956864
+        },
+        {
+          "metric": "il_pkpk",
+          "spice": 7.350738989763499,
+          "numpy": 7.345811650646997,
+          "deviation_pct": 0.0670768507394054
+        },
+        {
+          "metric": "il_peak",
+          "spice": 28.678613449506198,
+          "numpy": 28.672862250400183,
+          "deviation_pct": 0.020057987430030722
+        },
+        {
+          "metric": "il_min",
+          "spice": 21.3278744597427,
+          "numpy": 21.327050599753186,
+          "deviation_pct": 0.0038629813609692863
+        },
+        {
+          "metric": "il_rms",
+          "spice": 25.09921782326238,
+          "numpy": 25.089709724208458,
+          "deviation_pct": 0.03789640915911745
+        },
+        {
+          "metric": "i_hs_rms",
+          "spice": 17.84238797413661,
+          "numpy": 17.831421664788884,
+          "deviation_pct": 0.061499916012758074
+        },
+        {
+          "metric": "i_ls_rms",
+          "spice": 17.652757919476084,
+          "numpy": 17.65032394766561,
+          "deviation_pct": 0.01378995545743208
+        },
+        {
+          "metric": "i_cin_rms",
+          "spice": 12.897326449544353,
+          "numpy": 12.59064653930209,
+          "deviation_pct": 2.435775710841791
+        },
+        {
+          "metric": "i_cout_rms",
+          "spice": 2.1195168575989753,
+          "numpy": 2.118777475616159,
+          "deviation_pct": 0.034896632200665294
+        },
+        {
+          "metric": "i_in_mean",
+          "spice": 12.634777935094723,
+          "numpy": 12.626765948169892,
+          "deviation_pct": 0.06345240703533157
+        },
+        {
+          "metric": "p_cond_hs",
+          "spice": 15.440014218051315,
+          "numpy": 15.421040531493867,
+          "deviation_pct": 0.12303765442220853
+        },
+        {
+          "metric": "p_cond_ls",
+          "spice": 14.340018479216502,
+          "numpy": 14.336060316077965,
+          "deviation_pct": 0.02760983876509827
+        },
+        {
+          "metric": "p_diode_deadtime",
+          "spice": 2.890969267344076,
+          "numpy": 2.889069651103447,
+          "deviation_pct": 0.06575183259785823
+        }
+      ],
+      "numpy_model": {
+        "duty": 0.50504,
+        "ccm": true,
+        "warning": null,
+        "vout_mean": 199.99996249255912,
+        "il_pkpk": 7.345811650646997,
+        "il_peak": 28.672862250400183,
+        "il_rms": 25.089709724208458,
+        "i_cin_rms": 12.59064653930209,
+        "i_cout_rms": 2.118777475616159,
+        "p_cond_hs": 15.421040531493867,
+        "p_cond_ls": 14.336060316077965,
+        "p_diode_deadtime": 2.889069651103447,
+        "p_l_dcr": 10.071896544720646
+      },
+      "campaign": {
+        "controller": "open-loop PWL gates",
+        "events": [],
+        "steady_checks": {
+          "vout_ripple_below_2Vpp": true,
+          "vin_bus_ripple_below_2pct": true,
+          "il_peak_below_oc_trip_37p5A": true,
+          "il_peak_below_isat_worst_35A": true,
+          "cin_rms_per_part_below_14p5A": true,
+          "cout_rms_per_part_below_23p5A": true
+        },
+        "textbook": {
+          "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+          "dIL_App": 7.278823529411764,
+          "il_peak_A": 28.644085528632335,
+          "il_rms_A": 25.09280406885777,
+          "i_hs_rms_A": 17.83249388200861,
+          "i_ls_rms_A": 17.653639227825252,
+          "i_cin_rms_A": 12.590565940678122,
+          "i_cout_rms_A": 2.101215362044832,
+          "p_cond_hs_W": 15.422895145515914,
+          "p_cond_ls_W": 15.115072432331212,
+          "p_cond_total_W": 30.537967577847127,
+          "p_deadtime_W": 2.8755374828515414,
+          "p_dcr_W": 10.074381056609361,
+          "vout_ripple_Vpp": 0.19760657952069716,
+          "vin_ripple_Vpp": 3.526942252649141,
+          "i_in_mean_A_ideal": 12.628360437733416
+        },
+        "textbook_deviation_pct": {
+          "il_pkpk": 0.9880093954901384,
+          "il_peak": 0.12054118760171059,
+          "il_rms": 0.025560134240112033,
+          "i_hs_rms": 0.055483502158846454,
+          "i_cin_rms": 2.436431454404579,
+          "i_cout_rms": 0.870995704901604,
+          "p_cond_hs": 0.11099778850780904,
+          "p_diode_deadtime": 0.5366573930808738,
+          "p_l_dcr": 0.0511268016848566,
+          "vout_pkpk": -9.069010851623625,
+          "vin_bus_pkpk": 2.3930066009338686
+        }
+      },
+      "files": {
+        "deck": "ol_400V_25A_Lnom\\ol_400V_25A_Lnom.cir",
+        "parameters": "ol_400V_25A_Lnom\\parameters.json",
+        "waveforms_csv": "ol_400V_25A_Lnom\\waveforms.csv",
+        "zoom_csv": "ol_400V_25A_Lnom\\waveforms_zoom.csv",
+        "svg_vout": "ol_400V_25A_Lnom\\vout.svg",
+        "svg_il": "ol_400V_25A_Lnom\\il.svg",
+        "svg_zoom_vout": "ol_400V_25A_Lnom\\zoom_vout.svg",
+        "svg_zoom_currents": "ol_400V_25A_Lnom\\zoom_currents.svg",
+        "svg_zoom_capacitors": "ol_400V_25A_Lnom\\zoom_capacitor_currents.svg",
+        "svg_zoom_vsw": "ol_400V_25A_Lnom\\zoom_vsw.svg",
+        "summary": "ol_400V_25A_Lnom\\summary.json"
+      }
+    },
+    "cl_400V_startup20ms_stepup": {
+      "controller": "cascade",
+      "points": 1471691,
+      "runtime_s": 10.269572900000185,
+      "warnings": [],
+      "metrics": {
+        "duty": 0.5062092531533662,
+        "vout_mean": 200.0006101376815,
+        "vout_pkpk": 0.1741497187541654,
+        "vout_min": 199.91363892107256,
+        "vout_max": 200.08778863982673,
+        "vin_bus_mean": 399.36826505191146,
+        "vin_bus_pkpk": 3.623991614115482,
+        "il_mean": 24.998946030937528,
+        "il_pkpk": 7.35218962767976,
+        "il_peak": 28.663155041946894,
+        "il_min": 21.310965414267134,
+        "il_rms": 25.088708775242562,
+        "i_hs_rms": 17.82895910887566,
+        "i_hs_peak": 28.663551118050236,
+        "i_ls_rms": 17.651392525900153,
+        "i_ls_channel_rms": 17.20402284998929,
+        "i_diode_mean": 0.6145268380814352,
+        "i_cin_rms": 12.89152478901445,
+        "i_cout_rms": 2.1192760451226396,
+        "i_load_mean": 24.99929506364967,
+        "i_in_mean": 12.625314350784215,
+        "i_in_rms": 12.629575611899897,
+        "p_out": 4999.874755907451,
+        "p_in": 5050.125740313686,
+        "p_loss_total": 50.25098440623515,
+        "efficiency": 0.9900495577753449,
+        "p_cond_hs": 15.41678147093908,
+        "p_cond_ls": 14.35495250781325,
+        "p_diode_deadtime": 2.839095637643883,
+        "p_diode_deadtime_estimate": 2.8748787935578153,
+        "p_l_dcr": 10.071092928142932,
+        "p_cout_esr": 0.017965323821722626,
+        "p_cin_esr": 0.31576368163297075,
+        "p_r_in": 7.975309006834833,
+        "p_loss_modelled_sum": 50.990960556828675,
+        "steady_state": {
+          "vout_cycle_avg_pkpk_V": 0.004458045773191088,
+          "pwm_lsb_V": 0.4999999999999999,
+          "limit_cycle_suspected": false,
+          "energy_balance_pct": -0.014799893731722599
+        },
+        "startup": {
+          "vout_peak": 200.5980502724898,
+          "target": 200.0,
+          "overshoot_V": 0.598050272489786,
+          "overshoot_pct": 0.299025136244893,
+          "il_peak": 17.241736863702233,
+          "soft_start_s": 0.02
+        },
+        "load_step": {
+          "t_step": 0.028,
+          "i_load_before": 12.500016486987262,
+          "i_load_after": 24.999274408109613,
+          "vout_before_avg": 199.99117466960863,
+          "vout_final_avg": 200.0006101376815,
+          "excursion_avg_V": -7.537477450395954,
+          "excursion_avg_pct": -3.768738725197977,
+          "t_excursion": 0.028116400000000003,
+          "vout_raw_min_after": 192.39600286270914,
+          "vout_raw_max_after": 200.09184624445683,
+          "il_peak_after": 30.031888486051468,
+          "recovery_band_V": 2.0,
+          "recovered": true,
+          "recovery_time_s": 0.0007632000000000021
+        }
+      },
+      "comparison": [
+        {
+          "metric": "vout_mean",
+          "spice": 200.0006101376815,
+          "numpy": 199.9999999954215,
+          "deviation_pct": 0.0003050711300075398
+        },
+        {
+          "metric": "vout_pkpk",
+          "spice": 0.1741497187541654,
+          "numpy": 0.17116949524725555,
+          "deviation_pct": 1.741094990439095
+        },
+        {
+          "metric": "il_mean",
+          "spice": 24.998946030937528,
+          "numpy": 24.99999999943446,
+          "deviation_pct": -0.004215873987827636
+        },
+        {
+          "metric": "il_pkpk",
+          "spice": 7.35218962767976,
+          "numpy": 7.345811618740861,
+          "deviation_pct": 0.08682510891822216
+        },
+        {
+          "metric": "il_peak",
+          "spice": 28.663155041946894,
+          "numpy": 28.672866921728204,
+          "deviation_pct": -0.03387132444000793
+        },
+        {
+          "metric": "il_min",
+          "spice": 21.310965414267134,
+          "numpy": 21.327055302987343,
+          "deviation_pct": -0.07544355510699917
+        },
+        {
+          "metric": "il_rms",
+          "spice": 25.088708775242562,
+          "numpy": 25.089714394550583,
+          "deviation_pct": -0.004008093883441847
+        },
+        {
+          "metric": "i_hs_rms",
+          "spice": 17.82895910887566,
+          "numpy": 17.83142665998522,
+          "deviation_pct": -0.013838214723977478
+        },
+        {
+          "metric": "i_ls_rms",
+          "spice": 17.651392525900153,
+          "numpy": 17.65032554004846,
+          "deviation_pct": 0.006045134121024679
+        },
+        {
+          "metric": "i_cin_rms",
+          "spice": 12.89152478901445,
+          "numpy": 12.590648858534527,
+          "deviation_pct": 2.389677719238243
+        },
+        {
+          "metric": "i_cout_rms",
+          "spice": 2.1192760451226396,
+          "numpy": 2.118777466585741,
+          "deviation_pct": 0.023531425303580527
+        },
+        {
+          "metric": "i_in_mean",
+          "spice": 12.625314350784215,
+          "numpy": 12.626770689749408,
+          "deviation_pct": -0.01153374050243269
+        },
+        {
+          "metric": "p_cond_hs",
+          "spice": 15.41678147093908,
+          "numpy": 15.421049171425933,
+          "deviation_pct": -0.027674514486087768
+        },
+        {
+          "metric": "p_cond_ls",
+          "spice": 14.35495250781325,
+          "numpy": 14.336062758489959,
+          "deviation_pct": 0.1317638576331178
+        },
+        {
+          "metric": "p_diode_deadtime",
+          "spice": 2.839095637643883,
+          "numpy": 2.8890703187792806,
+          "deviation_pct": -1.7297841734954176
+        }
+      ],
+      "numpy_model": {
+        "duty": 0.50504009496108,
+        "ccm": true,
+        "warning": null,
+        "vout_mean": 199.9999999954215,
+        "il_pkpk": 7.345811618740861,
+        "il_peak": 28.672866921728204,
+        "il_rms": 25.089714394550583,
+        "i_cin_rms": 12.590648858534527,
+        "i_cout_rms": 2.118777466585741,
+        "p_cond_hs": 15.421049171425933,
+        "p_cond_ls": 14.336062758489959,
+        "p_diode_deadtime": 2.8890703187792806,
+        "p_l_dcr": 10.0719002944019
+      },
+      "campaign": {
+        "controller": "cascade",
+        "events": [
+          {
+            "type": "load_step_on",
+            "t_event_s": 0.028,
+            "i_load_before_A": 12.500016486987262,
+            "i_load_after_A": 24.999305340043957,
+            "excursion_cycle_avg_V": -7.536867312714463,
+            "excursion_pct_of_vref": -3.7684336563572316,
+            "t_excursion_after_event_s": 0.00011640000000000261,
+            "vout_raw_min_V": 192.39600286270914,
+            "vout_raw_max_V": 200.09184624445683,
+            "il_max_A": 30.031888486051468,
+            "il_min_A": 8.825986111557889,
+            "recovery_band_V": 2.0,
+            "recovered_within_window": true,
+            "recovery_time_s": 0.000762800000000001,
+            "window_s": 0.00799,
+            "limit_basis": "12.5 A load step: <= 10 V excursion, <= 5 ms recovery to the 1 % band",
+            "checks": {
+              "excursion_within_10V": true,
+              "recovery_within_5ms": true,
+              "vout_raw_below_ovp_230V": true,
+              "il_below_oc_trip_37p5A": true
+            }
+          }
+        ],
+        "steady_checks": {
+          "vout_ripple_below_2Vpp": true,
+          "vin_bus_ripple_below_2pct": true,
+          "il_peak_below_oc_trip_37p5A": true,
+          "il_peak_below_isat_worst_35A": true,
+          "cin_rms_per_part_below_14p5A": true,
+          "cout_rms_per_part_below_23p5A": true
+        },
+        "textbook": {
+          "basis": "D from the run; dI = Vout (1-D)/(L fs); I_rms identities; I_Cin,rms = sqrt(D(Io^2+dI^2/12)-(D Io)^2); P = I_rms^2 R; P_dt = 2 t_d fs V_SD Io; ripple dI/(8 fs C)+ESR dI; input ripple dQ/C_in + ESR_in (Io+dI/2)",
+          "dIL_App": 7.261628630097556,
+          "il_peak_A": 28.630109378698446,
+          "il_rms_A": 25.087029009886226,
+          "i_hs_rms_A": 17.84901570897339,
+          "i_ls_rms_A": 17.628716991423232,
+          "i_cin_rms_A": 12.587355305434958,
+          "i_cout_rms_A": 2.096251622170959,
+          "p_cond_hs_W": 15.451487046290174,
+          "p_cond_ls_W": 15.072425644039168,
+          "p_cond_total_W": 30.52391269032934,
+          "p_deadtime_W": 2.8749189323197113,
+          "p_dcr_W": 10.069744392685969,
+          "vout_ripple_Vpp": 0.19713976984672257,
+          "vin_ripple_Vpp": 3.525986053637888,
+          "i_in_mean_A_ideal": 12.654874483530733
+        },
+        "controller_gains": {
+          "structure": "outer voltage PI (V -> A) -> i_ref clamp -> inner average-current PI (A -> duty) with Vref/Vin feedforward -> duty clamp [0, 0.85] -> module comparator PWM; inductor current = i(Vld) + i(Vcout) filtered by a first-order 10 kHz low-pass (stand-in for the ePWM CTR=ZERO average sampling); output voltage through the module 20 kHz feedback filter",
+          "kpv_A_per_V": 1.2325,
+          "kiv_A_per_V_s": 3097.7,
+          "outer_zero_Hz": 400.0,
+          "kpi_per_A": 0.01709,
+          "kii_per_A_s": 85.91,
+          "inner_zero_Hz": 800.0,
+          "iref_min_A": -10.0,
+          "iref_max_A": 35.0,
+          "d_min": 0.0,
+          "d_max": 0.85,
+          "fb_filter_hz": 20000.0,
+          "i_filter_hz": 10000.0,
+          "feedforward": true,
+          "design_basis": "kpi = 2 pi 4 kHz L / Vin(400 V) for an inner crossover of about 4 kHz (fs/12.5); kpv tuned by bisection on the small-signal loop gain (plant 1/(sC) || R, closed inner loop, 20 kHz filter, T/2 PWM delay) for an outer crossover of 2.3 kHz (middle of the 2.0-2.5 kHz band of design_decisions.json assumptions_accepted.voltage_loop_crossover_Hz); analytical margins are recomputed by the driver and stored in results/loop_gain_analysis.json",
+          "firmware_status": "NO FIRMWARE EXISTS (assumptions register A-34: hardware/firmware contract only). These gains are a behavioural stand-in for the TMS320F28335 implementation and must not be copied into firmware without a discrete-time redesign (sampling, one-sample delay, ADC scaling, anti-windup, current-reference clamp coordinated with the 37.5 A OC trip).",
+          "iref_max_basis": "35 A: below the TMCS1133 OC trip (37.5 A, design_decisions sensing.current.oc_threshold_A) and the vendor-style I_sat 37.3 A; added assumption",
+          "iref_min_basis": "-10 A: synchronous operation continues at no load (baseline magnetics no_load_ccm_reverse_current_A -2.8 to -3.4 A); added assumption"
+        },
+        "startup": {
+          "soft_start_s": 0.02,
+          "vout_peak_V": 200.5980502724898,
+          "overshoot_V": 0.598050272489786,
+          "overshoot_pct": 0.299025136244893,
+          "il_peak_A": 17.241736863702233,
+          "t_99pct_s": 0.01981025361600025,
+          "vout_cycle_avg_pkpk_last_50T_V": 0.0051651432737855885,
+          "checks": {
+            "vout_peak_below_ovp_230V": true,
+            "il_peak_below_oc_trip_37p5A": true,
+            "overshoot_within_1pct_static_band": true
+          }
+        },
+        "textbook_deviation_pct": {
+          "il_pkpk": 1.2471168961581398,
+          "il_peak": 0.11542276283804404,
+          "il_rms": 0.006695752437141489,
+          "i_hs_rms": -0.11236810155108454,
+          "i_cin_rms": 2.4164685607004257,
+          "i_cout_rms": 1.0983616045022184,
+          "p_cond_hs": -0.22460993719970973,
+          "p_diode_deadtime": -1.246062776696221,
+          "p_l_dcr": 0.01339195320530622,
+          "vout_pkpk": -11.661802745550569,
+          "vin_bus_pkpk": 2.7795220680603183
+        }
+      },
+      "files": {
+        "deck": "cl_400V_startup20ms_stepup\\cl_400V_startup20ms_stepup.cir",
+        "parameters": "cl_400V_startup20ms_stepup\\parameters.json",
+        "waveforms_csv": "cl_400V_startup20ms_stepup\\waveforms.csv",
+        "zoom_csv": "cl_400V_startup20ms_stepup\\waveforms_zoom.csv",
+        "svg_vout": "cl_400V_startup20ms_stepup\\vout.svg",
+        "svg_il": "cl_400V_startup20ms_stepup\\il.svg",
+        "svg_zoom_vout": "cl_400V_startup20ms_stepup\\zoom_vout.svg",
+        "svg_zoom_currents": "cl_400V_startup20ms_stepup\\zoom_currents.svg",
+        "svg_zoom_capacitors": "cl_400V_startup20ms_stepup\\zoom_capacitor_currents.svg",
+        "svg_zoom_vsw": "cl_400V_startup20ms_stepup\\zoom_vsw.svg",
+        "svg_load_step": "cl_400V_startup20ms_stepup\\load_step.svg",
+        "summary": "cl_400V_startup20ms_stepup\\summary.json"
+      }
+    }
+  },
+  "parasitic_sweep": [],
+  "limits": {
+    "vout_ripple_max_Vpp": 2.0,
+    "vin_ripple_max_pct_pp": 2.0,
+    "load_step_excursion_max_V": 10.0,
+    "load_step_recovery_max_ms": 5.0,
+    "recovery_band_pct": 1.0,
+    "ovp_out_V": 230.0,
+    "oc_trip_A": 37.5,
+    "isat_30pct_nominal_A": 37.3,
+    "isat_30pct_worst_A": 35.0,
+    "cin_irms_rating_per_part_A": 14.5,
+    "cout_irms_rating_per_part_A": 23.5,
+    "source": "design_decisions.json assumptions_accepted, capacitors, magnetics, sensing, protection"
+  },
+  "cross_check_max_abs_deviation_pct_open_loop_ccm_runs": {
+    "vout_mean": 0.018713812943838837,
+    "vout_pkpk": 4.9752564363821214,
+    "il_mean": 0.037919818540956864,
+    "il_pkpk": 0.0670768507394054,
+    "il_peak": 0.020057987430030722,
+    "il_min": 0.0038629813609692863,
+    "il_rms": 0.03789640915911745,
+    "i_hs_rms": 0.061499916012758074,
+    "i_ls_rms": 0.01378995545743208,
+    "i_cin_rms": 2.435775710841791,
+    "i_cout_rms": 0.034896632200665294,
+    "i_in_mean": 0.06345240703533157,
+    "p_cond_hs": 0.12303765442220853,
+    "p_cond_ls": 0.02760983876509827,
+    "p_diode_deadtime": 0.06575183259785823
+  },
+  "loop_gain_analysis": "results/loop_gain_analysis.json",
+  "partial_rerun_runtime_s": 11.880425800000012
+}

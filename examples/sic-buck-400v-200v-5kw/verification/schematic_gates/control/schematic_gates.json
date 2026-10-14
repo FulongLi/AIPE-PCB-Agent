@@ -20,7 +20,7 @@
     "erc_zero": {
       "passed": true,
       "findings": 0,
-      "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\control\\erc\\20261012T095008Z-erc-d5803a1d\\run.json",
+      "manifest": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\verification\\schematic_gates\\control\\erc\\20261013T030844Z-erc-106fe70d\\run.json",
       "finding_types": {},
       "erc_nonfootprint_findings": 0,
       "details": []
@@ -28,21 +28,81 @@
     "netlist_vs_model": {
       "passed": true,
       "export_exit": 0,
-      "refs": 207,
+      "refs": 211,
       "duplicates": [],
       "exact": true,
-      "pads": 667,
+      "pads": 675,
       "mismatch_count": 0,
       "mismatches": [],
       "net_names_equal": true,
       "extra_names": [],
       "missing_names": []
     },
-    "netlist_vs_v2": {
+    "release_connectivity": {
       "passed": true,
       "source": "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw\\releases\\v2\\manufacturing\\control_board\\netlist.xml",
+      "revision": "V2.2",
+      "raw_difference": {
+        "exact": false,
+        "pads": 675,
+        "mismatch_count": 8,
+        "mismatches": [
+          {
+            "ref": "C76",
+            "pad": "1",
+            "a": null,
+            "b": "3V3"
+          },
+          {
+            "ref": "C76",
+            "pad": "2",
+            "a": null,
+            "b": "GND_CTRL"
+          },
+          {
+            "ref": "C77",
+            "pad": "1",
+            "a": null,
+            "b": "3V3"
+          },
+          {
+            "ref": "C77",
+            "pad": "2",
+            "a": null,
+            "b": "GND_CTRL"
+          },
+          {
+            "ref": "C78",
+            "pad": "1",
+            "a": null,
+            "b": "3V3"
+          },
+          {
+            "ref": "C78",
+            "pad": "2",
+            "a": null,
+            "b": "GND_CTRL"
+          },
+          {
+            "ref": "C79",
+            "pad": "1",
+            "a": null,
+            "b": "3V3"
+          },
+          {
+            "ref": "C79",
+            "pad": "2",
+            "a": null,
+            "b": "GND_CTRL"
+          }
+        ],
+        "net_names_equal": true,
+        "extra_names": [],
+        "missing_names": []
+      },
+      "allowed_changes": "V2.2: power R82.1 3V3 -> REF2V5_PB; control C76-C79 added across 3V3/GND_CTRL",
       "exact": true,
-      "pads": 667,
+      "pads": 675,
       "mismatch_count": 0,
       "mismatches": [],
       "net_names_equal": true,
@@ -57,12 +117,12 @@
         {
           "sheet": "02_supplies.kicad_sch",
           "paper": "A2",
-          "fill": 0.65
+          "fill": 0.671
         },
         {
           "sheet": "06_pwm_fault_logic.kicad_sch",
           "paper": "A2",
-          "fill": 0.68
+          "fill": 0.773
         }
       ],
       "sheets": {
@@ -72,7 +132,7 @@
         },
         "02_supplies.kicad_sch": {
           "paper": "A2",
-          "fill": 0.65
+          "fill": 0.671
         },
         "03_dsp.kicad_sch": {
           "paper": "A3",
@@ -88,7 +148,7 @@
         },
         "06_pwm_fault_logic.kicad_sch": {
           "paper": "A2",
-          "fill": 0.68
+          "fill": 0.773
         },
         "07_adc_frontend.kicad_sch": {
           "paper": "A3",

@@ -166,7 +166,7 @@ P_DESAT_BIAS = param("P_DESAT_bias_per_channel", 0.07, "W", "research/gate_drive
 P_MISC_CH = param("P_misc_per_channel", 0.015, "W", "research/gate_driver.json (pull-down, AIN)", LV_AN)
 P_SENS_BUDGET = param("P_sensing_module_budget", 0.40, "W", f"{BASE} power_stage.bias_supply.power_budget_W.sensing", LV_AN)
 I_AMC_VDD1_MAX = param("AMC1311_IDD1_max", 9.7e-3, "A", "SBAS786C (fetched)", LV_DS, "7.1 mA typical")
-I_SENS_MISC = param("sensing_island_misc_mA", 0.6e-3, "A", "added: decoupling leakage and REF-side loads on 5V_ISO", LV_ASM)
+I_SENS_MISC = param("sensing_island_misc_mA", 1e-3, "A", "V2.2 E22-02: feedback/loading/leakage allowance on 5V_ISO", LV_ASM)
 C_DECOUP_VDD = param("C_VDD_COM_nominal", 2 * 4.7e-6, "F", f"{BASE} power_stage.gate_driver.decoupling", LV_AN)
 C_DECOUP_VEE = param("C_COM_VEE_nominal", 4.7e-6, "F", f"{BASE} power_stage.gate_driver.decoupling", LV_AN)
 K_X7R_LOSS = param("X7R_bias_loss_at_15V", 0.35, "-", "research/gate_driver.json assumptions_added", LV_ASM, "TDK curve not extracted")
@@ -638,7 +638,8 @@ def bias_budget() -> dict:
     p_sens_load = i_sens * v_sens_com
     p_sens_module = i_sens * v_sens_dd  # COM-VEE regulator sources from VDD through RLIM
     p_rlim_sens = i_sens * (v_sens_dd - v_sens_com)
-    rlim_max_sens = (v_sens_dd - v_sens_com) / i_sens - R_LIM_INT
+    # Dual-positive configuration: TI SLUSF10B Eq.9 uses VOUT2, NOT VDD-COM.
+    rlim_max_sens = v_sens_com / i_sens - R_LIM_INT
     budget = {"hs_gate": max(gate_ch_ws, 0.32), "ls_gate": max(gate_ch_ws, 0.32), "sensing": P_SENS_BUDGET}
     p_in = {k: P_BIAS_IN_NOLOAD + K_BIAS_IN * v for k, v in budget.items()}
     p_in_total = sum(p_in.values())
@@ -647,6 +648,8 @@ def bias_budget() -> dict:
         P_quiescent_W=pq, P_DESAT_bias_W=P_DESAT_BIAS, P_misc_W=P_MISC_CH,
         sensing_load_mA=i_sens * 1e3, sensing_load_W_at_5V=p_sens_load, sensing_module_output_W_at_15V=p_sens_module,
         sensing_RLIM_dissipation_W=p_rlim_sens, sensing_RLIM_max_ohm=rlim_max_sens,
+        sensing_RLIM_fitted_ohm=160.0, sensing_RLIM_mpn="ERJP08F1600V", sensing_RLIM_rating_W_at_70C=0.66,
+        sensing_RLIM_dissipation_scope="Conservative combined resistor + internal-switch steady-state loss; NOT resistor pulse/startup qualification",
         budget_W=budget, utilisation_of_1p5W_rating={k: v / P_BIAS_RATING for k, v in budget.items()},
         P_in_W_per_module=p_in, P_in_total_W=p_in_total,
         I_12V_A_at_12V=p_in_total / V_AUX_NOM, I_12V_A_at_10p8V=p_in_total / V_AUX_MIN,
@@ -1619,7 +1622,7 @@ def calculate() -> dict:
         "Aux 12 V: the pull-in total (1.76 A at 10.8 V) exceeds an assumed -10 % circuit-breaker minimum (1.76 A) with zero margin for the 50 ms relay operate time; stagger fan start and relay pull-in or move the fan upstream of the eFuse (baseline fallback).",
         "Mezzanine 12 V pins carry 0.43-0.49 A each (fan, relay coil and bias modules all sit on the power board), above the architecture's 0.4 A per-pin target but 6x below the 3 A WR-PHD rating.",
         "Dead-time loss with V_SD at the actual current is 3.1-3.6 W (250 ns) / 3.8-4.3 W (300 ns) versus the 2.9-3.2 W flat-4.6 V figures of the baseline loss table (body-diode slope 0.07 ohm is an unverified assumption).",
-        "Sensing bias module: sourcing about 20 mA into the 5 V COM output through RLIM needs RLIM <= about 470 ohm and dissipates about 0.2 W in RLIM plus the internal FET (continuous, outside the RLIM pin's 16 %-run-time qualification) - feasibility of the COM-VEE 5.0 V configuration remains the baseline's open item.",
+        "V2.2 E22-02: TI SLUSF10B Eq.9 dual-positive RLIM limit is 5 V / 20.4 mA - 30 ohm = 215 ohm (typical internal resistance). Fitted 160 ohm, 0.66 W 1206 replaces 1 k placeholder; conservative resistor + internal FET steady loss about 0.204 W. Startup, stability, continuous-load regulator qualification and temperature remain open.",
         f"Bounded-worst efficiency is {100 * bw['eta_converter_only']:.2f} % converter-only, {100 * bw['eta_with_aux_electronics']:.2f} % with the aux electronics (baseline convention) and {100 * bw['eta_system']:.2f} % as a full system with relay hold and fan - at or just below the 98.0 % target and {100 * (bw['eta_system'] - ETA_FLOOR):.1f} % above the 97.5 % floor; the k_RG factor (1.3-2.0) is the largest single uncertainty and must be measured by double-pulse test.",
         "The twentieth verification report (assumptions-register fact-check, verify_assumptions_register_and_requirements_se_factcheck.json) was recovered after the first run of this script; its required changes concern the register text (ADC LSB, inrush charge-time range, CTI class bound, the 0.51 A maximum rating of a candidate fan that is not the baseline part) and change no input of this script.",
     ]

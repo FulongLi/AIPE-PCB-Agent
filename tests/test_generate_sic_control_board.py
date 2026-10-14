@@ -60,7 +60,7 @@ def lqfp_side(net_pattern, x=55.325, y0=22.25, size=(1.5, 0.3), start=1):
 class CandidateTests(unittest.TestCase):
     def test_candidates_load_validate_and_cover_the_model(self):
         parts = g.load_parts()
-        self.assertEqual(len(parts), 207)
+        self.assertEqual(len(parts), 211)
         for cid in ('A', 'B'):
             cand = g.load_candidate(g.candidate_path(cid))
             self.assertEqual(cand['id'], cid)
@@ -569,7 +569,7 @@ class PlacementTests(unittest.TestCase):
 
     def test_every_part_is_placed_with_the_expected_sides_and_stack(self):
         s = self.summary
-        self.assertEqual(s['footprints'], 207)
+        self.assertEqual(s['footprints'], 211)
         self.assertEqual(s['copper_layers'], 4)
         self.assertTrue(s['stackup'])
         back = sorted(ref for ref, side in s['sides'].items() if side == 'B')

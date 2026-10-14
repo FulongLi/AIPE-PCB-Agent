@@ -225,13 +225,19 @@ class WiredGenerationTests(unittest.TestCase):
             def __init__(self, w, h, title):
                 self.bbox, self.title = (0.0, 0.0, w, h), title
         PAPER = {'A3': (420.0, 297.0), 'A2': (594.0, 420.0)}
-        layouts = [L(300.0, 100.0, 'a'), L(80.0, 100.0, 'b'), L(300.0, 90.0, 'c')]
+        layouts = [L(280.0, 100.0, 'a'), L(70.0, 100.0, 'b'), L(280.0, 90.0, 'c')]
         paper, positions = sp.pack_sheet(layouts, ['A3', 'A2'], PAPER, 10.0)
         self.assertEqual(paper, 'A3')
         self.assertEqual(len(positions), 3)
         rects = []
         for layout, x, y in positions:
             rects.append((x, y, x + layout.bbox[2], y + layout.bbox[3]))
+        left, top, right, bottom = sp.paper_area(paper, PAPER)
+        for x0, y0, x1, y1 in rects:
+            self.assertGreaterEqual(x0, left)
+            self.assertGreaterEqual(y0, top)
+            self.assertLessEqual(x1, right)
+            self.assertLessEqual(y1, bottom)
         for i in range(3):
             for j in range(i + 1, 3):
                 a, b = rects[i], rects[j]

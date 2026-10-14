@@ -1368,7 +1368,9 @@ class SheetPlan:
 
 def paper_area(paper: str, PAPER: dict) -> tuple:
     width, height = PAPER[paper]
-    return 6.35, 33.02, width - 12.7, height - 30.0
+    # Native drawing sheets have a frame near x=10 mm. Keep labels and headings
+    # inside it; the old 6.35 mm margin visibly crossed the frame in exported PDFs.
+    return 20.32, 33.02, width - 20.32, height - 35.0
 
 
 def _pack_columns(layouts: list, left: float, top: float, right: float, bottom: float, ffd: bool) -> list | None:
@@ -1683,7 +1685,7 @@ def plan_root(sheets: list, planner: Planner, PAPER: dict, paper: str, top: floa
     for name in list(PAPER)[list(PAPER).index(paper):]:
         width, height = PAPER[name]
         columns = max(1, int((width - 12.7 - label_w - 12.7) // pitch_x))
-        x0 = snap(12.7 + label_w)
+        x0 = snap(20.32 + label_w)
         x, y, row_h = x0, top, 0.0
         positions, ok = [], True
         for e in entries:

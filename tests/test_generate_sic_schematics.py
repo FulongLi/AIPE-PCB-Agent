@@ -181,7 +181,7 @@ class NetClassTests(unittest.TestCase):
                 self.assertEqual(coerced.name, g.project_name(board))
                 self.assertEqual(coerced.revision, common.GENERATION)
                 self.assertEqual(coerced.comment, common.BANNER)
-                self.assertIn(common.BASIS, coerced.title)
+                self.assertEqual(coerced.title, f'SiC buck 400V / 200V / 5kW - {board} board')
                 self.assertEqual(coerced.pages, {str(k): str(v) for k, v in g.board_model(board).PAGES.items()})
                 self.assertEqual(coerced.flag_nets, list(g.board_model(board).FLAG_NETS))
                 self.assertIn(coerced.flag_page, coerced.pages)
@@ -239,7 +239,7 @@ class GenerationLabelTests(unittest.TestCase):
     """One generation label (sic_buck_common.GENERATION) for everything the V2.1 generators write."""
 
     def test_banner_is_derived_from_the_generation_label(self):
-        self.assertEqual(common.GENERATION, "V2.1")
+        self.assertEqual(common.GENERATION, "V2.2")
         self.assertEqual(common.BANNER, f"AI-GENERATED ENGINEERING PROTOTYPE - {common.GENERATION} - HUMAN REVIEW REQUIRED")
         self.assertEqual(g.REVISION, common.GENERATION)
         self.assertEqual(power_model.COMMENT, common.BANNER)
@@ -332,7 +332,7 @@ class GenerationTests(unittest.TestCase):
                 self.assertTrue(gates['gates']['net_settings_equal']['passed'])
                 self.assertTrue(gates['gates']['erc_zero']['passed'], gates['gates']['erc_zero'].get('details'))
                 self.assertTrue(gates['gates']['netlist_vs_model']['passed'], gates['gates']['netlist_vs_model'])
-                self.assertTrue(gates['gates']['netlist_vs_v2']['passed'], gates['gates']['netlist_vs_v2'])
+                self.assertTrue(gates['gates']['release_connectivity']['passed'], gates['gates']['release_connectivity'])
                 self.assertEqual(gates['gates']['erc_zero']['finding_types'], {})
                 fill = gates['gates']['paper_fill']
                 self.assertTrue(fill['passed'], fill)

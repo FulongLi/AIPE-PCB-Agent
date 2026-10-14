@@ -535,6 +535,13 @@ def build() -> Circuit:
     for _ in range(4):
         c.add("H", "M3", "MountingHole:MountingHole_3.2mm_M3", {}, page=p, kind="H",
               note="M3 standoff to the power-board SELV strip (stack height about 11 mm, unverified)")
+    # Append explicit references: preserve every V2.1 pin/reference while adding local bypasses.
+    # Placement is applied by refine_sic_v22; a schematic capacitor alone does not shorten a supply loop.
+    for ref, target in (("C76", "U4"), ("C77", "U8"), ("C78", "U10"), ("C79", "U11")):
+        page = next(part["page"] for part in c.parts if part["ref"] == target)
+        with c.block(f"v22_bypass_{target.lower()}", f"{target} dedicated local bypass (V2.2)"):
+            c.cap("100n/50V/0603", "3V3", GND, page, ref=ref,
+                  note=f"V2.2 E22-11: dedicated local bypass at {target}; direct supply stub and adjacent ground via")
     return c
 
 

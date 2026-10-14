@@ -2621,7 +2621,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVDD bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -2705,7 +2705,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVEE bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -2761,7 +2761,7 @@
         "type": "passive"
       }
     },
-    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "note": "Gate-bias RLIM per SLUSF10B Eq.10-12; 1 k placeholder, HUMAN REVIEW (capacitor charge imbalance, quiescent current and the RLIM pin 0.125 A rms rating)",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4103,7 +4103,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVDD bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4187,7 +4187,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVEE bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4243,7 +4243,7 @@
         "type": "passive"
       }
     },
-    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "note": "Gate-bias RLIM per SLUSF10B Eq.10-12; 1 k placeholder, HUMAN REVIEW (capacitor charge imbalance, quiescent current and the RLIM pin 0.125 A rms rating)",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4787,7 +4787,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVDD bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVDD bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4871,7 +4871,7 @@
         "type": "passive"
       }
     },
-    "note": "FBVEE bottom (VEEA single-point return); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "FBVEE bottom; VEEA quiet-star layout remains E22-03 OPEN; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -4906,17 +4906,17 @@
   },
   {
     "ref": "R57",
-    "value": "1k",
-    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "value": "160",
+    "footprint": "Resistor_SMD:R_1206_3216Metric",
     "nets": {
       "1": "ISO_RLIM",
       "2": "5V_ISO"
     },
     "page": "04_sensing_island",
     "kind": "R",
-    "mpn": "RC0805FR-071KL",
-    "maker": "Yageo",
-    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0805",
+    "mpn": "ERJP08F1600V",
+    "maker": "Panasonic",
+    "source": "https://industrial.panasonic.com/sa/products/pt/small-and-high-power-chip-resistors/models/ERJP08F1600V",
     "pins": {
       "1": {
         "name": "1",
@@ -4927,7 +4927,7 @@
         "type": "passive"
       }
     },
-    "note": "RLIM per SLUSF10B 'RLIM Resistor Selection'; 1 k placeholder, HUMAN REVIEW (COM-VEE regulator sink/source current and the RLIM pin 0.125 A rms rating)",
+    "note": "V2.2 E22-02: 160 ohm 1% 0.66 W; two AMC1311B maximum 19.4 mA + 1 mA allowance; SLUSF10B Eq.9. 60 ohm internal switch stress assumption is NOT a guaranteed limit. Startup, load regulation and hot resistor temperature require bench validation.",
     "xy": null,
     "board": "power",
     "dnp": false
@@ -6725,15 +6725,15 @@
   },
   {
     "ref": "R82",
-    "value": "9.09k",
+    "value": "6.65k",
     "footprint": "Resistor_SMD:R_0603_1608Metric",
     "nets": {
-      "1": "3V3",
+      "1": "REF2V5_PB",
       "2": "ISENSE_REF"
     },
     "page": "05_selv_strip",
     "kind": "R",
-    "mpn": "TNPW06039K09BEEA",
+    "mpn": "TNPW06036K65BEEA",
     "maker": "Vishay",
     "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
     "pins": {
@@ -6746,14 +6746,14 @@
         "type": "passive"
       }
     },
-    "note": "A-P1: ISENSE_REF = 3V3 x 1.00 k / 10.09 k = 0.327 V ratiometric zero-current reference (TMCS1133 has no VREF pin); 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "V2.2 E22-01: 2.5 V x 1.01 k / 7.66 k = 0.329634 V; TMCS1133 Cxx zero output is fixed 0.33 V, NOT ratiometric to VS (SBOSAG0E 8.3.5); calibrate actual zero current; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
   },
   {
     "ref": "R83",
-    "value": "1k",
+    "value": "1.01k",
     "footprint": "Resistor_SMD:R_0603_1608Metric",
     "nets": {
       "1": "ISENSE_REF",
@@ -6761,7 +6761,7 @@
     },
     "page": "05_selv_strip",
     "kind": "R",
-    "mpn": "TNPW06031K00BEEA",
+    "mpn": "TNPW06031K01BEEA",
     "maker": "Vishay",
     "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
     "pins": {
@@ -6774,7 +6774,7 @@
         "type": "passive"
       }
     },
-    "note": "A-P1: ISENSE_REF divider bottom; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
+    "note": "V2.2 E22-01: 0.1% divider bottom; independent reference and sensor errors remain; 0.1 % 25 ppm/K thin film, TNPW ordering code unverified",
     "xy": null,
     "board": "power",
     "dnp": false
