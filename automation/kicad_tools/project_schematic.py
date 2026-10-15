@@ -213,6 +213,11 @@ def default_unit_grouping(part: dict) -> list[list[str]]:
     Any group larger than MAX_UNIT_PINS is chunked so a unit always fits on a sheet.
     """
     numbers = sorted(part['pins'], key=pin_key)
+    if part.get('amplifier_channels'):
+        groups = [[str(c[k]) for k in ('positive', 'negative', 'output')] for c in part['amplifier_channels']]
+        used = {n for g in groups for n in g}
+        remaining = [n for n in numbers if n not in used]
+        return groups + ([remaining] if remaining else [])
     if part['kind'] == 'DSP':
         groups = [[], [], [], []]
         for n in numbers:
@@ -443,6 +448,8 @@ def symbol_for(part: dict, spec: ProjectSpec, library: _Library, grouping: Calla
     if sorted(n for g in groups for n in g) != sorted(part['pins']):
         raise ValueError(f'{part["ref"]}: unit grouping does not partition the pins')
     groups = [g for g in groups if g] or [[]]
+    if part.get('amplifier_channels'):
+        return (name, *amplifier_symbol(part, groups, name))
     if len(groups) == 1:
         result = official_symbol(part, official_candidates(part, spec), library, name)
         if result:
@@ -457,6 +464,32 @@ def symbol_for(part: dict, spec: ProjectSpec, library: _Library, grouping: Calla
             if result:
                 return (name, *result)
     return (name, *generic_symbol(part, groups, name, pin_order))
+
+
+def amplifier_symbol(part: dict, groups: list, name: str):
+    """Explicit-pin multi-channel analogue triangles, with a separate supply unit.
+
+    Opt-in metadata prevents guessing a manufacturer's pinout from the part name.
+    Every original pin remains present once, including supply and unused pins.
+    """
+    units=[];extents=[]
+    for i,group in enumerate(groups,1):
+        if i <= len(part['amplifier_channels']):
+            ch={k:str(v) for k,v in part['amplifier_channels'][i-1].items()}
+            if set(group) != set(ch.values()):raise ValueError('Amplifier channel grouping mismatch')
+            graphics=[_path([(-5.08,5.08),(-5.08,-5.08),(5.08,0),(-5.08,5.08)])]
+            for role,xy in [('positive',(-7.62,2.54,0)),('negative',(-7.62,-2.54,0)),('output',(7.62,0,180))]:
+                n=ch[role];p=part['pins'][n]
+                graphics.append(pin_sexpr(p['type'],*xy,2.54,'+' if role=='positive' else '-' if role=='negative' else p['name'],n))
+            extents.append((20.32,15.24))
+        else:
+            h=max(7.62,2.54*(len(group)+1));graphics=[f'(rectangle (start -5.08 {num(h/2)}) (end 5.08 {num(-h/2)}) (stroke (width 0.254) (type default)) (fill (type background)))']
+            for k,n in enumerate(group):
+                p=part['pins'][n]
+                graphics.append(pin_sexpr(p['type'],-7.62,snap((len(group)-1)*1.27-k*2.54),0,2.54,p['name'],n))
+            extents.append((20.32,h+5.08))
+        units.append(f'(symbol "{name}_{i}_1" '+ '\n'.join(graphics)+')')
+    return _header(name,part)+'\n'.join(units)+')',extents,'generated:explicit-analog-channels'
 
 
 def analyse_connectivity(parts: list, flag_nets=()) -> dict:
@@ -585,7 +618,7 @@ class _Generator:
             center_x, center_y = snap(x + cell_width / 2), snap(y + height / 2 + 7.62)
             in_bom = bool(part.get('in_bom', part['kind'] not in ('TP', 'H')))
             locations = sch.add_symbol(lib_id, definition, part['ref'], part['value'], part['footprint'], center_x, center_y,
-                                       unit, property_y=-height / 2 - 6.35, in_bom=in_bom)
+                                       unit, property_y=-height / 2 - 6.35, in_bom=in_bom, on_board=bool(part.get('on_board', True)))
             if unit == 1:
                 self.paths[part['ref']] = flow.sheet['instance_path'] + '/' + sch.references[part['ref']]
             for n, point in locations.items():
@@ -909,7 +942,7 @@ def _generate_wired(spec: ProjectSpec, parts: list, flag_nets: list, diagnostics
                 in_bom = bool(part.get('in_bom', part['kind'] not in ('TP', 'H')))
                 props = {k: v for k, v in placed.texts.items() if v}
                 sch.add_symbol(lib_id, placed.definition, part['ref'], part['value'], part['footprint'], placed.x, placed.y, placed.unit,
-                               property_y=placed.property_y, in_bom=in_bom, angle=placed.angle, dnp=bool(part.get('dnp')),
+                               property_y=placed.property_y, in_bom=in_bom, on_board=bool(part.get('on_board', True)), angle=placed.angle, dnp=bool(part.get('dnp')),
                                properties_at=props or None)
                 if placed.unit == 1:
                     gen.paths[part['ref']] = sheet['instance_path'] + '/' + sch.references[part['ref']]

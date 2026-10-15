@@ -1,0 +1,77 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-15T11:06:00",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b",
+            "violations": []
+        },
+        {
+            "path": "/SiC half bridge, DC link and output filter/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/7d91edae-66d9-5332-945d-46e4476569bd",
+            "violations": []
+        },
+        {
+            "path": "/High-side drive and short-circuit protection/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/302762e9-5541-5473-83d7-e00bf31b1352",
+            "violations": []
+        },
+        {
+            "path": "/Low-side drive and short-circuit protection/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/cd09e0bf-e8f3-5324-a82b-ccdffb359990",
+            "violations": []
+        },
+        {
+            "path": "/High-side isolated gate-bias supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/990ccd34-7986-5831-8393-1959ecd0a5f5",
+            "violations": []
+        },
+        {
+            "path": "/Low-side isolated gate-bias supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/3d627785-480e-541d-a01c-e01ea6667975",
+            "violations": []
+        },
+        {
+            "path": "/Raw input, DC-link and output isolated voltage measurement/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/f96f571b-acd4-54d2-aad3-0624e5c0d3aa",
+            "violations": []
+        },
+        {
+            "path": "/Independent isolated sensing supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/12628a3b-9f97-5b34-b42e-9029d82650ba",
+            "violations": []
+        },
+        {
+            "path": "/Keyed control harness, fail-safe inputs and mounting/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/5ab12804-7aa0-5a14-adc6-361caac032e5",
+            "violations": []
+        }
+    ],
+    "source": "sic-v3-power.kicad_sch"
+}

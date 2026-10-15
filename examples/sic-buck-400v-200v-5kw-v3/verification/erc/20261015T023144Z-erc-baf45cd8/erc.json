@@ -1,0 +1,93 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-15T10:31:44",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7",
+            "violations": []
+        },
+        {
+            "path": "/Protected electronics supply and DSP power sequencing/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/0c271cf5-9482-5caf-9c2f-323ce0482ff6",
+            "violations": []
+        },
+        {
+            "path": "/TMS320F28335 controller and signal assignment/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/538a0449-7513-559a-9eb7-e3fca11c76e3",
+            "violations": []
+        },
+        {
+            "path": "/DSP per-pin bypass and ADC reference/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/11acdfa1-df2f-56ae-902c-79d327f8aae2",
+            "violations": []
+        },
+        {
+            "path": "/Clock, boot, JTAG and communications/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/528e1945-efb1-57a0-8b99-db7c458d389f",
+            "violations": []
+        },
+        {
+            "path": "/Isolated voltage receiver and bipolar current conditioning/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/6794e767-b272-531e-9914-f02380a60f2d",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR093 引脚 1 [pwr, Power input, Line]",
+                            "pos": {
+                                "x": 146.05,
+                                "y": 58.42
+                            },
+                            "uuid": "66701c68-fcb2-5aaa-bc89-6f55ce07bf9f"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/Asynchronous protection, fault latch and PWM gating/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/fae78ea2-0372-56e4-9006-892709060759",
+            "violations": []
+        },
+        {
+            "path": "/Contactor, feedback, fan and thermal interlock/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/2cae45c9-4477-530d-8173-3bb591233eda",
+            "violations": []
+        },
+        {
+            "path": "/Power-board harness and mechanical support/",
+            "uuid_path": "/b7602b09-089f-531b-bc24-4cea9f3178a7/c392d4eb-bcbc-5c75-a397-190695d40aa1",
+            "violations": []
+        }
+    ],
+    "source": "sic-v3-control.kicad_sch"
+}
