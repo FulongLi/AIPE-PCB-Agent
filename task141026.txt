@@ -1,0 +1,1393 @@
+# AIPE-PCB-Agent V3.0
+# Clean-Sheet Expert Engineering Redesign
+# Complete Autonomous Engineering Task
+
+Repository:
+https://github.com/FulongLi/AIPE-PCB-Agent
+
+Project:
+400 V to 200 V, 5 kW SiC Synchronous Buck Converter
+
+Version:
+V3.0
+
+MISSION
+
+Act as a Principal Power Electronics and Hardware
+Design Engineer with expertise in:
+
+- Power electronics converter design
+- SiC MOSFET and gate-driver engineering
+- High-frequency switching circuits
+- Advanced PCB placement and routing
+- Electromagnetic compatibility (EMI/EMC)
+- Analogue and mixed-signal electronics
+- High-speed digital PCB design
+- DSP-based digital control
+- Power integrity and signal integrity
+- Thermal and mechanical engineering
+- Electrical insulation and safety
+- PCB manufacturing and assembly
+- Circuit modelling and simulation
+
+Your responsibility is to independently redesign
+the complete 5 kW SiC converter from first principles.
+
+This is NOT another incremental patch to V2.2.
+
+Create a NEW V3 engineering design using the
+requirements, validated knowledge and lessons
+from previous generations.
+
+Reconsider the system architecture, circuitry,
+component placement and PCB implementation.
+
+Carry the engineering work through to real,
+editable KiCad projects and verified outputs.
+
+The goal is a professional, knowledge-driven
+engineering prototype design.
+
+This is one comprehensive autonomous task.
+
+Do not split the implementation into multiple
+independent user-requested tasks.
+
+Use internal engineering milestones and
+verification gates, but continue working
+without routine approval requests.
+
+Ask for user input only when a genuinely
+unresolvable requirement or safety-critical
+decision prevents responsible progress.
+
+
+==================================================
+1. INSPECT THE EXISTING AIPE REPOSITORY
+==================================================
+
+Before designing anything, inspect the latest
+main branch of:
+
+https://github.com/FulongLi/AIPE-PCB-Agent
+
+Study the full engineering context.
+
+Important locations:
+
+knowledge/
+automation/
+docs/
+examples/sic-buck-400v-200v-5kw/
+
+The existing project includes:
+
+V2.0:
+Original 5 kW SiC converter design.
+
+V2.1:
+Schematic readability and PCB routing
+quality improvements.
+
+V2.2:
+Independent engineering review and
+electrical design corrections.
+
+The V2.2 changes include:
+
+- Corrected TMCS1133 current reference
+- Corrected isolated sensing RLIM selection
+- Improved local control-logic decoupling
+- Updated calculations and regression tests
+- Independent engineering review
+- Remaining engineering issue register
+
+Read these V2.2 documents carefully:
+
+review/v22/stage_a_independent_review.md
+
+review/v22/design_review_report.md
+
+review/v22/remaining_engineering_ecos.md
+
+review/v22/comparison.md
+
+review/v22/validation.json
+
+Also study:
+
+knowledge/lessons/v22-independent-review.md
+
+Review the manufacturer-derived knowledge from:
+
+TI TIDA-010054
+
+Wolfspeed CGD15SG00D2
+
+Wolfspeed CGD1700HB2M-UNA
+
+Wolfspeed PRD-04814
+
+Use original manufacturer datasheets when
+specific electrical limits or application
+conditions need confirmation.
+
+Treat previous AI-generated conclusions
+as evidence to be evaluated, not as
+automatically correct engineering facts.
+
+
+==================================================
+2. PRESERVE ALL PREVIOUS DESIGN HISTORY
+==================================================
+
+All previous design generations must remain
+available for comparison.
+
+DO NOT overwrite:
+
+examples/buck-48v-24v-1kw/
+
+examples/sic-buck-400v-200v-5kw/
+
+Keep all existing frozen V2 and V2.1 releases.
+
+Preserve the existing V2.2 design and its
+engineering review records.
+
+Create a NEW example directory:
+
+examples/sic-buck-400v-200v-5kw-v3/
+
+V3 must contain independent:
+
+- Design requirements
+- Engineering calculations
+- Component selection
+- Circuit models
+- KiCad schematics
+- PCB layouts
+- Simulation results
+- Verification evidence
+- Mechanical information
+- Manufacturing review outputs
+- Engineering reports
+
+Record the exact baseline Git commit used.
+
+Do not duplicate large historical artifacts
+unnecessarily when stable Git references
+and cryptographic hashes are sufficient.
+
+The previous designs are benchmarks,
+not templates that must be copied.
+
+
+==================================================
+3. FUNDAMENTAL DESIGN REQUIREMENTS
+==================================================
+
+Design a complete synchronous Buck converter.
+
+Nominal input voltage:
+400 V DC
+
+Input operating range:
+360–440 V DC
+
+Nominal output voltage:
+200 V DC
+
+Rated output power:
+5000 W
+
+Rated output current:
+25 A
+
+Nominal switching frequency:
+50 kHz
+
+Power semiconductor technology:
+Wolfspeed SiC MOSFET
+
+Digital controller:
+TI TMS320F28335
+
+PCB design environment:
+KiCad
+
+Preferred PCB layer count:
+2–4 layers where technically feasible.
+
+Six layers may be used when justified.
+
+Power/control partitioning:
+To be decided independently.
+
+The following parameters must be defined
+and justified during system design:
+
+- Efficiency target
+- Output voltage regulation
+- Output voltage ripple
+- Inductor current ripple
+- Ambient temperature
+- Cooling arrangement
+- Maximum permissible temperatures
+- Transient overload requirements
+- Startup requirements
+- Fault response requirements
+- PCB material and stack-up
+- Electrical insulation environment
+- Mechanical envelope
+- PCB manufacturing capabilities
+
+Clearly distinguish:
+
+USER REQUIREMENTS
+
+VERIFIED DATASHEET VALUES
+
+ANALYTICAL DESIGN RESULTS
+
+ENGINEERING ASSUMPTIONS
+
+UNVERIFIED DESIGN TARGETS
+
+Do not silently convert assumptions
+into established requirements.
+
+
+==================================================
+4. CLEAN-SHEET SYSTEM ARCHITECTURE
+==================================================
+
+Start by independently designing the
+complete converter architecture.
+
+Do not inherit the V2.2 PCB floorplan.
+
+Do not reuse the previous component
+positions as the new layout.
+
+Evaluate the architecture from:
+
+Input power
+    ↓
+Input protection
+    ↓
+Precharge / inrush management
+    ↓
+DC-link
+    ↓
+SiC switching stage
+    ↓
+Output inductor
+    ↓
+Output capacitors
+    ↓
+Output terminals
+
+Also design:
+
+- Auxiliary power supplies
+- Gate-driver supplies
+- Voltage sensing
+- Current sensing
+- Temperature sensing
+- Fast hardware protection
+- DSP controller
+- Communication interfaces
+- Board-to-board interfaces
+- Mechanical and thermal systems
+
+Evaluate alternative partitioning options:
+
+A. Single integrated PCB
+
+B. Separate power and control PCBs
+
+C. Separate power, gate-driver and
+   digital-control assemblies
+
+Select the architecture using engineering
+criteria rather than appearance alone.
+
+Provide a documented architecture
+comparison and selection.
+
+
+==================================================
+5. INDEPENDENT COMPONENT SELECTION
+==================================================
+
+Review the major component choices.
+
+Do not automatically retain V2.2 components.
+
+Select suitable real manufacturer devices.
+
+POWER MOSFETS
+
+Evaluate Wolfspeed SiC MOSFETs based on:
+
+- VDS rating
+- Transient overvoltage margin
+- Continuous and peak current
+- RDS(on) over temperature
+- Gate charge
+- Eon / Eoff
+- Coss
+- Package parasitics
+- Kelvin-source availability
+- Junction-to-case thermal resistance
+- Mounting arrangement
+- Datasheet operating limits
+
+The existing C4MS025120K is a candidate,
+not an unquestionable requirement.
+
+GATE DRIVERS
+
+Evaluate:
+
+- Isolation rating
+- Output drive capability
+- Compatible gate bias
+- Miller clamp
+- DESAT / short-circuit protection
+- UVLO
+- Fault reporting
+- Propagation delay
+- Common-mode transient immunity
+- Local supply decoupling
+
+The existing UCC21710-Q1 may be retained
+if justified.
+
+CAPACITORS
+
+Evaluate:
+
+- DC-link capacitance
+- RMS ripple current
+- ESR and ESL
+- Voltage derating
+- Film/ceramic combinations
+- Temperature and lifetime
+- Actual package and mounting geometry
+
+MAGNETIC COMPONENTS
+
+Evaluate:
+
+- Required output inductance
+- Actual inductance under DC bias
+- Peak current
+- Saturation behaviour
+- Copper losses
+- Core losses
+- Winding temperature
+- Stray-field effects
+- Mechanical dimensions
+- Cooling requirements
+
+SENSORS
+
+Evaluate current and voltage sensors
+against the actual operating conditions.
+
+Do not repeat the V2.1 TMCS1133
+reference-law error.
+
+Consider required bidirectional current
+capability, offset, bandwidth, noise,
+temperature and ADC interface.
+
+
+==================================================
+6. COMPLETE ELECTRICAL CIRCUIT DESIGN
+==================================================
+
+Design the electrical circuit before PCB routing.
+
+Include:
+
+- Complete power stage
+- Gate-driver circuits
+- Isolated gate-bias supplies
+- Input protection
+- DC-link
+- Output filter
+- Voltage/current sensing
+- Hardware overcurrent protection
+- Overvoltage protection
+- Undervoltage protection
+- Thermal protection
+- Fault interlocks
+- PWM disable and fail-safe behaviour
+- Auxiliary supplies
+- DSP power and clock systems
+- ADC conditioning
+- Communication and debug interfaces
+
+Verify compatibility between all circuit
+elements.
+
+For example:
+
+The selected current sensor must be
+compatible with its reference scheme,
+power supply, signal-conditioning circuit,
+ADC input range and firmware conversion.
+
+The isolated gate-bias supply must meet
+actual load and dynamic-current requirements.
+
+Dead time must not be assumed to exist
+merely because complementary PWM signals
+have interlock logic.
+
+A clean ERC is not sufficient proof
+of electrical correctness.
+
+
+==================================================
+7. SOLVE THE PREVIOUS ENGINEERING ISSUES
+==================================================
+
+V2.2 identified 18 engineering issues.
+
+Use the complete E22-01 through E22-18
+register as a mandatory V3 design input.
+
+Create:
+
+review/v22_issue_resolution_matrix.md
+
+For every previous issue provide:
+
+- Original issue ID
+- Root cause
+- V3 design response
+- Modified circuitry or geometry
+- Supporting analysis
+- Verification method
+- Closure status
+- Remaining risk
+
+Pay particular attention to:
+
+A. UCC14141 VEEA feedback return
+
+Design a physically quiet feedback-star
+network with correct return-current paths.
+
+Do not declare compliance based only on
+net names or schematic connectivity.
+
+B. SiC commutation loop
+
+Reconsider high-side MOSFET, low-side
+MOSFET and HF DC-link capacitor placement.
+
+Minimise the complete high-di/dt loop,
+including return copper and layer transitions.
+
+C. Low-side gate loop
+
+Reconsider driver position, gate resistors,
+Miller clamp and Kelvin-source routing.
+
+D. High-current copper bottlenecks
+
+Review 25 A continuous current paths,
+sensor package transitions, vias,
+copper thickness and thermal limits.
+
+E. Electrical insulation
+
+Resolve clearance/creepage requirements
+using the intended working voltage,
+environment and applicable standards.
+
+Do not accept unexplained DRC exceptions.
+
+F. Mechanical assembly
+
+Resolve control-board mounting,
+connector positioning, heatsink interfaces,
+device mounting and mechanical support.
+
+G. Protection architecture
+
+Resolve precharge, inrush, relay,
+fuse/MOV coordination, discharge
+and fault-shutdown requirements.
+
+H. EMI and thermal risks
+
+Address them as design constraints,
+not as a final visual inspection.
+
+Do not report an issue as fully closed
+unless the required evidence exists.
+
+Some items require hardware measurements.
+Mark those as:
+
+DESIGN ADDRESSED — HARDWARE VALIDATION PENDING
+
+rather than claiming experimental closure.
+
+
+==================================================
+8. PROFESSIONAL SCHEMATIC GENERATION
+==================================================
+
+Generate new KiCad schematics with
+professional engineering readability.
+
+Use manufacturer reference schematics,
+particularly TI designs, as a style reference.
+
+Requirements:
+
+- Functional block organisation
+- Clear power-flow direction
+- Conventional circuit topology diagrams
+- Consistent symbol orientation
+- Readable component references and values
+- Actual wires for local connections
+- Hierarchical labels for module interfaces
+- Minimal unnecessary Global Labels
+- Clear signal and power domains
+- No avoidable text overlap
+- No confusing wire crossings
+
+Draw the synchronous Buck half-bridge
+using conventional high-side / low-side
+vertical organisation.
+
+Show the output inductor and capacitors
+in a clear electrical relationship
+with the switching node.
+
+Make gate-driver and protection circuits
+easy to understand.
+
+Reuse the existing AIPE schematic
+presentation tools where appropriate.
+
+Improve generic tooling if necessary.
+
+Validate the complete schematic
+electrically after generation.
+
+
+==================================================
+9. CIRCUIT SIMULATION AND CONTROL DESIGN
+==================================================
+
+Develop appropriate models for:
+
+- Steady-state switching behaviour
+- Startup and soft-start
+- Load transients
+- Input voltage variation
+- Inductor current ripple
+- Output voltage ripple
+- Semiconductor stresses
+- Gate-driver behaviour
+- Fault response
+- Control-loop stability
+
+Use ngspice or other suitable available
+simulation tools.
+
+Where possible, use manufacturer models
+with explicit licensing and limitations.
+
+Do not describe a simplified behavioural
+model as full semiconductor validation.
+
+For the TMS320F28335:
+
+Define:
+
+- PWM generation
+- Dead-time implementation
+- ADC sampling
+- Control-loop structure
+- Fault handling
+- Trip-zone behaviour
+- Startup and shutdown sequence
+
+Provide source-level firmware or a
+reproducible implementation specification
+appropriate to the actual available toolchain.
+
+Firmware claims require build or
+execution evidence.
+
+Evaluate loop stability and relevant
+sampling/delay effects.
+
+Do not claim hardware timing validation
+without measurement.
+
+
+==================================================
+10. THERMAL AND MECHANICAL ENGINEERING
+==================================================
+
+Design thermal and mechanical systems
+before final PCB placement.
+
+Estimate:
+
+- MOSFET conduction losses
+- MOSFET switching losses
+- Gate-driver losses
+- Magnetic component losses
+- Capacitor losses
+- PCB copper losses
+- Auxiliary supply losses
+
+Define realistic cooling assumptions.
+
+Evaluate:
+
+- Heatsink geometry
+- Thermal interface materials
+- Electrical isolation requirements
+- Junction temperatures
+- Airflow
+- Component spacing
+- Hotspot management
+- Mounting holes
+- Fasteners
+- PCB supports
+- Connector engagement
+- Mechanical assembly tolerances
+
+Create an assembly-level mechanical
+representation where practical.
+
+Do not treat approximate component
+courtyards as proof of mechanical fit.
+
+If full mechanical validation is blocked
+by missing vendor models, document the
+missing information precisely.
+
+Do not approve fabrication on an
+unverified assembly.
+
+
+==================================================
+11. NEW PCB FLOORPLAN DESIGN
+==================================================
+
+This is a central objective of V3.
+
+DO NOT copy the V2.2 Placement.
+
+Generate multiple genuinely different
+PCB floorplan candidates.
+
+At minimum, evaluate:
+
+Candidate A:
+Optimised for commutation and gate loops.
+
+Candidate B:
+Optimised for thermal and mechanical
+integration while maintaining electrical
+constraints.
+
+Additional candidates are encouraged
+where justified.
+
+Evaluate each candidate using:
+
+- Complete commutation-loop geometry
+- Gate-loop geometry
+- Kelvin-return quality
+- HF capacitor proximity
+- Copper current paths
+- Thermal paths
+- EMI coupling risk
+- Isolation boundaries
+- Total board area
+- Number of PCB layers
+- Assembly volume
+- Manufacturability
+
+Use quantitative metrics wherever
+technically defensible.
+
+Do not treat pad-to-pad distance alone
+as an adequate loop-quality metric.
+
+Where possible, include field-based or
+partial-inductance analysis of the
+actual multi-layer current paths.
+
+If extraction is unavailable, use
+clearly identified geometric proxies
+and do not report imaginary nH values.
+
+Select and justify the best candidate
+before commencing final routing.
+
+
+==================================================
+12. KNOWLEDGE-DRIVEN PLACEMENT
+==================================================
+
+Actively use the AIPE Engineering
+Knowledge System.
+
+Relevant knowledge includes:
+
+- SiC gate-driver design
+- Gate-driver PCB layout
+- DC-link capacitor placement
+- Isolated bias supplies
+- Voltage and current sensing
+- Thermal placement
+- TI/Wolfspeed reference designs
+- Previous V2.2 engineering lessons
+
+Translate applicable knowledge into
+actual placement constraints.
+
+Examples:
+
+- Driver near its MOSFET
+- Short, controlled gate-return loop
+- Correct Kelvin source connection
+- HF capacitor near the commutation stage
+- Quiet analogue feedback return
+- Separation of noisy and sensitive circuits
+- Appropriate thermal clearance
+- Verified isolation boundaries
+
+Document which knowledge influenced
+each major layout decision.
+
+Do not merely cite references after
+the design is complete.
+
+
+==================================================
+13. ADVANCED PCB ROUTING
+==================================================
+
+Use the existing KiCad automation system.
+
+Reuse V2.1's routing-quality improvements:
+
+- Path simplification
+- 45-degree routing
+- Bend minimisation
+- Tangent arc transitions
+- Routing quality checks
+
+Improve them when necessary.
+
+However, the primary routing priority is:
+
+ELECTRICAL QUALITY FIRST.
+
+Explicitly consider:
+
+- Complete high-di/dt current loops
+- Gate and Kelvin-return routing
+- Power-plane continuity
+- Controlled return-current paths
+- Critical analogue routes
+- High-current copper
+- Layer transitions
+- Via arrays
+- Noise coupling
+- Isolation barriers
+- Thermal behaviour
+
+Prefer clean and organised routing.
+
+Avoid:
+
+- Excessive right-angle bends
+- Unnecessary zigzags
+- Short repetitive jogs
+- Unnecessary vias
+- Avoidable detours
+
+Use rounded corners where suitable.
+
+Do not increase critical-loop inductance
+or reduce copper current capacity
+merely to improve appearance.
+
+Choose suitable layer counts based
+on actual engineering requirements.
+
+Prioritise four-layer implementations
+where feasible, but justify six layers
+if they offer a meaningful advantage.
+
+
+==================================================
+14. HIGH-SPEED AND DIGITAL DESIGN REVIEW
+==================================================
+
+For the control PCB, evaluate:
+
+- DSP core power integrity
+- 3.3 V / core supply decoupling
+- ADC reference stability
+- Clock routing
+- PWM signal integrity
+- Fault signal propagation
+- Analogue/digital partitioning
+- Ground-return continuity
+- Common-mode coupling
+- Board-to-board connector integrity
+- JTAG and communication routing
+
+Review the interface between hazardous
+power circuitry and accessible control.
+
+Check the actual isolation strategy.
+
+Minimise unnecessary routing complexity.
+
+Do not automatically add PCB layers or
+components unless justified by electrical,
+thermal or manufacturing requirements.
+
+
+==================================================
+15. VERIFICATION AND ENGINEERING GATES
+==================================================
+
+Use explicit verification gates.
+
+GATE A — ELECTRICAL DESIGN
+
+- Component ratings checked
+- Topology checked
+- Power and sensing circuits reviewed
+- Protection concept reviewed
+- Electrical simulations assessed
+
+GATE B — MECHANICAL AND SAFETY
+
+- Electrical domain boundaries defined
+- Clearance/creepage design basis recorded
+- Mounting and heatsink geometry checked
+- No unexplained CAD-rule exemptions
+- Outstanding physical qualifications recorded
+
+GATE C — SCHEMATIC
+
+- Native KiCad ERC
+- Correct netlist
+- Correct functional interfaces
+- Schematic readability review
+
+GATE D — PCB
+
+- Native KiCad DRC
+- Zero unintended unconnected items
+- Schematic/PCB parity
+- Correct copper zones
+- Current-path screening
+- Critical-loop geometry review
+- Return-path review
+- Mechanical placement review
+
+GATE E — SYSTEM ENGINEERING REVIEW
+
+- Simulation evidence reviewed
+- Thermal estimates reviewed
+- EMI risks documented
+- Fault-handling assumptions reviewed
+- V2.2 issue-resolution matrix complete
+
+Do not weaken safety or DRC rules
+to pass a gate.
+
+An unresolved safety or engineering
+blocker must remain visible.
+
+CAD completeness is not equivalent
+to hardware qualification.
+
+
+==================================================
+16. MANUFACTURING AND ASSEMBLY OUTPUTS
+==================================================
+
+Generate a complete manufacturing
+review package from real KiCad files.
+
+Include:
+
+- Editable schematics
+- Editable PCB projects
+- Gerber files
+- Drill files
+- Layer stack-up
+- BOM
+- Pick-and-place data
+- Assembly drawings
+- STEP models where available
+- 2D PCB renders
+- 3D board renders
+- PDF schematic exports
+- PDF PCB layout exports
+
+Identify missing or approximate
+manufacturer models.
+
+Check component footprints and
+assembly orientations.
+
+Do not purchase components,
+order fabrication or energise
+hardware automatically.
+
+Mark all outputs as engineering
+prototype review material until
+the remaining safety and hardware
+qualification is complete.
+
+
+==================================================
+17. V2.2 VERSUS V3 ENGINEERING COMPARISON
+==================================================
+
+Create a detailed comparison between:
+
+V2.2:
+Existing expert-reviewed design.
+
+V3:
+New clean-sheet engineering design.
+
+Compare:
+
+1. System architecture
+2. Component selection
+3. Schematic quality
+4. Power-loop geometry
+5. Gate-loop geometry
+6. DC-link capacitor placement
+7. High-current copper structure
+8. PCB board area
+9. PCB layer count
+10. Thermal management
+11. Mechanical assembly
+12. Control-board architecture
+13. Signal/return-path quality
+14. EMI risk
+15. Verification completeness
+16. Remaining engineering issues
+
+Do not claim V3 is better merely
+because it is newer.
+
+Each claimed improvement requires
+appropriate evidence.
+
+Where possible, provide measurements
+and before/after diagrams.
+
+Where reliable measurements are
+unavailable, explicitly state that
+the comparison is qualitative.
+
+
+==================================================
+18. IMPROVE AIPE'S REUSABLE ENGINEERING TOOLS
+==================================================
+
+V3 is both a converter design experiment
+and an improvement to AIPE-PCB-Agent.
+
+Whenever a generalisable weakness is found,
+improve the reusable automation.
+
+Potential improvements include:
+
+- Constraint-driven placement
+- Critical-loop geometry analysis
+- Return-path quality checking
+- Copper current-capacity screening
+- Thermal-aware placement
+- Isolation-boundary checking
+- Mechanical assembly checks
+- Engineering schematic templates
+- Routing quality optimisation
+- Evidence-based design review
+
+Avoid hardcoding improvements only
+for the present 5 kW board.
+
+Maintain backwards compatibility
+with existing supported examples.
+
+Do not break frozen V1/V2/V2.1/V2.2
+design history.
+
+Add regression tests for new tools.
+
+
+==================================================
+19. UPDATE ENGINEERING KNOWLEDGE
+==================================================
+
+Capture reusable engineering lessons
+from the V3 design.
+
+Where appropriate, create or improve:
+
+- SiC half-bridge design Skills
+- DC-link placement Skills
+- Gate-loop and Kelvin routing rules
+- Isolation-aware PCB rules
+- Thermal placement rules
+- High-current copper rules
+- Digital-control PCB Skills
+- Engineering verification procedures
+
+Use real source references.
+
+Record:
+
+- Source
+- Applicability
+- Engineering decision
+- Design constraints
+- Verification level
+- Known limitations
+
+Do not promote unverified AI judgments
+to hardware-validated engineering rules.
+
+Integrate new knowledge with the
+existing AIPE Knowledge System.
+
+
+==================================================
+20. V3 PROJECT DIRECTORY
+==================================================
+
+Create:
+
+examples/sic-buck-400v-200v-5kw-v3/
+
+Suggested structure:
+
+requirements/
+    specification.yaml
+    assumptions.md
+    design_constraints.yaml
+
+architecture/
+    system_architecture.md
+    architecture_comparison.md
+    interfaces.yaml
+
+calculations/
+    electrical_design.md
+    semiconductor_losses.md
+    capacitor_design.md
+    magnetic_design.md
+    thermal_design.md
+
+components/
+    component_selection.md
+    bom.csv
+    component_records.json
+
+schematics/
+    engineering_review.md
+
+simulation/
+    models/
+    results/
+    simulation_report.md
+
+kicad/
+    power_board/
+    control_board/
+    shared_libraries/
+
+pcb/
+    floorplan_candidates/
+    placement_analysis/
+    routing_analysis/
+
+mechanical/
+    assembly.md
+    clearance_analysis.md
+    thermal_interface.md
+
+verification/
+    erc/
+    drc/
+    circuit_checks/
+    engineering_checks/
+    regression/
+    safety_review/
+
+manufacturing/
+    gerber/
+    drill/
+    bom/
+    assembly/
+    step/
+
+review/
+    design_review_report.md
+    v22_issue_resolution_matrix.md
+    v22_vs_v3_comparison.md
+    knowledge_utilisation.md
+    remaining_issues.md
+    schematic_power.pdf
+    schematic_control.pdf
+    pcb_power.png
+    pcb_control.png
+    pcb_power_3d.png
+    pcb_control_3d.png
+
+Adjust the directory structure
+to the selected architecture.
+
+The actual KiCad source files must
+be present and independently editable.
+
+
+==================================================
+21. EXECUTION ENVIRONMENT
+==================================================
+
+Check the available environment first.
+
+Verify:
+
+- Operating system
+- KiCad installation
+- kicad-cli
+- Python environment
+- pcbnew / KiCad APIs
+- Existing AIPE automation tools
+- ngspice
+- Other available simulation tools
+- GitHub access
+- Available CAD and engineering libraries
+
+Reuse installed tools.
+
+Do not unnecessarily reinstall software.
+
+Prefer deterministic programmatic
+CAD generation over fragile GUI automation.
+
+Use direct KiCad files/APIs for
+schematic and PCB generation.
+
+Do not use static images as substitutes
+for functional CAD projects.
+
+If a necessary tool is unavailable,
+make a serious attempt to establish
+a working approved environment.
+
+If that remains impossible, record
+the exact execution blocker and
+preserve any completed work.
+
+Never claim that KiCad, simulation,
+routing or tests were executed
+when they were not.
+
+
+==================================================
+22. QUALITY ASSURANCE
+==================================================
+
+For every major deliverable:
+
+- Preserve source traceability
+- Record relevant input versions
+- Use reproducible calculations
+- Validate generated files
+- Run appropriate tests
+- Preserve native reports
+- Record remaining limitations
+
+Use engineering calculations rather
+than unsupported qualitative claims.
+
+Do not fabricate:
+
+- Component specifications
+- Simulation results
+- Parasitic inductance values
+- Thermal results
+- EMC compliance
+- Electrical safety certification
+- Hardware measurements
+
+Do not conceal unresolved failures.
+
+High-voltage design must be reviewed
+against the intended operating environment
+and applicable engineering standards.
+
+This is a hazardous 400 V / 5 kW system,
+and the non-isolated 200 V output remains
+hazardous.
+
+A complete CAD design is not approval
+for fabrication or energisation.
+
+
+==================================================
+23. GIT DEVELOPMENT WORKFLOW
+==================================================
+
+Create a development branch:
+
+feat/sic-buck-v3-clean-sheet
+
+Base it on the latest main branch.
+
+Do not overwrite the previous designs.
+
+Commit meaningful milestones:
+
+- Requirements and architecture
+- Circuit design and calculations
+- Simulation and electrical review
+- Schematic generation
+- PCB floorplan
+- Placement and routing
+- Verification
+- Final review package
+
+Keep the task autonomous.
+
+Do not stop after producing the
+initial architecture or calculations.
+
+Continue to complete CAD generation
+and the engineering review package.
+
+If a blocking issue prevents a
+later milestone, preserve all real
+outputs and report it precisely.
+
+Do not mark unfinished work complete.
+
+
+==================================================
+24. FINAL GITHUB PULL REQUEST
+==================================================
+
+Submit V3 through a GitHub Pull Request.
+
+Repository:
+FulongLi/AIPE-PCB-Agent
+
+Branch:
+feat/sic-buck-v3-clean-sheet
+
+PR title:
+
+AIPE-PCB-Agent V3 —
+Clean-Sheet Expert Engineering Redesign
+
+The PR must include:
+
+- Summary of V3 architecture
+- Major electrical decisions
+- Component selections
+- Simulation evidence
+- New KiCad projects
+- PCB images and renders
+- Engineering verification reports
+- V2.2 issue-resolution matrix
+- V2.2 vs V3 comparison
+- Knowledge-system improvements
+- Remaining risks and blockers
+
+Do not merge automatically.
+
+Preserve the PR for human review.
+
+
+==================================================
+25. SUCCESS CRITERIA
+==================================================
+
+V3 should demonstrate that an AI engineering
+agent can independently redesign a complex
+power-electronics PCB using validated
+engineering knowledge.
+
+Success requires:
+
+- A genuine clean-sheet design
+- Complete engineering calculations
+- Justified major component selections
+- Professionally readable schematics
+- Actual editable KiCad PCB projects
+- Engineering-driven component placement
+- Optimised critical current loops
+- Appropriate thermal and mechanical design
+- Defensible insulation and safety design
+- Complete intended PCB routing
+- Native ERC and DRC evidence
+- Electrical simulation evidence
+- A full disposition of V2.2 engineering issues
+- Quantitative V2.2 vs V3 comparison
+- Reusable AIPE Engineering Knowledge updates
+- Reproducible development and verification
+
+Do not confuse a successful CAD build
+with a qualified hardware product.
+
+Every issue requiring physical testing
+must remain marked accordingly.
+
+Final deliverables must distinguish:
+
+DESIGN COMPLETE
+
+CAD VERIFIED
+
+SIMULATION VERIFIED
+
+HARDWARE VALIDATION PENDING
+
+RELEASE BLOCKED
+
+where applicable.
+
+FINAL OBJECTIVE:
+
+Move AIPE-PCB-Agent beyond automated
+PCB drawing.
+
+Demonstrate a knowledge-driven,
+engineering-aware autonomous design
+system capable of making and verifying
+professional hardware design decisions.
+
+END OF TASK.

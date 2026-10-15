@@ -1,0 +1,52 @@
+schema: 1
+generation: V3
+baseline_commit: 20e96fdfa5ea76649daa416ee70b7ea7798a319d
+task_source: task141026.txt
+user_requirements:
+  input_nominal_V: 400
+  input_operating_V: [360, 440]
+  output_nominal_V: 200
+  output_current_A: 25
+  output_power_W: 5000
+  switching_frequency_Hz: 50000
+  semiconductor: Wolfspeed SiC MOSFET
+  controller: TI TMS320F28335
+  cad: KiCad
+  layer_preference: 2-4; six only with justification
+  preserve_previous_designs: true
+  submit_for_review_without_merge: true
+engineering_assumptions:
+  environment: enclosed industrial DC converter; output remains hazardous
+  pollution_degree: 2
+  overvoltage_category: II
+  altitude_max_m: 2000
+  ambient_max_C: 40
+  auxiliary_source: external isolated regulated 12 V, 10 A; protected separate coil and electronics branches
+  load: passive load; no externally energised output, no sustained regenerative operation
+  cooling: forced air; chassis heatsink; fan failure inhibits PWM
+  insulation_material: Panasonic R-1566(S)/R-1551(S), CTI >=600 certified by fabricator
+unverified_design_targets:
+  efficiency_full_load_min_percent: 97.5
+  regulation_percent: 1
+  output_ripple_pp_V: 2
+  inductor_ripple_pp_max_A: 10
+  mosfet_junction_max_C: 125
+  capacitor_case_max_C: 85
+  inductor_winding_max_C: 110
+  pcb_copper_rise_max_K: 20
+  overload_A: 30
+  overload_duration_s: 1
+  overcurrent_window_A: [-36, 36]
+  overvoltage_trip_V: 225
+  soft_start_s: 0.2
+  precharge_timeout_s: 0.5
+  discharge_to_60V_max_s: 60
+  current_fault_to_gate_off_max_us: 8
+  switch_peak_VDS_max_V: 800
+  dead_time_nominal_ns: 300
+  load_step: 12.5 A to 25 A and reverse; peak deviation <=20 V, settle <=5 ms
+verification_policy:
+  hardware_measurements_available: false
+  prototypes_may_be_ordered: false
+  hardware_may_be_energised: false
+  cad_clean_does_not_imply_hardware_qualification: true

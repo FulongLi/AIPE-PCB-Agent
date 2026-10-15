@@ -1,0 +1,17 @@
+# V3 requirements and evidence contract
+
+Baseline: `20e96fdfa5ea76649daa416ee70b7ea7798a319d` (upstream main, merged V2.2 PR #5). The source request is `/task141026.txt`. V1 and the complete V2 example, including releases and V2.2, are read-only benchmarks. V3 starts on `feat/sic-buck-v3-clean-sheet` with an independent electrical model and placement.
+
+`specification.yaml` separates user requirements from engineering assumptions and unverified design targets. A downloaded manufacturer limit is not a circuit measurement. Numerical calculations are analytical results, and behavioural simulations will retain their model limitations. All assembly and manufacturing files are **engineering prototype review material**.
+
+The intended application is an enclosed industrial DC converter, PD2, OVC II, at or below 2000 m. These conditions were selected for this prototype; the user did not specify a certifiable end product or installation standard. IEC 60664-1 coordination as explained by TI SLUP419 is a design basis, not a declaration of product compliance. Application-standard selection, insulation test plan, laminate CTI certification, harness insulation, PE bonding and protective disconnect remain release prerequisites.
+
+Select CTI >=600 laminate (Panasonic R-1566(S)/R-1551(S), **not** the lower-CTI W/WN grades). Use an 800 V working-voltage design envelope for reinforced separation: 8 mm creepage on material group I and at least 8 mm board air clearance, exceeding the 5.5 mm basic clearance table value for the selected 6 kV reinforced impulse basis. The same 8 mm exclusion applies to internal copper between hazardous and control domains. These values are set before routing. Manufacturer body isolation and PCB pad spacing are checked independently. A slot lengthens surface paths; it does not enlarge straight-line air clearance.
+
+HV functional copper uses a separately justified voltage-difference rule; a MOSFET gate and its Kelvin source are locally low voltage even when both float at 400 V. Treating every net on an HV island as separated by 8 mm would not represent its electrical function. Device lead transitions require explicit dimensional checks, not unexplained DRC exclusions. No blanket pad, courtyard or connectivity exclusions are authorised.
+
+An external isolated 12 V/10 A auxiliary source supplies separate protected contactor and electronics branches. Its actual certification is an integration requirement. The output is hazardous and non-isolated. A passive load and no externally energised output are assumed; the design must detect reverse current and inhibit PWM, but cannot safely absorb unlimited external regenerative energy. Input and output discharge remain required after PWM stops.
+
+Software already available: KiCad 10.0.7 and its Python 3.11/pcbnew, system Python 3.10 with numerical/PDF tools, bundled ngspice 46, Git and authenticated GitHub CLI. No installation is needed so far. New software or installation locations require the user's confirmation. DSP source/specification will not be labelled target-built unless an actual TI build is executed.
+
+Reference URLs, retrieval dates and SHA-256 digests are in `source_manifest.json`. Vendor PDFs remain in ignored cache; this repository records derived design facts and source citations rather than redistributing those documents.
