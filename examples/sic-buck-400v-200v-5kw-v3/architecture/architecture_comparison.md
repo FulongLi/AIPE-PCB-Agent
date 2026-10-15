@@ -6,7 +6,7 @@ This is a new placement problem. No V2.2 coordinates are input to V3 placement.
 |---|---|---|---|
 | Gate and commutation loops | Can be local | Local on power PCB | Extra gate/source connector transition unless driver boards mount directly at devices |
 | DSP analogue return | Shares large board with switching fields | Separate continuous control ground plane | Separate control plane |
-| Insulation boundary | Long shared PCB boundary | Local certified barrier components on power PCB; low-voltage harness | Additional isolated mechanical interfaces and inter-board creepage checks |
+| Insulation boundary | Long shared PCB boundary | Manufacturer-isolated barrier components on power PCB; low-voltage harness; current certification must be verified | Additional isolated mechanical interfaces and inter-board creepage checks |
 | Mechanical support | Large PCB with heavy power parts | Four-point support for both PCBs; heavy magnetics/contactors on chassis | Additional supported driver assemblies |
 | Service and verification | One board replacement | Power and control verified independently | Most interconnects and assembly tolerances |
 | Manufacturing | Large 4-layer board; expensive scrap | 4-layer power and 4-layer control; different copper weights | Three PCB families; connector BOM and assembly cost |
