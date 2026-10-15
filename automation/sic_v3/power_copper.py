@@ -59,6 +59,17 @@ def clip():
     merged={}
     for net,layer,shape,priority in specs:merged.setdefault((net,layer,priority),[]).append(shape)
     specs=[(net,layer,unary_union(shapes),priority) for (net,layer,priority),shapes in merged.items()]
+    # Accessible planes are conductors too. Pad/track-only masks would let
+    #HV copper overlap an otherwise empty part of a control ground plane on
+    #another layer. First establish CTRL plane outlines against actual HV
+    #pads/tracks, then exclude their complete projected area from HV pours.
+    # Dedicated high-current regions take precedence over otherwise empty
+    #control-plane area, while still respecting every actual CTRL pad and
+    #track. Do not give the global PGND background this precedence.
+    power_corridors=[shape.difference(masks['CTRL']) for net,layer,shape,priority in specs if net in ['BUS','SW','VOUT','RAW']]
+    masks['HV']=unary_union([*groups['HV'],*power_corridors]).buffer(8.075,quad_segs=16)
+    control_planes=[shape.difference(masks['HV']) for net,layer,shape,priority in specs if net not in ds]
+    masks['CTRL']=unary_union([*groups['CTRL'],*control_planes]).buffer(8.075,quad_segs=16)
     out=[]
     for net,layer,shape,priority in specs:
         shape=shape.difference(masks['CTRL' if net in ds else 'HV']).simplify(.003,preserve_topology=True)
@@ -78,6 +89,9 @@ def apply(output):
     from automation.kicad_tools.grid_router import Router
     d=json.loads((WORK/'copper-polygons.json').read_text());routing.WORK=WORK
     b=routing.wrapper(pcb.LoadBoard(str((WORK/f"sic-v3-power-{d['source']}.kicad_pcb").resolve())),'power');b._detached=[]
+    # Rebuild the outlines from current routed copper; old masks must not
+    #survive a re-clip and silently bridge a newly routed isolation moat.
+    for z in list(b.board.Zones()):b._detached.append(z);b.board.Remove(z)
     # Remove the redundant same-net header via and the sub-pad neck flagged
     #by native DRC. Keep adjacent legal copper; reconnect if DRC requests it.
     for t in list(b.board.GetTracks()):

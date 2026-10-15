@@ -27,7 +27,13 @@ def export(board_path,output,nets):
                 poly=p.SHAPE_POLY_SET();item.TransformShapeToPolygon(poly,layer,0,p.FromMM(.002),p.ERROR_INSIDE)
             rr=rings(poly)
             if rr:records.append(dict(net=net,layer=b.GetLayerName(layer),uuid=item.m_Uuid.AsString(),kind='zone' if zone else 'pad' if pad else 'via' if via else 'track',
-                ref=item.GetParentFootprint().GetReference() if pad else '',pin=item.GetNumber() if pad else '',through=through,xy=list(p.ToMM(item.GetPosition())) if through or pad else None,polygons=rr))
+                ref=item.GetParentFootprint().GetReference() if pad else '',pin=item.GetNumber() if pad else '',through=through,xy=list(p.ToMM(item.GetPosition())) if through or pad else None,
+                drill_mm=list(p.ToMM(item.GetDrillSize())) if pad else [p.ToMM(item.GetDrillValue())]*2 if via else None,
+                start=list(p.ToMM(item.GetStart())) if not pad and not zone and not via else None,
+                end=list(p.ToMM(item.GetEnd())) if not pad and not zone and not via else None,
+                mid=list(p.ToMM(item.GetMid())) if isinstance(item,p.PCB_ARC) else None,
+                width_mm=p.ToMM(item.GetWidth(layer)) if via else p.ToMM(item.GetWidth()) if not pad and not zone else None,
+                polygons=rr))
     Path(output).write_text(json.dumps(dict(board=str(board_path),sha256=hashlib.sha256(Path(board_path).read_bytes()).hexdigest(),records=records),separators=(',',':')))
 
 

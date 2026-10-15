@@ -1,16 +1,15 @@
 {
   "stage": "CONTROL_ROUTING_NATIVE_PASS",
   "board": "kicad/control_board/sic-v3-control.kicad_pcb",
-  "board_sha256": "e3d9c38f8e8118e0a2b1bfbe7a85fd39dd1859df530e4762f023aedff008a8ab",
+  "board_sha256": "d512aaa6f9f3da9f08cc435530c8ca1bb920d146ddc1b25cd89cb39a331ccc39",
   "native_report": "verification/drc/control.json",
-  "report_sha256": "7a44a9fece48fe6f232f380be91de406c099d9a293ef50bcaa730169051f4431",
+  "report_sha256": "fd7261205e4340ad3f200c65da007f7bdd393fc87217ca4115d7205df6e24243",
   "unconnected_items": 0,
   "drc_violations_all_severities": 0,
   "schematic_parity_issues": 0,
   "notes": [
-    "Native KiCad 10.0.7; all-track-errors and schematic-parity enabled.",
-    "This is the completed control PCB only; power PCB routing and full V3 system review remain in progress.",
-    "No hardware, EMC, timing or thermal validation is implied."
+    "Native KiCad 10.0.7; all-track-errors, all severities and schematic parity enabled.",
+    "CAD completeness does not establish current capacity, insulation certification, mechanical fit, hardware timing or thermal performance."
   ],
   "refinements": [
     {
@@ -3321,6 +3320,28 @@
           }
         ]
       }
+    }
+  ],
+  "ignored_checks": [
+    {
+      "description": "Footprint has no courtyard defined",
+      "key": "missing_courtyard"
+    },
+    {
+      "description": "Track endpoint not centered on via",
+      "key": "track_not_centered_on_via"
+    },
+    {
+      "description": "Tuning profile track geometries",
+      "key": "tuning_profile_track_geometries"
+    },
+    {
+      "description": "Footprint doesn't match symbol's footprint filters",
+      "key": "footprint_filters_mismatch"
+    },
+    {
+      "description": "Footprint component type doesn't match footprint pads",
+      "key": "footprint_type_mismatch"
     }
   ]
 }

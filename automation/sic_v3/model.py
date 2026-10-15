@@ -120,7 +120,7 @@ def bias(c,tag,p,*,sense=False):
               mpn='744226S',maker='Wuerth Elektronik',source='https://www.we-online.com/components/products/datasheet/744226S.pdf',
               definitions=pin_defs('1:W1A:passive 2:W2A:passive 3:W2B:passive 4:W1B:passive'))
         for _ in range(3):cap(c,'10u/25V/1210',vb,gp,p)
-        cap(c,'100n/50V/0603',vb,gp,p,note='Same-side bypass at VIN7/GNDP8; no via in HF branch')
+        cap(c,'100n/50V/0603',vb,gp,p,note='Local VIN7/GNDP8 bypass; final back-side placement uses layer transitions and requires impedance/load-step qualification')
         nets={n:gp for n in (1,2,5,*range(8,19))}
         nets.update({n:vee for n in (*range(19,28),30,31,36)})
         nets.update({3:f'PG_{tag}_N',4:'BIAS_EN_F',6:vb,7:vb,28:vdd,29:vdd,32:f'{tag}_RLIM',33:f'{tag}_FBVEE',34:f'{tag}_FBVDD',35:quiet})
@@ -144,7 +144,7 @@ def bias(c,tag,p,*,sense=False):
         # 50 V bulk removes the near-rating 25 V capacitor at 22.1 V from the previous design.
         for _ in range(3):cap(c,'1u/50V/0805',vdd,vee,p,note='Nominal 3 uF plus local gate reservoir; effective bias capacitance must be characterised')
         for _ in range(2):cap(c,'10u/50V/1210',vdd,vee,p,note='Total nominal 23 uF; >=10 uF effective required at configured output voltage')
-        cap(c,'100n/50V/0603',vdd,vee,p,note='Same-side bypass at output pins28/30')
+        cap(c,'100n/50V/0603',vdd,vee,p,note='Local total-output bypass at pins28/30; consult final routed placement and transition measurements')
         if sense:cap(c,'10u/25V/1210',com,vee,p)
         resistor(c,'4.7k','3V3',f'PG_{tag}_N',p)
 

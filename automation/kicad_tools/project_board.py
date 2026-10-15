@@ -157,6 +157,23 @@ def box_distance(a,b):
 
 def segment_box_distance(a,z,x0,y0,x1,y1):
     """Vectorised exact distance from a segment to axis-aligned rectangles."""
+    if all(isinstance(v,(int,float)) for v in (x0,y0,x1,y1)):
+        dx,dy=z[0]-a[0],z[1]-a[1];length2=dx*dx+dy*dy
+        endpoint=lambda q:math.hypot(max(x0-q[0],q[0]-x1,0),max(y0-q[1],q[1]-y1,0))
+        result=min(endpoint(a),endpoint(z))
+        if not length2:return result
+        low,high=0.,1.
+        for c,v,mn,mx in [(a[0],dx,x0,x1),(a[1],dy,y0,y1)]:
+            if abs(v)<1e-12:
+                if c<mn or c>mx:high=-1
+            else:
+                t0,t1=(mn-c)/v,(mx-c)/v
+                low=max(low,min(t0,t1));high=min(high,max(t0,t1))
+        if low<=high:return 0.
+        for x,y in [(x0,y0),(x0,y1),(x1,y0),(x1,y1)]:
+            t=max(0,min(1,((x-a[0])*dx+(y-a[1])*dy)/length2))
+            result=min(result,math.hypot(x-a[0]-t*dx,y-a[1]-t*dy))
+        return result
     import numpy as np
     dx,dy=z[0]-a[0],z[1]-a[1];length2=dx*dx+dy*dy
     result=np.minimum(np.hypot(np.maximum(np.maximum(x0-a[0],a[0]-x1),0),np.maximum(np.maximum(y0-a[1],a[1]-y1),0)),

@@ -9,6 +9,29 @@ import math
 from automation.kicad_tools.grid_router import Router
 
 
+def prune_unanchored_signal_islands(board):
+    """Remove copper components with no pad and no same-net plane intent.
+
+    These are remnants of local rip-up, not unfinished pad escapes. Plane
+    nets are excluded so intentional stitching vias remain. Retain returned
+    SWIG wrappers until after the board has been saved.
+    """
+    import pcbnew as pcb
+    zones=list(board.Zones());plane_nets={z.GetNetname() for z in zones}
+    for z in zones:board.Remove(z)
+    board.BuildConnectivity();c=board.GetConnectivity();seen=set();removed=[]
+    for item in list(board.GetTracks()):
+        if item.GetNetname() in plane_nets or item.m_Uuid.AsString() in seen:continue
+        comp=list(c.GetConnectedItems(item));seen.update(v.m_Uuid.AsString() for v in comp)
+        if any(isinstance(v,pcb.PAD) for v in comp):continue
+        for v in comp:
+            if v.Type()==pcb.PCB_VIA_T:v=pcb.Cast_to_PCB_VIA(v)
+            if isinstance(v,pcb.PCB_TRACK):removed.append(v)
+    for v in removed:board.Remove(v)
+    for z in zones:board.Add(z)
+    return removed,zones
+
+
 def prune_native_dangling(board,report,*,vias=False):
     """Remove only native-reported dangling items; return retained wrappers.
 
@@ -22,12 +45,12 @@ def prune_native_dangling(board,report,*,vias=False):
     return retained
 
 
-def connect_opens(board,report,*,width_mm,height_mm,layers,grid=.125,trace=.2,clearance=.2,via=(.6,.3),max_nodes=150000,max_tries=18,progress=None,net_rules=None,pair_clearance=None,skip_nets=(),allowed_layers=None,style_eps=.02):
+def connect_opens(board,report,*,width_mm,height_mm,layers,grid=.125,trace=.2,clearance=.2,via=(.6,.3),max_nodes=150000,max_tries=18,progress=None,net_rules=None,pair_clearance=None,skip_nets=(),allowed_layers=None,style_eps=.02,origin=(0.,0.)):
     import pcbnew as pcb
     from automation.kicad_tools.pairwise_router import PairwiseRouter
     router_type=PairwiseRouter if pair_clearance else Router
     extra={'pair_clearance':pair_clearance} if pair_clearance else {}
-    r=router_type(board,width_mm,height_mm,layers,grid=grid,trace=trace,clearance=clearance,via=via,net_rules=net_rules,**extra,
+    r=router_type(board,width_mm,height_mm,layers,grid=grid,trace=trace,clearance=clearance,via=via,net_rules=net_rules,origin=origin,**extra,
         style=dict(diagonal=True,eps=style_eps,via_cost_cells=20),max_nodes=max_nodes)
     r.stage='retry'
     # GetConnectedItems traverses a ZONE as one object even when its filled

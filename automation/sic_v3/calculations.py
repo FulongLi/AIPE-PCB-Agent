@@ -45,8 +45,10 @@ def operating_point(vin, current=25.0, *, al_factor=1.0):
     cin_rms = math.sqrt(current**2*duty*(1-duty) + ripple**2*duty/12)
     cout_rms = ripple/math.sqrt(12)
     cap_loss = cin_rms**2*(.0091/4) + cout_rms**2*(.0043/2)
-    # Provisional copper resistance; replaced with actual path screening after routing.
-    copper = 2.5
+    # Routed 100 C DC meshes screen the principal paths. An 8 W at 25 A
+    #budget includes margin over their conservative summed-path screen;
+    #AC/proximity, solder/lead losses and temperature rise remain unqualified.
+    copper = 8.0*(current/25.0)**2
     auxiliary = 12.0  # includes digital logic, bias and fan; contactor holding power is separately counted
     contactor_hold = 1.7
     bleeders = vin**2/364_000 + VO**2/172_000
@@ -62,7 +64,7 @@ def operating_point(vin, current=25.0, *, al_factor=1.0):
                 dc_link_ripple_V=current*duty*(1-duty)/(54e-6*FS),
                 losses_W=dict(fet_h_conduction=cond_h, fet_l_conduction=cond_l, hs_switching=sw_h,
                     dead_time=dead_loss, core=pcore, winding_dc=pdc, winding_ac=pac, capacitors=cap_loss,
-                    provisional_copper=copper, auxiliary=auxiliary, contactor=contactor_hold, bleeders=bleeders, total=total),
+                    pcb_copper_budget=copper, auxiliary=auxiliary, contactor=contactor_hold, bleeders=bleeders, total=total),
                 efficiency_estimate_percent=100*(VO*current)/(VO*current+total),
                 heatsink_target_C=sink, junction_h_estimate_C=sink+p_h*(.5+.41),
                 junction_l_estimate_C=sink+p_l*(.5+.41))
@@ -152,7 +154,7 @@ def main():
     for idx,c in enumerate(data['corners']):
         a=(.92,1.0,1.08)[idx%3]
         rows.append(f"| {c['vin_V']:.0f} V | {c['current_A']:.0f} A | {a:.2f} | {c['L_at_peak_uH']:.1f} uH | {c['ripple_pp_A']:.2f} A | {c['peak_A']:.2f} A | {c['losses_W']['total']:.1f} W | {c['efficiency_estimate_percent']:.2f}% | {c['junction_h_estimate_C']:.1f} C |")
-    (OUT/'electrical_design.md').write_text('# V3 reproducible electrical sizing\n\nRun `python -m automation.sic_v3.calculations`. Full numeric precision and assumptions: `results.json`. These are analytical estimates, not measurements or guaranteed efficiency.\n\n'+'\n'.join(rows)+'\n\nThe ripple iteration evaluates inductance at the current peak, rather than using only its DC operating value. Load current, AL tolerance and all three input corners are independent sweep axes.\n',encoding='utf-8')
+    (OUT/'operating_corner_table.md').write_text('# V3 reproducible electrical sizing\n\nRun `python -m automation.sic_v3.calculations`. Full numeric precision and assumptions: `results.json`. These are analytical estimates, not measurements or guaranteed efficiency.\n\n'+'\n'.join(rows)+'\n\nThe ripple iteration evaluates inductance at the current peak, rather than using only its DC operating value. Load current, AL tolerance and all three input corners are independent sweep axes.\n',encoding='utf-8')
     print(json.dumps({'worst_rated':max((c for c in data['corners'] if c['current_A']==25),key=lambda c:c['ripple_pp_A']),
                       'bias':data['gate_bias'],'protection':data['protection']},indent=2))
 

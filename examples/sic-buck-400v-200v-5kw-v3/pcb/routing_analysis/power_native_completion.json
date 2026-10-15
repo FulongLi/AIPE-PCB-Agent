@@ -1,0 +1,177 @@
+{
+  "board": "kicad/power_board/sic-v3-power.kicad_pcb",
+  "native_report": "verification/drc/power.json",
+  "stage": "POWER_ROUTING_NATIVE_PASS",
+  "board_sha256": "9aa550b1787a68d9d6e668ff937cbef36e432dae01154341911462558ca96263",
+  "report_sha256": "ad9be616a17ae78b9c746d513a65634fd0bed1d46aba0d36aeba8dfea6468657",
+  "unconnected_items": 0,
+  "drc_violations_all_severities": 0,
+  "schematic_parity_issues": 0,
+  "notes": [
+    "Native KiCad 10.0.7; all-track-errors, all severities and schematic parity enabled.",
+    "CAD completeness does not establish current capacity, insulation certification, mechanical fit, hardware timing or thermal performance."
+  ],
+  "refinements": [
+    {
+      "record": "sic-v3-power-bridges8.json",
+      "sha256": "458cc945cd12ef1c1a23a280886bf7f7a86e5b34f775447c781f55d03d39eab6",
+      "data": {
+        "ref": "R8",
+        "pin": "2",
+        "net": "PGND",
+        "status": "escape_reserved",
+        "via": null,
+        "path": [
+          [
+            191.0375,
+            133.75
+          ],
+          [
+            193,
+            133.75
+          ],
+          [
+            193,
+            139
+          ],
+          [
+            191,
+            141
+          ]
+        ],
+        "cut_nets": [],
+        "cut_segments": 0,
+        "removed_vias": []
+      }
+    },
+    {
+      "record": "sic-v3-power-tail11.json",
+      "sha256": "3b7f6e1b618ab370bb87716249559c909da4ab83234be0595e0aa75769a2f915",
+      "data": {
+        "pruning": [
+          {
+            "pass_index": 0,
+            "removed": 32,
+            "normalisation": {
+              "split_tracks": 7,
+              "explicit_junctions": 23,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 1,
+            "removed": 13,
+            "normalisation": {
+              "split_tracks": 3,
+              "explicit_junctions": 12,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 2,
+            "removed": 6,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 12,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 3,
+            "removed": 6,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 4,
+            "removed": 3,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 5,
+            "removed": 3,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 6,
+            "removed": 3,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 7,
+            "removed": 3,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 8,
+            "removed": 2,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 9,
+            "removed": 1,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          },
+          {
+            "pass_index": 10,
+            "removed": 1,
+            "normalisation": {
+              "split_tracks": 0,
+              "explicit_junctions": 10,
+              "requires_native_drc": true
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "ignored_checks": [
+    {
+      "description": "Footprint has no courtyard defined",
+      "key": "missing_courtyard"
+    },
+    {
+      "description": "Track endpoint not centered on via",
+      "key": "track_not_centered_on_via"
+    },
+    {
+      "description": "Tuning profile track geometries",
+      "key": "tuning_profile_track_geometries"
+    },
+    {
+      "description": "Footprint doesn't match symbol's footprint filters",
+      "key": "footprint_filters_mismatch"
+    },
+    {
+      "description": "Footprint component type doesn't match footprint pads",
+      "key": "footprint_type_mismatch"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "question": "VEEA quiet feedback star return current isolation plane",
+  "hits": [
+    {
+      "id": "SKILL-004",
+      "type": "skill",
+      "title": "Isolated gate bias power supply design",
+      "section": "procedure",
+      "score": 12.723,
+      "matched_terms": [
+        "feedback",
+        "isolation",
+        "star",
+        "veea"
+      ],
+      "path": "knowledge/skills/power_electronics/SKILL-004-isolated-gate-bias-supply.json",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD15SG00D2",
+        "REF-WS-CGD1700HB2M-UNA",
+        "REF-WS-PRD-04814"
+      ],
+      "snippet": "¡­compute operating points Add CM choke and decoupling Verify isolation rating and estimate i_CM Define power-good/UVLO interaction Verify feedback-star copper topology and exclusions on every filled layer, not only the VEEA net name. Check a¡­"
+    },
+    {
+      "id": "REF-WS-CGD15SG00D2",
+      "type": "reference",
+      "title": "CGD15SG00D2 single-channel gate driver board for discrete SiC MOSFETs",
+      "section": "Decision 7 ¡ª Isolation by slots and plane partitioning in a small 4-layer board",
+      "score": 7.202,
+      "matched_terms": [
+        "isolation",
+        "plane",
+        "return"
+      ],
+      "path": "knowledge/references/wolfspeed/cgd15sg00d2/analysis.md",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-WS-CGD15SG00D2"
+      ],
+      "snippet": "¡­ transformer creepage to 8 mm; inner layer 1 carries a PGND plane under the LV side and a SOURCE plane under the HV side; inner layer 2 carries VCC (primary) and VDD/VSS planes (secondary) under the components using them. 4-layer, 62.4 mil,¡­"
+    },
+    {
+      "id": "CB-PR-002",
+      "type": "block",
+      "title": "Isolated thermistor feedback through gate-driver analog-to-PWM channel",
+      "section": "protection",
+      "score": 6.859,
+      "matched_terms": [
+        "current",
+        "feedback",
+        "return"
+      ],
+      "path": "knowledge/circuit_blocks/protection/CB-PR-002.json",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "Biases a thermistor with the gate driver's internal current source and returns temperature as an isolated duty-cycle signal, avoiding a separate isolator. JB1 / RT thermistor (module NTC or board sensor) referenced to the driver COM isolate¡­"
+    },
+    {
+      "id": "KR-TH-003",
+      "type": "rule",
+      "title": "NTC readings are not junction temperature",
+      "section": "human-review-requirement",
+      "score": 4.246,
+      "matched_terms": [
+        "feedback",
+        "isolation"
+      ],
+      "path": "knowledge/rules/engineering_rules.json",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "¡­otection without a validated thermal model, and isolate NTC feedback. Thermistor temperature differs substantially from junction temperature; module NTC isolation can fail after a catastrophic event. Designs using thermistor feedback from m¡­",
+      "category": "human-review-requirement",
+      "priority": "medium"
+    },
+    {
+      "id": "REF-WS-CGD1700HB2M-UNA",
+      "type": "reference",
+      "title": "CGD1700HB2M-UNA dual-channel differential isolated gate driver board for 1700 V SiC half-bridge modules",
+      "section": "Decision 8 ¡ª Isolated thermistor feedback through the driver's AIN/APWM",
+      "score": 4.246,
+      "matched_terms": [
+        "current",
+        "feedback",
+        "isolation"
+      ],
+      "path": "knowledge/references/wolfspeed/cgd1700hb2m-una/analysis.md",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "¡­ kHz, 10¨C88 % duty signal and sent differentially; optional current mirror not populated. (PRD-06992 ¡ì4.7) 2. **Why:** module NTCs can lose isolation after a catastrophic failure, so an isolation barrier on NTC feedback is recommended (PRD-¡­"
+    },
+    {
+      "id": "SKILL-002",
+      "type": "skill",
+      "title": "Gate driver PCB layout",
+      "section": "Engineering principles",
+      "score": 3.961,
+      "matched_terms": [
+        "current",
+        "isolation",
+        "plane"
+      ],
+      "path": "knowledge/skills/pcb_layout/SKILL-002-gate-driver-pcb-layout.md",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD15SG00D2",
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "¡­act loop includes the decoupling.** The high-frequency gate current closes through the driver's rail capacitors; place them between IC and output pins (KR-PCB-002). CGD15SG00D2 places source-referenced capacitors at the source output pin; C¡­"
+    },
+    {
+      "id": "SKILL-005",
+      "type": "skill",
+      "title": "Current and voltage sensing",
+      "section": "Source references",
+      "score": 3.91,
+      "matched_terms": [
+        "current",
+        "feedback"
+      ],
+      "path": "knowledge/skills/sensing/SKILL-005-current-voltage-sensing.md",
+      "validation_status": "reference-derived",
+      "sources": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "¡­OM. - PRD-09301 ¡ì5.1 (protection speed), ¡ì3.4 (isolated NTC feedback)."
+    },
+    {
+      "id": "CB-GD-001",
+      "type": "block",
+      "title": "Isolated SiC gate driver with DESAT, soft turn-off, Miller clamp and split outputs",
+      "section": "gate_drivers",
+      "score": 2.712,
+      "matched_terms": [
+        "current",
+        "isolation",
+        "return"
+      ],
+      "path": "knowledge/circuit_blocks/gate_drivers/CB-GD-001.json",
+      "validation_status": "analytically-checked",
+      "sources": [
+        "REF-TI-TIDA-010054",
+        "REF-WS-CGD1700HB2M-UNA"
+      ],
+      "snippet": "Drives one SiC MOSFET from a logic PWM across a reinforced isolation barrier with independent turn-on/turn-off resistors, active Miller clamp, DESAT overcurrent detection with configurable blanking, 400 mA soft turn-off, UVLO/RDY and an iso¡­"
+    }
+  ]
+}

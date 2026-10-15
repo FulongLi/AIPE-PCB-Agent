@@ -1,6 +1,10 @@
 # Human-authored source has consistent endings on Windows/macOS/Linux.
 * text=auto eol=lf
 
+# V3 provenance includes generated models, calculations and review documents.
+# Keep their recorded bytes stable in both the Git index and fresh checkouts.
+examples/sic-buck-400v-200v-5kw-v3/** -text whitespace=cr-at-eol
+
 # Preserve exact CAD/export bytes so recorded hashes survive a checkout.
 *.kicad_sch -text whitespace=cr-at-eol
 *.kicad_pcb -text whitespace=cr-at-eol
