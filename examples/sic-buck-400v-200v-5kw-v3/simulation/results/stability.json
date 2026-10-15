@@ -1,0 +1,355 @@
+{
+  "model": "Exact ZOH linear plant, one sample command delay, two PI integrators, sensor lags; no saturation or quantisation in pole analysis",
+  "controller": {
+    "kp_i": 0.015,
+    "ki_i": 3.5,
+    "kp_v": 0.65,
+    "ki_v": 400.0,
+    "i_max": 32.0,
+    "d_max": 0.94,
+    "current_filter_s": 3.74e-06,
+    "voltage_filter_s": 1.2e-05,
+    "actuation_delay_cycles": 1,
+    "adc_bits": 12,
+    "pwm_counts": 1500,
+    "deadtime_s": 3e-07
+  },
+  "corners": [
+    {
+      "vin_V": 360,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953631522310421,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 552.3603464302818,
+          "phase_margin_deg": 76.68449621999704
+        }
+      ],
+      "gain_margin_dB": 15.89303714188102
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953628775298314,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 559.9655112111589,
+          "phase_margin_deg": 71.17620700896742
+        }
+      ],
+      "gain_margin_dB": 15.78242266903884
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953631092528127,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 458.6283356288124,
+          "phase_margin_deg": 76.94682412608316
+        }
+      ],
+      "gain_margin_dB": 17.530311986981047
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953628393941537,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 464.6740659326581,
+          "phase_margin_deg": 71.53391569359658
+        }
+      ],
+      "gain_margin_dB": 17.439242508369
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953651118865808,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 549.2056590132177,
+          "phase_margin_deg": 72.62685456977712
+        }
+      ],
+      "gain_margin_dB": 16.134151785575536
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953633367819648,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 556.8561632528688,
+          "phase_margin_deg": 67.03354251780122
+        }
+      ],
+      "gain_margin_dB": 15.954238796106248
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953648344968646,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 457.45874826190243,
+          "phase_margin_deg": 73.4898040386707
+        }
+      ],
+      "gain_margin_dB": 17.74549752250704
+    },
+    {
+      "vin_V": 360,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953630899748938,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 463.5226696178899,
+          "phase_margin_deg": 68.01994036874666
+        }
+      ],
+      "gain_margin_dB": 17.596788776104635
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953623437228027,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 555.8506610532206,
+          "phase_margin_deg": 77.84389545175439
+        }
+      ],
+      "gain_margin_dB": 15.71471585043793
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953620953183328,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 563.4398991915295,
+          "phase_margin_deg": 72.36110261690455
+        }
+      ],
+      "gain_margin_dB": 15.624459370982411
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953623048469961,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 460.8597862896756,
+          "phase_margin_deg": 77.95008953000959
+        }
+      ],
+      "gain_margin_dB": 17.36602280762462
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953620608336184,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 466.90406924690694,
+          "phase_margin_deg": 72.5558666692704
+        }
+      ],
+      "gain_margin_dB": 17.291867414881914
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953641100007969,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 553.8041020704824,
+          "phase_margin_deg": 74.10210312777096
+        }
+      ],
+      "gain_margin_dB": 16.01164285857674
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953625090254838,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 561.4342842580636,
+          "phase_margin_deg": 68.5498886256124
+        }
+      ],
+      "gain_margin_dB": 15.858052926277136
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953638597111777,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 460.29484995346155,
+          "phase_margin_deg": 74.78733114146311
+        }
+      ],
+      "gain_margin_dB": 17.639055406377285
+    },
+    {
+      "vin_V": 400,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953622864595538,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 466.35510079092455,
+          "phase_margin_deg": 69.34686851596135
+        }
+      ],
+      "gain_margin_dB": 17.512356484793305
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953616812788855,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 558.5554649847675,
+          "phase_margin_deg": 78.81799511403764
+        }
+      ],
+      "gain_margin_dB": 15.531254872093669
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000348,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953614545810645,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 566.1349512057449,
+          "phase_margin_deg": 73.35457872041694
+        }
+      ],
+      "gain_margin_dB": 15.458167697674984
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953616457913916,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 462.5936933186908,
+          "phase_margin_deg": 78.78701374261088
+        }
+      ],
+      "gain_margin_dB": 17.19433594534902
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000348,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953614231099814,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 468.63887582625216,
+          "phase_margin_deg": 73.4070676643834
+        }
+      ],
+      "gain_margin_dB": 17.13442175878702
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953632889169333,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 557.3393155405738,
+          "phase_margin_deg": 75.35390387057588
+        }
+      ],
+      "gain_margin_dB": 15.89096749139437
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000467,
+      "C_F": 0.00018,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953618309618496,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 564.9560562717678,
+          "phase_margin_deg": 69.8330287296922
+        }
+      ],
+      "gain_margin_dB": 15.75927094617067
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 8.0,
+      "max_pole_magnitude": 0.9953630609040043,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 462.4662749508715,
+          "phase_margin_deg": 75.87682156977976
+        }
+      ],
+      "gain_margin_dB": 17.531726658577092
+    },
+    {
+      "vin_V": 440,
+      "L_H": 0.000467,
+      "C_F": 0.00022,
+      "R_load_ohm": 16.0,
+      "max_pole_magnitude": 0.9953616283014097,
+      "gain_crossings": [
+        {
+          "crossover_Hz": 468.5256121260275,
+          "phase_margin_deg": 70.45878341505923
+        }
+      ],
+      "gain_margin_dB": 17.423263326699463
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+V3 off-state Miller susceptibility sensitivity, assumed parasitics
+Voff source 0 -4.006172839506173
+Roff source sink 5.9
+Lgate sink g 5e-09
+Rclamp source g .5
+Cgs g 0 3.087n
+Iinj 0 g PULSE(0 3.4090909090909083 100n 1n 1n 8.8e-09 1u)
+.tran .2n 500n
+.options method=gear reltol=1e-5
+.end

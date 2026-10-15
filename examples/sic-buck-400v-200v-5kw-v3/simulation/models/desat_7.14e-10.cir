@@ -1,0 +1,16 @@
+V3 UCC21710 DESAT RC behavioural network; transistor survival not modelled
+VDD vdd 0 17.166666666666668
+VDS drain 0 PWL(0 0 2u 0 2.02u 440 5u 440)
+VEN en 0 PULSE(0 1 1u 1n 1n 10u 20u)
+Boff off 0 V=1-v(en)
+Soff oc 0 off 0 clamp
+.model clamp SW(Ron=2 Roff=1e12 Vt=.5 Vh=.01)
+Rtop vdd des 2.2k
+Dhv des drain DHV
+.model DHV D(Is=1e-10 N=1.7 Rs=.4 Cjo=15p Tt=75n Bv=1000)
+Rdiv des oc 9.09k
+Rbot oc 0 1k
+Cblank oc 0 7.14e-10
+.tran 1n 5u
+.options method=gear reltol=1e-5
+.end

@@ -1,0 +1,103 @@
+{
+  "ngspice": "ngspice-46",
+  "desat": [
+    {
+      "C_F": 6.46e-10,
+      "threshold_V": 0.63,
+      "rc_detect_s": 1.4809302197459897e-07,
+      "estimated_total_s": 1.3530930219745989e-06
+    },
+    {
+      "C_F": 6.46e-10,
+      "threshold_V": 0.7,
+      "rc_detect_s": 2.0509302197460325e-07,
+      "estimated_total_s": 1.4100930219746031e-06
+    },
+    {
+      "C_F": 6.46e-10,
+      "threshold_V": 0.77,
+      "rc_detect_s": 2.68093021974608e-07,
+      "estimated_total_s": 1.4730930219746079e-06
+    },
+    {
+      "C_F": 7.14e-10,
+      "threshold_V": 0.63,
+      "rc_detect_s": 1.8601771282084722e-07,
+      "estimated_total_s": 1.3910177128208471e-06
+    },
+    {
+      "C_F": 7.14e-10,
+      "threshold_V": 0.7,
+      "rc_detect_s": 2.4901771282085195e-07,
+      "estimated_total_s": 1.4540177128208519e-06
+    },
+    {
+      "C_F": 7.14e-10,
+      "threshold_V": 0.77,
+      "rc_detect_s": 3.1801771282085714e-07,
+      "estimated_total_s": 1.523017712820857e-06
+    }
+  ],
+  "miller": [
+    {
+      "assumed_L_H": 5e-09,
+      "assumed_dvdt_V_s": 20000000000.0,
+      "gate_peak_V": -3.377621709728582,
+      "gate_min_V": -4.006172839506175
+    },
+    {
+      "assumed_L_H": 5e-09,
+      "assumed_dvdt_V_s": 50000000000.0,
+      "gate_peak_V": -2.435846249541485,
+      "gate_min_V": -4.006172839506175
+    },
+    {
+      "assumed_L_H": 5e-09,
+      "assumed_dvdt_V_s": 100000000000.0,
+      "gate_peak_V": -0.9393184480762531,
+      "gate_min_V": -4.006172839506175
+    },
+    {
+      "assumed_L_H": 1.5e-08,
+      "assumed_dvdt_V_s": 20000000000.0,
+      "gate_peak_V": -3.371795811402142,
+      "gate_min_V": -4.01200050023388
+    },
+    {
+      "assumed_L_H": 1.5e-08,
+      "assumed_dvdt_V_s": 50000000000.0,
+      "gate_peak_V": -2.420229271146204,
+      "gate_min_V": -4.020287824530612
+    },
+    {
+      "assumed_L_H": 1.5e-08,
+      "assumed_dvdt_V_s": 100000000000.0,
+      "gate_peak_V": -0.8786805828950188,
+      "gate_min_V": -4.029365745869684
+    },
+    {
+      "assumed_L_H": 3e-08,
+      "assumed_dvdt_V_s": 20000000000.0,
+      "gate_peak_V": -3.3605898770809097,
+      "gate_min_V": -4.023044624302255
+    },
+    {
+      "assumed_L_H": 3e-08,
+      "assumed_dvdt_V_s": 50000000000.0,
+      "gate_peak_V": -2.392213702990158,
+      "gate_min_V": -4.041547519680722
+    },
+    {
+      "assumed_L_H": 3e-08,
+      "assumed_dvdt_V_s": 100000000000.0,
+      "gate_peak_V": -0.8298258610681402,
+      "gate_min_V": -4.055973578476745
+    }
+  ],
+  "limitations": [
+    "UF4007 diode parameters are a sensitivity approximation, not the manufacturer model.",
+    "Clamp resistance, stray inductance and linearised Cgd are assumed; no extracted board parasitics.",
+    "No C4MS025120K short-circuit survival time is guaranteed by its retrieved datasheet.",
+    "The8us system-current shutdown target and driver timing at3.3V require measurement."
+  ]
+}
