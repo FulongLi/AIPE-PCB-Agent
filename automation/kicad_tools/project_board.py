@@ -155,7 +155,26 @@ def box_distance(a,b):
     return math.hypot(max(a[0]-b[2],b[0]-a[2],0),max(a[1]-b[3],b[1]-a[3],0))
 
 
-def place_in_region(builder,ref,region,targets,*,angles=(0,90,180,270),side='F',step=.5,gap=.3,pad_gap=None):
+def segment_box_distance(a,z,x0,y0,x1,y1):
+    """Vectorised exact distance from a segment to axis-aligned rectangles."""
+    import numpy as np
+    dx,dy=z[0]-a[0],z[1]-a[1];length2=dx*dx+dy*dy
+    result=np.minimum(np.hypot(np.maximum(np.maximum(x0-a[0],a[0]-x1),0),np.maximum(np.maximum(y0-a[1],a[1]-y1),0)),
+                      np.hypot(np.maximum(np.maximum(x0-z[0],z[0]-x1),0),np.maximum(np.maximum(y0-z[1],z[1]-y1),0)))
+    if not length2:return result
+    for x,y in [(x0,y0),(x0,y1),(x1,y0),(x1,y1)]:
+        t=np.clip(((x-a[0])*dx+(y-a[1])*dy)/length2,0,1)
+        result=np.minimum(result,np.hypot(x-a[0]-t*dx,y-a[1]-t*dy))
+    low=np.zeros_like(result);high=np.ones_like(result)
+    for c,v,mn,mx in [(a[0],dx,x0,x1),(a[1],dy,y0,y1)]:
+        if abs(v)<1e-12:high=np.where((c<mn)|(c>mx),-1,high)
+        else:
+            t0,t1=(mn-c)/v,(mx-c)/v
+            low=np.maximum(low,np.minimum(t0,t1));high=np.minimum(high,np.maximum(t0,t1))
+    return np.where(low<=high,0,result)
+
+
+def place_in_region(builder,ref,region,targets,*,angles=(0,90,180,270),side='F',step=.5,gap=.3,pad_gap=None,copper_gap=None):
     """Minimise weighted pad-to-anchor distance under real courtyard constraints.
 
     targets = [(own_pin, target_xy, weight)]. pad_gap(own_net, foreign_net)
@@ -169,6 +188,12 @@ def place_in_region(builder,ref,region,targets,*,angles=(0,90,180,270),side='F',
     ys=np.arange(math.ceil(y0/step),math.floor(y1/step)+1)*step
     xx,yy=np.meshgrid(xs,ys);xx=xx.ravel();yy=yy.ravel();best=None
     foreign=[p for p in b.pads() if p['ref'] in b.placed and p['ref']!=ref] if pad_gap else []
+    copper=[]
+    if copper_gap is not None:
+        for t in b.board.GetTracks():
+            box=t.GetBoundingBox()
+            copper.append((t.GetNetname(),t.IsOnLayer(b.pcb.F_Cu if side=='F' else b.pcb.B_Cu),
+                [b.pcb.ToMM(v) for v in (box.GetX(),box.GetY(),box.GetRight(),box.GetBottom())],t))
     for angle in angles:
         b.place(ref,0,0,angle,side);local=b.box(ref)
         valid=(xx+local[0]>=x0)&(xx+local[2]<=x1)&(yy+local[1]>=y0)&(yy+local[3]<=y1)
@@ -182,7 +207,7 @@ def place_in_region(builder,ref,region,targets,*,angles=(0,90,180,270),side='F',
         cx,cy=xx[valid],yy[valid]
         if not len(cx):continue
         own=[p for p in b.pads() if p['ref']==ref]
-        if pad_gap:
+        if pad_gap or copper:
             mask=np.ones(len(cx),dtype=bool)
             for a in own:
                 if not a['net']:continue
@@ -191,6 +216,23 @@ def place_in_region(builder,ref,region,targets,*,angles=(0,90,180,270),side='F',
                     clearance=pad_gap(a['net'],f['net'])
                     if clearance<8 and not (set(a['layers'])&set(f['layers'])):continue
                     ab=a['box'];fb=f['box']
+                    dx=np.maximum(np.maximum(cx+ab[0]-fb[2],fb[0]-(cx+ab[2])),0)
+                    dy=np.maximum(np.maximum(cy+ab[1]-fb[3],fb[1]-(cy+ab[3])),0)
+                    mask &= dx*dx+dy*dy >= (clearance+.03)**2
+                for net,on_layer,fb,item in copper:
+                    if not on_layer:continue
+                    # Reserve all via lands, including same-net lands, to avoid
+                    #unqualified via-in-pad assembly. Exact segment distances
+                    #avoid blocking the whole rectangle around a diagonal.
+                    ab=a['box'];clearance=copper_gap(a['net'],net)
+                    if not isinstance(item,b.pcb.PCB_ARC):
+                        va=isinstance(item,b.pcb.PCB_VIA)
+                        aa=b.pcb.ToMM(item.GetPosition() if va else item.GetStart())
+                        zz=aa if va else b.pcb.ToMM(item.GetEnd())
+                        radius=b.pcb.ToMM(item.GetWidth(b.pcb.F_Cu) if va else item.GetWidth())/2
+                        distance=segment_box_distance(aa,zz,cx+ab[0],cy+ab[1],cx+ab[2],cy+ab[3])
+                        mask &= distance >= clearance+radius+.03
+                        continue
                     dx=np.maximum(np.maximum(cx+ab[0]-fb[2],fb[0]-(cx+ab[2])),0)
                     dy=np.maximum(np.maximum(cy+ab[1]-fb[3],fb[1]-(cy+ab[3])),0)
                     mask &= dx*dx+dy*dy >= (clearance+.03)**2

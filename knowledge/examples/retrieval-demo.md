@@ -7,23 +7,23 @@ unchanged knowledge base reproduces this file. Scores are BM25 relevance, not co
 
 | Rank | Id | Type | Title | Status | Score |
 |---|---|---|---|---|---|
-| 1 | `SKILL-002` | skill | Gate driver PCB layout | reference-derived | 20.121 |
-| 2 | `SKILL-001` | skill | SiC gate driver design | reference-derived | 17.56 |
-| 3 | `KR-PCB-003` | rule | Never tie the device Kelvin source to the power source in the layout | reference-derived | 14.779 |
-| 4 | `KR-GD-007` | rule | Gate-source discharge resistor on the device side of R_G | analytically-checked | 12.121 |
-| 5 | `KR-PCB-002` | rule | Gate-driver decoupling inside the gate loop | reference-derived | 11.535 |
-| 6 | `KR-IS-004` | rule | Sharing a gate-bias supply requires review | reference-derived | 11.39 |
+| 1 | `SKILL-002` | skill | Gate driver PCB layout | reference-derived | 20.195 |
+| 2 | `SKILL-001` | skill | SiC gate driver design | reference-derived | 17.678 |
+| 3 | `KR-PCB-003` | rule | Never tie the device Kelvin source to the power source in the layout | reference-derived | 14.834 |
+| 4 | `KR-GD-007` | rule | Gate-source discharge resistor on the device side of R_G | analytically-checked | 12.197 |
+| 5 | `KR-PCB-002` | rule | Gate-driver decoupling inside the gate loop | reference-derived | 11.583 |
+| 6 | `KR-IS-004` | rule | Sharing a gate-bias supply requires review | reference-derived | 11.421 |
 
 ## What should be considered when selecting DC-link capacitors?
 
 | Rank | Id | Type | Title | Status | Score |
 |---|---|---|---|---|---|
-| 1 | `SKILL-003` | skill | DC-link capacitor selection and placement | reference-derived | 15.672 |
-| 2 | `REF-TI-TIDA-010054` | reference | TIDA-010054 bidirectional dual-active-bridge reference design for level 3 EV charging stations | reference-derived | 7.98 |
-| 3 | `KR-CAP-002` | rule | DC-link RMS ripple current within rating at frequency and temperature | reference-derived | 6.985 |
-| 4 | `KR-CAP-001` | rule | DC-link capacitance from worst-case ripple charge | analytically-checked | 6.527 |
-| 5 | `CMP-B32716H8306K000` | component | TDK (EPCOS) B32716H8306K000 | - | 6.006 |
-| 6 | `CMP-B32716H1156K000` | component | TDK (EPCOS) B32716H1156K000 | - | 5.913 |
+| 1 | `SKILL-003` | skill | DC-link capacitor selection and placement | reference-derived | 15.849 |
+| 2 | `REF-TI-TIDA-010054` | reference | TIDA-010054 bidirectional dual-active-bridge reference design for level 3 EV charging stations | reference-derived | 8.083 |
+| 3 | `KR-CAP-002` | rule | DC-link RMS ripple current within rating at frequency and temperature | reference-derived | 7.074 |
+| 4 | `KR-CAP-001` | rule | DC-link capacitance from worst-case ripple charge | analytically-checked | 6.608 |
+| 5 | `CMP-B32716H8306K000` | component | TDK (EPCOS) B32716H8306K000 | - | 6.088 |
+| 6 | `CMP-B32716H1156K000` | component | TDK (EPCOS) B32716H1156K000 | - | 5.994 |
 
 ## What reusable current-sensing circuits are available for a high-voltage converter?
 
@@ -32,8 +32,8 @@ Filter: types = ['block']
 | Rank | Id | Type | Title | Status | Score |
 |---|---|---|---|---|---|
 | 1 | `CB-SN-003` | block | Isolated shunt current sensing (isolated amplifier or delta-sigma modulator) | analytically-checked | 6.292 |
-| 2 | `CB-SN-001` | block | Isolated HV bus voltage sensing with resistor ladder and isolated amplifier | analytically-checked | 5.327 |
-| 3 | `CB-SN-002` | block | Isolated HV voltage sensing with delta-sigma modulator and MCU SDFM | analytically-checked | 4.587 |
-| 4 | `CB-SN-004` | block | Hall-effect tank/switch-node current sensing with built-in overcurrent flag | reference-derived | 3.63 |
+| 2 | `CB-SN-001` | block | Isolated HV bus voltage sensing with resistor ladder and isolated amplifier | analytically-checked | 5.297 |
+| 3 | `CB-SN-002` | block | Isolated HV voltage sensing with delta-sigma modulator and MCU SDFM | analytically-checked | 4.564 |
+| 4 | `CB-SN-004` | block | Hall-effect tank/switch-node current sensing with built-in overcurrent flag | reference-derived | 3.642 |
 | 5 | `CB-IS-002` | block | Integrated isolated bias module (+15/-4 V) with optional sensing supply | reference-derived | 3.147 |
-| 6 | `CB-PR-002` | block | Isolated thermistor feedback through gate-driver analog-to-PWM channel | reference-derived | 2.29 |
+| 6 | `CB-PR-002` | block | Isolated thermistor feedback through gate-driver analog-to-PWM channel | reference-derived | 2.296 |

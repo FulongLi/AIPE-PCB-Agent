@@ -72,3 +72,13 @@ PE-PCB-001, PE-PCB-007, PE-PCB-008 (docs/pcb-design-rules.md).
 - PRD-09301 §1.4, §2.1–2.7, §3.8, §4, §6 (CGD1700HB2M-UNA analysis decisions 6–7).
 - CGD15SG00D2 PCB layout section and fab drawing (analysis decision 7).
 - TIDA-010054 layer plots (analysis decision 10).
+
+## V3 verification extension
+
+Evaluate the complete closed forward/return loop with layer transitions and component bridges; label geometry proxies separately from extracted inductance.
+
+Reserve actual fine-pitch escape tracks and through vias before final front/back passive placement.
+
+Validate all-layer projected isolation corridors in addition to native same-layer DRC; see knowledge/lessons/v3-clean-sheet-engineering.md.
+
+Evidence and applicability: [V3 engineering lessons](../../lessons/v3-clean-sheet-engineering.md). Analytical/CAD methods only; no hardware validation claim.

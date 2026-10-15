@@ -12,6 +12,8 @@ every claim. The workflow that produces and checks it is described in
 
 The [V2.2 independent-review lessons](lessons/v22-independent-review.md) add sensor-reference, isolated-bias sizing and CAD evidence checks derived from the live converter review and primary datasheets.
 
+The [V3 clean-sheet engineering lessons](lessons/v3-clean-sheet-engineering.md) extend this with complete-loop geometry, escape-aware placement, all-layer barrier screening, physical feedback stars and evidence boundaries. These are analytical/CAD methods and manufacturer guidance, not hardware qualification.
+
 ## Contents (V0)
 
 | Area | Location | Count |

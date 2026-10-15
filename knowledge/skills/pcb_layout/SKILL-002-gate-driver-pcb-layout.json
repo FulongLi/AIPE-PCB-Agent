@@ -32,7 +32,9 @@
     "Route DESAT drain connection short",
     "Route PWM/fault pairs and filters",
     "Add V_GS probe point at device side of R_G",
-    "Run DRC and inspect every copper layer"
+    "Run DRC and inspect every copper layer",
+    "Evaluate the complete closed forward/return loop with layer transitions and component bridges; label geometry proxies separately from extracted inductance.",
+    "Reserve actual fine-pitch escape tracks and through vias before final front/back passive placement."
   ],
   "component_considerations": [
     "Compact gate-resistor and capacitor packages",
@@ -62,7 +64,8 @@
   "known_limitations": [
     "TI layout observations are visual only",
     "Manufacturer guidance not quantified by AIPE parasitic extraction",
-    "PRD-09301 creepage figures not extracted"
+    "PRD-09301 creepage figures not extracted",
+    "Validate all-layer projected isolation corridors in addition to native same-layer DRC; see knowledge/lessons/v3-clean-sheet-engineering.md."
   ],
   "keywords": [
     "layout",

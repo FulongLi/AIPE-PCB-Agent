@@ -68,3 +68,13 @@ and supplies for the isolated side.
 
 - TIDA-010054 [analysis](../../references/ti/tida-010054/analysis.md) decisions 6–7; TIDUES0 §3.2–3.4; BOM.
 - PRD-09301 §5.1 (protection speed), §3.4 (isolated NTC feedback).
+
+## V3 verification extension
+
+Check the selected sensor reference law and output impedance before choosing the reference buffer/difference amplifier.
+
+Verify cable-open and unpowered sensor behavior, full ADC range and reference plausibility with the actual pin assignment.
+
+Bidirectional sensor range is not evidence that the converter or source can absorb reverse power.
+
+Evidence and applicability: [V3 engineering lessons](../../lessons/v3-clean-sheet-engineering.md). Analytical/CAD methods only; no hardware validation claim.

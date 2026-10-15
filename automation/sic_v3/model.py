@@ -103,7 +103,7 @@ def tp(c,net,p):
 def keyed(c,p):
     return c.add('J','POWER / CONTROL — 40-way','Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical',HARNESS,page=p,kind='J',
                  mpn='TST-120-01-G-D',maker='Samtec',source='https://www.samtec.com/products/tst',
-                 note='Keyed 100 mm maximum straight-through harness; verify mating cable pin 1 and rating; no gate-current path in this cable')
+                 note='Keyed 160 mm finished straight-through harness; 129 mm assembly centreline plus bend/slack allowance; verify mating pin 1, timing and EMI; no gate-current path in this cable')
 
 def mounts(c,p):
     for _ in range(4):

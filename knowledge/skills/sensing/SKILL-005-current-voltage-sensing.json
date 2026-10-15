@@ -29,7 +29,9 @@
     "Choose signal format and routing",
     "Design filters and isolated supply",
     "Define fast protection paths",
-    "Plan calibration"
+    "Plan calibration",
+    "Check the selected sensor reference law and output impedance before choosing the reference buffer/difference amplifier.",
+    "Verify cable-open and unpowered sensor behavior, full ADC range and reference plausibility with the actual pin assignment."
   ],
   "component_considerations": [
     "AMC1311, AMC1302-Q1, AMC1336, AMC1306M05, TMCS1133",
@@ -50,7 +52,8 @@
   ],
   "known_limitations": [
     "Single reference design for sensing",
-    "Accuracy budgets not computed"
+    "Accuracy budgets not computed",
+    "Bidirectional sensor range is not evidence that the converter or source can absorb reverse power."
   ],
   "keywords": [
     "current sensing",
