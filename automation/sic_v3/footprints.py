@@ -21,8 +21,18 @@ def isolated_so(name,n,pitch,row,padw,padh,bodyw,bodyh,height):
 
 def custom():
     f={}
+    text,boxes=isolated_so('V3_DGK8',8,.65,4.4,1.4,.45,3,3,1.1)
+    text=text.replace('TI manufacturer land pattern; reinforced barrier copper spacing must also be checked after routing',
+        'TI DGK0008A recommended land pattern 4214862/A April2023; nonisolated VSSOP8;0.20mm interpad gap')
+    f['V3_DGK8']=(text,boxes)
     f['V3_UCC21710_HV']=isolated_so('V3_UCC21710_HV',16,1.27,9.75,1.65,.6,7.5,10.3,2.65)
-    f['V3_UCC14141_DWN']=isolated_so('V3_UCC14141_DWN',36,.65,9.95,1.85,.45,7.5,12.83,2.65)
+    # Controlled variant of TI's0.45mm land:0.40mm retains the predeclared
+    #0.25mm local copper rule at0.65mm pitch. Lead maximum is0.39mm. This
+    #narrow-side-fillet variant requires stencil/alignment/solder-joint
+    #qualification; never describe it as the unchanged manufacturer pattern.
+    text,boxes=isolated_so('V3_UCC14141_DWN',36,.65,9.95,1.85,.40,7.5,12.83,3.55)
+    text=text.replace('TI manufacturer land pattern;','V3 narrow-land variant of TI DWN:0.40mm vs0.45mm width;0.39mm maximum lead; assembly qualification required;')
+    f['V3_UCC14141_DWN']=(text,boxes)
     f['V3_AMC1311_DWV']=isolated_so('V3_AMC1311_DWV',8,1.27,10.9,1.8,.6,7.5,5.85,2.8)
     for name,pitch,w,d,h,second in [('V3_CIN_15U',37.5,42,20,39.5,10.2),('V3_COUT_100U',52.5,57.5,35,50,20.3)]:
         f[name]=film_capacitor_footprint(name,pitch,w,d,h,1.4,pins=4,second_pitch_mm=second,pad_mm=3.4)

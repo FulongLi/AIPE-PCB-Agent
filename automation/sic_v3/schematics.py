@@ -72,10 +72,14 @@ def generate(board):
     parts=circuit.parts
     out=EXAMPLE/'kicad'/f'{board}_board';out.mkdir(parents=True,exist_ok=True)
     design=EXAMPLE/'design';design.mkdir(exist_ok=True)
+    # Persist the same evaluated model used below, including physical/BOM edits.
+    (design/f'circuit_{board}.json').write_text(json.dumps(parts,indent=2)+'\n',encoding='utf-8')
+    (design/f'groups_{board}.json').write_text(json.dumps({'groups':circuit.groups,'titles':circuit.block_titles},indent=2)+'\n',encoding='utf-8')
     report=ps.analyse_connectivity(parts,FLAGS[board])
     if any(report[k] for k in ['undriven_power_nets','pin_conflicts','single_pin_nets','no_connect_pins_with_nets']):
         raise ValueError(report)
-    libraries=pf.prepare_libraries(parts,out,custom_footprints=custom() if board=='power' else {})
+    used={p['footprint'] for p in parts}
+    libraries=pf.prepare_libraries(parts,out,custom_footprints={k:v for k,v in custom().items() if 'AIPE:'+k in used})
     classes,dru,spacing=rules(board,parts)
     presentation=dict(style='wired',groups=circuit.groups,group_titles=circuit.block_titles,exclude_supply=['SW5'],
                       include_supply=['BUS','VOUT','RAW'] if board=='power' else ['REF3'],max_row_mm=250)
@@ -98,7 +102,7 @@ def generate(board):
         keys=['board','ref','value','mpn','maker','footprint','source','dnp','on_board','note']
         w=csv.DictWriter(handle,keys);w.writeheader()
         for p in parts:
-            if p['kind'] in ('TP','H'):continue
+            if not p.get('in_bom',p['kind'] not in ('TP','H')):continue
             w.writerow({k:p.get(k,True if k=='on_board' else '') for k in keys})
     return result
 

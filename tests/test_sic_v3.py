@@ -7,6 +7,7 @@ from pathlib import Path
 from automation.sic_v3 import calculations as calc, model, footprints, schematics
 from automation.kicad_tools import project_footprints as pf, project_schematic as ps
 from automation.kicad_tools.native_schematic import parse, children, pins
+from automation.kicad_tools.loop_geometry import analyse_loop,offset_pair_coverage
 
 
 class ElectricalTests(unittest.TestCase):
@@ -83,5 +84,28 @@ class PresentationTests(unittest.TestCase):
             seen=[pin['number'] for unit in range(1,len(extents)+1) for pin in pins(definition,unit)]
             self.assertCountEqual(seen,p['pins'])
             self.assertEqual(len(seen),len(set(seen)))
+
+
+class LoopGeometryTests(unittest.TestCase):
+    def test_closed_multilayer_loop_and_component_accounting(self):
+        result=analyse_loop([
+            dict(role='copper',points=[[0,0,0],[10,0,0],[10,0,-1]]),
+            dict(role='component',points=[[10,0,-1],[10,5,-1]]),
+            dict(role='copper',points=[[10,5,-1],[0,5,-1],[0,5,0]]),
+            dict(role='component',points=[[0,5,0],[0,0,0]])])
+        self.assertAlmostEqual(result['external_copper_length_mm'],22)
+        self.assertAlmostEqual(result['terminal_bridge_length_mm'],10)
+        self.assertAlmostEqual(result['projected_xy_area_mm2'],50)
+        self.assertEqual(result['copper_z_transitions'],2)
+
+    def test_open_or_disconnected_paths_are_not_accepted_as_loops(self):
+        with self.assertRaises(ValueError):analyse_loop([dict(points=[[0,0,0],[1,0,0]])])
+        with self.assertRaises(ValueError):analyse_loop([dict(points=[[0,0,0],[1,0,0]]),dict(points=[[2,0,0],[0,0,0]])])
+
+    def test_return_proximity_does_not_count_distant_return(self):
+        close=offset_pair_coverage([[0,0],[10,0]],[[10,.5],[0,.5]],distance_mm=1)
+        far=offset_pair_coverage([[0,0],[10,0]],[[10,2],[0,2]],distance_mm=1)
+        self.assertAlmostEqual(close['covered_fraction'],1)
+        self.assertAlmostEqual(far['covered_fraction'],0)
 
 if __name__=='__main__':unittest.main()

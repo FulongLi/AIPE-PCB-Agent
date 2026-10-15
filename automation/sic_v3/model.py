@@ -45,9 +45,9 @@ HARNESS={str(i):n for i,n in enumerate([
  'BUS_P','BUS_N','OUT_P','OUT_N',GND,'TH_H_PWM',GND,'TH_L_PWM',
  '12V_E','12V_E',GND,GND,'3V3','3V3',GND,GND],1)}
 EXTRA_IC={
- 'OPA2320AIDGKR':('Package_SO:VSSOP-8_3x3mm_P0.65mm',OPA2320_PINS,DS.format('opa2320')),
+ 'OPA2320AIDGKR':('AIPE:V3_DGK8',OPA2320_PINS,DS.format('opa2320')),
  'OPA4192IPWR':('Package_SO:TSSOP-14_4.4x5mm_P0.65mm',pin_defs('1:OUTA:output 2:INA-:input 3:INA+:input 4:V+:power_in 5:INB+:input 6:INB-:input 7:OUTB:output 8:OUTC:output 9:INC-:input 10:INC+:input 11:V-:power_in 12:IND+:input 13:IND-:input 14:OUTD:output'),DS.format('opa4192')),
- 'TLV3202AIDGKR':('Package_SO:VSSOP-8_3x3mm_P0.65mm',pin_defs('1:OUTA:output 2:INA-:input 3:INA+:input 4:V-:power_in 5:INB+:input 6:INB-:input 7:OUTB:output 8:V+:power_in'),DS.format('tlv3202')),
+ 'TLV3202AIDGKR':('AIPE:V3_DGK8',pin_defs('1:OUTA:output 2:INA-:input 3:INA+:input 4:V-:power_in 5:INB+:input 6:INB-:input 7:OUTB:output 8:V+:power_in'),DS.format('tlv3202')),
 }
 
 def ic(c,mpn,nets,page,*,ref=None,note='',prefix='U'):
@@ -128,6 +128,7 @@ def bias(c,tag,p,*,sense=False):
                 source=DS.format('ucc14141-q1'),definitions=ucc14141_pins('passive' if sense else 'power_out'),note='VEEA pin35 isolated on every copper layer; single star at VEE36')
         u['island']=tag
         tie=c.add('NT','VEEA STAR','NetTie:NetTie-2_SMD_Pad0.5mm',{1:quiet,2:vee},page=p,kind='passive',note=f'Physical star at {u["ref"]}.36; no gate/decoupling current through quiet branch')
+        tie['in_bom']=False
         tie['star_of']=u['ref']
         for name,upper,top in [('FBVDD',vdd,'87.6k' if sense else '121k'),('FBVEE',com,'16.2k' if sense else '9.76k')]:
             resistor(c,top,upper,f'{tag}_{name}',p,precision=True)
