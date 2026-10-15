@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-15T13:11:58",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/6abfb5f2-b20a-53c0-a6bd-7ae123a10db9",
+            "violations": []
+        },
+        {
+            "path": "/High-voltage input, precharge, choke and PE/",
+            "uuid_path": "/6abfb5f2-b20a-53c0-a6bd-7ae123a10db9/00ab80b4-593f-5172-ad2a-7406999ed4ce",
+            "violations": []
+        },
+        {
+            "path": "/Auxiliary supply, contactors, thermal chain and fan/",
+            "uuid_path": "/6abfb5f2-b20a-53c0-a6bd-7ae123a10db9/e59bd615-62d6-513d-abdc-59a642fe7943",
+            "violations": []
+        },
+        {
+            "path": "/Current-sensor signal harness/",
+            "uuid_path": "/6abfb5f2-b20a-53c0-a6bd-7ae123a10db9/dde2ce1e-e0bc-5f88-862f-42487db1934e",
+            "violations": []
+        },
+        {
+            "path": "/Straight-through control harness/",
+            "uuid_path": "/6abfb5f2-b20a-53c0-a6bd-7ae123a10db9/ea38e2be-989c-54fe-b986-6dec52b4df59",
+            "violations": []
+        }
+    ],
+    "source": "sic-v3-system.kicad_sch"
+}

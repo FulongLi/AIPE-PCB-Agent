@@ -2,15 +2,25 @@
 
 AI-assisted power-electronics PCB engineering with reproducible KiCad automation.
 
+> **V3 clean-sheet 5 kW design — engineering prototype review; release blocked**
+
+V3 independently redesigns the 400 V to 200 V converter, with two fully routed four-layer boards, 9 + 9 schematic sheets and a five-sheet system wiring project. Native ERC/DRC, unconnected-item and schematic-parity checks are clean. The package adds executed sampled/native simulations, real-copper loop and resistance screens, mechanical envelopes, manufacturing exports and a full disposition of the 18 V2.2 issues. Hardware qualification and human engineering review remain open; no fabrication or energisation is approved.
+
+- [V3 package and editable projects](examples/sic-buck-400v-200v-5kw-v3/README.md)
+- [Design review and release holds](examples/sic-buck-400v-200v-5kw-v3/review/design_review_report.md)
+- [V2.2 versus V3 evidence](examples/sic-buck-400v-200v-5kw-v3/review/v22_vs_v3_comparison.md) and [verification manifest](examples/sic-buck-400v-200v-5kw-v3/verification/final_validation.json)
+
+V1 and the complete V2/V2.1/V2.2 example history remain unchanged. The V2.2 description below records that earlier milestone.
+
 > **V2.2 independent engineering review and circuit corrections — human review required**
 
-The active branch `feat/sic-buck-v2.2-engineering` corrects the current-sensor reference and isolated-sensing RLIM sizing, adds four local control-board bypasses, and repairs drawing margins and plot framing. A shorter gate-clamp candidate was rejected after its return-path geometry worsened. The original ratings and two-board architecture are retained. This revision includes actual CAD changes and explicitly differs electrically from V2/V2.1.
+The historical branch `feat/sic-buck-v2.2-engineering` corrected the current-sensor reference and isolated-sensing RLIM sizing, adds four local control-board bypasses, and repairs drawing margins and plot framing. A shorter gate-clamp candidate was rejected after its return-path geometry worsened. The original ratings and two-board architecture are retained. This revision includes actual CAD changes and explicitly differs electrically from V2/V2.1.
 
 - [V2.2 design review and remaining blockers](examples/sic-buck-400v-200v-5kw/review/v22/design_review_report.md)
 - [Independent Stage A review and prioritised issue register](examples/sic-buck-400v-200v-5kw/review/v22/stage_a_independent_review.md)
 - [Measured comparison](examples/sic-buck-400v-200v-5kw/review/v22/comparison.md), [validation evidence](examples/sic-buck-400v-200v-5kw/review/v22/validation.json), [exact remaining ECOs](examples/sic-buck-400v-200v-5kw/review/v22/remaining_engineering_ecos.md)
 
-V2 and V2.1 below are historical milestones; the active CAD/PDF paths now contain V2.2. Their frozen release directories retain the original files. No fabrication, energisation or automatic merge is approved.
+V2 and V2.1 below are historical milestones; their original example CAD/PDF paths contain V2.2. Their frozen release directories retain the original files. No fabrication, energisation or automatic merge is approved.
 
 > **AI-GENERATED ENGINEERING PROTOTYPE V2.1 - HUMAN REVIEW REQUIRED**
 

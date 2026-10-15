@@ -46,6 +46,7 @@ TERMINALS_PER_ROW = 8   # lone single-pin parts (test points, studs) are drawn a
 DEFAULT_DOWN_PATTERN = r'(^|_)(GND|PGND|GNDP|VSS|VEE|COM|KS)(_|$|\d)|GND'
 RAIL_RANK = ((r'VEE|VSS|PGND|^GND|_GND', 3), (r'GNDP|GND', 2), (r'KS|COM', 1))
 DEFAULT_PRESENTATION = dict(style='wired', groups={}, group_titles={}, group_order={}, supply='auto', exclude_supply=[],
+                            group_templates={},   # optional topology templates keyed by full group id
                             include_supply=[],     # passive-fed nets promoted to rails (power symbols) in addition to supply
                             down_pattern=DEFAULT_DOWN_PATTERN, paper_escalation=['A3', 'A2', 'A1', 'A0'],
                             title_size=3.5, heading_size=2.5, note_size=1.0, note_width=170, frames=False,
@@ -458,7 +459,8 @@ class GroupLayout:
     def satellites_on(self, net):
         """Pooled parts on `net` that a lane may pick up; parts between two rails (decoupling, MOV, PTC bridging two
         supply nets) are left for the decoupling rows."""
-        return [p for p in self.members if p['ref'] in self.pool and net in p['nets'].values() and not self.classify_decoupling(p)]
+        return [p for p in self.members if p['ref'] in self.pool and net in p['nets'].values() and not self.classify_decoupling(p)
+                and (not p.get('schematic_owner') or p['schematic_owner'] == getattr(self, '_active_anchor', None))]
 
     def classify_item(self, part, net):
         """(kind, far_net) of a pooled part seen from `net`: shunt / series / terminal / decoupling."""
@@ -851,6 +853,7 @@ class GroupLayout:
         for anchor_part in self.sorted_anchors():
             name, definition, extents, _ = self.symbol(anchor_part)
             for unit, (w, h) in enumerate(extents, 1):
+                self._active_anchor = f'{anchor_part["ref"]}:{unit}'
                 probe = Placed(anchor_part['ref'], unit, anchor_part, name, definition, 0, 0.0, 0.0)
                 lanes = self.anchor_lanes(probe)
                 for side in ('left', 'right'):
@@ -1294,7 +1297,12 @@ class Planner:
             layouts = []
             for gid, title, members in groups:
                 layout = GroupLayout(self, page, gid, members)
-                layout.layout(extras=extras)
+                template = self.presentation['group_templates'].get(gid)
+                if template:
+                    from automation.kicad_tools.schematic_templates import apply_template
+                    apply_template(layout, template)
+                else:
+                    layout.layout(extras=extras)
                 layout.title = title
                 layouts.append(layout)
             if page_flags:

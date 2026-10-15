@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-15T10:31:18",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b",
+            "violations": []
+        },
+        {
+            "path": "/SiC half bridge, DC link and output filter/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/7d91edae-66d9-5332-945d-46e4476569bd",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR003 引脚 1 [pwr, Power input, Line]",
+                            "pos": {
+                                "x": 24.13,
+                                "y": 52.07
+                            },
+                            "uuid": "5d6c4e38-8b4e-5055-b628-23f4f74d7546"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR008 引脚 1 [pwr, Power input, Line]",
+                            "pos": {
+                                "x": 113.03,
+                                "y": 154.94
+                            },
+                            "uuid": "7906dcd9-4223-5c68-b90b-5b31c39445bc"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR005 引脚 1 [pwr, Power input, Line]",
+                            "pos": {
+                                "x": 483.87,
+                                "y": 90.17
+                            },
+                            "uuid": "b828a17d-c5ab-5a7f-9aed-5bf334892cb1"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/High-side drive and short-circuit protection/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/302762e9-5541-5473-83d7-e00bf31b1352",
+            "violations": []
+        },
+        {
+            "path": "/Low-side drive and short-circuit protection/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/cd09e0bf-e8f3-5324-a82b-ccdffb359990",
+            "violations": []
+        },
+        {
+            "path": "/High-side isolated gate-bias supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/990ccd34-7986-5831-8393-1959ecd0a5f5",
+            "violations": []
+        },
+        {
+            "path": "/Low-side isolated gate-bias supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/3d627785-480e-541d-a01c-e01ea6667975",
+            "violations": []
+        },
+        {
+            "path": "/Raw input, DC-link and output isolated voltage measurement/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/f96f571b-acd4-54d2-aad3-0624e5c0d3aa",
+            "violations": []
+        },
+        {
+            "path": "/Independent isolated sensing supply/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/12628a3b-9f97-5b34-b42e-9029d82650ba",
+            "violations": []
+        },
+        {
+            "path": "/Keyed control harness, fail-safe inputs and mounting/",
+            "uuid_path": "/edf4f0ab-ad7b-5d2c-a5ed-8883f407ca9b/5ab12804-7aa0-5a14-adc6-361caac032e5",
+            "violations": []
+        }
+    ],
+    "source": "sic-v3-power.kicad_sch"
+}

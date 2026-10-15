@@ -1,0 +1,186 @@
+{
+  "status": "CAD_AND_REVIEW_EVIDENCE_VERIFIED",
+  "hardware_status": "HARDWARE VALIDATION PENDING; RELEASE BLOCKED",
+  "baseline_commit": "20e96fdfa5ea76649daa416ee70b7ea7798a319d",
+  "checks": {
+    "power_model_netlist": {
+      "passed": true,
+      "detail": null
+    },
+    "control_model_netlist": {
+      "passed": true,
+      "detail": null
+    },
+    "power_native_drc": {
+      "passed": true,
+      "detail": [
+        {
+          "description": "Footprint has no courtyard defined",
+          "key": "missing_courtyard"
+        },
+        {
+          "description": "Track endpoint not centered on via",
+          "key": "track_not_centered_on_via"
+        },
+        {
+          "description": "Tuning profile track geometries",
+          "key": "tuning_profile_track_geometries"
+        },
+        {
+          "description": "Footprint doesn't match symbol's footprint filters",
+          "key": "footprint_filters_mismatch"
+        },
+        {
+          "description": "Footprint component type doesn't match footprint pads",
+          "key": "footprint_type_mismatch"
+        }
+      ]
+    },
+    "power_native_exports": {
+      "passed": true,
+      "detail": []
+    },
+    "power_copper_islands": {
+      "passed": true,
+      "detail": null
+    },
+    "control_native_drc": {
+      "passed": true,
+      "detail": [
+        {
+          "description": "Footprint has no courtyard defined",
+          "key": "missing_courtyard"
+        },
+        {
+          "description": "Track endpoint not centered on via",
+          "key": "track_not_centered_on_via"
+        },
+        {
+          "description": "Tuning profile track geometries",
+          "key": "tuning_profile_track_geometries"
+        },
+        {
+          "description": "Footprint doesn't match symbol's footprint filters",
+          "key": "footprint_filters_mismatch"
+        },
+        {
+          "description": "Footprint component type doesn't match footprint pads",
+          "key": "footprint_type_mismatch"
+        }
+      ]
+    },
+    "control_native_exports": {
+      "passed": true,
+      "detail": []
+    },
+    "control_copper_islands": {
+      "passed": true,
+      "detail": null
+    },
+    "power_native_erc": {
+      "passed": true,
+      "detail": {
+        "run": "verification/erc/20261015T045008Z-erc-51bb1a33/run.json",
+        "stale": []
+      }
+    },
+    "control_native_erc": {
+      "passed": true,
+      "detail": {
+        "run": "verification/erc/20261015T065713Z-erc-a3682308/run.json",
+        "stale": []
+      }
+    },
+    "system_native_erc": {
+      "passed": true,
+      "detail": {
+        "run": "verification/erc/20261015T072312Z-erc-7c33b0ef/run.json",
+        "stale": []
+      }
+    },
+    "power_projected_isolation_current_input": {
+      "passed": true,
+      "detail": null
+    },
+    "power_projected_isolation": {
+      "passed": true,
+      "detail": null
+    },
+    "power_copper_dc_mesh_current_input": {
+      "passed": true,
+      "detail": null
+    },
+    "power_copper_dc_mesh": {
+      "passed": true,
+      "detail": null
+    },
+    "power_closed_loops_current_input": {
+      "passed": true,
+      "detail": null
+    },
+    "quiet_star_topology_current_input": {
+      "passed": true,
+      "detail": null
+    },
+    "quiet_star_topology": {
+      "passed": true,
+      "detail": null
+    },
+    "switch_node_area_current_input": {
+      "passed": true,
+      "detail": null
+    },
+    "simulation_input_hashes": {
+      "passed": true,
+      "detail": []
+    },
+    "calculation_reproduction": {
+      "passed": true,
+      "detail": null
+    },
+    "regression_executed": {
+      "passed": true,
+      "detail": {
+        "tests": 373,
+        "skipped": 2
+      }
+    },
+    "knowledge_schema": {
+      "passed": true,
+      "detail": "19 older component cache checks skipped; not a fresh part-number certification"
+    },
+    "visual_review_current": {
+      "passed": true,
+      "detail": null
+    },
+    "historical_designs_unchanged": {
+      "passed": true,
+      "detail": ""
+    }
+  },
+  "failed_checks": [],
+  "input_sha256": {
+    "verification/circuit_checks/netlist_equality.json": "b8ae031119897a7d53cfa8efc836d8d1c6ea66027ec16df071d7882a92ddb046",
+    "kicad/power_board/sic-v3-power.kicad_pcb": "9aa550b1787a68d9d6e668ff937cbef36e432dae01154341911462558ca96263",
+    "verification/drc/power.json": "ad9be616a17ae78b9c746d513a65634fd0bed1d46aba0d36aeba8dfea6468657",
+    "manufacturing/power/export-manifest.json": "5590b1568f44a854b549fa841ded316b14c62a8ea234545dfb5d2d60cbff3a01",
+    "verification/engineering_checks/power_copper_islands.json": "58f92dc8dc45dadc46a92f261b0af97594ac8867f0982db9377dd5bb0319eefe",
+    "kicad/control_board/sic-v3-control.kicad_pcb": "d512aaa6f9f3da9f08cc435530c8ca1bb920d146ddc1b25cd89cb39a331ccc39",
+    "verification/drc/control.json": "fd7261205e4340ad3f200c65da007f7bdd393fc87217ca4115d7205df6e24243",
+    "manufacturing/control/export-manifest.json": "73724d2a39d271a7976bb0b4ad8b53dd8e66c0b4d8bcec5e3d316cfdd8646e75",
+    "verification/engineering_checks/control_copper_islands.json": "2712f74b6be499adee36a9b707ffab628e6a015ba3d7376107448207f9549801",
+    "verification/erc/20261015T045008Z-erc-51bb1a33/run.json": "ab459d37b7bb1878e23d5afcf926047714ebbb6bbc9ffa3d72d885473e735412",
+    "verification/erc/20261015T065713Z-erc-a3682308/run.json": "a5283f6d34d00c1ebab4da9ae12bc5f23ad247d46252c8583aa6018f22bd396d",
+    "verification/erc/20261015T072312Z-erc-7c33b0ef/run.json": "037c6377f502786db663cd787c0c24da2983c64a0a3067a06eb78898af4905d9",
+    "verification/engineering_checks/power_projected_isolation.json": "7d17fd4d5ab10dc4f093544b4e24a290186478c7d3cae9d7692c15c0af9664ac",
+    "verification/engineering_checks/power_copper_dc_mesh.json": "37c5c4f9c66663a63181c92e22aa5478530a4eacb650ed0d554cd95fdd6131b0",
+    "verification/engineering_checks/power_closed_loops.json": "63e8ab57f7f7a1c6c6e4140bddd4d3741a4b4b5e2008a31732202fccc399a68c",
+    "verification/engineering_checks/quiet_star_topology.json": "18c7f25c1c75713bb14c0cff4c1bf3f5995d6a27d285b263b925e99678ca8d8a",
+    "verification/engineering_checks/switch_node_area.json": "9a59838a35f2292bcd88bc00352085db936cb00e37c5574e0b5dc12d8c175024",
+    "simulation/results/provenance.json": "677437b124284f1b8b2584f4dd78c86a360e8fedd461980bd7ac76a849a353e9",
+    "verification/regression/unittest.log": "7d8093412b2a09a162c545757b70aaf174cfab0c817cd4ee49b6d11a2744cba0",
+    "verification/regression/knowledge.log": "a210c20f2df016cb9b4d5873ec7441e983a44516844a7c12d2b330a792c55c7b",
+    "verification/engineering_checks/visual_review.json": "16c1f2b8cea7f62f41cca77c77330c14a3c5885c56219cad6fa2bd560397df1a"
+  },
+  "scope": "Recorded CAD/model/export/document/test evidence only. No hardware release or human engineering approval."
+}

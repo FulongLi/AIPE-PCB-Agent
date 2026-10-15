@@ -64,3 +64,13 @@ feedback is used correctly.
 
 - TIDA-010054 [analysis](../../references/ti/tida-010054/analysis.md) decisions 9–10; TIDUES0 §2.3.5–2.3.5.6.
 - CGD1700HB2M-UNA [analysis](../../references/wolfspeed/cgd1700hb2m-una/analysis.md) decision 8; PRD-09301 §3.4.
+
+## V3 verification extension
+
+Check the assembled thermal path including live tab, spreader, ceramic, contact films, clamp and PE mounting.
+
+Include real connector engagement and wire bend volumes, independently supported heavy parts and every board standoff.
+
+Approximate STEP boxes and material coupon dielectric strength do not establish assembly fit or insulation qualification.
+
+Evidence and applicability: [V3 engineering lessons](../../lessons/v3-clean-sheet-engineering.md). Analytical/CAD methods only; no hardware validation claim.

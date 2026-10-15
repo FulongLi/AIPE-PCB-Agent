@@ -128,7 +128,7 @@ def split_footprint(part) -> tuple[str, str]:
 
 def select_parts(parts, board=None) -> list[dict]:
     """Parts of one board ("power" | "control" via the optional part key); all parts when board is None."""
-    return [p for p in parts if board is None or p.get('board') == board]
+    return [p for p in parts if p.get('on_board', True) and (board is None or p.get('board') == board)]
 
 
 def custom_text(value) -> str:

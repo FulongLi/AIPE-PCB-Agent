@@ -1,0 +1,40 @@
+schema: 1
+evidence_level: design constraints established before final routing; physical qualification pending
+power_board:
+  initial_size_mm: [250, 180]
+  layers: 4
+  copper_um: [70, 70, 70, 70]
+  thickness_mm: 2.0
+  reinforced_clearance_creepage_mm: 8.0
+  reinforced_exclusion_all_layers: true
+  local_clearance_mm: 0.25
+  full_voltage_functional_clearance_mm: 3.0
+  minimum_track_mm: 0.25
+  ordinary_via_diameter_drill_mm: [0.8, 0.4]
+  current_path_target_A: 25
+  high_current_transition: explicit parallel copper and via arrays; screen measured minimum necks
+  gate_path: local paired gate/Kelvin paths; manual critical routing before general signals
+  vee_feedback: distinct quiet star at UCC14141 VEE pin; no plane crossing or load-return shortcut
+  primary_secondary: geometric regions, native netclass rules and all-layer audit
+control_board:
+  initial_size_mm: [160, 120]
+  layers: 4
+  copper_um: [35, 35, 35, 35]
+  thickness_mm: 1.6
+  minimum_track_mm: 0.15
+  minimum_clearance_mm: 0.20
+  ordinary_via_diameter_drill_mm: [0.6, 0.3]
+  ground: continuous reference plane; separate coil current path to entry
+  dsp_bypass_target_branch_mm: 2.0
+assembly:
+  each_board_mounts: 4
+  heavy_components: independently chassis mounted
+  thermal_interface: custom copper blocks plus unpunctured AlN plate; PE sink; qualification pending
+  control_cable_finished_mm: 160
+  control_cable_revision: 100 mm preliminary target superseded by 128.756 mm assembly centreline plus bend/slack allowance
+  control_cable_over_hv_min_air_mm: 8
+  accessible_metal: PE bonded; independent insulation review
+release:
+  no_drc_rule_waivers: true
+  no_automatic_procurement_or_energisation: true
+  physical_qualifications_required: true

@@ -65,3 +65,13 @@ regulation and input protection.
 ## Source references
 
 - PRD-04814 [analysis](../../references/wolfspeed/prd-04814/analysis.md); CGD15SG00D2 [analysis](../../references/wolfspeed/cgd15sg00d2/analysis.md) decisions 3–4; CGD1700HB2M-UNA [analysis](../../references/wolfspeed/cgd1700hb2m-una/analysis.md) decision 5; TIDA-010054 [analysis](../../references/ti/tida-010054/analysis.md) decisions 4, 7, 8.
+
+## V3 verification extension
+
+Verify feedback-star copper topology and exclusions on every filled layer, not only the VEEA net name.
+
+Check asymmetric source/sink load and effective ceramic capacitance under actual DC bias.
+
+A typical internal midpoint-regulator resistance is not a guaranteed hot maximum; preserve startup/load qualification.
+
+Evidence and applicability: [V3 engineering lessons](../../lessons/v3-clean-sheet-engineering.md). Analytical/CAD methods only; no hardware validation claim.

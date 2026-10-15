@@ -1,0 +1,75 @@
+{
+  "purpose": "Footprint/placement-only gate before routing; unconnected-item list may reach native report limit; never a routed CAD pass",
+  "generated_utc": "2026-10-15T03:34:08.643738+00:00",
+  "native_version": "10.0.7",
+  "checks": {
+    "power_A": {
+      "board": "kicad/power_board/sic-v3-power-A.kicad_pcb",
+      "board_sha256": "f85bdb5412cee1b7f6733d01e8d18c1624aeade0f8b78257b3fa1d4497728b3d",
+      "report": "verification/floorplan/power_A.json",
+      "tool_exit": 0,
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "drc",
+        "--format",
+        "json",
+        "--severity-all",
+        "--output",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\verification\\floorplan\\power_A.json",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\kicad\\power_board\\sic-v3-power-A.kicad_pcb"
+      ],
+      "violations": 0,
+      "by_type": {},
+      "reported_unconnected_items": 499,
+      "parity_checked": false,
+      "parity_findings": 0
+    },
+    "power_B": {
+      "board": "kicad/power_board/sic-v3-power.kicad_pcb",
+      "board_sha256": "d1c0821c1602af60b27a229a0c434b9a74738215f99f389358650d7771a2c370",
+      "report": "verification/floorplan/power_B.json",
+      "tool_exit": 0,
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "drc",
+        "--format",
+        "json",
+        "--severity-all",
+        "--output",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\verification\\floorplan\\power_B.json",
+        "--schematic-parity",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\kicad\\power_board\\sic-v3-power.kicad_pcb"
+      ],
+      "violations": 0,
+      "by_type": {},
+      "reported_unconnected_items": 499,
+      "parity_checked": true,
+      "parity_findings": 0
+    },
+    "control": {
+      "board": "kicad/control_board/sic-v3-control.kicad_pcb",
+      "board_sha256": "4a4770d87978832cb1a296d8b897b2e19a429108328331e777f6b51f19f4d2ce",
+      "report": "verification/floorplan/control.json",
+      "tool_exit": 0,
+      "command": [
+        "D:\\EngineeringTools\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "drc",
+        "--format",
+        "json",
+        "--severity-all",
+        "--output",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\verification\\floorplan\\control.json",
+        "--schematic-parity",
+        "D:\\Cursor Workspace\\AIPE-PCB-Agent\\examples\\sic-buck-400v-200v-5kw-v3\\kicad\\control_board\\sic-v3-control.kicad_pcb"
+      ],
+      "violations": 0,
+      "by_type": {},
+      "reported_unconnected_items": 499,
+      "parity_checked": true,
+      "parity_findings": 0
+    }
+  }
+}

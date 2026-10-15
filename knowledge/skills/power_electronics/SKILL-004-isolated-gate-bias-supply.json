@@ -29,7 +29,9 @@
     "Choose rail generation and compute operating points",
     "Add CM choke and decoupling",
     "Verify isolation rating and estimate i_CM",
-    "Define power-good/UVLO interaction"
+    "Define power-good/UVLO interaction",
+    "Verify feedback-star copper topology and exclusions on every filled layer, not only the VEEA net name.",
+    "Check asymmetric source/sink load and effective ceramic capacitance under actual DC bias."
   ],
   "component_considerations": [
     "Modules: R12P21503D, MGJ2D122005SC (named alternatives only)",
@@ -49,7 +51,8 @@
   ],
   "known_limitations": [
     "Module datasheets not verified for two parts",
-    "PRD-04814 comparison is qualitative"
+    "PRD-04814 comparison is qualitative",
+    "A typical internal midpoint-regulator resistance is not a guaranteed hot maximum; preserve startup/load qualification."
   ],
   "keywords": [
     "isolated supply",
