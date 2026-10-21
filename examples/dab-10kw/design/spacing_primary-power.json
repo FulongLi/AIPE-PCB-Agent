@@ -1,0 +1,3040 @@
+{
+  "board": "primary-power",
+  "bus_working_envelope_V": 800.0,
+  "reinforced_mm": 8.0,
+  "reference": "IEC 60664-1 (reference values only; application standard, pollution degree, CTI and impulse category must be confirmed by the reviewer)",
+  "domains": {
+    "AC_B": {
+      "domain": "ac_b",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 60
+    },
+    "BLD1": {
+      "domain": "ladder_0.833",
+      "coefficients": [
+        0.8333,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "BLD2": {
+      "domain": "ladder_0.667",
+      "coefficients": [
+        0.6667,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "BLD3": {
+      "domain": "ladder_0.500",
+      "coefficients": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "BLD4": {
+      "domain": "ladder_0.333",
+      "coefficients": [
+        0.3333,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "BLD5": {
+      "domain": "ladder_0.167",
+      "coefficients": [
+        0.1667,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "BUS_P": {
+      "domain": "bus_p",
+      "coefficients": [
+        1,
+        0,
+        0
+      ],
+      "envelope_V": 0
+    },
+    "DESAT_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "DESAT_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "DESAT_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "DESAT_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVDD_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVDD_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVDD_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "FBVDD_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVEE_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVEE_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "FBVEE_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "FBVEE_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "G_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "G_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "G_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "G_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "KS_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "KS_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "KS_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "KS_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTCR_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTCR_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTCR_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "NTCR_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTC_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTC_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "NTC_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "NTC_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OC_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OC_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OC_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "OC_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTH_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTH_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTH_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "OUTH_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTL_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTL_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "OUTL_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "OUTL_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "PGND": {
+      "domain": "bus_n",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 0
+    },
+    "RDR_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "RDR_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "RDR_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "RDR_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "RLIM_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "RLIM_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "RLIM_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "RLIM_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "SW_A": {
+      "domain": "sw_a",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 0
+    },
+    "SW_B": {
+      "domain": "sw_b",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 0
+    },
+    "S_16V": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "S_5V": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "S_FBVDD": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "S_FBVEE": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "S_RLIM": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "S_VEEA": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "VADC_IN": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20
+    },
+    "VDD_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VDD_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VDD_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "VDD_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VDIV1": {
+      "domain": "ladder_0.875",
+      "coefficients": [
+        0.875,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV2": {
+      "domain": "ladder_0.750",
+      "coefficients": [
+        0.75,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV3": {
+      "domain": "ladder_0.625",
+      "coefficients": [
+        0.625,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV4": {
+      "domain": "ladder_0.500",
+      "coefficients": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV5": {
+      "domain": "ladder_0.375",
+      "coefficients": [
+        0.375,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV6": {
+      "domain": "ladder_0.250",
+      "coefficients": [
+        0.25,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VDIV7": {
+      "domain": "ladder_0.125",
+      "coefficients": [
+        0.125,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0
+    },
+    "VEEA_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VEEA_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VEEA_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "VEEA_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VEE_AH": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VEE_AL": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "VEE_BH": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25
+    },
+    "VEE_BL": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25
+    },
+    "XF_B": {
+      "domain": "ac_b",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 60
+    }
+  },
+  "classes": {
+    "HV_00": {
+      "domain": "ac_b",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 60,
+      "nets": [
+        "AC_B",
+        "XF_B"
+      ]
+    },
+    "HV_01": {
+      "domain": "bus_n",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 0,
+      "nets": [
+        "PGND"
+      ]
+    },
+    "HV_02": {
+      "domain": "bus_p",
+      "coefficients": [
+        1,
+        0,
+        0
+      ],
+      "envelope_V": 0,
+      "nets": [
+        "BUS_P"
+      ]
+    },
+    "HV_03": {
+      "domain": "island_ah",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 25,
+      "nets": [
+        "DESAT_AH",
+        "FBVDD_AH",
+        "FBVEE_AH",
+        "G_AH",
+        "KS_AH",
+        "NTCR_AH",
+        "NTC_AH",
+        "OC_AH",
+        "OUTH_AH",
+        "OUTL_AH",
+        "RDR_AH",
+        "RLIM_AH",
+        "VDD_AH",
+        "VEEA_AH",
+        "VEE_AH"
+      ]
+    },
+    "HV_04": {
+      "domain": "island_al",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25,
+      "nets": [
+        "DESAT_AL",
+        "FBVDD_AL",
+        "FBVEE_AL",
+        "G_AL",
+        "KS_AL",
+        "NTCR_AL",
+        "NTC_AL",
+        "OC_AL",
+        "OUTH_AL",
+        "OUTL_AL",
+        "RDR_AL",
+        "RLIM_AL",
+        "VDD_AL",
+        "VEEA_AL",
+        "VEE_AL"
+      ]
+    },
+    "HV_05": {
+      "domain": "island_bh",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 25,
+      "nets": [
+        "DESAT_BH",
+        "FBVDD_BH",
+        "FBVEE_BH",
+        "G_BH",
+        "KS_BH",
+        "NTCR_BH",
+        "NTC_BH",
+        "OC_BH",
+        "OUTH_BH",
+        "OUTL_BH",
+        "RDR_BH",
+        "RLIM_BH",
+        "VDD_BH",
+        "VEEA_BH",
+        "VEE_BH"
+      ]
+    },
+    "HV_06": {
+      "domain": "island_bl",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 25,
+      "nets": [
+        "DESAT_BL",
+        "FBVDD_BL",
+        "FBVEE_BL",
+        "G_BL",
+        "KS_BL",
+        "NTCR_BL",
+        "NTC_BL",
+        "OC_BL",
+        "OUTH_BL",
+        "OUTL_BL",
+        "RDR_BL",
+        "RLIM_BL",
+        "VDD_BL",
+        "VEEA_BL",
+        "VEE_BL"
+      ]
+    },
+    "HV_07": {
+      "domain": "ladder_0.125",
+      "coefficients": [
+        0.125,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV7"
+      ]
+    },
+    "HV_08": {
+      "domain": "ladder_0.167",
+      "coefficients": [
+        0.1667,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "BLD5"
+      ]
+    },
+    "HV_09": {
+      "domain": "ladder_0.250",
+      "coefficients": [
+        0.25,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV6"
+      ]
+    },
+    "HV_10": {
+      "domain": "ladder_0.333",
+      "coefficients": [
+        0.3333,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "BLD4"
+      ]
+    },
+    "HV_11": {
+      "domain": "ladder_0.375",
+      "coefficients": [
+        0.375,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV5"
+      ]
+    },
+    "HV_12": {
+      "domain": "ladder_0.500",
+      "coefficients": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "BLD3",
+        "VDIV4"
+      ]
+    },
+    "HV_13": {
+      "domain": "ladder_0.625",
+      "coefficients": [
+        0.625,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV3"
+      ]
+    },
+    "HV_14": {
+      "domain": "ladder_0.667",
+      "coefficients": [
+        0.6667,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "BLD2"
+      ]
+    },
+    "HV_15": {
+      "domain": "ladder_0.750",
+      "coefficients": [
+        0.75,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV2"
+      ]
+    },
+    "HV_16": {
+      "domain": "ladder_0.833",
+      "coefficients": [
+        0.8333,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "BLD1"
+      ]
+    },
+    "HV_17": {
+      "domain": "ladder_0.875",
+      "coefficients": [
+        0.875,
+        0.0,
+        0.0
+      ],
+      "envelope_V": 0.0,
+      "nets": [
+        "VDIV1"
+      ]
+    },
+    "HV_18": {
+      "domain": "sense_iso",
+      "coefficients": [
+        0,
+        0,
+        0
+      ],
+      "envelope_V": 20,
+      "nets": [
+        "S_16V",
+        "S_5V",
+        "S_FBVDD",
+        "S_FBVEE",
+        "S_RLIM",
+        "S_VEEA",
+        "VADC_IN"
+      ]
+    },
+    "HV_19": {
+      "domain": "sw_a",
+      "coefficients": [
+        0,
+        1,
+        0
+      ],
+      "envelope_V": 0,
+      "nets": [
+        "SW_A"
+      ]
+    },
+    "HV_20": {
+      "domain": "sw_b",
+      "coefficients": [
+        0,
+        0,
+        1
+      ],
+      "envelope_V": 0,
+      "nets": [
+        "SW_B"
+      ]
+    }
+  },
+  "pairs": [
+    {
+      "a": "HV_00",
+      "b": "HV_01",
+      "domain_a": "ac_b",
+      "domain_b": "bus_n",
+      "working_voltage_V": 860.0,
+      "clearance_mm": 4.3
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_02",
+      "domain_a": "ac_b",
+      "domain_b": "bus_p",
+      "working_voltage_V": 860.0,
+      "clearance_mm": 4.3
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_03",
+      "domain_a": "ac_b",
+      "domain_b": "island_ah",
+      "working_voltage_V": 885.0,
+      "clearance_mm": 4.45
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_04",
+      "domain_a": "ac_b",
+      "domain_b": "island_al",
+      "working_voltage_V": 885.0,
+      "clearance_mm": 4.45
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_05",
+      "domain_a": "ac_b",
+      "domain_b": "island_bh",
+      "working_voltage_V": 85.0,
+      "clearance_mm": 0.45
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_06",
+      "domain_a": "ac_b",
+      "domain_b": "island_bl",
+      "working_voltage_V": 885.0,
+      "clearance_mm": 4.45
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_07",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 760.0,
+      "clearance_mm": 3.85
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_08",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 726.6,
+      "clearance_mm": 3.7
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_09",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 660.0,
+      "clearance_mm": 3.35
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_10",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 593.4,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_11",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 560.0,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_12",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 460.0,
+      "clearance_mm": 2.3
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_13",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 560.0,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_14",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 593.4,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_15",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 660.0,
+      "clearance_mm": 3.35
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_16",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 726.6,
+      "clearance_mm": 3.7
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_17",
+      "domain_a": "ac_b",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 760.0,
+      "clearance_mm": 3.85
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_18",
+      "domain_a": "ac_b",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 880.0,
+      "clearance_mm": 4.4
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_19",
+      "domain_a": "ac_b",
+      "domain_b": "sw_a",
+      "working_voltage_V": 860.0,
+      "clearance_mm": 4.3
+    },
+    {
+      "a": "HV_00",
+      "b": "HV_20",
+      "domain_a": "ac_b",
+      "domain_b": "sw_b",
+      "working_voltage_V": 60.0,
+      "clearance_mm": 0.3
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_02",
+      "domain_a": "bus_n",
+      "domain_b": "bus_p",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_03",
+      "domain_a": "bus_n",
+      "domain_b": "island_ah",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_04",
+      "domain_a": "bus_n",
+      "domain_b": "island_al",
+      "working_voltage_V": 25.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_05",
+      "domain_a": "bus_n",
+      "domain_b": "island_bh",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_06",
+      "domain_a": "bus_n",
+      "domain_b": "island_bl",
+      "working_voltage_V": 25.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_07",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_08",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 133.4,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_09",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_10",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 266.6,
+      "clearance_mm": 1.35
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_11",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_12",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_13",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_14",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_15",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_16",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_17",
+      "domain_a": "bus_n",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_18",
+      "domain_a": "bus_n",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 20.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_19",
+      "domain_a": "bus_n",
+      "domain_b": "sw_a",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    },
+    {
+      "a": "HV_01",
+      "b": "HV_20",
+      "domain_a": "bus_n",
+      "domain_b": "sw_b",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_03",
+      "domain_a": "bus_p",
+      "domain_b": "island_ah",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_04",
+      "domain_a": "bus_p",
+      "domain_b": "island_al",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_05",
+      "domain_a": "bus_p",
+      "domain_b": "island_bh",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_06",
+      "domain_a": "bus_p",
+      "domain_b": "island_bl",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_07",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_08",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_09",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_10",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_11",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_12",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_13",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_14",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 266.6,
+      "clearance_mm": 1.35
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_15",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_16",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 133.4,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_17",
+      "domain_a": "bus_p",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_18",
+      "domain_a": "bus_p",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 820.0,
+      "clearance_mm": 4.1
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_19",
+      "domain_a": "bus_p",
+      "domain_b": "sw_a",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    },
+    {
+      "a": "HV_02",
+      "b": "HV_20",
+      "domain_a": "bus_p",
+      "domain_b": "sw_b",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_04",
+      "domain_a": "island_ah",
+      "domain_b": "island_al",
+      "working_voltage_V": 850.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_05",
+      "domain_a": "island_ah",
+      "domain_b": "island_bh",
+      "working_voltage_V": 850.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_06",
+      "domain_a": "island_ah",
+      "domain_b": "island_bl",
+      "working_voltage_V": 850.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_07",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_08",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_09",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_10",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_11",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_12",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 425.0,
+      "clearance_mm": 2.15
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_13",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_14",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_15",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_16",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_17",
+      "domain_a": "island_ah",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_18",
+      "domain_a": "island_ah",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 845.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_19",
+      "domain_a": "island_ah",
+      "domain_b": "sw_a",
+      "working_voltage_V": 25.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_03",
+      "b": "HV_20",
+      "domain_a": "island_ah",
+      "domain_b": "sw_b",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_05",
+      "domain_a": "island_al",
+      "domain_b": "island_bh",
+      "working_voltage_V": 850.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_06",
+      "domain_a": "island_al",
+      "domain_b": "island_bl",
+      "working_voltage_V": 50.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_07",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 125.0,
+      "clearance_mm": 0.65
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_08",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 158.4,
+      "clearance_mm": 0.8
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_09",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 225.0,
+      "clearance_mm": 1.15
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_10",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 291.6,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_11",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 325.0,
+      "clearance_mm": 1.65
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_12",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 425.0,
+      "clearance_mm": 2.15
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_13",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_14",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_15",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_16",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_17",
+      "domain_a": "island_al",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_18",
+      "domain_a": "island_al",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 45.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_19",
+      "domain_a": "island_al",
+      "domain_b": "sw_a",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_04",
+      "b": "HV_20",
+      "domain_a": "island_al",
+      "domain_b": "sw_b",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_06",
+      "domain_a": "island_bh",
+      "domain_b": "island_bl",
+      "working_voltage_V": 850.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_07",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_08",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_09",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_10",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_11",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_12",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 425.0,
+      "clearance_mm": 2.15
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_13",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_14",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_15",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_16",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_17",
+      "domain_a": "island_bh",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_18",
+      "domain_a": "island_bh",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 845.0,
+      "clearance_mm": 4.25
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_19",
+      "domain_a": "island_bh",
+      "domain_b": "sw_a",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_05",
+      "b": "HV_20",
+      "domain_a": "island_bh",
+      "domain_b": "sw_b",
+      "working_voltage_V": 25.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_07",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.125",
+      "working_voltage_V": 125.0,
+      "clearance_mm": 0.65
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_08",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 158.4,
+      "clearance_mm": 0.8
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_09",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 225.0,
+      "clearance_mm": 1.15
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_10",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 291.6,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_11",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 325.0,
+      "clearance_mm": 1.65
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_12",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 425.0,
+      "clearance_mm": 2.15
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_13",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 525.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_14",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 558.4,
+      "clearance_mm": 2.85
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_15",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 625.0,
+      "clearance_mm": 3.2
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_16",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 691.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_17",
+      "domain_a": "island_bl",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 725.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_18",
+      "domain_a": "island_bl",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 45.0,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_19",
+      "domain_a": "island_bl",
+      "domain_b": "sw_a",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_06",
+      "b": "HV_20",
+      "domain_a": "island_bl",
+      "domain_b": "sw_b",
+      "working_voltage_V": 825.0,
+      "clearance_mm": 4.15
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_08",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.167",
+      "working_voltage_V": 33.4,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_09",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_10",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 166.6,
+      "clearance_mm": 0.85
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_11",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_12",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_13",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_14",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 433.4,
+      "clearance_mm": 2.2
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_15",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_16",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 566.6,
+      "clearance_mm": 2.9
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_17",
+      "domain_a": "ladder_0.125",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_18",
+      "domain_a": "ladder_0.125",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 120.0,
+      "clearance_mm": 0.6
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_19",
+      "domain_a": "ladder_0.125",
+      "domain_b": "sw_a",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_07",
+      "b": "HV_20",
+      "domain_a": "ladder_0.125",
+      "domain_b": "sw_b",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_09",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.250",
+      "working_voltage_V": 66.6,
+      "clearance_mm": 0.35
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_10",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 133.3,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_11",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 166.6,
+      "clearance_mm": 0.85
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_12",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 266.6,
+      "clearance_mm": 1.35
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_13",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 366.6,
+      "clearance_mm": 1.85
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_14",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_15",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 466.6,
+      "clearance_mm": 2.35
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_16",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 533.3,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_17",
+      "domain_a": "ladder_0.167",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 566.6,
+      "clearance_mm": 2.9
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_18",
+      "domain_a": "ladder_0.167",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 153.4,
+      "clearance_mm": 0.8
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_19",
+      "domain_a": "ladder_0.167",
+      "domain_b": "sw_a",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_08",
+      "b": "HV_20",
+      "domain_a": "ladder_0.167",
+      "domain_b": "sw_b",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_10",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.333",
+      "working_voltage_V": 66.6,
+      "clearance_mm": 0.35
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_11",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_12",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_13",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_14",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 333.4,
+      "clearance_mm": 1.7
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_15",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_16",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 466.6,
+      "clearance_mm": 2.35
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_17",
+      "domain_a": "ladder_0.250",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_18",
+      "domain_a": "ladder_0.250",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 220.0,
+      "clearance_mm": 1.1
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_19",
+      "domain_a": "ladder_0.250",
+      "domain_b": "sw_a",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_09",
+      "b": "HV_20",
+      "domain_a": "ladder_0.250",
+      "domain_b": "sw_b",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_11",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.375",
+      "working_voltage_V": 33.4,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_12",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 133.4,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_13",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 233.4,
+      "clearance_mm": 1.2
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_14",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 266.7,
+      "clearance_mm": 1.35
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_15",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 333.4,
+      "clearance_mm": 1.7
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_16",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_17",
+      "domain_a": "ladder_0.333",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 433.4,
+      "clearance_mm": 2.2
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_18",
+      "domain_a": "ladder_0.333",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 286.6,
+      "clearance_mm": 1.45
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_19",
+      "domain_a": "ladder_0.333",
+      "domain_b": "sw_a",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_10",
+      "b": "HV_20",
+      "domain_a": "ladder_0.333",
+      "domain_b": "sw_b",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_12",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.500",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_13",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_14",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 233.4,
+      "clearance_mm": 1.2
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_15",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_16",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 366.6,
+      "clearance_mm": 1.85
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_17",
+      "domain_a": "ladder_0.375",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_18",
+      "domain_a": "ladder_0.375",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 320.0,
+      "clearance_mm": 1.6
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_19",
+      "domain_a": "ladder_0.375",
+      "domain_b": "sw_a",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_11",
+      "b": "HV_20",
+      "domain_a": "ladder_0.375",
+      "domain_b": "sw_b",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_13",
+      "domain_a": "ladder_0.500",
+      "domain_b": "ladder_0.625",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_14",
+      "domain_a": "ladder_0.500",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 133.4,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_15",
+      "domain_a": "ladder_0.500",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_16",
+      "domain_a": "ladder_0.500",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 266.6,
+      "clearance_mm": 1.35
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_17",
+      "domain_a": "ladder_0.500",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 300.0,
+      "clearance_mm": 1.5
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_18",
+      "domain_a": "ladder_0.500",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 420.0,
+      "clearance_mm": 2.1
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_19",
+      "domain_a": "ladder_0.500",
+      "domain_b": "sw_a",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_12",
+      "b": "HV_20",
+      "domain_a": "ladder_0.500",
+      "domain_b": "sw_b",
+      "working_voltage_V": 400.0,
+      "clearance_mm": 2.0
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_14",
+      "domain_a": "ladder_0.625",
+      "domain_b": "ladder_0.667",
+      "working_voltage_V": 33.4,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_15",
+      "domain_a": "ladder_0.625",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_16",
+      "domain_a": "ladder_0.625",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 166.6,
+      "clearance_mm": 0.85
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_17",
+      "domain_a": "ladder_0.625",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 200.0,
+      "clearance_mm": 1.0
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_18",
+      "domain_a": "ladder_0.625",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 520.0,
+      "clearance_mm": 2.65
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_19",
+      "domain_a": "ladder_0.625",
+      "domain_b": "sw_a",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_13",
+      "b": "HV_20",
+      "domain_a": "ladder_0.625",
+      "domain_b": "sw_b",
+      "working_voltage_V": 500.0,
+      "clearance_mm": 2.5
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_15",
+      "domain_a": "ladder_0.667",
+      "domain_b": "ladder_0.750",
+      "working_voltage_V": 66.6,
+      "clearance_mm": 0.35
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_16",
+      "domain_a": "ladder_0.667",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 133.3,
+      "clearance_mm": 0.7
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_17",
+      "domain_a": "ladder_0.667",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 166.6,
+      "clearance_mm": 0.85
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_18",
+      "domain_a": "ladder_0.667",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 553.4,
+      "clearance_mm": 2.8
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_19",
+      "domain_a": "ladder_0.667",
+      "domain_b": "sw_a",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_14",
+      "b": "HV_20",
+      "domain_a": "ladder_0.667",
+      "domain_b": "sw_b",
+      "working_voltage_V": 533.4,
+      "clearance_mm": 2.7
+    },
+    {
+      "a": "HV_15",
+      "b": "HV_16",
+      "domain_a": "ladder_0.750",
+      "domain_b": "ladder_0.833",
+      "working_voltage_V": 66.6,
+      "clearance_mm": 0.35
+    },
+    {
+      "a": "HV_15",
+      "b": "HV_17",
+      "domain_a": "ladder_0.750",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 100.0,
+      "clearance_mm": 0.5
+    },
+    {
+      "a": "HV_15",
+      "b": "HV_18",
+      "domain_a": "ladder_0.750",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 620.0,
+      "clearance_mm": 3.15
+    },
+    {
+      "a": "HV_15",
+      "b": "HV_19",
+      "domain_a": "ladder_0.750",
+      "domain_b": "sw_a",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_15",
+      "b": "HV_20",
+      "domain_a": "ladder_0.750",
+      "domain_b": "sw_b",
+      "working_voltage_V": 600.0,
+      "clearance_mm": 3.05
+    },
+    {
+      "a": "HV_16",
+      "b": "HV_17",
+      "domain_a": "ladder_0.833",
+      "domain_b": "ladder_0.875",
+      "working_voltage_V": 33.4,
+      "clearance_mm": 0.25
+    },
+    {
+      "a": "HV_16",
+      "b": "HV_18",
+      "domain_a": "ladder_0.833",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 686.6,
+      "clearance_mm": 3.5
+    },
+    {
+      "a": "HV_16",
+      "b": "HV_19",
+      "domain_a": "ladder_0.833",
+      "domain_b": "sw_a",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_16",
+      "b": "HV_20",
+      "domain_a": "ladder_0.833",
+      "domain_b": "sw_b",
+      "working_voltage_V": 666.6,
+      "clearance_mm": 3.4
+    },
+    {
+      "a": "HV_17",
+      "b": "HV_18",
+      "domain_a": "ladder_0.875",
+      "domain_b": "sense_iso",
+      "working_voltage_V": 720.0,
+      "clearance_mm": 3.65
+    },
+    {
+      "a": "HV_17",
+      "b": "HV_19",
+      "domain_a": "ladder_0.875",
+      "domain_b": "sw_a",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_17",
+      "b": "HV_20",
+      "domain_a": "ladder_0.875",
+      "domain_b": "sw_b",
+      "working_voltage_V": 700.0,
+      "clearance_mm": 3.55
+    },
+    {
+      "a": "HV_18",
+      "b": "HV_19",
+      "domain_a": "sense_iso",
+      "domain_b": "sw_a",
+      "working_voltage_V": 820.0,
+      "clearance_mm": 4.1
+    },
+    {
+      "a": "HV_18",
+      "b": "HV_20",
+      "domain_a": "sense_iso",
+      "domain_b": "sw_b",
+      "working_voltage_V": 820.0,
+      "clearance_mm": 4.1
+    },
+    {
+      "a": "HV_19",
+      "b": "HV_20",
+      "domain_a": "sw_a",
+      "domain_b": "sw_b",
+      "working_voltage_V": 800.0,
+      "clearance_mm": 4.0
+    }
+  ],
+  "relaxations": [
+    {
+      "ref": "Q1",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "G_AH"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q1",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "KS_AH"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q1",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "SW_A"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.175,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q2",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "G_AL",
+        "SW_A"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q2",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "KS_AL",
+        "SW_A"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q2",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "PGND",
+        "SW_A"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.175,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q3",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "G_BL",
+        "SW_B"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q3",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "KS_BL",
+        "SW_B"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q3",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "PGND",
+        "SW_B"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.175,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q4",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "G_BH"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q4",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "KS_BH"
+      ],
+      "table_mm": 4.15,
+      "package_mm": 3.175,
+      "working_voltage_V": 825.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "Q4",
+      "footprint": "Package_TO_SOT_THT:TO-247-4_Vertical",
+      "nets": [
+        "BUS_P",
+        "SW_B"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.175,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C3",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C4",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C5",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C6",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C7",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C8",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C9",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C10",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C11",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    },
+    {
+      "ref": "C12",
+      "footprint": "Capacitor_SMD:C_2220_5750Metric",
+      "nets": [
+        "BUS_P",
+        "PGND"
+      ],
+      "table_mm": 4.0,
+      "package_mm": 3.3,
+      "working_voltage_V": 800.0,
+      "basis": "manufacturer-rated package; functional insulation inside the component lead field"
+    }
+  ],
+  "note": "Functional spacing from the reference table of design_constraints.yaml (creepage PD2 MG I / clearance for the functional impulse basis); inner layers use the outer-layer values; same-domain nets keep the board minimum clearance. Reference inputs to be reviewed, not a compliance assertion."
+}

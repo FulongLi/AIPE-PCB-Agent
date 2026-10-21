@@ -1,0 +1,773 @@
+{
+  "board": {
+    "3dviewports": [],
+    "design_settings": {
+      "rules": {
+        "min_clearance": 0.2,
+        "min_track_width": 0.15,
+        "min_via_diameter": 0.6,
+        "min_through_hole_diameter": 0.3,
+        "min_hole_clearance": 0.25,
+        "min_copper_edge_clearance": 0.5
+      }
+    },
+    "layer_presets": [],
+    "viewports": []
+  },
+  "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "dab-control.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "bus_width": 12,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.25,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "Default",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2147483647,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.5,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "CTRL_POWER",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.5,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "CTRL_SIGNAL",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6
+      }
+    ],
+    "meta": {
+      "version": 4
+    },
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "12V_E"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "12V_IN"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "3V3"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "5V0"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "BST5"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "GND_CTRL"
+      },
+      {
+        "netclass": "CTRL_POWER",
+        "pattern": "SW5"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_5V"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_ITANK_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_ITANK_S"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_TEMP_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_TEMP_S"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_V12"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_VBUS_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ADC_VBUS_S"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ALL_GOOD"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ARM"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "ARMED"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "AUX_FLT_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "BIAS_EN"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "BIAS_EN_MCU"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "CANH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "CANL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "CAN_MID"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "CAN_RX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "CAN_TX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "DRIVERS_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "DRV_RST"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "DRV_RST_MCU"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EMU0"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EMU1"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EN5"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM1A"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM1B"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM2A"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM2B"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM3A"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM3B"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM4A"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "EPWM4B"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_DVDT"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_EN"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_ILIM"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_IMON"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_OV"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_RTN"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "E_UV"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "FAULT_RD"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "FB5"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "FLT_P_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "FLT_S_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "GPIO_LED_RUN"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "LED_FAULT_K"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "LED_PWR_K"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "LED_RUN_K"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "MON3V3"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "MR_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "NRST"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "OV_P_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "OV_S_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "PG_P_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "PG_S_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "PROT_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "PWM_ENABLE"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_FLT_AH_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_FLT_AL_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_FLT_BH_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_FLT_BL_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_ISNS"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_ISNS_BUF"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_OC_TRIP_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PG_BIAS_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_AH_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_AL_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_BH_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_PWM_BL_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_RDY_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_RDY_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_RDY_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_RDY_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_SDFM_CLK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_SDFM_D"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_TEMP_HS"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_TEMP_PWM_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_TEMP_PWM_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_TEMP_PWM_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_TEMP_PWM_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VA"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VBUS_CMP"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VBUS_RX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VM"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VSNS_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "P_VSNS_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RDY_P_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RDY_S_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "REF3"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RESET_CT"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RS485_A"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RS485_B"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RS485_DE"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RS485_RX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RS485_TX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "RUN_EN"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "SDFM_P_CLK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "SDFM_P_D"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "SDFM_S_CLK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "SDFM_S_D"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "SUPPLY_OK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_FLT_AH_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_FLT_AL_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_FLT_BH_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_FLT_BL_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_ISNS"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_ISNS_BUF"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_OC_TRIP_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PG_BIAS_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_AH_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_AL_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_BH_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_PWM_BL_SRC"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_RDY_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_RDY_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_RDY_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_RDY_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_SDFM_CLK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_SDFM_D"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_TEMP_HS"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_TEMP_PWM_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_TEMP_PWM_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_TEMP_PWM_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_TEMP_PWM_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VA"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VBUS_CMP"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VBUS_RX"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VM"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VSNS_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "S_VSNS_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TCK"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TDI"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TDO"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_P_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_P_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_P_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_P_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_S_AH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_S_AL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_S_BH"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TEMP_PWM_S_BL"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TMS"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TRIPPED"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TRST_N"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "TZ_TRIP"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "V12_DIV"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "V5_DIV"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "V_OV_P"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "V_OV_S"
+      },
+      {
+        "netclass": "CTRL_SIGNAL",
+        "pattern": "XRS_CARD"
+      }
+    ]
+  },
+  "pcbnew": {
+    "last_paths": {
+      "gencad": "",
+      "idf": "",
+      "netlist": "",
+      "plot": "",
+      "specctra_dsn": "",
+      "step": "",
+      "svg": "",
+      "vrml": ""
+    },
+    "page_layout_descr_file": ""
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "sheets": [],
+  "text_variables": {}
+}

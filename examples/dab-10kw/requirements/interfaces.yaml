@@ -1,0 +1,158 @@
+# Inter-board interfaces of the AIPE 10 kW DAB (DAB-V1).  The control harness pin map is used verbatim by the
+# primary board, the secondary board and the control board models, so the three KiCad projects agree pin for pin
+# (a unit test checks this).  The controlCARD edge-connector map is an ASSUMED assignment: it must be reconciled
+# with the TI TMDSCNCD280039C controlCARD pin-out document before any board is built (open review item R-01).
+schema: 1
+control_harness:
+  description: "40-way keyed IDC harness between the control board and each power board (Samtec TST-120-01-G-D shrouded header, straight-through 1:1 cable, pin 1 marked); adjacent odd/even pins form signal/return pairs; SELV only - no gate current and no hazardous potential in the cable"
+  footprint: Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical
+  keying: "shrouded header with centre polarising key; cable connector with matching bump; pin 1 triangle on silkscreen"
+  rated_current_per_contact_A: 1.0
+  # pin: net name on the power board.  The control board prefixes board-specific nets with P_ (primary) or S_
+  # (secondary); shared supply nets keep their names.
+  pins:
+    1: GND_CTRL
+    2: PWM_AH
+    3: GND_CTRL
+    4: PWM_AL
+    5: GND_CTRL
+    6: PWM_BH
+    7: GND_CTRL
+    8: PWM_BL
+    9: GND_CTRL
+    10: DRV_RST
+    11: GND_CTRL
+    12: BIAS_EN
+    13: FLT_AH_N
+    14: FLT_AL_N
+    15: FLT_BH_N
+    16: FLT_BL_N
+    17: RDY_AH
+    18: RDY_AL
+    19: RDY_BH
+    20: RDY_BL
+    21: PG_BIAS_N
+    22: OC_TRIP_N
+    23: TEMP_HS
+    24: GND_CTRL
+    25: VSNS_P
+    26: VSNS_N
+    27: ISNS
+    28: GND_CTRL
+    29: TEMP_PWM_AH
+    30: TEMP_PWM_AL
+    31: TEMP_PWM_BH
+    32: TEMP_PWM_BL
+    33: SDFM_CLK
+    34: SDFM_D
+    35: 12V_E
+    36: 12V_E
+    37: GND_CTRL
+    38: GND_CTRL
+    39: 3V3
+    40: 3V3
+  shared_nets: [GND_CTRL, 12V_E, 3V3, DRV_RST, BIAS_EN]
+  direction_from_control: [PWM_AH, PWM_AL, PWM_BH, PWM_BL, DRV_RST, BIAS_EN, SDFM_CLK, 12V_E, 3V3]
+  direction_to_control: [FLT_AH_N, FLT_AL_N, FLT_BH_N, FLT_BL_N, RDY_AH, RDY_AL, RDY_BH, RDY_BL, PG_BIAS_N, OC_TRIP_N, TEMP_HS, VSNS_P, VSNS_N, ISNS, TEMP_PWM_AH, TEMP_PWM_AL, TEMP_PWM_BH, TEMP_PWM_BL, SDFM_D]
+  notes:
+    - "12V_E: two contacts; the five UCC14141 modules of one board draw about 1 A at 12 V worst case - contact derating and cable gauge are review items."
+    - "SDFM_CLK / SDFM_D are used by the secondary board (AMC1336); on the primary board they are reserved (not connected)."
+    - "VSNS_P / VSNS_N: AMC1311 differential output (about 1.44 V common mode, gain 1); ISNS: TMCS1133 output, 1.65 V at zero current, 25 mV/A."
+controlcard:
+  description: "TMS320F280039C controlCARD on a Samtec HSEC8 180-contact socket; the card's own 3.3 V regulator is fed from the 5 V supplied by the control board"
+  socket_footprint: Connector_Samtec_HSEC8:Samtec_HSEC8-190-01-X-DV-A_2x90_P0.8mm_Pol32_Socket_AlignmentPins
+  pinout_status: "ASSUMED - modelled on the common C2000 180-pin controlCARD layout; every assignment below must be verified against the TMDSCNCD280039C pin-out (review item R-01); unlisted contacts are left unconnected"
+  signals:
+    # contact: control-board net
+    1: 5V0
+    3: 5V0
+    5: 5V0
+    7: 5V0
+    2: GND_CTRL
+    4: GND_CTRL
+    6: GND_CTRL
+    8: GND_CTRL
+    9: ADC_VBUS_P
+    11: ADC_VBUS_S
+    15: ADC_ITANK_P
+    17: ADC_ITANK_S
+    21: ADC_TEMP_P
+    23: ADC_TEMP_S
+    25: ADC_V12
+    27: ADC_5V
+    49: EPWM1A
+    51: EPWM1B
+    53: EPWM2A
+    55: EPWM2B
+    50: EPWM3A
+    52: EPWM4A
+    54: EPWM3B
+    56: EPWM4B
+    57: TZ_TRIP
+    59: ARM
+    61: RUN_EN
+    63: DRV_RST_MCU
+    58: BIAS_EN_MCU
+    60: TEMP_PWM_P_AH
+    62: TEMP_PWM_P_AL
+    64: TEMP_PWM_P_BH
+    65: TEMP_PWM_P_BL
+    67: TEMP_PWM_S_AH
+    69: TEMP_PWM_S_AL
+    71: TEMP_PWM_S_BH
+    73: TEMP_PWM_S_BL
+    75: CAN_TX
+    77: CAN_RX
+    79: RS485_TX
+    81: RS485_RX
+    83: RS485_DE
+    66: SDFM_S_CLK
+    68: SDFM_S_D
+    70: SDFM_P_CLK
+    72: SDFM_P_D
+    80: GPIO_LED_RUN
+    84: FAULT_RD
+    86: XRS_CARD
+    100: GND_CTRL
+    102: GND_CTRL
+    104: GND_CTRL
+    106: GND_CTRL
+    110: TMS
+    112: TCK
+    114: TDI
+    116: TDO
+    118: TRST_N
+    120: EMU0
+    122: EMU1
+    140: GND_CTRL
+    160: GND_CTRL
+    170: GND_CTRL
+    180: GND_CTRL
+jtag_header:
+  description: "TI 14-pin JTAG / cJTAG header (2x07, 2.54 mm) - pin 6 is the key; wired to the controlCARD JTAG contacts (assumed) so that an external XDS probe can be used instead of the card's on-board XDS110"
+  footprint: Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical
+  pins: {1: TMS, 2: TRST_N, 3: TDI, 4: GND_CTRL, 5: 3V3, 6: null, 7: TDO, 8: GND_CTRL, 9: TCK, 10: GND_CTRL, 11: TCK, 12: GND_CTRL, 13: EMU0, 14: EMU1}
+can:
+  description: "ISO 11898-2 CAN FD transceiver TCAN1042HGV (VCC 5 V, VIO 3.3 V); 3-way pluggable terminal (CANH, CANL, GND); split termination 2 x 60 Ohm + 4.7 nF selectable by a solder jumper footprint"
+  connector_footprint: Connector_Phoenix_MC:PhoenixContact_MC_1,5_3-G-3.81_1x03_P3.81mm_Horizontal
+  connector_mpn: 1803581
+  pins: {1: CANH, 2: CANL, 3: GND_CTRL}
+rs485:
+  description: "optional THVD1450 half-duplex RS-485 (not populated); 3-way pluggable terminal (A, B, GND)"
+  connector_footprint: Connector_Phoenix_MC:PhoenixContact_MC_1,5_3-G-3.81_1x03_P3.81mm_Horizontal
+  connector_mpn: 1803581
+  pins: {1: RS485_A, 2: RS485_B, 3: GND_CTRL}
+auxiliary_input:
+  description: "12 V auxiliary input (external isolated regulated supply), 2-way pluggable terminal, TVS, TPS2640 eFuse"
+  connector_footprint: Connector_Phoenix_MC:PhoenixContact_MC_1,5_2-G-3.81_1x02_P3.81mm_Horizontal
+  connector_mpn: 1803578
+  pins: {1: 12V_IN, 2: GND_CTRL}
+heatsink_ntc:
+  description: "cabled 10 k NTC on each heat sink (SELV; the heat sink is PE-bonded and the devices are insulated from it)"
+  footprint: Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical
+  mpn: B2B-PH-K-S
+  pins: {1: NTC_HS, 2: GND_CTRL}
+hv_terminals:
+  primary: {J1: BUS_P, J2: PGND, J3: SW_A, J4: AC_B}
+  secondary: {J1: BUS_P, J2: PGND, J3: SW_A, J4: AC_B}
+  description: "Wuerth REDCUBE THR 74651195 (M4 internal thread) press-in terminals; SW_A connects to the external series inductor (primary) or directly to the transformer (secondary), AC_B to the transformer winding through the Hall sensor"

@@ -1,0 +1,46 @@
+# Routing plan inputs of the primary power board (DAB-V1).  automation/dab_v1/routing.py turns these into a
+# grid_router.run_plan dictionary: the floorplan supplies every pour polygon, keep-out and net region; this file
+# supplies the router parameters, the net widths and the stage order.  Pair-specific clearances come from the
+# insulation table (rules.py) through a PairwiseRouter; the plan itself holds no clearance table.
+board: primary-power
+grid_mm: 0.125
+trace_mm: 0.3
+clearance_mm: 0.25
+via_mm: [0.8, 0.4]
+layers: [F.Cu, In1.Cu, In2.Cu, B.Cu]
+style: {diagonal: true, simplify: octilinear, arcs: false, eps: 0.02, via_cost_cells: 24, heuristic_weight: 1.1}
+max_nodes: 150000
+signal_order_trials: 1
+ripup_rounds: 2
+widths_mm:
+  # glob pattern -> track width; the first match wins
+  "G_*": 0.6
+  "KS_*": 0.6
+  "OUTH_*": 0.6
+  "OUTL_*": 0.6
+  "VDD_*": 0.5
+  "VEE_*": 0.5
+  "DESAT_*": 0.3
+  "12V_*": 0.8
+  "GNDP_*": 0.6
+  "3V3": 0.4
+  "GND_CTRL": 0.4
+  "S_5V": 0.4
+  "S_16V": 0.4
+  "*": 0.3
+fanout_widths_mm:
+  "12V_*": 0.25
+  "GNDP_*": 0.25
+  "VDD_*": 0.25
+  "VEE_*": 0.25
+  "S_*": 0.25
+critical_patterns: ["OUTH_*", "OUTL_*", "G_*", "KS_*"]
+critical_layers: [F.Cu, B.Cu]
+signal_first: ["DESAT_*", "OC_*", "VDD_*", "VEE_*", "*_VEEA", "*_FBVDD", "*_FBVEE", "*_RLIM"]
+power_nets: [BUS_P, PGND, SW_A, SW_B, XF_B, AC_B]
+island_layers: [F.Cu, B.Cu]
+selv_layers: [F.Cu, In2.Cu, B.Cu]
+exact_stub_mm: 0.35
+direct_lane_mm: 0.0
+prune_vias: true
+fill: true

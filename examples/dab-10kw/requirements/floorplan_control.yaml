@@ -1,0 +1,53 @@
+# Placement inputs of the control board (DAB-V1): a single SELV domain.  The controlCARD socket sits along the
+# top edge (the card stands vertically above the board), the two keyed power-board harness headers along the
+# bottom edge, the auxiliary input and the field-bus connectors on the left edge, the JTAG header on the right.
+board: control
+outline_mm: [160, 120]
+fixed:
+  # ref: [x, y, angle]
+  J1: [80, 10, 0]        # HSEC8 socket (controlCARD), card edge towards y = 0
+  J2: [50, 113, 90]      # harness to the primary board (2x20 IDC, pin 1 left)
+  J3: [112, 113, 90]     # harness to the secondary board
+  J4: [8, 32, 90]        # 12 V auxiliary input (MC 1x02)
+  J5: [8, 62, 90]        # CAN (MC 1x03)
+  J6: [8, 86, 90]        # RS-485 (MC 1x03, optional)
+  J7: [152, 46, 0]       # JTAG 2x07
+  J8: [58, 78, 0]        # manual reset header
+regions:
+  # functional block -> placement rectangle [x0, y0, x1, y1]
+  aux_entry: [12.0, 20.0, 44.0, 44.0]
+  buck_5v: [12.0, 44.0, 44.0, 70.0]
+  ldo_3v3: [44.0, 48.0, 64.0, 70.0]
+  supervisor: [44.0, 70.0, 64.0, 86.0]
+  can: [14.0, 56.0, 40.0, 76.0]
+  rs485: [14.0, 78.0, 40.0, 98.0]
+  pwm_gating: [40.0, 86.0, 120.0, 104.0]
+  fault_logic: [66.0, 60.0, 122.0, 86.0]
+  latch: [122.0, 60.0, 146.0, 86.0]
+  comparators: [100.0, 20.0, 146.0, 40.0]
+  receivers: [60.0, 20.0, 100.0, 46.0]
+  adc_conditioning: [60.0, 44.0, 100.0, 60.0]
+  card_bypass: [40.0, 15.0, 120.0, 20.0]
+  jtag: [136.0, 36.0, 158.0, 60.0]
+  indicators: [122.0, 88.0, 158.0, 104.0]
+  harness_filters: [24.0, 100.0, 140.0, 108.0]
+group_regions:
+  aux_entry: aux_entry
+  buck_5v: buck_5v
+  ldo_3v3: ldo_3v3
+  supervisor: supervisor
+  controlcard: card_bypass
+  pwm_gating: pwm_gating
+  fault_tree: fault_logic
+  ov_comparators: comparators
+  latch: latch
+  receivers: receivers
+  adc_conditioning: adc_conditioning
+  digital_io: harness_filters
+  can: can
+  rs485: rs485
+  jtag: jtag
+  harnesses: harness_filters
+  indicators: indicators
+ground_plane: {x: [2.0, 158.0], y: [2.0, 118.0], layer: In1.Cu}
+mounting_holes: [[5, 5], [155, 5], [5, 115], [155, 115], [34, 5], [126, 5]]

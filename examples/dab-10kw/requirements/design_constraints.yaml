@@ -1,0 +1,145 @@
+# Design constraints of the AIPE 10 kW DAB (DAB-V1): board stack-ups, the insulation-coordination table that the
+# net classes and DRC rules are derived from, and the global routing parameters.  The insulation values are IEC
+# 60664-1 table values used as REFERENCE INPUTS for the working voltages at pollution degree 2 and material group I;
+# they are labelled to-be-reviewed and are not asserted as compliance with any standard.  The generated net classes,
+# .kicad_dru rules and router pair clearances are computed from this file by automation/dab_v1/rules.py.
+schema: 1
+evidence_level: "design constraints fixed before placement and routing; physical, dielectric and thermal qualification pending"
+insulation_reference:
+  standard: "IEC 60664-1 (reference values only; application standard, pollution degree, CTI and impulse category must be confirmed by the reviewer)"
+  pollution_degree: 2
+  material_group: "I (CTI >= 600 assumed)"
+  altitude_max_m: 2000
+  overvoltage_category: II
+  # Table F.2 (clearance, inhomogeneous field, up to 2000 m) keyed by rated impulse voltage in kV
+  clearance_mm_by_impulse_kV: {2.5: 1.5, 4.0: 3.0, 6.0: 5.5, 8.0: 8.0}
+  # Table F.4 (creepage, pollution degree 2, material group I) keyed by working voltage in V
+  creepage_mm_pd2_mg1_by_working_V: {50: 0.6, 100: 0.71, 125: 0.75, 160: 0.8, 200: 1.0, 250: 1.25, 320: 1.6, 400: 2.0, 500: 2.5, 630: 3.2, 800: 4.0, 1000: 5.0}
+  impulse_basis_kV:
+    primary_functional_and_basic: 4.0
+    primary_reinforced: 6.0
+    secondary_functional_and_basic: 2.5
+    secondary_reinforced: 4.0
+  # Functional spacing rule applied between HV domains on one board: the larger of the creepage value (outer layers)
+  # and the clearance value for the functional impulse basis; linear interpolation between rows (IEC 60664-1 Table
+  # F.4 permits interpolation) rounded up to 0.05 mm, with the board minimum clearance at or below 50 V.  Inner layers
+  # carry the same values (solid insulation is not credited).  Table of [working voltage difference V, mm].
+  functional_gap_mm_by_working_V: [[50, 0.25], [160, 0.8], [320, 1.6], [500, 2.5], [630, 3.2], [800, 4.0], [1000, 5.0]]
+  # Reinforced separation between every hazardous (HV) domain and the SELV control domain on every copper layer:
+  # 2 x creepage(800 V) = 8.0 mm and clearance(6 kV) = 5.5 mm -> 8.0 mm; the same 8.0 mm is applied on the 400 V
+  # secondary board as a deliberate margin (2 x creepage(400 V) = 4.0 mm would be the table value).
+  reinforced_hv_to_selv_mm: 8.0
+  hv_copper_to_board_edge_mm: 1.0
+  selv_copper_to_board_edge_mm: 0.5
+  review_items:
+    - "Confirm the applicable product/application standard and whether IEC 60664-1 functional/basic/reinforced categories apply as used here."
+    - "Confirm pollution degree 2 (enclosure, condensation) and the CTI certificate of the actual laminate."
+    - "Confirm the rated impulse voltage basis for an 800 V DC bus fed from a controlled source (4 kV functional/basic, 6 kV reinforced assumed)."
+    - "Inner-layer spacing uses the outer-layer values; solid-insulation evaluation (IEC 60664-1 clause 6) was not performed."
+    - "Package creepage/clearance of the isolation parts (UCC21710 DW, UCC14141 DWN, AMC1311/AMC1336 DWV, TMCS1133 DVG) must be checked against the 8.0 mm land gap of the AIPE footprints and the manufacturer values."
+    - "The heat-sink / insulating-pad path is a separate insulation system (device tab at bus potential to the PE-bonded sink)."
+boards:
+  primary-power:
+    name: dab-primary
+    title: "AIPE 10 kW DAB - primary power board (800 V bus)"
+    side: primary
+    size_mm: [300, 150]
+    layers: 4
+    copper_um: [70, 70, 70, 70]
+    thickness_mm: 2.0
+    stackup:
+      - [F.Cu, copper, 0.07]
+      - [dielectric 1, prepreg, 0.2]
+      - [In1.Cu, copper, 0.07]
+      - [dielectric 2, core, 1.32]
+      - [In2.Cu, copper, 0.07]
+      - [dielectric 3, prepreg, 0.2]
+      - [B.Cu, copper, 0.07]
+    bus_voltage_V: 800
+    bus_working_envelope_V: 800
+    min_track_mm: 0.25
+    min_clearance_mm: 0.25
+    via_mm: [0.8, 0.4]
+    min_hole_clearance_mm: 0.3
+  secondary-power:
+    name: dab-secondary
+    title: "AIPE 10 kW DAB - secondary power board (400 V bus)"
+    side: secondary
+    size_mm: [300, 150]
+    layers: 4
+    copper_um: [70, 70, 70, 70]
+    thickness_mm: 2.0
+    stackup:
+      - [F.Cu, copper, 0.07]
+      - [dielectric 1, prepreg, 0.2]
+      - [In1.Cu, copper, 0.07]
+      - [dielectric 2, core, 1.32]
+      - [In2.Cu, copper, 0.07]
+      - [dielectric 3, prepreg, 0.2]
+      - [B.Cu, copper, 0.07]
+    bus_voltage_V: 400
+    bus_working_envelope_V: 450
+    min_track_mm: 0.25
+    min_clearance_mm: 0.25
+    via_mm: [0.8, 0.4]
+    min_hole_clearance_mm: 0.3
+  control:
+    name: dab-control
+    title: "AIPE 10 kW DAB - control board (TMS320F280039C controlCARD)"
+    side: control
+    size_mm: [160, 120]
+    layers: 4
+    copper_um: [35, 35, 35, 35]
+    thickness_mm: 1.6
+    stackup:
+      - [F.Cu, copper, 0.035]
+      - [dielectric 1, prepreg, 0.2]
+      - [In1.Cu, copper, 0.035]
+      - [dielectric 2, core, 1.06]
+      - [In2.Cu, copper, 0.035]
+      - [dielectric 3, prepreg, 0.2]
+      - [B.Cu, copper, 0.035]
+    min_track_mm: 0.15
+    min_clearance_mm: 0.2
+    via_mm: [0.6, 0.3]
+    min_hole_clearance_mm: 0.25
+power_domains:
+  # Potential of every HV domain of a power board as a*BUS + b*SW_A + c*SW_B + local envelope (V).  SW_A and SW_B
+  # take the values {0, BUS} independently; the pair-wise working-voltage difference is the maximum over those
+  # states plus the two local envelopes.  Net membership is assigned by automation/dab_v1/rules.py from net names.
+  bus_p:     {coefficients: [1, 0, 0], envelope_V: 0}
+  bus_n:     {coefficients: [0, 0, 0], envelope_V: 0, note: "net PGND: the hazardous negative bus rail of the board (named as a ground so that KiCad's ground-pin ERC accepts the isolated-amplifier GND1 pins); it is not connected to GND_CTRL"}
+  sw_a:      {coefficients: [0, 1, 0], envelope_V: 0}
+  sw_b:      {coefficients: [0, 0, 1], envelope_V: 0}
+  ac_b:      {coefficients: [0, 0, 1], envelope_V: 60}
+  island_ah: {coefficients: [0, 1, 0], envelope_V: 25}
+  island_al: {coefficients: [0, 0, 0], envelope_V: 25}
+  island_bh: {coefficients: [0, 0, 1], envelope_V: 25}
+  island_bl: {coefficients: [0, 0, 0], envelope_V: 25}
+  sense_iso: {coefficients: [0, 0, 0], envelope_V: 20}
+  ladder:    {coefficients: [0.5, 0, 0], envelope_V: 0, note: "resistor ladder nodes are assigned their actual fraction of BUS by rules.py"}
+routing_defaults:
+  power:
+    grid_mm: 0.2
+    trace_mm: 0.3
+    clearance_mm: 0.3
+    via_mm: [0.8, 0.4]
+    layers: [F.Cu, In1.Cu, In2.Cu, B.Cu]
+    style: {diagonal: true, simplify: octilinear, arcs: false, eps: 0.02, via_cost_cells: 24, heuristic_weight: 1.1}
+    max_nodes: 150000
+    signal_order_trials: 2
+    ripup_rounds: 2
+  control:
+    grid_mm: 0.125
+    trace_mm: 0.2
+    clearance_mm: 0.2
+    via_mm: [0.6, 0.3]
+    layers: [F.Cu, In2.Cu, B.Cu]
+    style: {diagonal: true, simplify: octilinear, arcs: true, eps: 0.02, via_cost_cells: 18}
+    max_nodes: 400000
+    signal_order_trials: 3
+    ripup_rounds: 3
+release:
+  no_drc_rule_waivers: true
+  no_automatic_procurement_or_energisation: true
+  physical_qualifications_required: true

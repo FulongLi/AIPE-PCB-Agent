@@ -1,0 +1,82 @@
+# AIPE 10 kW dual-active-bridge (DAB-V1) - user requirements, engineering assumptions and unverified targets.
+# The three sections are deliberately separate: an engineering assumption or a target is never a user requirement,
+# and a manufacturer rating is never a measurement.  Nothing in this file establishes electrical safety,
+# standards compliance or manufacturability; it defines what the generated CAD was built to and what a reviewer
+# must check.
+schema: 1
+generation: DAB-V1
+project: AIPE 10 kW dual active bridge, 800 V primary / 400 V secondary, 100 kHz, single-phase-shift
+task_source: AIPE task 2026-10-21 (10 kW DAB workflow; repository AIPE-Workflows/examples/dab-10kw)
+reference_design: "TI TIDA-010054 (TIDUES0 Rev F) - facts in AIPE-Workflows/examples/dab-10kw/references/tida-010054-fact-sheet.md; AIPE operating point (800 V to 400 V, n = 2) differs from TI's (800 V to 500 V, n = 1.6)"
+user_requirements:
+  nominal_power_W: 10000
+  primary_bus_nominal_V: 800
+  secondary_bus_nominal_V: 400
+  switching_frequency_Hz: 100000
+  modulation: single-phase-shift
+  power_flow: bidirectional
+  primary_devices: "4x Wolfspeed C3M0075120K (TO-247-4)"
+  secondary_devices: "4x Wolfspeed C3M0030090K (TO-247-4)"
+  gate_driver: "UCC21710 isolated driver with DESAT and Miller clamp, or equivalent, with isolated +15 V / -4 V supplies (UCC14141 or equivalent)"
+  gate_resistance_ohm: 2.0
+  dc_link: "film capacitors plus ceramic decoupling"
+  magnetics_connections: "transformer and series inductor connections on the power boards"
+  sensing: "bus voltage (isolated amplifier / modulator), transformer current (TMCS1133-class Hall or shunt), temperature"
+  protection: "over-current / over-voltage hardware trips feeding a fault latch (hardware, not firmware-only)"
+  controller: "TMS320F280039C controlCARD (HSEC8 edge connector) on the control board with ADC conditioning, SDFM inputs, CAN (RS-485 optional), JTAG/cJTAG debug, 12 V auxiliary input to 5 V / 3.3 V"
+  interconnect: "inter-board connectors with defined pinouts and keyed polarity"
+  boards: [primary-power, secondary-power, control]
+  stackups: "realistic: 4-layer 2 oz power boards, 4-layer 1 oz control board"
+  insulation: "net classes and clearances derived from a documented insulation-coordination table (IEC 60664-1 values for the working voltages, pollution degree 2, as reference inputs labelled to-be-reviewed)"
+  cad: KiCad 10
+  pipeline: "reuse the generic AIPE pipeline; generation driven by YAML/JSON requirement files"
+engineering_assumptions:
+  topology: "single-phase DAB, two full bridges, eight controlled switches, SPS modulation; EPS/DPS/TPS not designed in"
+  turns_ratio_np_ns: 2.0
+  series_inductance_uH: 35.0
+  series_inductor_location: "external, in the primary AC path (terminal AC_A of the primary board to the transformer)"
+  dc_blocking_capacitance_uF: 8.8
+  dc_blocking_location: "primary board, in series with terminal AC_B (TIDUES0 Eq. 20 minimum 7.2 uF)"
+  dead_time_ns: 200
+  phase_shift_nominal_deg: 22.5
+  primary_bus_range_V: [700, 800]
+  secondary_bus_range_V: [350, 450]
+  primary_transient_envelope_V: 1000
+  secondary_transient_envelope_V: 600
+  environment: "enclosed laboratory / industrial DC-DC converter; pollution degree 2; overvoltage category II; altitude <= 2000 m"
+  ambient_max_C: 40
+  cooling: "forced air; two TO-247-4 per heat sink on insulating pads (TIDA-010054 arrangement); fan supply external"
+  auxiliary_source: "external isolated regulated 12 V, 5 A, feeding the control board only; the power boards receive 12 V and 3.3 V through the keyed control harnesses"
+  primary_source: "controlled DC source <= 800 V; the over-voltage trip inhibits switching, it does not clamp source energy"
+  secondary_port: "DC bus or battery emulator 350-450 V; reverse power flow is a control-mode decision, not an uncontrolled event"
+  insulation_material: "CTI >= 600 laminate (material group I) assumed; fabricator certificate required"
+  grounding: "control electronics referenced to one SELV ground (GND_CTRL); every power-board HV domain is galvanically separate from GND_CTRL; heat sinks are protective-earth bonded through the chassis, not through the PCB"
+derived_operating_point:
+  primary_dc_current_A: 12.5
+  secondary_dc_current_A: 25
+  primary_tank_rms_A_estimate: 17
+  secondary_tank_rms_A_estimate: 34
+  primary_tank_peak_A_estimate: 30
+  secondary_tank_peak_A_estimate: 60
+  note: "analytical SPS estimates at 10 kW for the nominal point; the AIPE simulation workflow supplies the evidence"
+unverified_design_targets:
+  efficiency_full_load_min_percent: 97.5
+  efficiency_peak_min_percent: 98.5
+  junction_temperature_max_C: 125
+  device_bus_utilisation_max_fraction: 0.7
+  primary_overcurrent_trip_A: 45
+  secondary_overcurrent_trip_A: 70
+  primary_overvoltage_trip_V: 900
+  secondary_overvoltage_trip_V: 480
+  fault_to_gate_off_max_us: 2
+  dc_link_discharge_to_60V_max_s: 60
+  heat_sink_temperature_trip_C: 90
+  gate_loop_driver_to_gate_mm_max: 15
+  hf_capacitor_to_switch_mm_max: 15
+verification_policy:
+  hardware_measurements_available: false
+  prototypes_may_be_ordered: false
+  hardware_may_be_energised: false
+  simulation_evidence: "owned by the AIPE simulation workflow (AIPE-Workflows/examples/dab-10kw); none is claimed by this PCB package"
+  cad_clean_does_not_imply_hardware_qualification: true
+  insulation_table_status: "reference inputs, to be reviewed; not a compliance assertion"
