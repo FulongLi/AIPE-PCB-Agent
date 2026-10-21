@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aipe-pcb-agent"
+# First declared version. The repository had no version before the Ecosystem Stabilisation V0.1 (2026-10-21); 0.1.0 matches
+# aipe.yaml (schema_version 0.1.0, compatibility core 0.1.x) and the prototype maturity recorded there. Bump on released changes.
+version = "0.1.0"
+description = "Reproducible KiCad 10 automation for power-electronics PCBs: requirement-driven schematic, placement, grid routing, native ERC/DRC and export manifests"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Fulong Li" }]
+# No LICENSE file is present in the repository; aipe.yaml declares MIT. The maintainer has to add the licence text before a release.
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+# PyYAML is optional at run time (a subset parser covers the requirement files under KiCad's bundled Python); Shapely merges pour
+# rectangles and analyses filled-copper islands on the host; pytest runs the suite.
+yaml = ["pyyaml>=6.0"]
+geometry = ["shapely>=2.0"]
+test = ["pytest>=7.0", "pyyaml>=6.0", "shapely>=2.0"]
+
+[project.urls]
+Repository = "https://github.com/FulongLi/AIPE-PCB-Agent"
+
+[tool.setuptools.packages.find]
+include = ["automation*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

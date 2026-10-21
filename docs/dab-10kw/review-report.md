@@ -35,9 +35,9 @@ human reviewer must verify before any board is ordered, built or energised.
 <!-- RESULTS-ERC-DRC -->
 | Board | ERC (`sch erc --severity-all`) | DRC (`pcb drc --schematic-parity --severity-all --refill-zones`) | Checks ignored by KiCad (default, not disabled here) | Router result |
 |---|---|---|---|---|
-| primary-power | 0 findings (`20261021T071523Z-erc-e2894fc6`) | violations 57, unconnected 82, parity 0; unconnected_items (error) x82, clearance (error) x20, hole_clearance (error) x2, track_dangling (warning) x34, via_dangling (warning) x1 (`20261021T071523Z-drc-39f76185`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | 2470 tracks, 411 vias, 23 zones, 79 unresolved connections, 1214.6 s |
-| secondary-power | 0 findings (`20261021T071639Z-erc-a3528079`) | violations 37, unconnected 81, parity 0; unconnected_items (error) x81, hole_clearance (error) x2, track_dangling (warning) x33, via_dangling (warning) x2 (`20261021T071639Z-drc-ce8b8c2f`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | 2703 tracks, 455 vias, 22 zones, 80 unresolved connections, 1325.7 s |
-| control | 0 findings (`20261021T072243Z-erc-a7b01b14`) | violations 0, unconnected 499, parity 0; unconnected_items (error) x499 (`20261021T072243Z-drc-bff9bf17`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | - |
+| primary-power | 0 findings (`20261021T114704Z-erc-82fe6ef8`) | violations 18, unconnected 26, parity 0; unconnected_items (error) x26, track_dangling (warning) x18 (`20261021T114704Z-drc-8c4572df`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | 2501 tracks, 436 vias, 22 zones, 26 unresolved connections, 1160.5 s |
+| secondary-power | 0 findings (`20261021T114746Z-erc-c5f3b0ce`) | violations 18, unconnected 23, parity 0; unconnected_items (error) x23, track_dangling (warning) x18 (`20261021T114746Z-drc-9d8d1f3f`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | 2598 tracks, 449 vias, 21 zones, 23 unresolved connections, 1189.0 s |
+| control | 0 findings (`20261021T121733Z-erc-61086698`) | violations 28, unconnected 24, parity 0; unconnected_items (error) x24, track_dangling (warning) x28 (`20261021T121733Z-drc-64a4df3c`) | missing_courtyard, track_not_centered_on_via, tuning_profile_track_geometries, footprint_filters_mismatch, footprint_type_mismatch | 3090 tracks, 622 vias, 1 zones, 24 unresolved connections, 2713.5 s |
 <!-- /RESULTS-ERC-DRC -->
 
 ## 4. Export bundles
@@ -100,9 +100,9 @@ The net classes and `.kicad_dru` of the power boards are derived from `requireme
 ## 7. Remaining findings and honest limits
 
 <!-- RESULTS-REMAINING -->
-- **primary-power**: 57 DRC violations remain (clearance x20, hole_clearance x2, track_dangling x34, via_dangling x1); 82 unconnected items remain in 42 nets (router: 79 open connections); unrouted or partly routed nets: BIAS_ENF (10), GND_CTRL (10), PG_BIAS_N (10), 3V3 (8), AC_B (6), GNDP_AH (6), GNDP_BH (6), GNDP_BL (6), GNDP_S (6), VEEA_AL (6), 12V_BIAS_AH (4), 12V_BIAS_AL (4), 12V_BIAS_BH (4), 12V_BIAS_BL (4), 12V_BIAS_S (4), BUS_P (4), FBVEE_AH (4), FBVEE_AL (4), GNDP_AL (4), PGND (4), VEEA_BL (4), VEE_AH (4), VEE_AL (4), DRV_RSTF (2), FBVEE_BH (2), FBVEE_BL (2), NTCR_AH (2), NTC_AH (2), NTC_AL (2), RLIM_AH (2), RLIM_AL (2), RLIM_BH (2), RLIM_BL (2), SDFM_D (2), S_FBVDD (2), S_FBVEE (2), S_RLIM (2), VDD_AH (2), VDD_AL (2), VEEA_AH (2), VEEA_BH (2), VSNS_P (2); model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 1, '3V3': 5, 'AC_B': 4, 'BUS_P': 3, 'GND_CTRL': 6, 'PGND': 3, 'SW_A': 1, 'SW_B': 1, 'XF_B': 1} (split nets or not analysed); routing geometry: {'arcs': {'count': 0, 'radius_mm': None, 'joints': 0, 'discontinuous': 0, 'tangency_failures': []}}; layout-metric rows: 13 within, 6 exceeding, 101 measured only, 2 not measured (thresholds are the unverified design targets; geometry only).
-- **secondary-power**: 37 DRC violations remain (hole_clearance x2, track_dangling x33, via_dangling x2); 81 unconnected items remain in 42 nets (router: 80 open connections); unrouted or partly routed nets: BIAS_ENF (10), GND_CTRL (10), PG_BIAS_N (10), 3V3 (6), AC_B (6), GNDP_AH (6), GNDP_BH (6), GNDP_BL (6), GNDP_S (6), VEEA_AL (6), VEEA_BH (6), 12V_BIAS_AH (4), 12V_BIAS_AL (4), 12V_BIAS_BH (4), 12V_BIAS_BL (4), 12V_BIAS_S (4), FBVEE_AH (4), FBVEE_AL (4), GNDP_AL (4), VEEA_BL (4), VEE_AH (4), VEE_AL (4), BUS_P (2), DRV_RSTF (2), FBVEE_BH (2), FBVEE_BL (2), NTCR_AH (2), NTCR_AL (2), NTC_AH (2), NTC_AL (2), PGND (2), RLIM_AH (2), RLIM_AL (2), RLIM_BH (2), RLIM_BL (2), S_5V (2), S_FBVDD (2), S_FBVEE (2), S_RLIM (2), VDD_AH (2), VDD_AL (2), VEEA_AH (2); model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 1, '3V3': 4, 'AC_B': 4, 'BUS_P': 2, 'GND_CTRL': 6, 'PGND': 2, 'SW_A': 1, 'SW_B': 1} (split nets or not analysed); routing geometry: {'arcs': {'count': 0, 'radius_mm': None, 'joints': 0, 'discontinuous': 0, 'tangency_failures': []}}; layout-metric rows: 14 within, 5 exceeding, 99 measured only, 2 not measured (thresholds are the unverified design targets; geometry only).
-- **control**: 499 unconnected items remain in 123 nets (router: n/a open connections); unrouted or partly routed nets: GND_CTRL (336), 3V3 (120), 5V0 (52), 12V_E (26), PWM_ENABLE (18), 12V_IN (12), E_RTN (10), ADC_5V (8), ADC_ITANK_P (8), ADC_ITANK_S (8), ADC_TEMP_P (8), ADC_TEMP_S (8), ADC_V12 (8), ADC_VBUS_P (8), ADC_VBUS_S (8), P_VBUS_RX (8), S_VBUS_RX (8), ALL_GOOD (6), CANH (6), CANL (6), FB5 (6), NRST (6), P_VA (6), P_VM (6), REF3 (6), S_VA (6), S_VM (6), V_OV_P (6), ARM (4), ARMED (4), AUX_FLT_N (4), BIAS_EN (4), BIAS_EN_MCU (4), CAN_MID (4), DRV_RST (4), DRV_RST_MCU (4), EN5 (4), EPWM1A (4), EPWM1B (4), EPWM2A (4), EPWM2B (4), EPWM3A (4), EPWM3B (4), EPWM4A (4), EPWM4B (4), E_IMON (4), E_OV (4), E_UV (4), MON3V3 (4), P_ISNS_BUF (4), P_PG_BIAS_N (4), P_RDY_AH (4), P_RDY_AL (4), P_RDY_BH (4), P_RDY_BL (4), RS485_A (4), RS485_B (4), RS485_DE (4), RUN_EN (4), SW5 (4) ...; model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 14, '3V3': 61, '5V0': 27, 'GND_CTRL': 169} (split nets or not analysed); layout-metric rows: 0 within, 0 exceeding, 1 measured only, 13 not measured (thresholds are the unverified design targets; geometry only).
+- **primary-power**: 18 DRC violations remain (track_dangling x18); 26 unconnected items remain in 18 nets (router: 26 open connections); unrouted or partly routed nets: BIAS_ENF (10), VEEA_BL (6), FBVEE_AL (4), PG_BIAS_N (4), FBVDD_AL (2), FBVDD_BL (2), FBVEE_AH (2), FBVEE_BH (2), FBVEE_BL (2), KS_BL (2), RLIM_BL (2), S_16V (2), S_RLIM (2), VEEA_AH (2), VEEA_AL (2), VEEA_BH (2), VEE_AH (2), VEE_BL (2); model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 1, '3V3': 1, 'AC_B': 1, 'BUS_P': 1, 'GND_CTRL': 1, 'PGND': 1, 'SW_A': 1, 'SW_B': 1, 'XF_B': 1} (all single); routing geometry: {'arcs': {'count': 0, 'radius_mm': None, 'joints': 0, 'discontinuous': 0, 'tangency_failures': []}}; layout-metric rows: 14 within, 5 exceeding, 101 measured only, 2 not measured (thresholds are the unverified design targets; geometry only).
+- **secondary-power**: 18 DRC violations remain (track_dangling x18); 23 unconnected items remain in 16 nets (router: 23 open connections); unrouted or partly routed nets: BIAS_ENF (10), VEEA_BL (6), FBVEE_AL (4), FBVDD_AL (2), FBVDD_BL (2), FBVEE_AH (2), FBVEE_BH (2), FBVEE_BL (2), PG_BIAS_N (2), RLIM_BL (2), S_RLIM (2), VEEA_AH (2), VEEA_AL (2), VEEA_BH (2), VEE_AH (2), VEE_BL (2); model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 1, '3V3': 1, 'AC_B': 1, 'BUS_P': 1, 'GND_CTRL': 1, 'PGND': 1, 'SW_A': 1, 'SW_B': 1} (all single); routing geometry: {'arcs': {'count': 0, 'radius_mm': None, 'joints': 0, 'discontinuous': 0, 'tangency_failures': []}}; layout-metric rows: 14 within, 5 exceeding, 99 measured only, 2 not measured (thresholds are the unverified design targets; geometry only).
+- **control**: 28 DRC violations remain (track_dangling x28); 24 unconnected items remain in 23 nets (router: 24 open connections); unrouted or partly routed nets: GND_CTRL (4), 3V3 (2), ARM (2), DRV_RST_MCU (2), EPWM3A (2), E_IMON (2), NRST (2), PG_S_OK (2), PROT_OK (2), P_FLT_BH_N (2), P_FLT_BL_N (2), P_RDY_BL (2), P_VBUS_RX (2), RS485_DE (2), RS485_TX (2), RUN_EN (2), SUPPLY_OK (2), S_FLT_BL_N (2), S_PG_BIAS_N (2), S_PWM_AL_SRC (2), TEMP_PWM_P_BH (2), TEMP_PWM_S_AL (2), V_OV_S (2); model/schematic/board pad-net equality: exact (schematic mismatches 0, board mismatches 0); filled-copper islands per power net: {'12V_E': 1, '3V3': 2, '5V0': 1, 'GND_CTRL': 3} (split nets or not analysed); routing geometry: {'arcs': {'count': 222, 'radius_mm': {'min': 0.1962, 'median': 0.3968, 'max': 1.0008}, 'joints': 437, 'discontinuous': 1, 'tangency_failures': [{'net': 'RS485_RX', 'layer': 'F.Cu', 'xy_mm': [21.625, 87.125], 'error_deg': 129.603}]}}; layout-metric rows: 0 within, 0 exceeding, 1 measured only, 13 not measured (thresholds are the unverified design targets; geometry only).
 - The router report is a geometric proposal; every remaining DRC item above is a real finding of the generated copper and must be resolved or dispositioned by a human before any fabrication decision. Routing quality metrics are geometry, not inductance or EMI.
 <!-- /RESULTS-REMAINING -->
 
@@ -111,30 +111,32 @@ The net classes and `.kicad_dru` of the power boards are derived from `requireme
 <!-- RESULTS-EVIDENCE -->
 | Board | Evidence file | SHA-256 |
 |---|---|---|
-| primary-power | `examples/dab-10kw/verification/summary_primary-power.json` | `2767aef7e1a13135...` |
-| primary-power | `examples/dab-10kw/verification/erc/20261021T071523Z-erc-e2894fc6/run.json` | `2061a30b9d4d1609...` |
-| primary-power | `examples/dab-10kw/verification/drc/20261021T071523Z-drc-39f76185/run.json` | `ba1fdec5f6496940...` |
-| primary-power | `examples/dab-10kw/manufacturing/primary-power/export-manifest.json` | `2a0b9eddc45449d6...` |
+| primary-power | `examples/dab-10kw/verification/summary_primary-power.json` | `91c60d1c30a57267...` |
+| primary-power | `examples/dab-10kw/verification/erc/20261021T114704Z-erc-82fe6ef8/run.json` | `41e80f378fa448ca...` |
+| primary-power | `examples/dab-10kw/verification/drc/20261021T114704Z-drc-8c4572df/run.json` | `4647bcb7a44413fa...` |
+| primary-power | `examples/dab-10kw/manufacturing/primary-power/export-manifest.json` | `910a2f80505f6211...` |
 | primary-power | `examples/dab-10kw/verification/circuit_checks/netlist_equality_primary-power.json` | `0772c34054abddf5...` |
-| primary-power | `examples/dab-10kw/verification/engineering_checks/routing_quality_primary-power.json` | `0865c7b49863c3e1...` |
-| primary-power | `examples/dab-10kw/verification/engineering_checks/layout_metrics_primary-power.json` | `45344243037981f1...` |
-| primary-power | `examples/dab-10kw/verification/engineering_checks/copper_islands_primary-power.json` | `14eb2f5b26358eca...` |
-| primary-power | `examples/dab-10kw/pcb/routing_report_primary-power.json` | `be25a47269282ef6...` |
-| secondary-power | `examples/dab-10kw/verification/summary_secondary-power.json` | `a9dbf1e07b85f244...` |
-| secondary-power | `examples/dab-10kw/verification/erc/20261021T071639Z-erc-a3528079/run.json` | `8ce923ac0fc97574...` |
-| secondary-power | `examples/dab-10kw/verification/drc/20261021T071639Z-drc-ce8b8c2f/run.json` | `991ab2fe3f370e67...` |
-| secondary-power | `examples/dab-10kw/manufacturing/secondary-power/export-manifest.json` | `2a9655da76f7b71d...` |
+| primary-power | `examples/dab-10kw/verification/engineering_checks/routing_quality_primary-power.json` | `55dc35c1ec3116fc...` |
+| primary-power | `examples/dab-10kw/verification/engineering_checks/layout_metrics_primary-power.json` | `cf9e71ef25563c9f...` |
+| primary-power | `examples/dab-10kw/verification/engineering_checks/copper_islands_primary-power.json` | `77766bdf7cb15326...` |
+| primary-power | `examples/dab-10kw/pcb/routing_report_primary-power.json` | `2fe9b72df72bd7bf...` |
+| secondary-power | `examples/dab-10kw/verification/summary_secondary-power.json` | `a31fea1173f931ca...` |
+| secondary-power | `examples/dab-10kw/verification/erc/20261021T114746Z-erc-c5f3b0ce/run.json` | `947b6d1886d11737...` |
+| secondary-power | `examples/dab-10kw/verification/drc/20261021T114746Z-drc-9d8d1f3f/run.json` | `0d06707594cf959e...` |
+| secondary-power | `examples/dab-10kw/manufacturing/secondary-power/export-manifest.json` | `304ae04568cc3fb3...` |
 | secondary-power | `examples/dab-10kw/verification/circuit_checks/netlist_equality_secondary-power.json` | `181efe851b8b90ca...` |
-| secondary-power | `examples/dab-10kw/verification/engineering_checks/routing_quality_secondary-power.json` | `e331e7eaaf5ce8f5...` |
-| secondary-power | `examples/dab-10kw/verification/engineering_checks/layout_metrics_secondary-power.json` | `b45c7460186a271f...` |
-| secondary-power | `examples/dab-10kw/verification/engineering_checks/copper_islands_secondary-power.json` | `e6577817874b1e8e...` |
-| secondary-power | `examples/dab-10kw/pcb/routing_report_secondary-power.json` | `e905aae23e8a8ea9...` |
-| control | `examples/dab-10kw/verification/summary_control.json` | `0d98a0dd3c2ea712...` |
-| control | `examples/dab-10kw/verification/erc/20261021T072243Z-erc-a7b01b14/run.json` | `856e581649b74e7c...` |
-| control | `examples/dab-10kw/verification/drc/20261021T072243Z-drc-bff9bf17/run.json` | `514decb574a3c3e6...` |
-| control | `examples/dab-10kw/manufacturing/control/export-manifest.json` | `1d12aa77d98f6150...` |
+| secondary-power | `examples/dab-10kw/verification/engineering_checks/routing_quality_secondary-power.json` | `e48d66cb0ff2d611...` |
+| secondary-power | `examples/dab-10kw/verification/engineering_checks/layout_metrics_secondary-power.json` | `4ccfd149e2e200d6...` |
+| secondary-power | `examples/dab-10kw/verification/engineering_checks/copper_islands_secondary-power.json` | `62bc1d6dd6914d72...` |
+| secondary-power | `examples/dab-10kw/pcb/routing_report_secondary-power.json` | `936ff14ed1921c99...` |
+| control | `examples/dab-10kw/verification/summary_control.json` | `208bc689f9c5d0b4...` |
+| control | `examples/dab-10kw/verification/erc/20261021T121733Z-erc-61086698/run.json` | `5229e7e4e66e829b...` |
+| control | `examples/dab-10kw/verification/drc/20261021T121733Z-drc-64a4df3c/run.json` | `8bfbbf883c408713...` |
+| control | `examples/dab-10kw/manufacturing/control/export-manifest.json` | `d47455f653f0167a...` |
 | control | `examples/dab-10kw/verification/circuit_checks/netlist_equality_control.json` | `dce45fe1071e4194...` |
-| control | `examples/dab-10kw/verification/engineering_checks/layout_metrics_control.json` | `cdf0cd0b654c8493...` |
-| control | `examples/dab-10kw/verification/engineering_checks/copper_islands_control.json` | `30ffb745b9d517c6...` |
-| all | `examples/dab-10kw/requirements/source_manifest.json` | `5a92700f390f9c42...` |
+| control | `examples/dab-10kw/verification/engineering_checks/routing_quality_control.json` | `0b879d6f36f1ccb8...` |
+| control | `examples/dab-10kw/verification/engineering_checks/layout_metrics_control.json` | `2238691442916033...` |
+| control | `examples/dab-10kw/verification/engineering_checks/copper_islands_control.json` | `0b6585485e800411...` |
+| control | `examples/dab-10kw/pcb/routing_report_control.json` | `bd70ce40b3176216...` |
+| all | `examples/dab-10kw/requirements/source_manifest.json` | `ac0fab19fb26d91c...` |
 <!-- /RESULTS-EVIDENCE -->

@@ -265,6 +265,7 @@ class GenerationLabelTests(unittest.TestCase):
             self.assertEqual(len(label), len("AIPE SiC BUCK CONTROL - V2"))
 
 
+@unittest.skipUnless(kicad_cli() and library_installed(), 'KiCad 10 with its footprint library is required (generate validates every footprint against the installed library)')
 class GenerationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

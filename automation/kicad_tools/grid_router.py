@@ -41,6 +41,7 @@ import math
 import re
 import time
 from collections import Counter, defaultdict
+from pathlib import Path
 
 import numpy as np
 
@@ -53,7 +54,7 @@ PLAN_KEYS = {'board', 'layers', 'grid', 'trace', 'clearance', 'via', 'hole_clear
              'net_rules', 'keepouts', 'pre_routed', 'critical', 'critical_layers', 'power', 'fanout',
              'signal_order', 'signal_layers', 'exclude_nets', 'front_fallback', 'ground', 'prune_vias',
              'fill', 'save', 'strict', 'max_nodes', 'signal_order_trials', 'ripup_rounds', 'ripup_penalty', 'signal_first', 'signal_groups',
-             'signal_pinned', 'style'}
+             'signal_pinned', 'style', 'time_budget_s', 'checkpoint'}
 # V2.1 routing style (plan key ``style``). Every default reproduces V2: 4-direction search, no simplification, no arcs.
 STYLE_DEFAULTS = dict(
     diagonal=False,            # 8-direction A* (octile heuristic, corner rule) for the route/negotiate/retry searches
@@ -587,13 +588,16 @@ class Router:
 
     def __init__(self, board, width_mm, height_mm, layers, grid=0.25, trace=0.2, clearance=0.2, via=(0.6, 0.3),
                  net_rules=None, keepouts=None, board_margin=1.0, origin=(0.0, 0.0), critical=(), power=(),
-                 hole_clearance=0.25, directions=None, max_nodes=700000, style=None):
+                 hole_clearance=0.25, directions=None, max_nodes=700000, style=None, no_via_in_pad=False):
         import pcbnew as pcb
         self.pcb, self.board = pcb, board
         self.width, self.height = float(width_mm), float(height_mm)
         self.trace, self.clearance = float(trace), float(clearance)
         self.via_d, self.via_drill = float(via[0]), float(via[1])
         self.hole_clearance = float(hole_clearance); self.max_nodes = int(max_nodes)
+        self.no_via_in_pad = bool(no_via_in_pad)  # SMD pads refuse via centres of their own net too (no via-in-pad assembly)
+        self.graphics = []  # netless footprint copper (net-tie bridges, bars): via and drill exclusion, see _register_pads
+        self.stranded = defaultdict(list)  # net -> fallback direct ports of pads whose via escape failed (fanout fallback_direct)
         self.style = normalise_style(style)  # V2.1 geometry knobs; defaults = V2 behaviour
         self.eps = float(self.style['eps'])
         self.stage = 'pre_routed'  # run_plan names the stage whose copper is being created; beautify rewrites eligible stages only
@@ -733,9 +737,21 @@ class Router:
                         g.segment(g.transitions, pos, pos, min(pcb.ToMM(pad.GetSize())) / 2 - 0.15, code)
                 for layer in (range(self.nl) if thru else on):
                     g.box(g.occ[layer], box, clearance + self.trace / 2, code, alt=g.alt[layer])
-                g.box(g.vocc, box, clearance + self.via_d / 2, code)
+                # with no_via_in_pad an SMD land refuses every via centre, its own net's included (the via ring would sit on the land)
+                g.box(g.vocc, box, clearance + self.via_d / 2, -1 if (self.no_via_in_pad and not thru and code > 0) else code)
                 self.pad_records.append(dict(fp=fp, pad=pad, ref=fp.GetReference(), number=pad.GetNumber(), net=net, code=code,
                                              xy=pos, box=box, thru=thru, layers=on, side=0 if (thru or 0 in on) else on[-1]))
+            for shape in fp.GraphicalItems():
+                # netless footprint copper (the bridge polygon of a net tie, current bars): no via may land on it - KiCad measures the
+                # hole clearance against it - and tracks keep off through the pads whose halos cover such copper; the router's pad
+                # model alone does not see it, which is how a via ended up in a net-tie pad on the DAB-V1 boards
+                if not hasattr(shape, 'GetShape') or shape.GetLayer() not in self.layers:
+                    continue
+                bb = shape.GetBoundingBox()
+                box = [pcb.ToMM(bb.GetX()), pcb.ToMM(bb.GetY()), pcb.ToMM(bb.GetRight()), pcb.ToMM(bb.GetBottom())]
+                g.box(g.vocc, box, self.clearance + self.via_d / 2, -1)
+                g.box(g.holes, box, self.hole_clearance + self.via_drill / 2 + 2 * EPS, -1)
+                self.graphics.append(dict(ref=fp.GetReference(), box=box, layer=self.layers.index(shape.GetLayer())))
 
     def _register_existing(self):
         pcb = self.pcb
@@ -974,7 +990,7 @@ class Router:
         return (0 if record['ref'].startswith('U') else 1, natural_ref_key(record['ref']), pad_sort_key(record['number']))
 
     def fanout(self, order_key=None, skip=None, inpad_vias=(), inward=None, escape_layer=None, exact=None, direct=None,
-               exact_via=None, direct_lane=0.0, exact_lane=None):
+               exact_via=None, direct_lane=0.0, exact_lane=None, fallback_direct=None):
         """Escape every connected pad to a routing port; returns ``[ref, pad, net]`` failures.
 
         Through-hole pads register a port with layer None (reachable on every
@@ -1002,11 +1018,15 @@ class Router:
         ``exact_lane(record)`` (mm, optional) reserves the same kind of corridor beyond an exact
         stub's end, in the stub's direction on the stub's layer, so a row of stub (or stub-via)
         ports cannot be sealed by one foreign track running along the stub-end line.
+        ``fallback_direct(record)`` (optional): a pad whose via escape finds no via position is
+        registered as a direct port on its own layer instead of failing, and listed in ``stranded``
+        so that a later stage can tie it to the nearest layer-free port of its net (``run_plan``
+        does this for the ground net when ``ground.route_stranded`` is set).
         """
         skip = skip or (lambda record: False); inward = inward or (lambda record: False)
         exact = exact or (lambda record: None); direct = direct or (lambda record: False)
         exact_via = exact_via or (lambda record: False); direct_lane = float(direct_lane or 0.0)
-        exact_lane = exact_lane or (lambda record: 0.0)
+        exact_lane = exact_lane or (lambda record: 0.0); fallback_direct = fallback_direct or (lambda record: False)
         inpad = {tuple(p) for p in inpad_vias}
         failures = []
         g = self.grid
@@ -1031,7 +1051,7 @@ class Router:
                 for more in (0.0, 0.5, 1.0, 1.5):
                     end = (x + ux * (extent + length + more), y + uy * (extent + length + more))
                     ex, ey = self.to_grid(*end)
-                    if not g.inside(ex, ey) or int(g.occ[side, ey, ex]) not in (0, r['code']):
+                    if not self._exact_end_ok(r, side, end, (ex, ey), escape_width):
                         continue
                     if more and not self._stub_clear(side, (x + ux * (extent + length), y + uy * (extent + length)), end, r['code']):
                         continue  # the longer stub would cross foreign copper beyond the nominal end
@@ -1039,24 +1059,34 @@ class Router:
                         self.track((x0, y0), (x, y), net, side, escape_width, escape_width + 0.05)  # jog from the pad centre into the gap
                     self.track((x, y), end, net, side, escape_width, escape_width + 0.05)
                     self.track(end, self.to_mm(ex, ey), net, side, escape_width, escape_width + 0.05)
+                    self._claim_port_cell(side, ex, ey, r['code'])
                     self.ports[net].append((ex, ey, self._stub_port_layer(r, ex, ey, side, exact_via), ref, number)); placed = True
                     lane = float(exact_lane(r) or 0.0)
                     if lane > 0:
                         px, py = self.to_mm(ex, ey)
-                        self._reserve_lane((px, py), (px + ux * lane, py + uy * lane), net, side)
+                        self._reserve_lane((px, py), (px + ux * lane, py + uy * lane), net, side, escape_width)  # stub width: rows at 0.65 mm pitch
                     break
                 if not placed:
                     failures.append([ref, number, net])
                     self.unresolved.append(dict(stage='fanout', ref=ref, pad=number, net=net))
                 continue
-            if self.is_critical(net) or self.nl == 1:
-                self.ports[net].append((sx, sy, side, ref, number)); continue
             cx, cy = self.pcb.ToMM(r['fp'].GetPosition())
             dx, dy = x - cx, y - cy
             if abs(dx) >= abs(dy):
                 ux, uy = (1 if dx >= 0 else -1), 0
             else:
                 ux, uy = 0, (1 if dy >= 0 else -1)
+            if self.is_critical(net) or self.nl == 1:
+                # port at the pad centre on its own layer; an exit lane (``exact_lane``) keeps the row's other nets from running
+                # across the pad's exit before the critical net is routed - the gate-loop nets of the DAB-V1 drivers lost their
+                # CLMPI pin this way when a neighbouring output net cut diagonally across it
+                lane = float(exact_lane(r) or 0.0)
+                if lane > 0:
+                    spec = exact(r)
+                    lux, luy = (int(spec[1][0]), int(spec[1][1])) if isinstance(spec, (tuple, list)) and len(spec) > 1 else (ux, uy)
+                    extent = (r['box'][2] - r['box'][0]) / 2 if lux else (r['box'][3] - r['box'][1]) / 2
+                    self._reserve_lane((x, y), (x + lux * (extent + lane), y + luy * (extent + lane)), net, side)
+                self.ports[net].append((sx, sy, side, ref, number)); continue
             if direct(r) and not exact(r):
                 # port at the pad's outer end (long pads: the copper the router adds starts beyond the pad centre, so a track
                 # leaving a barrier package stays as far from the opposite row as the pad itself)
@@ -1087,7 +1117,7 @@ class Router:
                     reach = extent + float(stub_length) + more
                     end = (x + primary * ux * reach, y + primary * uy * reach)
                     ex, ey = self.to_grid(*end)
-                    if not g.inside(ex, ey) or int(g.occ[side, ey, ex]) not in (0, r['code']):
+                    if not self._exact_end_ok(r, side, end, (ex, ey), escape_width):
                         continue
                     nominal = (x + primary * ux * (extent + float(stub_length)), y + primary * uy * (extent + float(stub_length)))
                     if more and not self._stub_clear(side, nominal, end, r['code']):
@@ -1098,11 +1128,15 @@ class Router:
                     start = (x + primary * ux * extent * 0.45, y + primary * uy * extent * 0.45)
                     self.track(start, end, net, side, escape_width, escape_width + 0.05)
                     self.track(end, self.to_mm(ex, ey), net, side, escape_width, escape_width + 0.05)  # <= half a cell to the grid port
-                    self.ports[net].append((ex, ey, self._stub_port_layer(r, ex, ey, side, exact_via), ref, number)); placed = True
+                    self._claim_port_cell(side, ex, ey, r['code'])
+                    port = (ex, ey, self._stub_port_layer(r, ex, ey, side, exact_via), ref, number)
+                    self.ports[net].append(port); placed = True
+                    if port[2] is not None and exact_via(r) and fallback_direct(r):
+                        self.stranded[net].append(port)  # the stub's via did not fit: tie the port to the net's nearest via later
                     lane = float(exact_lane(r) or 0.0)
                     if lane > 0:
                         px, py = self.to_mm(ex, ey)
-                        self._reserve_lane((px, py), (px + primary * ux * lane, py + primary * uy * lane), net, side)
+                        self._reserve_lane((px, py), (px + primary * ux * lane, py + primary * uy * lane), net, side, escape_width)
                     break
                 if placed:
                     continue
@@ -1125,6 +1159,12 @@ class Router:
                 self.track((x, y), self.to_mm(sx, sy), net, side, escape_width); self.emit(path, net, escape_width); self.via(self.to_mm(ex, ey), net)
                 self.ports[net].append((ex, ey, port_layer, ref, number)); routed = True
                 break
+            if not routed and fallback_direct(r):
+                # no via position within reach (dense cluster): keep the pad as a direct port on its own layer; run_plan ties the
+                # stranded ports of the ground net to the nearest via / plated pad of the net after the signal stage
+                self.ports[net].append((sx, sy, side, ref, number)); self.stranded[net].append((sx, sy, side, ref, number))
+                self.stats['fanout_fallback_direct'] += 1
+                continue
             if not routed:
                 failures.append([ref, number, net])
                 self.unresolved.append(dict(stage='fanout', ref=ref, pad=number, net=net))
@@ -1132,14 +1172,52 @@ class Router:
         return failures
 
     def _stub_clear(self, side, a, b, code):
-        """True when every grid cell along the mm segment a-b (sampled at the grid pitch) is free or owned by ``code`` on layer ``side``."""
+        """True when every grid cell along the mm segment a-b beyond its first cell (sampled at the grid pitch) is free or owned by
+        ``code`` on layer ``side``; the first cell is the nominal stub end, which ``_exact_end_ok`` has already judged."""
         g = self.grid
         n = max(1, int(math.ceil(math.dist(a, b) / g.grid)))
-        for i in range(n + 1):
+        for i in range(1, n + 1):
             x, y = self.to_grid(a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n)
             if not g.inside(x, y) or int(g.occ[side, y, x]) not in (0, code):
                 return False
         return True
+
+    def _exact_end_ok(self, record, side, end, cell, width):
+        """True when the exact stub of pad ``record`` may end at mm point ``end`` whose grid cell is ``cell`` on layer ``side``.
+
+        The cell must be free or the net's own, or a soft-conflict cell (-2: the clearance halos of two pads overlap there, the
+        normal case between 0.40 mm lands at 0.65 mm pitch on a 0.125 mm grid, where the halo of ``clearance + trace/2`` is
+        wider than the land gap) whose stub copper of ``width`` keeps the clearance from every foreign pad box: the halo is a
+        conservative default-trace model, the stub is narrower, so the real geometry decides. Hard blocks (-1), zone keep-outs
+        and foreign copper (another net's code: a track, via or pre-routed item) always refuse.
+        """
+        g = self.grid; ex, ey = cell
+        if not g.inside(ex, ey):
+            return False
+        v = int(g.occ[side, ey, ex])
+        if int(g.zocc[side, ey, ex]) not in (0, record['code']):
+            return False
+        if v in (0, record['code']):
+            return True
+        if v != -2:
+            return False
+        reach = self.clearance + float(width) / 2 - 1e-6
+        points = (tuple(end), self.to_mm(ex, ey))  # the stub copper runs from the nominal end to the grid port
+        for p in self.pad_records:
+            if p['code'] == record['code'] or (not p['thru'] and side not in p['layers']):
+                continue
+            x0, y0, x1, y1 = p['box']
+            for px, py in points:
+                if math.hypot(max(x0 - px, px - x1, 0.0), max(y0 - py, py - y1, 0.0)) < reach:
+                    return False
+        return True
+
+    def _claim_port_cell(self, side, ex, ey, code):
+        """Own the port cell of an exact stub: a soft-conflict cell (-2) accepted by ``_exact_end_ok`` becomes the net's so that the
+        route search may start or end there (a -2 goal is never entered)."""
+        g = self.grid
+        if int(g.occ[side, ey, ex]) == -2:
+            g.occ[side, ey, ex] = code
 
     def _stub_port_layer(self, record, ex, ey, side, exact_via):
         """Layer of an exact-stub port: the stub's layer, or None (every layer) when ``exact_via`` asks for a via at the stub end and
@@ -1352,14 +1430,15 @@ class Router:
             self.recording_net = None
         self.unresolved = list(unresolved)
 
-    def negotiate(self, layers, allow_front_fallback=True, rounds=20, penalty=40.0, protected=(), tabu=4):
+    def negotiate(self, layers, allow_front_fallback=True, rounds=20, penalty=40.0, protected=(), tabu=4, deadline=None):
         """Rip-up and re-route the unresolved signal connections; returns the log of rounds.
 
         For each failed connection a soft A* finds a path across other signal nets' copper; those nets are ripped up,
         the failed connection is routed first and the ripped nets are re-routed. A round is kept when the unresolved
         count does not grow and the resulting set of failures is new (a set seen before is a cycle and is reverted).
         The targets of the last ``tabu`` kept rounds cannot be ripped again, so two connections fighting over the same
-        lane do not alternate forever. ``protected`` nets are never ripped.
+        lane do not alternate forever. ``protected`` nets are never ripped. ``deadline`` (time.monotonic value) stops
+        the stage before a round that would start after it; the log then ends with a ``time_budget`` entry.
         """
         log = []
         protected = set(protected)
@@ -1372,6 +1451,9 @@ class Router:
         recent = []
         recent_targets = []
         for rnd in range(rounds):
+            if deadline is not None and time.monotonic() > deadline:
+                log.append(dict(round=rnd, result='time_budget: remaining rounds skipped'))
+                break
             current = [u for u in self.unresolved if u.get('stage') == 'route']
             failing = {u['net'] for u in current}
             self.release_lanes({lane[2] for lane in self._lanes if lane[2] not in failing})  # routed nets no longer need their corridors
@@ -1481,16 +1563,17 @@ class Router:
             path = self.astar(start, end, net, layers=tuple(range(self.nl)))
         return path
 
-    def retry_unresolved(self, layers, allow_front_fallback=True):
+    def retry_unresolved(self, layers, allow_front_fallback=True, deadline=None):
         """Route the unresolved signal connections whose ports have become mutually reachable (copper moved by later nets' rip-up
-        rounds or by the order replay); returns the number routed. Each record gets one hard search."""
+        rounds or by the order replay); returns the number routed. Each record gets one hard search; ``deadline`` (time.monotonic)
+        ends the pass early."""
         routed = 0
         for keep_own in (True, False):  # first with the open nets' own corridors still reserved, then without any lane
             failing = {u['net'] for u in self.unresolved if u.get('stage') == 'route'}
             self.release_lanes({lane[2] for lane in self._lanes if lane[2] not in failing} if keep_own else None)
             for record in [u for u in self.unresolved if u.get('stage') == 'route']:
                 net = record['net']
-                if net not in self.code:
+                if net not in self.code or (deadline is not None and time.monotonic() > deadline):
                     continue
                 path = self._hard_path(tuple(record['start']), tuple(record['end']), net, layers, allow_front_fallback)
                 if path is None:
@@ -1882,7 +1965,7 @@ class Router:
         return dict(status='requires-native-DRC', tracks=int(self.stats['tracks']), vias=int(self.stats['vias'] - self.stats['pruned_unused_vias']),
                     arcs=int(self.stats['arcs']),
                     zones=int(self.stats['zones']), pruned=int(self.stats['pruned_unused_vias']),
-                    unresolved=list(self.unresolved),
+                    unresolved=list(self.unresolved), stranded={net: len(ports) for net, ports in self.stranded.items() if ports},
                     net_length_mm={net: round(value, 3) for net, value in sorted(self.length.items())},
                     grid=dict(nx=self.grid.nx, ny=self.grid.ny, pitch=self.grid.grid, margin_cells=self.grid.margin,
                               layers=list(self.names), directions=list(self.grid.directions)),
@@ -1907,10 +1990,13 @@ def validate_plan(plan):
     min_thickness?, thermal_relief?}}; ``fanout`` {skip_refs?, skip_nets?, skip_pads?,
     inpad_vias?, inward_pads?, order?, escape_layer?, direct_nets?, exact_via_pads? ([[ref, pad], ...]: a via at the exact
     stub's end, port on every layer), direct_lane_mm? (reserved exit corridor of every direct port), exact_lane_pads? ([[ref, pad, mm], ...]:
-    reserved corridor beyond the stub end)}; pre-routed vias may carry ``lane: [dx, dy, mm, layer]``; ``signal_order`` [names or prefixes];
+    reserved corridor beyond the stub end), fallback_direct_nets? (nets whose pads become direct ports when no escape via fits, see
+    ``Router.fanout``), no_via_in_pad? (SMD lands refuse via centres of every net, their own included)}; pre-routed vias may carry
+    ``lane: [dx, dy, mm, layer]``; ``signal_order`` [names or prefixes];
     ``signal_layers`` [names]; ``exclude_nets``; ``front_fallback``; ``ground`` {net,
     layers, polygon?, holes?: {layer: [polygon,...]}, clearance?, priority?,
-    thermal_relief?}; ``prune_vias``; ``fill``; ``save`` path; ``strict``; ``max_nodes``
+    thermal_relief?, route_stranded? (after the signal stage, tie every stranded port of the ground net to its nearest via or
+    plated pad)}; ``prune_vias``; ``fill``; ``save`` path; ``strict``; ``max_nodes``
     A* expansion budget per path (default 700000); ``signal_order_trials`` number of deterministic
     signal-stage orders tried (the best is kept; default 1); ``ripup_rounds`` rip-up and re-route
     rounds for the connections that stay unresolved (default 0 = off), ``ripup_penalty`` soft-path cost
@@ -1920,7 +2006,10 @@ def validate_plan(plan):
     diagonal_pref_factor, simplify, chamfer, arcs, arc_radius_mm, arc_steps, arc_dilate_cells, min_turn_deg, max_turn_deg,
     corner_keep_mm, straight_nets, max_width_for_arcs_mm, smooth_power, smooth_critical, stages, l_short_mm, eps} - the V2.1
     geometry knobs (see ``STYLE_DEFAULTS``; absent = V2 behaviour); ``net_rules[net].smooth`` ('none' | 'diagonal' | 'arc')
-    overrides the per-net smoothing policy.
+    overrides the per-net smoothing policy; ``time_budget_s`` (seconds, 0 = none) stops the signal trials, the rip-up and the
+    retry stage once the wall time since ``run_plan`` started exceeds it - nets not yet routed are recorded as unresolved with
+    ``reason: time_budget`` and the run still prunes, pours, fills and saves; ``checkpoint`` (path) saves the board after every
+    stage so that an interrupted run keeps its progress (a ``<checkpoint>.json`` next to it records the stage and counts).
     """
     if not isinstance(plan, dict):
         raise ValueError('plan must be a dict')
@@ -1956,6 +2045,10 @@ def validate_plan(plan):
         if not isinstance(plan['style'], dict):
             raise ValueError('plan.style must be a dict')
         normalise_style(plan['style'])
+    if plan.get('time_budget_s') is not None and (not isinstance(plan['time_budget_s'], (int, float)) or plan['time_budget_s'] < 0):
+        raise ValueError('plan.time_budget_s must be a non-negative number of seconds')
+    if plan.get('checkpoint') is not None and not isinstance(plan['checkpoint'], str):
+        raise ValueError('plan.checkpoint must be a file path')
     for net, rule in plan.get('net_rules', {}).items():
         if isinstance(rule, dict) and rule.get('smooth') not in (None, *SMOOTH_POLICIES):
             raise ValueError(f'net_rules[{net!r}].smooth must be one of {SMOOTH_POLICIES}')
@@ -2028,12 +2121,41 @@ def run_plan(board, plan, router_factory=None):
     start = time.monotonic()
     spec = plan['board']
     power = plan.get('power', {})
+    fan = plan.get('fanout', {})
     make = router_factory or Router
     router = make(board, spec['width'], spec['height'], plan['layers'], grid=plan.get('grid', 0.25),
                     trace=plan.get('trace', 0.2), clearance=plan.get('clearance', 0.2), via=tuple(plan.get('via', (0.6, 0.3))),
                     net_rules=plan.get('net_rules'), board_margin=spec.get('margin', 1.0), origin=tuple(spec.get('origin', (0.0, 0.0))),
                     critical=plan.get('critical', ()), power=list(power), hole_clearance=plan.get('hole_clearance', 0.25),
-                    directions=plan.get('directions'), max_nodes=plan.get('max_nodes', 700000), style=plan.get('style'))
+                    directions=plan.get('directions'), max_nodes=plan.get('max_nodes', 700000), style=plan.get('style'),
+                    no_via_in_pad=bool(fan.get('no_via_in_pad')))
+    # time box and checkpoints: a long run that is stopped from outside keeps the copper of every finished stage
+    budget = float(plan.get('time_budget_s') or 0.0)
+    deadline = start + budget if budget > 0 else None
+    checkpoint = plan.get('checkpoint')
+    budget_log = []
+
+    budget_logged = set()
+
+    def over_budget(stage):
+        if deadline is not None and time.monotonic() > deadline:
+            if stage not in budget_logged:
+                budget_logged.add(stage)
+                budget_log.append(dict(stage=stage, seconds=round(time.monotonic() - start, 1), note='time budget exceeded: stage skipped or cut short'))
+            return True
+        return False
+
+    def save_checkpoint(stage):
+        if not checkpoint:
+            return
+        import json as _json
+        router.pcb.SaveBoard(str(checkpoint), board)
+        tracks = list(board.GetTracks())
+        Path(str(checkpoint) + '.json').write_text(_json.dumps(dict(
+            stage=stage, seconds=round(time.monotonic() - start, 1), tracks=sum(1 for t in tracks if not isinstance(t, router.pcb.PCB_VIA)),
+            vias=sum(1 for t in tracks if isinstance(t, router.pcb.PCB_VIA)), zones=len(board.Zones()), unresolved=len(router.unresolved),
+            note='checkpoint of an unfinished routing run: no pour fill, no via pruning, no beautify yet; native DRC decides'),
+            indent=2) + '\n', encoding='utf-8')
     router.stage = 'pre_routed'
     for keepout in plan.get('keepouts', ()):
         layer = keepout.get('layer')
@@ -2063,9 +2185,9 @@ def run_plan(board, plan, router_factory=None):
                 router.via(xy, array['net'], array.get('diameter'), array.get('drill'))
                 if array.get('port'):
                     router.ports[array['net']].append((*router.to_grid(*xy), None, 'VIA_ARRAY', ''))
-    fan = plan.get('fanout', {})
     router.stage = 'fanout'
     skip_refs, skip_nets = set(fan.get('skip_refs', ())), set(fan.get('skip_nets', ()))
+    fallback_nets = set(fan.get('fallback_direct_nets', ()))
     skip_pads = {tuple(p) for p in fan.get('skip_pads', ())}
     inward = {tuple(p) for p in fan.get('inward_pads', ())}
     exact_pads = {(p[0], p[1]): ((float(p[2]), tuple(p[3]), *p[4:6]) if len(p) > 3 else float(p[2])) if len(p) > 2 else 0.6 for p in fan.get('exact_stub_pads', ())}
@@ -2084,13 +2206,16 @@ def run_plan(board, plan, router_factory=None):
                   direct=lambda r: r['net'] in direct_nets,
                   exact_via=lambda r: (r['ref'], r['number']) in exact_vias,
                   direct_lane=float(fan.get('direct_lane_mm', 0.0) or 0.0),
-                  exact_lane=lambda r: exact_lanes.get((r['ref'], r['number']), 0.0))
+                  exact_lane=lambda r: exact_lanes.get((r['ref'], r['number']), 0.0),
+                  fallback_direct=lambda r: r['net'] in fallback_nets)
+    save_checkpoint('fanout')
     indices = lambda names: tuple(router.layer_index(n) for n in names) if names else None
     critical_layers = indices(plan.get('critical_layers'))
     router.stage = 'critical'
     for net in plan.get('critical', ()):
         if net in router.code:
             router.route_net(net, layers=critical_layers)
+    save_checkpoint('critical')
     router.stage = 'power'
     for net, item in power.items():
         if net not in router.code:
@@ -2138,7 +2263,12 @@ def run_plan(board, plan, router_factory=None):
         pre_unresolved = len(router.unresolved)
         group_log = []
         index = 0
+        trial_seconds = None
         while index < trials:
+            if index > 0 and deadline is not None and trial_seconds is not None and time.monotonic() + 1.2 * trial_seconds > deadline:
+                budget_log.append(dict(stage='signal', trial=index, note=f'trial skipped: {round(trial_seconds)} s per trial do not fit the remaining budget'))
+                break  # a cut-short trial would only force a costly replay of the best complete one
+            trial_start = time.monotonic()
             if index < len(meta):
                 name, order = meta[index]
             else:  # refinement: seeded perturbation of the best order so far, the nets that failed in it promoted
@@ -2159,7 +2289,17 @@ def run_plan(board, plan, router_factory=None):
                 router.restore(state)
                 router.net_items = {k: v for k, v in router.net_items.items() if k not in set(members)} if group_index else defaultdict(list)
                 router.net_items = defaultdict(list, router.net_items)
-            for net in order:
+            cut_short = False
+            for position, net in enumerate(order):
+                if deadline is not None and time.monotonic() > deadline:
+                    # out of time: every net not yet routed in this order is recorded honestly as an open connection
+                    for left in order[position:]:
+                        pts = list(dict.fromkeys((p[0], p[1], p[2]) for p in router.ports.get(left, [])))
+                        if len(pts) >= 2:
+                            router.unresolved.append(dict(stage='route', net=left, start=pts[0], end=pts[1], expanded=0, reason='time_budget'))
+                    budget_log.append(dict(stage='signal', trial=index, routed=position, left=len(order) - position, seconds=round(time.monotonic() - start, 1)))
+                    cut_short = True
+                    break
                 router.recording_net = net
                 router.route_net(net, layers=signal_layers, allow_front_fallback=plan.get('front_fallback', True))
                 router.recording_net = None
@@ -2171,7 +2311,9 @@ def run_plan(board, plan, router_factory=None):
             key = (unresolved, round(total, 3))
             if best is None or key < best[0]:
                 best = (key, index, failed_nets)
-            if unresolved == 0:
+            trial_seconds = time.monotonic() - trial_start
+            save_checkpoint(f'signal trial {index}')
+            if unresolved == 0 or cut_short or (deadline is not None and time.monotonic() > deadline):
                 break
             index += 1
         if state is not None and best is not None and best[1] != len(group_log) - 1:  # replay the best trial onto the board
@@ -2185,16 +2327,44 @@ def run_plan(board, plan, router_factory=None):
             router.end_snapshot()
         trial_log.extend(group_log)
         selected.append(group_log[best[1]]['order'] if group_log and best is not None else None)
+    save_checkpoint('signal')
+    # stranded ground pads (no escape via fitted in the fan-out): a short connection to the nearest via or plated pad of the net
+    stranded_log = []
+    router.stage = 'stranded'
+    if ground and ground.get('route_stranded') and router.stranded.get(ground_net):
+        stranded_set = set(router.stranded[ground_net])
+        # every other port of the ground net is an anchor: its escape vias (ports on the plane layer, reached through the existing
+        # via), plated pads and pre-routed vias; the nearest few are tried in turn, a failed attempt leaves no record behind
+        candidates = [p for p in router.ports.get(ground_net, []) if p not in stranded_set]
+        for port in list(router.stranded[ground_net]):
+            if over_budget('stranded'):
+                break
+            anchors = sorted(candidates, key=lambda p: (abs(p[0] - port[0]) + abs(p[1] - port[1]), p[0], p[1]))[:4]
+            routed = False
+            for anchor in anchors:
+                before = len(router.unresolved)
+                if not router.route_net(ground_net, [anchor, port], layers=tuple(range(router.nl))):
+                    routed = True
+                    break
+                del router.unresolved[before:]
+            if not routed:
+                router.unresolved.append(dict(stage='stranded', net=ground_net, ref=port[3], pad=port[4], start=(port[0], port[1], port[2]),
+                                              anchors_tried=len(anchors)))
+            stranded_log.append(dict(ref=port[3], pad=port[4], routed=routed, anchors_tried=len(anchors)))
+        save_checkpoint('stranded')
     ripup_log = []
     router.stage = 'negotiate'
-    if int(plan.get('ripup_rounds', 0)) > 0 and any(u.get('stage') == 'route' for u in router.unresolved):
+    if int(plan.get('ripup_rounds', 0)) > 0 and any(u.get('stage') == 'route' for u in router.unresolved) and not over_budget('negotiate'):
         ripup_log = router.negotiate(signal_layers if signal_layers else router.default_layers(remaining[0]) if remaining else (0,),
                                      allow_front_fallback=plan.get('front_fallback', True), rounds=int(plan['ripup_rounds']),
-                                     penalty=float(plan.get('ripup_penalty', 40.0)), protected=excluded)
+                                     penalty=float(plan.get('ripup_penalty', 40.0)), protected=excluded, deadline=deadline)
+        save_checkpoint('negotiate')
     retried = 0
     router.stage = 'retry'
-    if any(u.get('stage') == 'route' for u in router.unresolved):  # connections that became routable while later nets moved
-        retried = router.retry_unresolved(signal_layers if signal_layers else tuple(range(router.nl)), allow_front_fallback=plan.get('front_fallback', True))
+    if any(u.get('stage') == 'route' for u in router.unresolved) and not over_budget('retry'):  # connections that became routable while later nets moved
+        retried = router.retry_unresolved(signal_layers if signal_layers else tuple(range(router.nl)), allow_front_fallback=plan.get('front_fallback', True),
+                                          deadline=deadline)
+        save_checkpoint('retry')
     if plan.get('prune_vias', True):
         router.prune_unused_vias(exclude_nets=set(power) | ({ground_net} if ground_net else set()))
     beautify_report = None
@@ -2213,7 +2383,9 @@ def run_plan(board, plan, router_factory=None):
     report = router.report()
     report.update(stage='routed_candidate', seconds=round(time.monotonic() - start, 3), signal_order_trials=trial_log,
                   signal_order_selected=(selected[0] if len(selected) == 1 else selected) if selected else None, ripup_rounds=ripup_log,
-                  retried=retried)
+                  retried=retried, stranded_routing=stranded_log,
+                  time_budget=dict(seconds=budget, exceeded=bool(deadline is not None and time.monotonic() > deadline), log=budget_log) if deadline is not None else None,
+                  graphics_registered=len(router.graphics))
     if beautify_report is not None:
         report['beautify'] = beautify_report
     if plan.get('save'):

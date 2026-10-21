@@ -8,11 +8,17 @@ evidence lives under examples/dab-10kw/verification and is produced by the pipel
 from __future__ import annotations
 
 import json
+import math
 import unittest
 from pathlib import Path
 
-from automation.dab_v1 import footprints as fpt, model, parts, requirements as rq, rules
+from automation.dab_v1 import fanout_rows as fr, footprints as fpt, model, parts, requirements as rq, rules
 from automation.kicad_tools import grid_router as gr, project_footprints as pf, project_schematic as ps
+
+try:
+    import numpy as np
+except ImportError:  # pragma: no cover - numpy is a repository requirement
+    np = None
 
 try:
     import yaml  # type: ignore
@@ -217,6 +223,194 @@ class RoutingPlanTests(unittest.TestCase):
         self.assertEqual(len(pieces), 4)
         self.assertAlmostEqual(sum((x1 - x0) * (y1 - y0) for x0, y0, x1, y1 in pieces), 100 - 4)
         self.assertEqual(subtract_rects([0, 0, 10, 10], [[-1, -1, 11, 11]]), [])
+
+    def test_plan_carries_the_remediation_fields(self):
+        """The routing plan built from a regenerated floorplan record switches on the 2026-10-21 remediation: no via-in-pad,
+        stranded-ground fallback and routing, same-net row bridges as pre-routed tracks, and the optional time box."""
+        from automation.dab_v1 import routing
+        record = rq.EXAMPLE / 'pcb' / 'floorplan_primary-power.json'
+        if not record.exists():
+            self.skipTest(f'{record.name} not generated')
+        data = json.loads(record.read_text(encoding='utf-8'))
+        if 'no_via_in_pad' not in data['plan']:
+            self.skipTest('floorplan record predates the remediation')
+        nets = sorted({n for p in model.build(REQ, 'primary-power').parts for n in p['nets'].values() if n})
+        plan = routing.build_plan(REQ, 'primary-power', data, nets, None, time_budget_s=120, checkpoint=Path('x.kicad_pcb'))
+        self.assertFalse(plan['fanout']['no_via_in_pad'])  # available in the router, deliberately off for the DAB plans (remediation 2.2)
+        self.assertGreaterEqual(len(plan['fanout']['exact_lane_pads']), 100)  # exit lanes for the IC pads (remediation 2.10)
+        self.assertTrue(all(len(lane) == 3 and lane[2] > 0 for lane in plan['fanout']['exact_lane_pads']))
+        self.assertEqual(plan['fanout']['fallback_direct_nets'], ['GND_CTRL'])
+        self.assertTrue(plan['ground']['route_stranded'])
+        self.assertEqual(plan['time_budget_s'], 120.0)
+        self.assertEqual(plan['checkpoint'], 'x.kicad_pcb')
+        bridges = [t for t in plan['pre_routed']['tracks'] if 'note' in t]
+        self.assertGreaterEqual(len(bridges), 20)  # five DWN-36 modules x six same-net runs
+        self.assertTrue(all(t['width'] <= fr.BRIDGE_WIDTH_MAX for t in bridges))
+        skipped = {tuple(p) for p in plan['fanout']['skip_pads']}
+        stubbed = {(s[0], s[1]) for s in plan['fanout']['exact_stub_pads']}
+        self.assertFalse(skipped & stubbed)  # a pad is either bridged-and-skipped or stubbed, never both
+        self.assertNotIn('time_budget_s', routing.build_plan(REQ, 'primary-power', data, nets, None))
+
+
+def dwn_row(net_of, *, y=78.975, x0=92.475, pitch=0.65, pad=(0.4, 1.85)):
+    """Synthetic ProjectBoard.pads() records of one 0.65 mm pitch row (the UCC14141 DWN-36 SELV row of the DAB-V1 boards)."""
+    out = []
+    for i, net in enumerate(net_of):
+        x = x0 + i * pitch
+        out.append(dict(ref='U3', pin=str(i + 1), net=net, xy=[x, y], box=[x - pad[0] / 2, y - pad[1] / 2, x + pad[0] / 2, y + pad[1] / 2],
+                        layers=['F.Cu'], thru=False))
+    return out
+
+
+class FinePitchRowTests(unittest.TestCase):
+    """automation.dab_v1.fanout_rows: the geometric escape plan of fine-pitch rows (root cause of the 2026-10-21 fan-out and
+    route failures on the DAB-V1 boards; see docs/dab-10kw/routing-remediation.md)."""
+
+    WIDTHS = {'GNDP_AH': 0.6, '12V_BIAS_AH': 0.8, 'PG_BIAS_N': 0.3, 'BIAS_ENF': 0.3, 'PGND': 0.3}
+    FANOUT = {'GNDP_AH': 0.25, '12V_BIAS_AH': 0.25}
+    ROUTER = dict(trace=0.3, clearance=0.25, grid=0.125, eps=0.02, base_stub=0.45)
+
+    def plan(self, nets, bbox=(91.29, 67.81, 104.71, 80.19), **kw):
+        params = dict(self.ROUTER, **kw)
+        return fr.plan_rows('U3', dwn_row(nets), list(bbox), width_of=lambda n: self.WIDTHS.get(n, 0.3),
+                            fanout_width_of=lambda n: self.FANOUT.get(n, self.WIDTHS.get(n, 0.3)), **params)
+
+    def test_end_pads_of_a_long_row_escape_across_the_row(self):
+        pads = dwn_row(['A'] * 18)
+        # the courtyard of the DWN-36 is nearly square: the raw |dx| vs |dy| rule sent pins 1 and 18 sideways along the row
+        self.assertEqual(fr.pad_direction(pads[0], pads, [91.29, 67.81, 104.71, 80.19]), (0, 1))
+        self.assertEqual(fr.pad_direction(pads[-1], pads, [91.29, 67.81, 104.71, 80.19]), (0, 1))
+        self.assertEqual(fr.outward_direction((10.0, 3.0), [0, 0, 20, 4]), (0, 1))
+        self.assertEqual(fr.outward_direction((19.0, 2.0), [0, 0, 20, 4]), (1, 0))
+
+    def test_same_net_runs_are_bridged_and_get_one_stub_each(self):
+        nets = ['GNDP_AH', 'GNDP_AH', 'PG_BIAS_N', 'BIAS_ENF', 'GNDP_AH', '12V_BIAS_AH', '12V_BIAS_AH'] + ['GNDP_AH'] * 11
+        out = self.plan(nets)
+        self.assertEqual(out['warnings'], [])
+        self.assertEqual(len(out['bridges']), 3)  # pins 1-2, 6-7, 8-18
+        for bridge in out['bridges']:
+            self.assertLessEqual(bridge['width'], 0.3)
+            self.assertLess(bridge['a'][1], 79.9)  # inside the lands, in their outer half
+            self.assertGreater(bridge['a'][1], 78.975)
+        stubs = {s[1]: s for s in out['stubs']}
+        self.assertEqual(len(stubs), 6)  # six runs: GND 1-2, PG, ENF, GND 5, 12V 6-7, GND 8-18
+        self.assertEqual(len(out['skip_pads']), 18 - 6)
+        self.assertEqual(stubs['1'][4], 0.325)   # even run: the stub sits on the bridge between the two lands
+        self.assertEqual(stubs['6'][4], 0.325)
+        self.assertEqual(stubs['13'][4], 0.0)    # odd run: the middle land
+        self.assertTrue(all(s[3] == [0, 1] for s in out['stubs']))
+
+    def test_stub_lengths_follow_the_occupancy_model(self):
+        nets = ['GNDP_AH', 'GNDP_AH', 'PG_BIAS_N', 'BIAS_ENF', 'GNDP_AH', '12V_BIAS_AH', '12V_BIAS_AH'] + ['GNDP_AH'] * 11
+        stubs = {s[1]: s for s in self.plan(nets)['stubs']}
+        # narrow nets: the port just clears the neighbouring lands' halo band (clearance + trace/2 = 0.4 mm)
+        self.assertEqual(stubs['3'][2], 0.5)
+        self.assertEqual(stubs['4'][2], 0.5)
+        # a 0.6 mm net escaping alone between a 0.3 mm stub and the 12V stub has to pass the neighbour's stub end before it widens
+        self.assertGreater(stubs['5'][2], stubs['4'][2] + 0.5)
+        # a stub on a bridge between two same-net lands sees its nearest foreign stub 1.5 pitches away: no extra length
+        self.assertLess(stubs['6'][2], stubs['5'][2])
+        self.assertGreaterEqual(stubs['6'][2], 0.25 + 0.15 + fr.dilation_mm(0.8, 0.3, 0.125) + 0.1 - 1e-9)
+        # the comb geometry is consistent: a wide net's port is outside the dilated halo of every foreign stub
+        for s in self.plan(nets)['stubs']:
+            net = nets[int(s[1]) - 1]
+            if self.WIDTHS[net] <= 0.3:
+                continue
+            port = (92.475 + (int(s[1]) - 1) * 0.65 + s[4], 79.9 + s[2])
+            for t in self.plan(nets)['stubs']:
+                other = nets[int(t[1]) - 1]
+                if other == net:
+                    continue
+                end = (92.475 + (int(t[1]) - 1) * 0.65 + t[4], 79.9 + t[2] + self.FANOUT.get(other, self.WIDTHS[other]) / 2)
+                need = fr.halo_mm(self.FANOUT.get(other, self.WIDTHS[other]), 0.3, 0.25, 0.02) + fr.dilation_mm(self.WIDTHS[net], 0.3, 0.125)
+                lateral = abs(port[0] - end[0])
+                if lateral < need:
+                    self.assertGreaterEqual(math.hypot(lateral, port[1] - end[1]), need - 1e-6, (s, t))
+
+    def test_exit_lanes_reach_the_fan_out_band_and_wide_stubs_end_beyond_them(self):
+        nets = ['GNDP_AH', 'GNDP_AH', 'PG_BIAS_N', 'BIAS_ENF', 'GNDP_AH', '12V_BIAS_AH', '12V_BIAS_AH'] + ['GNDP_AH'] * 11
+        widths = dict(self.WIDTHS, GNDP_AH=0.5, **{'12V_BIAS_AH': 0.5})
+        out = fr.plan_rows('U3', dwn_row(nets), [91.29, 67.81, 104.71, 80.19], width_of=lambda n: widths.get(n, 0.3),
+                           fanout_width_of=lambda n: self.FANOUT.get(n, widths.get(n, 0.3)), band_mm=3.0, **self.ROUTER)
+        stubs = {s[1]: s for s in out['stubs']}
+        lanes = {l[1]: l[2] for l in out['lanes']}
+        self.assertEqual(out['rows'][0]['lane_end'], 2.0)
+        for pin in ('3', '4'):  # narrow nets: 0.5 mm stub plus a lane to the end of the band
+            self.assertAlmostEqual(stubs[pin][2] + lanes[pin], 2.0, places=6)
+        # the lone wide GND pin ends beyond the neighbouring lane end, so its 0.5 mm track starts where no lane is alongside
+        self.assertGreater(stubs['5'][2], 2.0)
+        self.assertNotIn('5', lanes)
+        # critical nets keep the pad port and get a lane from the land to the band end
+        crit = fr.plan_rows('U2', dwn_row(['G_AH', 'OUTL_AH', 'VDD_AH'], pitch=1.27, pad=(0.6, 1.65)), [0, 0, 20, 20], width_of=lambda n: 0.6,
+                            fanout_width_of=lambda n: 0.25, critical_nets={'G_AH', 'OUTL_AH'}, band_mm=3.0, **self.ROUTER)
+        self.assertEqual([s[1] for s in crit['stubs']], ['3'])
+        self.assertEqual({l[1]: l[2] for l in crit['lanes']}['1'], 2.0)
+        self.assertAlmostEqual({l[1]: l[2] for l in crit['lanes']}['3'] + crit['stubs'][0][2], 2.0, places=6)
+
+    def test_pour_nets_are_bridged_but_not_stubbed_and_coarse_rows_keep_plain_stubs(self):
+        out = self.plan(['PGND', 'PGND', 'PGND', 'BIAS_ENF'] + ['PGND'] * 14, pour_nets={'PGND'})
+        self.assertEqual(len(out['bridges']), 2)
+        self.assertEqual([s[1] for s in out['stubs']], ['4'])
+        self.assertEqual(out['skip_pads'], [])  # pour-net pads are bridged and keep the fan-out's via escape (no enclosed pour pockets)
+        coarse = fr.plan_rows('U2', dwn_row(['A', 'B', 'C', 'D'], pitch=1.27, pad=(0.6, 1.65)), [0, 0, 20, 20], width_of=lambda n: 0.3,
+                              fanout_width_of=lambda n: 0.3, **self.ROUTER)
+        self.assertEqual(coarse['bridges'], [])
+        self.assertEqual([s[2] for s in coarse['stubs']], [0.45] * 4)
+        ground = fr.plan_rows('U9', dwn_row(['GND_CTRL', 'X', 'GND_CTRL', 'GND_CTRL']), [0, 0, 20, 20], width_of=lambda n: 0.3,
+                              fanout_width_of=lambda n: 0.25, exact_via_nets={'GND_CTRL'}, **self.ROUTER)
+        self.assertEqual(ground['exact_via_pads'], [['U9', '1'], ['U9', '3']])
+
+
+@unittest.skipIf(np is None, 'numpy unavailable')
+class ExactStubEndTests(unittest.TestCase):
+    """Router._exact_end_ok / _claim_port_cell without pcbnew: a bare Router around a Grid with hand-made pad records."""
+
+    def router(self):
+        r = gr.Router.__new__(gr.Router)
+        r.grid = gr.Grid(81, 41, 1, grid=0.125, margin_cells=2)
+        r.trace, r.clearance = 0.3, 0.25
+        r.pad_records = []
+        return r
+
+    def pad(self, r, code, box, layers=(0,), thru=False):
+        rec = dict(code=code, box=list(box), layers=list(layers), thru=thru, net=f'N{code}')
+        r.pad_records.append(rec)
+        for layer in layers:
+            r.grid.box(r.grid.occ[layer], box, r.clearance + r.trace / 2, code, alt=r.grid.alt[layer])
+        return rec
+
+    def test_soft_conflict_cell_is_accepted_only_with_real_clearance(self):
+        r = self.router()
+        # two 0.40 mm lands at 0.65 mm pitch: their 0.4 mm halos overlap in the gap and beyond the land ends
+        a = self.pad(r, 1, [4.0, 1.0, 4.4, 2.85])
+        b = self.pad(r, 2, [4.65, 1.0, 5.05, 2.85])
+        end = (4.2, 2.85 + 0.35)  # the 0.35 mm stub end of land a, below the row
+        cell = r.grid.to_grid(*end)
+        self.assertEqual(int(r.grid.occ[0, cell[1], cell[0]]), -2)
+        self.assertTrue(r._exact_end_ok(a, 0, end, cell, 0.25))   # 0.25 mm stub: 0.45 mm from land b >= clearance + width/2 = 0.375
+        r._claim_port_cell(0, cell[0], cell[1], 1)
+        self.assertEqual(int(r.grid.occ[0, cell[1], cell[0]]), 1)
+        # a stub too wide for the row is refused: the end point is 0.57 mm from land b, a 0.7 mm stub needs 0.25 + 0.35
+        r.grid.occ[0, cell[1], cell[0]] = -2
+        self.assertFalse(r._exact_end_ok(a, 0, end, cell, 0.7))
+        # hard blocks and foreign copper always refuse
+        r.grid.occ[0, cell[1], cell[0]] = -1
+        self.assertFalse(r._exact_end_ok(a, 0, end, cell, 0.25))
+        r.grid.occ[0, cell[1], cell[0]] = 2
+        self.assertFalse(r._exact_end_ok(a, 0, end, cell, 0.25))
+        self.assertFalse(r._exact_end_ok(a, 0, (0.0, 0.0), (0, 0), 0.25))  # outside the routable area
+
+
+class PlanValidationTests(unittest.TestCase):
+    def test_time_budget_and_checkpoint_keys(self):
+        base = dict(board=dict(width=10, height=10), layers=['F.Cu'])
+        self.assertEqual(gr.validate_plan(dict(base, time_budget_s=60, checkpoint='x.kicad_pcb'))['time_budget_s'], 60)
+        with self.assertRaises(ValueError):
+            gr.validate_plan(dict(base, time_budget_s=-1))
+        with self.assertRaises(ValueError):
+            gr.validate_plan(dict(base, checkpoint=7))
+        with self.assertRaises(ValueError):
+            gr.validate_plan(dict(base, unknown_key=1))
 
 
 if __name__ == '__main__':

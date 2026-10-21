@@ -31,7 +31,7 @@ def kicad_python():
     return candidate
 
 
-def run_stage(board: str, stage: str, verify_stages: str) -> dict:
+def run_stage(board: str, stage: str, verify_stages: str, time_budget: float = 0.0) -> dict:
     start = time.monotonic()
     if stage == 'schematic':
         from automation.dab_v1 import schematics
@@ -44,8 +44,11 @@ def run_stage(board: str, stage: str, verify_stages: str) -> dict:
         ok = True
     elif stage in ('floorplan', 'route'):
         module = 'automation.dab_v1.floorplan' if stage == 'floorplan' else 'automation.dab_v1.routing'
-        completed = subprocess.run([str(kicad_python()), '-m', module, '--board', board], cwd=str(rq.ROOT), capture_output=True, text=True,
-                                   encoding='utf-8', errors='replace', timeout=7200)
+        command = [str(kicad_python()), '-m', module, '--board', board]
+        if stage == 'route' and time_budget > 0:
+            command += ['--time-budget', str(time_budget)]  # the router time-boxes itself and still pours, fills and saves
+        completed = subprocess.run(command, cwd=str(rq.ROOT), capture_output=True, text=True, encoding='utf-8', errors='replace',
+                                   timeout=(time_budget + 2400) if (stage == 'route' and time_budget > 0) else 7200)
         result = dict(exit_code=completed.returncode, tail=(completed.stdout + completed.stderr)[-1500:])
         ok = completed.returncode == 0
     elif stage == 'verify':
@@ -63,11 +66,12 @@ def main(argv=None) -> int:
     parser.add_argument('--board', choices=rq.BOARDS, required=True)
     parser.add_argument('--stages', default=','.join(STAGES))
     parser.add_argument('--verify-stages', default='erc,drc,export,netlist,quality,layout,islands')
+    parser.add_argument('--time-budget', type=float, default=0.0, help='router time box in seconds (0 = unlimited); unrouted nets are reported, the board is still saved')
     args = parser.parse_args(argv)
-    log = dict(board=args.board, started_utc=datetime.now(timezone.utc).isoformat(), stages=[])
+    log = dict(board=args.board, started_utc=datetime.now(timezone.utc).isoformat(), stages=[], time_budget_s=args.time_budget)
     worst = 0
     for stage in args.stages.split(','):
-        entry = run_stage(args.board, stage, args.verify_stages)
+        entry = run_stage(args.board, stage, args.verify_stages, args.time_budget)
         log['stages'].append(entry)
         print(json.dumps({k: v for k, v in entry.items() if k != 'result'}), flush=True)
         if not entry['ok']:

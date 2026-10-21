@@ -28,8 +28,13 @@ def first_match(net: str, table: dict, default=None):
     return default
 
 
-def build_plan(req, board: str, plan_record: dict, nets: list, save_path: Path | None) -> dict:
-    """run_plan dictionary for one board (pure function of the requirement files and the floorplan record)."""
+def build_plan(req, board: str, plan_record: dict, nets: list, save_path: Path | None, *, time_budget_s: float = 0.0,
+               checkpoint: Path | None = None) -> dict:
+    """run_plan dictionary for one board (pure function of the requirement files and the floorplan record).
+
+    ``time_budget_s`` > 0 time-boxes the router (unrouted nets are reported, the board is still poured, filled and saved) and
+    ``checkpoint`` names a board file saved after every router stage so that an interrupted run keeps its progress.
+    """
     cfg = req.board(board)
     rp = req.routing[board]
     copper = plan_record['plan']
@@ -66,18 +71,24 @@ def build_plan(req, board: str, plan_record: dict, nets: list, save_path: Path |
                 via=[float(v) for v in rp['via_mm']], hole_clearance=float(cfg['min_hole_clearance_mm']),
                 net_rules=net_rules, keepouts=copper['keepouts'], critical=critical, critical_layers=list(rp.get('critical_layers', [])),
                 power=power, fanout=dict(direct_nets=direct, exact_stub_pads=copper['exact_stub_pads'], direct_lane_mm=float(rp.get('direct_lane_mm', 0.0)),
-                                         skip_pads=copper.get('skip_pads', [])),
+                                         skip_pads=copper.get('skip_pads', []), exact_via_pads=copper.get('exact_via_pads', []),
+                                         exact_lane_pads=copper.get('exact_lane_pads', []),
+                                         fallback_direct_nets=list(copper.get('fallback_direct_nets', [])), no_via_in_pad=bool(copper.get('no_via_in_pad', False))),
                 pre_routed=copper.get('pre_routed', dict(tracks=[], vias=[])),
                 signal_first=signal_first, signal_order=signal_first, exclude_nets=[], front_fallback=True,
-                ground=dict(copper['ground']), prune_vias=bool(rp.get('prune_vias', True)), fill=bool(rp.get('fill', True)),
+                ground=dict(copper['ground'], route_stranded=True), prune_vias=bool(rp.get('prune_vias', True)), fill=bool(rp.get('fill', True)),
                 max_nodes=int(rp['max_nodes']), signal_order_trials=int(rp.get('signal_order_trials', 1)), ripup_rounds=int(rp.get('ripup_rounds', 0)),
                 style=dict(rp.get('style', {})), strict=False)
     if save_path is not None:
         plan['save'] = str(save_path)
+    if time_budget_s and float(time_budget_s) > 0:
+        plan['time_budget_s'] = float(time_budget_s)
+    if checkpoint is not None:
+        plan['checkpoint'] = str(checkpoint)
     return validate_plan(plan)
 
 
-def route(req, board: str) -> dict:
+def route(req, board: str, time_budget_s: float = 0.0) -> dict:
     import pcbnew as pcb
     cfg = req.board(board)
     directory = rq.EXAMPLE / board
@@ -88,9 +99,12 @@ def route(req, board: str) -> dict:
     for item in list(pcb_board.GetTracks()):
         pcb_board.Remove(item)
     for zone in list(pcb_board.Zones()):
-        pcb_board.Remove(zone)
+        if zone.GetParentFootprint() is None:  # footprint rule areas (heat-sink keep-outs) belong to the placement
+            pcb_board.Remove(zone)
     nets = sorted(n.GetNetname() for n in pcb_board.GetNetInfo().NetsByNetcode().values() if n.GetNetCode())
-    plan = build_plan(req, board, record, nets, board_path)
+    checkpoint = rq.ROOT / '.aipe' / 'dab' / 'checkpoints' / f'{cfg["name"]}.kicad_pcb'
+    checkpoint.parent.mkdir(parents=True, exist_ok=True)
+    plan = build_plan(req, board, record, nets, board_path, time_budget_s=time_budget_s, checkpoint=checkpoint)
     save_json(PCB_DIR / f'routing_plan_{board}.json', plan)
     factory = None
     if cfg['side'] != 'control':
@@ -100,16 +114,21 @@ def route(req, board: str) -> dict:
     report = run_plan(pcb_board, plan, router_factory=factory)
     report['wall_seconds'] = round(time.monotonic() - start, 1)
     report['board'] = board
+    report['escape_rows'] = record['plan'].get('escape_rows', [])
+    report['escape_warnings'] = record['plan'].get('escape_warnings', [])
     save_json(PCB_DIR / f'routing_report_{board}.json', report)
-    print(f'{board}: tracks {report["tracks"]} vias {report["vias"]} zones {report["zones"]} unresolved {len(report["unresolved"])} in {report["wall_seconds"]} s', flush=True)
+    budget = report.get('time_budget') or {}
+    print(f'{board}: tracks {report["tracks"]} vias {report["vias"]} zones {report["zones"]} unresolved {len(report["unresolved"])} in {report["wall_seconds"]} s'
+          + (' (time budget exceeded: see report.time_budget)' if budget.get('exceeded') else ''), flush=True)
     return report
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     parser.add_argument('--board', choices=rq.BOARDS, required=True)
+    parser.add_argument('--time-budget', type=float, default=0.0, help='seconds after which the router stops routing nets, still pours, fills and saves (0 = unlimited)')
     args = parser.parse_args(argv)
-    report = route(rq.load(), args.board)
+    report = route(rq.load(), args.board, time_budget_s=args.time_budget)
     return 1 if report['unresolved'] else 0
 
 

@@ -11,19 +11,21 @@ checkers.  Placement screening is geometric; native DRC remains mandatory.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import math
 from pathlib import Path
 
-from automation.dab_v1 import model as dab_model, requirements as rq, rules
+from automation.dab_v1 import fanout_rows as fr, model as dab_model, requirements as rq, rules
 from automation.kicad_tools.project_board import ProjectBoard, box_distance, place_in_region
 
 PCB_DIR = rq.EXAMPLE / 'pcb'
+PLACEMENT_DEFAULTS = dict(part_gap_mm=0.25, ic_stub_reserve_mm=0.0)
 
 
 def save_json(path: Path, data) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, default=str) + '\n', encoding='utf-8')
+    path.write_text(json.dumps(data, indent=2, default=str) + '\n', encoding='utf-8', newline='\n')  # LF on every platform (text=auto eol=lf)
 
 
 def rect(x0, y0, x1, y1):
@@ -86,6 +88,65 @@ class Placer:
         self.pair_gap = lambda a, z: pair(a, z)[0]
         self.copper_gap = lambda a, z: pair(a, z)[0]
         self.log = []
+        self.placement = {**PLACEMENT_DEFAULTS, **dict(self.fp.get('placement') or {})}
+        self.reserved = {}  # ref -> true courtyard bbox while an inflated one (stub reserve) is in force during region filling
+
+    # ----- stub reserve around ICs ---------------------------------------------------------------
+    def reserve(self, ref):
+        """Inflate the recorded courtyard of a placed IC by ``placement.ic_stub_reserve_mm`` on the sides that carry pad rows while
+        the regions are filled: the fan-out stubs (up to 1.3 mm beyond the lands on the fine-pitch rows), the first full-width
+        track segments and the vias of the gate-loop nets need a free band in front of every pin row, which the courtyard alone
+        does not reserve - the 2026-10-21 boards had 1210 capacitors placed right under the driver's logic pins (sealing the 3V3
+        and DRV_RSTF ports) and, with a plain courtyard gap, a wall of decoupling capacitors above the HV row that sealed the
+        gate pin.  Sides without pads keep the courtyard.  ``release_reserves`` restores the true boxes."""
+        margin = float(self.placement['ic_stub_reserve_mm'])
+        if margin <= 0 or ref in self.reserved or ref not in self.b.placed:
+            return
+        box = self.b.placed[ref]['bbox']
+        pads = [p for p in self.b.pads() if p['ref'] == ref]
+        sides = {row['direction'] for row in fr.group_rows(pads, box)} or {(0, 1), (0, -1), (1, 0), (-1, 0)}
+        self.reserved[ref] = list(box)
+        self.b.placed[ref]['bbox'] = [box[0] - (margin if (-1, 0) in sides else 0.0), box[1] - (margin if (0, -1) in sides else 0.0),
+                                      box[2] + (margin if (1, 0) in sides else 0.0), box[3] + (margin if (0, 1) in sides else 0.0)]
+
+    def release_reserves(self):
+        for ref, box in self.reserved.items():
+            if ref in self.b.placed:
+                self.b.placed[ref]['bbox'] = box
+        self.reserved = {}
+
+    def is_ic_like(self, part) -> bool:
+        return part['kind'] in ('IC', 'DSP') or (part['kind'] != 'J' and sum(1 for n in part['nets']) >= 8)
+
+    def ic_escapes(self, pour_nets) -> dict:
+        """Fan-out plan of every IC: fine-pitch rows through fanout_rows.plan_rows (bridges, one stub per same-net run, stub
+        lengths from the occupancy model), other rows with plain exact stubs of ``exact_stub_mm``; pour-connected nets get no
+        stub.  Pads of the ground net in fine-pitch rows get a via at the stub end when it fits (``exact_via_pads``)."""
+        rp = self.req.routing[self.board_key]
+        width_of = lambda net: float(fr.first_match(net, rp.get('widths_mm', {}), rp['trace_mm']))
+        fan_of = lambda net: float(fr.first_match(net, rp.get('fanout_widths_mm', {}), width_of(net)))
+        ground = self.fp['selv']['ground_plane'] if self.cfg['side'] != 'control' else self.fp['ground_plane']
+        ground_net = 'GND_CTRL'
+        nets = {n for p in self.parts for n in p['nets'].values() if n}
+        critical = {n for pat in rp.get('critical_patterns', []) for n in nets if fnmatch.fnmatchcase(n, pat) and n not in rp.get('power_nets', [])}
+        out = dict(stubs=[], bridges=[], lanes=[], skip_pads=[], exact_via_pads=[], rows=[], warnings=[])
+        pads_by_ref = {}
+        for p in self.b.pads():
+            pads_by_ref.setdefault(p['ref'], []).append(p)
+        for ref, part in sorted(self.by_ref.items()):
+            if ref not in self.b.fp or ref not in self.b.placed:
+                continue
+            smd = [p for p in pads_by_ref.get(ref, []) if not p['thru']]
+            if part['kind'] != 'IC' and not (part['kind'] == 'J' and len(smd) >= 20):  # ICs and fine-pitch card-edge sockets
+                continue
+            plan = fr.plan_rows(ref, pads_by_ref.get(ref, []), self.b.placed[ref]['bbox'], width_of=width_of, fanout_width_of=fan_of,
+                                trace=float(rp['trace_mm']), clearance=float(rp['clearance_mm']), grid=float(rp['grid_mm']),
+                                eps=float(rp.get('style', {}).get('eps', 0.01)), base_stub=float(rp['exact_stub_mm']),
+                                pour_nets=set(pour_nets) - {ground_net}, exact_via_nets={ground_net}, critical_nets=critical,
+                                fine_pitch_mm=float(rp.get('fine_pitch_mm', 0.8)), band_mm=float(self.placement['ic_stub_reserve_mm']))
+            for key in out:
+                out[key].extend(plan[key])
+        return out
 
     # ----- geometry helpers --------------------------------------------------------------------
     def pads_of(self, ref):
@@ -168,14 +229,19 @@ class Placer:
                     result.append((pin, tuple(self.b.pcb.ToMM(q.GetPosition())), w / len(items)))
         return result
 
-    def fill_region(self, refs, region, *, side='F', step=.25, gap=.25, extra_targets=None, label=''):
-        """Place refs (bypass capacitors first, then large parts) into a region with insulation-aware pad gaps."""
+    def fill_region(self, refs, region, *, side='F', step=.25, gap=None, extra_targets=None, label=''):
+        """Place refs (ICs first, then bypass capacitors, then large parts) into a region with insulation-aware pad gaps.
+
+        ``gap`` defaults to ``placement.part_gap_mm`` of the floorplan file: the courtyard-to-courtyard distance that leaves
+        room for the widest routed track plus two clearances between neighbouring pads (0.6 mm for the 0.6 mm gate nets).
+        """
+        gap = float(self.placement['part_gap_mm']) if gap is None else float(gap)
         pending = [self.by_ref[r] for r in refs if r in self.b.fp and r not in self.b.placed]
 
         def rank(p):
             box = self.b.box(p['ref'])
             area = (box[2] - box[0]) * (box[3] - box[1])
-            return (0 if p['kind'] == 'C' and p['value'].startswith('100n') else 1 if area > 12 else 2, -area, p['ref'])
+            return (0 if self.is_ic_like(p) else 1 if p['kind'] == 'C' and p['value'].startswith('100n') else 2 if area > 12 else 3, -area, p['ref'])
         pending.sort(key=rank)
         for p in pending:
             targets = self.anchors(p) + list((extra_targets or {}).get(p['ref'], []))
@@ -184,6 +250,8 @@ class Placer:
             except ValueError as exc:
                 self.log.append(dict(ref=p['ref'], region=region, label=label, error=str(exc)[:200]))
                 raise
+            if self.is_ic_like(p):
+                self.reserve(p['ref'])
         return len(pending)
 
     def tag_of(self, part):
@@ -257,6 +325,8 @@ class Placer:
         hall_in = 'XF_B' if side == 'primary' else 'SW_B'
         self.orient(barrier['hall'], rb['barrier_ics']['U_HALL'], ic_y,
                     lambda pads: self.hv_pins_up({'1', '2'})(pads) and pads['1'][0][0] > pads['2'][0][0])
+        for ref in [v['driver'] for v in islands.values()] + [v['bias'] for v in islands.values()] + list(barrier.values()) + [sbias]:
+            self.reserve(ref)  # keep the region fills clear of the fan-out stubs and the first track segment
         # harness header horizontal with pin 1 on the left, mounting holes
         hr = fp['selv']['harness']
         self.orient(hr['ref'], hr['x'], hr['y'], self.pin_left('1'), angles=(hr['angle'], (hr['angle'] + 180) % 360, 0, 180))
@@ -358,8 +428,11 @@ class Placer:
         else:
             add('SW_B', 'B.Cu', rect(feed[0], feed[1], feed[2], xf[3]), 3)
             add('SW_B', 'F.Cu', rect(feed[0], 44.0, feed[2], xf[3]), 3)
-        # AC_B: Hall-sensor output bar to the terminal (F.Cu and In1.Cu)
-        riser = rect(rb['ac_b_riser']['x'][0], rb['ac_b_riser']['y'][0], rb['ac_b_riser']['x'][1], rb['ac_b_riser']['y'][1])
+        # AC_B: Hall-sensor output bar to the terminal (F.Cu and In1.Cu); the bar covers the whole press-in terminal footprint, not
+        # only its centre row - the 2026-10-21 boards left three of J4's nine lands outside the pour
+        j4 = self.b.placed[rb['ac_b_terminal']['ref']]['bbox']
+        riser = rect(min(rb['ac_b_riser']['x'][0], j4[0] + 0.5), min(rb['ac_b_riser']['y'][0], j4[1] + 0.5),
+                     max(rb['ac_b_riser']['x'][1], j4[2] - 0.5), rb['ac_b_riser']['y'][1])
         for layer in ('F.Cu', 'In1.Cu'):
             add('AC_B', layer, riser, 3)
         # laminated bus planes under the device row and the film block, excluding the switch-node copper
@@ -376,9 +449,12 @@ class Placer:
         for r in subtract_rects(base, excl) + subtract_rects(film_block, [base]):
             add('BUS_P', 'In1.Cu', r, 1)
             add('PGND', 'In2.Cu', r, 1)
-        ic_boxes = [self.b.placed[r]['bbox'] for r in (barrier['vsense'], barrier.get('vmod'), sbias) if r]
+        ic_boxes = [self.reserved.get(r) or self.b.placed[r]['bbox'] for r in (barrier['vsense'], barrier.get('vmod'), sbias) if r]
         sense_x1 = max(box[2] for box in ic_boxes) + 1.0
-        add('PGND', 'In2.Cu', rect(rb['ladder_region'][0] - 2, rb['ladder_region'][1], sense_x1, fp['barrier']['hv_max_y']), 1)
+        # sense-region planes start at the device-row plane edge so that they merge with the laminated planes (a 2 mm gap left the
+        # PGND sense pour and the ladder's BUS_P pad as islands); the BUS_P finger on In1.Cu under the ladder faces the PGND pour on In2.Cu
+        add('PGND', 'In2.Cu', rect(rb['ladder_region'][0] - 2, pyy1, sense_x1, fp['barrier']['hv_max_y']), 1)
+        add('BUS_P', 'In1.Cu', rect(rb['ladder_region'][0] - 2, pyy1, rb['ladder_region'][2], fp['barrier']['hv_max_y']), 1)
         # F.Cu / B.Cu PGND pours connect the 0.65 mm pitch VEE pins of the sensing bias module and the amplifier GND1 pins
         sense_pour = rect(rb['sense_iso_region'][0], rb['sense_iso_region'][1], sense_x1, fp['barrier']['hv_max_y'])
         amp_pour = rect(rb['ladder_region'][0] - 2, fp['barrier']['hv_max_y'] - 6.0, rb['sense_iso_region'][0], fp['barrier']['hv_max_y'])
@@ -392,11 +468,8 @@ class Placer:
         for r in hs_bases:
             keepouts.append(dict(layer='F.Cu', rect=r, vias=True))
             keepouts.append(dict(layer=None, rect=rect(r[0], r[1], r[2], r[3]), vias=True, zone=True))
-        # no vias within 1 mm of the net-tie star pads (KiCad hole-clearance treats net-tie pads as foreign copper)
-        for ref, part in self.by_ref.items():
-            if part['footprint'].startswith('NetTie') and ref in self.b.placed:
-                x, y = self.b.placed[ref]['x'], self.b.placed[ref]['y']
-                keepouts.append(dict(layer=None, rect=rect(x - 1.3, y - 1.0, x + 1.3, y + 1.0), vias=True, zone=True))
+        # (net-tie bridges: the router registers netless footprint copper itself and refuses via-in-pad; a keep-out box here
+        # would also block the tracks that must reach the tie's pads)
         # per-net routing regions
         regions = {}
         selv = [rect(1.0, fp['barrier']['selv_min_y'], W - 1.0, H - 1.0)]
@@ -419,28 +492,15 @@ class Placer:
         for net in {n for p in self.parts for n in p['nets'].values() if n} - set(self.domains):
             if net != 'GND_CTRL':
                 regions[net] = {'F.Cu': selv, 'In2.Cu': selv, 'B.Cu': selv}
-        # fine-pitch rows: exact outward stubs for every SMD IC pad of a routed net (pour nets connect through the pours
-        # or through the escape vias of the default fan-out)
+        # IC fan-out: fine-pitch rows (bridges, one stub per same-net run, computed stub lengths) and plain exact stubs elsewhere;
+        # pour nets connect through the pours or through the escape vias of the default fan-out
         pour_nets = set(zones) | {ground['net']}
-        stubs = []
-        for ref, part in self.by_ref.items():
-            if part['kind'] != 'IC' or ref not in self.b.fp:
-                continue
-            cx, cy = self.b.pcb.ToMM(self.b.fp[ref].GetPosition())
-            for q in self.b.fp[ref].Pads():
-                if q.GetAttribute() != self.b.pcb.PAD_ATTRIB_SMD or not q.GetNumber() or not q.GetNetname() or q.GetNetname() in pour_nets:
-                    continue
-                x, y = self.b.pcb.ToMM(q.GetPosition())
-                if abs(y - cy) > abs(x - cx):
-                    direction = (0, 1 if y > cy else -1)
-                else:
-                    direction = (1 if x > cx else -1, 0)
-                stubs.append([ref, q.GetNumber(), self.req.routing[self.board_key]['exact_stub_mm'], list(direction)])
+        escapes = self.ic_escapes(pour_nets)
         # DC-link ceramics: one deterministic via below each pad (clear of the other electrode and of the DESAT diodes),
         # joined to the pad by a short stub; the laminated planes connect the vias
         hf = [p['ref'] for p in self.parts if self.groups.get(p['ref']) == 'dc_link' and p['footprint'].startswith('Capacitor_SMD')]
         via_d, via_drill = self.req.board(self.board_key)['via_mm']
-        pre_tracks, pre_vias, skip_pads = [], [], []
+        pre_tracks, pre_vias, skip_pads = list(escapes['bridges']), [], list(escapes['skip_pads'])
         drop = dr['hf_cap_band_y'][1] + via_d / 2 + 0.3
         for ref in hf:
             for q in self.b.fp[ref].Pads():
@@ -449,7 +509,9 @@ class Placer:
                 pre_tracks.append(dict(net=net, layer='F.Cu', a=[round(x, 3), round(y, 3)], b=[round(x, 3), round(drop, 3)], width=0.3))  # 0.5 left 3.95 mm to the other electrode (4.0 mm rule)
                 pre_vias.append(dict(net=net, xy=[round(x, 3), round(drop, 3)], diameter=via_d, drill=via_drill))
                 skip_pads.append([ref, q.GetNumber()])
-        return dict(zones=zones, ground=ground, keepouts=keepouts, regions=regions, exact_stub_pads=stubs,
+        return dict(zones=zones, ground=ground, keepouts=keepouts, regions=regions, exact_stub_pads=escapes['stubs'],
+                    exact_via_pads=escapes['exact_via_pads'], exact_lane_pads=escapes['lanes'], escape_rows=escapes['rows'], escape_warnings=escapes['warnings'],
+                    fallback_direct_nets=[ground['net']], no_via_in_pad=False,
                     pre_routed=dict(tracks=pre_tracks, vias=pre_vias), skip_pads=skip_pads,
                     heatsink_bases=hs_bases, barrier=fp['barrier'])
 
@@ -480,7 +542,7 @@ class Placer:
             by_region.setdefault(region, []).append(p['ref'])
         for region in order:
             refs = by_region.pop(region, [])
-            self.fill_region(refs, regions[region], label=region, step=.25, gap=.25)
+            self.fill_region(refs, regions[region], label=region, step=.25)
         if by_region:
             raise ValueError(f'regions without an order entry: {sorted(by_region)}')
         missing = [r for r in b.fp if r not in b.placed]
@@ -488,20 +550,11 @@ class Placer:
             raise ValueError(f'unplaced parts: {missing}')
         W, H = self.cfg['size_mm']
         gp = fp['ground_plane']
+        escapes = self.ic_escapes({'GND_CTRL'})
         plan = dict(zones={}, ground=dict(net='GND_CTRL', layers=[gp['layer']], polygon=rect_poly(rect(gp['x'][0], gp['y'][0], gp['x'][1], gp['y'][1])), priority=0, clearance=0.2),
-                    keepouts=[], regions={}, exact_stub_pads=[], pre_routed=dict(tracks=[], vias=[]), skip_pads=[], heatsink_bases=[], barrier=None)
-        stubs = []
-        for ref, part in self.by_ref.items():
-            if part['kind'] != 'IC' or ref not in b.fp:
-                continue
-            cx, cy = b.pcb.ToMM(b.fp[ref].GetPosition())
-            for q in b.fp[ref].Pads():
-                if q.GetAttribute() != b.pcb.PAD_ATTRIB_SMD or not q.GetNumber() or not q.GetNetname() or q.GetNetname() == 'GND_CTRL':
-                    continue
-                x, y = b.pcb.ToMM(q.GetPosition())
-                direction = (0, 1 if y > cy else -1) if abs(y - cy) > abs(x - cx) else (1 if x > cx else -1, 0)
-                stubs.append([ref, q.GetNumber(), self.req.routing['control']['exact_stub_mm'], list(direction)])
-        plan['exact_stub_pads'] = stubs
+                    keepouts=[], regions={}, exact_stub_pads=escapes['stubs'], exact_via_pads=escapes['exact_via_pads'], exact_lane_pads=escapes['lanes'], escape_rows=escapes['rows'],
+                    escape_warnings=escapes['warnings'], fallback_direct_nets=['GND_CTRL'], no_via_in_pad=False,
+                    pre_routed=dict(tracks=escapes['bridges'], vias=[]), skip_pads=escapes['skip_pads'], heatsink_bases=[], barrier=None)
         b.label(f'DAB-V1 CONTROL - {self.cfg["title"].split(" - ")[-1]}', (80, 2.5), size=1.0)
         b.label('NOT QUALIFIED', (151, 112), size=0.8)
         return plan
@@ -513,9 +566,10 @@ class Placer:
         self.b.label('REINFORCED BARRIER BAND (8 mm reference, to be reviewed) - NO COPPER', (36, 74), size=0.8)
 
     def finish(self, plan: dict) -> Path:
+        self.release_reserves()
         path = self.b.save()
         record = dict(board=self.board_key, project=self.name, generation=rq.GENERATION, outline_mm=self.cfg['size_mm'], layers=self.cfg['layers'],
-                      placements=self.b.placed, pads=self.b.pads(), plan=plan, placement_log=self.log,
+                      placements=self.b.placed, pads=self.b.pads(), plan=plan, placement_log=self.log, placement_parameters=self.placement,
                       note='Placement is geometric (courtyards, pad boxes, insulation pair gaps); native DRC decides.')
         save_json(PCB_DIR / f'floorplan_{self.board_key}.json', record)
         return path

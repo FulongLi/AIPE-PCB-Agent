@@ -50,4 +50,7 @@ group_regions:
   harnesses: harness_filters
   indicators: indicators
 ground_plane: {x: [2.0, 158.0], y: [2.0, 118.0], layer: In1.Cu}
+placement:
+  part_gap_mm: 0.4          # courtyard-to-courtyard gap in the filled regions (0.2 mm tracks, 0.2 mm clearance)
+  ic_stub_reserve_mm: 2.0   # free band in front of every IC pin row: 0.45 mm stubs, 1 mm exit lanes and the first track segment
 mounting_holes: [[5, 5], [155, 5], [5, 115], [155, 115], [34, 5], [126, 5]]

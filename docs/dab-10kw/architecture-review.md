@@ -84,6 +84,47 @@ the AIPE operating point (800 V to 400 V, n = 2, 100 kHz SPS) differs from TI's.
   applicable standard, pollution degree, CTI certificate, impulse category, solid-insulation evaluation of inner layers and
   the heat-sink insulation system are open.**
 
+### 6.1 Check of the 8.0 mm rule on the routed geometry (remediation run of 2026-10-21)
+
+What was checked on the regenerated and re-routed boards (`docs/dab-10kw/routing-remediation.md`, report ids in
+`review-report.md` section 3):
+
+- Native DRC (`--schematic-parity --severity-all --refill-zones`) reports no violation of the rule
+  `Reinforced HV-to-SELV separation, every copper layer (8.0 mm)` on either power board; the remaining findings are
+  unconnected items and dangling-track warnings (routing completeness), not spacing. KiCad evaluates the rule per
+  copper layer between items of the two class groups, including filled pours.
+- Independent geometry (Shapely over a full copper export, `verification/engineering_checks/barrier_geometry_<board>.json`):
+  the smallest distance between hazardous-domain copper and SELV copper on any single layer and between the planar
+  projections of all hazardous and all SELV copper across the stack is recorded there; the projected (across-layer) value
+  is the planar corridor the `PairwiseRouter` enforces beyond what DRC checks. <!-- BARRIER-NUMBERS -->Measured on the committed boards: primary F.Cu 8.000, In1.Cu 9.030, In2.Cu 8.477, B.Cu 8.477 mm,
+  across layers 8.000 mm; secondary F.Cu 8.000, In1.Cu 9.030, In2.Cu 9.030, B.Cu 8.577 mm, across layers 8.000 mm. The
+  minimum is the Hall sensor's own land gap (HV bar inner edge y 70.5 to SELV land y 78.5 at x 254.7); before the AC_B riser
+  was capped at the bars the across-layer projection was 6.5 mm (In1.Cu riser at y 72 against F.Cu SELV lands).<!-- /BARRIER-NUMBERS -->
+- The isolation packages are the only parts straddling the band; their AIPE footprints keep 8.0-9.1 mm inner land
+  gaps (unit test `FootprintTests.test_isolation_footprints_keep_the_reinforced_land_gap`).
+- The AC_B riser polygon of the floorplan nominally reaches y = 72 mm, 2 mm into the band, to meet the Hall sensor's
+  HV lands; the *filled* copper is clipped by the 8.0 mm rule around the sensor's SELV lands (that is why DRC is clean),
+  so the Gerbers, not the plan polygon, define the copper there - review item R-19.
+- Creepage is not modelled separately from clearance: the 8.0 mm value is used for both (2 x creepage at 800 V, PD2,
+  MG I), there are no slots or grooves, and the barrier band is copper-free on every layer except for the isolation
+  packages' own land fields. Whether the surface path across the soldermask-covered band can be credited as creepage at
+  the table value is part of R-03.
+
+### 6.2 Gate-drive interface, protection connections and the DESAT relocation
+
+- Gate loops: `G_x`, `KS_x`, `OUTH_x`, `OUTL_x` are routed as critical nets on F.Cu/B.Cu inside the island regions;
+  the driver's CLMPI pin (pin 7) exit was the one critical connection that stayed open in the first re-run (sealed by
+  `OUTL_x`); the fan-out band and exit lanes of the second re-run resolved it on the primary board except where noted
+  in the results table.
+- DESAT: the diode cathode moved from y = 24 mm to 32.8 mm (anode from 34.2 to 43.0 mm, the island top). The DESAT
+  trace from the anode to the divider is shorter than before; the drain-side pour tongue is 9 mm longer and crosses the
+  ceramic-capacitor row in a free column (DRC-clean against the 4.0 mm BUS_P-PGND / SW-PGND rules because the filler
+  clips it). The blanking network values (R-07) are unchanged.
+- Protection connections (`PG_BIAS_N` wired-AND, `BIAS_ENF`, `FLT_x_N`, `RDY_x`, `OC_TRIP_N`): the harness-side pull-ups
+  and filters are placed and routed on the SELV strip; `BIAS_ENF` and `PG_BIAS_N` are among the connections that are
+  still open at the module pins in the current boards (results table) - the protection chain is therefore not complete
+  on the CAD as committed, and nothing here may be read as a working protection path.
+
 ## 7. Grounding
 
 - GND_CTRL is the single SELV reference: a continuous In1.Cu plane on the control board and on the SELV strip of each
@@ -159,3 +200,18 @@ creepage; R-04 double-pulse gate tuning; R-05 dead time / TZ; R-06 capacitor rat
 short-circuit withstand; R-08 Hall OC threshold; R-09 analogue trip tolerance budget and HV UVLO; R-10 external magnetics
 terminations and harness integrity; R-11 heat-sink insulation system; R-12 common-mode paths; R-13 commutation-loop
 evidence; R-14 discharge timing; R-15 fault-path delays; R-16 eFuse polarity; R-17 auxiliary current budget.
+
+Added by the routing remediation of 2026-10-21 (`docs/dab-10kw/routing-remediation.md`):
+
+- R-18 The laminated BUS_P (In1.Cu) and PGND (In2.Cu) planes are continuous again but pass the DESAT diode columns
+  through necks of about 4.5 mm (device-row plane band minus the diode-pad exclusions); assess against the DC-link
+  ripple current and widen the plane band or move the diodes if required.
+- R-19 Pours that nominally enter the barrier band (AC_B riser to the Hall sensor) are clipped by the 8.0 mm rule in
+  the fill; inspect the F.Cu / In1.Cu Gerbers around U1 and J4 rather than the plan polygons.
+- R-20 Ground pads that found no escape via in the fan-out are tied to the nearest ground via with a short F.Cu track
+  (`stranded_routing` in the routing report); confirm these return paths for the affected decoupling capacitors.
+- R-21 `12V_BIAS_x` and `GNDP_x` (UCC14141 input rails) are routed at 0.5 mm instead of 0.8 / 0.6 mm (module input below
+  0.5 A average assumed; 0.5 mm at 70 um carries about 2.5 A at 10 K rise); confirm against the module's inrush and
+  the eFuse limit (R-17).
+- R-22 Open connections remain on all three boards (results table in `review-report.md`); until they are closed the
+  boards are routing candidates, not complete layouts, and no Gerber set is manufacturing-ready.

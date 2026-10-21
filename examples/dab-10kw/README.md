@@ -26,18 +26,23 @@ Host Python 3.10+ (PyYAML optional) and KiCad 10 (kicad-cli and its bundled Pyth
 
 ```text
 python -m automation.dab_v1.schematics --board primary-power --erc       # libraries, hierarchical schematic, rules, ERC
-<KiCad python> -m automation.dab_v1.floorplan --board primary-power      # placement and copper plan (pcbnew)
+<KiCad python> -m automation.dab_v1.floorplan --board primary-power      # placement, copper plan and fine-pitch row escapes (pcbnew)
 python -m automation.dab_v1.copper --board primary-power                 # merge the pour rectangles (Shapely)
-<KiCad python> -m automation.dab_v1.routing --board primary-power        # grid_router.run_plan through PairwiseRouter
+<KiCad python> -m automation.dab_v1.routing --board primary-power --time-budget 2700   # grid_router.run_plan through PairwiseRouter
 python -m automation.dab_v1.verify --board primary-power                 # DRC, exports, netlist equality, quality, layout, islands
-python -m automation.dab_v1.pipeline --board primary-power               # the four stages in sequence
+python -m automation.dab_v1.pipeline --board primary-power --time-budget 2700          # the stages in sequence
+python -m automation.dab_v1.report                                       # refresh the result tables of docs/dab-10kw/review-report.md
 python -m automation.dab_v1.provenance                                   # re-fetch and hash the manufacturer sources
 python -m pytest tests/test_dab_v1.py -q
 ```
 
 Repeat with `secondary-power` and `control`. Regeneration reproduces the schematic bytes and the placement; routed
 copper is reproduced item for item but not byte for byte (random KiCad item ids), so compare geometry and the hashed
-manifests, not file bytes.
+manifests, not file bytes. `--time-budget` (seconds) time-boxes the router: nets it did not reach are recorded as
+unresolved with `reason: time_budget`, the board is still poured, filled and saved, and a checkpoint board is written
+under `.aipe/dab/checkpoints/` after every router stage. The escape plan of the 0.65 mm rows (same-net bridges, one stub
+per run, computed stub lengths) is recorded per IC in `pcb/floorplan_<board>.json -> plan.escape_rows`; see
+[`docs/dab-10kw/routing-remediation.md`](../../docs/dab-10kw/routing-remediation.md) for the root causes it addresses.
 
 ## What is in the requirement files
 
@@ -52,19 +57,20 @@ manifests, not file bytes.
   JTAG, CAN, RS-485, auxiliary input, heat-sink NTC and HV terminals.
 - `floorplan_<board>.yaml`, `routing_<board>.yaml` - placement geometry and router parameters.
 
-## Status (2026-10-21, time-boxed run)
+## Status (2026-10-21, remediation run - see `docs/dab-10kw/routing-remediation.md`)
 
 | Board | ERC | Routing | Native DRC (`--schematic-parity --severity-all --refill-zones`) | Exports |
 |---|---|---|---|---|
-| primary-power | 0 findings | grid router: 2470 tracks, 411 vias, 23 pours, **79 connections left open** (1215 s) | 57 violations (20 clearance at 3.95 mm vs the 4.0 mm bus rule from the pre-routed capacitor stubs, 2 via-to-net-tie hole clearances, 34 dangling-track and 1 dangling-via warnings), **82 unconnected items in 42 nets**, parity 0 | 11 commands, 36 artifacts, hashed |
-| secondary-power | 0 findings | 2703 tracks, 455 vias, 22 pours, **80 connections left open** (1326 s) | 37 violations (2 hole clearances, 33 dangling-track and 2 dangling-via warnings), **81 unconnected items in 42 nets**, parity 0 | 11 commands, 36 artifacts, hashed |
-| control | 0 findings | **not routed** - the router was stopped at the time-box cut-off before it saved; the board is placed only | 0 violations, all nets unconnected (KiCad lists 499 items), parity 0 | 11 commands, 36 artifacts, hashed |
+| primary-power | 0 findings | grid router: 2501 tracks, 436 vias, 22 pours, **26 connections left open** (1161 s, time budget not reached) | **0 violations other than unconnected items** (18 dangling-track warnings), **26 unconnected items in 18 nets**, parity 0 | 11 commands, 36 artifacts, hashed |
+| secondary-power | 0 findings | 2598 tracks, 449 vias, 21 pours, **23 connections left open** (1189 s) | **0 violations other than unconnected items** (18 dangling-track warnings), **23 unconnected items in 16 nets**, parity 0 | 11 commands, 36 artifacts, hashed |
+| control | 0 findings | 3090 tracks, 622 vias, 1 pour, **24 connections left open** (2714 s; the 45-minute budget was reached after one signal trial, rip-up and retry were cut) | **0 violations other than unconnected items** (28 dangling-track warnings), **24 unconnected items in 23 nets**, parity 0 | 11 commands, 36 artifacts, hashed |
 
-Model / schematic netlist / board pad-net equality is exact on all three boards. The open connections are mostly
-SELV and bias-module nets (BIAS_ENF, PG_BIAS_N, GND_CTRL, 3V3, GNDP_x, 12V_BIAS_x, VEEA_x, FBVEE_x) plus the AC_B
-terminal copper; they are listed per net in `verification/summary_<board>.json` and in the review report. Two fixes
-for the next routing iteration are already in the generator (0.3 mm capacitor stubs, via keep-outs around the
-net-tie pads) but have not been re-run. **These are blocked items, not finished boards.**
+Model / schematic netlist / board pad-net equality is exact on all three boards; every power and ground pour is a
+single filled island on both power boards; the 8.0 mm HV-to-SELV separation holds on every copper layer and across the
+stack (`verification/engineering_checks/barrier_geometry_<board>.json`). The open connections of the power boards are
+the narrow nets of the UCC14141 rows (BIAS_ENF, PG_BIAS_N, FBVEE/FBVDD/VEEA/RLIM) and a few island nets; they are listed
+per net in `verification/summary_<board>.json` and in the review report. **These are routing candidates, not finished
+boards: no Gerber set is manufacturing-ready while connections are open.**
 
 See `docs/dab-10kw/review-report.md` for the per-board ERC/DRC counts, ignored checks, export lists, remaining
 violations and the open review items. The controlCARD contact map, several transcribed pin tables, the film-capacitor
