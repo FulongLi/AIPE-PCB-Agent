@@ -26,6 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[test]"
       - name: Confirm that KiCad is absent (the KiCad-dependent tests must skip, not pass)
-        run: python -m automation.setup.detect_kicad || echo "kicad-cli not found: KiCad-dependent tests will be skipped"
+        run: |
+          python -m automation.setup.detect_kicad || echo "kicad-cli not found: KiCad-dependent tests will be skipped"
       - name: Run the host tests
         run: python -m pytest -q -rs
