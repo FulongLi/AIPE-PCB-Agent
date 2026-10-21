@@ -16,10 +16,12 @@ dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
 # PyYAML is optional at run time (a subset parser covers the requirement files under KiCad's bundled Python); Shapely merges pour
-# rectangles and analyses filled-copper islands on the host; pytest runs the suite.
+# rectangles and analyses filled-copper islands on the host; SciPy (sparse graphs and solvers) backs the copper-path and
+# sheet-resistance analyses (automation/kicad_tools/copper_paths.py, sheet_resistance.py); pytest runs the suite.
 yaml = ["pyyaml>=6.0"]
 geometry = ["shapely>=2.0"]
-test = ["pytest>=7.0", "pyyaml>=6.0", "shapely>=2.0"]
+analysis = ["scipy>=1.10"]
+test = ["pytest>=7.0", "pyyaml>=6.0", "shapely>=2.0", "scipy>=1.10"]
 
 [project.urls]
 Repository = "https://github.com/FulongLi/AIPE-PCB-Agent"
