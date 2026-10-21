@@ -1,0 +1,382 @@
+{
+  "status": "passed",
+  "step_copper_included": false,
+  "commands": [
+    {
+      "name": "schematic_pdf",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "pdf",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\review\\schematic.pdf",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "pcb_pdf",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pdf",
+        "--mode-multipage",
+        "--black-and-white",
+        "--include-border-title",
+        "--layers",
+        "F.Cu,In1.Cu,In2.Cu,B.Cu,F.SilkS,F.Fab,B.Fab",
+        "--common-layers",
+        "Edge.Cuts",
+        "--scale",
+        "0",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\review\\pcb_layout.pdf",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "gerber",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "gerbers",
+        "--layers",
+        "F.Cu,In1.Cu,In2.Cu,B.Cu,F.SilkS,B.SilkS,F.Fab,B.Fab,Edge.Cuts,F.Paste,B.Paste,F.Mask,B.Mask",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\gerber\\",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "drill",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "drill",
+        "--format",
+        "excellon",
+        "--generate-report",
+        "--report-path",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\drill\\drill-report.rpt",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\drill\\",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "bom",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "bom",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\bom\\bom.csv",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_sch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "placement",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "pos",
+        "--format",
+        "csv",
+        "--units",
+        "mm",
+        "--side",
+        "both",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\pick_and_place\\positions.csv",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "step",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "export",
+        "step",
+        "--subst-models",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\step\\board.step",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "front",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\review\\pcb_front.png",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "back",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "bottom",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\review\\pcb_back.png",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "isometric",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "pcb",
+        "render",
+        "--side",
+        "top",
+        "--rotate",
+        "330,0,25",
+        "--width",
+        "1200",
+        "--height",
+        "900",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\review\\pcb_3d.png",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "netlist",
+      "command": [
+        "C:\\Users\\Zhongnan Qian\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe",
+        "sch",
+        "export",
+        "netlist",
+        "--format",
+        "kicadxml",
+        "-o",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\manufacturing\\control\\netlist.xml",
+        "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_sch"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "artifacts": {
+    "netlist.xml": {
+      "bytes": 462354,
+      "sha256": "4751477dad00245cbdc220af3b32f760733ffab160fbe29ee27c2ebdd6331202"
+    },
+    "bom/bom.csv": {
+      "bytes": 11996,
+      "sha256": "345e720847a03f3cb907ea6797f0d87731ba26b89bd44b256e6b9f223f97320e"
+    },
+    "drill/dab-control.drl": {
+      "bytes": 2415,
+      "sha256": "3e796a30f116ab8e44705eaa65677033a9dc896ad5d4af1f861ee261c11d82ac"
+    },
+    "drill/drill-report.rpt": {
+      "bytes": 858,
+      "sha256": "2dc8b98c84eede2c700ecbffb52db735bcd6b627ad84947567cde959ba7c5ce4"
+    },
+    "gerber/dab-control-B_Cu.gbl": {
+      "bytes": 8007,
+      "sha256": "b06dbf32036c2b891c811a1411ab3e905fd7087c30faee4a5bdaba92d89eae48"
+    },
+    "gerber/dab-control-B_Fab.gbr": {
+      "bytes": 454,
+      "sha256": "09821082a9f2c4df9e8642140cb9bf01c07821b0e4cd224467d755e45c2902ea"
+    },
+    "gerber/dab-control-B_Mask.gbs": {
+      "bytes": 4874,
+      "sha256": "a3b342c55c8408bd2d2f8a434eb0585a5dc0ee19ba32b00855c0fe30308ad79f"
+    },
+    "gerber/dab-control-B_Paste.gbp": {
+      "bytes": 473,
+      "sha256": "52085d5a71fa08eafeb07015a0362e1dce7045d39a4a4c8a112ab1ad83c10a7a"
+    },
+    "gerber/dab-control-B_Silkscreen.gbo": {
+      "bytes": 474,
+      "sha256": "02e11f8e976c78ae62a3f14db7bf4a4ada7d149053674ee7850843ef7eba691a"
+    },
+    "gerber/dab-control-Edge_Cuts.gm1": {
+      "bytes": 654,
+      "sha256": "b5bef2d8f7224e3a51a5af6d7e9f3cc7333b0ba7b5c5f09a5005f7e8d6d2c888"
+    },
+    "gerber/dab-control-F_Cu.gtl": {
+      "bytes": 60484,
+      "sha256": "cd0ff2e97f77fbf4da0796c3010b530e3c52329ab1bebca0d1352aaba56a487c"
+    },
+    "gerber/dab-control-F_Fab.gbr": {
+      "bytes": 423127,
+      "sha256": "9ce5ec294d4772b3d1f8a9a3870fd6b89a2c1eb4a90e59225c6b31f24f1d5e39"
+    },
+    "gerber/dab-control-F_Mask.gts": {
+      "bytes": 32614,
+      "sha256": "c7060fccfe91c48e57a5393fb0f1d313c9b04bc762e34c5fcf3c1ec8146487cf"
+    },
+    "gerber/dab-control-F_Paste.gtp": {
+      "bytes": 28663,
+      "sha256": "64864ce2448d1961317b0518ad466009f2fcd5f764386207073bbc1aada68841"
+    },
+    "gerber/dab-control-F_Silkscreen.gto": {
+      "bytes": 76349,
+      "sha256": "f69033f636e401083579c07fbdd6b07c146b59bfc2f2bd698b7bf49c7f7c5a58"
+    },
+    "gerber/dab-control-In1_Cu.g1": {
+      "bytes": 6552,
+      "sha256": "b01cce0bbcef3a482a41eb9c94b448dfca0d1bd6a10611a51042aa3834d68705"
+    },
+    "gerber/dab-control-In2_Cu.g2": {
+      "bytes": 6552,
+      "sha256": "047455e6d65fef8a1db4865a7721d7783ca6731f559fa33e4b3d38372975ec03"
+    },
+    "gerber/dab-control-job.gbrjob": {
+      "bytes": 4115,
+      "sha256": "4213fff0d6a15fdedc0711e4544dec3112b04fcaceb3add305562dcb1b2f9a90"
+    },
+    "logs/back.log": {
+      "bytes": 1541,
+      "sha256": "f80e410e148673f00b0f910c467cddb4f75bfc93c0a509e538780391d46f17af"
+    },
+    "logs/bom.log": {
+      "bytes": 153,
+      "sha256": "8f1a70d68ca8a5d78e8eb5409f98be8f450e7fdcebc00e250c69514b5458d91c"
+    },
+    "logs/drill.log": {
+      "bytes": 165,
+      "sha256": "d3a32320a54f4763473a322938f1da60ce28c74676f732a2d2fbeabd12de64db"
+    },
+    "logs/front.log": {
+      "bytes": 1541,
+      "sha256": "73db4068414b78244a4eed3b7f48730768ce51f9ab2f052a4e53fe09cda27656"
+    },
+    "logs/gerber.log": {
+      "bytes": 2076,
+      "sha256": "92918aca735fd58b596d5720d8025e5eb69f4e569fd58f08fd9c225dec3bd68b"
+    },
+    "logs/isometric.log": {
+      "bytes": 1541,
+      "sha256": "903ba0767a96ea6e42565e86841fcadedd94fd8707d77731ab796b8dc9e8f44f"
+    },
+    "logs/netlist.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "logs/pcb_pdf.log": {
+      "bytes": 165,
+      "sha256": "86d53daa5e1420e0887010049c3ebf3380b044fe7a61bfd19d1d1ef0209bcaf2"
+    },
+    "logs/placement.log": {
+      "bytes": 169,
+      "sha256": "99b6fddb2396898827d5caeec0261980e35e03b8ca43405ac27f91730ac64fdb"
+    },
+    "logs/schematic_pdf.log": {
+      "bytes": 161,
+      "sha256": "bb3c103a3f4d935c2d359733856e8388ca69cd78fce92fe6008417b1e5beeb03"
+    },
+    "logs/step.log": {
+      "bytes": 489,
+      "sha256": "ec59afb17a74ce253ec1c31fc0fb51c2ba9d0c375b850fa2ae7f9068a41daf71"
+    },
+    "pick_and_place/positions.csv": {
+      "bytes": 15358,
+      "sha256": "a13f1885281f33f12dac6dd6724d1021ef49741777caaefbdbb75e75bad07784"
+    },
+    "review/pcb_3d.png": {
+      "bytes": 193877,
+      "sha256": "f63e0567b83f2113b4b061c869104a1c70b92751d60f4608d7b800a76c55cb90"
+    },
+    "review/pcb_back.png": {
+      "bytes": 19878,
+      "sha256": "b17e85f1f93a40a2825b40872511b090c3681c57a4d30ed2db0aa19e7c2932b3"
+    },
+    "review/pcb_front.png": {
+      "bytes": 64900,
+      "sha256": "29436fffe9fc74f18520277b9772c5c66e4abef5c916e9ab9797267e4a458060"
+    },
+    "review/pcb_layout.pdf": {
+      "bytes": 1111296,
+      "sha256": "fa06e09546badca18ec295e6ed560d49ef490196ce5c5aed0addff6ead57fc46"
+    },
+    "review/schematic.pdf": {
+      "bytes": 1060487,
+      "sha256": "7f7ada3a968836930771bd2a1bd43f616a3bac6f4c0fabc567611297b07fa162"
+    },
+    "step/board.step": {
+      "bytes": 4589884,
+      "sha256": "884ec068fab428910f38ca4c7a8e66bcbc29842d599a95a1ddb134fd66e8760c"
+    }
+  },
+  "input_sha256": {
+    "01_supply.kicad_sch": "18f0790259f27aa53b6a1f5863e0cb2ded3cb61284b029096e59c65690e13cc1",
+    "02_card.kicad_sch": "7302d6b76f21974be8248a1e3b1335770bb7b5514df683694e570f090968a28c",
+    "03_pwm_gating.kicad_sch": "0fb1068a2216bcebb7a751f22e6327803afc108df9d4a3ecf17497c3a6a3faa4",
+    "04_fault_logic.kicad_sch": "587b93d3ec3889e0aeed593cb87ef1d3ffcf6e43e767ec3f33e079eb1a79412e",
+    "05_analog.kicad_sch": "125397165f10d3d1e5291212651c74b33a3029b804b3ee97756b8ef7164a8c30",
+    "06_comms.kicad_sch": "7e53dfbb5b456231e64f41b5b00498c72eb867588aaf722652f15543444d92ee",
+    "07_interface.kicad_sch": "845b901fedcfb8c2dbda333b7055038bfc0b88ee134dd875832bc3d682d3acab",
+    "dab-control.kicad_dru": "ec8e3d76fd63688757f1d1f78df5fd61412772d3a5338a8592418a9e8207e15a",
+    "dab-control.kicad_pcb": "baffe51c611330f4002c2b1d2b9a2251147340bf4157669314d1b451d29026b5",
+    "dab-control.kicad_pro": "0e8372c33ea51207399a4e54b633e3033085c26bb16221b3562a05174cbcb315",
+    "dab-control.kicad_sch": "8e94925dc3aad01ad82859d4972db838c297f60a0cd2c6611722fe78ee410614",
+    "fp-lib-table": "3b82a638a68f856874e36ee8013e77480e9204c1f853aee090e00a4a815d24fa",
+    "libraries/AIPE.3dshapes/DAB_DGK8.step": "36744783dffc6dca48aefb483a15473c5cfb1db319c4c33f33aed675da0438fd",
+    "libraries/AIPE.3dshapes/DAB_DGK8.wrl": "b8d2273e90db28808823fa3891a4a38c4bf702a735ca71032b153d9e7be0bfea",
+    "libraries/AIPE.kicad_sym": "49c8ce9e0749eb973523e3d74e733ddce5ac6295bc65ea1c96723dee05104baf",
+    "libraries/AIPE.pretty/DAB_DGK8.kicad_mod": "908b1845dc364917bff861f2004ffee548c5a40b4f623d4aa2b22e42791487ef",
+    "libraries/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod": "d45eebd5cb9faace255d4ec95a0f9484efde898359507b02e2ba9bbb3ef6d857",
+    "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "e890bdf55fa18fc6df6878eb1b5251a991e1b93985509175eb269d3d002880b4",
+    "libraries/Capacitor_SMD.pretty/C_1210_3225Metric.kicad_mod": "c0c3dbbbe623e957a8ee6c0a36f432e06b10ff8bd79fc785bd13dea723a1f20c",
+    "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.5.kicad_mod": "f26e14bf7e967c0e4b59897c79d3be8f59d8ed0cda901d475ee24f5a6202bfec",
+    "libraries/Capacitor_THT.pretty/CP_Radial_D6.3mm_P2.50mm.kicad_mod": "985ff707ffcb2e5687d2e09b671bfa3ea0cdc41eeb20f6a75f6cb19f3f316e44",
+    "libraries/Connector_IDC.pretty/IDC-Header_2x20_P2.54mm_Vertical.kicad_mod": "2c0be724a6a06a0d283044bfb0a6d4c15f2fb130f93e459b076cc8b77a8a2bee",
+    "libraries/Connector_Phoenix_MC.pretty/PhoenixContact_MC_1,5_2-G-3.81_1x02_P3.81mm_Horizontal.kicad_mod": "7b7984073d420f43183ab346ba40345f22355eff2528c97805cd6bbd1e7860b3",
+    "libraries/Connector_Phoenix_MC.pretty/PhoenixContact_MC_1,5_3-G-3.81_1x03_P3.81mm_Horizontal.kicad_mod": "64057a6fa7eb384c9247965a8e3b30024138368b0dade01ee9428a8134262b13",
+    "libraries/Connector_PinHeader_2.54mm.pretty/PinHeader_1x02_P2.54mm_Vertical.kicad_mod": "e5c0d699660a4479fa2414cc5be1835c6f52a38630dd85a2d18aab4dcd3ff8e5",
+    "libraries/Connector_PinHeader_2.54mm.pretty/PinHeader_2x07_P2.54mm_Vertical.kicad_mod": "1dc9e0cc5d679e6999b9b56f1710c79309a16ee9ae7314e4b5676703cdeb1b5e",
+    "libraries/Connector_Samtec_HSEC8.pretty/Samtec_HSEC8-190-01-X-DV-A_2x90_P0.8mm_Pol32_Socket_AlignmentPins.kicad_mod": "039a2ff1ea23d38f3726b80d2aa1cbb1b6c4e29006a80ceaef1ff304c50508eb",
+    "libraries/Diode_SMD.pretty/D_SMB.kicad_mod": "9c05e7c89fdbe091e34239523a372eea056ffe3ad12d5526f5b49eaa25428579",
+    "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "1594c737edf4922415ffb3768701c033c5cd3288f99bb0e2a6d273f83d843a35",
+    "libraries/Inductor_SMD.pretty/L_Coilcraft_MSS1048-XXX.kicad_mod": "01dc4b30d6a549da642dc5e97428f3e992404cacb5984d0e9d3da7ad5417dc79",
+    "libraries/LED_SMD.pretty/LED_0805_2012Metric.kicad_mod": "ce3a8266ee445b343374e2391b3b931a2bbc27f83d4f06af397cbea91df53178",
+    "libraries/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod": "3853c52bba27d3e3e3e18db44a20dfb296eb9e6cd16ebf26fe4a96a2ee8add3b",
+    "libraries/Package_SO.pretty/HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm.kicad_mod": "0a86f4222ca67695d4a4935ff620121f9f837c7ff9a5409e5893b54f2ebdbec8",
+    "libraries/Package_SO.pretty/SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod": "3c9b63198dd4dbf5e6c28c84702c29fad46a35103b821a19306c4ac888ad8e76",
+    "libraries/Package_SO.pretty/SSOP-8_2.95x2.8mm_P0.65mm.kicad_mod": "090b79404c6d3532d31c2be03e71e76c7095e68e2dcb8a17fefe293c5699e16c",
+    "libraries/Package_SO.pretty/TSSOP-14_4.4x5mm_P0.65mm.kicad_mod": "8da4c0cda07ca9aadbeb33cd860d9bc90a2b382263b25be3609543a6da4a7258",
+    "libraries/Package_SO.pretty/VSSOP-8_3x3mm_P0.65mm.kicad_mod": "f9f7ef914a57e5a53d295cb6a5a566151bda44d1789c8c9e986ec3b65459c56e",
+    "libraries/Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod": "684a94089f59798a46492dac8dd0242edfa4d915e76a210abdca369e4faa4f9b",
+    "libraries/Package_TO_SOT_SMD.pretty/SOT-23-6.kicad_mod": "ea29040bed73e5dfa455e36f2c9324b0de7782c5a6cf79040b7d885ff766fdb4",
+    "libraries/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod": "7fb2859c6463f3a37966a1a20c31d8bfe7d4e8459d00bb165d5a7488270816c5",
+    "libraries/Resistor_SMD.pretty/R_0603_1608Metric.kicad_mod": "03fc7902b2661df01b4d828fdb6eab9eddf974e7130ed2b98892607387a50c4b",
+    "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "eb7c629059d07f6b09617273ed038a415763363e2db41669c0d65af6d34c05eb",
+    "sym-lib-table": "67843d88e913636a883c5f661d07399c5f21fd8911d22213ace19ed9951893cf"
+  }
+}

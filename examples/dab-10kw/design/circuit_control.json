@@ -1,0 +1,8311 @@
+[
+  {
+    "ref": "J4",
+    "value": "12 V AUXILIARY IN",
+    "footprint": "Connector_Phoenix_MC:PhoenixContact_MC_1,5_2-G-3.81_1x02_P3.81mm_Horizontal",
+    "nets": {
+      "1": "12V_IN",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "J",
+    "mpn": 1803578,
+    "maker": "Phoenix Contact",
+    "source": "https://www.phoenixcontact.com/en-pc/products/1803578",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D1",
+    "value": "SMBJ15A",
+    "footprint": "Diode_SMD:D_SMB",
+    "nets": {
+      "1": "12V_IN",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "D",
+    "mpn": "SMBJ15A",
+    "maker": "Littelfuse",
+    "source": "https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "Unidirectional TVS, cathode to +12 V",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U1",
+    "value": "TPS26400PWPR",
+    "footprint": "Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm",
+    "nets": {
+      "1": "12V_IN",
+      "2": "12V_IN",
+      "3": "E_UV",
+      "5": "E_OV",
+      "6": null,
+      "7": "E_EN",
+      "8": "E_RTN",
+      "9": "GND_CTRL",
+      "10": "E_IMON",
+      "11": "E_ILIM",
+      "12": "E_DVDT",
+      "14": "AUX_FLT_N",
+      "15": "12V_E",
+      "16": "12V_E",
+      "17": "E_RTN",
+      "4": null,
+      "13": null
+    },
+    "page": "01_supply",
+    "kind": "IC",
+    "mpn": "TPS26400PWPR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tps2640.pdf",
+    "pins": {
+      "1": {
+        "name": "IN",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "IN",
+        "type": "power_in"
+      },
+      "3": {
+        "name": "UVLO",
+        "type": "input"
+      },
+      "4": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "5": {
+        "name": "OVP",
+        "type": "input"
+      },
+      "6": {
+        "name": "MODE",
+        "type": "input"
+      },
+      "7": {
+        "name": "SHDN",
+        "type": "input"
+      },
+      "8": {
+        "name": "RTN",
+        "type": "passive"
+      },
+      "9": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "10": {
+        "name": "IMON",
+        "type": "output"
+      },
+      "11": {
+        "name": "ILIM",
+        "type": "passive"
+      },
+      "12": {
+        "name": "dVdT",
+        "type": "passive"
+      },
+      "13": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "14": {
+        "name": "FLT",
+        "type": "open_collector"
+      },
+      "15": {
+        "name": "OUT",
+        "type": "power_out"
+      },
+      "16": {
+        "name": "OUT",
+        "type": "passive"
+      },
+      "17": {
+        "name": "PAD",
+        "type": "passive"
+      }
+    },
+    "note": "eFuse: UVLO about 9 V, OVP about 15 V, current limit about 2.2 A (TIDUES0 settings); RTN kept separate from GND per SLVSFQ6A",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R1",
+    "value": "107k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "12V_IN",
+      "2": "E_UV"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-07107KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R2",
+    "value": "4.42k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "E_UV",
+      "2": "E_OV"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-074K42L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R3",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "E_OV",
+      "2": "E_RTN"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R4",
+    "value": "6.04k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "E_ILIM",
+      "2": "E_RTN"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-076K04L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R5",
+    "value": "14.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "E_IMON",
+      "2": "E_RTN"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-0714K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R6",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "12V_IN",
+      "2": "E_EN"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R7",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "AUX_FLT_N"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C1",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "E_DVDT",
+      "2": "E_RTN"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C2",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "12V_IN",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C3",
+    "value": "100u/25V",
+    "footprint": "Capacitor_SMD:CP_Elec_8x10.5",
+    "nets": {
+      "1": "12V_E",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "EEE-FK1E101P",
+    "maker": "Panasonic",
+    "source": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-smd/models/EEEFK1E101P",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP1",
+    "value": "E_IMON",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "E_IMON"
+    },
+    "page": "01_supply",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U2",
+    "value": "TPS54302DDCR",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "nets": {
+      "1": "GND_CTRL",
+      "2": "SW5",
+      "3": "12V_E",
+      "4": "FB5",
+      "5": "EN5",
+      "6": "BST5"
+    },
+    "page": "01_supply",
+    "kind": "IC",
+    "mpn": "TPS54302DDCR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tps54302.pdf",
+    "pins": {
+      "1": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "SW",
+        "type": "power_out"
+      },
+      "3": {
+        "name": "VIN",
+        "type": "power_in"
+      },
+      "4": {
+        "name": "FB",
+        "type": "input"
+      },
+      "5": {
+        "name": "EN",
+        "type": "input"
+      },
+      "6": {
+        "name": "BOOT",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C4",
+    "value": "10u/50V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM32ER71H106KA12L",
+    "maker": "Murata",
+    "source": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM32ER71H106KA12-04A.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C5",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C6",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "BST5",
+      "2": "SW5"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R8",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "EN5"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R9",
+    "value": "20k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EN5",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-0720KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "L1",
+    "value": "10uH",
+    "footprint": "Inductor_SMD:L_Coilcraft_MSS1048-XXX",
+    "nets": {
+      "1": "SW5",
+      "2": "5V0"
+    },
+    "page": "01_supply",
+    "kind": "L",
+    "mpn": "MSS1048-103MLC",
+    "maker": "Coilcraft",
+    "source": "https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/mss-mos/mss1048/",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C7",
+    "value": "22u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM32ER71E226KE15L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C8",
+    "value": "22u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM32ER71E226KE15L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C9",
+    "value": "220u",
+    "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "EEU-FR1C221",
+    "maker": "Panasonic",
+    "source": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1C221",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R10",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "FB5"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R11",
+    "value": "13.3k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "FB5",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-0713K3L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C10",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "FB5"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Feed-forward; verify the loop with the actual output capacitance",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U3",
+    "value": "TPS7A2033PDBVR",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL",
+      "3": "5V0",
+      "5": "3V3",
+      "4": null
+    },
+    "page": "01_supply",
+    "kind": "IC",
+    "mpn": "TPS7A2033PDBVR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tps7a20.pdf",
+    "pins": {
+      "1": {
+        "name": "IN",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "3": {
+        "name": "EN",
+        "type": "input"
+      },
+      "4": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "5": {
+        "name": "OUT",
+        "type": "power_out"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C11",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C12",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C13",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U4",
+    "value": "TPS3808G01DBVR",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "nets": {
+      "1": "NRST",
+      "2": "GND_CTRL",
+      "3": "MR_N",
+      "4": "RESET_CT",
+      "5": "MON3V3",
+      "6": "3V3"
+    },
+    "page": "01_supply",
+    "kind": "IC",
+    "mpn": "TPS3808G01DBVR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+    "pins": {
+      "1": {
+        "name": "RESET_N",
+        "type": "open_collector"
+      },
+      "2": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "3": {
+        "name": "MR_N",
+        "type": "input"
+      },
+      "4": {
+        "name": "CT",
+        "type": "passive"
+      },
+      "5": {
+        "name": "SENSE",
+        "type": "input"
+      },
+      "6": {
+        "name": "VDD",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R12",
+    "value": "68.1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "MON3V3"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "TNPW060368K1BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R13",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "MON3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "3.16 V threshold with VIT 0.405 V",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R14",
+    "value": "4.7k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "NRST"
+    },
+    "page": "01_supply",
+    "kind": "R",
+    "mpn": "RC0603FR-074K7L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C14",
+    "value": "10n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "RESET_CT",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H103KA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H103KA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C15",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "J8",
+    "value": "MANUAL RESET",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "nets": {
+      "1": "MR_N",
+      "2": "GND_CTRL"
+    },
+    "page": "01_supply",
+    "kind": "J",
+    "mpn": "TSW-102-07-G-S",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/tsw",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "J1",
+    "value": "controlCARD HSEC8 180-contact socket",
+    "footprint": "Connector_Samtec_HSEC8:Samtec_HSEC8-190-01-X-DV-A_2x90_P0.8mm_Pol32_Socket_AlignmentPins",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL",
+      "3": "5V0",
+      "4": "GND_CTRL",
+      "5": "5V0",
+      "6": "GND_CTRL",
+      "7": "5V0",
+      "8": "GND_CTRL",
+      "9": "ADC_VBUS_P",
+      "10": null,
+      "11": "ADC_VBUS_S",
+      "12": null,
+      "13": null,
+      "14": null,
+      "15": "ADC_ITANK_P",
+      "16": null,
+      "17": "ADC_ITANK_S",
+      "18": null,
+      "19": null,
+      "20": null,
+      "21": "ADC_TEMP_P",
+      "22": null,
+      "23": "ADC_TEMP_S",
+      "24": null,
+      "25": "ADC_V12",
+      "26": null,
+      "27": "ADC_5V",
+      "28": null,
+      "29": null,
+      "30": null,
+      "31": null,
+      "32": null,
+      "33": null,
+      "34": null,
+      "35": null,
+      "36": null,
+      "37": null,
+      "38": null,
+      "39": null,
+      "40": null,
+      "41": null,
+      "42": null,
+      "43": null,
+      "44": null,
+      "45": null,
+      "46": null,
+      "47": null,
+      "48": null,
+      "49": "EPWM1A",
+      "50": "EPWM3A",
+      "51": "EPWM1B",
+      "52": "EPWM4A",
+      "53": "EPWM2A",
+      "54": "EPWM3B",
+      "55": "EPWM2B",
+      "56": "EPWM4B",
+      "57": "TZ_TRIP",
+      "58": "BIAS_EN_MCU",
+      "59": "ARM",
+      "60": "TEMP_PWM_P_AH",
+      "61": "RUN_EN",
+      "62": "TEMP_PWM_P_AL",
+      "63": "DRV_RST_MCU",
+      "64": "TEMP_PWM_P_BH",
+      "65": "TEMP_PWM_P_BL",
+      "66": "SDFM_S_CLK",
+      "67": "TEMP_PWM_S_AH",
+      "68": "SDFM_S_D",
+      "69": "TEMP_PWM_S_AL",
+      "70": "SDFM_P_CLK",
+      "71": "TEMP_PWM_S_BH",
+      "72": "SDFM_P_D",
+      "73": "TEMP_PWM_S_BL",
+      "74": null,
+      "75": "CAN_TX",
+      "76": null,
+      "77": "CAN_RX",
+      "78": null,
+      "79": "RS485_TX",
+      "80": "GPIO_LED_RUN",
+      "81": "RS485_RX",
+      "82": null,
+      "83": "RS485_DE",
+      "84": "FAULT_RD",
+      "85": null,
+      "86": "XRS_CARD",
+      "87": null,
+      "88": null,
+      "89": null,
+      "90": null,
+      "91": null,
+      "92": null,
+      "93": null,
+      "94": null,
+      "95": null,
+      "96": null,
+      "97": null,
+      "98": null,
+      "99": null,
+      "100": "GND_CTRL",
+      "101": null,
+      "102": "GND_CTRL",
+      "103": null,
+      "104": "GND_CTRL",
+      "105": null,
+      "106": "GND_CTRL",
+      "107": null,
+      "108": null,
+      "109": null,
+      "110": "TMS",
+      "111": null,
+      "112": "TCK",
+      "113": null,
+      "114": "TDI",
+      "115": null,
+      "116": "TDO",
+      "117": null,
+      "118": "TRST_N",
+      "119": null,
+      "120": "EMU0",
+      "121": null,
+      "122": "EMU1",
+      "123": null,
+      "124": null,
+      "125": null,
+      "126": null,
+      "127": null,
+      "128": null,
+      "129": null,
+      "130": null,
+      "131": null,
+      "132": null,
+      "133": null,
+      "134": null,
+      "135": null,
+      "136": null,
+      "137": null,
+      "138": null,
+      "139": null,
+      "140": "GND_CTRL",
+      "141": null,
+      "142": null,
+      "143": null,
+      "144": null,
+      "145": null,
+      "146": null,
+      "147": null,
+      "148": null,
+      "149": null,
+      "150": null,
+      "151": null,
+      "152": null,
+      "153": null,
+      "154": null,
+      "155": null,
+      "156": null,
+      "157": null,
+      "158": null,
+      "159": null,
+      "160": "GND_CTRL",
+      "161": null,
+      "162": null,
+      "163": null,
+      "164": null,
+      "165": null,
+      "166": null,
+      "167": null,
+      "168": null,
+      "169": null,
+      "170": "GND_CTRL",
+      "171": null,
+      "172": null,
+      "173": null,
+      "174": null,
+      "175": null,
+      "176": null,
+      "177": null,
+      "178": null,
+      "179": null,
+      "180": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "J",
+    "mpn": "HSEC8-190-01-L-DV-A",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/hsec8-dv",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      },
+      "4": {
+        "name": "4",
+        "type": "passive"
+      },
+      "5": {
+        "name": "5",
+        "type": "passive"
+      },
+      "6": {
+        "name": "6",
+        "type": "passive"
+      },
+      "7": {
+        "name": "7",
+        "type": "passive"
+      },
+      "8": {
+        "name": "8",
+        "type": "passive"
+      },
+      "9": {
+        "name": "9",
+        "type": "passive"
+      },
+      "10": {
+        "name": "10",
+        "type": "passive"
+      },
+      "11": {
+        "name": "11",
+        "type": "passive"
+      },
+      "12": {
+        "name": "12",
+        "type": "passive"
+      },
+      "13": {
+        "name": "13",
+        "type": "passive"
+      },
+      "14": {
+        "name": "14",
+        "type": "passive"
+      },
+      "15": {
+        "name": "15",
+        "type": "passive"
+      },
+      "16": {
+        "name": "16",
+        "type": "passive"
+      },
+      "17": {
+        "name": "17",
+        "type": "passive"
+      },
+      "18": {
+        "name": "18",
+        "type": "passive"
+      },
+      "19": {
+        "name": "19",
+        "type": "passive"
+      },
+      "20": {
+        "name": "20",
+        "type": "passive"
+      },
+      "21": {
+        "name": "21",
+        "type": "passive"
+      },
+      "22": {
+        "name": "22",
+        "type": "passive"
+      },
+      "23": {
+        "name": "23",
+        "type": "passive"
+      },
+      "24": {
+        "name": "24",
+        "type": "passive"
+      },
+      "25": {
+        "name": "25",
+        "type": "passive"
+      },
+      "26": {
+        "name": "26",
+        "type": "passive"
+      },
+      "27": {
+        "name": "27",
+        "type": "passive"
+      },
+      "28": {
+        "name": "28",
+        "type": "passive"
+      },
+      "29": {
+        "name": "29",
+        "type": "passive"
+      },
+      "30": {
+        "name": "30",
+        "type": "passive"
+      },
+      "31": {
+        "name": "31",
+        "type": "passive"
+      },
+      "32": {
+        "name": "32",
+        "type": "passive"
+      },
+      "33": {
+        "name": "33",
+        "type": "passive"
+      },
+      "34": {
+        "name": "34",
+        "type": "passive"
+      },
+      "35": {
+        "name": "35",
+        "type": "passive"
+      },
+      "36": {
+        "name": "36",
+        "type": "passive"
+      },
+      "37": {
+        "name": "37",
+        "type": "passive"
+      },
+      "38": {
+        "name": "38",
+        "type": "passive"
+      },
+      "39": {
+        "name": "39",
+        "type": "passive"
+      },
+      "40": {
+        "name": "40",
+        "type": "passive"
+      },
+      "41": {
+        "name": "41",
+        "type": "passive"
+      },
+      "42": {
+        "name": "42",
+        "type": "passive"
+      },
+      "43": {
+        "name": "43",
+        "type": "passive"
+      },
+      "44": {
+        "name": "44",
+        "type": "passive"
+      },
+      "45": {
+        "name": "45",
+        "type": "passive"
+      },
+      "46": {
+        "name": "46",
+        "type": "passive"
+      },
+      "47": {
+        "name": "47",
+        "type": "passive"
+      },
+      "48": {
+        "name": "48",
+        "type": "passive"
+      },
+      "49": {
+        "name": "49",
+        "type": "passive"
+      },
+      "50": {
+        "name": "50",
+        "type": "passive"
+      },
+      "51": {
+        "name": "51",
+        "type": "passive"
+      },
+      "52": {
+        "name": "52",
+        "type": "passive"
+      },
+      "53": {
+        "name": "53",
+        "type": "passive"
+      },
+      "54": {
+        "name": "54",
+        "type": "passive"
+      },
+      "55": {
+        "name": "55",
+        "type": "passive"
+      },
+      "56": {
+        "name": "56",
+        "type": "passive"
+      },
+      "57": {
+        "name": "57",
+        "type": "passive"
+      },
+      "58": {
+        "name": "58",
+        "type": "passive"
+      },
+      "59": {
+        "name": "59",
+        "type": "passive"
+      },
+      "60": {
+        "name": "60",
+        "type": "passive"
+      },
+      "61": {
+        "name": "61",
+        "type": "passive"
+      },
+      "62": {
+        "name": "62",
+        "type": "passive"
+      },
+      "63": {
+        "name": "63",
+        "type": "passive"
+      },
+      "64": {
+        "name": "64",
+        "type": "passive"
+      },
+      "65": {
+        "name": "65",
+        "type": "passive"
+      },
+      "66": {
+        "name": "66",
+        "type": "passive"
+      },
+      "67": {
+        "name": "67",
+        "type": "passive"
+      },
+      "68": {
+        "name": "68",
+        "type": "passive"
+      },
+      "69": {
+        "name": "69",
+        "type": "passive"
+      },
+      "70": {
+        "name": "70",
+        "type": "passive"
+      },
+      "71": {
+        "name": "71",
+        "type": "passive"
+      },
+      "72": {
+        "name": "72",
+        "type": "passive"
+      },
+      "73": {
+        "name": "73",
+        "type": "passive"
+      },
+      "74": {
+        "name": "74",
+        "type": "passive"
+      },
+      "75": {
+        "name": "75",
+        "type": "passive"
+      },
+      "76": {
+        "name": "76",
+        "type": "passive"
+      },
+      "77": {
+        "name": "77",
+        "type": "passive"
+      },
+      "78": {
+        "name": "78",
+        "type": "passive"
+      },
+      "79": {
+        "name": "79",
+        "type": "passive"
+      },
+      "80": {
+        "name": "80",
+        "type": "passive"
+      },
+      "81": {
+        "name": "81",
+        "type": "passive"
+      },
+      "82": {
+        "name": "82",
+        "type": "passive"
+      },
+      "83": {
+        "name": "83",
+        "type": "passive"
+      },
+      "84": {
+        "name": "84",
+        "type": "passive"
+      },
+      "85": {
+        "name": "85",
+        "type": "passive"
+      },
+      "86": {
+        "name": "86",
+        "type": "passive"
+      },
+      "87": {
+        "name": "87",
+        "type": "passive"
+      },
+      "88": {
+        "name": "88",
+        "type": "passive"
+      },
+      "89": {
+        "name": "89",
+        "type": "passive"
+      },
+      "90": {
+        "name": "90",
+        "type": "passive"
+      },
+      "91": {
+        "name": "91",
+        "type": "passive"
+      },
+      "92": {
+        "name": "92",
+        "type": "passive"
+      },
+      "93": {
+        "name": "93",
+        "type": "passive"
+      },
+      "94": {
+        "name": "94",
+        "type": "passive"
+      },
+      "95": {
+        "name": "95",
+        "type": "passive"
+      },
+      "96": {
+        "name": "96",
+        "type": "passive"
+      },
+      "97": {
+        "name": "97",
+        "type": "passive"
+      },
+      "98": {
+        "name": "98",
+        "type": "passive"
+      },
+      "99": {
+        "name": "99",
+        "type": "passive"
+      },
+      "100": {
+        "name": "100",
+        "type": "passive"
+      },
+      "101": {
+        "name": "101",
+        "type": "passive"
+      },
+      "102": {
+        "name": "102",
+        "type": "passive"
+      },
+      "103": {
+        "name": "103",
+        "type": "passive"
+      },
+      "104": {
+        "name": "104",
+        "type": "passive"
+      },
+      "105": {
+        "name": "105",
+        "type": "passive"
+      },
+      "106": {
+        "name": "106",
+        "type": "passive"
+      },
+      "107": {
+        "name": "107",
+        "type": "passive"
+      },
+      "108": {
+        "name": "108",
+        "type": "passive"
+      },
+      "109": {
+        "name": "109",
+        "type": "passive"
+      },
+      "110": {
+        "name": "110",
+        "type": "passive"
+      },
+      "111": {
+        "name": "111",
+        "type": "passive"
+      },
+      "112": {
+        "name": "112",
+        "type": "passive"
+      },
+      "113": {
+        "name": "113",
+        "type": "passive"
+      },
+      "114": {
+        "name": "114",
+        "type": "passive"
+      },
+      "115": {
+        "name": "115",
+        "type": "passive"
+      },
+      "116": {
+        "name": "116",
+        "type": "passive"
+      },
+      "117": {
+        "name": "117",
+        "type": "passive"
+      },
+      "118": {
+        "name": "118",
+        "type": "passive"
+      },
+      "119": {
+        "name": "119",
+        "type": "passive"
+      },
+      "120": {
+        "name": "120",
+        "type": "passive"
+      },
+      "121": {
+        "name": "121",
+        "type": "passive"
+      },
+      "122": {
+        "name": "122",
+        "type": "passive"
+      },
+      "123": {
+        "name": "123",
+        "type": "passive"
+      },
+      "124": {
+        "name": "124",
+        "type": "passive"
+      },
+      "125": {
+        "name": "125",
+        "type": "passive"
+      },
+      "126": {
+        "name": "126",
+        "type": "passive"
+      },
+      "127": {
+        "name": "127",
+        "type": "passive"
+      },
+      "128": {
+        "name": "128",
+        "type": "passive"
+      },
+      "129": {
+        "name": "129",
+        "type": "passive"
+      },
+      "130": {
+        "name": "130",
+        "type": "passive"
+      },
+      "131": {
+        "name": "131",
+        "type": "passive"
+      },
+      "132": {
+        "name": "132",
+        "type": "passive"
+      },
+      "133": {
+        "name": "133",
+        "type": "passive"
+      },
+      "134": {
+        "name": "134",
+        "type": "passive"
+      },
+      "135": {
+        "name": "135",
+        "type": "passive"
+      },
+      "136": {
+        "name": "136",
+        "type": "passive"
+      },
+      "137": {
+        "name": "137",
+        "type": "passive"
+      },
+      "138": {
+        "name": "138",
+        "type": "passive"
+      },
+      "139": {
+        "name": "139",
+        "type": "passive"
+      },
+      "140": {
+        "name": "140",
+        "type": "passive"
+      },
+      "141": {
+        "name": "141",
+        "type": "passive"
+      },
+      "142": {
+        "name": "142",
+        "type": "passive"
+      },
+      "143": {
+        "name": "143",
+        "type": "passive"
+      },
+      "144": {
+        "name": "144",
+        "type": "passive"
+      },
+      "145": {
+        "name": "145",
+        "type": "passive"
+      },
+      "146": {
+        "name": "146",
+        "type": "passive"
+      },
+      "147": {
+        "name": "147",
+        "type": "passive"
+      },
+      "148": {
+        "name": "148",
+        "type": "passive"
+      },
+      "149": {
+        "name": "149",
+        "type": "passive"
+      },
+      "150": {
+        "name": "150",
+        "type": "passive"
+      },
+      "151": {
+        "name": "151",
+        "type": "passive"
+      },
+      "152": {
+        "name": "152",
+        "type": "passive"
+      },
+      "153": {
+        "name": "153",
+        "type": "passive"
+      },
+      "154": {
+        "name": "154",
+        "type": "passive"
+      },
+      "155": {
+        "name": "155",
+        "type": "passive"
+      },
+      "156": {
+        "name": "156",
+        "type": "passive"
+      },
+      "157": {
+        "name": "157",
+        "type": "passive"
+      },
+      "158": {
+        "name": "158",
+        "type": "passive"
+      },
+      "159": {
+        "name": "159",
+        "type": "passive"
+      },
+      "160": {
+        "name": "160",
+        "type": "passive"
+      },
+      "161": {
+        "name": "161",
+        "type": "passive"
+      },
+      "162": {
+        "name": "162",
+        "type": "passive"
+      },
+      "163": {
+        "name": "163",
+        "type": "passive"
+      },
+      "164": {
+        "name": "164",
+        "type": "passive"
+      },
+      "165": {
+        "name": "165",
+        "type": "passive"
+      },
+      "166": {
+        "name": "166",
+        "type": "passive"
+      },
+      "167": {
+        "name": "167",
+        "type": "passive"
+      },
+      "168": {
+        "name": "168",
+        "type": "passive"
+      },
+      "169": {
+        "name": "169",
+        "type": "passive"
+      },
+      "170": {
+        "name": "170",
+        "type": "passive"
+      },
+      "171": {
+        "name": "171",
+        "type": "passive"
+      },
+      "172": {
+        "name": "172",
+        "type": "passive"
+      },
+      "173": {
+        "name": "173",
+        "type": "passive"
+      },
+      "174": {
+        "name": "174",
+        "type": "passive"
+      },
+      "175": {
+        "name": "175",
+        "type": "passive"
+      },
+      "176": {
+        "name": "176",
+        "type": "passive"
+      },
+      "177": {
+        "name": "177",
+        "type": "passive"
+      },
+      "178": {
+        "name": "178",
+        "type": "passive"
+      },
+      "179": {
+        "name": "179",
+        "type": "passive"
+      },
+      "180": {
+        "name": "180",
+        "type": "passive"
+      }
+    },
+    "note": "ASSUMED - modelled on the common C2000 180-pin controlCARD layout; every assignment below must be verified against the TMDSCNCD280039C pin-out (review item R-01); unlisted contacts are left unconnected",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C16",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Card supply reservoir at the socket",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C17",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Card supply reservoir at the socket",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C18",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Card supply reservoir at the socket",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C19",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Card supply reservoir at the socket",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C20",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R15",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ARM",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Default off / reset when the card is absent",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R16",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RUN_EN",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Default off / reset when the card is absent",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R17",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DRV_RST_MCU",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Default off / reset when the card is absent",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R18",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "BIAS_EN_MCU",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Default off / reset when the card is absent",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R19",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM1A",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R20",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM1B",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R21",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM2A",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R22",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM2B",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R23",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM3A",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R24",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM3B",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R25",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM4A",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R26",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "EPWM4B",
+      "2": "GND_CTRL"
+    },
+    "page": "02_card",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U5",
+    "value": "SN74LVC2G08DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "EPWM1A",
+      "2": "PWM_ENABLE",
+      "3": "P_PWM_AL_SRC",
+      "4": "GND_CTRL",
+      "5": "EPWM1B",
+      "6": "PWM_ENABLE",
+      "7": "P_PWM_AH_SRC",
+      "8": "3V3"
+    },
+    "page": "03_pwm_gating",
+    "kind": "IC",
+    "mpn": "SN74LVC2G08DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2A",
+        "type": "input"
+      },
+      "6": {
+        "name": "2B",
+        "type": "input"
+      },
+      "7": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C21",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R27",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_PWM_AH_SRC",
+      "2": "P_PWM_AH"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R28",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_PWM_AL_SRC",
+      "2": "P_PWM_AL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U6",
+    "value": "SN74LVC2G08DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "EPWM2A",
+      "2": "PWM_ENABLE",
+      "3": "P_PWM_BL_SRC",
+      "4": "GND_CTRL",
+      "5": "EPWM2B",
+      "6": "PWM_ENABLE",
+      "7": "P_PWM_BH_SRC",
+      "8": "3V3"
+    },
+    "page": "03_pwm_gating",
+    "kind": "IC",
+    "mpn": "SN74LVC2G08DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2A",
+        "type": "input"
+      },
+      "6": {
+        "name": "2B",
+        "type": "input"
+      },
+      "7": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C22",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R29",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_PWM_BH_SRC",
+      "2": "P_PWM_BH"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R30",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_PWM_BL_SRC",
+      "2": "P_PWM_BL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U7",
+    "value": "SN74LVC2G08DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "EPWM3A",
+      "2": "PWM_ENABLE",
+      "3": "S_PWM_AL_SRC",
+      "4": "GND_CTRL",
+      "5": "EPWM3B",
+      "6": "PWM_ENABLE",
+      "7": "S_PWM_AH_SRC",
+      "8": "3V3"
+    },
+    "page": "03_pwm_gating",
+    "kind": "IC",
+    "mpn": "SN74LVC2G08DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2A",
+        "type": "input"
+      },
+      "6": {
+        "name": "2B",
+        "type": "input"
+      },
+      "7": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C23",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R31",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_PWM_AH_SRC",
+      "2": "S_PWM_AH"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R32",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_PWM_AL_SRC",
+      "2": "S_PWM_AL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U8",
+    "value": "SN74LVC2G08DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "EPWM4A",
+      "2": "PWM_ENABLE",
+      "3": "S_PWM_BL_SRC",
+      "4": "GND_CTRL",
+      "5": "EPWM4B",
+      "6": "PWM_ENABLE",
+      "7": "S_PWM_BH_SRC",
+      "8": "3V3"
+    },
+    "page": "03_pwm_gating",
+    "kind": "IC",
+    "mpn": "SN74LVC2G08DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2A",
+        "type": "input"
+      },
+      "6": {
+        "name": "2B",
+        "type": "input"
+      },
+      "7": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C24",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R33",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_PWM_BH_SRC",
+      "2": "S_PWM_BH"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R34",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_PWM_BL_SRC",
+      "2": "S_PWM_BL"
+    },
+    "page": "03_pwm_gating",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U9",
+    "value": "SN74LV21APWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "1": "P_FLT_AH_N",
+      "2": "P_FLT_AL_N",
+      "4": "P_FLT_BH_N",
+      "5": "P_FLT_BL_N",
+      "6": "FLT_P_OK",
+      "7": "GND_CTRL",
+      "8": "FLT_S_OK",
+      "9": "S_FLT_AH_N",
+      "10": "S_FLT_AL_N",
+      "12": "S_FLT_BH_N",
+      "13": "S_FLT_BL_N",
+      "14": "3V3",
+      "3": null,
+      "11": null
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LV21APWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "4": {
+        "name": "1C",
+        "type": "input"
+      },
+      "5": {
+        "name": "1D",
+        "type": "input"
+      },
+      "6": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "7": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "9": {
+        "name": "2A",
+        "type": "input"
+      },
+      "10": {
+        "name": "2B",
+        "type": "input"
+      },
+      "11": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "12": {
+        "name": "2C",
+        "type": "input"
+      },
+      "13": {
+        "name": "2D",
+        "type": "input"
+      },
+      "14": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C25",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U10",
+    "value": "SN74LV21APWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "1": "P_RDY_AH",
+      "2": "P_RDY_AL",
+      "4": "P_RDY_BH",
+      "5": "P_RDY_BL",
+      "6": "RDY_P_OK",
+      "7": "GND_CTRL",
+      "8": "RDY_S_OK",
+      "9": "S_RDY_AH",
+      "10": "S_RDY_AL",
+      "12": "S_RDY_BH",
+      "13": "S_RDY_BL",
+      "14": "3V3",
+      "3": null,
+      "11": null
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LV21APWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "4": {
+        "name": "1C",
+        "type": "input"
+      },
+      "5": {
+        "name": "1D",
+        "type": "input"
+      },
+      "6": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "7": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "9": {
+        "name": "2A",
+        "type": "input"
+      },
+      "10": {
+        "name": "2B",
+        "type": "input"
+      },
+      "11": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "12": {
+        "name": "2C",
+        "type": "input"
+      },
+      "13": {
+        "name": "2D",
+        "type": "input"
+      },
+      "14": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C26",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U11",
+    "value": "SN74LV21APWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "1": "PG_P_OK",
+      "2": "PG_S_OK",
+      "4": "P_OC_TRIP_N",
+      "5": "S_OC_TRIP_N",
+      "6": "PROT_OK",
+      "7": "GND_CTRL",
+      "8": "SUPPLY_OK",
+      "9": "OV_P_OK",
+      "10": "OV_S_OK",
+      "12": "AUX_FLT_N",
+      "13": "NRST",
+      "14": "3V3",
+      "3": null,
+      "11": null
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LV21APWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "4": {
+        "name": "1C",
+        "type": "input"
+      },
+      "5": {
+        "name": "1D",
+        "type": "input"
+      },
+      "6": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "7": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "9": {
+        "name": "2A",
+        "type": "input"
+      },
+      "10": {
+        "name": "2B",
+        "type": "input"
+      },
+      "11": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "12": {
+        "name": "2C",
+        "type": "input"
+      },
+      "13": {
+        "name": "2D",
+        "type": "input"
+      },
+      "14": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C27",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U12",
+    "value": "SN74LV21APWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "1": "FLT_P_OK",
+      "2": "FLT_S_OK",
+      "4": "RDY_P_OK",
+      "5": "RDY_S_OK",
+      "6": "DRIVERS_OK",
+      "7": "GND_CTRL",
+      "8": "ALL_GOOD",
+      "9": "PROT_OK",
+      "10": "SUPPLY_OK",
+      "12": "DRIVERS_OK",
+      "13": "3V3",
+      "14": "3V3",
+      "3": null,
+      "11": null
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LV21APWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "4": {
+        "name": "1C",
+        "type": "input"
+      },
+      "5": {
+        "name": "1D",
+        "type": "input"
+      },
+      "6": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "7": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "9": {
+        "name": "2A",
+        "type": "input"
+      },
+      "10": {
+        "name": "2B",
+        "type": "input"
+      },
+      "11": {
+        "name": "NC",
+        "type": "no_connect"
+      },
+      "12": {
+        "name": "2C",
+        "type": "input"
+      },
+      "13": {
+        "name": "2D",
+        "type": "input"
+      },
+      "14": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C28",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U13",
+    "value": "SN74LV04APWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "1": "P_PG_BIAS_N",
+      "2": "PG_P_OK",
+      "3": "S_PG_BIAS_N",
+      "4": "PG_S_OK",
+      "5": "ALL_GOOD",
+      "6": "FAULT_RD",
+      "7": "GND_CTRL",
+      "8": null,
+      "9": "GND_CTRL",
+      "10": null,
+      "11": "GND_CTRL",
+      "12": null,
+      "13": "GND_CTRL",
+      "14": "3V3"
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LV04APWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lv04a.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "3": {
+        "name": "2A",
+        "type": "input"
+      },
+      "4": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "5": {
+        "name": "3A",
+        "type": "input"
+      },
+      "6": {
+        "name": "3Y",
+        "type": "output"
+      },
+      "7": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "8": {
+        "name": "4Y",
+        "type": "output"
+      },
+      "9": {
+        "name": "4A",
+        "type": "input"
+      },
+      "10": {
+        "name": "5Y",
+        "type": "output"
+      },
+      "11": {
+        "name": "5A",
+        "type": "input"
+      },
+      "12": {
+        "name": "6Y",
+        "type": "output"
+      },
+      "13": {
+        "name": "6A",
+        "type": "input"
+      },
+      "14": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "UCC14141 PG is open-drain LOW = good; inverted for the AND tree; FAULT_RD = NOT ALL_GOOD to the card",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C29",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R35",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "P_PG_BIAS_N"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Local pull-up: an unplugged harness reads as a fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R36",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "S_PG_BIAS_N"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Local pull-up: an unplugged harness reads as a fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R37",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "P_OC_TRIP_N"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Local pull-up: an unplugged harness reads as a fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R38",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "S_OC_TRIP_N"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Local pull-up: an unplugged harness reads as a fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R39",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_FLT_AH_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R40",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_FLT_AL_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R41",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_FLT_BH_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R42",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_FLT_BL_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R43",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_FLT_AH_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R44",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_FLT_AL_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R45",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_FLT_BH_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R46",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_FLT_BL_N",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Weak pull-down: unplugged harness reads as a driver fault",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R47",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_RDY_AH",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R48",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_RDY_AL",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R49",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_RDY_BH",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R50",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_RDY_BL",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R51",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_RDY_AH",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R52",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_RDY_AL",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R53",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_RDY_BH",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R54",
+    "value": "100k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_RDY_BL",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-07100KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U14",
+    "value": "REF3130AIDBZR",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "nets": {
+      "1": "5V0",
+      "2": "REF3",
+      "3": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "REF3130AIDBZR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/gpn/ref3130",
+    "pins": {
+      "1": {
+        "name": "IN",
+        "type": "power_in"
+      },
+      "2": {
+        "name": "OUT",
+        "type": "power_out"
+      },
+      "3": {
+        "name": "GND",
+        "type": "power_in"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C30",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C31",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "REF3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R55",
+    "value": "1.3k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "REF3",
+      "2": "V_OV_P"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "TNPW06031K30BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R56",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V_OV_P",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Trip 900 V primary (2.66 V) / 480 V secondary (2.83 V) at the receiver scaling",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C32",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "V_OV_P",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R57",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VBUS_RX",
+      "2": "P_VBUS_CMP"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R58",
+    "value": "590",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "REF3",
+      "2": "V_OV_S"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "TNPW0603590RBEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R59",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V_OV_S",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Trip 900 V primary (2.66 V) / 480 V secondary (2.83 V) at the receiver scaling",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C33",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "V_OV_S",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R60",
+    "value": "1k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VBUS_RX",
+      "2": "S_VBUS_CMP"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-071KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U15",
+    "value": "TLV1702AIDGKR",
+    "footprint": "AIPE:DAB_DGK8",
+    "nets": {
+      "1": "OV_P_OK",
+      "2": "P_VBUS_CMP",
+      "3": "V_OV_P",
+      "4": "GND_CTRL",
+      "5": "V_OV_S",
+      "6": "S_VBUS_CMP",
+      "7": "OV_S_OK",
+      "8": "3V3"
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "TLV1702AIDGKR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tlv1702.pdf",
+    "pins": {
+      "1": {
+        "name": "1OUT",
+        "type": "open_collector"
+      },
+      "2": {
+        "name": "1IN-",
+        "type": "input"
+      },
+      "3": {
+        "name": "1IN+",
+        "type": "input"
+      },
+      "4": {
+        "name": "V-",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2IN+",
+        "type": "input"
+      },
+      "6": {
+        "name": "2IN-",
+        "type": "input"
+      },
+      "7": {
+        "name": "2OUT",
+        "type": "open_collector"
+      },
+      "8": {
+        "name": "V+",
+        "type": "power_in"
+      }
+    },
+    "note": "Open-collector outputs high while the bus is below threshold",
+    "xy": null,
+    "board": "control",
+    "dnp": false,
+    "amplifier_channels": [
+      {
+        "positive": "3",
+        "negative": "2",
+        "output": "1"
+      },
+      {
+        "positive": "5",
+        "negative": "6",
+        "output": "7"
+      }
+    ]
+  },
+  {
+    "ref": "R61",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "OV_P_OK"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R62",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "OV_S_OK"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-0710KL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C34",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U16",
+    "value": "SN74LVC1G74DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "ARM",
+      "2": "3V3",
+      "3": "TRIPPED",
+      "4": "GND_CTRL",
+      "5": "ARMED",
+      "6": "ALL_GOOD",
+      "7": "3V3",
+      "8": "3V3"
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LVC1G74DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf",
+    "pins": {
+      "1": {
+        "name": "CLK",
+        "type": "input"
+      },
+      "2": {
+        "name": "D",
+        "type": "input"
+      },
+      "3": {
+        "name": "Q_N",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "Q",
+        "type": "output"
+      },
+      "6": {
+        "name": "CLR_N",
+        "type": "input"
+      },
+      "7": {
+        "name": "PRE_N",
+        "type": "input"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "D = 1, CLK = ARM pulse from the card, CLR_N = ALL_GOOD; Q = ARMED feeds the PWM gate and the card TZ input; Q_N = TRIPPED",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C35",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U17",
+    "value": "SN74LVC2G08DCTR",
+    "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+    "nets": {
+      "1": "ARMED",
+      "2": "RUN_EN",
+      "3": null,
+      "4": "GND_CTRL",
+      "5": "GND_CTRL",
+      "6": "GND_CTRL",
+      "7": "PWM_ENABLE",
+      "8": "3V3"
+    },
+    "page": "04_fault_logic",
+    "kind": "IC",
+    "mpn": "SN74LVC2G08DCTR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf",
+    "pins": {
+      "1": {
+        "name": "1A",
+        "type": "input"
+      },
+      "2": {
+        "name": "1B",
+        "type": "input"
+      },
+      "3": {
+        "name": "2Y",
+        "type": "output"
+      },
+      "4": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "2A",
+        "type": "input"
+      },
+      "6": {
+        "name": "2B",
+        "type": "input"
+      },
+      "7": {
+        "name": "1Y",
+        "type": "output"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "PWM_ENABLE = ARMED AND RUN_EN",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C36",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "04_fault_logic",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R63",
+    "value": "0",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "ARMED",
+      "2": "TZ_TRIP"
+    },
+    "page": "04_fault_logic",
+    "kind": "R",
+    "mpn": "RC0603FR-070RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Card trip-zone input: low = trip (latch cleared)",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP2",
+    "value": "TRIPPED",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "TRIPPED"
+    },
+    "page": "04_fault_logic",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP3",
+    "value": "ALL_GOOD",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "ALL_GOOD"
+    },
+    "page": "04_fault_logic",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP4",
+    "value": "PWM_ENABLE",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "PWM_ENABLE"
+    },
+    "page": "04_fault_logic",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R64",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VSNS_N",
+      "2": "P_VM"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R65",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VBUS_RX",
+      "2": "P_VM"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R66",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VSNS_P",
+      "2": "P_VA"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R67",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VA",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C37",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "P_VBUS_RX",
+      "2": "P_VM"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C38",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "P_VA",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R68",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VSNS_N",
+      "2": "S_VM"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R69",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VBUS_RX",
+      "2": "S_VM"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R70",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VSNS_P",
+      "2": "S_VA"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R71",
+    "value": "15k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VA",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060315K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C39",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "S_VBUS_RX",
+      "2": "S_VM"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C40",
+    "value": "100p/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "S_VA",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H101JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H101JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U18",
+    "value": "OPA4192IPWR",
+    "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+    "nets": {
+      "4": "5V0",
+      "11": "GND_CTRL",
+      "1": "P_VBUS_RX",
+      "2": "P_VM",
+      "3": "P_VA",
+      "7": "S_VBUS_RX",
+      "6": "S_VM",
+      "5": "S_VA",
+      "8": "P_ISNS_BUF",
+      "9": "P_ISNS_BUF",
+      "10": "P_ISNS",
+      "14": "S_ISNS_BUF",
+      "13": "S_ISNS_BUF",
+      "12": "S_ISNS"
+    },
+    "page": "05_analog",
+    "kind": "IC",
+    "mpn": "OPA4192IPWR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/opa4192.pdf",
+    "pins": {
+      "1": {
+        "name": "OUTA",
+        "type": "output"
+      },
+      "2": {
+        "name": "INA-",
+        "type": "input"
+      },
+      "3": {
+        "name": "INA+",
+        "type": "input"
+      },
+      "4": {
+        "name": "V+",
+        "type": "power_in"
+      },
+      "5": {
+        "name": "INB+",
+        "type": "input"
+      },
+      "6": {
+        "name": "INB-",
+        "type": "input"
+      },
+      "7": {
+        "name": "OUTB",
+        "type": "output"
+      },
+      "8": {
+        "name": "OUTC",
+        "type": "output"
+      },
+      "9": {
+        "name": "INC-",
+        "type": "input"
+      },
+      "10": {
+        "name": "INC+",
+        "type": "input"
+      },
+      "11": {
+        "name": "V-",
+        "type": "power_in"
+      },
+      "12": {
+        "name": "IND+",
+        "type": "input"
+      },
+      "13": {
+        "name": "IND-",
+        "type": "input"
+      },
+      "14": {
+        "name": "OUTD",
+        "type": "output"
+      }
+    },
+    "note": "A/B: 1.5 x differential receivers (1.574 V at nominal bus -> 2.36 V); C/D: unity buffers for the Hall outputs",
+    "xy": null,
+    "board": "control",
+    "dnp": false,
+    "amplifier_channels": [
+      {
+        "positive": "3",
+        "negative": "2",
+        "output": "1"
+      },
+      {
+        "positive": "5",
+        "negative": "6",
+        "output": "7"
+      },
+      {
+        "positive": "10",
+        "negative": "9",
+        "output": "8"
+      },
+      {
+        "positive": "12",
+        "negative": "13",
+        "output": "14"
+      }
+    ]
+  },
+  {
+    "ref": "C41",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C42",
+    "value": "1u/50V",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM21BR71H105KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71H105KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R72",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_VBUS_RX",
+      "2": "ADC_VBUS_P"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C43",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_VBUS_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D2",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_VBUS_P"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D3",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_VBUS_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R73",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_VBUS_RX",
+      "2": "ADC_VBUS_S"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C44",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_VBUS_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D4",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_VBUS_S"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D5",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_VBUS_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R74",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_ISNS_BUF",
+      "2": "ADC_ITANK_P"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C45",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_ITANK_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D6",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_ITANK_P"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D7",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_ITANK_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R75",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_ISNS_BUF",
+      "2": "ADC_ITANK_S"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C46",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_ITANK_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D8",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_ITANK_S"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D9",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_ITANK_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R76",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_TEMP_HS",
+      "2": "ADC_TEMP_P"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C47",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_TEMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D10",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_TEMP_P"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D11",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_TEMP_P",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R77",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_TEMP_HS",
+      "2": "ADC_TEMP_S"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C48",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_TEMP_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D12",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_TEMP_S"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D13",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_TEMP_S",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R78",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V12_DIV",
+      "2": "ADC_V12"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C49",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_V12",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D14",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_V12"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D15",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_V12",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R79",
+    "value": "220",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V5_DIV",
+      "2": "ADC_5V"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-07220RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C50",
+    "value": "1n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "ADC_5V",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "C",
+    "mpn": "GRM1885C1H102JA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM1885C1H102JA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D16",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "3V3",
+      "2": "ADC_5V"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D17",
+    "value": "BAT46W-E3-08",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "nets": {
+      "1": "ADC_5V",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "D",
+    "mpn": "BAT46W-E3-08",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/86406/bat46w.pdf",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R80",
+    "value": "43k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "V12_DIV"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060343K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R81",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V12_DIV",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R82",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "V5_DIV"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R83",
+    "value": "10k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "V5_DIV",
+      "2": "GND_CTRL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "TNPW060310K0BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R84",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_TEMP_PWM_AH",
+      "2": "TEMP_PWM_P_AH"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R85",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_TEMP_PWM_AL",
+      "2": "TEMP_PWM_P_AL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R86",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_TEMP_PWM_BH",
+      "2": "TEMP_PWM_P_BH"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R87",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_TEMP_PWM_BL",
+      "2": "TEMP_PWM_P_BL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R88",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "SDFM_P_CLK",
+      "2": "P_SDFM_CLK"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R89",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "P_SDFM_D",
+      "2": "SDFM_P_D"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R90",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_TEMP_PWM_AH",
+      "2": "TEMP_PWM_S_AH"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R91",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_TEMP_PWM_AL",
+      "2": "TEMP_PWM_S_AL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R92",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_TEMP_PWM_BH",
+      "2": "TEMP_PWM_S_BH"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R93",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_TEMP_PWM_BL",
+      "2": "TEMP_PWM_S_BL"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R94",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "SDFM_S_CLK",
+      "2": "S_SDFM_CLK"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R95",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "S_SDFM_D",
+      "2": "SDFM_S_D"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R96",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "DRV_RST_MCU",
+      "2": "DRV_RST"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R97",
+    "value": "33",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "BIAS_EN_MCU",
+      "2": "BIAS_EN"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-0733RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R98",
+    "value": "0",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "NRST",
+      "2": "XRS_CARD"
+    },
+    "page": "05_analog",
+    "kind": "R",
+    "mpn": "RC0603FR-070RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Supervisor reset to the card reset line (open-drain both sides)",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U19",
+    "value": "TCAN1042HGVDRQ1",
+    "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+    "nets": {
+      "1": "CAN_TX",
+      "2": "GND_CTRL",
+      "3": "5V0",
+      "4": "CAN_RX",
+      "5": "3V3",
+      "6": "CANL",
+      "7": "CANH",
+      "8": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "IC",
+    "mpn": "TCAN1042HGVDRQ1",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/tcan1042-q1.pdf",
+    "pins": {
+      "1": {
+        "name": "TXD",
+        "type": "input"
+      },
+      "2": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "3": {
+        "name": "VCC",
+        "type": "power_in"
+      },
+      "4": {
+        "name": "RXD",
+        "type": "output"
+      },
+      "5": {
+        "name": "VIO",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "CANL",
+        "type": "bidirectional"
+      },
+      "7": {
+        "name": "CANH",
+        "type": "bidirectional"
+      },
+      "8": {
+        "name": "STB",
+        "type": "input"
+      }
+    },
+    "note": "STB low = normal mode; VIO 3.3 V, VCC 5 V",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C51",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "5V0",
+      "2": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C52",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R99",
+    "value": "60.4",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "CANH",
+      "2": "CAN_MID"
+    },
+    "page": "06_comms",
+    "kind": "R",
+    "mpn": "TNPW060360R4BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R100",
+    "value": "60.4",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "CANL",
+      "2": "CAN_MID"
+    },
+    "page": "06_comms",
+    "kind": "R",
+    "mpn": "TNPW060360R4BEEA",
+    "maker": "Vishay",
+    "source": "https://www.vishay.com/docs/28773/tnpwe3.pdf",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C53",
+    "value": "4.7n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "CAN_MID",
+      "2": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "C",
+    "mpn": "GRM188R71H472KA01D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H472KA01%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "Split termination; remove the resistors when the node is not a bus end",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D18",
+    "value": "PESD1CAN",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "nets": {
+      "1": "CANH",
+      "2": "CANL",
+      "3": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "D",
+    "mpn": "PESD1CAN,215",
+    "maker": "Nexperia",
+    "source": "https://assets.nexperia.com/documents/data-sheet/PESD1CAN.pdf",
+    "pins": {
+      "1": {
+        "name": "IO1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "IO2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "GND",
+        "type": "passive"
+      }
+    },
+    "note": "Pinout transcribed (IO1, IO2, common cathode GND) - verify",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "J5",
+    "value": "CAN BUS",
+    "footprint": "Connector_Phoenix_MC:PhoenixContact_MC_1,5_3-G-3.81_1x03_P3.81mm_Horizontal",
+    "nets": {
+      "1": "CANH",
+      "2": "CANL",
+      "3": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "J",
+    "mpn": 1803581,
+    "maker": "Phoenix Contact",
+    "source": "https://www.phoenixcontact.com/en-pc/products/1803581",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "U20",
+    "value": "THVD1450DR",
+    "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+    "nets": {
+      "1": "RS485_RX",
+      "2": "RS485_DE",
+      "3": "RS485_DE",
+      "4": "RS485_TX",
+      "5": "GND_CTRL",
+      "6": "RS485_A",
+      "7": "RS485_B",
+      "8": "3V3"
+    },
+    "page": "06_comms",
+    "kind": "IC",
+    "mpn": "THVD1450DR",
+    "maker": "Texas Instruments",
+    "source": "https://www.ti.com/lit/ds/symlink/thvd1450.pdf",
+    "pins": {
+      "1": {
+        "name": "R",
+        "type": "output"
+      },
+      "2": {
+        "name": "RE_N",
+        "type": "input"
+      },
+      "3": {
+        "name": "DE",
+        "type": "input"
+      },
+      "4": {
+        "name": "D",
+        "type": "input"
+      },
+      "5": {
+        "name": "GND",
+        "type": "power_in"
+      },
+      "6": {
+        "name": "A",
+        "type": "bidirectional"
+      },
+      "7": {
+        "name": "B",
+        "type": "bidirectional"
+      },
+      "8": {
+        "name": "VCC",
+        "type": "power_in"
+      }
+    },
+    "note": "Receiver enable tied to the driver enable (half duplex)",
+    "xy": null,
+    "board": "control",
+    "dnp": true
+  },
+  {
+    "ref": "C54",
+    "value": "100n/50V",
+    "footprint": "Capacitor_SMD:C_0603_1608Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "C",
+    "mpn": "GRM188R71H104KA93D",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM188R71H104KA93%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": true
+  },
+  {
+    "ref": "R101",
+    "value": "120",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "RS485_A",
+      "2": "RS485_B"
+    },
+    "page": "06_comms",
+    "kind": "R",
+    "mpn": "RC0603FR-07120RL",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": true
+  },
+  {
+    "ref": "J6",
+    "value": "RS-485",
+    "footprint": "Connector_Phoenix_MC:PhoenixContact_MC_1,5_3-G-3.81_1x03_P3.81mm_Horizontal",
+    "nets": {
+      "1": "RS485_A",
+      "2": "RS485_B",
+      "3": "GND_CTRL"
+    },
+    "page": "06_comms",
+    "kind": "J",
+    "mpn": 1803581,
+    "maker": "Phoenix Contact",
+    "source": "https://www.phoenixcontact.com/en-pc/products/1803581",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": true
+  },
+  {
+    "ref": "J7",
+    "value": "JTAG 14-pin",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical",
+    "nets": {
+      "1": "TMS",
+      "2": "TRST_N",
+      "3": "TDI",
+      "4": "GND_CTRL",
+      "5": "3V3",
+      "6": null,
+      "7": "TDO",
+      "8": "GND_CTRL",
+      "9": "TCK",
+      "10": "GND_CTRL",
+      "11": "TCK",
+      "12": "GND_CTRL",
+      "13": "EMU0",
+      "14": "EMU1"
+    },
+    "page": "06_comms",
+    "kind": "J",
+    "mpn": "TSW-107-07-G-D",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/tsw",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      },
+      "4": {
+        "name": "4",
+        "type": "passive"
+      },
+      "5": {
+        "name": "5",
+        "type": "passive"
+      },
+      "6": {
+        "name": "6",
+        "type": "passive"
+      },
+      "7": {
+        "name": "7",
+        "type": "passive"
+      },
+      "8": {
+        "name": "8",
+        "type": "passive"
+      },
+      "9": {
+        "name": "9",
+        "type": "passive"
+      },
+      "10": {
+        "name": "10",
+        "type": "passive"
+      },
+      "11": {
+        "name": "11",
+        "type": "passive"
+      },
+      "12": {
+        "name": "12",
+        "type": "passive"
+      },
+      "13": {
+        "name": "13",
+        "type": "passive"
+      },
+      "14": {
+        "name": "14",
+        "type": "passive"
+      }
+    },
+    "note": "Pin 6 removed as key; TCK on pins 9 and 11 (TCK return)",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "J2",
+    "value": "PRIMARY POWER BOARD harness",
+    "footprint": "Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical",
+    "nets": {
+      "1": "GND_CTRL",
+      "2": "P_PWM_AH",
+      "3": "GND_CTRL",
+      "4": "P_PWM_AL",
+      "5": "GND_CTRL",
+      "6": "P_PWM_BH",
+      "7": "GND_CTRL",
+      "8": "P_PWM_BL",
+      "9": "GND_CTRL",
+      "10": "DRV_RST",
+      "11": "GND_CTRL",
+      "12": "BIAS_EN",
+      "13": "P_FLT_AH_N",
+      "14": "P_FLT_AL_N",
+      "15": "P_FLT_BH_N",
+      "16": "P_FLT_BL_N",
+      "17": "P_RDY_AH",
+      "18": "P_RDY_AL",
+      "19": "P_RDY_BH",
+      "20": "P_RDY_BL",
+      "21": "P_PG_BIAS_N",
+      "22": "P_OC_TRIP_N",
+      "23": "P_TEMP_HS",
+      "24": "GND_CTRL",
+      "25": "P_VSNS_P",
+      "26": "P_VSNS_N",
+      "27": "P_ISNS",
+      "28": "GND_CTRL",
+      "29": "P_TEMP_PWM_AH",
+      "30": "P_TEMP_PWM_AL",
+      "31": "P_TEMP_PWM_BH",
+      "32": "P_TEMP_PWM_BL",
+      "33": "P_SDFM_CLK",
+      "34": "P_SDFM_D",
+      "35": "12V_E",
+      "36": "12V_E",
+      "37": "GND_CTRL",
+      "38": "GND_CTRL",
+      "39": "3V3",
+      "40": "3V3"
+    },
+    "page": "07_interface",
+    "kind": "J",
+    "mpn": "TST-120-01-G-D",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/tst",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      },
+      "4": {
+        "name": "4",
+        "type": "passive"
+      },
+      "5": {
+        "name": "5",
+        "type": "passive"
+      },
+      "6": {
+        "name": "6",
+        "type": "passive"
+      },
+      "7": {
+        "name": "7",
+        "type": "passive"
+      },
+      "8": {
+        "name": "8",
+        "type": "passive"
+      },
+      "9": {
+        "name": "9",
+        "type": "passive"
+      },
+      "10": {
+        "name": "10",
+        "type": "passive"
+      },
+      "11": {
+        "name": "11",
+        "type": "passive"
+      },
+      "12": {
+        "name": "12",
+        "type": "passive"
+      },
+      "13": {
+        "name": "13",
+        "type": "passive"
+      },
+      "14": {
+        "name": "14",
+        "type": "passive"
+      },
+      "15": {
+        "name": "15",
+        "type": "passive"
+      },
+      "16": {
+        "name": "16",
+        "type": "passive"
+      },
+      "17": {
+        "name": "17",
+        "type": "passive"
+      },
+      "18": {
+        "name": "18",
+        "type": "passive"
+      },
+      "19": {
+        "name": "19",
+        "type": "passive"
+      },
+      "20": {
+        "name": "20",
+        "type": "passive"
+      },
+      "21": {
+        "name": "21",
+        "type": "passive"
+      },
+      "22": {
+        "name": "22",
+        "type": "passive"
+      },
+      "23": {
+        "name": "23",
+        "type": "passive"
+      },
+      "24": {
+        "name": "24",
+        "type": "passive"
+      },
+      "25": {
+        "name": "25",
+        "type": "passive"
+      },
+      "26": {
+        "name": "26",
+        "type": "passive"
+      },
+      "27": {
+        "name": "27",
+        "type": "passive"
+      },
+      "28": {
+        "name": "28",
+        "type": "passive"
+      },
+      "29": {
+        "name": "29",
+        "type": "passive"
+      },
+      "30": {
+        "name": "30",
+        "type": "passive"
+      },
+      "31": {
+        "name": "31",
+        "type": "passive"
+      },
+      "32": {
+        "name": "32",
+        "type": "passive"
+      },
+      "33": {
+        "name": "33",
+        "type": "passive"
+      },
+      "34": {
+        "name": "34",
+        "type": "passive"
+      },
+      "35": {
+        "name": "35",
+        "type": "passive"
+      },
+      "36": {
+        "name": "36",
+        "type": "passive"
+      },
+      "37": {
+        "name": "37",
+        "type": "passive"
+      },
+      "38": {
+        "name": "38",
+        "type": "passive"
+      },
+      "39": {
+        "name": "39",
+        "type": "passive"
+      },
+      "40": {
+        "name": "40",
+        "type": "passive"
+      }
+    },
+    "note": "shrouded header with centre polarising key; cable connector with matching bump; pin 1 triangle on silkscreen",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "J3",
+    "value": "SECONDARY POWER BOARD harness",
+    "footprint": "Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical",
+    "nets": {
+      "1": "GND_CTRL",
+      "2": "S_PWM_AH",
+      "3": "GND_CTRL",
+      "4": "S_PWM_AL",
+      "5": "GND_CTRL",
+      "6": "S_PWM_BH",
+      "7": "GND_CTRL",
+      "8": "S_PWM_BL",
+      "9": "GND_CTRL",
+      "10": "DRV_RST",
+      "11": "GND_CTRL",
+      "12": "BIAS_EN",
+      "13": "S_FLT_AH_N",
+      "14": "S_FLT_AL_N",
+      "15": "S_FLT_BH_N",
+      "16": "S_FLT_BL_N",
+      "17": "S_RDY_AH",
+      "18": "S_RDY_AL",
+      "19": "S_RDY_BH",
+      "20": "S_RDY_BL",
+      "21": "S_PG_BIAS_N",
+      "22": "S_OC_TRIP_N",
+      "23": "S_TEMP_HS",
+      "24": "GND_CTRL",
+      "25": "S_VSNS_P",
+      "26": "S_VSNS_N",
+      "27": "S_ISNS",
+      "28": "GND_CTRL",
+      "29": "S_TEMP_PWM_AH",
+      "30": "S_TEMP_PWM_AL",
+      "31": "S_TEMP_PWM_BH",
+      "32": "S_TEMP_PWM_BL",
+      "33": "S_SDFM_CLK",
+      "34": "S_SDFM_D",
+      "35": "12V_E",
+      "36": "12V_E",
+      "37": "GND_CTRL",
+      "38": "GND_CTRL",
+      "39": "3V3",
+      "40": "3V3"
+    },
+    "page": "07_interface",
+    "kind": "J",
+    "mpn": "TST-120-01-G-D",
+    "maker": "Samtec",
+    "source": "https://www.samtec.com/products/tst",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      },
+      "3": {
+        "name": "3",
+        "type": "passive"
+      },
+      "4": {
+        "name": "4",
+        "type": "passive"
+      },
+      "5": {
+        "name": "5",
+        "type": "passive"
+      },
+      "6": {
+        "name": "6",
+        "type": "passive"
+      },
+      "7": {
+        "name": "7",
+        "type": "passive"
+      },
+      "8": {
+        "name": "8",
+        "type": "passive"
+      },
+      "9": {
+        "name": "9",
+        "type": "passive"
+      },
+      "10": {
+        "name": "10",
+        "type": "passive"
+      },
+      "11": {
+        "name": "11",
+        "type": "passive"
+      },
+      "12": {
+        "name": "12",
+        "type": "passive"
+      },
+      "13": {
+        "name": "13",
+        "type": "passive"
+      },
+      "14": {
+        "name": "14",
+        "type": "passive"
+      },
+      "15": {
+        "name": "15",
+        "type": "passive"
+      },
+      "16": {
+        "name": "16",
+        "type": "passive"
+      },
+      "17": {
+        "name": "17",
+        "type": "passive"
+      },
+      "18": {
+        "name": "18",
+        "type": "passive"
+      },
+      "19": {
+        "name": "19",
+        "type": "passive"
+      },
+      "20": {
+        "name": "20",
+        "type": "passive"
+      },
+      "21": {
+        "name": "21",
+        "type": "passive"
+      },
+      "22": {
+        "name": "22",
+        "type": "passive"
+      },
+      "23": {
+        "name": "23",
+        "type": "passive"
+      },
+      "24": {
+        "name": "24",
+        "type": "passive"
+      },
+      "25": {
+        "name": "25",
+        "type": "passive"
+      },
+      "26": {
+        "name": "26",
+        "type": "passive"
+      },
+      "27": {
+        "name": "27",
+        "type": "passive"
+      },
+      "28": {
+        "name": "28",
+        "type": "passive"
+      },
+      "29": {
+        "name": "29",
+        "type": "passive"
+      },
+      "30": {
+        "name": "30",
+        "type": "passive"
+      },
+      "31": {
+        "name": "31",
+        "type": "passive"
+      },
+      "32": {
+        "name": "32",
+        "type": "passive"
+      },
+      "33": {
+        "name": "33",
+        "type": "passive"
+      },
+      "34": {
+        "name": "34",
+        "type": "passive"
+      },
+      "35": {
+        "name": "35",
+        "type": "passive"
+      },
+      "36": {
+        "name": "36",
+        "type": "passive"
+      },
+      "37": {
+        "name": "37",
+        "type": "passive"
+      },
+      "38": {
+        "name": "38",
+        "type": "passive"
+      },
+      "39": {
+        "name": "39",
+        "type": "passive"
+      },
+      "40": {
+        "name": "40",
+        "type": "passive"
+      }
+    },
+    "note": "shrouded header with centre polarising key; cable connector with matching bump; pin 1 triangle on silkscreen",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C55",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C56",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "12V_E",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "C57",
+    "value": "10u/25V",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "nets": {
+      "1": "3V3",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "C",
+    "mpn": "GRM32ER71E106KA12L",
+    "maker": "Murata",
+    "source": "https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E106KA12%23",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D19",
+    "value": "LED PWR",
+    "footprint": "LED_SMD:LED_0805_2012Metric",
+    "nets": {
+      "1": "LED_PWR_K",
+      "2": "3V3"
+    },
+    "page": "07_interface",
+    "kind": "D",
+    "mpn": "LTST-C170KGKT",
+    "maker": "Lite-On",
+    "source": "https://optoelectronics.liteon.com/en-global/led/LED-Component/Detail/926",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R102",
+    "value": "1.5k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LED_PWR_K",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "R",
+    "mpn": "RC0603FR-071K5L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D20",
+    "value": "LED RUN",
+    "footprint": "LED_SMD:LED_0805_2012Metric",
+    "nets": {
+      "1": "LED_RUN_K",
+      "2": "GPIO_LED_RUN"
+    },
+    "page": "07_interface",
+    "kind": "D",
+    "mpn": "LTST-C170KGKT",
+    "maker": "Lite-On",
+    "source": "https://optoelectronics.liteon.com/en-global/led/LED-Component/Detail/926",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R103",
+    "value": "1.5k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LED_RUN_K",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "R",
+    "mpn": "RC0603FR-071K5L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "D21",
+    "value": "LED FAULT",
+    "footprint": "LED_SMD:LED_0805_2012Metric",
+    "nets": {
+      "1": "LED_FAULT_K",
+      "2": "TRIPPED"
+    },
+    "page": "07_interface",
+    "kind": "D",
+    "mpn": "LTST-C170KRKT",
+    "maker": "Lite-On",
+    "source": "https://optoelectronics.liteon.com/en-global/led/LED-Component/Detail/926",
+    "pins": {
+      "1": {
+        "name": "K",
+        "type": "passive"
+      },
+      "2": {
+        "name": "A",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "R104",
+    "value": "1.5k",
+    "footprint": "Resistor_SMD:R_0603_1608Metric",
+    "nets": {
+      "1": "LED_FAULT_K",
+      "2": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "R",
+    "mpn": "RC0603FR-071K5L",
+    "maker": "Yageo",
+    "source": "https://www.yageo.com/en/Chart/Download/pdf/RC0603",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      },
+      "2": {
+        "name": "2",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP5",
+    "value": "5V0",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "5V0"
+    },
+    "page": "07_interface",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP6",
+    "value": "3V3",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "3V3"
+    },
+    "page": "07_interface",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "TP7",
+    "value": "GND_CTRL",
+    "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+    "nets": {
+      "1": "GND_CTRL"
+    },
+    "page": "07_interface",
+    "kind": "TP",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {
+      "1": {
+        "name": "1",
+        "type": "passive"
+      }
+    },
+    "note": "",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H1",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H2",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H3",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H4",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H5",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  },
+  {
+    "ref": "H6",
+    "value": "M3 insulated standoff",
+    "footprint": "MountingHole:MountingHole_3.2mm_M3",
+    "nets": {},
+    "page": "07_interface",
+    "kind": "H",
+    "mpn": "",
+    "maker": "",
+    "source": "",
+    "pins": {},
+    "note": "Insulated M3 standoff; no PCB copper used as a protective conductor",
+    "xy": null,
+    "board": "control",
+    "dnp": false
+  }
+]

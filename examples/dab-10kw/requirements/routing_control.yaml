@@ -1,0 +1,32 @@
+# Routing plan inputs of the control board (DAB-V1); single SELV domain, GND_CTRL plane on In1.Cu.
+board: control
+grid_mm: 0.125
+trace_mm: 0.2
+clearance_mm: 0.2
+via_mm: [0.6, 0.3]
+layers: [F.Cu, In2.Cu, B.Cu]
+style: {diagonal: true, simplify: octilinear, arcs: true, eps: 0.02, via_cost_cells: 18}
+max_nodes: 400000
+signal_order_trials: 3
+ripup_rounds: 3
+widths_mm:
+  "12V_*": 0.8
+  "5V*": 0.6
+  "3V3": 0.5
+  "GND_CTRL": 0.4
+  "SW5": 0.7
+  "CAN*": 0.25
+  "*": 0.2
+fanout_widths_mm:
+  "12V_*": 0.3
+  "5V*": 0.3
+  "3V3": 0.25
+critical_patterns: ["CLK*", "SDFM_*"]
+critical_layers: [F.Cu, B.Cu]
+signal_first: ["EPWM*", "PWM_*", "TZ_TRIP", "ARMED", "ALL_GOOD", "ADC_*", "SDFM_*", "CANH", "CANL"]
+power_nets: []
+ground_net: GND_CTRL
+exact_stub_mm: 0.45
+direct_lane_mm: 0.5
+prune_vias: true
+fill: true

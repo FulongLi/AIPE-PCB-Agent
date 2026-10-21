@@ -1,0 +1,5256 @@
+{
+  "schema_version": 1,
+  "status": "measured-human-review-required",
+  "generated_utc": "2026-10-21T07:16:50.821031+00:00",
+  "checker": "automation/verification/check_sic_layout.py",
+  "spec": {
+    "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_spec_secondary-power.json",
+    "sha256": "40cb4de6e1ec6e0a3dd55d25d221b8e0567a11efafa36ba748610b3d573e34bf",
+    "board": "secondary-power",
+    "title": "AIPE 10 kW DAB - secondary power board (400 V bus) - layout metrics spec (derived from requirements)"
+  },
+  "model_file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\design\\circuit_secondary-power.json",
+  "distance_backend": "numpy",
+  "runtime_s": 0.86,
+  "board": {
+    "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\secondary-power\\dab-secondary.kicad_pcb",
+    "sha256": "950f865e72268c6c4be1fe4fb9da2d4090c44a4d65fe06fdcebf74a9ab46aa9c",
+    "title": "dab-secondary",
+    "pcbnew_version": "10.0.6",
+    "outline_mm": [
+      300.0,
+      150.0
+    ],
+    "outline_bbox_mm": [
+      0.0,
+      0.0,
+      300.0,
+      150.0
+    ],
+    "edge_cuts_bbox_mm": [
+      -0.025,
+      -0.025,
+      300.025,
+      150.025
+    ],
+    "outline_area_mm2": 45000.0,
+    "outline_cutouts": 0,
+    "copper_layers": 4,
+    "layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "outer_layers": [
+      "F.Cu",
+      "B.Cu"
+    ],
+    "thickness_mm": 2.0,
+    "copper_um": {
+      "F.Cu": 70.0,
+      "In1.Cu": 70.0,
+      "In2.Cu": 70.0,
+      "B.Cu": 70.0
+    },
+    "stackup": [
+      {
+        "layer": "F.Cu",
+        "type": "copper",
+        "thickness_mm": 0.07,
+        "thickness_um": 70.0
+      },
+      {
+        "layer": "dielectric 1",
+        "type": "prepreg",
+        "thickness_mm": 0.2
+      },
+      {
+        "layer": "In1.Cu",
+        "type": "copper",
+        "thickness_mm": 0.07,
+        "thickness_um": 70.0
+      },
+      {
+        "layer": "dielectric 2",
+        "type": "core",
+        "thickness_mm": 1.32
+      },
+      {
+        "layer": "In2.Cu",
+        "type": "copper",
+        "thickness_mm": 0.07,
+        "thickness_um": 70.0
+      },
+      {
+        "layer": "dielectric 3",
+        "type": "prepreg",
+        "thickness_mm": 0.2
+      },
+      {
+        "layer": "B.Cu",
+        "type": "copper",
+        "thickness_mm": 0.07,
+        "thickness_um": 70.0
+      }
+    ],
+    "footprints": 312,
+    "tracks": 2642,
+    "vias": 440,
+    "zones": 22,
+    "rule_areas": 0,
+    "unfilled_zones": [],
+    "nets": 132,
+    "expected": {
+      "outline_mm": [
+        300,
+        150
+      ],
+      "copper_layers": 4,
+      "copper_um": 70,
+      "thickness_mm": 2.0
+    }
+  },
+  "nets": {
+    "12V_BIAS_AH": {
+      "cls": "CTRL",
+      "track_mm": 18.1316,
+      "tracks": 12,
+      "vias": 2,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_BIAS_AL": {
+      "cls": "CTRL",
+      "track_mm": 18.1316,
+      "tracks": 11,
+      "vias": 2,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_BIAS_BH": {
+      "cls": "CTRL",
+      "track_mm": 18.1316,
+      "tracks": 11,
+      "vias": 2,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_BIAS_BL": {
+      "cls": "CTRL",
+      "track_mm": 18.1316,
+      "tracks": 11,
+      "vias": 2,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_BIAS_S": {
+      "cls": "CTRL",
+      "track_mm": 18.1316,
+      "tracks": 9,
+      "vias": 0,
+      "pads": 7,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_E": {
+      "cls": "CTRL",
+      "track_mm": 251.1847,
+      "tracks": 39,
+      "vias": 13,
+      "pads": 10,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "3V3": {
+      "cls": "CTRL",
+      "track_mm": 446.6391,
+      "tracks": 156,
+      "vias": 23,
+      "pads": 38,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "AC_B": {
+      "cls": "HV_00",
+      "track_mm": 2.165,
+      "tracks": 2,
+      "vias": 1,
+      "pads": 10,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "F.Cu": 201.1597,
+        "In1.Cu": 213.0974
+      },
+      "zone_islands": {
+        "F.Cu": 1,
+        "In1.Cu": 1
+      }
+    },
+    "BIAS_EN": {
+      "cls": "CTRL",
+      "track_mm": 28.2539,
+      "tracks": 3,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BIAS_ENF": {
+      "cls": "CTRL",
+      "track_mm": 6.9926,
+      "tracks": 7,
+      "vias": 0,
+      "pads": 8,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BLD1": {
+      "cls": "HV_09",
+      "track_mm": 5.375,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BLD2": {
+      "cls": "HV_08",
+      "track_mm": 5.25,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BLD3": {
+      "cls": "HV_07",
+      "track_mm": 5.375,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BUS_P": {
+      "cls": "HV_02",
+      "track_mm": 45.4875,
+      "tracks": 16,
+      "vias": 13,
+      "pads": 30,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "F.Cu": 1416.8632,
+        "B.Cu": 1415.4064,
+        "In1.Cu": 7018.8897
+      },
+      "zone_islands": {
+        "F.Cu": 2,
+        "B.Cu": 2,
+        "In1.Cu": 1
+      }
+    },
+    "DESAT_AH": {
+      "cls": "HV_03",
+      "track_mm": 12.0355,
+      "tracks": 3,
+      "vias": 1,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DESAT_AL": {
+      "cls": "HV_04",
+      "track_mm": 14.4069,
+      "tracks": 4,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DESAT_BH": {
+      "cls": "HV_05",
+      "track_mm": 39.7604,
+      "tracks": 14,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DESAT_BL": {
+      "cls": "HV_06",
+      "track_mm": 18.8995,
+      "tracks": 4,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DRV_RST": {
+      "cls": "CTRL",
+      "track_mm": 27.9951,
+      "tracks": 3,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DRV_RSTF": {
+      "cls": "CTRL",
+      "track_mm": 118.4062,
+      "tracks": 31,
+      "vias": 9,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVDD_AH": {
+      "cls": "HV_03",
+      "track_mm": 27.1708,
+      "tracks": 14,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVDD_AL": {
+      "cls": "HV_04",
+      "track_mm": 27.1708,
+      "tracks": 14,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVDD_BH": {
+      "cls": "HV_05",
+      "track_mm": 21.8173,
+      "tracks": 20,
+      "vias": 4,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVDD_BL": {
+      "cls": "HV_06",
+      "track_mm": 25.8727,
+      "tracks": 14,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVEE_AH": {
+      "cls": "HV_03",
+      "track_mm": 4.7249,
+      "tracks": 2,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVEE_AL": {
+      "cls": "HV_04",
+      "track_mm": 4.7249,
+      "tracks": 2,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVEE_BH": {
+      "cls": "HV_05",
+      "track_mm": 12.3588,
+      "tracks": 5,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FBVEE_BL": {
+      "cls": "HV_06",
+      "track_mm": 6.8588,
+      "tracks": 7,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_AH_N": {
+      "cls": "CTRL",
+      "track_mm": 94.7296,
+      "tracks": 13,
+      "vias": 2,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_AL_N": {
+      "cls": "CTRL",
+      "track_mm": 69.6494,
+      "tracks": 11,
+      "vias": 3,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_BH_N": {
+      "cls": "CTRL",
+      "track_mm": 83.851,
+      "tracks": 8,
+      "vias": 3,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_BL_N": {
+      "cls": "CTRL",
+      "track_mm": 65.4037,
+      "tracks": 7,
+      "vias": 2,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GNDP_AH": {
+      "cls": "CTRL",
+      "track_mm": 48.8114,
+      "tracks": 64,
+      "vias": 7,
+      "pads": 19,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GNDP_AL": {
+      "cls": "CTRL",
+      "track_mm": 56.0614,
+      "tracks": 66,
+      "vias": 4,
+      "pads": 19,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GNDP_BH": {
+      "cls": "CTRL",
+      "track_mm": 54.8669,
+      "tracks": 65,
+      "vias": 4,
+      "pads": 19,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GNDP_BL": {
+      "cls": "CTRL",
+      "track_mm": 68.0866,
+      "tracks": 68,
+      "vias": 4,
+      "pads": 19,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GNDP_S": {
+      "cls": "CTRL",
+      "track_mm": 55.1169,
+      "tracks": 65,
+      "vias": 4,
+      "pads": 19,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GND_CTRL": {
+      "cls": "CTRL",
+      "track_mm": 68.8166,
+      "tracks": 101,
+      "vias": 44,
+      "pads": 60,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "In1.Cu": 19818.2196
+      },
+      "zone_islands": {
+        "In1.Cu": 1
+      }
+    },
+    "G_AH": {
+      "cls": "HV_03",
+      "track_mm": 68.859,
+      "tracks": 18,
+      "vias": 2,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "G_AL": {
+      "cls": "HV_04",
+      "track_mm": 65.7451,
+      "tracks": 18,
+      "vias": 4,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "G_BH": {
+      "cls": "HV_05",
+      "track_mm": 70.3961,
+      "tracks": 20,
+      "vias": 3,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "G_BL": {
+      "cls": "HV_06",
+      "track_mm": 64.0793,
+      "tracks": 19,
+      "vias": 3,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ISNS": {
+      "cls": "CTRL",
+      "track_mm": 131.7473,
+      "tracks": 16,
+      "vias": 2,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "KS_AH": {
+      "cls": "HV_03",
+      "track_mm": 114.7925,
+      "tracks": 68,
+      "vias": 10,
+      "pads": 21,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "KS_AL": {
+      "cls": "HV_04",
+      "track_mm": 130.8614,
+      "tracks": 83,
+      "vias": 11,
+      "pads": 21,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "KS_BH": {
+      "cls": "HV_05",
+      "track_mm": 124.4745,
+      "tracks": 74,
+      "vias": 5,
+      "pads": 21,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "KS_BL": {
+      "cls": "HV_06",
+      "track_mm": 109.5854,
+      "tracks": 70,
+      "vias": 7,
+      "pads": 21,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "MDIV1": {
+      "cls": "HV_09",
+      "track_mm": 1.75,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "MDIV2": {
+      "cls": "HV_08",
+      "track_mm": 1.75,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "MDIV3": {
+      "cls": "HV_07",
+      "track_mm": 30.5156,
+      "tracks": 7,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTCR_AH": {
+      "cls": "HV_03",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTCR_AL": {
+      "cls": "HV_04",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTCR_BH": {
+      "cls": "HV_05",
+      "track_mm": 5.9571,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTCR_BL": {
+      "cls": "HV_06",
+      "track_mm": 11.0784,
+      "tracks": 8,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTC_AH": {
+      "cls": "HV_03",
+      "track_mm": 36.6703,
+      "tracks": 16,
+      "vias": 2,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTC_AL": {
+      "cls": "HV_04",
+      "track_mm": 43.5846,
+      "tracks": 14,
+      "vias": 2,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTC_BH": {
+      "cls": "HV_05",
+      "track_mm": 24.8241,
+      "tracks": 12,
+      "vias": 2,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTC_BL": {
+      "cls": "HV_06",
+      "track_mm": 24.4884,
+      "tracks": 17,
+      "vias": 4,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NTC_HS": {
+      "cls": "CTRL",
+      "track_mm": 7.4053,
+      "tracks": 5,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OC_AH": {
+      "cls": "HV_03",
+      "track_mm": 45.2792,
+      "tracks": 23,
+      "vias": 2,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OC_AL": {
+      "cls": "HV_04",
+      "track_mm": 46.7237,
+      "tracks": 26,
+      "vias": 2,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OC_BH": {
+      "cls": "HV_05",
+      "track_mm": 20.4685,
+      "tracks": 14,
+      "vias": 6,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OC_BL": {
+      "cls": "HV_06",
+      "track_mm": 21.251,
+      "tracks": 12,
+      "vias": 4,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OC_TRIP_N": {
+      "cls": "CTRL",
+      "track_mm": 143.8566,
+      "tracks": 16,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTH_AH": {
+      "cls": "HV_03",
+      "track_mm": 8.2374,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTH_AL": {
+      "cls": "HV_04",
+      "track_mm": 8.2374,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTH_BH": {
+      "cls": "HV_05",
+      "track_mm": 8.6339,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTH_BL": {
+      "cls": "HV_06",
+      "track_mm": 8.6339,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTL_AH": {
+      "cls": "HV_03",
+      "track_mm": 8.341,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTL_AL": {
+      "cls": "HV_04",
+      "track_mm": 8.341,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTL_BH": {
+      "cls": "HV_05",
+      "track_mm": 9.273,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OUTL_BL": {
+      "cls": "HV_06",
+      "track_mm": 9.273,
+      "tracks": 3,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PGND": {
+      "cls": "HV_01",
+      "track_mm": 119.3506,
+      "tracks": 102,
+      "vias": 41,
+      "pads": 58,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "F.Cu": 1485.4823,
+        "B.Cu": 1459.8071,
+        "In2.Cu": 7981.7633
+      },
+      "zone_islands": {
+        "F.Cu": 6,
+        "B.Cu": 3,
+        "In2.Cu": 2
+      }
+    },
+    "PG_BIAS_N": {
+      "cls": "CTRL",
+      "track_mm": 45.8752,
+      "tracks": 16,
+      "vias": 1,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWMF_AH": {
+      "cls": "CTRL",
+      "track_mm": 57.8501,
+      "tracks": 20,
+      "vias": 5,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWMF_AL": {
+      "cls": "CTRL",
+      "track_mm": 58.6559,
+      "tracks": 18,
+      "vias": 4,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWMF_BH": {
+      "cls": "CTRL",
+      "track_mm": 83.5563,
+      "tracks": 23,
+      "vias": 2,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWMF_BL": {
+      "cls": "CTRL",
+      "track_mm": 61.0879,
+      "tracks": 19,
+      "vias": 2,
+      "pads": 5,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWM_AH": {
+      "cls": "CTRL",
+      "track_mm": 49.1001,
+      "tracks": 4,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWM_AL": {
+      "cls": "CTRL",
+      "track_mm": 44.3367,
+      "tracks": 2,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWM_BH": {
+      "cls": "CTRL",
+      "track_mm": 74.5597,
+      "tracks": 4,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWM_BL": {
+      "cls": "CTRL",
+      "track_mm": 47.7022,
+      "tracks": 3,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDR_AH": {
+      "cls": "HV_03",
+      "track_mm": 16.0015,
+      "tracks": 17,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDR_AL": {
+      "cls": "HV_04",
+      "track_mm": 45.2702,
+      "tracks": 12,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDR_BH": {
+      "cls": "HV_05",
+      "track_mm": 5.1124,
+      "tracks": 3,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDR_BL": {
+      "cls": "HV_06",
+      "track_mm": 11.1731,
+      "tracks": 8,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_AH": {
+      "cls": "CTRL",
+      "track_mm": 96.956,
+      "tracks": 15,
+      "vias": 3,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_AL": {
+      "cls": "CTRL",
+      "track_mm": 74.06,
+      "tracks": 11,
+      "vias": 3,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_BH": {
+      "cls": "CTRL",
+      "track_mm": 81.1926,
+      "tracks": 11,
+      "vias": 3,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_BL": {
+      "cls": "CTRL",
+      "track_mm": 63.488,
+      "tracks": 8,
+      "vias": 2,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RLIM_AH": {
+      "cls": "HV_03",
+      "track_mm": 2.75,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RLIM_AL": {
+      "cls": "HV_04",
+      "track_mm": 2.75,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RLIM_BH": {
+      "cls": "HV_05",
+      "track_mm": 6.682,
+      "tracks": 5,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RLIM_BL": {
+      "cls": "HV_06",
+      "track_mm": 6.682,
+      "tracks": 5,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_CLK": {
+      "cls": "CTRL",
+      "track_mm": 84.0177,
+      "tracks": 4,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_CLKIN": {
+      "cls": "CTRL",
+      "track_mm": 17.6386,
+      "tracks": 12,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_D": {
+      "cls": "CTRL",
+      "track_mm": 83.6641,
+      "tracks": 6,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_DOUT": {
+      "cls": "CTRL",
+      "track_mm": 5.3834,
+      "tracks": 6,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SW_A": {
+      "cls": "HV_11",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 12,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "F.Cu": 202.5632,
+        "B.Cu": 919.8062
+      },
+      "zone_islands": {
+        "F.Cu": 1,
+        "B.Cu": 1
+      }
+    },
+    "SW_B": {
+      "cls": "HV_12",
+      "track_mm": 2.165,
+      "tracks": 2,
+      "vias": 1,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "F.Cu": 1122.9142,
+        "B.Cu": 3477.7278
+      },
+      "zone_islands": {
+        "F.Cu": 2,
+        "B.Cu": 1
+      }
+    },
+    "S_16V": {
+      "cls": "HV_10",
+      "track_mm": 32.7061,
+      "tracks": 31,
+      "vias": 2,
+      "pads": 9,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_5V": {
+      "cls": "HV_10",
+      "track_mm": 35.6507,
+      "tracks": 30,
+      "vias": 8,
+      "pads": 9,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FBVDD": {
+      "cls": "HV_10",
+      "track_mm": 10.5961,
+      "tracks": 6,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FBVEE": {
+      "cls": "HV_10",
+      "track_mm": 26.8566,
+      "tracks": 13,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_RLIM": {
+      "cls": "HV_10",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VEEA": {
+      "cls": "HV_10",
+      "track_mm": 49.5223,
+      "tracks": 41,
+      "vias": 2,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_HS": {
+      "cls": "CTRL",
+      "track_mm": 136.684,
+      "tracks": 13,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_AH": {
+      "cls": "CTRL",
+      "track_mm": 103.1206,
+      "tracks": 15,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_AL": {
+      "cls": "CTRL",
+      "track_mm": 74.488,
+      "tracks": 7,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_BH": {
+      "cls": "CTRL",
+      "track_mm": 76.9865,
+      "tracks": 10,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_BL": {
+      "cls": "CTRL",
+      "track_mm": 60.6636,
+      "tracks": 7,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VADC_IN": {
+      "cls": "HV_10",
+      "track_mm": 18.7903,
+      "tracks": 14,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDD_AH": {
+      "cls": "HV_03",
+      "track_mm": 73.8849,
+      "tracks": 51,
+      "vias": 13,
+      "pads": 16,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDD_AL": {
+      "cls": "HV_04",
+      "track_mm": 90.2541,
+      "tracks": 55,
+      "vias": 15,
+      "pads": 16,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDD_BH": {
+      "cls": "HV_05",
+      "track_mm": 117.8013,
+      "tracks": 63,
+      "vias": 6,
+      "pads": 16,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDD_BL": {
+      "cls": "HV_06",
+      "track_mm": 75.4906,
+      "tracks": 56,
+      "vias": 8,
+      "pads": 16,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDIV1": {
+      "cls": "HV_09",
+      "track_mm": 2.1768,
+      "tracks": 2,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDIV2": {
+      "cls": "HV_08",
+      "track_mm": 1.75,
+      "tracks": 1,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VDIV3": {
+      "cls": "HV_07",
+      "track_mm": 17.0104,
+      "tracks": 4,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEEA_AH": {
+      "cls": "HV_03",
+      "track_mm": 42.0475,
+      "tracks": 30,
+      "vias": 4,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEEA_AL": {
+      "cls": "HV_04",
+      "track_mm": 22.0637,
+      "tracks": 16,
+      "vias": 0,
+      "pads": 6,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEEA_BH": {
+      "cls": "HV_05",
+      "track_mm": 23.2279,
+      "tracks": 16,
+      "vias": 4,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEEA_BL": {
+      "cls": "HV_06",
+      "track_mm": 17.3692,
+      "tracks": 13,
+      "vias": 2,
+      "pads": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEE_AH": {
+      "cls": "HV_03",
+      "track_mm": 106.7346,
+      "tracks": 71,
+      "vias": 7,
+      "pads": 23,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEE_AL": {
+      "cls": "HV_04",
+      "track_mm": 109.6718,
+      "tracks": 72,
+      "vias": 9,
+      "pads": 23,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEE_BH": {
+      "cls": "HV_05",
+      "track_mm": 95.2173,
+      "tracks": 74,
+      "vias": 10,
+      "pads": 23,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VEE_BL": {
+      "cls": "HV_06",
+      "track_mm": 112.8919,
+      "tracks": 79,
+      "vias": 6,
+      "pads": 23,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VMOD_IN": {
+      "cls": "HV_10",
+      "track_mm": 11.6261,
+      "tracks": 14,
+      "vias": 4,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VOC_SET": {
+      "cls": "CTRL",
+      "track_mm": 11.1299,
+      "tracks": 9,
+      "vias": 3,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VSNS_N": {
+      "cls": "CTRL",
+      "track_mm": 92.4277,
+      "tracks": 10,
+      "vias": 1,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "VSNS_P": {
+      "cls": "CTRL",
+      "track_mm": 94.5491,
+      "tracks": 11,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U1-NC-Pad5)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    }
+  },
+  "commutation": {
+    "mosfets": [
+      {
+        "ref": "Q1",
+        "role": "HS",
+        "found": true,
+        "pins": {
+          "drain": {
+            "pad": "1",
+            "net": "BUS_P",
+            "xy": [
+              86.92,
+              17.815
+            ],
+            "nearest_same_net_mm": 15.7892,
+            "nearest_same_net_pad": "C3.1",
+            "nearest_any_mm": 12.1703,
+            "nearest_any_pad": "C3.2",
+            "capacitors_within_row1": 0,
+            "capacitors_within_row2": 1,
+            "distance_to_hf_group_bbox_mm": 6.985
+          },
+          "source": {
+            "pad": "2",
+            "net": "SW_A",
+            "xy": [
+              92.0,
+              17.815
+            ],
+            "nearest_same_net_mm": null,
+            "nearest_same_net_pad": null,
+            "nearest_any_mm": 15.7735,
+            "nearest_any_pad": "C3.2",
+            "capacitors_within_row1": 0,
+            "capacitors_within_row2": 0,
+            "distance_to_hf_group_bbox_mm": 6.985
+          }
+        }
+      },
+      {
+        "ref": "Q2",
+        "role": "LS",
+        "found": true,
+        "pins": {
+          "drain": {
+            "pad": "1",
+            "net": "SW_A",
+            "xy": [
+              122.92,
+              17.815
+            ],
+            "nearest_same_net_mm": null,
+            "nearest_same_net_pad": null,
+            "nearest_any_mm": 9.6853,
+            "nearest_any_pad": "C4.2",
+            "capacitors_within_row1": 0,
+            "capacitors_within_row2": 0,
+            "distance_to_hf_group_bbox_mm": 6.985
+          },
+          "source": {
+            "pad": "2",
+            "net": "PGND",
+            "xy": [
+              128.0,
+              17.815
+            ],
+            "nearest_same_net_mm": 10.9691,
+            "nearest_same_net_pad": "C4.2",
+            "nearest_any_mm": 9.6851,
+            "nearest_any_pad": "C4.1",
+            "capacitors_within_row1": 3,
+            "capacitors_within_row2": 5,
+            "distance_to_hf_group_bbox_mm": 6.985
+          }
+        }
+      },
+      {
+        "ref": "Q3",
+        "role": "LS",
+        "found": true,
+        "pins": {
+          "drain": {
+            "pad": "1",
+            "net": "SW_B",
+            "xy": [
+              169.08,
+              18.185
+            ],
+            "nearest_same_net_mm": null,
+            "nearest_same_net_pad": null,
+            "nearest_any_mm": 9.8268,
+            "nearest_any_pad": "C9.2",
+            "capacitors_within_row1": 0,
+            "capacitors_within_row2": 0,
+            "distance_to_hf_group_bbox_mm": 6.615
+          },
+          "source": {
+            "pad": "2",
+            "net": "PGND",
+            "xy": [
+              164.0,
+              18.185
+            ],
+            "nearest_same_net_mm": 9.5169,
+            "nearest_same_net_pad": "C9.2",
+            "nearest_any_mm": 9.5169,
+            "nearest_any_pad": "C9.2",
+            "capacitors_within_row1": 2,
+            "capacitors_within_row2": 7,
+            "distance_to_hf_group_bbox_mm": 6.615
+          }
+        }
+      },
+      {
+        "ref": "Q4",
+        "role": "HS",
+        "found": true,
+        "pins": {
+          "drain": {
+            "pad": "1",
+            "net": "BUS_P",
+            "xy": [
+              205.08,
+              18.185
+            ],
+            "nearest_same_net_mm": 10.9363,
+            "nearest_same_net_pad": "C12.1",
+            "nearest_any_mm": 10.9363,
+            "nearest_any_pad": "C12.1",
+            "capacitors_within_row1": 1,
+            "capacitors_within_row2": 3,
+            "distance_to_hf_group_bbox_mm": 8.1907
+          },
+          "source": {
+            "pad": "2",
+            "net": "SW_B",
+            "xy": [
+              200.0,
+              18.185
+            ],
+            "nearest_same_net_mm": null,
+            "nearest_same_net_pad": null,
+            "nearest_any_mm": 9.3377,
+            "nearest_any_pad": "C12.1",
+            "capacitors_within_row1": 0,
+            "capacitors_within_row2": 0,
+            "distance_to_hf_group_bbox_mm": 6.615
+          }
+        }
+      }
+    ],
+    "hf_capacitors": [
+      {
+        "ref": "C3",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C4",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C5",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C6",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C7",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C8",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C9",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C10",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C11",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      },
+      {
+        "ref": "C12",
+        "found": true,
+        "pads": [
+          [
+            "1",
+            "BUS_P"
+          ],
+          [
+            "2",
+            "PGND"
+          ]
+        ]
+      }
+    ],
+    "hf_group_bbox_mm": [
+      73.55,
+      24.8,
+      200.25,
+      30.2
+    ],
+    "sw_copper_mm2": {
+      "F.Cu": {
+        "zone_mm2": 202.5632,
+        "pad_mm2": 93.2151,
+        "track_mm2": 0.0,
+        "via_mm2": 0.0,
+        "total_mm2": 295.7783
+      },
+      "In1.Cu": {
+        "zone_mm2": 0.0,
+        "pad_mm2": 93.2151,
+        "track_mm2": 0.0,
+        "via_mm2": 0.0,
+        "total_mm2": 93.2151
+      },
+      "In2.Cu": {
+        "zone_mm2": 0.0,
+        "pad_mm2": 93.2151,
+        "track_mm2": 0.0,
+        "via_mm2": 0.0,
+        "total_mm2": 93.2151
+      },
+      "B.Cu": {
+        "zone_mm2": 919.8062,
+        "pad_mm2": 93.2151,
+        "track_mm2": 0.0,
+        "via_mm2": 0.0,
+        "total_mm2": 1013.0213
+      }
+    }
+  },
+  "gate_loops": {
+    "loops": [
+      {
+        "mosfet": "Q1",
+        "driver": "U2",
+        "gate_nets": [
+          "G_AH",
+          "OUTH_AH",
+          "OUTL_AH"
+        ],
+        "kelvin_net": "KS_AH",
+        "power_source_net": "SW_A",
+        "driver_output_to_gate_pad_mm": 52.5709,
+        "driver_output_pad": "4",
+        "driver_return_to_kelvin_pad_mm": 51.8749,
+        "gate_track_mm": 85.4374,
+        "gate_vias": 6,
+        "gate_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "kelvin_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "adjacent_layer_pairs": [
+          [
+            "B.Cu",
+            "In2.Cu"
+          ],
+          [
+            "F.Cu",
+            "In1.Cu"
+          ],
+          [
+            "In1.Cu",
+            "F.Cu"
+          ],
+          [
+            "In1.Cu",
+            "In2.Cu"
+          ],
+          [
+            "In2.Cu",
+            "B.Cu"
+          ],
+          [
+            "In2.Cu",
+            "In1.Cu"
+          ]
+        ],
+        "gate_kelvin_on_adjacent_layers": true,
+        "gate_track_over_kelvin_pour_fraction": 0.0,
+        "kelvin_separation": {
+          "distinct_nets": true,
+          "min_copper_distance_mm": 0.2505,
+          "per_layer": {
+            "F.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "pad Q1.3",
+                "zone SW_A"
+              ]
+            },
+            "In1.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q1.3",
+                "pad Q1.2"
+              ]
+            },
+            "In2.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q1.3",
+                "pad Q1.2"
+              ]
+            },
+            "B.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "track",
+                "zone SW_A"
+              ]
+            }
+          },
+          "copper_contact": false,
+          "bridging_parts": []
+        }
+      },
+      {
+        "mosfet": "Q2",
+        "driver": "U4",
+        "gate_nets": [
+          "G_AL",
+          "OUTH_AL",
+          "OUTL_AL"
+        ],
+        "kelvin_net": "KS_AL",
+        "power_source_net": "PGND",
+        "driver_output_to_gate_pad_mm": 52.5709,
+        "driver_output_pad": "4",
+        "driver_return_to_kelvin_pad_mm": 51.8749,
+        "gate_track_mm": 82.3235,
+        "gate_vias": 8,
+        "gate_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "kelvin_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "adjacent_layer_pairs": [
+          [
+            "B.Cu",
+            "In2.Cu"
+          ],
+          [
+            "F.Cu",
+            "In1.Cu"
+          ],
+          [
+            "In1.Cu",
+            "F.Cu"
+          ],
+          [
+            "In1.Cu",
+            "In2.Cu"
+          ],
+          [
+            "In2.Cu",
+            "B.Cu"
+          ],
+          [
+            "In2.Cu",
+            "In1.Cu"
+          ]
+        ],
+        "gate_kelvin_on_adjacent_layers": true,
+        "gate_track_over_kelvin_pour_fraction": 0.0,
+        "kelvin_separation": {
+          "distinct_nets": true,
+          "min_copper_distance_mm": 0.2505,
+          "per_layer": {
+            "F.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "track",
+                "zone PGND"
+              ]
+            },
+            "In1.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q2.3",
+                "pad Q2.2"
+              ]
+            },
+            "In2.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "pad Q2.3",
+                "zone PGND"
+              ]
+            },
+            "B.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q2.3",
+                "pad Q2.2"
+              ]
+            }
+          },
+          "copper_contact": false,
+          "bridging_parts": []
+        }
+      },
+      {
+        "mosfet": "Q3",
+        "driver": "U6",
+        "gate_nets": [
+          "G_BL",
+          "OUTH_BL",
+          "OUTL_BL"
+        ],
+        "kelvin_net": "KS_BL",
+        "power_source_net": "PGND",
+        "driver_output_to_gate_pad_mm": 50.9562,
+        "driver_output_pad": "4",
+        "driver_return_to_kelvin_pad_mm": 51.004,
+        "gate_track_mm": 81.9862,
+        "gate_vias": 7,
+        "gate_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "kelvin_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "adjacent_layer_pairs": [
+          [
+            "B.Cu",
+            "In2.Cu"
+          ],
+          [
+            "F.Cu",
+            "In1.Cu"
+          ],
+          [
+            "In1.Cu",
+            "F.Cu"
+          ],
+          [
+            "In1.Cu",
+            "In2.Cu"
+          ],
+          [
+            "In2.Cu",
+            "B.Cu"
+          ],
+          [
+            "In2.Cu",
+            "In1.Cu"
+          ]
+        ],
+        "gate_kelvin_on_adjacent_layers": true,
+        "gate_track_over_kelvin_pour_fraction": 0.0,
+        "kelvin_separation": {
+          "distinct_nets": true,
+          "min_copper_distance_mm": 0.2505,
+          "per_layer": {
+            "F.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "via",
+                "zone PGND"
+              ]
+            },
+            "In1.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q3.3",
+                "pad Q3.2"
+              ]
+            },
+            "In2.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "via",
+                "zone PGND"
+              ]
+            },
+            "B.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q3.3",
+                "pad Q3.2"
+              ]
+            }
+          },
+          "copper_contact": false,
+          "bridging_parts": []
+        }
+      },
+      {
+        "mosfet": "Q4",
+        "driver": "U8",
+        "gate_nets": [
+          "G_BH",
+          "OUTH_BH",
+          "OUTL_BH"
+        ],
+        "kelvin_net": "KS_BH",
+        "power_source_net": "SW_B",
+        "driver_output_to_gate_pad_mm": 50.9562,
+        "driver_output_pad": "4",
+        "driver_return_to_kelvin_pad_mm": 51.004,
+        "gate_track_mm": 88.3029,
+        "gate_vias": 7,
+        "gate_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "kelvin_layers": [
+          "F.Cu",
+          "In1.Cu",
+          "In2.Cu",
+          "B.Cu"
+        ],
+        "adjacent_layer_pairs": [
+          [
+            "B.Cu",
+            "In2.Cu"
+          ],
+          [
+            "F.Cu",
+            "In1.Cu"
+          ],
+          [
+            "In1.Cu",
+            "F.Cu"
+          ],
+          [
+            "In1.Cu",
+            "In2.Cu"
+          ],
+          [
+            "In2.Cu",
+            "B.Cu"
+          ],
+          [
+            "In2.Cu",
+            "In1.Cu"
+          ]
+        ],
+        "gate_kelvin_on_adjacent_layers": true,
+        "gate_track_over_kelvin_pour_fraction": 0.0,
+        "kelvin_separation": {
+          "distinct_nets": true,
+          "min_copper_distance_mm": 0.2505,
+          "per_layer": {
+            "F.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "track",
+                "zone SW_B"
+              ]
+            },
+            "In1.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q4.3",
+                "pad Q4.2"
+              ]
+            },
+            "In2.Cu": {
+              "distance_mm": 0.635,
+              "between": [
+                "pad Q4.3",
+                "pad Q4.2"
+              ]
+            },
+            "B.Cu": {
+              "distance_mm": 0.2505,
+              "between": [
+                "pad Q4.3",
+                "zone SW_B"
+              ]
+            }
+          },
+          "copper_contact": false,
+          "bridging_parts": []
+        }
+      }
+    ]
+  },
+  "isolation": {
+    "pairs": [
+      {
+        "name": "HV domains to SELV (all layers)",
+        "nets_a": [
+          "AC_B",
+          "BLD1",
+          "BLD2",
+          "BLD3",
+          "BUS_P",
+          "DESAT_AH",
+          "DESAT_AL",
+          "DESAT_BH",
+          "DESAT_BL",
+          "FBVDD_AH",
+          "FBVDD_AL",
+          "FBVDD_BH",
+          "FBVDD_BL",
+          "FBVEE_AH",
+          "FBVEE_AL",
+          "FBVEE_BH",
+          "FBVEE_BL",
+          "G_AH",
+          "G_AL",
+          "G_BH",
+          "G_BL",
+          "KS_AH",
+          "KS_AL",
+          "KS_BH",
+          "KS_BL",
+          "MDIV1",
+          "MDIV2",
+          "MDIV3",
+          "NTCR_AH",
+          "NTCR_AL",
+          "NTCR_BH",
+          "NTCR_BL",
+          "NTC_AH",
+          "NTC_AL",
+          "NTC_BH",
+          "NTC_BL",
+          "OC_AH",
+          "OC_AL",
+          "OC_BH",
+          "OC_BL",
+          "OUTH_AH",
+          "OUTH_AL",
+          "OUTH_BH",
+          "OUTH_BL",
+          "OUTL_AH",
+          "OUTL_AL",
+          "OUTL_BH",
+          "OUTL_BL",
+          "PGND",
+          "RDR_AH",
+          "RDR_AL",
+          "RDR_BH",
+          "RDR_BL",
+          "RLIM_AH",
+          "RLIM_AL",
+          "RLIM_BH",
+          "RLIM_BL",
+          "SW_A",
+          "SW_B",
+          "S_16V",
+          "S_5V",
+          "S_FBVDD",
+          "S_FBVEE",
+          "S_RLIM",
+          "S_VEEA",
+          "VADC_IN",
+          "VDD_AH",
+          "VDD_AL",
+          "VDD_BH",
+          "VDD_BL",
+          "VDIV1",
+          "VDIV2",
+          "VDIV3",
+          "VEEA_AH",
+          "VEEA_AL",
+          "VEEA_BH",
+          "VEEA_BL",
+          "VEE_AH",
+          "VEE_AL",
+          "VEE_BH",
+          "VEE_BL",
+          "VMOD_IN"
+        ],
+        "nets_b": [
+          "12V_BIAS_AH",
+          "12V_BIAS_AL",
+          "12V_BIAS_BH",
+          "12V_BIAS_BL",
+          "12V_BIAS_S",
+          "12V_E",
+          "3V3",
+          "BIAS_EN",
+          "BIAS_ENF",
+          "DRV_RST",
+          "DRV_RSTF",
+          "FLT_AH_N",
+          "FLT_AL_N",
+          "FLT_BH_N",
+          "FLT_BL_N",
+          "GNDP_AH",
+          "GNDP_AL",
+          "GNDP_BH",
+          "GNDP_BL",
+          "GNDP_S",
+          "GND_CTRL",
+          "ISNS",
+          "NTC_HS",
+          "OC_TRIP_N",
+          "PG_BIAS_N",
+          "PWMF_AH",
+          "PWMF_AL",
+          "PWMF_BH",
+          "PWMF_BL",
+          "PWM_AH",
+          "PWM_AL",
+          "PWM_BH",
+          "PWM_BL",
+          "RDY_AH",
+          "RDY_AL",
+          "RDY_BH",
+          "RDY_BL",
+          "SDFM_CLK",
+          "SDFM_CLKIN",
+          "SDFM_D",
+          "SDFM_DOUT",
+          "TEMP_HS",
+          "TEMP_PWM_AH",
+          "TEMP_PWM_AL",
+          "TEMP_PWM_BH",
+          "TEMP_PWM_BL",
+          "VOC_SET",
+          "VSNS_N",
+          "VSNS_P"
+        ],
+        "per_layer": {
+          "F.Cu": {
+            "kind": "outer",
+            "items_a": 1920,
+            "items_b": 1184,
+            "distance_mm": 8.0005,
+            "threshold_mm": 8.0,
+            "within": true,
+            "between": [
+              {
+                "item": "zone",
+                "source": "zone PGND",
+                "net": "PGND",
+                "layer": "F.Cu",
+                "ref": null
+              },
+              {
+                "item": "track",
+                "source": "track",
+                "net": "SDFM_CLKIN",
+                "layer": "F.Cu",
+                "ref": null
+              }
+            ]
+          },
+          "In1.Cu": {
+            "kind": "inner",
+            "items_a": 333,
+            "items_b": 207,
+            "distance_mm": 8.0015,
+            "threshold_mm": 8.0,
+            "within": true,
+            "between": [
+              {
+                "item": "zone",
+                "source": "zone AC_B",
+                "net": "AC_B",
+                "layer": "In1.Cu",
+                "ref": null
+              },
+              {
+                "item": "zone",
+                "source": "zone GND_CTRL",
+                "net": "GND_CTRL",
+                "layer": "In1.Cu",
+                "ref": null
+              }
+            ]
+          },
+          "In2.Cu": {
+            "kind": "inner",
+            "items_a": 333,
+            "items_b": 276,
+            "distance_mm": 9.65,
+            "threshold_mm": 8.0,
+            "within": true,
+            "between": [
+              {
+                "item": "via",
+                "source": "via",
+                "net": "NTC_AL",
+                "layer": "In2.Cu",
+                "ref": null
+              },
+              {
+                "item": "track",
+                "source": "track",
+                "net": "3V3",
+                "layer": "In2.Cu",
+                "ref": null
+              }
+            ]
+          },
+          "B.Cu": {
+            "kind": "outer",
+            "items_a": 653,
+            "items_b": 350,
+            "distance_mm": 8.925,
+            "threshold_mm": 8.0,
+            "within": true,
+            "between": [
+              {
+                "item": "zone",
+                "source": "zone PGND",
+                "net": "PGND",
+                "layer": "B.Cu",
+                "ref": null
+              },
+              {
+                "item": "track",
+                "source": "track",
+                "net": "3V3",
+                "layer": "B.Cu",
+                "ref": null
+              }
+            ]
+          }
+        },
+        "min_mm": 8.0005,
+        "min_layer": "F.Cu",
+        "excluded_refs": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7",
+          "U8",
+          "U9",
+          "U10",
+          "U11",
+          "U12"
+        ],
+        "within_threshold": true
+      }
+    ],
+    "barrier_keepouts": [],
+    "barrier_parts": []
+  },
+  "heatsink": {
+    "ref": "HS1",
+    "courtyard_bbox_mm": [
+      83.505,
+      4.005,
+      136.495,
+      14.995
+    ],
+    "hv_nets": [
+      "AC_B",
+      "BLD1",
+      "BLD2",
+      "BLD3",
+      "BUS_P",
+      "DESAT_AH",
+      "DESAT_AL",
+      "DESAT_BH",
+      "DESAT_BL",
+      "FBVDD_AH",
+      "FBVDD_AL",
+      "FBVDD_BH",
+      "FBVDD_BL",
+      "FBVEE_AH",
+      "FBVEE_AL",
+      "FBVEE_BH",
+      "FBVEE_BL",
+      "G_AH",
+      "G_AL",
+      "G_BH",
+      "G_BL",
+      "KS_AH",
+      "KS_AL",
+      "KS_BH",
+      "KS_BL",
+      "MDIV1",
+      "MDIV2",
+      "MDIV3",
+      "NTCR_AH",
+      "NTCR_AL",
+      "NTCR_BH",
+      "NTCR_BL",
+      "NTC_AH",
+      "NTC_AL",
+      "NTC_BH",
+      "NTC_BL",
+      "OC_AH",
+      "OC_AL",
+      "OC_BH",
+      "OC_BL",
+      "OUTH_AH",
+      "OUTH_AL",
+      "OUTH_BH",
+      "OUTH_BL",
+      "OUTL_AH",
+      "OUTL_AL",
+      "OUTL_BH",
+      "OUTL_BL",
+      "PGND",
+      "RDR_AH",
+      "RDR_AL",
+      "RDR_BH",
+      "RDR_BL",
+      "RLIM_AH",
+      "RLIM_AL",
+      "RLIM_BH",
+      "RLIM_BL",
+      "SW_A",
+      "SW_B",
+      "S_16V",
+      "S_5V",
+      "S_FBVDD",
+      "S_FBVEE",
+      "S_RLIM",
+      "S_VEEA",
+      "VADC_IN",
+      "VDD_AH",
+      "VDD_AL",
+      "VDD_BH",
+      "VDD_BL",
+      "VDIV1",
+      "VDIV2",
+      "VDIV3",
+      "VEEA_AH",
+      "VEEA_AL",
+      "VEEA_BH",
+      "VEEA_BL",
+      "VEE_AH",
+      "VEE_AL",
+      "VEE_BH",
+      "VEE_BL",
+      "VMOD_IN"
+    ],
+    "per_layer": {
+      "F.Cu": {
+        "hv_items": 2110,
+        "min_distance_mm": 0.0,
+        "nearest": {
+          "item": "zone",
+          "source": "zone BUS_P",
+          "net": "BUS_P",
+          "layer": "F.Cu",
+          "ref": null
+        },
+        "items_within_keepout": 19
+      }
+    },
+    "keepout_mm": 5.0,
+    "npth_holes": [
+      [
+        90.0,
+        9.5
+      ],
+      [
+        130.0,
+        9.5
+      ]
+    ]
+  },
+  "decoupling": {
+    "ics": [
+      {
+        "ic": "U2",
+        "found": true,
+        "pads": [
+          {
+            "pad": "5",
+            "net": "VDD_AH",
+            "distance_mm": 2.4521,
+            "capacitor": "C23.1",
+            "same_net": true
+          },
+          {
+            "pad": "8",
+            "net": "VEE_AH",
+            "distance_mm": 2.547,
+            "capacitor": "C24.2",
+            "same_net": true
+          }
+        ],
+        "max_distance_mm": 2.547
+      },
+      {
+        "ic": "U4",
+        "found": true,
+        "pads": [
+          {
+            "pad": "5",
+            "net": "VDD_AL",
+            "distance_mm": 2.4521,
+            "capacitor": "C47.1",
+            "same_net": true
+          },
+          {
+            "pad": "8",
+            "net": "VEE_AL",
+            "distance_mm": 2.547,
+            "capacitor": "C48.2",
+            "same_net": true
+          }
+        ],
+        "max_distance_mm": 2.547
+      },
+      {
+        "ic": "U6",
+        "found": true,
+        "pads": [
+          {
+            "pad": "5",
+            "net": "VDD_BL",
+            "distance_mm": 2.4521,
+            "capacitor": "C71.1",
+            "same_net": true
+          },
+          {
+            "pad": "8",
+            "net": "VEE_BL",
+            "distance_mm": 2.547,
+            "capacitor": "C72.2",
+            "same_net": true
+          }
+        ],
+        "max_distance_mm": 2.547
+      },
+      {
+        "ic": "U8",
+        "found": true,
+        "pads": [
+          {
+            "pad": "5",
+            "net": "VDD_BH",
+            "distance_mm": 2.4521,
+            "capacitor": "C95.1",
+            "same_net": true
+          },
+          {
+            "pad": "8",
+            "net": "VEE_BH",
+            "distance_mm": 2.547,
+            "capacitor": "C96.2",
+            "same_net": true
+          }
+        ],
+        "max_distance_mm": 2.547
+      }
+    ]
+  },
+  "sensing": {
+    "kelvin_pairs": [
+      {
+        "name": "AMC1311 differential output",
+        "nets": [
+          "VSNS_P",
+          "VSNS_N"
+        ],
+        "track_mm": {
+          "VSNS_P": 94.5491,
+          "VSNS_N": 92.4277
+        },
+        "vias": {
+          "VSNS_P": 2,
+          "VSNS_N": 1
+        },
+        "layers": {
+          "VSNS_P": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ],
+          "VSNS_N": [
+            "F.Cu",
+            "In1.Cu",
+            "In2.Cu",
+            "B.Cu"
+          ]
+        },
+        "mismatch_mm": 2.1213,
+        "min_distance_to_sw_mm": 88.4092,
+        "present": true
+      }
+    ],
+    "parts": [
+      {
+        "ref": "U1",
+        "found": true,
+        "min_distance_to_sw_mm": 112.7525,
+        "nearest": {
+          "item": "zone",
+          "source": "zone SW_A",
+          "net": "SW_A",
+          "layer": "B.Cu",
+          "ref": null
+        }
+      },
+      {
+        "ref": "U11",
+        "found": true,
+        "min_distance_to_sw_mm": 83.3661,
+        "nearest": {
+          "item": "zone",
+          "source": "zone SW_A",
+          "net": "SW_A",
+          "layer": "B.Cu",
+          "ref": null
+        }
+      },
+      {
+        "ref": "U12",
+        "found": true,
+        "min_distance_to_sw_mm": 90.1845,
+        "nearest": {
+          "item": "zone",
+          "source": "zone SW_A",
+          "net": "SW_A",
+          "layer": "B.Cu",
+          "ref": null
+        }
+      }
+    ]
+  },
+  "control": {
+    "control_refs": [
+      "C101",
+      "C102",
+      "C103",
+      "C104",
+      "C113",
+      "C114",
+      "C115",
+      "C116",
+      "C129",
+      "C13",
+      "C130",
+      "C134",
+      "C135",
+      "C136",
+      "C137",
+      "C138",
+      "C139",
+      "C14",
+      "C140",
+      "C141",
+      "C142",
+      "C143",
+      "C144",
+      "C145",
+      "C146",
+      "C147",
+      "C148",
+      "C15",
+      "C16",
+      "C25",
+      "C26",
+      "C29",
+      "C30",
+      "C31",
+      "C32",
+      "C49",
+      "C50",
+      "C53",
+      "C54",
+      "C55",
+      "C56",
+      "C73",
+      "C74",
+      "C77",
+      "C78",
+      "C79",
+      "C80",
+      "C97",
+      "C98",
+      "J5",
+      "J6",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "R100",
+      "R101",
+      "R102",
+      "R103",
+      "R13",
+      "R14",
+      "R29",
+      "R30",
+      "R45",
+      "R46",
+      "R5",
+      "R6",
+      "R61",
+      "R62",
+      "R7",
+      "R87",
+      "R88",
+      "R89",
+      "R90",
+      "R91",
+      "R92",
+      "R93",
+      "R94",
+      "R95",
+      "R96",
+      "R97",
+      "R98",
+      "R99"
+    ],
+    "power_refs": [
+      "C1",
+      "C10",
+      "C100",
+      "C105",
+      "C106",
+      "C107",
+      "C108",
+      "C109",
+      "C11",
+      "C110",
+      "C111",
+      "C112",
+      "C117",
+      "C118",
+      "C119",
+      "C12",
+      "C120",
+      "C121",
+      "C122",
+      "C123",
+      "C124",
+      "C125",
+      "C126",
+      "C127",
+      "C128",
+      "C131",
+      "C132",
+      "C133",
+      "C17",
+      "C18",
+      "C19",
+      "C2",
+      "C20",
+      "C21",
+      "C22",
+      "C23",
+      "C24",
+      "C27",
+      "C28",
+      "C3",
+      "C33",
+      "C34",
+      "C35",
+      "C36",
+      "C37",
+      "C38",
+      "C39",
+      "C4",
+      "C40",
+      "C41",
+      "C42",
+      "C43",
+      "C44",
+      "C45",
+      "C46",
+      "C47",
+      "C48",
+      "C5",
+      "C51",
+      "C52",
+      "C57",
+      "C58",
+      "C59",
+      "C6",
+      "C60",
+      "C61",
+      "C62",
+      "C63",
+      "C64",
+      "C65",
+      "C66",
+      "C67",
+      "C68",
+      "C69",
+      "C7",
+      "C70",
+      "C71",
+      "C72",
+      "C75",
+      "C76",
+      "C8",
+      "C81",
+      "C82",
+      "C83",
+      "C84",
+      "C85",
+      "C86",
+      "C87",
+      "C88",
+      "C89",
+      "C9",
+      "C90",
+      "C91",
+      "C92",
+      "C93",
+      "C94",
+      "C95",
+      "C96",
+      "C99",
+      "D1",
+      "D10",
+      "D11",
+      "D12",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "D8",
+      "D9",
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "NT1",
+      "NT2",
+      "NT3",
+      "NT4",
+      "NT5",
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "R1",
+      "R10",
+      "R11",
+      "R12",
+      "R15",
+      "R16",
+      "R17",
+      "R18",
+      "R19",
+      "R2",
+      "R20",
+      "R21",
+      "R22",
+      "R23",
+      "R24",
+      "R25",
+      "R26",
+      "R27",
+      "R28",
+      "R3",
+      "R31",
+      "R32",
+      "R33",
+      "R34",
+      "R35",
+      "R36",
+      "R37",
+      "R38",
+      "R39",
+      "R4",
+      "R40",
+      "R41",
+      "R42",
+      "R43",
+      "R44",
+      "R47",
+      "R48",
+      "R49",
+      "R50",
+      "R51",
+      "R52",
+      "R53",
+      "R54",
+      "R55",
+      "R56",
+      "R57",
+      "R58",
+      "R59",
+      "R60",
+      "R63",
+      "R64",
+      "R65",
+      "R66",
+      "R67",
+      "R68",
+      "R69",
+      "R70",
+      "R71",
+      "R72",
+      "R73",
+      "R74",
+      "R75",
+      "R76",
+      "R77",
+      "R78",
+      "R79",
+      "R8",
+      "R80",
+      "R81",
+      "R82",
+      "R83",
+      "R84",
+      "R85",
+      "R86",
+      "R9",
+      "RT1",
+      "RT2",
+      "RT3",
+      "RT4",
+      "TP1",
+      "TP2",
+      "TP3",
+      "TP4"
+    ],
+    "control_bbox_mm": [
+      34.025,
+      78.275,
+      265.225,
+      144.945
+    ],
+    "power_bbox_mm": [
+      4.505,
+      1.465,
+      260.535,
+      68.535
+    ],
+    "bbox_separation_mm": 9.74,
+    "bbox_overlap_mm2": null,
+    "excluded_refs": [
+      "U1",
+      "U10",
+      "U11",
+      "U12",
+      "U2",
+      "U3",
+      "U4",
+      "U5",
+      "U6",
+      "U7",
+      "U8",
+      "U9"
+    ],
+    "dsp_bypass": [],
+    "ground": {
+      "net": "GND_CTRL",
+      "per_layer": {
+        "In1.Cu": {
+          "area_mm2": 19818.2196,
+          "islands": 1,
+          "zones": 1,
+          "probes": {
+            "required": [],
+            "forbidden": []
+          }
+        }
+      }
+    }
+  },
+  "compactness": {
+    "board_area_mm2": 45000.0,
+    "board_area_dm2": 4.5,
+    "footprints": 312,
+    "footprints_per_dm2": 69.3333,
+    "courtyard_area_mm2": {
+      "front": 10325.7121,
+      "back": 57.33
+    },
+    "courtyard_fraction": {
+      "front": 0.2295,
+      "back": 0.0013
+    },
+    "hv_nets": [
+      "AC_B",
+      "BLD1",
+      "BLD2",
+      "BLD3",
+      "BUS_P",
+      "DESAT_AH",
+      "DESAT_AL",
+      "DESAT_BH",
+      "DESAT_BL",
+      "FBVDD_AH",
+      "FBVDD_AL",
+      "FBVDD_BH",
+      "FBVDD_BL",
+      "FBVEE_AH",
+      "FBVEE_AL",
+      "FBVEE_BH",
+      "FBVEE_BL",
+      "G_AH",
+      "G_AL",
+      "G_BH",
+      "G_BL",
+      "KS_AH",
+      "KS_AL",
+      "KS_BH",
+      "KS_BL",
+      "MDIV1",
+      "MDIV2",
+      "MDIV3",
+      "NTCR_AH",
+      "NTCR_AL",
+      "NTCR_BH",
+      "NTCR_BL",
+      "NTC_AH",
+      "NTC_AL",
+      "NTC_BH",
+      "NTC_BL",
+      "OC_AH",
+      "OC_AL",
+      "OC_BH",
+      "OC_BL",
+      "OUTH_AH",
+      "OUTH_AL",
+      "OUTH_BH",
+      "OUTH_BL",
+      "OUTL_AH",
+      "OUTL_AL",
+      "OUTL_BH",
+      "OUTL_BL",
+      "PGND",
+      "RDR_AH",
+      "RDR_AL",
+      "RDR_BH",
+      "RDR_BL",
+      "RLIM_AH",
+      "RLIM_AL",
+      "RLIM_BH",
+      "RLIM_BL",
+      "SW_A",
+      "SW_B",
+      "S_16V",
+      "S_5V",
+      "S_FBVDD",
+      "S_FBVEE",
+      "S_RLIM",
+      "S_VEEA",
+      "VADC_IN",
+      "VDD_AH",
+      "VDD_AL",
+      "VDD_BH",
+      "VDD_BL",
+      "VDIV1",
+      "VDIV2",
+      "VDIV3",
+      "VEEA_AH",
+      "VEEA_AL",
+      "VEEA_BH",
+      "VEEA_BL",
+      "VEE_AH",
+      "VEE_AL",
+      "VEE_BH",
+      "VEE_BL",
+      "VMOD_IN"
+    ],
+    "hv_bbox_mm": [
+      2.0,
+      1.0005,
+      296.0,
+      72.0
+    ],
+    "hv_bbox_fraction": 0.4639,
+    "hv_outer_copper_mm2": 13543.3038,
+    "hv_outer_copper_fraction": 0.1505,
+    "tallest_component": {
+      "ref": "U9",
+      "height_mm": 0.0
+    },
+    "assembly_height_mm": {
+      "declared": null,
+      "computed": 2.0,
+      "used": 2.0
+    },
+    "rated_power_W": null,
+    "power_density_W_per_dm2": null,
+    "power_density_W_per_L": null
+  },
+  "rule_table": [
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "U2 output pad 4 to Q1 gate pad 4",
+      "measured": 52.571,
+      "threshold": "<= 15 mm",
+      "disposition": "exceeds spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "G_AH/OUTH_AH/OUTL_AH track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_AH layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
+      "measured": {
+        "track_mm": 85.44,
+        "adjacent": true,
+        "over_kelvin_pour": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1"
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "U4 output pad 4 to Q2 gate pad 4",
+      "measured": 52.571,
+      "threshold": "<= 15 mm",
+      "disposition": "exceeds spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "G_AL/OUTH_AL/OUTL_AL track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_AL layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
+      "measured": {
+        "track_mm": 82.32,
+        "adjacent": true,
+        "over_kelvin_pour": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1"
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "U6 output pad 4 to Q3 gate pad 4",
+      "measured": 50.956,
+      "threshold": "<= 15 mm",
+      "disposition": "exceeds spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "G_BL/OUTH_BL/OUTL_BL track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_BL layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
+      "measured": {
+        "track_mm": 81.99,
+        "adjacent": true,
+        "over_kelvin_pour": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1"
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "U8 output pad 4 to Q4 gate pad 4",
+      "measured": 50.956,
+      "threshold": "<= 15 mm",
+      "disposition": "exceeds spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "G_BH/OUTH_BH/OUTL_BH track length (mm), layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu'], Kelvin KS_BH layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']",
+      "measured": {
+        "track_mm": 88.3,
+        "adjacent": true,
+        "over_kelvin_pour": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "KR-PCB-001 adjacency proxy: a gate/Kelvin layer pair with stack index difference 1"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q1 drain pad 1 (BUS_P) to nearest HF capacitor pad of the same net",
+      "measured": 15.789,
+      "threshold": "<= 30.0 mm (row 2; row 1 <= 15.0 mm)",
+      "disposition": "within spec threshold - human review required",
+      "note": "nearest C3.1"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q1 source pad 2 (SW_A) to nearest HF capacitor pad (any named net)",
+      "measured": 15.773,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "pad net is not a capacitor net (switch node)"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q2 drain pad 1 (SW_A) to nearest HF capacitor pad (any named net)",
+      "measured": 9.685,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "pad net is not a capacitor net (switch node)"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q2 source pad 2 (PGND) to nearest HF capacitor pad of the same net",
+      "measured": 10.969,
+      "threshold": "<= 30.0 mm (row 2; row 1 <= 15.0 mm)",
+      "disposition": "within spec threshold - human review required",
+      "note": "nearest C4.2"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q3 drain pad 1 (SW_B) to nearest HF capacitor pad (any named net)",
+      "measured": 9.827,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "pad net is not a capacitor net (switch node)"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q3 source pad 2 (PGND) to nearest HF capacitor pad of the same net",
+      "measured": 9.517,
+      "threshold": "<= 30.0 mm (row 2; row 1 <= 15.0 mm)",
+      "disposition": "within spec threshold - human review required",
+      "note": "nearest C9.2"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q4 drain pad 1 (BUS_P) to nearest HF capacitor pad of the same net",
+      "measured": 10.936,
+      "threshold": "<= 30.0 mm (row 2; row 1 <= 15.0 mm)",
+      "disposition": "within spec threshold - human review required",
+      "note": "nearest C12.1"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "Q4 source pad 2 (SW_B) to nearest HF capacitor pad (any named net)",
+      "measured": 9.338,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "pad net is not a capacitor net (switch node)"
+    },
+    {
+      "rule": "PE-PCB-003",
+      "requirement": "Minimise HF commutation loop",
+      "metric": "SW_A copper area, all layers (mm2; per layer in JSON)",
+      "measured": 1495.2,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "switch-node copper is a dv/dt coupling and radiation proxy; the baseline asks for the minimum that carries the current"
+    },
+    {
+      "rule": "PE-PCB-003",
+      "requirement": "Minimise HF commutation loop",
+      "metric": "HV ceramic group bounding box (x0, y0, x1, y1 mm) and pin distances (JSON)",
+      "measured": [
+        73.55,
+        24.8,
+        200.25,
+        30.2
+      ],
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "bounding box of the HF capacitor pads on the named nets"
+    },
+    {
+      "rule": "PE-PCB-004",
+      "requirement": "Use Kelvin current sensing",
+      "metric": "AMC1311 differential output track lengths (mm) and mismatch",
+      "measured": {
+        "VSNS_P": 94.549,
+        "VSNS_N": 92.428,
+        "mismatch": 2.121
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "metric": "AMC1311 differential output minimum copper distance to SW_A (mm, any layer)",
+      "measured": 88.409,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "metric": "U1 pads: minimum copper distance to SW_A (mm, any layer)",
+      "measured": 112.753,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "metric": "U11 pads: minimum copper distance to SW_A (mm, any layer)",
+      "measured": 83.366,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "metric": "U12 pads: minimum copper distance to SW_A (mm, any layer)",
+      "measured": 90.185,
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "AC_B copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {
+          "F.Cu": 201.2,
+          "In1.Cu": 213.1
+        },
+        "vias": 1,
+        "track_mm": 2.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "BLD1 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 5.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "BLD2 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 5.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "BLD3 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 5.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "BUS_P copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {
+          "F.Cu": 1416.9,
+          "B.Cu": 1415.4,
+          "In1.Cu": 7018.9
+        },
+        "vias": 13,
+        "track_mm": 45.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "DESAT_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 1,
+        "track_mm": 12.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "DESAT_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 14.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "DESAT_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 39.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "DESAT_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 18.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVDD_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 27.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVDD_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 27.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVDD_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 21.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVDD_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 25.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVEE_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 4.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVEE_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 4.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVEE_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 12.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "FBVEE_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 6.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "G_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 68.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "G_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 65.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "G_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 70.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "G_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 64.1
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "KS_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 10,
+        "track_mm": 114.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "KS_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 11,
+        "track_mm": 130.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "KS_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 5,
+        "track_mm": 124.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "KS_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 7,
+        "track_mm": 109.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "MDIV1 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 1.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "MDIV2 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 1.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "MDIV3 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 30.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTCR_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTCR_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTCR_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 6.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTCR_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 11.1
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTC_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 36.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTC_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 43.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTC_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 24.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "NTC_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 24.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OC_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 45.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OC_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 46.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OC_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 6,
+        "track_mm": 20.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OC_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 21.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTH_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTH_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTH_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTH_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTL_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTL_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 8.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTL_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 9.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "OUTL_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 9.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "PGND copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {
+          "F.Cu": 1485.5,
+          "B.Cu": 1459.8,
+          "In2.Cu": 7981.8
+        },
+        "vias": 41,
+        "track_mm": 119.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RDR_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 16.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RDR_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 45.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RDR_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 5.1
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RDR_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 11.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RLIM_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 2.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RLIM_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 2.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RLIM_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 6.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "RLIM_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 6.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "SW_A copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {
+          "F.Cu": 202.6,
+          "B.Cu": 919.8
+        },
+        "vias": 0,
+        "track_mm": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "SW_B copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {
+          "F.Cu": 1122.9,
+          "B.Cu": 3477.7
+        },
+        "vias": 1,
+        "track_mm": 2.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_16V copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 32.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_5V copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 8,
+        "track_mm": 35.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_FBVDD copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 3,
+        "track_mm": 10.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_FBVEE copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 26.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_RLIM copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 0.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "S_VEEA copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 49.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VADC_IN copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 18.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDD_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 13,
+        "track_mm": 73.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDD_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 15,
+        "track_mm": 90.3
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDD_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 6,
+        "track_mm": 117.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDD_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 8,
+        "track_mm": 75.5
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDIV1 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 2.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDIV2 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 1.8
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VDIV3 copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 17.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEEA_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 42.0
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEEA_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 0,
+        "track_mm": 22.1
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEEA_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 23.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEEA_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 2,
+        "track_mm": 17.4
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEE_AH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 7,
+        "track_mm": 106.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEE_AL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 9,
+        "track_mm": 109.7
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEE_BH copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 10,
+        "track_mm": 95.2
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VEE_BL copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 6,
+        "track_mm": 112.9
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "VMOD_IN copper (zone area per layer, via count, track length)",
+      "measured": {
+        "zone_area_mm2": {},
+        "vias": 4,
+        "track_mm": 11.6
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "Copper width/current capacity needs the IPC-2221 rationale in the baseline; areas are fill areas, not conductor widths."
+    },
+    {
+      "rule": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "metric": "control section (84 parts) to power stage (207 parts) bounding-box distance (mm)",
+      "measured": 9.74,
+      "threshold": ">= 8.0 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "metric": "GND_CTRL zone area (mm2) and island count per layer",
+      "measured": {
+        "In1.Cu": {
+          "area": 19818.2,
+          "islands": 1
+        }
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "V1 ground-plane extent guard generalised"
+    },
+    {
+      "rule": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "metric": "board area (mm2), footprints per dm2, courtyard fraction front/back",
+      "measured": {
+        "area": 45000.0,
+        "per_dm2": 69.3,
+        "courtyard": {
+          "front": 0.229,
+          "back": 0.001
+        }
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "HV bbox fraction 0.464; power density n/a W/dm2, n/a W/L"
+    },
+    {
+      "rule": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "metric": "U2 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm)",
+      "measured": 2.547,
+      "threshold": "<= 15 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": "5->C23.1 2.45; 8->C24.2 2.55"
+    },
+    {
+      "rule": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "metric": "U4 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm)",
+      "measured": 2.547,
+      "threshold": "<= 15 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": "5->C47.1 2.45; 8->C48.2 2.55"
+    },
+    {
+      "rule": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "metric": "U6 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm)",
+      "measured": 2.547,
+      "threshold": "<= 15 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": "5->C71.1 2.45; 8->C72.2 2.55"
+    },
+    {
+      "rule": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "metric": "U8 supply pads ['5', '8'] to nearest decoupling capacitor pad, maximum (mm)",
+      "measured": 2.547,
+      "threshold": "<= 15 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": "5->C95.1 2.45; 8->C96.2 2.55"
+    },
+    {
+      "rule": "KR-PCB-003",
+      "requirement": "Never tie the device Kelvin source to the power source in the layout",
+      "metric": "KS_AH versus SW_A: distinct nets, no bridging part, no copper contact, minimum copper distance (mm)",
+      "measured": {
+        "distinct": true,
+        "bridging": [],
+        "contact": false,
+        "min_mm": 0.25
+      },
+      "threshold": "distinct nets, no part other than the device on both nets, copper distance > 0 on every layer",
+      "disposition": "within spec threshold - human review required",
+      "note": "hard constraint; the device itself is the only permitted connection"
+    },
+    {
+      "rule": "KR-PCB-003",
+      "requirement": "Never tie the device Kelvin source to the power source in the layout",
+      "metric": "KS_AL versus PGND: distinct nets, no bridging part, no copper contact, minimum copper distance (mm)",
+      "measured": {
+        "distinct": true,
+        "bridging": [],
+        "contact": false,
+        "min_mm": 0.25
+      },
+      "threshold": "distinct nets, no part other than the device on both nets, copper distance > 0 on every layer",
+      "disposition": "within spec threshold - human review required",
+      "note": "hard constraint; the device itself is the only permitted connection"
+    },
+    {
+      "rule": "KR-PCB-003",
+      "requirement": "Never tie the device Kelvin source to the power source in the layout",
+      "metric": "KS_BL versus PGND: distinct nets, no bridging part, no copper contact, minimum copper distance (mm)",
+      "measured": {
+        "distinct": true,
+        "bridging": [],
+        "contact": false,
+        "min_mm": 0.25
+      },
+      "threshold": "distinct nets, no part other than the device on both nets, copper distance > 0 on every layer",
+      "disposition": "within spec threshold - human review required",
+      "note": "hard constraint; the device itself is the only permitted connection"
+    },
+    {
+      "rule": "KR-PCB-003",
+      "requirement": "Never tie the device Kelvin source to the power source in the layout",
+      "metric": "KS_BH versus SW_B: distinct nets, no bridging part, no copper contact, minimum copper distance (mm)",
+      "measured": {
+        "distinct": true,
+        "bridging": [],
+        "contact": false,
+        "min_mm": 0.25
+      },
+      "threshold": "distinct nets, no part other than the device on both nets, copper distance > 0 on every layer",
+      "disposition": "within spec threshold - human review required",
+      "note": "hard constraint; the device itself is the only permitted connection"
+    },
+    {
+      "rule": "KR-ISO-001",
+      "requirement": "No copper crossing an isolation barrier on any layer",
+      "metric": "barrier strip copper check",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no barrier_keepouts in the spec"
+    },
+    {
+      "rule": "KR-ISO-002",
+      "requirement": "Creepage and clearance per standard for every net-class pair",
+      "metric": "HV domains to SELV (all layers): minimum copper distance per layer (mm)",
+      "measured": {
+        "F.Cu": 8.0,
+        "In1.Cu": 8.002,
+        "In2.Cu": 9.65,
+        "B.Cu": 8.925
+      },
+      "threshold": "all=8.000 mm",
+      "disposition": "within spec threshold - human review required",
+      "note": ""
+    },
+    {
+      "rule": "KR-ISO-004",
+      "requirement": "Slots and cut-outs to extend creepage",
+      "metric": "slots under barrier parts",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no barrier_parts in the spec"
+    },
+    {
+      "rule": "KR-TH-002",
+      "requirement": "Rated insulating interface for shared heat sinks (HV copper keep-out at the sink)",
+      "metric": "HS1: minimum HV copper distance to the heatsink courtyard on the outer layers (mm)",
+      "measured": {
+        "F.Cu": 0.0
+      },
+      "threshold": ">= 5.0 mm",
+      "disposition": "exceeds spec threshold - human review required",
+      "note": "baseline: >= 5 mm HV copper keep-out around the PE-bonded sink; pad/clip insulation itself is a human-review item"
+    }
+  ],
+  "summary": {
+    "rows": 120,
+    "within_threshold": 14,
+    "exceeding_threshold": 5,
+    "measured_only": 99,
+    "not_measured": 2
+  },
+  "notes": [
+    "Straight-line pad distances, track sums and copper areas are geometric proxies; they are not loop inductance, current-path length, creepage per standard or EMI performance.",
+    "Isolation distances are copper-to-copper on each layer (pads, tracks, vias, filled zones); through-air clearance between layers, component bodies, solder mask and coatings are not evaluated.",
+    "Thresholds are those given in the layout spec (taken from the design baseline); no acceptance limit is invented here. Engineering acceptance of every row remains a human responsibility.",
+    "Slot detection relies on non-plated oblong pads or Edge.Cuts graphics inside the barrier part courtyard; the fabricator must confirm the slot width after tolerance.",
+    "Generated by automation.dab_v1.verify from the requirement files; thresholds are the unverified design targets of specification.yaml."
+  ],
+  "warnings": []
+}

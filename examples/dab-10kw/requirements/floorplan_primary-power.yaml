@@ -1,0 +1,73 @@
+# Placement inputs of the primary power board (DAB-V1).  Coordinates are millimetres on the board outline
+# (origin top-left, y downwards).  automation/dab_v1/floorplan.py derives every island, pour, plane, keepout and
+# placement region from these numbers; no component pose is written in code.  The secondary board uses the same
+# geometry (see floorplan_secondary-power.yaml) with its own device, capacitor and sensing variants.
+board: primary-power
+outline_mm: [300, 150]
+# Reinforced barrier band: hazardous copper stays above hv_max_y, SELV copper below selv_min_y (8.0 mm band).
+barrier: {hv_max_y: 70.0, selv_min_y: 78.0, ic_centre_y: 74.0}
+switch_row:
+  # device body centres; Q1 = leg A high side, Q2 = leg A low side, Q3 = leg B low side, Q4 = leg B high side
+  refs: [Q1, Q2, Q3, Q4]
+  roles: [AH, AL, BL, BH]
+  x: [92, 128, 164, 200]
+  y: 18.0
+  # leg B is rotated so that both SW_B leads are adjacent and the second BUS_P lead sits at the row's end
+  angle: [0, 0, 180, 180]
+heatsinks:
+  # two TO-247-4 per sink (TIDA-010054 arrangement); base envelope width x depth, height; keep-out under the base
+  - {ref: HS1, x: 110, y: 9.5, width: 52, depth: 10, height: 50, devices: [Q1, Q2]}
+  - {ref: HS2, x: 182, y: 9.5, width: 52, depth: 10, height: 50, devices: [Q3, Q4]}
+device_row:
+  pour_y: [15.0, 22.0]           # F.Cu / B.Cu pours around the device leads
+  hf_cap_y: 27.5                 # DC-link ceramic row (centre); orientation alternates so neighbouring pads share a net
+  hf_cap_slots_x: [77, 125.4, 133.0, 140.6, 148.2, 155.8, 163.4, 181.6, 189.2, 196.8]
+  hf_cap_band_y: [24.0, 31.0]
+  # DESAT diodes stand in the device row (cathode pad at desat_y, anode towards the island) so the drain copper is
+  # reached by a pour tongue instead of a hazardous track through the island; dx relative to the device centre
+  desat_dx: [-6.0, -12.0, 8.5, 12.0]
+  desat_y: 24.0
+  plane_y: [3.0, 40.0]           # BUS_P (In1.Cu) and PGND (In2.Cu) laminated planes under the device row
+  plane_x: [2.0, 218.0]
+islands:
+  # per switch, centred on the device x: HV part above the barrier, SELV part below it
+  half_width: 14.0
+  hv_y: [42.0, 70.0]
+  selv_y: [78.0, 100.0]
+  driver_dx: -7.0
+  bias_dx: 6.0
+sw_a:
+  # leg A switch node: B.Cu copper from the leads to the top-edge terminal J3 between the heat sinks
+  pad_region: {x: [92.0, 123.0], y: [3.0, 22.0]}
+  strip: {x: [123.0, 152.0], y: [3.0, 11.5]}
+  terminal: {ref: J3, x: 146, y: 8}
+sw_b:
+  # leg B switch node: B.Cu copper from the leads over the top edge (under the heat-sink base) to the right section
+  pad_region: {x: [165.0, 202.0], y: [3.0, 22.0]}
+  strip: {x: [202.0, 296.0], y: [3.0, 11.5]}
+  cap_feed: {x: [261.0, 296.0], y: [3.0, 42.0]}
+left_block:
+  # two four-lead film capacitors side by side in y (electrodes left = PGND, right = BUS_P); BUS_P terminal above the
+  # right pad column, PGND terminal below it; one 1210 bleeder row on the back side between the pad rows
+  terminals: {J1: [55, 8.2], J2: [60, 62]}
+  film_caps: {C1: [26, 18], C2: [26, 52]}
+  film_angle: 0
+  bus_p_pour: [[40.0, 2.0, 92.0, 22.0], [40.0, 22.0, 48.0, 66.0]]
+  bus_n_pour: [[2.0, 2.0, 12.0, 70.0], [52.0, 54.0, 68.0, 70.0]]
+  plane_block: [2.0, 3.0, 73.0, 70.0]
+  bleeder_row: {x: [9.5, 39.5], y: 34.5, side: B}
+right_block:
+  ladder_region: [217.0, 42.0, 229.0, 70.0]
+  sense_iso_region: [230.0, 42.0, 243.5, 70.0]
+  barrier_ics: {U_VSENSE: 221.5, U_VMOD: 230.0, U_SBIAS: 241.5, U_HALL: 259}
+  ac_b_riser: {x: [250.0, 259.0], y: [48.0, 72.0]}
+  ac_b_terminal: {ref: J4, x: 254, y: 48}
+  dc_block_caps: {x: [273.5, 289.5], y: 54.0, angle: 90}
+  xf_b_pour: {x: [260.0, 296.0], y: [60.0, 70.0]}
+  selv_region: [220.0, 78.0, 298.0, 112.0]
+selv:
+  harness: {ref: J5, x: 150, y: 140, angle: 90}
+  left_region: [2.0, 78.0, 76.0, 112.0]
+  bulk_region: [2.0, 112.0, 120.0, 132.0]
+  ground_plane: {x: [2.0, 298.0], y: [80.0, 148.0], layer: In1.Cu}
+mounting_holes: [[76, 6], [294, 6], [6, 144], [294, 144], [100, 144], [200, 144], [146, 74]]

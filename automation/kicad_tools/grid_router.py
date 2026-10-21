@@ -1946,8 +1946,9 @@ def validate_plan(plan):
         if not isinstance(spec, dict):
             raise ValueError(f'power net {net} needs a dict')
         for layer, polygon in spec.get('zones', {}).items():
-            if len(polygon) < 3:
-                raise ValueError(f'power zone {net}/{layer} needs at least 3 points')
+            for poly in polygons_of(polygon):
+                if len(poly) < 3:
+                    raise ValueError(f'power zone {net}/{layer} needs at least 3 points')
     ground = plan.get('ground')
     if ground is not None and (not isinstance(ground, dict) or not ground.get('net') or not ground.get('layers')):
         raise ValueError('plan.ground needs net and layers')
@@ -1959,6 +1960,14 @@ def validate_plan(plan):
         if isinstance(rule, dict) and rule.get('smooth') not in (None, *SMOOTH_POLICIES):
             raise ValueError(f'net_rules[{net!r}].smooth must be one of {SMOOTH_POLICIES}')
     return dict(plan)
+
+
+def polygons_of(value):
+    """One polygon (list of points) or several (list of polygons) -> list of polygons; a point is a 2-sequence of numbers."""
+    value = list(value)
+    if value and isinstance(value[0][0], (int, float)):
+        return [value]
+    return [list(p) for p in value]
 
 
 def save_and_reload(board, path):
@@ -2004,19 +2013,23 @@ def orders_meta(router, remaining, trials, rank=None, first=()):
     return result[:trials]
 
 
-def run_plan(board, plan):
+def run_plan(board, plan, router_factory=None):
     """Execute a declarative routing plan on an open pcbnew BOARD and return the report dict.
 
     Stages: router setup (rules, keepouts) -> pre-routed tracks/vias/via arrays ->
     fanout -> critical nets in plan order -> power stubs and zones -> signal nets by
     priority -> via pruning -> ground zones -> zone fill -> optional save/reload.
-    ``strict`` raises RuntimeError when anything stays unresolved.
+    ``strict`` raises RuntimeError when anything stays unresolved.  ``router_factory``
+    (default ``Router``) builds the router with the same keyword arguments, so a
+    subclass such as ``pairwise_router.PairwiseRouter`` (with its extra arguments
+    bound through ``functools.partial``) can run an unchanged plan.
     """
     plan = validate_plan(plan)
     start = time.monotonic()
     spec = plan['board']
     power = plan.get('power', {})
-    router = Router(board, spec['width'], spec['height'], plan['layers'], grid=plan.get('grid', 0.25),
+    make = router_factory or Router
+    router = make(board, spec['width'], spec['height'], plan['layers'], grid=plan.get('grid', 0.25),
                     trace=plan.get('trace', 0.2), clearance=plan.get('clearance', 0.2), via=tuple(plan.get('via', (0.6, 0.3))),
                     net_rules=plan.get('net_rules'), board_margin=spec.get('margin', 1.0), origin=tuple(spec.get('origin', (0.0, 0.0))),
                     critical=plan.get('critical', ()), power=list(power), hole_clearance=plan.get('hole_clearance', 0.25),
@@ -2087,8 +2100,9 @@ def run_plan(board, plan):
             router.route_power_stub(net, [p for p in router.ports[net] if p[3] in anchors],
                                     [p for p in router.ports[net] if p[3] not in anchors], layers=indices(item.get('layers')))
         for layer, polygon in item.get('zones', {}).items():
-            router.zone(net, layer, [tuple(p) for p in polygon], priority=item.get('priority', 1), clearance=item.get('clearance', 0.5),
-                        min_thickness=item.get('min_thickness', 0.2), thermal_relief=bool(item.get('thermal_relief')))
+            for poly in polygons_of(polygon):
+                router.zone(net, layer, [tuple(p) for p in poly], priority=item.get('priority', 1), clearance=item.get('clearance', 0.5),
+                            min_thickness=item.get('min_thickness', 0.2), thermal_relief=bool(item.get('thermal_relief')))
     ground = plan.get('ground')
     ground_net = ground['net'] if ground else None
     excluded = set(plan.get('exclude_nets', ())) | set(plan.get('critical', ())) | set(power) | ({ground_net} if ground_net else set())

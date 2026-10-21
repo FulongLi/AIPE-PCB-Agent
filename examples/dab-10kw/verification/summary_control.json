@@ -1,0 +1,280 @@
+{
+  "board": "control",
+  "project": "dab-control",
+  "generation": "DAB-V1",
+  "updated_utc": "2026-10-21T07:22:43.448123+00:00",
+  "inputs": {
+    "examples\\dab-10kw\\control\\dab-control.kicad_pcb": "baffe51c611330f4002c2b1d2b9a2251147340bf4157669314d1b451d29026b5",
+    "examples\\dab-10kw\\control\\dab-control.kicad_sch": "8e94925dc3aad01ad82859d4972db838c297f60a0cd2c6611722fe78ee410614"
+  },
+  "requirement_sha256": {
+    "components": "09e3b7c367510e004c531f245473ffe497e479d677a281c69fdc9f275075d211",
+    "design_constraints": "02fad76601e7568eb924f390fecfc978710153930b470829f3cd72b4cb4ba1e0",
+    "floorplan_control": "03258de163ec7d38b501cb1e7f8bd60bef2239963acf51ff5825e74111350f3a",
+    "floorplan_primary-power": "0b52996404cd9fbb71a8a1a41aa01ef97837dcb190c75eca41850e1fae2729d2",
+    "floorplan_secondary-power": "75b1bfb1705d90ea83c03d536ee4d49f1144a8903b1af2512f413a519717091c",
+    "interfaces": "e69ec168ca3b2fc59f1582fb347855a802a2d3a94f7861517c8763eb91c7431d",
+    "routing_control": "326cffe4198a3d2cedcf2a95f9057eb302dd2c1ddce49320bba5b6ffbf6defa5",
+    "routing_primary-power": "55e33d8b7133cbc1141f7516d2776af7f2e861efaccf551e9625d9de92183ca8",
+    "routing_secondary-power": "f18826796530fc93d38835257b68c5c9601fff7cfd65932deeeb3e2c1c0ade9d",
+    "specification": "09db3cc104f2c6fec04c69f2734ae6bcd1291f52cd5d72e1d0b8d95cd065b6c5"
+  },
+  "erc": {
+    "exit_code": 0,
+    "manifest": "examples\\dab-10kw\\verification\\erc\\20261021T072243Z-erc-a7b01b14\\run.json",
+    "finding_count": 0,
+    "status": "passed",
+    "report_sha256": "fec328ed939d7e32f961687a31094671858cb9829909f647fd4da32e80e4cae3"
+  },
+  "drc": {
+    "exit_code": 5,
+    "manifest": "examples\\dab-10kw\\verification\\drc\\20261021T072243Z-drc-bff9bf17\\run.json",
+    "finding_counts": {
+      "violations": 0,
+      "unconnected_items": 499,
+      "schematic_parity": 0
+    },
+    "status": "failed",
+    "by_type": {
+      "unconnected_items:unconnected_items:error": 499
+    },
+    "ignored_checks": [
+      {
+        "description": "Footprint has no courtyard defined",
+        "key": "missing_courtyard"
+      },
+      {
+        "description": "Track endpoint not centered on via",
+        "key": "track_not_centered_on_via"
+      },
+      {
+        "description": "Tuning profile track geometries",
+        "key": "tuning_profile_track_geometries"
+      },
+      {
+        "description": "Footprint doesn't match symbol's footprint filters",
+        "key": "footprint_filters_mismatch"
+      },
+      {
+        "description": "Footprint component type doesn't match footprint pads",
+        "key": "footprint_type_mismatch"
+      }
+    ],
+    "report_sha256": "16f02ac0ea687622cd45b9ab5a197e22f8cb71244814b8d98c70b8a4b6c28a6f",
+    "report": "examples\\dab-10kw\\verification\\drc\\20261021T072243Z-drc-bff9bf17\\drc.json",
+    "unconnected_nets": {
+      "GND_CTRL": 336,
+      "3V3": 120,
+      "5V0": 52,
+      "12V_E": 26,
+      "PWM_ENABLE": 18,
+      "12V_IN": 12,
+      "E_RTN": 10,
+      "ADC_5V": 8,
+      "ADC_ITANK_P": 8,
+      "ADC_ITANK_S": 8,
+      "ADC_TEMP_P": 8,
+      "ADC_TEMP_S": 8,
+      "ADC_V12": 8,
+      "ADC_VBUS_P": 8,
+      "ADC_VBUS_S": 8,
+      "P_VBUS_RX": 8,
+      "S_VBUS_RX": 8,
+      "ALL_GOOD": 6,
+      "CANH": 6,
+      "CANL": 6,
+      "FB5": 6,
+      "NRST": 6,
+      "P_VA": 6,
+      "P_VM": 6,
+      "REF3": 6,
+      "S_VA": 6,
+      "S_VM": 6,
+      "V_OV_P": 6,
+      "ARM": 4,
+      "ARMED": 4,
+      "AUX_FLT_N": 4,
+      "BIAS_EN": 4,
+      "BIAS_EN_MCU": 4,
+      "CAN_MID": 4,
+      "DRV_RST": 4,
+      "DRV_RST_MCU": 4,
+      "EN5": 4,
+      "EPWM1A": 4,
+      "EPWM1B": 4,
+      "EPWM2A": 4,
+      "EPWM2B": 4,
+      "EPWM3A": 4,
+      "EPWM3B": 4,
+      "EPWM4A": 4,
+      "EPWM4B": 4,
+      "E_IMON": 4,
+      "E_OV": 4,
+      "E_UV": 4,
+      "MON3V3": 4,
+      "P_ISNS_BUF": 4,
+      "P_PG_BIAS_N": 4,
+      "P_RDY_AH": 4,
+      "P_RDY_AL": 4,
+      "P_RDY_BH": 4,
+      "P_RDY_BL": 4,
+      "RS485_A": 4,
+      "RS485_B": 4,
+      "RS485_DE": 4,
+      "RUN_EN": 4,
+      "SW5": 4,
+      "S_FLT_AH_N": 4,
+      "S_FLT_AL_N": 4,
+      "S_FLT_BH_N": 4,
+      "S_FLT_BL_N": 4,
+      "S_OC_TRIP_N": 4,
+      "S_PG_BIAS_N": 4,
+      "S_RDY_AH": 4,
+      "S_RDY_AL": 4,
+      "S_RDY_BH": 4,
+      "S_RDY_BL": 4,
+      "TCK": 4,
+      "V12_DIV": 4,
+      "CAN_RX": 2,
+      "CAN_TX": 2,
+      "EMU0": 2,
+      "EMU1": 2,
+      "FAULT_RD": 2,
+      "GPIO_LED_RUN": 2,
+      "MR_N": 2,
+      "PG_P_OK": 2,
+      "PG_S_OK": 2,
+      "P_TEMP_PWM_BH": 2,
+      "P_VBUS_CMP": 2,
+      "RDY_P_OK": 2,
+      "RDY_S_OK": 2,
+      "RESET_CT": 2,
+      "RS485_RX": 2,
+      "RS485_TX": 2,
+      "SDFM_P_CLK": 2,
+      "SDFM_P_D": 2,
+      "SDFM_S_CLK": 2,
+      "SDFM_S_D": 2,
+      "S_ISNS": 2,
+      "S_PWM_AH": 2,
+      "S_PWM_AH_SRC": 2,
+      "S_PWM_AL": 2,
+      "S_PWM_AL_SRC": 2,
+      "S_PWM_BH": 2,
+      "S_PWM_BL": 2,
+      "S_PWM_BL_SRC": 2,
+      "S_SDFM_CLK": 2,
+      "S_SDFM_D": 2,
+      "S_TEMP_HS": 2,
+      "S_TEMP_PWM_AH": 2,
+      "S_TEMP_PWM_AL": 2,
+      "S_TEMP_PWM_BH": 2,
+      "S_TEMP_PWM_BL": 2,
+      "S_VSNS_N": 2,
+      "S_VSNS_P": 2,
+      "TDI": 2,
+      "TDO": 2,
+      "TEMP_PWM_P_AH": 2,
+      "TEMP_PWM_P_AL": 2,
+      "TEMP_PWM_P_BH": 2,
+      "TEMP_PWM_P_BL": 2,
+      "TEMP_PWM_S_AH": 2,
+      "TEMP_PWM_S_AL": 2,
+      "TEMP_PWM_S_BH": 2,
+      "TEMP_PWM_S_BL": 2,
+      "TMS": 2,
+      "TRST_N": 2,
+      "TZ_TRIP": 2,
+      "XRS_CARD": 2
+    },
+    "note": "KiCad lists at most about 500 unconnected items per report; counts are of listed items (pad ends), not of nets"
+  },
+  "export": {
+    "status": "passed",
+    "manifest": "examples\\dab-10kw\\manufacturing\\control\\export-manifest.json",
+    "commands": [
+      [
+        "schematic_pdf",
+        0
+      ],
+      [
+        "pcb_pdf",
+        0
+      ],
+      [
+        "gerber",
+        0
+      ],
+      [
+        "drill",
+        0
+      ],
+      [
+        "bom",
+        0
+      ],
+      [
+        "placement",
+        0
+      ],
+      [
+        "step",
+        0
+      ],
+      [
+        "front",
+        0
+      ],
+      [
+        "back",
+        0
+      ],
+      [
+        "isometric",
+        0
+      ],
+      [
+        "netlist",
+        0
+      ]
+    ],
+    "artifacts": 36,
+    "manifest_sha256": "1d12aa77d98f61503d1f134da782c77ba5742de96d798c60931230f6c853953f"
+  },
+  "netlist": {
+    "passed": true,
+    "schematic_mismatches": 0,
+    "board_mismatches": 0,
+    "duplicate_nodes": 0,
+    "conflicting_pads": 0,
+    "file": "examples\\dab-10kw\\verification\\circuit_checks\\netlist_equality_control.json",
+    "sha256": "dce45fe1071e41947f262246a0d66e525313caed06d380c30430961368eb6005"
+  },
+  "layout_metrics": {
+    "exit_code": 0,
+    "log": "measured-human-review-required: 14 rule rows (0 within, 0 exceeding spec thresholds, 1 measured only, 13 not measured) in 0.156 s -> D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_metrics_control.json\n",
+    "spec": "examples\\dab-10kw\\verification\\engineering_checks\\layout_spec_control.json",
+    "file": "examples\\dab-10kw\\verification\\engineering_checks\\layout_metrics_control.json",
+    "sha256": "cdf0cd0b654c84934a9dca94704fa561c6c33e4267a4e10ee8faa4856b5098d2",
+    "summary": {
+      "rows": 14,
+      "within_threshold": 0,
+      "exceeding_threshold": 0,
+      "measured_only": 1,
+      "not_measured": 13
+    },
+    "warnings": []
+  },
+  "copper_islands": {
+    "passed": false,
+    "components": {
+      "12V_E": 14,
+      "3V3": 61,
+      "5V0": 27,
+      "GND_CTRL": 169
+    },
+    "file": "examples\\dab-10kw\\verification\\engineering_checks\\copper_islands_control.json",
+    "sha256": "30ffb745b9d517c6dee65964205d2dd6e902cc2ef2aa986a0c950b45a0e2be6d"
+  },
+  "scope": "CAD evidence only: native ERC/DRC under the recorded rule set, export hashes, pad/net equality and geometric layout metrics. No electrical, thermal, EMI, insulation or manufacturability qualification is established by these checks."
+}

@@ -116,3 +116,40 @@ directory, which is how the V2 and V2.1 generations were compared with one defin
 - The gates prove netlist identity and rule-file identity against a legacy generation of the same
   model, not that the drawing is good; readability is measured by `schematic_metrics`, and the
   TI TIDA-010054 schematic was the reference style, not a template.
+
+## DAB-V1 modules: requirement-file-driven generation (branch `feat/dab-10kw-workflow`)
+
+**AI-GENERATED ENGINEERING PROTOTYPE DAB-V1 - HUMAN REVIEW REQUIRED**
+
+`automation/dab_v1/` generates the three KiCad 10 projects of the 10 kW dual active bridge
+(`examples/dab-10kw/{primary-power,secondary-power,control}`) from YAML/JSON requirement files instead of code-level
+constants. The circuit topology is code (`model.py`), every number it uses is data: devices, value banks, pin maps,
+board stack-ups, the insulation-coordination table, placement regions and routing parameters live in
+`examples/dab-10kw/requirements/*.yaml`. The generic pipeline is reused unchanged except for two backward-compatible
+`grid_router.run_plan` extensions (`router_factory`, several pours per layer).
+
+```text
+requirements/*.yaml  (requirements.py: PyYAML or the subset parser used under KiCad's Python)
+    -> model.py            Circuit models (power(req, board), control(req)) with block annotations
+    -> rules.py            potential model -> net classes, .kicad_dru (reinforced + functional + package relaxations), pair gaps
+    -> footprints.py       isolation packages with >= 8 mm land gap, film / heat-sink envelopes (project_footprints generators)
+    -> schematics.py       prepare_libraries + project_schematic.generate_project (wired) + run_check ERC; design records
+    -> floorplan.py        ProjectBoard + place_in_region under rules.make_pair_gap; copper plan (pours, planes, keep-outs, regions)
+    -> copper.py           host-side Shapely union of the pour rectangles per net and layer (KiCad rejects overlapping same-net zones)
+    -> routing.py          plan dict (pre-routed DC-link vias, pours, keep-outs, regions, stubs) -> grid_router.run_plan through PairwiseRouter / Router
+    -> verify.py           run_check DRC, export_outputs, netlist equality, check_routing_quality, check_sic_layout, copper islands
+    -> provenance.py       manufacturer URLs -> hashed source_manifest.json
+    -> pipeline.py         host / KiCad-Python stage sequencing
+```
+
+| Module | Contract |
+|---|---|
+| `requirements.py` | `Requirements` validates the files (board stack-ups vs thickness, harness map 1..40, controlCARD contacts, floorplan outlines); `functional_gap_mm` interpolates the reference table; `load_yaml_text` is the PyYAML-compatible subset parser (unit-tested against PyYAML on every file). |
+| `rules.py` | `power_domains` assigns every hazardous net a potential `a*BUS + b*SW_A + c*SW_B` plus envelope; `pair_voltage` maximises over the switch states; `build_rules` emits one class per distinct potential profile, the reinforced rule (explicit over the HV classes, so unconnected pads never trigger it), pair rules above the board minimum and pair-specific package relaxations with their evidence; `make_pair_gap` is the callback of the placer and the PairwiseRouter. |
+| `floorplan.py` | Orientation by predicate (hazardous pins towards the barrier side, electrode nets left/right, pin 1 left), fixed poses only for devices / terminals / capacitor rows / barrier ICs / connectors / holes, everything else by anchor-weighted `place_in_region`; the copper plan (zone rectangles per net and layer, laminated planes minus switch-node exclusions, barrier and heat-sink keep-outs, per-net routing regions on named layers, exact stub pads) is derived from the same numbers and written to `pcb/floorplan_<board>.json`. |
+| `report.py` | Fills the result sections of `docs/dab-10kw/review-report.md` from the verification summaries and manifests (numbers copied, never typed). |
+| `verify.py` | Writes `verification/summary_<board>.json` with ERC/DRC manifests, export manifest, netlist equality, routing quality, a layout spec derived from the requirements for `check_sic_layout`, and copper-island counts. Clean results are CAD statements only. |
+
+Honest limits: the controlCARD contact map and several pin tables are transcribed assumptions (recorded in
+`parts.PINOUT_SOURCES` and `interfaces.yaml`); the insulation values are reference inputs to be reviewed; the layout
+checker measures geometry only; see `docs/dab-10kw/review-report.md`.

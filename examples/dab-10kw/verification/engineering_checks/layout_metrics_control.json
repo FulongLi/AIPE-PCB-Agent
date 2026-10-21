@@ -1,0 +1,4102 @@
+{
+  "schema_version": 1,
+  "status": "measured-human-review-required",
+  "generated_utc": "2026-10-21T07:22:51.375344+00:00",
+  "checker": "automation/verification/check_sic_layout.py",
+  "spec": {
+    "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_spec_control.json",
+    "sha256": "8d7fef369f5bf267b07f1d88643e702a86936223a2574d170860c43e73dae95e",
+    "board": "control",
+    "title": "AIPE 10 kW DAB - control board (TMS320F280039C controlCARD) - layout metrics spec (derived from requirements)"
+  },
+  "model_file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\design\\circuit_control.json",
+  "distance_backend": "numpy",
+  "runtime_s": 0.156,
+  "board": {
+    "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb",
+    "sha256": "baffe51c611330f4002c2b1d2b9a2251147340bf4157669314d1b451d29026b5",
+    "title": "dab-control",
+    "pcbnew_version": "10.0.6",
+    "outline_mm": [
+      160.0,
+      120.0
+    ],
+    "outline_bbox_mm": [
+      0.0,
+      0.0,
+      160.0,
+      120.0
+    ],
+    "edge_cuts_bbox_mm": [
+      -0.025,
+      -0.025,
+      160.025,
+      120.025
+    ],
+    "outline_area_mm2": 19200.0,
+    "outline_cutouts": 0,
+    "copper_layers": 4,
+    "layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ],
+    "outer_layers": [
+      "F.Cu",
+      "B.Cu"
+    ],
+    "thickness_mm": 1.6,
+    "copper_um": {
+      "F.Cu": 35.0,
+      "In1.Cu": 35.0,
+      "In2.Cu": 35.0,
+      "B.Cu": 35.0
+    },
+    "stackup": [
+      {
+        "layer": "F.Cu",
+        "type": "copper",
+        "thickness_mm": 0.035,
+        "thickness_um": 35.0
+      },
+      {
+        "layer": "dielectric 1",
+        "type": "prepreg",
+        "thickness_mm": 0.2
+      },
+      {
+        "layer": "In1.Cu",
+        "type": "copper",
+        "thickness_mm": 0.035,
+        "thickness_um": 35.0
+      },
+      {
+        "layer": "dielectric 2",
+        "type": "core",
+        "thickness_mm": 1.06
+      },
+      {
+        "layer": "In2.Cu",
+        "type": "copper",
+        "thickness_mm": 0.035,
+        "thickness_um": 35.0
+      },
+      {
+        "layer": "dielectric 3",
+        "type": "prepreg",
+        "thickness_mm": 0.2
+      },
+      {
+        "layer": "B.Cu",
+        "type": "copper",
+        "thickness_mm": 0.035,
+        "thickness_um": 35.0
+      }
+    ],
+    "footprints": 224,
+    "tracks": 0,
+    "vias": 0,
+    "zones": 0,
+    "rule_areas": 0,
+    "unfilled_zones": [],
+    "nets": 298,
+    "expected": {
+      "outline_mm": [
+        160,
+        120
+      ],
+      "copper_layers": 4,
+      "copper_um": 35,
+      "thickness_mm": 1.6
+    }
+  },
+  "nets": {
+    "12V_E": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 14,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "12V_IN": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 7,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "3V3": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 61,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "5V0": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 27,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_5V": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_ITANK_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_ITANK_S": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_TEMP_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_TEMP_S": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_V12": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_VBUS_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ADC_VBUS_S": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ALL_GOOD": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ARM": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "ARMED": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "AUX_FLT_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BIAS_EN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BIAS_EN_MCU": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "BST5": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "CANH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "CANL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "CAN_MID": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "CAN_RX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "CAN_TX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DRIVERS_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DRV_RST": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "DRV_RST_MCU": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EMU0": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EMU1": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EN5": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM1A": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM1B": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM2A": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM2B": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM3A": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM3B": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM4A": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "EPWM4B": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_DVDT": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_EN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_ILIM": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_IMON": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_OV": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_RTN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 6,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "E_UV": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FAULT_RD": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FB5": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_P_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_S_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GND_CTRL": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 169,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GPIO_LED_RUN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "LED_FAULT_K": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "LED_PWR_K": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "LED_RUN_K": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "MON3V3": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "MR_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "NRST": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OV_P_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "OV_S_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PG_P_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PG_S_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PROT_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "PWM_ENABLE": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 10,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_FLT_AH_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_FLT_AL_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_FLT_BH_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_FLT_BL_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_ISNS": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_ISNS_BUF": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_OC_TRIP_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PG_BIAS_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_AH_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_AL_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_BH_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_PWM_BL_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_RDY_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_RDY_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_RDY_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_RDY_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_SDFM_CLK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_SDFM_D": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_TEMP_HS": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_TEMP_PWM_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_TEMP_PWM_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_TEMP_PWM_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_TEMP_PWM_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VA": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VBUS_CMP": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VBUS_RX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VM": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VSNS_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "P_VSNS_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_P_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RDY_S_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "REF3": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RESET_CT": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RS485_A": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RS485_B": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RS485_DE": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RS485_RX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RS485_TX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "RUN_EN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_P_CLK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_P_D": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_S_CLK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SDFM_S_D": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SUPPLY_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "SW5": {
+      "cls": "CTRL_POWER",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FLT_AH_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FLT_AL_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FLT_BH_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_FLT_BL_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_ISNS": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_ISNS_BUF": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_OC_TRIP_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PG_BIAS_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_AH_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_AL_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_BH_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_PWM_BL_SRC": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_RDY_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_RDY_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_RDY_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_RDY_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_SDFM_CLK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_SDFM_D": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_TEMP_HS": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_TEMP_PWM_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_TEMP_PWM_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_TEMP_PWM_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_TEMP_PWM_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VA": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VBUS_CMP": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VBUS_RX": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 5,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VM": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VSNS_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "S_VSNS_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TCK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TDI": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TDO": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_P_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_P_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_P_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_P_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_S_AH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_S_AL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_S_BH": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TEMP_PWM_S_BL": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TMS": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TRIPPED": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TRST_N": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "TZ_TRIP": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "V12_DIV": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "V5_DIV": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 3,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "V_OV_P": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "V_OV_S": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 4,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "XRS_CARD": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 2,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad10)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad101)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad103)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad105)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad107)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad108)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad109)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad111)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad113)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad115)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad117)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad119)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad12)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad121)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad123)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad124)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad125)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad126)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad127)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad128)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad129)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad13)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad130)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad131)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad132)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad133)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad134)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad135)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad136)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad137)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad138)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad139)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad14)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad141)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad142)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad143)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad144)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad145)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad146)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad147)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad148)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad149)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad150)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad151)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad152)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad153)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad154)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad155)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad156)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad157)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad158)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad159)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad16)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad161)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad162)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad163)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad164)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad165)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad166)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad167)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad168)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad169)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad171)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad172)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad173)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad174)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad175)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad176)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad177)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad178)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad179)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad18)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad19)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad20)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad22)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad24)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad26)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad28)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad29)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad30)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad31)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad32)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad33)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad34)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad35)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad36)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad37)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad38)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad39)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad40)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad41)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad42)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad43)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad44)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad45)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad46)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad47)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad48)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad74)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad76)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad78)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad82)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad85)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad87)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad88)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad89)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad90)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad91)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad92)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad93)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad94)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad95)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad96)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad97)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad98)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J1-Pad99)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(J7-Pad6)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U1-MODE-Pad6)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U1-NC-Pad13)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U1-NC-Pad4)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U10-NC-Pad11)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U10-NC-Pad3)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U11-NC-Pad11)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U11-NC-Pad3)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U12-NC-Pad11)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U12-NC-Pad3)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U13-4Y-Pad8)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U13-5Y-Pad10)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U13-6Y-Pad12)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U17-2Y-Pad3)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U3-NC-Pad4)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U9-NC-Pad11)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "unconnected-(U9-NC-Pad3)": {
+      "cls": null,
+      "track_mm": 0.0,
+      "tracks": 0,
+      "vias": 0,
+      "pads": 1,
+      "layers": [
+        "F.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    }
+  },
+  "commutation": {
+    "mosfets": [],
+    "hf_capacitors": [],
+    "hf_group_bbox_mm": null,
+    "sw_copper_mm2": null
+  },
+  "gate_loops": {
+    "loops": []
+  },
+  "isolation": {
+    "pairs": [],
+    "barrier_keepouts": [],
+    "barrier_parts": []
+  },
+  "heatsink": {
+    "ref": null
+  },
+  "decoupling": {
+    "ics": []
+  },
+  "sensing": {
+    "kelvin_pairs": [],
+    "parts": []
+  },
+  "control": {},
+  "compactness": {
+    "board_area_mm2": 19200.0,
+    "board_area_dm2": 1.92,
+    "footprints": 224,
+    "footprints_per_dm2": 116.6667,
+    "courtyard_area_mm2": {
+      "front": 4428.902,
+      "back": 0.0
+    },
+    "courtyard_fraction": {
+      "front": 0.2307,
+      "back": 0.0
+    },
+    "hv_nets": [],
+    "hv_bbox_mm": null,
+    "hv_bbox_fraction": null,
+    "hv_outer_copper_mm2": 0,
+    "hv_outer_copper_fraction": 0.0,
+    "tallest_component": {
+      "ref": "U9",
+      "height_mm": 0.0
+    },
+    "assembly_height_mm": {
+      "declared": null,
+      "computed": 1.6,
+      "used": 1.6
+    },
+    "rated_power_W": null,
+    "power_density_W_per_dm2": null,
+    "power_density_W_per_L": null
+  },
+  "rule_table": [
+    {
+      "rule": "PE-PCB-001",
+      "requirement": "Minimise MOSFET gate loop",
+      "metric": "driver output to gate pad distance",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no gate_loops in the spec"
+    },
+    {
+      "rule": "PE-PCB-002",
+      "requirement": "Place HF DC-link capacitors close to the half bridge",
+      "metric": "HF capacitor to device pin distance",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no commutation section in the spec"
+    },
+    {
+      "rule": "PE-PCB-003",
+      "requirement": "Minimise HF commutation loop",
+      "metric": "commutation loop proxies",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no commutation section in the spec"
+    },
+    {
+      "rule": "PE-PCB-004",
+      "requirement": "Use Kelvin current sensing",
+      "metric": "Kelvin sense pair length match",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no sensing.kelvin_pairs in the spec"
+    },
+    {
+      "rule": "PE-PCB-005",
+      "requirement": "Separate sensitive analog and switch-node paths",
+      "metric": "sensing versus switch node distance",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no sensing section in the spec"
+    },
+    {
+      "rule": "PE-PCB-006",
+      "requirement": "Justify high-current copper and via capacity",
+      "metric": "HV net copper",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no HV net classes in the spec"
+    },
+    {
+      "rule": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "metric": "control section versus power stage separation",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no control section in the spec"
+    },
+    {
+      "rule": "PE-PCB-007",
+      "requirement": "Separate control and switching structures",
+      "metric": "board area (mm2), footprints per dm2, courtyard fraction front/back",
+      "measured": {
+        "area": 19200.0,
+        "per_dm2": 116.7,
+        "courtyard": {
+          "front": 0.231,
+          "back": 0.0
+        }
+      },
+      "threshold": null,
+      "disposition": "measured - human review required",
+      "note": "HV bbox fraction n/a; power density n/a W/dm2, n/a W/L"
+    },
+    {
+      "rule": "PE-PCB-008",
+      "requirement": "Place decoupling adjacent to supply pins",
+      "metric": "supply pad to decoupling capacitor distance",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no decoupling entries in the spec"
+    },
+    {
+      "rule": "KR-PCB-003",
+      "requirement": "Never tie the device Kelvin source to the power source in the layout",
+      "metric": "Kelvin-source versus power-source separation",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no gate_loops in the spec"
+    },
+    {
+      "rule": "KR-ISO-001",
+      "requirement": "No copper crossing an isolation barrier on any layer",
+      "metric": "barrier strip copper check",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no barrier_keepouts in the spec"
+    },
+    {
+      "rule": "KR-ISO-002",
+      "requirement": "Creepage and clearance per standard for every net-class pair",
+      "metric": "net-class pair copper distances",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no isolation pairs in the spec"
+    },
+    {
+      "rule": "KR-ISO-004",
+      "requirement": "Slots and cut-outs to extend creepage",
+      "metric": "slots under barrier parts",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "no barrier_parts in the spec"
+    },
+    {
+      "rule": "KR-TH-002",
+      "requirement": "Rated insulating interface for shared heat sinks (HV copper keep-out at the sink)",
+      "metric": "HV copper distance to the heatsink envelope",
+      "measured": null,
+      "threshold": null,
+      "disposition": "not measured - spec input missing or reference not found",
+      "note": "heatsink ref missing or not on the board"
+    }
+  ],
+  "summary": {
+    "rows": 14,
+    "within_threshold": 0,
+    "exceeding_threshold": 0,
+    "measured_only": 1,
+    "not_measured": 13
+  },
+  "notes": [
+    "Straight-line pad distances, track sums and copper areas are geometric proxies; they are not loop inductance, current-path length, creepage per standard or EMI performance.",
+    "Isolation distances are copper-to-copper on each layer (pads, tracks, vias, filled zones); through-air clearance between layers, component bodies, solder mask and coatings are not evaluated.",
+    "Thresholds are those given in the layout spec (taken from the design baseline); no acceptance limit is invented here. Engineering acceptance of every row remains a human responsibility.",
+    "Slot detection relies on non-plated oblong pads or Edge.Cuts graphics inside the barrier part courtyard; the fabricator must confirm the slot width after tolerance.",
+    "Generated by automation.dab_v1.verify from the requirement files; thresholds are the unverified design targets of specification.yaml."
+  ],
+  "warnings": []
+}

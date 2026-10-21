@@ -1,0 +1,77 @@
+{
+  "board": "secondary-power",
+  "project": "dab-secondary",
+  "parts": 312,
+  "sheets": [
+    "01_bridge",
+    "02_drive_ah",
+    "03_drive_al",
+    "04_drive_bl",
+    "05_drive_bh",
+    "06_sense",
+    "07_interface"
+  ],
+  "symbol_fallbacks": {
+    "Q1": "generated:fet",
+    "Q2": "generated:fet",
+    "Q3": "generated:fet",
+    "Q4": "generated:fet",
+    "L1": "generated:rectangle",
+    "L2": "generated:rectangle",
+    "L3": "generated:rectangle",
+    "L4": "generated:rectangle",
+    "L5": "generated:rectangle"
+  },
+  "flags": [
+    "BUS_P",
+    "PGND",
+    "12V_E",
+    "3V3",
+    "GND_CTRL",
+    "S_5V",
+    "KS_AH",
+    "KS_AL",
+    "KS_BL",
+    "KS_BH",
+    "GNDP_AH",
+    "GNDP_AL",
+    "GNDP_BL",
+    "GNDP_BH",
+    "12V_BIAS_AH",
+    "12V_BIAS_AL",
+    "12V_BIAS_BL",
+    "12V_BIAS_BH",
+    "GNDP_S",
+    "12V_BIAS_S"
+  ],
+  "library": [
+    "AIPE",
+    "Capacitor_SMD",
+    "Connector_IDC",
+    "Connector_JST",
+    "Diode_SMD",
+    "Diode_THT",
+    "Inductor_SMD",
+    "MountingHole",
+    "NetTie",
+    "Package_TO_SOT_THT",
+    "Resistor_SMD",
+    "TerminalBlock_Wuerth",
+    "TestPoint"
+  ],
+  "custom_footprints": [
+    "DAB_AMC1311_DWV",
+    "DAB_AMC1336_DWV",
+    "DAB_FILM_SECONDARY",
+    "DAB_HEATSINK_ENVELOPE",
+    "DAB_TMCS1133_DVG",
+    "DAB_UCC14141_DWN",
+    "DAB_UCC21710_DW_HV"
+  ],
+  "erc": {
+    "exit_code": 0,
+    "manifest": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\erc\\20261021T061846Z-erc-2a46f55f\\run.json",
+    "finding_count": 0,
+    "status": "passed"
+  }
+}

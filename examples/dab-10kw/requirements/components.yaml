@@ -1,0 +1,219 @@
+# Component selections of the AIPE 10 kW DAB (DAB-V1).  Every entry names a real orderable part, its
+# manufacturer and the manufacturer document that the design relies on.  "verification" states how the
+# pin table / dimensions used by automation/dab_v1 were established:
+#   fetched-datasheet  - the manufacturer PDF was read (by this or an earlier AIPE run recorded in the repository)
+#   repository-record  - taken from a pin table already verified and recorded in this repository (sic_buck models)
+#   transcribed        - written from engineering knowledge of the part; MUST be checked against the datasheet
+#   library-convention - KiCad library pad numbering (two-pad parts, headers)
+# Nothing here is a procurement approval.  Dimensions marked "envelope" are reserved volumes, not vendor CAD.
+schema: 1
+switches:
+  primary:
+    mpn: C3M0075120K
+    maker: Wolfspeed
+    source: "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0075120K_data_sheet.pdf"
+    rating: "1200 V, 75 mOhm typ, 30 A, TO-247-4 Kelvin source; +15 V / -4 V gate per datasheet"
+    footprint: Package_TO_SOT_THT:TO-247-4_Vertical
+    pins: "1:D:passive 2:S:passive 3:KS:passive 4:G:input"
+    verification: "repository-record: Wolfspeed TO-247-4 outline PRD 05966 (lead 1 DRAIN, 2 SOURCE, 3 DRIVER SOURCE, 4 GATE) as recorded for C4MS025120K; same package family - confirm for C3M0075120K"
+    qg_nC_typ: 51
+    rth_jc_K_per_W: 1.1
+  secondary:
+    mpn: C3M0030090K
+    maker: Wolfspeed
+    source: "https://assets.wolfspeed.com/uploads/2024/01/Wolfspeed_C3M0030090K_data_sheet.pdf"
+    rating: "900 V, 30 mOhm typ, 63 A, TO-247-4 Kelvin source; +15 V / -4 V gate per datasheet"
+    footprint: Package_TO_SOT_THT:TO-247-4_Vertical
+    pins: "1:D:passive 2:S:passive 3:KS:passive 4:G:input"
+    verification: "repository-record: same TO-247-4 lead order assumption as the primary device - confirm"
+    qg_nC_typ: 87
+    rth_jc_K_per_W: 0.48
+gate_driver:
+  mpn: UCC21710QDWRQ1
+  maker: Texas Instruments
+  source: "https://www.ti.com/lit/ds/symlink/ucc21710-q1.pdf"
+  footprint: AIPE:DAB_UCC21710_DW_HV
+  verification: "repository-record: SLUSDH8D pin table (UCC21710_PINS of the V2 power model, fetched-datasheet)"
+  r_on_ohm: 2.0
+  r_off_ohm: 2.0
+  r_gs_ohm: 10000
+  gate_resistor_mpn: ERJP08F2R00V
+  gate_resistor_source: "https://industrial.panasonic.com/ww/products/pt/small-and-high-power-chip-resistors"
+isolated_bias:
+  mpn: UCC14141QDWNRQ1
+  maker: Texas Instruments
+  source: "https://www.ti.com/lit/ds/symlink/ucc14141-q1.pdf"
+  footprint: AIPE:DAB_UCC14141_DWN
+  verification: "repository-record: SLUSF10B Table 6-1 (ucc14141_pins of the V2 power model, fetched-datasheet)"
+  vdd_V: 15.0
+  vee_V: -4.0
+  fb_vdd_top_ohm: "107k"
+  fb_vee_top_ohm: "9.76k"
+  fb_bottom_ohm: "16.2k"
+  rlim_ohm: "1k"
+  rdr_ohm: "180"
+  sense_supply:
+    total_V: 16.0
+    com_V: 5.0
+    fb_vdd_top_ohm: "87.6k"
+    fb_vee_top_ohm: "16.2k"
+    rlim_ohm: "82"
+  cm_choke:
+    mpn: 744226S
+    maker: Wuerth Elektronik
+    source: "https://www.we-online.com/components/products/datasheet/744226S.pdf"
+    footprint: Inductor_SMD:L_CommonMode_Wuerth_WE-SL2
+    verification: "repository-record: windings 1-4 and 2-3 (fetched-datasheet in the V2 model)"
+desat:
+  diode_mpn: STTH112A
+  diode_maker: STMicroelectronics
+  diode_source: "https://www.st.com/resource/en/datasheet/stth112.pdf"
+  diode_footprint: Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal
+  diode_verification: "library-convention: KiCad DO-41 pad 1 = cathode; 1200 V ultrafast 1 A (STTH112 datasheet not re-read here)"
+  pullup_ohm: "2.2k"
+  divider_top_ohm: "9.09k"
+  divider_bottom_ohm: "1k"
+  blanking_cap: "680p/50V/0603"
+  clamp_diode_mpn: BAT46W-E3-08
+  clamp_diode_source: "https://www.vishay.com/docs/86406/bat46w.pdf"
+sensing:
+  voltage_isolated_amplifier:
+    mpn: AMC1311BDWVR
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/amc1311.pdf"
+    footprint: AIPE:DAB_AMC1311_DWV
+    verification: "repository-record: SBAS786C pin table (AMC1311_PINS of the V2 power model, fetched-datasheet)"
+  voltage_modulator:
+    mpn: AMC1336DWVR
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/amc1336.pdf"
+    footprint: AIPE:DAB_AMC1336_DWV
+    pins: "1:AVDD:power_in 2:AINP:input 3:AINN:input 4:AGND:power_in 5:DGND:power_in 6:DOUT:output 7:CLKIN:input 8:DVDD:power_in"
+    verification: "transcribed: SBAS951 DWV pinout written from memory - verify before layout release"
+  current_hall:
+    mpn: TMCS1133B1QDVGR
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/tmcs1133.pdf"
+    footprint: AIPE:DAB_TMCS1133_DVG
+    verification: "repository-record: SBOSAG0E Table 5-1 pin table (TMCS1133_PINS of the V2 power model, fetched-datasheet); B1 orderable status per knowledge CMP-TMCS1133 note"
+    sensitivity_mV_per_A: 25
+    zero_current_output_V: 1.65
+    bandwidth_Hz: 1000000
+  ladder_resistor:
+    value_ohm: "634k"
+    package: "1206"
+    series: TNPW
+    maker: Vishay
+    source: "https://www.vishay.com/docs/28773/tnpwe3.pdf"
+    note: "0.1 %, 25 ppm/K thin film; 200 V limiting element voltage per 1206 (100 V applied per element at 800 V)"
+  heatsink_ntc:
+    mpn: NCP21XV103J03RA
+    maker: Murata
+    source: "https://www.murata.com/en-us/products/productdetail?partno=NCP21XV103J03RA"
+    note: "10 k B3988 NTC used for the island temperature; the heat-sink sensor is an external cabled NTC on a JST PH connector"
+comparator:
+  mpn: TLV1702AIDGKR
+  maker: Texas Instruments
+  source: "https://www.ti.com/lit/ds/symlink/tlv1702.pdf"
+  verification: "repository-record: SBOS589D (IC table of the V2 control model, fetched-datasheet)"
+receiver_amplifier:
+  mpn: OPA4192IPWR
+  maker: Texas Instruments
+  source: "https://www.ti.com/lit/ds/symlink/opa4192.pdf"
+  verification: "repository-record: pin table of the V3 control model (fetched-datasheet, source_manifest opa4192)"
+reference:
+  mpn: REF3130AIDBZR
+  maker: Texas Instruments
+  source: "https://www.ti.com/lit/gpn/ref3130"
+  verification: "repository-record: SBVS046E (IC table of the V2 control model)"
+logic:
+  and4: SN74LV21APWR
+  inverter: SN74LV04APWR
+  and2: SN74LVC2G08DCTR
+  dflop: SN74LVC1G74DCTR
+  source: "https://www.ti.com/lit/ds/symlink/sn74lv21a.pdf"
+  verification: "repository-record: IC table of the V2 control model (fetched-datasheet)"
+auxiliary_supply:
+  efuse: TPS26400PWPR
+  buck_5v: TPS54302DDCR
+  buck_inductor: MSS1048-103MLC
+  buck_inductor_source: "https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/mss-mos/mss1048/"
+  ldo_3v3:
+    mpn: TPS7A2033PDBVR
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/tps7a20.pdf"
+    footprint: Package_TO_SOT_SMD:SOT-23-5
+    pins: "1:IN:power_in 2:GND:power_in 3:EN:input 4:NC:no_connect 5:OUT:power_out"
+    verification: "transcribed: TPS7A20 DBV pinout written from memory - verify"
+  supervisor: TPS3808G01DBVR
+  tvs: SMBJ15A
+  tvs_source: "https://www.littelfuse.com/products/tvs-diodes/surface-mount/smbj"
+communications:
+  can_transceiver:
+    mpn: TCAN1042HGVDRQ1
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/tcan1042-q1.pdf"
+    footprint: Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+    pins: "1:TXD:input 2:GND:power_in 3:VCC:power_in 4:RXD:output 5:VIO:power_in 6:CANL:bidirectional 7:CANH:bidirectional 8:STB:input"
+    verification: "transcribed: TCAN1042 D pinout written from memory - verify"
+  rs485_transceiver:
+    mpn: THVD1450DR
+    maker: Texas Instruments
+    source: "https://www.ti.com/lit/ds/symlink/thvd1450.pdf"
+    footprint: Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+    pins: "1:R:output 2:RE_N:input 3:DE:input 4:D:input 5:GND:power_in 6:A:bidirectional 7:B:bidirectional 8:VCC:power_in"
+    verification: "transcribed: industry-standard RS-485 SOIC-8 pinout - verify"
+    populate: false
+controller:
+  card: TMDSCNCD280039C
+  mcu: TMS320F280039C
+  source: "https://www.ti.com/tool/TMDSCNCD280039C"
+  socket:
+    mpn: HSEC8-190-01-L-DV-A
+    maker: Samtec
+    source: "https://www.samtec.com/products/hsec8-dv"
+    footprint: Connector_Samtec_HSEC8:Samtec_HSEC8-190-01-X-DV-A_2x90_P0.8mm_Pol32_Socket_AlignmentPins
+    verification: "library-convention: KiCad HSEC8-190 socket, 180 contacts (odd row / even row).  The task and TIDUES0 call the card interface 'HSEC8-160'; the TI controlCARD pinout counts 180 contacts, which is Samtec's HSEC8-190 size - the exact socket orderable and polarisation key position must be confirmed against TI's controlCARD documentation (open review item)"
+dc_link:
+  primary:
+    film: {mpn: B32716H1156K000, maker: TDK, source: "https://www.tdk-electronics.tdk.com/en/529106/products/product-catalog/film-capacitors/power-electronic-capacitors", capacitance_uF: 15, voltage_V: 1100, count: 2, envelope_mm: [42.0, 32.0, 45.0], pitch_mm: [37.5, 20.3], drill_mm: 1.4, verification: "transcribed envelope: TIDA-010054 BOM part; datasheet not located (knowledge CMP-B32716H1156K000) - dimensions are a reserved envelope to verify"}
+    ceramic: {key: "0.47u/1kV/2220", mpn: 2220Y1K00474KETWS2, maker: Knowles Syfer, source: "https://www.knowlescapacitors.com/syfer", count: 10, verification: "knowledge CMP-2220Y1K00474KETWS2 (datasheet not located)"}
+  secondary:
+    film: {mpn: B32716H8306K000, maker: TDK, source: "https://www.tdk-electronics.tdk.com/en/529106/products/product-catalog/film-capacitors/power-electronic-capacitors", capacitance_uF: 30, voltage_V: 800, count: 2, envelope_mm: [42.0, 32.0, 45.0], pitch_mm: [37.5, 20.3], drill_mm: 1.4, verification: "transcribed envelope: TIDA-010054 BOM part; datasheet not located - envelope to verify"}
+    ceramic: {key: "0.47u/630V/2220", mpn: CGA9P1X7T2J474M250KC, maker: TDK, source: "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA9P1X7T2J474M250KC", count: 10, verification: "knowledge CMP-CGA9P1X7T2J474M250KC"}
+dc_block:
+  mpn: B32674D6475K000
+  maker: TDK
+  source: "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/MKP_B32674.pdf"
+  capacitance_uF: 4.7
+  voltage_V: 630
+  count: 2
+  envelope_mm: [31.5, 15.0, 24.5]
+  pitch_mm: 27.5
+  drill_mm: 1.0
+  verification: "transcribed envelope: B32674 series box dimensions from memory - verify; two parts give 9.4 uF against the TIDUES0 Eq. 20 minimum of 7.2 uF; ripple-current rating at 100 kHz is an open calculation"
+terminals:
+  hv_mpn: 74651195
+  hv_maker: Wuerth Elektronik
+  hv_source: "https://www.we-online.com/components/products/datasheet/74651195.pdf"
+  hv_footprint: TerminalBlock_Wuerth:Wuerth_REDCUBE-THR_WP-THRSH_74651195_THR
+  harness_mpn: TST-120-01-G-D
+  harness_maker: Samtec
+  harness_source: "https://www.samtec.com/products/tst"
+  harness_footprint: Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical
+heatsink:
+  mpn: CR201-50VE
+  maker: Ohmite
+  source: "https://www.ohmite.com/catalog/cr-series"
+  envelope_mm: [52.0, 10.0, 50.0]
+  rth_K_per_W: 0.5
+  insulating_pad: "Wakefield-Vette CD-02-05-247 (0.1 K/W) - TIDA-010054 BOM"
+  verification: "transcribed envelope: TIDA-010054 heat sink; base footprint dimensions are a reserved envelope to verify"
+bleeder:
+  package: "1210"
+  footprint: Resistor_SMD:R_1210_3225Metric
+  value_ohm: "100k"
+  mpn: CRCW1210100KFKEA
+  maker: Vishay
+  source: "https://www.vishay.com/docs/20035/dcrcwe3.pdf"
+  note: "0.5 W / 200 V element; six elements (primary, 133 V and 0.18 W each) or four (secondary, 100 V and 0.1 W each)"
