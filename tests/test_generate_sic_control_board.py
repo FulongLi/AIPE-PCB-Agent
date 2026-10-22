@@ -30,6 +30,23 @@ from automation.kicad_tools import grid_router as gr  # noqa: E402
 from automation.setup.detect_kicad import find_kicad_cli, read_config  # noqa: E402
 
 
+def recorded_path(recorded: str) -> Path:
+    """Resolve a path stored in a recorded evidence file.
+
+    The routing-progress records and DRC manifests store the absolute path of the machine that produced them. On any
+    other checkout (CI, a fresh clone) that path does not exist, so the file is located by its repository-relative tail
+    (everything from ``examples/`` on); the recorded hash comparison then decides whether the committed file is the one
+    the evidence describes. An absolute path that exists is used as recorded."""
+    candidate = Path(recorded)
+    if candidate.is_file():
+        return candidate
+    text = recorded.replace('\\', '/')
+    marker = text.find('/examples/')
+    if marker < 0:
+        marker = text.find('examples/') - 1
+    return ROOT / text[marker + 1:] if marker >= -1 and 'examples/' in text else candidate
+
+
 def kicad_python():
     explicit = os.environ.get('AIPE_KICAD_PYTHON') or read_config().get('kicad_python')
     if explicit and Path(os.path.expandvars(explicit)).is_file():
@@ -595,12 +612,12 @@ class EvidenceTests(unittest.TestCase):
     @unittest.skipUnless(PROGRESS.is_file(), 'no recorded routing evidence')
     def test_recorded_drc_manifest_matches_the_board_and_the_recorded_state(self):
         progress = json.loads(self.PROGRESS.read_text(encoding='utf-8'))
-        board = Path(progress['board'])
+        board = recorded_path(progress['board'])
         self.assertTrue(board.is_file(), board)
         import hashlib
         self.assertEqual(progress['board_sha256'], hashlib.sha256(board.read_bytes()).hexdigest(), 'board changed after the recorded run')
         drc = progress.get('drc') or {}
-        manifest = Path(drc.get('manifest', ''))
+        manifest = recorded_path(drc.get('manifest', ''))
         self.assertTrue(manifest.is_file(), 'DRC manifest missing')
         recorded = json.loads(manifest.read_text(encoding='utf-8'))
         self.assertEqual(recorded['source_sha256'], progress['board_sha256'])

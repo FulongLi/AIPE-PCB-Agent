@@ -27,6 +27,23 @@ from automation.kicad_tools import generate_sic_power_floorplan as g  # noqa: E4
 from automation.kicad_tools import grid_router as gr  # noqa: E402
 from automation.setup.detect_kicad import find_kicad_cli, read_config  # noqa: E402
 
+
+def recorded_path(recorded: str) -> Path:
+    """Resolve a path stored in a recorded evidence file.
+
+    The routing-progress records and DRC manifests store the absolute path of the machine that produced them. On any
+    other checkout (CI, a fresh clone) that path does not exist, so the file is located by its repository-relative tail
+    (everything from ``examples/`` on); the recorded hash comparison then decides whether the committed file is the one
+    the evidence describes. An absolute path that exists is used as recorded."""
+    candidate = Path(recorded)
+    if candidate.is_file():
+        return candidate
+    text = recorded.replace('\\', '/')
+    marker = text.find('/examples/')
+    if marker < 0:
+        marker = text.find('examples/') - 1
+    return ROOT / text[marker + 1:] if marker >= -1 and 'examples/' in text else candidate
+
 CANDIDATES = ('A', 'B', 'C')
 
 
@@ -228,14 +245,13 @@ class EvidenceTests(unittest.TestCase):
         data = json.loads(progress.read_text(encoding='utf-8'))
         if not data.get('board'):
             self.skipTest('routing_progress_power.json names no board yet')
-        board = Path(data['board'])
-        if not board.is_file():
-            self.skipTest(f'recorded board {board} is absent')
+        board = recorded_path(data['board'])
+        self.assertTrue(board.is_file(), f'recorded board {board} is absent from the repository')
         self.assertEqual(hashlib.sha256(board.read_bytes()).hexdigest(), data['board_sha256'], 'routing_progress_power.json is stale')
         self.assertIn(data['stage'], ('floorplan-selected', 'floorplan-in-progress', 'routed', 'routed_with_unresolved_connections'))
         self.assertEqual(data['footprints'], 237)
         if data.get('drc') and data['drc'].get('manifest'):
-            manifest = Path(data['drc']['manifest'])
+            manifest = recorded_path(data['drc']['manifest'])
             self.assertTrue(manifest.is_file(), f'DRC manifest {manifest} missing')
             run = json.loads(manifest.read_text(encoding='utf-8'))
             self.assertEqual(run['source_sha256'], data['board_sha256'], 'DRC manifest does not belong to the recorded board')

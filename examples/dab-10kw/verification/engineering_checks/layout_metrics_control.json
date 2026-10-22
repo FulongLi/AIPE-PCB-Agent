@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "measured-human-review-required",
-  "generated_utc": "2026-10-21T07:22:51.375344+00:00",
+  "generated_utc": "2026-10-21T12:17:43.781239+00:00",
   "checker": "automation/verification/check_sic_layout.py",
   "spec": {
     "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_spec_control.json",
@@ -11,10 +11,10 @@
   },
   "model_file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\design\\circuit_control.json",
   "distance_backend": "numpy",
-  "runtime_s": 0.156,
+  "runtime_s": 0.359,
   "board": {
     "file": "D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\control\\dab-control.kicad_pcb",
-    "sha256": "baffe51c611330f4002c2b1d2b9a2251147340bf4157669314d1b451d29026b5",
+    "sha256": "06229f8a11dc6e999a5483947496968e19b82ad745b619aebfc9ebc1de3e8e7f",
     "title": "dab-control",
     "pcbnew_version": "10.0.6",
     "outline_mm": [
@@ -95,9 +95,9 @@
       }
     ],
     "footprints": 224,
-    "tracks": 0,
-    "vias": 0,
-    "zones": 0,
+    "tracks": 3075,
+    "vias": 610,
+    "zones": 1,
     "rule_areas": 0,
     "unfilled_zones": [],
     "nets": 298,
@@ -114,9 +114,9 @@
   "nets": {
     "12V_E": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 274.554,
+      "tracks": 58,
+      "vias": 2,
       "pads": 14,
       "layers": [
         "F.Cu",
@@ -129,8 +129,8 @@
     },
     "12V_IN": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 45.4013,
+      "tracks": 23,
       "vias": 0,
       "pads": 7,
       "layers": [
@@ -144,9 +144,9 @@
     },
     "3V3": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 628.8087,
+      "tracks": 337,
+      "vias": 25,
       "pads": 61,
       "layers": [
         "F.Cu",
@@ -159,9 +159,9 @@
     },
     "5V0": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 338.8841,
+      "tracks": 102,
+      "vias": 3,
       "pads": 27,
       "layers": [
         "F.Cu",
@@ -174,153 +174,189 @@
     },
     "ADC_5V": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 87.8127,
+      "tracks": 28,
+      "vias": 4,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_ITANK_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 67.6006,
+      "tracks": 18,
+      "vias": 6,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_ITANK_S": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 68.2493,
+      "tracks": 29,
+      "vias": 2,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_TEMP_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 83.2723,
+      "tracks": 22,
+      "vias": 4,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_TEMP_S": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 78.1149,
+      "tracks": 23,
+      "vias": 4,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_V12": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 64.2384,
+      "tracks": 21,
+      "vias": 7,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_VBUS_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 76.6968,
+      "tracks": 34,
+      "vias": 11,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ADC_VBUS_S": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 66.1492,
+      "tracks": 20,
+      "vias": 5,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ALL_GOOD": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 68.6918,
+      "tracks": 24,
+      "vias": 6,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ARM": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 102.8933,
+      "tracks": 15,
+      "vias": 5,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "ARMED": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 42.9961,
+      "tracks": 27,
+      "vias": 3,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "AUX_FLT_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 97.2523,
+      "tracks": 19,
+      "vias": 4,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "BIAS_EN": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 70.5949,
+      "tracks": 9,
+      "vias": 2,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -333,33 +369,39 @@
     },
     "BIAS_EN_MCU": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 109.677,
+      "tracks": 26,
+      "vias": 11,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "BST5": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 5.4339,
+      "tracks": 6,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "CANH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 39.4511,
+      "tracks": 19,
+      "vias": 1,
       "pads": 4,
       "layers": [
         "F.Cu",
@@ -372,9 +414,9 @@
     },
     "CANL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 32.8122,
+      "tracks": 11,
+      "vias": 3,
       "pads": 4,
       "layers": [
         "F.Cu",
@@ -387,44 +429,53 @@
     },
     "CAN_MID": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 11.432,
+      "tracks": 11,
+      "vias": 3,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "CAN_RX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 84.2256,
+      "tracks": 17,
+      "vias": 5,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "CAN_TX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 86.8777,
+      "tracks": 18,
+      "vias": 6,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "DRIVERS_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 10.5973,
+      "tracks": 8,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -435,9 +486,9 @@
     },
     "DRV_RST": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 70.5777,
+      "tracks": 8,
+      "vias": 2,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -450,21 +501,24 @@
     },
     "DRV_RST_MCU": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 96.4967,
+      "tracks": 13,
+      "vias": 3,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EMU0": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 78.9435,
+      "tracks": 9,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -477,9 +531,9 @@
     },
     "EMU1": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 82.2544,
+      "tracks": 10,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -492,8 +546,8 @@
     },
     "EN5": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 9.294,
+      "tracks": 8,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -504,56 +558,68 @@
     },
     "EPWM1A": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 97.4242,
+      "tracks": 17,
+      "vias": 4,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM1B": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 102.6264,
+      "tracks": 19,
+      "vias": 4,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM2A": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 102.8865,
+      "tracks": 21,
+      "vias": 4,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM2B": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 204.5265,
+      "tracks": 23,
+      "vias": 3,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM3A": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 111.2646,
+      "tracks": 14,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -564,44 +630,53 @@
     },
     "EPWM3B": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 115.8466,
+      "tracks": 17,
+      "vias": 6,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM4A": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 114.9534,
+      "tracks": 22,
+      "vias": 5,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "EPWM4B": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 107.1209,
+      "tracks": 18,
+      "vias": 7,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "E_DVDT": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 7.0267,
+      "tracks": 9,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -612,32 +687,38 @@
     },
     "E_EN": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 9.2366,
+      "tracks": 4,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "E_ILIM": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 5.0404,
+      "tracks": 6,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "E_IMON": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 3.2994,
+      "tracks": 3,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -648,20 +729,23 @@
     },
     "E_OV": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 12.6481,
+      "tracks": 11,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "E_RTN": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 22.09,
+      "tracks": 17,
       "vias": 0,
       "pads": 6,
       "layers": [
@@ -672,70 +756,10 @@
     },
     "E_UV": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 10.394,
+      "tracks": 11,
+      "vias": 2,
       "pads": 3,
-      "layers": [
-        "F.Cu"
-      ],
-      "zone_area_mm2": {},
-      "zone_islands": {}
-    },
-    "FAULT_RD": {
-      "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
-      "pads": 2,
-      "layers": [
-        "F.Cu"
-      ],
-      "zone_area_mm2": {},
-      "zone_islands": {}
-    },
-    "FB5": {
-      "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
-      "pads": 4,
-      "layers": [
-        "F.Cu"
-      ],
-      "zone_area_mm2": {},
-      "zone_islands": {}
-    },
-    "FLT_P_OK": {
-      "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
-      "pads": 2,
-      "layers": [
-        "F.Cu"
-      ],
-      "zone_area_mm2": {},
-      "zone_islands": {}
-    },
-    "FLT_S_OK": {
-      "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
-      "pads": 2,
-      "layers": [
-        "F.Cu"
-      ],
-      "zone_area_mm2": {},
-      "zone_islands": {}
-    },
-    "GND_CTRL": {
-      "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
-      "pads": 169,
       "layers": [
         "F.Cu",
         "In1.Cu",
@@ -745,22 +769,104 @@
       "zone_area_mm2": {},
       "zone_islands": {}
     },
-    "GPIO_LED_RUN": {
+    "FAULT_RD": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 78.5035,
+      "tracks": 19,
+      "vias": 5,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FB5": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 36.618,
+      "tracks": 16,
+      "vias": 4,
+      "pads": 4,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_P_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 15.6382,
+      "tracks": 13,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "FLT_S_OK": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 16.1142,
+      "tracks": 12,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {},
+      "zone_islands": {}
+    },
+    "GND_CTRL": {
+      "cls": "CTRL_POWER",
+      "track_mm": 208.978,
+      "tracks": 334,
+      "vias": 131,
+      "pads": 169,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
+      ],
+      "zone_area_mm2": {
+        "In1.Cu": 17354.7337
+      },
+      "zone_islands": {
+        "In1.Cu": 1
+      }
+    },
+    "GPIO_LED_RUN": {
+      "cls": "CTRL_SIGNAL",
+      "track_mm": 104.6113,
+      "tracks": 12,
+      "vias": 2,
+      "pads": 2,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "LED_FAULT_K": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 2.1768,
+      "tracks": 2,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -771,8 +877,8 @@
     },
     "LED_PWR_K": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 1.75,
+      "tracks": 1,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -783,8 +889,8 @@
     },
     "LED_RUN_K": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 4.9017,
+      "tracks": 2,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -795,20 +901,23 @@
     },
     "MON3V3": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 8.773,
+      "tracks": 6,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "MR_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 3.425,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -822,44 +931,53 @@
     },
     "NRST": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 32.5939,
+      "tracks": 14,
+      "vias": 5,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "OV_P_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 165.4246,
+      "tracks": 30,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "OV_S_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 72.3114,
+      "tracks": 21,
+      "vias": 4,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "PG_P_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 8.474,
+      "tracks": 8,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -870,8 +988,8 @@
     },
     "PG_S_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 1.832,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -882,8 +1000,8 @@
     },
     "PROT_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 1.8527,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -894,21 +1012,24 @@
     },
     "PWM_ENABLE": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 96.3418,
+      "tracks": 67,
+      "vias": 7,
       "pads": 10,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_FLT_AH_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 87.6905,
+      "tracks": 19,
+      "vias": 5,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -921,9 +1042,9 @@
     },
     "P_FLT_AL_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 82.5185,
+      "tracks": 16,
+      "vias": 4,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -936,9 +1057,9 @@
     },
     "P_FLT_BH_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 71.9749,
+      "tracks": 20,
+      "vias": 1,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -951,9 +1072,9 @@
     },
     "P_FLT_BL_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 62.974,
+      "tracks": 9,
+      "vias": 2,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -966,9 +1087,9 @@
     },
     "P_ISNS": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 81.9677,
+      "tracks": 12,
+      "vias": 2,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -981,21 +1102,24 @@
     },
     "P_ISNS_BUF": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 12.1518,
+      "tracks": 7,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_OC_TRIP_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 74.3644,
+      "tracks": 19,
+      "vias": 3,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1008,9 +1132,9 @@
     },
     "P_PG_BIAS_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 106.0879,
+      "tracks": 37,
+      "vias": 10,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1023,9 +1147,9 @@
     },
     "P_PWM_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 100.802,
+      "tracks": 5,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1038,21 +1162,24 @@
     },
     "P_PWM_AH_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 4.0643,
+      "tracks": 6,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_PWM_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 80.234,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1065,8 +1192,8 @@
     },
     "P_PWM_AL_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 25.2599,
+      "tracks": 15,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1077,9 +1204,9 @@
     },
     "P_PWM_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 91.7478,
+      "tracks": 5,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1092,21 +1219,24 @@
     },
     "P_PWM_BH_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 5.8498,
+      "tracks": 6,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_PWM_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 73.7775,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1119,21 +1249,24 @@
     },
     "P_PWM_BL_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 10.0998,
+      "tracks": 8,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_RDY_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 79.8085,
+      "tracks": 22,
+      "vias": 6,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1146,9 +1279,9 @@
     },
     "P_RDY_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 74.434,
+      "tracks": 29,
+      "vias": 10,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1161,9 +1294,9 @@
     },
     "P_RDY_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 84.222,
+      "tracks": 33,
+      "vias": 4,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1176,9 +1309,9 @@
     },
     "P_RDY_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 74.8908,
+      "tracks": 20,
+      "vias": 3,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1191,8 +1324,8 @@
     },
     "P_SDFM_CLK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 8.4534,
+      "tracks": 3,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1206,8 +1339,8 @@
     },
     "P_SDFM_D": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 11.2892,
+      "tracks": 6,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1221,9 +1354,9 @@
     },
     "P_TEMP_HS": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 60.9366,
+      "tracks": 4,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1236,8 +1369,8 @@
     },
     "P_TEMP_PWM_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 8.2552,
+      "tracks": 3,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1251,8 +1384,8 @@
     },
     "P_TEMP_PWM_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 9.7981,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1266,8 +1399,8 @@
     },
     "P_TEMP_PWM_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 8.7034,
+      "tracks": 3,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1281,8 +1414,8 @@
     },
     "P_TEMP_PWM_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 10.0267,
+      "tracks": 5,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1296,8 +1429,8 @@
     },
     "P_VA": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 19.4094,
+      "tracks": 12,
       "vias": 0,
       "pads": 4,
       "layers": [
@@ -1308,8 +1441,8 @@
     },
     "P_VBUS_CMP": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 4.5766,
+      "tracks": 5,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1320,33 +1453,39 @@
     },
     "P_VBUS_RX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 104.9812,
+      "tracks": 47,
+      "vias": 13,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_VM": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 23.6607,
+      "tracks": 14,
+      "vias": 3,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "P_VSNS_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 93.4426,
+      "tracks": 7,
+      "vias": 2,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1359,9 +1498,9 @@
     },
     "P_VSNS_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 87.7109,
+      "tracks": 9,
+      "vias": 2,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1374,32 +1513,38 @@
     },
     "RDY_P_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 16.4962,
+      "tracks": 8,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "RDY_S_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 8.6271,
+      "tracks": 8,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "REF3": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 8.7518,
+      "tracks": 7,
       "vias": 0,
       "pads": 4,
       "layers": [
@@ -1410,8 +1555,8 @@
     },
     "RESET_CT": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 3.4339,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1422,8 +1567,8 @@
     },
     "RS485_A": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 21.0106,
+      "tracks": 13,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -1437,9 +1582,9 @@
     },
     "RS485_B": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 13.9274,
+      "tracks": 7,
+      "vias": 2,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1452,8 +1597,8 @@
     },
     "RS485_DE": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 4.1064,
+      "tracks": 7,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -1464,20 +1609,23 @@
     },
     "RS485_RX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 107.0101,
+      "tracks": 33,
+      "vias": 3,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "RS485_TX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 1.8553,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1488,20 +1636,23 @@
     },
     "RUN_EN": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 87.4361,
+      "tracks": 22,
+      "vias": 7,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "SDFM_P_CLK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 100.6458,
+      "tracks": 8,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1512,44 +1663,53 @@
     },
     "SDFM_P_D": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 95.4209,
+      "tracks": 4,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "SDFM_S_CLK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 117.8749,
+      "tracks": 5,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "SDFM_S_D": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 120.5265,
+      "tracks": 4,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "SUPPLY_OK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 1.8379,
+      "tracks": 4,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1560,21 +1720,24 @@
     },
     "SW5": {
       "cls": "CTRL_POWER",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 10.0141,
+      "tracks": 7,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_FLT_AH_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 49.3484,
+      "tracks": 29,
+      "vias": 4,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1587,9 +1750,9 @@
     },
     "S_FLT_AL_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 59.1734,
+      "tracks": 28,
+      "vias": 4,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1602,9 +1765,9 @@
     },
     "S_FLT_BH_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 68.3145,
+      "tracks": 28,
+      "vias": 8,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1617,9 +1780,9 @@
     },
     "S_FLT_BL_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 53.9415,
+      "tracks": 23,
+      "vias": 7,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1632,9 +1795,9 @@
     },
     "S_ISNS": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 85.2716,
+      "tracks": 15,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1647,21 +1810,24 @@
     },
     "S_ISNS_BUF": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 8.0567,
+      "tracks": 11,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_OC_TRIP_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 130.9431,
+      "tracks": 37,
+      "vias": 9,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1674,9 +1840,9 @@
     },
     "S_PG_BIAS_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 80.6498,
+      "tracks": 27,
+      "vias": 7,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1689,9 +1855,9 @@
     },
     "S_PWM_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 32.3367,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1704,21 +1870,24 @@
     },
     "S_PWM_AH_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 5.1124,
+      "tracks": 7,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_PWM_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 22.2583,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1731,8 +1900,8 @@
     },
     "S_PWM_AL_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 0.9607,
+      "tracks": 2,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1743,9 +1912,9 @@
     },
     "S_PWM_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 23.9335,
+      "tracks": 3,
+      "vias": 2,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1758,21 +1927,24 @@
     },
     "S_PWM_BH_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 4.7159,
+      "tracks": 6,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_PWM_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 21.4341,
+      "tracks": 7,
+      "vias": 2,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1785,21 +1957,24 @@
     },
     "S_PWM_BL_SRC": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 7.2416,
+      "tracks": 8,
+      "vias": 2,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_RDY_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 113.5086,
+      "tracks": 43,
+      "vias": 8,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1812,9 +1987,9 @@
     },
     "S_RDY_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 70.5999,
+      "tracks": 30,
+      "vias": 11,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1827,9 +2002,9 @@
     },
     "S_RDY_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 143.5882,
+      "tracks": 46,
+      "vias": 5,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1842,9 +2017,9 @@
     },
     "S_RDY_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 81.8044,
+      "tracks": 37,
+      "vias": 6,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -1857,9 +2032,9 @@
     },
     "S_SDFM_CLK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 10.5753,
+      "tracks": 6,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1872,9 +2047,9 @@
     },
     "S_SDFM_D": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 6.0141,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1887,9 +2062,9 @@
     },
     "S_TEMP_HS": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 75.6178,
+      "tracks": 12,
+      "vias": 4,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1902,9 +2077,9 @@
     },
     "S_TEMP_PWM_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 14.0585,
+      "tracks": 4,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1917,9 +2092,9 @@
     },
     "S_TEMP_PWM_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 9.2301,
+      "tracks": 5,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1932,9 +2107,9 @@
     },
     "S_TEMP_PWM_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 9.8854,
+      "tracks": 3,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1947,9 +2122,9 @@
     },
     "S_TEMP_PWM_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 11.045,
+      "tracks": 8,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -1962,20 +2137,23 @@
     },
     "S_VA": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 15.9774,
+      "tracks": 11,
+      "vias": 4,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_VBUS_CMP": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 66.4468,
+      "tracks": 13,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -1986,33 +2164,39 @@
     },
     "S_VBUS_RX": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 70.3841,
+      "tracks": 31,
+      "vias": 7,
       "pads": 5,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_VM": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 13.9101,
+      "tracks": 11,
+      "vias": 2,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "S_VSNS_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 92.2067,
+      "tracks": 11,
+      "vias": 3,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2025,9 +2209,9 @@
     },
     "S_VSNS_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 92.3577,
+      "tracks": 11,
+      "vias": 3,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2040,9 +2224,9 @@
     },
     "TCK": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 81.6074,
+      "tracks": 6,
+      "vias": 2,
       "pads": 3,
       "layers": [
         "F.Cu",
@@ -2055,9 +2239,9 @@
     },
     "TDI": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 75.3707,
+      "tracks": 9,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2070,9 +2254,9 @@
     },
     "TDO": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 77.0791,
+      "tracks": 8,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2085,32 +2269,38 @@
     },
     "TEMP_PWM_P_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 105.3075,
+      "tracks": 17,
+      "vias": 4,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TEMP_PWM_P_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 104.9037,
+      "tracks": 20,
+      "vias": 5,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TEMP_PWM_P_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 0.805,
+      "tracks": 2,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -2121,32 +2311,38 @@
     },
     "TEMP_PWM_P_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 103.5378,
+      "tracks": 23,
+      "vias": 6,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TEMP_PWM_S_AH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 108.0698,
+      "tracks": 19,
+      "vias": 4,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TEMP_PWM_S_AL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 0.83,
+      "tracks": 2,
       "vias": 0,
       "pads": 2,
       "layers": [
@@ -2157,33 +2353,39 @@
     },
     "TEMP_PWM_S_BH": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 147.6121,
+      "tracks": 23,
+      "vias": 5,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TEMP_PWM_S_BL": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 117.0149,
+      "tracks": 13,
+      "vias": 4,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TMS": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 76.3139,
+      "tracks": 8,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2196,21 +2398,24 @@
     },
     "TRIPPED": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 35.6793,
+      "tracks": 15,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "TRST_N": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 76.6158,
+      "tracks": 9,
+      "vias": 1,
       "pads": 2,
       "layers": [
         "F.Cu",
@@ -2223,20 +2428,23 @@
     },
     "TZ_TRIP": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 86.775,
+      "tracks": 15,
+      "vias": 3,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "V12_DIV": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
+      "track_mm": 3.6768,
+      "tracks": 3,
       "vias": 0,
       "pads": 3,
       "layers": [
@@ -2247,48 +2455,60 @@
     },
     "V5_DIV": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 6.9874,
+      "tracks": 5,
+      "vias": 2,
       "pads": 3,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "V_OV_P": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 20.9531,
+      "tracks": 14,
+      "vias": 2,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "V_OV_S": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 12.9362,
+      "tracks": 12,
+      "vias": 3,
       "pads": 4,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}
     },
     "XRS_CARD": {
       "cls": "CTRL_SIGNAL",
-      "track_mm": 0.0,
-      "tracks": 0,
-      "vias": 0,
+      "track_mm": 106.9768,
+      "tracks": 15,
+      "vias": 6,
       "pads": 2,
       "layers": [
-        "F.Cu"
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "B.Cu"
       ],
       "zone_area_mm2": {},
       "zone_islands": {}

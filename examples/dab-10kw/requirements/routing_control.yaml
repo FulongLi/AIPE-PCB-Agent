@@ -6,7 +6,7 @@ clearance_mm: 0.2
 via_mm: [0.6, 0.3]
 layers: [F.Cu, In2.Cu, B.Cu]
 style: {diagonal: true, simplify: octilinear, arcs: true, eps: 0.02, via_cost_cells: 18}
-max_nodes: 400000
+max_nodes: 800000   # 400000 ran dry on the harness-to-card paths (CAN, P_FLT, P_RDY) in the 2026-10-21 run
 signal_order_trials: 3
 ripup_rounds: 3
 widths_mm:
@@ -21,12 +21,15 @@ fanout_widths_mm:
   "12V_*": 0.3
   "5V*": 0.3
   "3V3": 0.25
+  "GND_CTRL": 0.25   # 0.65 mm TSSOP ground pins: the 0.4 mm track cannot leave the land
+  "SW5": 0.3
 critical_patterns: ["CLK*", "SDFM_*"]
 critical_layers: [F.Cu, B.Cu]
-signal_first: ["EPWM*", "PWM_*", "TZ_TRIP", "ARMED", "ALL_GOOD", "ADC_*", "SDFM_*", "CANH", "CANL"]
+signal_first: ["12V_*", "5V*", "SW5", "3V3", "EPWM*", "PWM_*", "TZ_TRIP", "ARMED", "ALL_GOOD", "ADC_*", "SDFM_*", "CANH", "CANL"]  # wide rails first
 power_nets: []
 ground_net: GND_CTRL
 exact_stub_mm: 0.45
+fine_pitch_mm: 1.0    # 0.8 mm HSEC8 socket and 0.95 mm SOT-23 rows included; rows below this pitch get same-net bridges, one stub per run and computed stub lengths (automation/dab_v1/fanout_rows.py)
 direct_lane_mm: 0.5
 prune_vias: true
 fill: true

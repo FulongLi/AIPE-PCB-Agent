@@ -9,7 +9,7 @@ clearance_mm: 0.25
 via_mm: [0.8, 0.4]
 layers: [F.Cu, In1.Cu, In2.Cu, B.Cu]
 style: {diagonal: true, simplify: octilinear, arcs: false, eps: 0.02, via_cost_cells: 24, heuristic_weight: 1.1}
-max_nodes: 150000
+max_nodes: 800000   # 150000 ran dry on the 300 x 150 mm board (harness-to-barrier paths over 60 mm); 400000 still did for VSNS_P / RDY
 signal_order_trials: 1
 ripup_rounds: 2
 widths_mm:
@@ -21,8 +21,11 @@ widths_mm:
   "VDD_*": 0.5
   "VEE_*": 0.5
   "DESAT_*": 0.3
+  # UCC14141 input rails (12V_BIAS_x, GNDP_x): 0.5 mm. The module input is below 0.5 A average; 0.5 mm at 70 um carries about
+  # 2.5 A (10 K rise). Wider exits cannot leave the 0.65 mm DWN row side by side (routing-remediation.md, section 2.4).
+  "12V_BIAS_*": 0.5
   "12V_*": 0.8
-  "GNDP_*": 0.6
+  "GNDP_*": 0.5
   "3V3": 0.4
   "GND_CTRL": 0.4
   "S_5V": 0.4
@@ -36,11 +39,13 @@ fanout_widths_mm:
   "S_*": 0.25
 critical_patterns: ["OUTH_*", "OUTL_*", "G_*", "KS_*"]
 critical_layers: [F.Cu, B.Cu]
-signal_first: ["DESAT_*", "OC_*", "VDD_*", "VEE_*", "*_VEEA", "*_FBVDD", "*_FBVEE", "*_RLIM"]
+# wide row nets first: their full-width tracks leave the fan-out band before the narrow nets of the same rows are routed
+signal_first: ["GNDP_*", "12V_BIAS_*", "VDD_*", "VEE_*", "DESAT_*", "OC_*", "*_VEEA", "*_FBVDD", "*_FBVEE", "*_RLIM"]
 power_nets: [BUS_P, PGND, SW_A, SW_B, XF_B, AC_B]
 island_layers: [F.Cu, B.Cu]
 selv_layers: [F.Cu, In2.Cu, B.Cu]
-exact_stub_mm: 0.35
+exact_stub_mm: 0.45   # 0.35 left the stub port inside the neighbouring lands' clearance halo on the 0.125 mm grid (see fine_pitch_mm)
+fine_pitch_mm: 0.8    # rows below this pitch get same-net bridges, one stub per run and computed stub lengths (automation/dab_v1/fanout_rows.py)
 direct_lane_mm: 0.0
 prune_vias: true
 fill: true

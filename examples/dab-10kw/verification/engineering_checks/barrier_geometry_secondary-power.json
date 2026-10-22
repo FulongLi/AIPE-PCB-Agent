@@ -1,0 +1,82 @@
+{
+  "board": "secondary-power",
+  "pcb_sha256": "27b69dd7dd0d67150cb3bdb00b58b92bee11f2954f83082937bffb8405920ee0",
+  "reinforced_rule_mm": 8.0,
+  "barrier_band_y": [
+    70.0,
+    78.0
+  ],
+  "per_layer": {
+    "B.Cu": {
+      "min_distance_mm": 8.577,
+      "hv_point": [
+        162.836,
+        69.648
+      ],
+      "selv_point": [
+        162.836,
+        78.225
+      ],
+      "hv_max_y": 70.0,
+      "selv_min_y": 77.977
+    },
+    "F.Cu": {
+      "min_distance_mm": 8.0,
+      "hv_point": [
+        258.515,
+        70.5
+      ],
+      "selv_point": [
+        258.515,
+        78.5
+      ],
+      "hv_max_y": 70.5,
+      "selv_min_y": 77.977
+    },
+    "In1.Cu": {
+      "min_distance_mm": 9.03,
+      "hv_point": [
+        160.336,
+        69.023
+      ],
+      "selv_point": [
+        159.164,
+        77.977
+      ],
+      "hv_max_y": 70.5,
+      "selv_min_y": 77.977
+    },
+    "In2.Cu": {
+      "min_distance_mm": 9.03,
+      "hv_point": [
+        160.336,
+        69.023
+      ],
+      "selv_point": [
+        159.164,
+        77.977
+      ],
+      "hv_max_y": 70.0,
+      "selv_min_y": 77.977
+    }
+  },
+  "nets_hv": 82,
+  "nets_selv": 49,
+  "across_layers": {
+    "min_distance_mm": 8.0,
+    "hv_point": [
+      254.705,
+      70.5
+    ],
+    "selv_point": [
+      254.705,
+      78.5
+    ],
+    "note": "planar distance between the projections of all hazardous and all SELV copper (every layer)"
+  },
+  "band_copper": {
+    "hv_area_mm2": 6.563,
+    "selv_area_mm2": 0.004,
+    "note": "copper of each class lying inside the nominal 8 mm barrier band; the isolation packages legitimately straddle the band with their lands"
+  }
+}

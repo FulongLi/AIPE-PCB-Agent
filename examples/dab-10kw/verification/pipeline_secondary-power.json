@@ -1,0 +1,164 @@
+{
+  "board": "secondary-power",
+  "started_utc": "2026-10-21T11:47:46.194167+00:00",
+  "stages": [
+    {
+      "stage": "verify",
+      "ok": false,
+      "seconds": 12.4,
+      "result": {
+        "erc": {
+          "exit_code": 0,
+          "manifest": "examples\\dab-10kw\\verification\\erc\\20261021T114746Z-erc-c5f3b0ce\\run.json",
+          "finding_count": 0,
+          "status": "passed",
+          "report_sha256": "5350d954a838c1d2b34183cc5ccb203d05ac98e51b60bcd0594f22a479688b91"
+        },
+        "drc": {
+          "exit_code": 5,
+          "manifest": "examples\\dab-10kw\\verification\\drc\\20261021T114746Z-drc-9d8d1f3f\\run.json",
+          "finding_counts": {
+            "violations": 18,
+            "unconnected_items": 23,
+            "schematic_parity": 0
+          },
+          "status": "failed",
+          "by_type": {
+            "unconnected_items:unconnected_items:error": 23,
+            "violations:track_dangling:warning": 18
+          },
+          "ignored_checks": [
+            {
+              "description": "Footprint has no courtyard defined",
+              "key": "missing_courtyard"
+            },
+            {
+              "description": "Track endpoint not centered on via",
+              "key": "track_not_centered_on_via"
+            },
+            {
+              "description": "Tuning profile track geometries",
+              "key": "tuning_profile_track_geometries"
+            },
+            {
+              "description": "Footprint doesn't match symbol's footprint filters",
+              "key": "footprint_filters_mismatch"
+            },
+            {
+              "description": "Footprint component type doesn't match footprint pads",
+              "key": "footprint_type_mismatch"
+            }
+          ],
+          "report_sha256": "910237a318edb587337b6bcd7920285d50bbb9c96e569e90e70ee4a545e6d6fa",
+          "report": "examples\\dab-10kw\\verification\\drc\\20261021T114746Z-drc-9d8d1f3f\\drc.json",
+          "unconnected_nets": {
+            "BIAS_ENF": 10,
+            "VEEA_BL": 6,
+            "FBVEE_AL": 4,
+            "FBVDD_AL": 2,
+            "FBVDD_BL": 2,
+            "FBVEE_AH": 2,
+            "FBVEE_BH": 2,
+            "FBVEE_BL": 2,
+            "PG_BIAS_N": 2,
+            "RLIM_BL": 2,
+            "S_RLIM": 2,
+            "VEEA_AH": 2,
+            "VEEA_AL": 2,
+            "VEEA_BH": 2,
+            "VEE_AH": 2,
+            "VEE_BL": 2
+          },
+          "note": "KiCad lists at most about 500 unconnected items per report; counts are of listed items (pad ends), not of nets"
+        },
+        "export": {
+          "status": "passed",
+          "manifest": "examples\\dab-10kw\\manufacturing\\secondary-power\\export-manifest.json",
+          "commands": [
+            [
+              "schematic_pdf",
+              0
+            ],
+            [
+              "pcb_pdf",
+              0
+            ],
+            [
+              "gerber",
+              0
+            ],
+            [
+              "drill",
+              0
+            ],
+            [
+              "bom",
+              0
+            ],
+            [
+              "placement",
+              0
+            ],
+            [
+              "step",
+              0
+            ],
+            [
+              "front",
+              0
+            ],
+            [
+              "back",
+              0
+            ],
+            [
+              "isometric",
+              0
+            ],
+            [
+              "netlist",
+              0
+            ]
+          ],
+          "artifacts": 36,
+          "manifest_sha256": "304ae04568cc3fb3c0ca324d09d3e17f9f51ceee8339bbd728bf5c122759d5b1"
+        },
+        "netlist": {
+          "passed": true,
+          "schematic_mismatches": 0,
+          "board_mismatches": 0,
+          "duplicate_nodes": 0,
+          "conflicting_pads": 0,
+          "file": "examples\\dab-10kw\\verification\\circuit_checks\\netlist_equality_secondary-power.json",
+          "sha256": "181efe851b8b90caecfae803be46601bb6b1563aa9be6fdc716861e46a9dc27c"
+        },
+        "routing": {
+          "tracks": 2598,
+          "vias": 449,
+          "zones": 21,
+          "unresolved": 23,
+          "seconds": 1189.0,
+          "file": "examples\\dab-10kw\\pcb\\routing_report_secondary-power.json",
+          "sha256": "936ff14ed1921c994f7d1fc61ffad8a2ee1a95cb308f4930c47b8692f1030b6d"
+        },
+        "copper_islands": {
+          "passed": true,
+          "components": {
+            "12V_E": 1,
+            "3V3": 1,
+            "AC_B": 1,
+            "BUS_P": 1,
+            "GND_CTRL": 1,
+            "PGND": 1,
+            "SW_A": 1,
+            "SW_B": 1
+          },
+          "file": "examples\\dab-10kw\\verification\\engineering_checks\\copper_islands_secondary-power.json",
+          "sha256": "62bc1d6dd6914d721540af61947c18cfd17c646ea762596b921d9fd687639001"
+        }
+      }
+    }
+  ],
+  "time_budget_s": 0.0,
+  "finished_utc": "2026-10-21T11:47:58.587100+00:00"
+}

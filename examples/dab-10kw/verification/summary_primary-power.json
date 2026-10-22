@@ -2,45 +2,42 @@
   "board": "primary-power",
   "project": "dab-primary",
   "generation": "DAB-V1",
-  "updated_utc": "2026-10-21T07:15:23.040800+00:00",
+  "updated_utc": "2026-10-21T11:47:04.418367+00:00",
   "inputs": {
-    "examples\\dab-10kw\\primary-power\\dab-primary.kicad_pcb": "fd10e2ec8827f09744c8d64f653d97e231071c2998165649e0ee263377ffb7c2",
+    "examples\\dab-10kw\\primary-power\\dab-primary.kicad_pcb": "a8067aee4d8bfe6f4a0c519d662d40c5c65c2ecc9318199f16627e3dd3ed08e5",
     "examples\\dab-10kw\\primary-power\\dab-primary.kicad_sch": "2d2f63fc3fe94991cd2e401eb76fc12b882dfbcfc7cf027631890b1bc46dced5"
   },
   "requirement_sha256": {
     "components": "09e3b7c367510e004c531f245473ffe497e479d677a281c69fdc9f275075d211",
     "design_constraints": "02fad76601e7568eb924f390fecfc978710153930b470829f3cd72b4cb4ba1e0",
-    "floorplan_control": "03258de163ec7d38b501cb1e7f8bd60bef2239963acf51ff5825e74111350f3a",
-    "floorplan_primary-power": "0b52996404cd9fbb71a8a1a41aa01ef97837dcb190c75eca41850e1fae2729d2",
-    "floorplan_secondary-power": "75b1bfb1705d90ea83c03d536ee4d49f1144a8903b1af2512f413a519717091c",
+    "floorplan_control": "374076faabd01fec63ef29d8ad18a8b88ed815e2cfb94ef51fa9a14738634171",
+    "floorplan_primary-power": "86b9d5f2f3c3829aa5c8e3a7a074dbfa9121452c6a00ebb22da19c0afb635b17",
+    "floorplan_secondary-power": "8cf36f38cd3660066dead4f9596678b8017bb29a814c71a4c12fce7a4f70d465",
     "interfaces": "e69ec168ca3b2fc59f1582fb347855a802a2d3a94f7861517c8763eb91c7431d",
-    "routing_control": "326cffe4198a3d2cedcf2a95f9057eb302dd2c1ddce49320bba5b6ffbf6defa5",
-    "routing_primary-power": "55e33d8b7133cbc1141f7516d2776af7f2e861efaccf551e9625d9de92183ca8",
-    "routing_secondary-power": "f18826796530fc93d38835257b68c5c9601fff7cfd65932deeeb3e2c1c0ade9d",
+    "routing_control": "ad88c049e3ab6aa813d0aa1d4e66de1ed7dbf4b5eb3b6eb685697dec76db689b",
+    "routing_primary-power": "7a56a936fcfb4a80c7d11f645e0c670cd21cda94c852658207ab52f9d196619d",
+    "routing_secondary-power": "f198243b23a84a3ef958ea2754810953133a969ea00ecadf972142cdcc9c2a0f",
     "specification": "09db3cc104f2c6fec04c69f2734ae6bcd1291f52cd5d72e1d0b8d95cd065b6c5"
   },
   "erc": {
     "exit_code": 0,
-    "manifest": "examples\\dab-10kw\\verification\\erc\\20261021T071523Z-erc-e2894fc6\\run.json",
+    "manifest": "examples\\dab-10kw\\verification\\erc\\20261021T114704Z-erc-82fe6ef8\\run.json",
     "finding_count": 0,
     "status": "passed",
-    "report_sha256": "2bf0da5e87df36d47b888d36b47d270726e42a4edde5d644d73aa4ac116564fc"
+    "report_sha256": "04e83f451c1b2641fd1eee53c64cc96fabe5a86aec8b0e0b1fbb514b5f520865"
   },
   "drc": {
     "exit_code": 5,
-    "manifest": "examples\\dab-10kw\\verification\\drc\\20261021T071523Z-drc-39f76185\\run.json",
+    "manifest": "examples\\dab-10kw\\verification\\drc\\20261021T114704Z-drc-8c4572df\\run.json",
     "finding_counts": {
-      "violations": 57,
-      "unconnected_items": 82,
+      "violations": 18,
+      "unconnected_items": 26,
       "schematic_parity": 0
     },
     "status": "failed",
     "by_type": {
-      "unconnected_items:unconnected_items:error": 82,
-      "violations:clearance:error": 20,
-      "violations:hole_clearance:error": 2,
-      "violations:track_dangling:warning": 34,
-      "violations:via_dangling:warning": 1
+      "unconnected_items:unconnected_items:error": 26,
+      "violations:track_dangling:warning": 18
     },
     "ignored_checks": [
       {
@@ -64,51 +61,27 @@
         "key": "footprint_type_mismatch"
       }
     ],
-    "report_sha256": "16e5df3344eb1cdbad2b8fc362ea90fe561be223444d5b7459ff86be075e32af",
-    "report": "examples\\dab-10kw\\verification\\drc\\20261021T071523Z-drc-39f76185\\drc.json",
+    "report_sha256": "a9751797e453faa5c192f6731710aed27b23a4e36efec27cb9e7c01714cf0025",
+    "report": "examples\\dab-10kw\\verification\\drc\\20261021T114704Z-drc-8c4572df\\drc.json",
     "unconnected_nets": {
       "BIAS_ENF": 10,
-      "GND_CTRL": 10,
-      "PG_BIAS_N": 10,
-      "3V3": 8,
-      "AC_B": 6,
-      "GNDP_AH": 6,
-      "GNDP_BH": 6,
-      "GNDP_BL": 6,
-      "GNDP_S": 6,
-      "VEEA_AL": 6,
-      "12V_BIAS_AH": 4,
-      "12V_BIAS_AL": 4,
-      "12V_BIAS_BH": 4,
-      "12V_BIAS_BL": 4,
-      "12V_BIAS_S": 4,
-      "BUS_P": 4,
-      "FBVEE_AH": 4,
+      "VEEA_BL": 6,
       "FBVEE_AL": 4,
-      "GNDP_AL": 4,
-      "PGND": 4,
-      "VEEA_BL": 4,
-      "VEE_AH": 4,
-      "VEE_AL": 4,
-      "DRV_RSTF": 2,
+      "PG_BIAS_N": 4,
+      "FBVDD_AL": 2,
+      "FBVDD_BL": 2,
+      "FBVEE_AH": 2,
       "FBVEE_BH": 2,
       "FBVEE_BL": 2,
-      "NTCR_AH": 2,
-      "NTC_AH": 2,
-      "NTC_AL": 2,
-      "RLIM_AH": 2,
-      "RLIM_AL": 2,
-      "RLIM_BH": 2,
+      "KS_BL": 2,
       "RLIM_BL": 2,
-      "SDFM_D": 2,
-      "S_FBVDD": 2,
-      "S_FBVEE": 2,
+      "S_16V": 2,
       "S_RLIM": 2,
-      "VDD_AH": 2,
-      "VDD_AL": 2,
       "VEEA_AH": 2,
+      "VEEA_AL": 2,
       "VEEA_BH": 2,
-      "VSNS_P": 2
+      "VEE_AH": 2,
+      "VEE_BL": 2
     },
     "note": "KiCad lists at most about 500 unconnected items per report; counts are of listed items (pad ends), not of nets"
   },
@@ -162,7 +135,7 @@
       ]
     ],
     "artifacts": 36,
-    "manifest_sha256": "2a0b9eddc45449d6a70b81e8d2e68d5fdc77403cecdca22b6917e9c5e00ba6ef"
+    "manifest_sha256": "910a2f80505f6211f5bf02ea7ccc3c2cc8d5d89bfc29358b14e786dcd9dcf779"
   },
   "netlist": {
     "passed": true,
@@ -175,9 +148,9 @@
   },
   "routing_quality": {
     "exit_code": 0,
-    "log": "measured - human review required: 2470 segments, 0 arcs, 411 vias, 5907.6 mm, bends 90/45/other 180/778/86, stair/zigzag runs 17/12, efficiency 0.8751 -> D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\routing_quality_primary-power.json\n",
+    "log": "measured - human review required: 2501 segments, 0 arcs, 436 vias, 6820.4 mm, bends 90/45/other 41/995/153, stair/zigzag runs 13/13, efficiency 0.8866 -> D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\routing_quality_primary-power.json\n",
     "file": "examples\\dab-10kw\\verification\\engineering_checks\\routing_quality_primary-power.json",
-    "sha256": "0865c7b49863c3e1120a39747d28619123b83f06a36037492a83472353e46b77",
+    "sha256": "55dc35c1ec3116fc96a143d1fb600796cf3ceffbd9d447d3072a1ad29e029875",
     "summary": {
       "arcs": {
         "count": 0,
@@ -191,43 +164,43 @@
   },
   "layout_metrics": {
     "exit_code": 0,
-    "log": "measured-human-review-required: 122 rule rows (13 within, 6 exceeding spec thresholds, 101 measured only, 2 not measured) in 0.828 s -> D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_metrics_primary-power.json\n",
+    "log": "measured-human-review-required: 122 rule rows (14 within, 5 exceeding spec thresholds, 101 measured only, 2 not measured) in 0.985 s -> D:\\Cursor Workspace\\AIPE-Full-Ecosystem-Integration\\repos\\AIPE-PCB-Agent\\examples\\dab-10kw\\verification\\engineering_checks\\layout_metrics_primary-power.json\n",
     "spec": "examples\\dab-10kw\\verification\\engineering_checks\\layout_spec_primary-power.json",
     "file": "examples\\dab-10kw\\verification\\engineering_checks\\layout_metrics_primary-power.json",
-    "sha256": "45344243037981f10d5cf5e101c07ad3785d49c2315594dbe468c56b4b666cd2",
+    "sha256": "cf9e71ef25563c9f9fd9f2968a063831c0e48a72bd74e5a4041a903ead6dd313",
     "summary": {
       "rows": 122,
-      "within_threshold": 13,
-      "exceeding_threshold": 6,
+      "within_threshold": 14,
+      "exceeding_threshold": 5,
       "measured_only": 101,
       "not_measured": 2
     },
     "warnings": []
   },
   "copper_islands": {
-    "passed": false,
+    "passed": true,
     "components": {
       "12V_E": 1,
-      "3V3": 5,
-      "AC_B": 4,
-      "BUS_P": 3,
-      "GND_CTRL": 6,
-      "PGND": 3,
+      "3V3": 1,
+      "AC_B": 1,
+      "BUS_P": 1,
+      "GND_CTRL": 1,
+      "PGND": 1,
       "SW_A": 1,
       "SW_B": 1,
       "XF_B": 1
     },
     "file": "examples\\dab-10kw\\verification\\engineering_checks\\copper_islands_primary-power.json",
-    "sha256": "14eb2f5b26358eca21ea9e782dcb65150a739f444c7cdf858c3cbb0525060800"
+    "sha256": "77766bdf7cb15326758aadbc601cd40775fc6d4ff663c120bdc801d79342a984"
   },
   "routing": {
-    "tracks": 2470,
-    "vias": 411,
-    "zones": 23,
-    "unresolved": 79,
-    "seconds": 1214.6,
+    "tracks": 2501,
+    "vias": 436,
+    "zones": 22,
+    "unresolved": 26,
+    "seconds": 1160.5,
     "file": "examples\\dab-10kw\\pcb\\routing_report_primary-power.json",
-    "sha256": "be25a47269282ef64b46f69aa07eadd4e3354447b7586c8361fa2a2876800ba1"
+    "sha256": "2fe9b72df72bd7bf0f70a989b0b537b96f6eb4f21a80d3eb638b66bca6e0f5e2"
   },
   "scope": "CAD evidence only: native ERC/DRC under the recorded rule set, export hashes, pad/net equality and geometric layout metrics. No electrical, thermal, EMI, insulation or manufacturability qualification is established by these checks."
 }
